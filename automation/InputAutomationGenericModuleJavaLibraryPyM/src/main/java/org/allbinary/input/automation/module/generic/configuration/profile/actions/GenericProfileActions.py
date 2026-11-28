@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
@@ -25,32 +26,30 @@ class GenericProfileActions(*java_bases(DomNodeInterface, DomDocumentMappingInte
     DEFAULT_PROFILE_ACTIONS_PATH: str = None
 
     def _init_fields(self) -> None:
-        from java.util.HashMap import HashMap
-        from org.allbinary.input.automation.module.DefaultListModelHelper import DefaultListModelHelper
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.logic.io.file.CommonDataFileStrings import CommonDataFileStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonFileStrings: CommonDataFileStrings = CommonDataFileStrings.getInstance()
-        self.name: str = None
-        self.genericProfileActionsJPanel: GenericProfileActionsJPanel = None
-        self.actionsDefaultListModelHelper: DefaultListModelHelper = None
-        self.hashMap: HashMap = None
+        if "name" not in vars(self): self.name: str = None
+        if "genericProfileActionsJPanel" not in vars(self): self.genericProfileActionsJPanel: GenericProfileActionsJPanel = None
+        if "actionsDefaultListModelHelper" not in vars(self): self.actionsDefaultListModelHelper: DefaultListModelHelper = None
+        if "hashMap" not in vars(self): self.hashMap: HashMap = None
 
     def __init__(self, *args) -> None:
         if len(args) == 2:
-            self._constructor2(*args)
+            __class__._constructor2(self, *args)
         elif len(args) == 3:
-            self.__jconstructor3(*args)
+            __class__.__jconstructor3(self, *args)
 
     def __jconstructor3(self, *args) -> None:
-        if True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)) and (args[2] is None or isinstance(args[2], str)):
-            self._constructor3_1(*args)
+        if True and (args[0] is None or any(base.__name__ == "GenericProfileActionsJPanel" for base in type(args[0]).__mro__)) and (args[1] is None or any(base.__name__ == "AbPath" for base in type(args[1]).__mro__)) and (args[2] is None or isinstance(args[2], str)):
+            __class__._constructor3_1(self, *args)
         else:
-            self._constructor3_2(*args)
+            __class__._constructor3_2(self, *args)
     
 
     def _constructor2(self, genericProfileActionsJPanel: GenericProfileActionsJPanel, name: str) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.setName(name)
         self.init(genericProfileActionsJPanel)
         self.load()
@@ -58,7 +57,7 @@ class GenericProfileActions(*java_bases(DomNodeInterface, DomDocumentMappingInte
 
     def _constructor3_1(self, genericProfileActionsJPanel: GenericProfileActionsJPanel, abPath: AbPath, name: str) -> None:
         from org.allbinary.logic.io.path.AbPath import AbPath
-        self._init_fields()
+        __class__._init_fields(self)
         self.setName(name)
         self.init(genericProfileActionsJPanel)
         self.load()
@@ -66,7 +65,7 @@ class GenericProfileActions(*java_bases(DomNodeInterface, DomDocumentMappingInte
 
     def _constructor3_2(self, genericProfileActionsJPanel: GenericProfileActionsJPanel, fileInputStream: FileInputStream, name: str) -> None:
         from java.io.FileInputStream import FileInputStream
-        self._init_fields()
+        __class__._init_fields(self)
         self.setName(name)
         self.init(genericProfileActionsJPanel)
         self.fileInit(fileInputStream)
@@ -92,15 +91,17 @@ class GenericProfileActions(*java_bases(DomNodeInterface, DomDocumentMappingInte
     
 
     def getFile(self, name: str) -> File:
+        from java.io.File import File
         fileName: str = GenericProfileActions.DEFAULT_PROFILE_ACTIONS_PATH + name + str(self.commonFileStrings._XML)
         return File(fileName)
     
 
     # throws Exception
     def load(self) -> None:
+        from java.io.File import File
         from java.io.FileInputStream import FileInputStream
         file: File = self.getFile(self.getName())
-        if file.isFile():
+        if java_predicate(file, "isFile"):
             idFile: FileInputStream = FileInputStream(file)
             self.fileInit(idFile)
         else:

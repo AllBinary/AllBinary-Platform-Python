@@ -15,11 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.business.category.CategoryView import CategoryView
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 
 
+@java_inherited_overloads
 class StoreThemeCategoryView(*java_bases(CategoryView, DomNodeInterface)):
     
 
@@ -33,7 +36,7 @@ class StoreThemeCategoryView(*java_bases(CategoryView, DomNodeInterface)):
         from org.allbinary.logic.visual.theme.ThemeValidation import ThemeValidation
         from org.w3c.dom.Document import Document
         from org.w3c.dom.Node import Node
-        node: Node = super().toXmlNode(document)
+        node: Node = java_super_call(super(), "toXmlNode", document)
         storeThemeCategoryInterface: StoreThemeCategoryInterface = self.getCategoryInterface()
         themeValidationArray: list[ThemeValidation] = storeThemeCategoryInterface.getThemes().toArray()
         Arrays.sort(themeValidationArray, ThemeComparator())

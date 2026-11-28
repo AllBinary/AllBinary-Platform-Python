@@ -20,13 +20,12 @@ from __future__ import annotations
 class BasketReview:
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.items: BasicArrayList = BasicArrayListD()
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def isValid(self) -> bool:
@@ -104,6 +103,7 @@ class BasketReview:
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
+        from org.allbinary.business.user.commerce.inventory.basket.BasketData import BasketData
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         from org.allbinary.business.user.commerce.inventory.item.Item import Item
         from org.allbinary.business.user.commerce.inventory.item.ItemView import ItemView

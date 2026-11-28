@@ -15,10 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.data.tables.BasicDataTableInterface import BasicDataTableInterface
 
 
 # Java interface
+@java_inherited_overloads
 class OrderHistoryEntityInterface(BasicDataTableInterface):
     
 
@@ -54,7 +56,9 @@ class OrderHistoryEntityInterface(BasicDataTableInterface):
         raise NotImplementedError()
 
     def getOrders(self, *args):
-        return getattr(self, "getOrders_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("getOrders_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getOrders(*args)
     
 
     # throws Exception

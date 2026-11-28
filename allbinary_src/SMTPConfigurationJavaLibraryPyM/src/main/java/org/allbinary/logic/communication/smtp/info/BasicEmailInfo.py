@@ -21,18 +21,17 @@ class BasicEmailInfo:
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfigurationInterface import EmailServerConfigurationInterface
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.subject: str = None
-        self.textBody: str = None
-        self.emailServerConfigurationInterface: EmailServerConfigurationInterface = None
+        if "subject" not in vars(self): self.subject: str = None
+        if "textBody" not in vars(self): self.textBody: str = None
+        if "emailServerConfigurationInterface" not in vars(self): self.emailServerConfigurationInterface: EmailServerConfigurationInterface = None
     
 
     def __init__(self, subject: str, textBody: str) -> None:
         from org.allbinary.string.CommonStrings import CommonStrings
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-        self._init_fields()
+        __class__._init_fields(self)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGING):
             commonStrings: CommonStrings = CommonStrings.getInstance()
             self.logUtil.putF(commonStrings.START, self, commonStrings.CONSTRUCTOR)

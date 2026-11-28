@@ -15,27 +15,26 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 
 
 class MultipartRequestParamForwardHelper:
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
-        from org.allbinary.logic.communication.http.request.RequestMapInterface import RequestMapInterface
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.pageContext: PageContext = None
-        self.requestMapInterface: RequestMapInterface = None
-        self.page: str = None
-        self.command: str = None
-        self.paramVector: BasicArrayList = None
+        if "pageContext" not in vars(self): self.pageContext: PageContext = None
+        if "requestMapInterface" not in vars(self): self.requestMapInterface: RequestMapInterface = None
+        if "page" not in vars(self): self.page: str = None
+        if "command" not in vars(self): self.command: str = None
+        if "paramVector" not in vars(self): self.paramVector: BasicArrayList = None
     
 
     def __init__(self, parentHelperTag: HelperTag, page: str, command: str, paramVector: BasicArrayList, pageContext: PageContext) -> None:
         from admin.taghelpers.InventoryItemViewParentTagHelper import InventoryItemViewParentTagHelper
         from org.allbinary.util.BasicArrayList import BasicArrayList
         from tags.HelperTag import HelperTag
-        self._init_fields()
+        __class__._init_fields(self)
         self.pageContext = pageContext
         self.page = page
         self.command = command
@@ -92,7 +91,7 @@ class MultipartRequestParamForwardHelper:
         from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         hashMap: HashMap = self.requestMapInterface.getRequestHashMap()
         requestCommand: str = hashMap.get(GLOBALS2.ADMINCOMMAND)
-        if StringValidationUtil.getInstance().isEmpty(self.command) or (not StringValidationUtil.getInstance().isEmpty(requestCommand) and ((self.command > requestCommand) - (self.command < requestCommand)) == 0):
+        if StringValidationUtil.getInstance().isEmpty(self.command) or (not (StringValidationUtil.getInstance().isEmpty(requestCommand)) and ((self.command > requestCommand) - (self.command < requestCommand)) == 0):
             return True
         return False
 # from java.util.HashMap import HashMap

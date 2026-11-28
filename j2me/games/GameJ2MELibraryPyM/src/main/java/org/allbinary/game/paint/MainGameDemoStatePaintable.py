@@ -15,19 +15,25 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.graphics.paint.Paintable import Paintable
 
 
+@java_inherited_overloads
 class MainGameDemoStatePaintable(Paintable):
+    def _java_defaults(self):
+        vars(self).setdefault("ownershipPaintableInterface", None)
+        vars(self).setdefault("menuPaintableInterface", None)
 
     def _init_fields(self) -> None:
-        self.ownershipPaintableInterface: Paintable = None
-        self.menuPaintableInterface: Paintable = None
+        if "ownershipPaintableInterface" not in vars(self): self.ownershipPaintableInterface: Paintable = None
+        if "menuPaintableInterface" not in vars(self): self.menuPaintableInterface: Paintable = None
     
 
     def __init__(self, ownershipPaintableInterface: Paintable, menuPaintableInterface: Paintable) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.ownershipPaintableInterface = ownershipPaintableInterface
         self.menuPaintableInterface = menuPaintableInterface
     

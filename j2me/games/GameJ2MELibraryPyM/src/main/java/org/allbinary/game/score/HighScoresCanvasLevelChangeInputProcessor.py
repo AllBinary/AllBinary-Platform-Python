@@ -15,19 +15,26 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import threading
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 from org.allbinary.game.score.HighScoresCanvasInputProcessor import HighScoresCanvasInputProcessor
 
 
+@java_inherited_overloads
 class HighScoresCanvasLevelChangeInputProcessor(*java_bases(HighScoresCanvasInputProcessor, UpdateMyFontInterface)):
     _lock = threading.RLock()
+    def _java_defaults(self):
+        vars(self).setdefault("displayInfoSingleton", None)
+        vars(self).setdefault("INSTRUCTIONS", None)
+        vars(self).setdefault("myFontProcessor", None)
+        vars(self).setdefault("anchor", 0)
+        vars(self).setdefault("fontHeight", 0)
 
     def _init_fields(self) -> None:
         from org.allbinary.graphics.Anchor import Anchor
         from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
         self.displayInfoSingleton: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
         self.INSTRUCTIONS: str = "(Right = Next Track, Left = Previous Track)"
@@ -37,9 +44,10 @@ class HighScoresCanvasLevelChangeInputProcessor(*java_bases(HighScoresCanvasInpu
     
 
     def __init__(self, highScoresCanvas: HighScoresCanvas) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.score.displayable.HighScoresCanvas import HighScoresCanvas
         super().__init__(highScoresCanvas)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
@@ -63,7 +71,7 @@ class HighScoresCanvasLevelChangeInputProcessor(*java_bases(HighScoresCanvasInpu
 
     def update(self) -> None:
         with self._lock:
-            return self._update_unlocked()
+            return __class__.__dict__["_update_unlocked"].__get__(self, __class__)()
 
     def _update_unlocked(self) -> None:
         from javax.microedition.lcdui.Canvas import Canvas
@@ -87,7 +95,7 @@ class HighScoresCanvasLevelChangeInputProcessor(*java_bases(HighScoresCanvasInpu
         self.myFontProcessor.process(graphics)
         width: int = self.displayInfoSingleton.getLastWidth()
         topScoresWidth: int = (graphics.getFont().stringWidth(self.INSTRUCTIONS) >> 1)
-        graphics.drawString(self.INSTRUCTIONS, (width >> 1) - topScoresWidth, self.fontHeight * 2, self.anchor)
+        graphics.drawString(self.INSTRUCTIONS, (int(width) >> (int(1) & 31)) - topScoresWidth, self.fontHeight * 2, self.anchor)
 # from javax.microedition.lcdui.Canvas import Canvas
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics

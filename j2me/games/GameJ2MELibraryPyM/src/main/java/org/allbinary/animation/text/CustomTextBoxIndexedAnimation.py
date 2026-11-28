@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.IndexedAnimation import IndexedAnimation
 from org.allbinary.game.input.event.RawKeyEventListener import RawKeyEventListener
@@ -22,22 +24,28 @@ from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterf
 from org.allbinary.animation.text.TextInterface import TextInterface
 
 
+@java_inherited_overloads
 class CustomTextBoxIndexedAnimation(*java_bases(IndexedAnimation, RawKeyEventListener, UpdateMyFontInterface, TextInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("customTextBox", None)
+        vars(self).setdefault("lastText", None)
+        vars(self).setdefault("hasChanged", False)
+        vars(self).setdefault("textChangeListener", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.form.item.CustomTextBox import CustomTextBox
         from org.allbinary.logic.string.StringUtil import StringUtil
-        self.customTextBox: CustomTextBox = None
+        if "customTextBox" not in vars(self): self.customTextBox: CustomTextBox = None
         self.lastText: str = StringUtil.getInstance().INIT_STRING
         self.hasChanged: bool = True
         self.textChangeListener: TextChangeListener = TextChangeListener.getInstance()
     
 
     def __init__(self, customTextBox: CustomTextBox) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         from org.allbinary.graphics.form.item.CustomTextBox import CustomTextBox
         super().__init__(AnimationBehavior.getInstance())
-        self._init_fields()
+        __class__._init_fields(self)
         self.customTextBox = customTextBox
     
 
@@ -95,7 +103,7 @@ class CustomTextBoxIndexedAnimation(*java_bases(IndexedAnimation, RawKeyEventLis
     
 
     def getWidth(self) -> int:
-        return super().getWidth()
+        return java_super_call(super(), "getWidth")
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
 # from org.allbinary.animation.AnimationBehavior import AnimationBehavior

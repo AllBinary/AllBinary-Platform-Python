@@ -15,12 +15,18 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.layer.RTSLayer2LogHelper import RTSLayer2LogHelper
 
 
+@java_inherited_overloads
 class RTSLayer2SelectedLogHelper(RTSLayer2LogHelper):
     instanceC: RTSLayer2SelectedLogHelper = None
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("TRACK_TO_FIRE_OR_MOVE", None)
+        vars(self).setdefault("BUILDING_CHASE", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -29,8 +35,9 @@ class RTSLayer2SelectedLogHelper(RTSLayer2LogHelper):
         self.BUILDING_CHASE: str = "buildingChase"
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

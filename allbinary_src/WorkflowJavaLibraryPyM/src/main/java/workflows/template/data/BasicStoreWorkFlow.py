@@ -15,11 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.workflow.StoreWorkFlowInterface import StoreWorkFlowInterface
 from workflows.template.data.BasicWorkFlow import BasicWorkFlow
 
 
+@java_inherited_overloads
 class BasicStoreWorkFlow(*java_bases(BasicWorkFlow, StoreWorkFlowInterface)):
     
 

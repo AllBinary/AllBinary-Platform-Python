@@ -22,7 +22,6 @@ class PositionStrings:
     instance: PositionStrings = None
 
     def _init_fields(self) -> None:
-        from jsinterop.annotations.JsProperty import JsProperty
         self.X: str = "x"
         self.Y: str = "y"
         self.X_LABEL: str = "x: "
@@ -33,7 +32,7 @@ class PositionStrings:
         self.DZ_LABEL: str = "dz: "
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

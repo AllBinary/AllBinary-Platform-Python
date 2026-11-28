@@ -31,7 +31,7 @@ class AndroidServicesUtil:
         self.SERVICE_NOT_FOUND_RUNNING: str = "Service not found Running: "
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

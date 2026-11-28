@@ -23,15 +23,18 @@ class SWTJOGLProcessor(object):
     instance: SWTJOGLProcessor = None
 
     def _init_fields(self) -> None:
-        self.glHolder: GLHolder = (GLHolder()  # Java anonymous class body:
-#         
-# 
-#         def run(self, renderer: object) -> None:
-#             pass
-)
+        _java_listener_owner = self
+        class _JavaListenerN65771(GLHolder):
+                
+
+
+            def run(self, renderer: object) -> None:
+                pass
+        self.glHolder: GLHolder = _JavaListenerN65771()
+            
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

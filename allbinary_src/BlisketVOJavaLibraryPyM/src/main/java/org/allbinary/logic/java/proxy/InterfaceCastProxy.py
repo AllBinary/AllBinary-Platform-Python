@@ -15,30 +15,31 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.reflect.InvocationHandler import InvocationHandler
 
 
 class InterfaceCastProxy(InvocationHandler):
 
     def _init_fields(self) -> None:
-        self.anyType: object = None
+        if "anyType" not in vars(self): self.anyType: object = None
     
 
     def __init__(self, anyType: object) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.anyType = anyType
     
 
     @staticmethod
     def newInstance(anyType: object) -> object:
-        return Proxy.newProxyInstance(type(anyType).getClassLoader(), type(anyType).getInterfaces(), InterfaceCastProxy(anyType))
+        return Proxy.newProxyInstance(__import__("java.lang.ClassLoader", fromlist=["ClassLoader"]).ClassLoader.getSystemClassLoader(), type(anyType).getInterfaces(), InterfaceCastProxy(anyType))
     
 
     # throws Throwable
     def invoke(self, proxyObject: object, proxyMethod: Method, proxyArgs: list[object]) -> object:
         methodName: str = proxyMethod.getName()
         realMethod: Method = type(self.anyType).getMethod(methodName, proxyMethod.getParameterTypes())
-        if not realMethod.isAccessible():
+        if not (java_predicate(realMethod, "isAccessible")):
             realMethod.setAccessible(True)
         return proxyMethod.invoke(self.anyType, proxyArgs)
 # from java.lang.reflect.Method import Method

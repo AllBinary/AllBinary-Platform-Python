@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 from java.lang.JavaRuntimeStatic import java_bases
@@ -22,13 +23,16 @@ from org.allbinary.game.layer.AllBinaryGameLayer import AllBinaryGameLayer
 from org.allbinary.game.input.GameInputInterface import GameInputInterface
 
 
+@java_inherited_overloads
 class TestingInputSingleton(*java_bases(AllBinaryGameLayer, GameInputInterface)):
     instance: TestingInputSingleton = None
     _lock = threading.RLock()
+    def _java_defaults(self):
+        vars(self).setdefault("inputProcessorArray", None)
+        vars(self).setdefault("testInputPaintable", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.graphics.paint.NullPaintable import NullPaintable
-        from org.allbinary.graphics.paint.PaintableInterface import PaintableInterface
         self.inputProcessorArray: list[GameInputProcessor] = [None] * (InputFactory.getInstance().MAX)
         self.testInputPaintable: PaintableInterface = NullPaintable.getInstance()
     
@@ -39,12 +43,13 @@ class TestingInputSingleton(*java_bases(AllBinaryGameLayer, GameInputInterface))
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.input.GameInputProcessorUtil import GameInputProcessorUtil
         from org.allbinary.graphics.RectangleFactory import RectangleFactory
         from org.allbinary.logic.string.StringUtil import StringUtil
         from org.allbinary.view.ViewPosition import ViewPosition
         super().__init__(StringUtil.getInstance().EMPTY_STRING, RectangleFactory.SINGLETON, ViewPosition.getInstanceD())
-        self._init_fields()
+        __class__._init_fields(self)
         GameInputProcessorUtil.init(self.inputProcessorArray)
     
 
@@ -65,67 +70,85 @@ class TestingInputSingleton(*java_bases(AllBinaryGameLayer, GameInputInterface))
         from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         testInputInterface: TestInputInterface = aTestInputInterface
         self.testInputPaintable = testInputInterface
-        self.inputProcessorArray[Canvas.UP] = (GameInputProcessor()  # Java anonymous class body:
-#             
-# 
-#             # throws Exception
-#             def processEvent(self, allbinaryLayerManager: AllBinaryLayerManager, gameKeyEvent: GameKeyEvent) -> None:
-#                 from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
-#                 from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-#                 testInputInterface.up()
-)
-        self.inputProcessorArray[Canvas.DOWN] = (GameInputProcessor()  # Java anonymous class body:
-#             
-# 
-#             # throws Exception
-#             def processEvent(self, allbinaryLayerManager: AllBinaryLayerManager, gameKeyEvent: GameKeyEvent) -> None:
-#                 from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
-#                 from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-#                 testInputInterface.down()
-)
-        self.inputProcessorArray[Canvas.LEFT] = (GameInputProcessor()  # Java anonymous class body:
-#             
-# 
-#             # throws Exception
-#             def processEvent(self, allbinaryLayerManager: AllBinaryLayerManager, gameKeyEvent: GameKeyEvent) -> None:
-#                 from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
-#                 from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-#                 testInputInterface.left()
-)
-        self.inputProcessorArray[Canvas.RIGHT] = (GameInputProcessor()  # Java anonymous class body:
-#             
-# 
-#             # throws Exception
-#             def processEvent(self, allbinaryLayerManager: AllBinaryLayerManager, gameKeyEvent: GameKeyEvent) -> None:
-#                 from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
-#                 from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-#                 testInputInterface.right()
-)
-        self.inputProcessorArray[Canvas.KEY_NUM7] = (GameInputProcessor()  # Java anonymous class body:
-#             
-# 
-#             # throws Exception
-#             def processEvent(self, allbinaryLayerManager: AllBinaryLayerManager, gameKeyEvent: GameKeyEvent) -> None:
-#                 from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
-#                 from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-#                 testInputInterface.strafeLeft()
-)
-        self.inputProcessorArray[Canvas.KEY_NUM9] = (GameInputProcessor()  # Java anonymous class body:
-#             
-# 
-#             # throws Exception
-#             def processEvent(self, allbinaryLayerManager: AllBinaryLayerManager, gameKeyEvent: GameKeyEvent) -> None:
-#                 from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
-#                 from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-#                 testInputInterface.strafeRight()
-)
+        _java_listener_owner = self
+        class _JavaListenerN66410(GameInputProcessor):
+            
+            
+
+            # throws Exception
+            def processEvent(self, allbinaryLayerManager: AllBinaryLayerManager, gameKeyEvent: GameKeyEvent) -> None:
+                from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+                from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+                testInputInterface.up()
+        self.inputProcessorArray[Canvas.UP] = _JavaListenerN66410()
+            
+        _java_listener_owner = self
+        class _JavaListenerN66558(GameInputProcessor):
+            
+            
+
+            # throws Exception
+            def processEvent(self, allbinaryLayerManager: AllBinaryLayerManager, gameKeyEvent: GameKeyEvent) -> None:
+                from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+                from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+                testInputInterface.down()
+        self.inputProcessorArray[Canvas.DOWN] = _JavaListenerN66558()
+            
+        _java_listener_owner = self
+        class _JavaListenerN66706(GameInputProcessor):
+            
+            
+
+            # throws Exception
+            def processEvent(self, allbinaryLayerManager: AllBinaryLayerManager, gameKeyEvent: GameKeyEvent) -> None:
+                from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+                from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+                testInputInterface.left()
+        self.inputProcessorArray[Canvas.LEFT] = _JavaListenerN66706()
+            
+        _java_listener_owner = self
+        class _JavaListenerN66854(GameInputProcessor):
+            
+            
+
+            # throws Exception
+            def processEvent(self, allbinaryLayerManager: AllBinaryLayerManager, gameKeyEvent: GameKeyEvent) -> None:
+                from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+                from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+                testInputInterface.right()
+        self.inputProcessorArray[Canvas.RIGHT] = _JavaListenerN66854()
+            
+        _java_listener_owner = self
+        class _JavaListenerN67002(GameInputProcessor):
+            
+            
+
+            # throws Exception
+            def processEvent(self, allbinaryLayerManager: AllBinaryLayerManager, gameKeyEvent: GameKeyEvent) -> None:
+                from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+                from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+                testInputInterface.strafeLeft()
+        self.inputProcessorArray[Canvas.KEY_NUM7] = _JavaListenerN67002()
+            
+        _java_listener_owner = self
+        class _JavaListenerN67150(GameInputProcessor):
+            
+            
+
+            # throws Exception
+            def processEvent(self, allbinaryLayerManager: AllBinaryLayerManager, gameKeyEvent: GameKeyEvent) -> None:
+                from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
+                from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
+                testInputInterface.strafeRight()
+        self.inputProcessorArray[Canvas.KEY_NUM9] = _JavaListenerN67150()
+            
         GameInputProcessorUtil.init(self.inputProcessorArray)
     
 
     # throws Exception
     def processInputList(self, allbinaryLayerManager: AllBinaryLayerManager, list_: BasicArrayList) -> None:
         with self._lock:
-            return self._processInputList_unlocked(allbinaryLayerManager, list_)
+            return __class__.__dict__["_processInputList_unlocked"].__get__(self, __class__)(allbinaryLayerManager, list_)
 
     def _processInputList_unlocked(self, allbinaryLayerManager: AllBinaryLayerManager, list_: BasicArrayList) -> None:
         from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
@@ -143,7 +166,7 @@ class TestingInputSingleton(*java_bases(AllBinaryGameLayer, GameInputInterface))
     # throws Exception
     def processInput(self, allbinaryLayerManager: AllBinaryLayerManager) -> None:
         with self._lock:
-            return self._processInput_unlocked(allbinaryLayerManager)
+            return __class__.__dict__["_processInput_unlocked"].__get__(self, __class__)(allbinaryLayerManager)
 
     def _processInput_unlocked(self, allbinaryLayerManager: AllBinaryLayerManager) -> None:
         from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager

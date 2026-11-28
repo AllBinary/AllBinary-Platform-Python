@@ -21,11 +21,11 @@ from org.allbinary.media.graphics.geography.map.GeographicMapCellPositionFactory
 class GeologicalGeographicMapCellPositionFactory(GeographicMapCellPositionFactoryInterface):
 
     def _init_fields(self) -> None:
-        self.resourcePerMapCellType: list[int] = None
+        if "resourcePerMapCellType" not in vars(self): self.resourcePerMapCellType: list[int] = None
     
 
     def __init__(self, resourcePerMapCellType: list[int]) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.resourcePerMapCellType = resourcePerMapCellType
     
 

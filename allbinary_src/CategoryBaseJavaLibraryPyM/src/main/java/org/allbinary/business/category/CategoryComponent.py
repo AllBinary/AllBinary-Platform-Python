@@ -15,20 +15,25 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.visual.transform.TransformInterface import TransformInterface
 from org.allbinary.business.category.CategoryView import CategoryView
 
 
+@java_inherited_overloads
 class CategoryComponent(*java_bases(CategoryView, TransformInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("NO_TYPE", 0)
 
     def _init_fields(self) -> None:
         self.NO_TYPE: int = 0
     
 
     def __init__(self, categoryInterface: CategoryInterface) -> None:
+        __class__._java_defaults(self)
         super().__init__(categoryInterface)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getTypeId(self) -> int:

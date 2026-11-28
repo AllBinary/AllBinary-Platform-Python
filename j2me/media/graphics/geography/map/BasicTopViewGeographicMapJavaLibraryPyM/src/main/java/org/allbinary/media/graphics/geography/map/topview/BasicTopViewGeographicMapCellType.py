@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 
 
 class BasicTopViewGeographicMapCellType:
@@ -22,9 +23,9 @@ class BasicTopViewGeographicMapCellType:
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.name: str = None
-        self.cost: int = None
-        self.types: list[int] = None
+        if "name" not in vars(self): self.name: str = None
+        if "cost" not in vars(self): self.cost: int = 0
+        if "types" not in vars(self): self.types: list[int] = None
     
 
     @staticmethod
@@ -40,7 +41,7 @@ class BasicTopViewGeographicMapCellType:
         from org.allbinary.media.graphics.geography.map.GeographicMapCellTypeFactory import GeographicMapCellTypeFactory
         from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellType import RaceTrackGeographicMapCellType
         from org.allbinary.util.BasicArrayList import BasicArrayList
-        self._init_fields()
+        __class__._init_fields(self)
         size: int = types.size()
         typeArray: list[int] = [0] * (size)
         typeAsInteger: int = None

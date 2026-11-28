@@ -15,30 +15,39 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from admin.taghelpers.Table import Table
 
 
+@java_inherited_overloads
 class UserHelper(Table):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("hashMap", None)
+        vars(self).setdefault("pageContext", None)
+        vars(self).setdefault("request", None)
+        vars(self).setdefault("path", None)
+        vars(self).setdefault("portion", None)
 
     def _init_fields(self) -> None:
-        from java.util.HashMap import HashMap
-        from org.allbinary.business.installer.Portion import Portion
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.hashMap: HashMap = None
-        self.pageContext: PageContext = None
-        self.request: HttpServletRequest = None
-        self.path: str = None
-        self.portion: Portion = None
+        if "hashMap" not in vars(self): self.hashMap: HashMap = None
+        if "pageContext" not in vars(self): self.pageContext: PageContext = None
+        if "request" not in vars(self): self.request: HttpServletRequest = None
+        if "path" not in vars(self): self.path: str = None
+        if "portion" not in vars(self): self.portion: Portion = None
     
 
     def __init__(self, hashMap: HashMap, pageContext: PageContext) -> None:
+        __class__._java_defaults(self)
         from java.util.HashMap import HashMap
         from org.allbinary.business.installer.Portion import Portion
         from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
         from org.allbinary.globals.URLGLOBALS import URLGLOBALS
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.hashMap = hashMap
         self.pageContext = pageContext
         self.request = pageContext.getRequest()
@@ -89,7 +98,7 @@ class UserHelper(Table):
         try:
             userInterface: UserInterface = NewUserFactory.getInstance(self.request, self.hashMap)
             enable: str = self.hashMap.get(EntryData.getInstance().ENABLE)
-            if not StringValidationUtil.getInstance().isEmpty(enable):
+            if not (StringValidationUtil.getInstance().isEmpty(enable)):
                 userInterface.setEnable(enable)
             values: BasicArrayList = userInterface.toVector()
             UserEntityFactory.getInstance().insert(values)

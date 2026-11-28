@@ -12,15 +12,14 @@ class ToastUtil:
     class MakeToast(object):
 
         def _init_fields(self) -> None:
-            from android.content.Context import Context
-            self.context: Context = None
-            self.string: str = None
-            self.time: int = None
+            if "context" not in vars(self): self.context: Context = None
+            if "string" not in vars(self): self.string: str = None
+            if "time" not in vars(self): self.time: int = 0
         
 
         def __init__(self, context: Context, string: str, time: int) -> None:
             from android.content.Context import Context
-            self._init_fields()
+            __class__._init_fields(self)
             self.context = context
             self.string = string
             self.time = time
@@ -42,7 +41,7 @@ class ToastUtil:
         self.logUtil: LogUtil = LogUtil.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

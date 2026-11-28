@@ -15,10 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.media.graphics.geography.map.racetrack.BasePathFinderGraphVisitor import BasePathFinderGraphVisitor
 
 
 #1.4.2
+@java_inherited_overloads
 class PathFinderGraphHackVisitor(BasePathFinderGraphVisitor):
     
 

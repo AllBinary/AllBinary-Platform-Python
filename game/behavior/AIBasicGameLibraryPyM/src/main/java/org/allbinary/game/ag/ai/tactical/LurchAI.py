@@ -15,21 +15,28 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.ai.BasicAI import BasicAI
 
 
+@java_inherited_overloads
 class LurchAI(BasicAI):
+    def _java_defaults(self):
+        vars(self).setdefault("currentRelativeAngle", 0)
+        vars(self).setdefault("currentSpeed", 0)
 
     def _init_fields(self) -> None:
         self.currentRelativeAngle: int = 0
-        self.currentSpeed: int = 0
+        if "currentSpeed" not in vars(self): self.currentSpeed: int = 0
     
 
     def __init__(self, ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.input.GameInput import GameInput
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         super().__init__(ownerLayerInterface, gameInput)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -57,9 +64,9 @@ class LurchAI(BasicAI):
             x -= self.currentSpeed
         ownerLayerInterface.setPosition(x, ownerLayerInterface.getYP(), ownerLayerInterface.getZP())
         if self.currentRelativeAngle == 0:
-            super().processKeyAI(Canvas.KEY_NUM0)
+            java_super_call(super(), "processKeyAI", Canvas.KEY_NUM0)
         elif self.currentRelativeAngle == 180:
-            super().processKeyAI(Canvas.KEY_POUND)
+            java_super_call(super(), "processKeyAI", Canvas.KEY_POUND)
     
 
     def reverse(self) -> None:

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 
 
@@ -22,10 +23,9 @@ class CategoryPrivateTree:
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.category.CategoryFactoryInterface import CategoryFactoryInterface
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.categoryFactoryInterface: CategoryFactoryInterface = None
+        if "categoryFactoryInterface" not in vars(self): self.categoryFactoryInterface: CategoryFactoryInterface = None
     
 
     def __init__(self, categoryFactoryInterface: CategoryFactoryInterface) -> None:
@@ -33,7 +33,7 @@ class CategoryPrivateTree:
         from org.allbinary.string.CommonStrings import CommonStrings
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-        self._init_fields()
+        __class__._init_fields(self)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().CATEGORY):
             commonStrings: CommonStrings = CommonStrings.getInstance()
             self.logUtil.putF(commonStrings.START, self, "CategoryPrivateTree(CategoryFactoryInterface categoryFactoryInterface)")
@@ -43,7 +43,7 @@ class CategoryPrivateTree:
     # throws Exception
     def save(self, categoryInterface: CategoryInterface) -> None:
         with self._lock:
-            return self._save_unlocked(categoryInterface)
+            return __class__.__dict__["_save_unlocked"].__get__(self, __class__)(categoryInterface)
 
     def _save_unlocked(self, categoryInterface: CategoryInterface) -> None:
         from org.allbinary.business.category.CategoryComponent import CategoryComponent
@@ -65,14 +65,14 @@ class CategoryPrivateTree:
     # throws Exception
     def delete(self, categoryInterface: CategoryInterface) -> None:
         with self._lock:
-            return self._delete_unlocked(categoryInterface)
+            return __class__.__dict__["_delete_unlocked"].__get__(self, __class__)(categoryInterface)
 
     def _delete_unlocked(self, categoryInterface: CategoryInterface) -> None:
         from org.allbinary.business.category.CategoryInterface import CategoryInterface
         from org.allbinary.logic.io.file.AbFile import AbFile
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-        if categoryInterface.isLeaf():
+        if java_predicate(categoryInterface, "isLeaf"):
             categoryFile: AbFile = AbFile.createAbFileFromAbPath(categoryInterface.getFilePath())
             if categoryFile.delete():
                 if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):

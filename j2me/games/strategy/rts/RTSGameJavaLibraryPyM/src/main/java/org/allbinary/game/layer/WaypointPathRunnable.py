@@ -16,11 +16,15 @@
 from __future__ import annotations
 
 import time
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import threading
 from org.allbinary.game.layer.WaypointPathRunnableBase import WaypointPathRunnableBase
 
 
+@java_inherited_overloads
 class WaypointPathRunnable(WaypointPathRunnableBase):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -28,8 +32,9 @@ class WaypointPathRunnable(WaypointPathRunnableBase):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def run(self) -> None:

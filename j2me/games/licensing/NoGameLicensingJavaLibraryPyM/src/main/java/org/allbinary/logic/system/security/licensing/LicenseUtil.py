@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 
@@ -35,7 +36,7 @@ class LicenseUtil:
 
     def isRunning(self) -> bool:
         with self._lock:
-            return self._isRunning_unlocked()
+            return __class__.__dict__["_isRunning_unlocked"].__get__(self, __class__)()
 
     def _isRunning_unlocked(self) -> bool:
         return False
@@ -43,7 +44,7 @@ class LicenseUtil:
 
     def setRunning(self, running: bool) -> None:
         with self._lock:
-            return self._setRunning_unlocked(running)
+            return __class__.__dict__["_setRunning_unlocked"].__get__(self, __class__)(running)
 
     def _setRunning_unlocked(self, running: bool) -> None:
         pass
@@ -51,7 +52,7 @@ class LicenseUtil:
 
     def shouldWait(self, commandListener: CommandListener) -> bool:
         from javax.microedition.lcdui.CommandListener import CommandListener
-        return self.isRunning()
+        return java_predicate(self, "isRunning")
 # from javax.microedition.lcdui.CommandListener import CommandListener
 
 

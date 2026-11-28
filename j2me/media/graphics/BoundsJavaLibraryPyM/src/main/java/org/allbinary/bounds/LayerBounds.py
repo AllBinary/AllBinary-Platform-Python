@@ -21,15 +21,14 @@ from org.allbinary.bounds.event.BoundsChangeEventListener import BoundsChangeEve
 class LayerBounds(BoundsChangeEventListener):
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.Rectangle import Rectangle
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.rectangle: Rectangle = None
+        if "rectangle" not in vars(self): self.rectangle: Rectangle = None
     
 
     def __init__(self, rectangle: Rectangle) -> None:
         from org.allbinary.graphics.Rectangle import Rectangle
-        self._init_fields()
+        __class__._init_fields(self)
         self.rectangle = rectangle
     
 

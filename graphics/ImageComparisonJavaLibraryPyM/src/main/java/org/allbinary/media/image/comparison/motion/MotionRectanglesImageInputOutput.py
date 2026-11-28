@@ -27,7 +27,7 @@ class MotionRectanglesImageInputOutput(ImageIOInterface):
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -117,7 +117,9 @@ class MotionRectanglesImageInputOutput(ImageIOInterface):
             imagePersistanceUtil.saveWithImageIO(str(filePathStringBuffer3), bufferedImageCacheables[2].getBufferedImage())
 
     def save(self, *args):
-        return getattr(self, "save_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("save_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().save(*args)
 # from java.awt.Graphics import Graphics
 # from java.awt.Rectangle import Rectangle
 # from java.awt.Color import Color

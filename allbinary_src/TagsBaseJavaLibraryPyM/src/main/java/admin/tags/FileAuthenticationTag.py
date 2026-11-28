@@ -15,35 +15,51 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_equals
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 import datetime
 from tags.CustomTagSupport import CustomTagSupport
 
 
+@java_inherited_overloads
 class FileAuthenticationTag(CustomTagSupport):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("attemptsInteger", None)
+        vars(self).setdefault("weblisketSession", None)
+        vars(self).setdefault("request", None)
+        vars(self).setdefault("command", None)
+        vars(self).setdefault("userName", None)
+        vars(self).setdefault("password", None)
+        vars(self).setdefault("newPassword", None)
+        vars(self).setdefault("authenticated", None)
+        vars(self).setdefault("sessionUserName", None)
+        vars(self).setdefault("role", None)
+        vars(self).setdefault("timeout", None)
+        vars(self).setdefault("roles", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
-        from org.allbinary.business.user.role.BasicUserRole import BasicUserRole
-        from org.allbinary.logic.communication.http.request.session.BasicWeblisketSession import BasicWeblisketSession
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.attemptsInteger: int = None
-        self.weblisketSession: BasicWeblisketSession = None
-        self.request: HttpServletRequest = None
-        self.command: str = None
-        self.userName: str = None
-        self.password: str = None
-        self.newPassword: str = None
-        self.authenticated: str = None
-        self.sessionUserName: str = None
-        self.role: BasicUserRole = None
-        self.timeout: str = None
-        self.roles: BasicArrayList = None
+        if "attemptsInteger" not in vars(self): self.attemptsInteger: int = None
+        if "weblisketSession" not in vars(self): self.weblisketSession: BasicWeblisketSession = None
+        if "request" not in vars(self): self.request: HttpServletRequest = None
+        if "command" not in vars(self): self.command: str = None
+        if "userName" not in vars(self): self.userName: str = None
+        if "password" not in vars(self): self.password: str = None
+        if "newPassword" not in vars(self): self.newPassword: str = None
+        if "authenticated" not in vars(self): self.authenticated: str = None
+        if "sessionUserName" not in vars(self): self.sessionUserName: str = None
+        if "role" not in vars(self): self.role: BasicUserRole = None
+        if "timeout" not in vars(self): self.timeout: str = None
+        if "roles" not in vars(self): self.roles: BasicArrayList = None
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def setCommand(self, command: str) -> None:
@@ -160,7 +176,7 @@ class FileAuthenticationTag(CustomTagSupport):
             else:
                 if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().AUTHENTICATION):
                     self.logUtil.putF("Role Is Not In Session", self, "isSessionOld()")
-            return self.isRarelyUsedSession()
+            return java_predicate(self, "isRarelyUsedSession")
         except Exception as e:
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAGERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "isSessionOld()", e)
@@ -255,7 +271,7 @@ class FileAuthenticationTag(CustomTagSupport):
                 size: int = self.roles.size()
                 for index in range(0, size):
                     mustBeOfRole: BasicUserRole = self.roles.get(index)
-                    if self.sessionUserName is not None and self.role.equals(mustBeOfRole):
+                    if self.sessionUserName is not None and java_equals(self.role, mustBeOfRole):
                         return True
                 return False
             return False
@@ -338,7 +354,7 @@ class FileAuthenticationTag(CustomTagSupport):
                 if ((self.command > GLOBALS2.CHANGEPASSWORD) - (self.command < GLOBALS2.CHANGEPASSWORD)) == 0:
                     if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                         self.logUtil.putF("Change Password", self, self.tagStrings.DO_START_TAG)
-                    if not self.changePassword():
+                    if not (self.changePassword()):
                         self.pageContext.getOut().print_("Password Change Attempt Failed.<p>")
                         return self.EVAL_BODY_INCLUDE
                     else:
@@ -349,7 +365,7 @@ class FileAuthenticationTag(CustomTagSupport):
                         self.logUtil.putF("INVALIDATESESSION", self, self.tagStrings.DO_START_TAG)
                     return self.invalidateSession()
                 else:
-                    if self.isSessionOld():
+                    if java_predicate(self, "isSessionOld"):
                         if self.processInvalidation():
                             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                                 self.logUtil.putF("Processing Invalidation", self, self.tagStrings.DO_START_TAG)
@@ -365,7 +381,7 @@ class FileAuthenticationTag(CustomTagSupport):
                                 return TagSupport.SKIP_BODY
                             else:
                                 return TagSupport.EVAL_BODY_INCLUDE
-                    if (self.userName is None or ((self.userName > stringUtil.EMPTY_STRING) - (self.userName < stringUtil.EMPTY_STRING)) == 0) and (self.password is None or ((self.password > stringUtil.EMPTY_STRING) - (self.password < stringUtil.EMPTY_STRING)) == 0) and self.roles is not None and self.isAuthenticationSessionValid():
+                    if (self.userName is None or ((self.userName > stringUtil.EMPTY_STRING) - (self.userName < stringUtil.EMPTY_STRING)) == 0) and (self.password is None or ((self.password > stringUtil.EMPTY_STRING) - (self.password < stringUtil.EMPTY_STRING)) == 0) and self.roles is not None and java_predicate(self, "isAuthenticationSessionValid"):
                         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                             self.logUtil.putF("Authenticated session is valid", self, self.tagStrings.DO_START_TAG)
                         if ((self.command > GLOBALS2.PROCESSBODYIFAUTHENTICATED) - (self.command < GLOBALS2.PROCESSBODYIFAUTHENTICATED)) == 0:
@@ -375,7 +391,7 @@ class FileAuthenticationTag(CustomTagSupport):
                     if self.userName is not None and self.password is not None and self.processIfNewLogin():
                         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                             self.logUtil.putF("Processing new login.", self, self.tagStrings.DO_START_TAG)
-                        if self.isRoleValid():
+                        if java_predicate(self, "isRoleValid"):
                             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                                 self.logUtil.putF("Role is valid - Processing new login", self, self.tagStrings.DO_START_TAG)
                             self.pageContext.getOut().print_(self.validRole())

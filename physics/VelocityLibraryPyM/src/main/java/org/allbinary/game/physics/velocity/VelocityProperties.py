@@ -15,23 +15,31 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
 from org.allbinary.game.physics.velocity.VelocityInterface import VelocityInterface
 
 
+@java_inherited_overloads
 class VelocityProperties(*java_bases(BasicVelocityProperties, VelocityInterface)):
     NULL_VELOCITY_PROPERTIES: VelocityProperties = None
+    def _java_defaults(self):
+        vars(self).setdefault("maxForwardVelocity", 0)
+        vars(self).setdefault("maxReverseVelocity", 0)
 
     def _init_fields(self) -> None:
-        self.maxForwardVelocity: int = 0
-        self.maxReverseVelocity: int = 0
+        if "maxForwardVelocity" not in vars(self): self.maxForwardVelocity: int = 0
+        if "maxReverseVelocity" not in vars(self): self.maxReverseVelocity: int = 0
     
 
     def __init__(self, maxForwardVelocity: int, maxReverseVelocity: int) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.setMaxForwardVelocity(maxForwardVelocity)
         self.setMaxReverseVelocity(maxReverseVelocity)
     
@@ -129,12 +137,12 @@ class VelocityProperties(*java_bases(BasicVelocityProperties, VelocityInterface)
     
 
     def setVelocityi(self, magnitude: int, angle: int, otherAngle: int) -> None:
-        super().setVelocityi(magnitude, angle, otherAngle)
+        java_super_call(super(), "setVelocityi", magnitude, angle, otherAngle)
         self.limitXYToForwardAndReverseMaxVelocity()
     
 
     def addVelocityi(self, magnitude: int, angle: int, otherAngle: int) -> None:
-        super().addVelocityi(magnitude, angle, otherAngle)
+        java_super_call(super(), "addVelocityi", magnitude, angle, otherAngle)
         self.limitXYToForwardAndReverseMaxVelocity()
 
 

@@ -22,10 +22,10 @@ class TrackballMotionGestureFactory:
     instance: object = None
 
     def _init_fields(self) -> None:
-        self.LEFT: MotionGestureInput = None
-        self.RIGHT: MotionGestureInput = None
-        self.UP: MotionGestureInput = None
-        self.DOWN: MotionGestureInput = None
+        if "LEFT" not in vars(self): self.LEFT: MotionGestureInput = None
+        if "RIGHT" not in vars(self): self.RIGHT: MotionGestureInput = None
+        if "UP" not in vars(self): self.UP: MotionGestureInput = None
+        if "DOWN" not in vars(self): self.DOWN: MotionGestureInput = None
     
 
     @staticmethod
@@ -42,7 +42,7 @@ class TrackballMotionGestureFactory:
         from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
         from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
         from org.allbinary.game.input.InputFactory import InputFactory
-        self._init_fields()
+        __class__._init_fields(self)
         MAX: int = InputFactory.getInstance().MAX
         self.LEFT = MotionGestureInput(MAX - 26, "L Trackball")
         self.RIGHT = MotionGestureInput(MAX - 27, "R Trackball")

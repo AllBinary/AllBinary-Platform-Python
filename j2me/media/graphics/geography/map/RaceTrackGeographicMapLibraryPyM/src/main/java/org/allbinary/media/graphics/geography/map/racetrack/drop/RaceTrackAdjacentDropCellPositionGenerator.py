@@ -15,12 +15,22 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.media.graphics.geography.map.racetrack.drop.RaceTrackDropCellPositionGenerator import RaceTrackDropCellPositionGenerator
 
 
+@java_inherited_overloads
 class RaceTrackAdjacentDropCellPositionGenerator(RaceTrackDropCellPositionGenerator):
     SINGLETON: RaceTrackAdjacentDropCellPositionGenerator = None
+    def _java_defaults(self):
+        vars(self).setdefault("layerCoveringCellPositionsUtil", None)
+        vars(self).setdefault("groupCommonFactory", None)
+        vars(self).setdefault("surroundingCellPositions", None)
+        vars(self).setdefault("hashtable", None)
+        vars(self).setdefault("geographicMapDirectionUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.game.identification.GroupCommonFactory import GroupCommonFactory
@@ -28,7 +38,6 @@ class RaceTrackAdjacentDropCellPositionGenerator(RaceTrackDropCellPositionGenera
         from org.allbinary.logic.StdUtil import StdUtil
         from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         from org.allbinary.media.graphics.geography.map.GeographicMapDirectionUtil import GeographicMapDirectionUtil
-        from org.allbinary.util.ABHashtable import ABHashtable
         self.layerCoveringCellPositionsUtil: LayerCoveringCellPositionsUtil = LayerCoveringCellPositionsUtil.getInstance()
         self.groupCommonFactory: GroupCommonFactory = GroupCommonFactory.getInstance()
         self.surroundingCellPositions: list[GeographicMapCellPosition] = [None] * (4)
@@ -43,8 +52,9 @@ class RaceTrackAdjacentDropCellPositionGenerator(RaceTrackDropCellPositionGenera
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -69,7 +79,7 @@ class RaceTrackAdjacentDropCellPositionGenerator(RaceTrackDropCellPositionGenera
         while (index := index - 1) >= 0:
             geographicMapCellPosition = self.surroundingCellPositions[index]
             raceTrackGeographicMapCellType = self.raceTrackGeographicMap.getCellTypeAt(geographicMapCellPosition)
-            if not raceTrackGeographicMapCellTypeFactory.isPath(raceTrackGeographicMapCellType):
+            if not (raceTrackGeographicMapCellTypeFactory.isPath(raceTrackGeographicMapCellType)):
                 nonRoadGeographicMapCellPosition = geographicMapCellPosition
                 break
         return nonRoadGeographicMapCellPosition
@@ -80,7 +90,7 @@ class RaceTrackAdjacentDropCellPositionGenerator(RaceTrackDropCellPositionGenera
         from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
         from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
         self.hashtable.put(AllBinaryGameLayerManager.ID, allBinaryGameLayerManager)
-        super().update(allBinaryGameLayerManager, geographicMapInterface)
+        java_super_call(super(), "update", allBinaryGameLayerManager, geographicMapInterface)
     
 
     # throws Exception
@@ -103,7 +113,7 @@ class RaceTrackAdjacentDropCellPositionGenerator(RaceTrackDropCellPositionGenera
         if randomGeographicMapCellPosition is None:
             return
         dropCellPositionHistory: DropCellPositionHistory = DropCellPositionHistory.getInstance()
-        if not dropCellPositionHistory.isCellPositionWithDrop(geographicMapCellPosition):
+        if not (dropCellPositionHistory.isCellPositionWithDrop(geographicMapCellPosition)):
             direction: Direction = self.geographicMapDirectionUtil.getDirectionFromCellPositionToAdjacentCellPosition(randomGeographicMapCellPosition, geographicMapCellPosition)
             objectCanBeNull: object = self.hashtable.get(self.groupCommonFactory.ID)
             if objectCanBeNull is not None:

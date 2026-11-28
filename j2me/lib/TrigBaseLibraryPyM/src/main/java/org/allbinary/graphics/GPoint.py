@@ -21,9 +21,9 @@ class GPoint:
     POINT_LABEL: str = "Point: "
 
     def _init_fields(self) -> None:
-        self.x: int = None
-        self.y: int = None
-        self.z: int = None
+        if "x" not in vars(self): self.x: int = 0
+        if "y" not in vars(self): self.y: int = 0
+        if "z" not in vars(self): self.z: int = 0
     
 
     @staticmethod
@@ -34,7 +34,7 @@ class GPoint:
 
     def __init__(self, x: int, y: int, z: int) -> None:
         from jsinterop.annotations.JsConstructor import JsConstructor
-        self._init_fields()
+        __class__._init_fields(self)
         self.x = x
         self.y = y
         self.z = z

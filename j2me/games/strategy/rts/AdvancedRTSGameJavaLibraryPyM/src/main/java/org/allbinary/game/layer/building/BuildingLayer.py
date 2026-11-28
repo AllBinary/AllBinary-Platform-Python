@@ -15,30 +15,43 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.layer.AdvancedRTSGameLayer import AdvancedRTSGameLayer
 from org.allbinary.animation.RotationAnimationInterfaceCompositeInterface import RotationAnimationInterfaceCompositeInterface
 from org.allbinary.game.tracking.TrackingEventListenerInterface import TrackingEventListenerInterface
 
 
+@java_inherited_overloads
 class BuildingLayer(*java_bases(AdvancedRTSGameLayer, RotationAnimationInterfaceCompositeInterface, TrackingEventListenerInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("buildingLevelCost", 0)
+        vars(self).setdefault("productivity", 0)
+        vars(self).setdefault("efficiency", 0)
+        vars(self).setdefault("efficiencyPerLevel", 0)
+        vars(self).setdefault("trackingEvent", None)
+        vars(self).setdefault("damageFloaters", None)
+        vars(self).setdefault("damageFloatersPaintableInterface", None)
+        vars(self).setdefault("healthBar", None)
+        vars(self).setdefault("pathsHashtable", None)
+        vars(self).setdefault("local", False)
+        vars(self).setdefault("timeDelayHelper", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.combat.damage.DamageFloaters import DamageFloaters
-        from org.allbinary.game.tracking.TrackingEvent import TrackingEvent
-        from org.allbinary.graphics.paint.Paintable import Paintable
         from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
-        from org.allbinary.util.ABHashtable import ABHashtable
-        self.buildingLevelCost: int = 0
-        self.productivity: int = 0
-        self.efficiency: int = None
-        self.efficiencyPerLevel: int = None
-        self.trackingEvent: TrackingEvent = None
-        self.damageFloaters: DamageFloaters = None
-        self.damageFloatersPaintableInterface: Paintable = None
-        self.healthBar: Paintable = None
-        self.pathsHashtable: ABHashtable[object, object] = None
-        self.local: bool = False
+        if "buildingLevelCost" not in vars(self): self.buildingLevelCost: int = 0
+        if "productivity" not in vars(self): self.productivity: int = 0
+        if "efficiency" not in vars(self): self.efficiency: int = 0
+        if "efficiencyPerLevel" not in vars(self): self.efficiencyPerLevel: int = 0
+        if "trackingEvent" not in vars(self): self.trackingEvent: TrackingEvent = None
+        if "damageFloaters" not in vars(self): self.damageFloaters: DamageFloaters = None
+        if "damageFloatersPaintableInterface" not in vars(self): self.damageFloatersPaintableInterface: Paintable = None
+        if "healthBar" not in vars(self): self.healthBar: Paintable = None
+        if "pathsHashtable" not in vars(self): self.pathsHashtable: ABHashtable[object, object] = None
+        if "local" not in vars(self): self.local: bool = False
         self.timeDelayHelper: TimeDelayHelper = TimeDelayHelper(3000)
     
 
@@ -62,6 +75,7 @@ class BuildingLayer(*java_bases(AdvancedRTSGameLayer, RotationAnimationInterface
     
 
     def __init__(self, remoteInfo: RemoteInfo, buildingPropertiesFactory: BuildingPropertiesFactory, advancedRTSProperties: AdvancedRTSProperties, groupInterface: list[Group], rootName: str, name: str, healthInterface: Health, rtsFormInput: RTSFormInput, animationInterfaceFactoryInterface: AnimationInterfaceFactoryInterface, emptyAnimationInterfaceFactoryInterface: AnimationInterfaceFactoryInterface, baseAnimationInterfaceFactoryInterface: AnimationInterfaceFactoryInterface, buildAnimationInterfaceFactoryInterface: AnimationInterfaceFactoryInterface, verticleBuildAnimationInterfaceFactoryInterface: AnimationInterfaceFactoryInterface, proceduralAnimationInterfaceFactoryInterface: ProceduralAnimationInterfaceFactoryInterface, rectangle: Rectangle, x: int, y: int) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.input.form.RTSFormInput import RTSFormInput
         from org.allbinary.game.layer.AdvancedRTSProperties import AdvancedRTSProperties
         from org.allbinary.game.layer.CollidableRTSBehavior import CollidableRTSBehavior
@@ -76,7 +90,7 @@ class BuildingLayer(*java_bases(AdvancedRTSGameLayer, RotationAnimationInterface
         from org.allbinary.media.audio.SelectSound import SelectSound
         from org.allbinary.game.multiplayer.layer.RemoteInfo import RemoteInfo
         super().__init__(remoteInfo, NullPathFindingLayer.NULL_PATH_FINDING_LAYER, advancedRTSProperties, groupInterface, rootName, name, healthInterface, rtsFormInput, animationInterfaceFactoryInterface, emptyAnimationInterfaceFactoryInterface, baseAnimationInterfaceFactoryInterface, buildAnimationInterfaceFactoryInterface, verticleBuildAnimationInterfaceFactoryInterface, proceduralAnimationInterfaceFactoryInterface, rectangle, x, y, TileLayerPositionIntoViewPosition())
-        self._init_fields()
+        __class__._init_fields(self)
         self.setCollidableInferface(CollidableRTSBehavior(True))
         self.getWaypointBehavior().setWaypoint(Waypoint(self, SelectSound.getInstance()))
         self.damageFloaters = buildingPropertiesFactory.getDamageFloaters(self)
@@ -96,19 +110,19 @@ class BuildingLayer(*java_bases(AdvancedRTSGameLayer, RotationAnimationInterface
         from org.allbinary.game.layer.AdvancedRTSPlayerLayerInterface import AdvancedRTSPlayerLayerInterface
         from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
         advancedRTSPlayerLayerInterface: AdvancedRTSPlayerLayerInterface = rtsPlayerLayerInterface
-        if advancedRTSPlayerLayerInterface.isLocalPlayer():
+        if java_predicate(advancedRTSPlayerLayerInterface, "isLocalPlayer"):
             self.local = True
             self.addVisibility()
         else:
             self.local = False
-        super().initVisibility(rtsPlayerLayerInterface)
+        java_super_call(super(), "initVisibility", rtsPlayerLayerInterface)
     
 
     # throws Exception
     def construct(self, rtsPlayerLayerInterface: RTSPlayerLayerInterface) -> None:
         from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
         from org.allbinary.game.tracking.TrackingEventHandler import TrackingEventHandler
-        super().construct(rtsPlayerLayerInterface)
+        java_super_call(super(), "construct", rtsPlayerLayerInterface)
         TrackingEventHandler.getInstance().addListenerInterface(self)
     
 
@@ -127,14 +141,14 @@ class BuildingLayer(*java_bases(AdvancedRTSGameLayer, RotationAnimationInterface
         from org.allbinary.ag.weapon.media.audio.ExplosionBasicSound import ExplosionBasicSound
         from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         from org.allbinary.media.audio.SecondaryPlayerQueueFactory import SecondaryPlayerQueueFactory
-        if self.getHealthInterface().isDamaged():
+        if java_predicate(self.getHealthInterface(), "isDamaged"):
             self.setAnimationInterface(self.destroyAnimationInterface)
-        if not self.getHealthInterface().isAlive():
-            if self.isReadyForExplosion():
+        if not (java_predicate(self.getHealthInterface(), "isAlive")):
+            if java_predicate(self, "isReadyForExplosion"):
                 currentFrame: int = self.destroyAnimationInterface.getFrame()
                 size: int = self.destroyAnimationInterface.getSize() - 1
-                if currentFrame == size and not self.timeDelayHelper.isTimeTNT():
-                    if not self.getHealthInterface().isAlive():
+                if currentFrame == size and not (java_predicate(self.timeDelayHelper, "isTimeTNT")):
+                    if not (java_predicate(self.getHealthInterface(), "isAlive")):
                         self.setDestroyed(True)
                 else:
                     self.destroyAnimationInterface.nextFrame()
@@ -146,7 +160,7 @@ class BuildingLayer(*java_bases(AdvancedRTSGameLayer, RotationAnimationInterface
                 self.timeDelayHelper.setStartTimeTNT()
                 self.setReadyForExplosion(True)
         else:
-            super().processBuiltTick(allBinaryLayerManager)
+            java_super_call(super(), "processBuiltTick", allBinaryLayerManager)
         self.indexedButShouldBeRotationAnimationInterface.nextFrame()
     
 
@@ -174,14 +188,14 @@ class BuildingLayer(*java_bases(AdvancedRTSGameLayer, RotationAnimationInterface
     
 
     def downgrade(self) -> None:
-        super().downgrade()
+        java_super_call(super(), "downgrade")
         self.setProductivity(self.getProductivity() - 1)
         self.setEfficiency(self.getEfficiency() - self.calculateEfficiency())
         self.getHealthInterface().setMaxHealth(self.getHealthInterface().getMaxHealth() - ((self.getLevel() + 1) * 100))
     
 
     def upgrade(self) -> None:
-        super().upgrade()
+        java_super_call(super(), "upgrade")
         self.setProductivity(self.getProductivity() + 1)
         self.setEfficiency(self.getEfficiency() + self.calculateEfficiency())
         self.getHealthInterface().setMaxHealth(self.getHealthInterface().getMaxHealth() + (self.getLevel() * 100))
@@ -258,15 +272,15 @@ class BuildingLayer(*java_bases(AdvancedRTSGameLayer, RotationAnimationInterface
 
     def paint(self, graphics: Graphics) -> None:
         from javax.microedition.lcdui.Graphics import Graphics
-        if self.isVisible():
-            super().paint(graphics)
+        if java_predicate(self, "isVisible"):
+            java_super_call(super(), "paint", graphics)
             self.damageFloatersPaintableInterface.paint(graphics)
             self.healthBar.paint(graphics)
     
 
     # throws Exception
     def damage(self, damage: int, damageType: int) -> None:
-        super().damage(damage, damageType)
+        java_super_call(super(), "damage", damage, damageType)
         self.damageFloaters.add(damage)
         if damage > 0:
             self.getHealthInterface().damage(damage)
@@ -303,13 +317,13 @@ class BuildingLayer(*java_bases(AdvancedRTSGameLayer, RotationAnimationInterface
         from org.allbinary.game.tracking.TrackingEventHandler import TrackingEventHandler
         from org.allbinary.media.audio.SecondaryPlayerQueueFactory import SecondaryPlayerQueueFactory
         from org.allbinary.media.graphics.geography.map.drop.DropCellPositionHistory import DropCellPositionHistory
-        super().setDestroyed(destroyed)
-        if self.isDestroyed():
+        java_super_call(super(), "setDestroyed", destroyed)
+        if java_predicate(self, "isDestroyed"):
             DropCellPositionHistory.getInstance().removeAll(self)
             TrackingEventHandler.getInstance().removeListener(self)
             if self.local:
                 self.removeVisibility()
-            if not self.getHealthInterface().isAlive():
+            if not (java_predicate(self.getHealthInterface(), "isAlive")):
                 damage: int = self.getHealthInterface().getMaxHealth()
                 if damage > 10:
                     SecondaryPlayerQueueFactory.getInstance().add(ExplosionBasicSound.getInstance())
@@ -351,11 +365,11 @@ class BuildingLayer(*java_bases(AdvancedRTSGameLayer, RotationAnimationInterface
 
     def getRotationAnimationInterface(self) -> RotationAnimation:
         from org.allbinary.animation.RotationAnimation import RotationAnimation
-        return super().getRotationAnimationInterface()
+        return java_super_call(super(), "getRotationAnimationInterface")
     
 
     def setFrame(self, index: int) -> None:
-        super().setFrame(index)
+        java_super_call(super(), "setFrame", index)
 # from javax.microedition.lcdui.Graphics import Graphics
 # from org.allbinary.ag.weapon.media.audio.ExplosionBasicSound import ExplosionBasicSound
 # from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory

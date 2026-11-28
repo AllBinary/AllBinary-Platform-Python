@@ -29,7 +29,7 @@ class InventorySearchLoopInfo:
         self.LAST: str = " last: "
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def toString(self) -> str:

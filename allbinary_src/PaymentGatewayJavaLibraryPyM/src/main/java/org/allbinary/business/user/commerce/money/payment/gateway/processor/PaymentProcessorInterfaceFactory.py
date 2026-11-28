@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 
@@ -34,13 +35,13 @@ class PaymentProcessorInterfaceFactory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
     def getInstance_j1(self, transformInfoInterface: TransformInfoInterface) -> PaymentProcessorInterface:
         with self._lock:
-            return self._getInstance_j1_unlocked(transformInfoInterface)
+            return __class__.__dict__["_getInstance_j1_unlocked"].__get__(self, __class__)(transformInfoInterface)
 
     def _getInstance_j1_unlocked(self, transformInfoInterface: TransformInfoInterface) -> PaymentProcessorInterface:
         from org.allbinary.business.user.commerce.money.payment.gateway.transaction.PaymentTransactionInterface import PaymentTransactionInterface
@@ -55,7 +56,7 @@ class PaymentProcessorInterfaceFactory:
         try:
             paymentTransactionInterface: PaymentTransactionInterface = PaymentTransactionInterfaceRequestFactory.getInstance().getInstance(transformInfoInterface)
             gatewayName: str = paymentTransactionInterface.getOrderHistory().getPaymentMethod()
-            if not StringValidationUtil.getInstance().isEmpty(gatewayName):
+            if not (StringValidationUtil.getInstance().isEmpty(gatewayName)):
                 paymentType: PaymentType = PaymentTypeUtil.getInstance().get(gatewayName)
                 paymentProcessorInterfaceFactoryInterface: PaymentProcessorInterfaceFactoryInterface = paymentType.getPaymentProcessorInterfaceFactoryInterface()
                 return paymentProcessorInterfaceFactoryInterface.getInstance(transformInfoInterface, paymentTransactionInterface)
@@ -66,8 +67,11 @@ class PaymentProcessorInterfaceFactory:
                 self.logUtil.put(commonStrings.EXCEPTION, self, commonStrings.GET_INSTANCE, e)
             raise e
 
-    def getInstance(self, *args):
-        return getattr(self, "getInstance_j" + str(len(args)))(*args)
+    def getInstance(self=None, *args):
+        if self is None and not args: return __class__.getInstance_j0()
+        implementation = __class__.__dict__.get("getInstance_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getInstance(*args)
 # from org.allbinary.business.user.commerce.money.payment.gateway.transaction.PaymentTransactionInterface import PaymentTransactionInterface
 # from org.allbinary.business.user.commerce.money.payment.gateway.transaction.PaymentTransactionInterfaceRequestFactory import PaymentTransactionInterfaceRequestFactory
 # from org.allbinary.business.user.commerce.money.payment.types.PaymentType import PaymentType

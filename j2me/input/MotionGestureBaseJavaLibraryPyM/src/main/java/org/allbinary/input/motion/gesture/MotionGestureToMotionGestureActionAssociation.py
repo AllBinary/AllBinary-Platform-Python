@@ -20,16 +20,14 @@ from __future__ import annotations
 class MotionGestureToMotionGestureActionAssociation:
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.input.CompleteMotionGestureInputEvent import CompleteMotionGestureInputEvent
-        from org.allbinary.util.BasicArrayList import BasicArrayList
-        self.list_: BasicArrayList = None
-        self.motionGestureAction: CompleteMotionGestureInputEvent = None
+        if "list_" not in vars(self): self.list_: BasicArrayList = None
+        if "motionGestureAction" not in vars(self): self.motionGestureAction: CompleteMotionGestureInputEvent = None
     
 
     def __init__(self, list_: BasicArrayList, commandAction: CompleteMotionGestureInputEvent) -> None:
         from org.allbinary.game.input.CompleteMotionGestureInputEvent import CompleteMotionGestureInputEvent
         from org.allbinary.util.BasicArrayList import BasicArrayList
-        self._init_fields()
+        __class__._init_fields(self)
         self.list_ = list_
         self.motionGestureAction = commandAction
     

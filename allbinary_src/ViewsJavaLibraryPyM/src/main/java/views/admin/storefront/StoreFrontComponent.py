@@ -15,24 +15,30 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from views.business.context.modules.storefront.HttpStoreComponentView import HttpStoreComponentView
 
 
+@java_inherited_overloads
 class StoreFrontComponent(HttpStoreComponentView):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("newStoreFrontInterface", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.newStoreFrontInterface: StoreFrontInterface = None
+        if "newStoreFrontInterface" not in vars(self): self.newStoreFrontInterface: StoreFrontInterface = None
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.context.modules.storefront.StoreFront import StoreFront
         from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
         self.newStoreFrontInterface = StoreFront(self.getPageContext().getRequest())
         if self.newStoreFrontInterface.getName() is None:
             self.newStoreFrontInterface.setName(self.getWeblisketSession().getStoreName())
@@ -43,7 +49,7 @@ class StoreFrontComponent(HttpStoreComponentView):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            return super().view()
+            return java_super_call(super(), "view")
         except Exception as e:
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "view", e)

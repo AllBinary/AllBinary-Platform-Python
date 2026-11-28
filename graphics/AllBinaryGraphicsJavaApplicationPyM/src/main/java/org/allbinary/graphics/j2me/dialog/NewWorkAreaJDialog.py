@@ -15,24 +15,32 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 # from javax.swing.JDialog import JDialog
 
 
+@java_inherited_overloads
 class NewWorkAreaJDialog(JDialog):
+    def _java_defaults(self):
+        vars(self).setdefault("parent", None)
+        vars(self).setdefault("dimension", None)
+        vars(self).setdefault("xSizeJTextField", None)
+        vars(self).setdefault("ySizeJTextField", None)
+        vars(self).setdefault("nameJTextField", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.j2me.MyFrame import MyFrame
-        self.parent: MyFrame = None
-        self.dimension: Dimension = None
-        self.xSizeJTextField: JTextField = None
-        self.ySizeJTextField: JTextField = None
-        self.nameJTextField: JTextField = None
+        if "parent" not in vars(self): self.parent: MyFrame = None
+        if "dimension" not in vars(self): self.dimension: Dimension = None
+        if "xSizeJTextField" not in vars(self): self.xSizeJTextField: JTextField = None
+        if "ySizeJTextField" not in vars(self): self.ySizeJTextField: JTextField = None
+        if "nameJTextField" not in vars(self): self.nameJTextField: JTextField = None
     
 
     def __init__(self, parent: MyFrame, modal: bool, dimension: Dimension, newName: str) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.j2me.MyFrame import MyFrame
         super().__init__(parent, modal)
-        self._init_fields()
+        __class__._init_fields(self)
         try:
             self.initComponents()
             self.parent = parent
@@ -41,15 +49,18 @@ class NewWorkAreaJDialog(JDialog):
             self.nameJTextField = JTextField(newName)
             self.dimension = dimension
             submitButton: JButton = JButton("Ok")
-            submitButton.addActionListener((ActionListener()  # Java anonymous class body:
-#                 
-# 
-#                 def actionPerformed(self, evt: ActionEvent) -> None:
-#                     try:
-#                         self.disposeNewDialog()
-#                     except Exception as e:
-#                         pass
-))
+            _java_listener_owner = self
+            class _JavaListenerN66406(ActionListener):
+            
+                
+
+                def actionPerformed(self, evt: ActionEvent) -> None:
+                    try:
+                        (self if hasattr(self, "disposeNewDialog") else _java_listener_owner).disposeNewDialog()
+                    except Exception as e:
+                        pass
+            submitButton.addActionListener(_JavaListenerN66406()
+            )
             self.setSize(150, 100)
             self.getContentPane().setLayout(GridLayout(5, 2))
             self.getContentPane().add(JLabel("Please enter"))
@@ -86,12 +97,15 @@ class NewWorkAreaJDialog(JDialog):
     
 
     def initComponents(self) -> None:
-        self.addWindowListener((WindowAdapter()  # Java anonymous class body:
-#             
-# 
-#             def windowClosing(self, evt: WindowEvent) -> None:
-#                 self.closeDialog(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN67645(WindowAdapter):
+            
+            
+
+            def windowClosing(self, evt: WindowEvent) -> None:
+                (self if hasattr(self, "closeDialog") else _java_listener_owner).closeDialog(evt)
+        self.addWindowListener(_JavaListenerN67645()
+            )
         self.pack()
     
 

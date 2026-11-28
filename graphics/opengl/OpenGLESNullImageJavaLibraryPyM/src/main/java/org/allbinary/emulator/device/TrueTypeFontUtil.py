@@ -15,12 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.emulator.device.TrueTypeFontUtilBase import TrueTypeFontUtilBase
 
 
+@java_inherited_overloads
 class TrueTypeFontUtil(TrueTypeFontUtilBase):
     instance: TrueTypeFontUtil = None
+    def _java_defaults(self):
+        vars(self).setdefault("fontImage", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.image.opengles.OpenGLESImage import OpenGLESImage
@@ -33,8 +37,9 @@ class TrueTypeFontUtil(TrueTypeFontUtilBase):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__(1)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getAsTextureSize(self, textureSize: int) -> int:

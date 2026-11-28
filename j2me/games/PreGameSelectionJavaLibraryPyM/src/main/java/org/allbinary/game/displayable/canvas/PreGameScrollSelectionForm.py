@@ -15,9 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.graphics.form.ScrollCurrentSelectionForm import ScrollCurrentSelectionForm
 
 
+@java_inherited_overloads
 class PreGameScrollSelectionForm(ScrollCurrentSelectionForm):
     
 
@@ -32,7 +35,7 @@ class PreGameScrollSelectionForm(ScrollCurrentSelectionForm):
     def init(self, rectangle: Rectangle) -> None:
         from org.allbinary.graphics.Rectangle import Rectangle
         from org.allbinary.graphics.form.FormTypeFactory import FormTypeFactory
-        super().init(rectangle, FormTypeFactory.getInstance().TEMP_HORIZONTAL_FORM)
+        java_super_call(super(), "init", rectangle, FormTypeFactory.getInstance().TEMP_HORIZONTAL_FORM)
 # from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
 # from org.allbinary.graphics.Rectangle import Rectangle
 # from org.allbinary.graphics.color.BasicColor import BasicColor

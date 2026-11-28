@@ -15,37 +15,57 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import datetime
 from admin.taghelpers.ModifyTable import ModifyTable
 
 
+@java_inherited_overloads
 class BasicGroupItemsRequestHelper(ModifyTable):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("basicItemData", None)
+        vars(self).setdefault("request", None)
+        vars(self).setdefault("id", None)
+        vars(self).setdefault("itemOne", None)
+        vars(self).setdefault("itemTwo", None)
+        vars(self).setdefault("itemThree", None)
+        vars(self).setdefault("itemFour", None)
+        vars(self).setdefault("itemFive", None)
+        vars(self).setdefault("itemSix", None)
+        vars(self).setdefault("itemSeven", None)
+        vars(self).setdefault("itemEight", None)
+        vars(self).setdefault("itemNine", None)
+        vars(self).setdefault("itemTen", None)
+        vars(self).setdefault("timeEntered", None)
+        vars(self).setdefault("lastModified", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.basicItemData: BasicItemData = BasicItemData.getInstance()
-        self.request: HttpServletRequest = None
-        self.id: str = None
-        self.itemOne: str = None
-        self.itemTwo: str = None
-        self.itemThree: str = None
-        self.itemFour: str = None
-        self.itemFive: str = None
-        self.itemSix: str = None
-        self.itemSeven: str = None
-        self.itemEight: str = None
-        self.itemNine: str = None
-        self.itemTen: str = None
-        self.timeEntered: str = None
-        self.lastModified: str = None
+        if "request" not in vars(self): self.request: HttpServletRequest = None
+        if "id" not in vars(self): self.id: str = None
+        if "itemOne" not in vars(self): self.itemOne: str = None
+        if "itemTwo" not in vars(self): self.itemTwo: str = None
+        if "itemThree" not in vars(self): self.itemThree: str = None
+        if "itemFour" not in vars(self): self.itemFour: str = None
+        if "itemFive" not in vars(self): self.itemFive: str = None
+        if "itemSix" not in vars(self): self.itemSix: str = None
+        if "itemSeven" not in vars(self): self.itemSeven: str = None
+        if "itemEight" not in vars(self): self.itemEight: str = None
+        if "itemNine" not in vars(self): self.itemNine: str = None
+        if "itemTen" not in vars(self): self.itemTen: str = None
+        if "timeEntered" not in vars(self): self.timeEntered: str = None
+        if "lastModified" not in vars(self): self.lastModified: str = None
     
 
     def __init__(self, hashMap: HashMap, pageContext: PageContext) -> None:
+        __class__._java_defaults(self)
         from java.util.HashMap import HashMap
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.request = pageContext.getRequest()
         self.getFormData()
     

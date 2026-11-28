@@ -23,7 +23,6 @@ class AndroidHardware(HardwareInterface):
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
@@ -34,7 +33,7 @@ class AndroidHardware(HardwareInterface):
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.init(self.DEVICES)
         size: int = self.componentInterfaceVector.size()
         if size < self.MINHARDWARE:

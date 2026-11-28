@@ -15,29 +15,36 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.IndexedAnimation import IndexedAnimation
 from org.allbinary.animation.RotationAnimationInterface import RotationAnimationInterface
 
 
+@java_inherited_overloads
 class RotationAnimation(*java_bases(IndexedAnimation, RotationAnimationInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("frameUtil", None)
+        vars(self).setdefault("directionUtil", None)
+        vars(self).setdefault("angleInfo", None)
+        vars(self).setdefault("circularIndexUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.direction.DirectionUtil import DirectionUtil
-        from org.allbinary.math.AngleInfo import AngleInfo
         from org.allbinary.math.FrameUtil import FrameUtil
-        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         self.frameUtil: FrameUtil = FrameUtil.getInstance()
         self.directionUtil: DirectionUtil = DirectionUtil.getInstance()
-        self.angleInfo: AngleInfo = None
-        self.circularIndexUtil: CircularIndexUtil = None
+        if "angleInfo" not in vars(self): self.angleInfo: AngleInfo = None
+        if "circularIndexUtil" not in vars(self): self.circularIndexUtil: CircularIndexUtil = None
     
 
     def __init__(self, angleInfo: AngleInfo, circularIndexUtil: CircularIndexUtil, animationBehavior: AnimationBehavior) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.math.AngleInfo import AngleInfo
         from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         super().__init__(animationBehavior)
-        self._init_fields()
+        __class__._init_fields(self)
         self.angleInfo = angleInfo
         self.circularIndexUtil = circularIndexUtil
     
@@ -108,7 +115,7 @@ class RotationAnimation(*java_bases(IndexedAnimation, RotationAnimationInterface
 
     def toString(self) -> str:
         from org.allbinary.logic.string.StringMaker import StringMaker
-        return str(StringMaker().append(str(super())).append("circularIndexUtil: ").append(str(self.circularIndexUtil)).append("angleInfo: ").append(str(self.angleInfo)))
+        return str(StringMaker().append(java_super_call(super(), "toString")).append("circularIndexUtil: ").append(str(self.circularIndexUtil)).append("angleInfo: ").append(str(self.angleInfo)))
 
     def __str__(self) -> str:
         return self.toString()

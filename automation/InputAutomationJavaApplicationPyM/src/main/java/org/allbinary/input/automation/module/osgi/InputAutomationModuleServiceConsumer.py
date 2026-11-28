@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.osgi.service.InputAutomationServiceConsumer import InputAutomationServiceConsumer
 
 
+@java_inherited_overloads
 class InputAutomationModuleServiceConsumer(InputAutomationServiceConsumer):
     
 
@@ -25,7 +27,7 @@ class InputAutomationModuleServiceConsumer(InputAutomationServiceConsumer):
         from org.allbinary.input.automation.module.osgi.InputAutomationModuleOSGIServiceVisitor import InputAutomationModuleOSGIServiceVisitor
         from org.osgi.framework.BundleContext import BundleContext
         from bundle.input.automation.module.InputAutomationModuleServiceInterface import InputAutomationModuleServiceInterface
-        super().__init__(InputAutomationModuleServiceInterface.__module__ + "." + InputAutomationModuleServiceInterface.__qualname__, bundleContext, InputAutomationModuleOSGIServiceVisitor())
+        super().__init__(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(InputAutomationModuleServiceInterface), bundleContext, InputAutomationModuleOSGIServiceVisitor())
 # from org.osgi.framework.BundleContext import BundleContext
 # from bundle.input.automation.module.InputAutomationModuleServiceInterface import InputAutomationModuleServiceInterface
 

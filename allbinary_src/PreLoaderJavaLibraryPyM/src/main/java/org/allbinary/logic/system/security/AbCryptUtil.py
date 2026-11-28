@@ -32,11 +32,12 @@ class AbCryptUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
     def decrypt(self, inputStream: InputStream, key: str) -> list[int]:
+        from java.io.ByteArrayOutputStream import ByteArrayOutputStream
         from java.io.InputStream import InputStream
         from org.allbinary.logic.system.security.crypt.jcehelper.AbCrypt import AbCrypt
         from org.allbinary.logic.system.security.crypt.jcehelper.KeySpecFactory import KeySpecFactory

@@ -20,18 +20,25 @@ from __future__ import annotations
 class SearchParams:
 
     def _init_fields(self) -> None:
-        from java.util.HashMap import HashMap
-        self.columnsAndSearchValues: HashMap = None
-        self.order: str = None
-        self.sortBy: str = None
-        self.listLength: str = None
-        self.startPage: str = None
-        self.endPage: str = None
+        if "columnsAndSearchValues" not in vars(self): self.columnsAndSearchValues: HashMap = None
+        if "order" not in vars(self): self.order: str = None
+        if "sortBy" not in vars(self): self.sortBy: str = None
+        if "listLength" not in vars(self): self.listLength: str = None
+        if "startPage" not in vars(self): self.startPage: str = None
+        if "endPage" not in vars(self): self.endPage: str = None
     
 
     def __init__(self, request: HttpServletRequest) -> None:
+        from org.allbinary.logic.control.search.SearchData import SearchData
+        from org.allbinary.logic.control.search.SearchData import SearchData
+        from org.allbinary.logic.control.search.SearchData import SearchData
+        from org.allbinary.logic.control.search.SearchData import SearchData
+        from org.allbinary.logic.control.search.SearchData import SearchData
+        from org.allbinary.logic.control.search.SearchData import SearchData
+        from org.allbinary.logic.control.search.SearchData import SearchData
+        from org.allbinary.logic.control.search.SearchData import SearchData
         from org.allbinary.logic.StdUtil import StdUtil
-        self._init_fields()
+        __class__._init_fields(self)
         self.columnsAndSearchValues = StdUtil.getInstance().createHashMap()
         self.setLength(request.getParameter(SearchData.LENGTH))
         self.setOrder(request.getParameter(SearchData.ORDER))
@@ -121,6 +128,8 @@ class SearchParams:
 
     # throws Exception
     def getParamsNode(self, document: Document) -> Node:
+        from org.allbinary.logic.control.search.SearchData import SearchData
+        from org.allbinary.logic.control.search.SearchData import SearchData
         from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
         from org.w3c.dom.Document import Document
         from org.w3c.dom.Node import Node
@@ -134,6 +143,8 @@ class SearchParams:
 
     # throws Exception
     def getFieldsNode(self, document: Document) -> Node:
+        from org.allbinary.logic.control.search.SearchData import SearchData
+        from org.allbinary.logic.control.search.SearchData import SearchData
         from java.util.Set import Set
         from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
         from org.allbinary.data.tree.dom.ToDomHelper import ToDomHelper
@@ -152,6 +163,7 @@ class SearchParams:
 
     # throws Exception
     def getOrderNode(self, document: Document) -> Node:
+        from org.allbinary.logic.control.search.SearchData import SearchData
         from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
         from org.allbinary.data.tree.dom.ToDomHelper import ToDomHelper
         from org.w3c.dom.Document import Document
@@ -161,6 +173,7 @@ class SearchParams:
 
     # throws Exception
     def getSortByNode(self, document: Document) -> Node:
+        from org.allbinary.logic.control.search.SearchData import SearchData
         from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
         from org.allbinary.data.tree.dom.ToDomHelper import ToDomHelper
         from org.w3c.dom.Document import Document
@@ -170,6 +183,7 @@ class SearchParams:
 
     # throws Exception
     def getLengthNode(self, document: Document) -> Node:
+        from org.allbinary.logic.control.search.SearchData import SearchData
         from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
         from org.allbinary.data.tree.dom.ToDomHelper import ToDomHelper
         from org.w3c.dom.Document import Document

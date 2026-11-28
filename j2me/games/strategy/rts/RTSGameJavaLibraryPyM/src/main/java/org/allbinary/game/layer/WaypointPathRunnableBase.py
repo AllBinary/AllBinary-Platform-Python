@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.JavaThread import JavaThread
+from java.lang.JavaRuntimeStatic import java_divide
 import threading
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.thread.PriorityRunnable import PriorityRunnable
@@ -29,10 +31,10 @@ class WaypointPathRunnableBase(*java_bases(RunnableInterface, PriorityRunnable))
         self.pathFindingLayer: PathFindingLayerInterface = NullPathFindingLayer.NULL_PATH_FINDING_LAYER
         self.targetPathFindingLayer: PathFindingLayerInterface = NullPathFindingLayer.NULL_PATH_FINDING_LAYER
         self.priorityP: int = 2147483647
-        self.runningP: bool = False
+        if "runningP" not in vars(self): self.runningP: bool = False
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def isRunning(self) -> bool:
@@ -44,7 +46,7 @@ class WaypointPathRunnableBase(*java_bases(RunnableInterface, PriorityRunnable))
     
 
     # throws Exception
-    def setThread(self, thread: threading.Thread) -> None:
+    def setThread(self, thread: JavaThread) -> None:
         pass
     
 

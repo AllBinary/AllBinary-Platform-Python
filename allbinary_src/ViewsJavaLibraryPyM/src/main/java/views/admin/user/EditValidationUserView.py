@@ -15,26 +15,34 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.validate.ValidationComponentInterface import ValidationComponentInterface
 from views.admin.user.UserView import UserView
 
 
+@java_inherited_overloads
 class EditValidationUserView(*java_bases(UserView, ValidationComponentInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("userName", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.userName: str = None
+        if "userName" not in vars(self): self.userName: str = None
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        __class__._java_defaults(self)
         from java.util.HashMap import HashMap
         from org.allbinary.business.user.username.UserName import UserName
         from org.allbinary.logic.communication.http.request.RequestParams import RequestParams
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
         httpServletRequest: HttpServletRequest = self.getPageContext().getRequest()
         hashMap: HashMap = RequestParams(httpServletRequest).toHashMap()
         self.userName = UserName(hashMap).get()
@@ -52,7 +60,7 @@ class EditValidationUserView(*java_bases(UserView, ValidationComponentInterface)
                     return False
             else:
                 return False
-            return self.user.isValid()
+            return java_predicate(self.user, "isValid")
         except Exception as e:
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEWERROR):
                 self.logUtil.put("Failed to validate form", self, self.commonStrings.IS_VALID, e)
@@ -77,7 +85,7 @@ class EditValidationUserView(*java_bases(UserView, ValidationComponentInterface)
             else:
                 stringBuffer.append("User Name is not valid.<br />")
                 return str(stringBuffer)
-            if self.user.isValid() == False:
+            if java_predicate(self.user, "isValid") == False:
                 if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     self.logUtil.putF("User exists but is invalid - Probably manually modified", self, "validationInfo()")
                 stringBuffer.append("User data is not valid - Please call administrator.<br />")
@@ -103,7 +111,7 @@ class EditValidationUserView(*java_bases(UserView, ValidationComponentInterface)
     # throws Exception
     def getTransformInfoInterface(self) -> TransformInfoInterface:
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-        return super().getTransformInfoInterface()
+        return java_super_call(super(), "getTransformInfoInterface")
 # from java.util.HashMap import HashMap
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
 # from org.allbinary.business.user.username.UserName import UserName

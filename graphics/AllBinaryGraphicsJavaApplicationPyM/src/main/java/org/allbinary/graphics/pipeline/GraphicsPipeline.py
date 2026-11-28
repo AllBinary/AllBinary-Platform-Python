@@ -16,9 +16,11 @@
 from __future__ import annotations
 
 import math
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.graphics.pipeline.BasicGraphicsPipeline import BasicGraphicsPipeline
 
 
+@java_inherited_overloads
 class GraphicsPipeline(BasicGraphicsPipeline):
     
 

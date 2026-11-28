@@ -21,30 +21,29 @@ from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 class CssElementView(DomNodeInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.TITLE: str = "title"
         self.DESCRIPTION: str = "description"
-        self.value: str = None
-        self.title: str = None
-        self.description: str = None
-        self.cssElementVector: BasicArrayList = None
-        self.cssPropertyVector: BasicArrayList = None
+        if "value" not in vars(self): self.value: str = None
+        if "title" not in vars(self): self.title: str = None
+        if "description" not in vars(self): self.description: str = None
+        if "cssElementVector" not in vars(self): self.cssElementVector: BasicArrayList = None
+        if "cssPropertyVector" not in vars(self): self.cssPropertyVector: BasicArrayList = None
 
     def __init__(self, *args) -> None:
         if len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
         elif len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
     
 
     def _constructor0(self) -> None:
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         from org.allbinary.logic.string.StringUtil import StringUtil
-        self._init_fields()
+        __class__._init_fields(self)
         self.cssPropertyVector = BasicArrayListD()
         stringUtil: StringUtil = StringUtil.getInstance()
         self.title = stringUtil.EMPTY_STRING
@@ -53,6 +52,7 @@ class CssElementView(DomNodeInterface):
     
 
     def _constructor1(self, node: Node) -> None:
+        from org.allbinary.logic.visual.dhtml.style.css.CssElementData import CssElementData
         from org.allbinary.logic.visual.dhtml.style.css.CssElementsValidationFactory import CssElementsValidationFactory
         from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.data.tree.dom.DomData import DomData
@@ -65,7 +65,7 @@ class CssElementView(DomNodeInterface):
         from org.w3c.dom.NodeList import NodeList
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-        self._init_fields()
+        __class__._init_fields(self)
         try:
             valueNode: Node = DomSearchHelper.getNode(DomData.VALUE, node.getChildNodes())
             self.value = DomNodeHelper.getTextNodeValue(valueNode)
@@ -111,6 +111,7 @@ class CssElementView(DomNodeInterface):
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
+        from org.allbinary.logic.visual.dhtml.style.css.CssElementData import CssElementData
         from java.util.HashMap import HashMap
         from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
         from org.w3c.dom.Document import Document

@@ -15,21 +15,20 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
 from org.allbinary.animation.AnimationInterfaceFactoryInterface import AnimationInterfaceFactoryInterface
 
 
 class BaseImageAnimationFactory(AnimationInterfaceFactoryInterface):
 
     def _init_fields(self) -> None:
-        from javax.microedition.lcdui.Image import Image
-        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
         from org.allbinary.image.AnimationFactoryImageScaleUtil import AnimationFactoryImageScaleUtil
         from org.allbinary.media.ScaleProperties import ScaleProperties
         self.animationFactoryImageScaleUtil: AnimationFactoryImageScaleUtil = AnimationFactoryImageScaleUtil.getInstance()
-        self.image: Image = None
-        self.animationBehaviorFactory: AnimationBehaviorFactory = None
-        self.sequenceArray: list[int] = None
-        self.animationFactoryInitializationVisitor: AnimationFactoryInitializationVisitor = None
+        if "image" not in vars(self): self.image: Image = None
+        if "animationBehaviorFactory" not in vars(self): self.animationBehaviorFactory: AnimationBehaviorFactory = None
+        if "sequenceArray" not in vars(self): self.sequenceArray: list[int] = None
+        if "animationFactoryInitializationVisitor" not in vars(self): self.animationFactoryInitializationVisitor: AnimationFactoryInitializationVisitor = None
         self.scaleProperties: ScaleProperties = ScaleProperties.instance
     
 
@@ -45,7 +44,7 @@ class BaseImageAnimationFactory(AnimationInterfaceFactoryInterface):
         from org.allbinary.animation.image.AnimationFactoryInitializationVisitor import AnimationFactoryInitializationVisitor
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
-        self._init_fields()
+        __class__._init_fields(self)
         self.animationFactoryInitializationVisitor = AnimationFactoryInitializationVisitor()
         self.image = image
         self.animationFactoryInitializationVisitor.width = width
@@ -98,7 +97,7 @@ class BaseImageAnimationFactory(AnimationInterfaceFactoryInterface):
         commonSeps: CommonSeps = CommonSeps.getInstance()
         commonLabels: CommonLabels = CommonLabels.getInstance()
         stringBuffer: StringMaker = StringMaker()
-        stringBuffer.append(str(super()))
+        stringBuffer.append(java_super_call(super(), "toString"))
         stringBuffer.append(commonLabels.HEIGHT_LABEL)
         stringBuffer.appendint(int(self.image.getHeight()))
         stringBuffer.append(commonSeps.SPACE)

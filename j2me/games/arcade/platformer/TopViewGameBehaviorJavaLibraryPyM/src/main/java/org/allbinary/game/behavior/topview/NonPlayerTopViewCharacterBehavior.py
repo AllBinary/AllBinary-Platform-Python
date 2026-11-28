@@ -15,10 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.game.behavior.topview.TopViewCharacterBehavior import TopViewCharacterBehavior
 
 
+@java_inherited_overloads
 class NonPlayerTopViewCharacterBehavior(TopViewCharacterBehavior):
+    def _java_defaults(self):
+        vars(self).setdefault("geographicMapBehavior", None)
+        vars(self).setdefault("CLIFF", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.media.graphics.geography.map.MultiGeographicMapBehavior import MultiGeographicMapBehavior
@@ -28,8 +34,9 @@ class NonPlayerTopViewCharacterBehavior(TopViewCharacterBehavior):
         self.CLIFF: BasicTerrainInfo = BasicTerrainInfo(AngleFactory.getInstance().DOWN)
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -55,7 +62,7 @@ class NonPlayerTopViewCharacterBehavior(TopViewCharacterBehavior):
                 nextTerrainGeographicMapCellPosition = geographicMapCellPositionFactory.getAt(geographicMapCellPosition.getColumn() + 1, geographicMapCellPosition.getRow())
             self.geographicMapBehavior.getCellTypeAt(geographicMapInterfaceArray, geographicMapCellTypeArray, nextTerrainGeographicMapCellPosition)
             hasSolidBlock: bool = self.hasSolidBlock(geographicMapInterfaceArray, geographicMapCellTypeArray)
-            if not hasSolidBlock:
+            if not (hasSolidBlock):
                 terrainEvent: TerrainEvent = TerrainEventCircularStaticPool.getInstance().getNext(self.CLIFF)
                 TerrainEventHandler.getInstance(layer).fireEvent(terrainEvent)
     

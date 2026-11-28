@@ -26,20 +26,20 @@ class PaymentGatewayPageData:
     STARTCHECKOUT: str = None
 
     def _init_fields(self) -> None:
-        self.MAKEPAYMENT: str = None
-        self.CHECKOUT: str = None
-        self.SHIPPING: str = None
-        self.SHIPPINGADDRESS: str = None
-        self.SHIPPINGADDRESSACTION: str = None
-        self.BILLINGADDRESS: str = None
-        self.PAYMENT: str = None
-        self.AUTHORIZE: str = None
-        self.FINISH: str = None
+        if "MAKEPAYMENT" not in vars(self): self.MAKEPAYMENT: str = None
+        if "CHECKOUT" not in vars(self): self.CHECKOUT: str = None
+        if "SHIPPING" not in vars(self): self.SHIPPING: str = None
+        if "SHIPPINGADDRESS" not in vars(self): self.SHIPPINGADDRESS: str = None
+        if "SHIPPINGADDRESSACTION" not in vars(self): self.SHIPPINGADDRESSACTION: str = None
+        if "BILLINGADDRESS" not in vars(self): self.BILLINGADDRESS: str = None
+        if "PAYMENT" not in vars(self): self.PAYMENT: str = None
+        if "AUTHORIZE" not in vars(self): self.AUTHORIZE: str = None
+        if "FINISH" not in vars(self): self.FINISH: str = None
     
 
     def __init__(self, location: str, paymentMethod: str) -> None:
         from org.allbinary.logic.string.StringMaker import StringMaker
-        self._init_fields()
+        __class__._init_fields(self)
         paymentMethodString: str = str(PaymentGatewayPageData.NAME) + paymentMethod
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(location)

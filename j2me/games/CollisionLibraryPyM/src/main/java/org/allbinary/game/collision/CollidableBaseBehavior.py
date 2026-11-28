@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.game.collision.CollidableInterface import CollidableInterface
 
 
@@ -30,7 +31,7 @@ class CollidableBaseBehavior(CollidableInterface):
     
 
     def __init__(self, collidable: bool) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.collidable = collidable
     
 
@@ -39,7 +40,7 @@ class CollidableBaseBehavior(CollidableInterface):
     
 
     def getName(self) -> str:
-        return type(self).__module__ + "." + type(self).__qualname__
+        return __import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(self))
     
 
     def setCollidable(self, collidable: bool) -> None:
@@ -56,7 +57,7 @@ class CollidableBaseBehavior(CollidableInterface):
         from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.string.CommonLabels import CommonLabels
-        raise Exception(str(StringMaker().append(self.commonStrings.NOT_IMPLEMENTED).append(CommonLabels.getInstance().COLON_SEP).append(type(self).__module__ + "." + type(self).__qualname__)))
+        raise Exception(str(StringMaker().append(self.commonStrings.NOT_IMPLEMENTED).append(CommonLabels.getInstance().COLON_SEP).append(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(self)))))
     
 
     def isCollision(self, ownerLayer: CollidableCompositeLayer, collisionLayer: CollidableCompositeLayer) -> bool:

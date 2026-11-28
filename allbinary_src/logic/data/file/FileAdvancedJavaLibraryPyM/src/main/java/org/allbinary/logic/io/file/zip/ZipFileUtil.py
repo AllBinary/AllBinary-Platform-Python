@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -28,7 +29,7 @@ class ZipFileUtil:
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -57,9 +58,9 @@ class ZipFileUtil:
             current: int = 0
             for i in range(0, size):
                 file: AbFile = fileBasicArrayList.get(i)
-                if file.isDirectory():
+                if java_predicate(file, "isDirectory"):
                     pass
-                elif file.isFile():
+                elif java_predicate(file, "isFile"):
                     stringBuffer.delete(0, stringBuffer.length())
                     stringBuffer.appendint(current)
                     stringBuffer.append(" Creating Zip File Entry: ")
@@ -97,7 +98,7 @@ class ZipFileUtil:
             fileUtil: FileUtil = FileUtil.getInstance()
             while ((zipEntry := inputStream.getNextEntry())) is not None:
                 entryName: str = zipEntry.getName()
-                if zipEntry.isDirectory():
+                if java_predicate(zipEntry, "isDirectory"):
                     pass
                 else:
                     entryFile: AbFile = AbFile.createAbFile(path + entryName)
@@ -105,9 +106,9 @@ class ZipFileUtil:
                     stringBuffer.append("ZipEntry Name: ")
                     stringBuffer.append(entryName)
                     stringBuffer.append(" isFile: ")
-                    stringBuffer.appendboolean(entryFile.isFile())
+                    stringBuffer.appendboolean(java_predicate(entryFile, "isFile"))
                     stringBuffer.append(" isDirectory: ")
-                    stringBuffer.appendboolean(entryFile.isDirectory())
+                    stringBuffer.appendboolean(java_predicate(entryFile, "isDirectory"))
                     stringBuffer.append(" getParent: ")
                     stringBuffer.append(entryFile.getParent())
                     self.logUtil.putF(str(stringBuffer), self, "unzip")

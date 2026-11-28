@@ -15,35 +15,45 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.combat.damage.DamageFloaters import DamageFloaters
 
 
+@java_inherited_overloads
 class PtsDamageFloaters(DamageFloaters):
     basicColorArrayIndexer: BasicColorArrayIndexer = None
+    def _java_defaults(self):
+        vars(self).setdefault("basicSetColorUtil", None)
+        vars(self).setdefault("layerInterface", None)
+        vars(self).setdefault("lastDamage", None)
+        vars(self).setdefault("lastDamageString", None)
+        vars(self).setdefault("lastDamageStringSizeArray", None)
+        vars(self).setdefault("circularIndexUtil", None)
+        vars(self).setdefault("primitiveLongUtil", None)
+        vars(self).setdefault("myRandomFactory", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
         from org.allbinary.graphics.color.BasicColorSetUtil import BasicColorSetUtil
-        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-        from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
         from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         self.basicSetColorUtil: BasicColorSetUtil = BasicColorSetUtil.getInstance()
-        self.layerInterface: AllBinaryLayer = None
+        if "layerInterface" not in vars(self): self.layerInterface: AllBinaryLayer = None
         self.lastDamage: list[int] = [0] * (5)
         self.lastDamageString: list[list[str]] = [['\0'] * (0) for _ in range(5)]
         self.lastDamageStringSizeArray: list[int] = [0] * (5)
         self.circularIndexUtil: CircularIndexUtil = CircularIndexUtil.createInstance(5)
-        self.primitiveLongUtil: PrimitiveLongUtil = None
+        if "primitiveLongUtil" not in vars(self): self.primitiveLongUtil: PrimitiveLongUtil = None
         self.myRandomFactory: MyRandomFactory = MyRandomFactory.getInstance()
     
 
     def __init__(self, layerInterface: AllBinaryLayer) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         from org.allbinary.logic.java.character.CharArrayFactory import CharArrayFactory
         from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.primitiveLongUtil = PrimitiveLongUtil.createPowerOfTen(100000)
         self.layerInterface = layerInterface
         CHAR_ARRAY: list[str] = CharArrayFactory.getInstance().getZeroCharArray()

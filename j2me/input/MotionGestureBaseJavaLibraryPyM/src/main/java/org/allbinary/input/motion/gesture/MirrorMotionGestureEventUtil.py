@@ -22,13 +22,12 @@ class MirrorMotionGestureEventUtil:
     instance: MirrorMotionGestureEventUtil = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.input.motion.gesture.observer.MotionEventCircularPool import MotionEventCircularPool
-        self.motionEventCircularPool: MotionEventCircularPool = None
+        if "motionEventCircularPool" not in vars(self): self.motionEventCircularPool: MotionEventCircularPool = None
     
 
     def __init__(self) -> None:
         from org.allbinary.input.motion.gesture.observer.MotionEventCircularPool import MotionEventCircularPool
-        self._init_fields()
+        __class__._init_fields(self)
         self.motionEventCircularPool = MotionEventCircularPool.createPool(2147483647)
     
 

@@ -15,28 +15,44 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.layer.SelectionHudPaintable import SelectionHudPaintable
 
 
+@java_inherited_overloads
 class UpgradableRTSLayerHudPaintable(SelectionHudPaintable):
     instance: UpgradableRTSLayerHudPaintable = None
+    def _java_defaults(self):
+        vars(self).setdefault("PERCENT", None)
+        vars(self).setdefault("rtsLayer", None)
+        vars(self).setdefault("costY", 0)
+        vars(self).setdefault("costY1", 0)
+        vars(self).setdefault("percentCompleteX2", 0)
+        vars(self).setdefault("rtsLayerCompositePaintableLateInit", None)
+        vars(self).setdefault("charHeight", 0)
+        vars(self).setdefault("charWidth", 0)
+        vars(self).setdefault("percentComplete", 0)
+        vars(self).setdefault("percentCompleteX", 0)
+        vars(self).setdefault("percentCompleteArray", None)
+        vars(self).setdefault("currentTotalDigits", 0)
 
     def _init_fields(self) -> None:
         from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
         from org.allbinary.logic.java.character.CharArrayFactory import CharArrayFactory
         self.PERCENT: str = "%"
         self.rtsLayer: CollidableDestroyableDamageableLayer = CollidableDestroyableDamageableLayer.getNullInstance()
-        self.costY: int = 0
-        self.costY1: int = 0
-        self.percentCompleteX2: int = 0
-        self.rtsLayerCompositePaintableLateInit: RTSLayerCompositePaintable = None
-        self.charHeight: int = 0
-        self.charWidth: int = 0
-        self.percentComplete: int = 0
-        self.percentCompleteX: int = 0
+        if "costY" not in vars(self): self.costY: int = 0
+        if "costY1" not in vars(self): self.costY1: int = 0
+        if "percentCompleteX2" not in vars(self): self.percentCompleteX2: int = 0
+        if "rtsLayerCompositePaintableLateInit" not in vars(self): self.rtsLayerCompositePaintableLateInit: RTSLayerCompositePaintable = None
+        if "charHeight" not in vars(self): self.charHeight: int = 0
+        if "charWidth" not in vars(self): self.charWidth: int = 0
+        if "percentComplete" not in vars(self): self.percentComplete: int = 0
+        if "percentCompleteX" not in vars(self): self.percentCompleteX: int = 0
         self.percentCompleteArray: list[str] = CharArrayFactory.getInstance().getZeroCharArray()
-        self.currentTotalDigits: int = 0
+        if "currentTotalDigits" not in vars(self): self.currentTotalDigits: int = 0
     
 
     @staticmethod
@@ -45,15 +61,16 @@ class UpgradableRTSLayerHudPaintable(SelectionHudPaintable):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
         from javax.microedition.lcdui.Font import Font
         from javax.microedition.lcdui.Graphics import Graphics
         from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
-        super().updateMeasurement(graphics)
+        java_super_call(super(), "updateMeasurement", graphics)
         font: Font = graphics.getFont()
         self.charHeight = font.getHeight()
         self.charWidth = MyFontProcessor.defaultCharWidth(font)
@@ -64,7 +81,7 @@ class UpgradableRTSLayerHudPaintable(SelectionHudPaintable):
         from org.allbinary.game.layer.UpgradableWideRTSLayerPaintable import UpgradableWideRTSLayerPaintable
         from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
         from org.allbinary.input.motion.button.CommonButtons import CommonButtons
-        super().update()
+        java_super_call(super(), "update")
         commonButtons: CommonButtons = CommonButtons.getInstance()
         self.costY = (self.y + commonButtons.STANDARD_BUTTON_SIZE)
         self.costY1 = (self.y + commonButtons.STANDARD_BUTTON_SIZE - self.charHeight)
@@ -98,7 +115,7 @@ class UpgradableRTSLayerHudPaintable(SelectionHudPaintable):
 
     def paint(self, graphics: Graphics) -> None:
         from javax.microedition.lcdui.Graphics import Graphics
-        super().paint(graphics)
+        java_super_call(super(), "paint", graphics)
         self.rtsLayerCompositePaintableLateInit.paint(graphics)
         graphics.drawChars(self.percentCompleteArray, 0, self.currentTotalDigits, self.imageX + self.percentCompleteX, self.costY, 0)
         graphics.drawString(self.PERCENT, self.percentCompleteX2, self.costY, 0)

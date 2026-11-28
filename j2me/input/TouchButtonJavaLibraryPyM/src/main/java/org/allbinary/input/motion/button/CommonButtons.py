@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -22,10 +23,9 @@ class CommonButtons:
     instance: CommonButtons = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.Rectangle import Rectangle
-        self.STANDARD_BUTTON_SIZE: int = None
-        self.NORMAL_BUTTON: Rectangle = None
-        self.LARGE_BUTTON: Rectangle = None
+        if "STANDARD_BUTTON_SIZE" not in vars(self): self.STANDARD_BUTTON_SIZE: int = 0
+        if "NORMAL_BUTTON" not in vars(self): self.NORMAL_BUTTON: Rectangle = None
+        if "LARGE_BUTTON" not in vars(self): self.LARGE_BUTTON: Rectangle = None
     
 
     @staticmethod
@@ -37,21 +37,23 @@ class CommonButtons:
         from org.allbinary.graphics.PointFactory import PointFactory
         from org.allbinary.graphics.Rectangle import Rectangle
         from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-        self._init_fields()
+        __class__._init_fields(self)
         displayInfo: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
         commonButtonSize: int = 128
         while commonButtonSize > 64:
-            totalColumns: int = displayInfo.getLastWidth() / commonButtonSize
-            totalRows: int = displayInfo.getLastHeight() / commonButtonSize
+            totalColumns: int = java_divide(displayInfo.getLastWidth(), commonButtonSize)
+            
+            totalRows: int = java_divide(displayInfo.getLastHeight(), commonButtonSize)
+            
             max: int = totalColumns
             if totalRows > max:
                 max = totalRows
             if max > 9:
                 break
-            commonButtonSize = commonButtonSize >> 1
+            commonButtonSize = int(commonButtonSize) >> (int(1) & 31)
         self.STANDARD_BUTTON_SIZE = commonButtonSize
         self.NORMAL_BUTTON = Rectangle(PointFactory.getInstance().ZERO_ZERO, self.STANDARD_BUTTON_SIZE, self.STANDARD_BUTTON_SIZE)
-        self.LARGE_BUTTON = Rectangle(PointFactory.getInstance().ZERO_ZERO, self.STANDARD_BUTTON_SIZE << 1, self.STANDARD_BUTTON_SIZE << 1)
+        self.LARGE_BUTTON = Rectangle(PointFactory.getInstance().ZERO_ZERO, ((((self.STANDARD_BUTTON_SIZE) << ((1) & 31)) + 0x80000000) % 0x100000000 - 0x80000000), ((((self.STANDARD_BUTTON_SIZE) << ((1) & 31)) + 0x80000000) % 0x100000000 - 0x80000000))
 # from org.allbinary.graphics.PointFactory import PointFactory
 # from org.allbinary.graphics.Rectangle import Rectangle
 # from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton

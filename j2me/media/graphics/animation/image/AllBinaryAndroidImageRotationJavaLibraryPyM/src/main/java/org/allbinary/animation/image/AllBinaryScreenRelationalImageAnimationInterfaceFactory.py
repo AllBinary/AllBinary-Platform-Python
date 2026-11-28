@@ -15,18 +15,22 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.animation.image.BaseImageAnimationFactory import BaseImageAnimationFactory
 
 
+@java_inherited_overloads
 class AllBinaryScreenRelationalImageAnimationInterfaceFactory(BaseImageAnimationFactory):
+    def _java_defaults(self):
+        vars(self).setdefault("lastImage", None)
 
     def _init_fields(self) -> None:
-        from javax.microedition.lcdui.Image import Image
         from javax.microedition.lcdui.NullImage import NullImage
         self.lastImage: Image = NullImage.NULL_IMAGE
     
 
     def __init__(self, image: Image, animationBehaviorFactory: AnimationBehaviorFactory) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.Image import Image
         from javax.microedition.lcdui.NullImage import NullImage
         from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
@@ -36,7 +40,7 @@ class AllBinaryScreenRelationalImageAnimationInterfaceFactory(BaseImageAnimation
         from org.allbinary.media.image.ImageScaleUtil import ImageScaleUtil
         from org.microemu.android.device.AndroidImageInterface import AndroidImageInterface
         super().__init__(image, PrimitiveIntUtil.getArrayInstance(), 0, 0, 0, 0, animationBehaviorFactory)
-        self._init_fields()
+        __class__._init_fields(self)
         if self.lastImage != NullImage.NULL_IMAGE:
             androidImageInterface: AndroidImageInterface = self.lastImage
             androidImageInterface.getBitmap().recycle()
@@ -46,6 +50,7 @@ class AllBinaryScreenRelationalImageAnimationInterfaceFactory(BaseImageAnimation
 
     # throws Exception
     def getInstance(self, instanceId: int) -> Animation:
+        from org.allbinary.animation.image.ImageAnimation import ImageAnimation
         from org.allbinary.animation.Animation import Animation
         return ImageAnimation(self.lastImage, self.animationBehaviorFactory.getOrCreateInstance())
 # from javax.microedition.lcdui.Image import Image

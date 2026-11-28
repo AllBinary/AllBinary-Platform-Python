@@ -37,7 +37,7 @@ class ResourceUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def setLoadingPaths(self, path: str, ext: str) -> None:
@@ -63,6 +63,8 @@ class ResourceUtil:
 
     # throws Exception
     def getResourceAsStreamAtStart(self, resource: str, startIndex: int) -> InputStream:
+        from java.io.ByteArrayInputStream import ByteArrayInputStream
+        from java.io.ByteArrayOutputStream import ByteArrayOutputStream
         from java.io.FileInputStream import FileInputStream
         from java.io.InputStream import InputStream
         from org.allbinary.logic.io.StreamUtil import StreamUtil

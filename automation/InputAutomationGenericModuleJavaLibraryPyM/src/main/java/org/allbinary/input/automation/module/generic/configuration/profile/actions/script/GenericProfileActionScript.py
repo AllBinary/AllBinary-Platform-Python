@@ -15,32 +15,38 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 # from javax.swing.tree.DefaultMutableTreeNode import DefaultMutableTreeNode
 from org.allbinary.input.automation.actions.script.ProfileActionScriptNodeInterface import ProfileActionScriptNodeInterface
 
 
+@java_inherited_overloads
 class GenericProfileActionScript(*java_bases(DefaultMutableTreeNode, ProfileActionScriptNodeInterface)):
     NAME: str = "Root"
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("genericProfileActionJPanel", None)
+        vars(self).setdefault("profileActionConditionInterfaceVector", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.GenericProfileActionJPanel import GenericProfileActionJPanel
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.genericProfileActionJPanel: GenericProfileActionJPanel = None
-        self.profileActionConditionInterfaceVector: BasicArrayList = None
+        if "genericProfileActionJPanel" not in vars(self): self.genericProfileActionJPanel: GenericProfileActionJPanel = None
+        if "profileActionConditionInterfaceVector" not in vars(self): self.profileActionConditionInterfaceVector: BasicArrayList = None
 
     def __init__(self, *args) -> None:
         if len(args) == 2:
-            self._constructor2(*args)
+            __class__._constructor2(self, *args)
         elif len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
     
 
     def _constructor2(self, genericProfileActionJPanel: GenericProfileActionJPanel, node: Node) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
         from org.allbinary.input.automation.actions.script.condition.ProfileActionScriptConditionFactory import ProfileActionScriptConditionFactory
@@ -49,7 +55,7 @@ class GenericProfileActionScript(*java_bases(DefaultMutableTreeNode, ProfileActi
         from org.w3c.dom.Node import Node
         from org.w3c.dom.NodeList import NodeList
         super().__init__(GenericProfileActionScript.NAME)
-        self._init_fields()
+        __class__._init_fields(self)
         self.genericProfileActionJPanel = genericProfileActionJPanel
         self.setProfileActionConditionInterfaceVector(BasicArrayListD())
         actionScriptNode: Node = DomSearchHelper.getNode(GenericProfileActionData.SCRIPT, node.getChildNodes())
@@ -64,10 +70,11 @@ class GenericProfileActionScript(*java_bases(DefaultMutableTreeNode, ProfileActi
     
 
     def _constructor1(self, genericProfileActionJPanel: GenericProfileActionJPanel) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         from org.allbinary.input.automation.module.generic.configuration.profile.actions.GenericProfileActionJPanel import GenericProfileActionJPanel
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.genericProfileActionJPanel = genericProfileActionJPanel
         self.setProfileActionConditionInterfaceVector(BasicArrayListD())
     

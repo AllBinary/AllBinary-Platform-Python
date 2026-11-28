@@ -29,7 +29,7 @@ class GameMode:
     
 
     def __init__(self, name: str) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.setName(name)
     
 

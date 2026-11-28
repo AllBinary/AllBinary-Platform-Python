@@ -26,7 +26,7 @@ class GravityUtil:
         self.MAX_GAME_VELOCITY: int = 18000
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

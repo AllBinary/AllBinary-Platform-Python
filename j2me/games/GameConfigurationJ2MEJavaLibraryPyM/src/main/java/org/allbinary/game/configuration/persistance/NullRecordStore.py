@@ -15,10 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from javax.microedition.rms.RecordStore import RecordStore
 
 
+@java_inherited_overloads
 class NullRecordStore(RecordStore):
     NULL_RECORD_STORE: NullRecordStore = None
 

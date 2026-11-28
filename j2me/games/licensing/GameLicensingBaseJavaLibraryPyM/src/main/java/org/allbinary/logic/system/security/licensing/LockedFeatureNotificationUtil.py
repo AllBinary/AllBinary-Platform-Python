@@ -29,7 +29,7 @@ class LockedFeatureNotificationUtil:
         self.gameNotificationEvent: GameNotificationEvent = GameNotificationEvent(self, LicenseStrings.getInstance().LOCKED, SmallIntegerSingletonFactory.getInstance().getAt(3), BasicColorFactory.getInstance().RED, BooleanFactory.getInstance().FALSE)
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

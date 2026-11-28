@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -23,9 +24,7 @@ class PersistentInputMapping:
     instance: object = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.input.InputPersistance import InputPersistance
         from org.allbinary.game.input.mapping.event.InputMappingEvent import InputMappingEvent
-        from org.allbinary.game.input.mapping.event.InputMappingEventListenerInterface import InputMappingEventListenerInterface
         from org.allbinary.game.input.mapping.event.NullInputMappingEventListener import NullInputMappingEventListener
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
@@ -35,7 +34,7 @@ class PersistentInputMapping:
         self.enumerationUtil: EnumerationUtil = EnumerationUtil.getInstance()
         self.inputMapping: InputToGameKeyMapping = InputToGameKeyMapping()
         self.inputMappingEventListenerInterface: InputMappingEventListenerInterface = NullInputMappingEventListener.NULL_INPUT_MAPPING_EVENT_LISTENER
-        self.inputPersistance: InputPersistance = None
+        if "inputPersistance" not in vars(self): self.inputPersistance: InputPersistance = None
         self.inputMappingEvent: InputMappingEvent = InputMappingEvent(self)
     
 
@@ -50,7 +49,7 @@ class PersistentInputMapping:
 
     def __init__(self, name: str) -> None:
         from org.allbinary.game.input.InputPersistance import InputPersistance
-        self._init_fields()
+        __class__._init_fields(self)
         self.inputPersistance = InputPersistance(name)
     
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 
 
@@ -74,7 +75,7 @@ class LoggingInitInfo:
 
     @staticmethod
     def _updateIfNeeded_unlocked() -> None:
-        if not LoggingInitInfo.hasRead:
+        if not (LoggingInitInfo.hasRead):
             LoggingInitInfo.read()
             LoggingInitInfo.hasRead = True
             if LoggingInitInfo.logConfigInfoList is None:
@@ -118,7 +119,7 @@ class LoggingInitInfo:
         for index in range(0, size):
             logConfigInfo: LogConfig = LoggingInitInfo.logConfigInfoList.objectArray[index]
             logTypeVector: BasicArrayList = logConfigInfo.getTypeVector()
-            if logConfigInfo.isEnabled():
+            if java_predicate(logConfigInfo, "isEnabled"):
                 allLogTypeVector.addAllList(logTypeVector)
         return allLogTypeVector
     

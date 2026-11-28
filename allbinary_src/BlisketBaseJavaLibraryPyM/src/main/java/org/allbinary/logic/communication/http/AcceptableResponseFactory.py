@@ -27,7 +27,7 @@ class AcceptableResponseFactory:
         self.VXML: AcceptableResponse = AcceptableResponse("text/vxml", "vxml", 2)
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

@@ -15,10 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.resource.FeaturedResourceFactory import FeaturedResourceFactory
 
 
+@java_inherited_overloads
 class FeaturedAnimationInterfaceFactoryInterfaceFactory(FeaturedResourceFactory):
     INSTANCE: FeaturedAnimationInterfaceFactoryInterfaceFactory = None
     
@@ -53,7 +56,7 @@ class FeaturedAnimationInterfaceFactoryInterfaceFactory(FeaturedResourceFactory)
         size: int = self.getList().size()
         for index in range(0, size):
             featureInterface: FeatureResourceAnimationInterfaceFactoryInterface = list_.objectArray[index]
-            if featureInterface.isFeature():
+            if java_predicate(featureInterface, "isFeature"):
                 rectangle: Rectangle = featureInterface.getRectangle(resource)
                 if rectangle != RectangleFactory.SINGLETON:
                     return Rectangle(pointFactory.createXY(x, y), ((rectangle.getWidth() * scale) >> 1), ((rectangle.getHeight() * scale) >> 1))
@@ -86,7 +89,7 @@ class FeaturedAnimationInterfaceFactoryInterfaceFactory(FeaturedResourceFactory)
         animationInterfaceFactoryInterface: BasicAnimationInterfaceFactoryInterface = None
         for index in range(0, size):
             featureInterface = list_.objectArray[index]
-            if featureInterface.isFeature():
+            if java_predicate(featureInterface, "isFeature"):
                 resourceTypeAvailableList.add(featureInterface)
                 animationInterfaceFactoryInterface = featureInterface.getBasicAnimationInterfaceFactoryInstance(resource)
                 if animationInterfaceFactoryInterface != NullAnimationFactory.NULL_NOT_FOR_USE_ANIMATION_FACTORY:
@@ -112,7 +115,7 @@ class FeaturedAnimationInterfaceFactoryInterfaceFactory(FeaturedResourceFactory)
             for index in range(0, size):
                 stringBuffer.append(CommonSeps.getInstance().NEW_LINE)
                 featureInterface = list_.objectArray[index]
-                if featureInterface.isFeature():
+                if java_predicate(featureInterface, "isFeature"):
                     stringBuffer.append(StringUtil.getInstance().toString(featureInterface))
                     stringBuffer.append(HAS_KEY)
                     stringBuffer.appendint(featureInterface.getHashtable().size())

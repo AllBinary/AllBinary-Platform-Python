@@ -25,7 +25,6 @@ class BasicColorCacheFactory:
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.StdUtil import StdUtil
-        from org.allbinary.util.ABHashtable import ABHashtable
         self.hashtable: ABHashtable[object, object] = StdUtil.getInstance().createHashtable()
     
 
@@ -35,7 +34,7 @@ class BasicColorCacheFactory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def add(self, basicDefaultColor: BasicColor) -> None:
@@ -44,7 +43,7 @@ class BasicColorCacheFactory:
 
     def getAndOrCreate(self, integer: int) -> BasicColor:
         with self._lock:
-            return self._getAndOrCreate_unlocked(integer)
+            return __class__.__dict__["_getAndOrCreate_unlocked"].__get__(self, __class__)(integer)
 
     def _getAndOrCreate_unlocked(self, integer: int) -> BasicColor:
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory

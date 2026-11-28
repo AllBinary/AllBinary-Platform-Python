@@ -15,31 +15,37 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from admin.taghelpers.ModifyTable import ModifyTable
 
 
 #TWB - Am I missing the correct Quote Request? Probably not
+@java_inherited_overloads
 class QuoteRequestHelper(ModifyTable):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("weblisketSession", None)
+        vars(self).setdefault("storeFrontInterface", None)
+        vars(self).setdefault("quoteRequest", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-        from org.allbinary.business.user.quoterequest.QuoteRequest import QuoteRequest
-        from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.weblisketSession: WeblisketSession = None
-        self.storeFrontInterface: StoreFrontInterface = None
-        self.quoteRequest: QuoteRequest = None
+        if "weblisketSession" not in vars(self): self.weblisketSession: WeblisketSession = None
+        if "storeFrontInterface" not in vars(self): self.storeFrontInterface: StoreFrontInterface = None
+        if "quoteRequest" not in vars(self): self.quoteRequest: QuoteRequest = None
     
 
     def __init__(self, hashMap: HashMap, pageContext: PageContext) -> None:
+        __class__._java_defaults(self)
         from java.util.HashMap import HashMap
         from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
         from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
         from org.allbinary.business.user.quoterequest.QuoteRequest import QuoteRequest
         from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         request: HttpServletRequest = pageContext.getRequest()
         self.weblisketSession = WeblisketSession(hashMap, pageContext)
         self.quoteRequest = QuoteRequest(self.weblisketSession.getUserName(), request)
@@ -49,7 +55,7 @@ class QuoteRequestHelper(ModifyTable):
     
 
     def isValid(self) -> bool:
-        return self.quoteRequest.isValid()
+        return java_predicate(self.quoteRequest, "isValid")
     
 
     def validationInfo(self) -> str:

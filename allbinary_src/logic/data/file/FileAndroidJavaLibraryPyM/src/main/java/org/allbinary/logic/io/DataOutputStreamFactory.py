@@ -30,6 +30,7 @@ class DataOutputStreamFactory:
     # throws Exception
     def getInstanceForAbFile(self, file: AbFile) -> AbDataOutputStream:
         from org.allbinary.logic.io.AbFileOutputStream import AbFileOutputStream
+        from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
         from org.allbinary.logic.io.file.AbFile import AbFile
         idFileOutputStream: AbFileOutputStream = AbFileOutputStream.createFromAbFile(file)
         idOutData: AbDataOutputStream = AbDataOutputStream(idFileOutputStream)
@@ -39,13 +40,17 @@ class DataOutputStreamFactory:
     # throws Exception
     def getInstance_j2(self, filePath: str, fileName: str) -> AbDataOutputStream:
         from org.allbinary.logic.io.FileStreamFactory import FileStreamFactory
+        from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
         fileStreamFactory: FileStreamFactory = FileStreamFactory.getInstance()
         fileOutputStream: AbFileOutputStream = fileStreamFactory.getFileOutputStreamInstance(filePath, fileName)
         idOutData: AbDataOutputStream = AbDataOutputStream(fileOutputStream)
         return idOutData
 
-    def getInstance(self, *args):
-        return getattr(self, "getInstance_j" + str(len(args)))(*args)
+    def getInstance(self=None, *args):
+        if self is None and not args: return __class__.getInstance_j0()
+        implementation = __class__.__dict__.get("getInstance_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getInstance(*args)
 # from org.allbinary.logic.io.file.AbFile import AbFile
 
 

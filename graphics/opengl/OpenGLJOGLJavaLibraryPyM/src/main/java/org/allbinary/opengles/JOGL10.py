@@ -22,8 +22,6 @@ from javax.microedition.khronos.opengles.GL10 import GL10
 class JOGL10(GL10):
 
     def _init_fields(self) -> None:
-        from com.jogamp.opengl.glu.GLU import GLU
-        from com.jogamp.opengl.GL2 import GL2
         self.RED: str = "red: "
         self.GREEN: str = " green: "
         self.BLUE: str = " blue: "
@@ -35,17 +33,17 @@ class JOGL10(GL10):
         self.LIGHT: str = "light: "
         self.FACE: str = "face: "
         self.TARGET: str = "target: "
-        self.gl10: GL2 = None
-        self.glu: GLU = None
-        self.GL_LINE: int = None
-        self.GL_QUAD_STRIP: int = None
+        if "gl10" not in vars(self): self.gl10: GL2 = None
+        if "glu" not in vars(self): self.glu: GLU = None
+        if "GL_LINE" not in vars(self): self.GL_LINE: int = 0
+        if "GL_QUAD_STRIP" not in vars(self): self.GL_QUAD_STRIP: int = 0
     
 
     def __init__(self, gl: GL, gl2: GL2) -> None:
         from com.jogamp.opengl.glu.GLU import GLU
         from com.jogamp.opengl.GL import GL
         from com.jogamp.opengl.GL2 import GL2
-        self._init_fields()
+        __class__._init_fields(self)
         self.gl10 = gl2
         self.glu = GLU.createGLU(self.gl10)
         self.GL_LINE = GL2.GL_LINE
@@ -133,7 +131,9 @@ class JOGL10(GL10):
         self.gl10.glDeleteTextures(n, textures)
 
     def glDeleteTextures(self, *args):
-        return getattr(self, "glDeleteTextures_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glDeleteTextures_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glDeleteTextures(*args)
     
 
     def glDepthFunc(self, func: int) -> None:
@@ -192,7 +192,9 @@ class JOGL10(GL10):
         self.gl10.glFogfv(pname, params)
 
     def glFogfv(self, *args):
-        return getattr(self, "glFogfv_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glFogfv_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glFogfv(*args)
     
 
     def glFrontFace(self, mode: int) -> None:
@@ -211,7 +213,9 @@ class JOGL10(GL10):
         self.gl10.glGenTextures(n, textures)
 
     def glGenTextures(self, *args):
-        return getattr(self, "glGenTextures_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glGenTextures_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glGenTextures(*args)
     
 
     def glGetError(self) -> int:
@@ -226,7 +230,9 @@ class JOGL10(GL10):
         self.gl10.glGetIntegerv(pname, params)
 
     def glGetIntegerv(self, *args):
-        return getattr(self, "glGetIntegerv_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glGetIntegerv_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glGetIntegerv(*args)
     
 
     def glGetString(self, name: int) -> str:
@@ -249,7 +255,9 @@ class JOGL10(GL10):
         self.gl10.glLightModelfv(pname, params)
 
     def glLightModelfv(self, *args):
-        return getattr(self, "glLightModelfv_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glLightModelfv_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glLightModelfv(*args)
     
 
     def glLightf(self, light: int, pname: int, param: float) -> None:
@@ -264,7 +272,9 @@ class JOGL10(GL10):
         self.gl10.glLightfv(light, pname, params)
 
     def glLightfv(self, *args):
-        return getattr(self, "glLightfv_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glLightfv_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glLightfv(*args)
     
 
     def glLineWidth(self, width: float) -> None:
@@ -283,7 +293,9 @@ class JOGL10(GL10):
         self.gl10.glLoadMatrixf(m)
 
     def glLoadMatrixf(self, *args):
-        return getattr(self, "glLoadMatrixf_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glLoadMatrixf_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glLoadMatrixf(*args)
     
 
     def glLogicOp(self, opcode: int) -> None:
@@ -302,7 +314,9 @@ class JOGL10(GL10):
         self.gl10.glMaterialfv(face, pname, params)
 
     def glMaterialfv(self, *args):
-        return getattr(self, "glMaterialfv_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glMaterialfv_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glMaterialfv(*args)
     
 
     def glMatrixMode(self, mode: int) -> None:
@@ -317,7 +331,9 @@ class JOGL10(GL10):
         self.gl10.glMultMatrixf(m)
 
     def glMultMatrixf(self, *args):
-        return getattr(self, "glMultMatrixf_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glMultMatrixf_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glMultMatrixf(*args)
     
 
     def glMultiTexCoord4f(self, target: int, s: float, t: float, r: float, q: float) -> None:
@@ -416,7 +432,9 @@ class JOGL10(GL10):
         self.gl10.glTexEnvfv(target, pname, params)
 
     def glTexEnvfv(self, *args):
-        return getattr(self, "glTexEnvfv_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glTexEnvfv_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glTexEnvfv(*args)
     
 
     def glTexImage2D(self, target: int, level: int, internalformat: int, width: int, height: int, border: int, format: int, type_: int, pixels: Buffer) -> None:

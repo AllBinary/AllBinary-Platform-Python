@@ -27,7 +27,7 @@ class BasicWeaponPartCircularPool:
         self.basicWeaponPart: BasicWeaponPart = BasicWeaponPart.NULL_BASIC_WEAPON_PART
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -38,7 +38,7 @@ class BasicWeaponPartCircularPool:
     # throws Exception
     def getInstance(self, sourceLayerInterface: AllBinaryLayer, weaponProperties: WeaponProperties, scoreableInterface: ScoreableInterface, relativeRelationship: RelativeRelationship) -> BasicWeaponPart:
         with self._lock:
-            return self._getInstance_unlocked(sourceLayerInterface, weaponProperties, scoreableInterface, relativeRelationship)
+            return __class__.__dict__["_getInstance_unlocked"].__get__(self, __class__)(sourceLayerInterface, weaponProperties, scoreableInterface, relativeRelationship)
 
     def _getInstance_unlocked(self, sourceLayerInterface: AllBinaryLayer, weaponProperties: WeaponProperties, scoreableInterface: ScoreableInterface, relativeRelationship: RelativeRelationship) -> BasicWeaponPart:
         from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties

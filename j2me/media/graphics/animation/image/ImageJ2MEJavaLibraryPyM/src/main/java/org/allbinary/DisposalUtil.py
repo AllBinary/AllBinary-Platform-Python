@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -34,7 +35,7 @@ class DisposalUtil:
 
     def disposeResource(self, resource: Resource) -> None:
         from org.eclipse.swt.graphics.Resource import Resource
-        if not resource.isDisposed():
+        if not (java_predicate(resource, "isDisposed")):
             resource.dispose()
 # from javax.microedition.lcdui.Image import Image
 # from org.eclipse.swt.graphics.Resource import Resource

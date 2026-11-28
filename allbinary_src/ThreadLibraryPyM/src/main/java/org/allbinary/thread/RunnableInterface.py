@@ -15,10 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaThread import JavaThread
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import threading
 
 
 # Java interface
+@java_inherited_overloads
 class RunnableInterface(object):
     
 
@@ -31,7 +34,7 @@ class RunnableInterface(object):
     
 
     # throws Exception
-    def setThread(self, thread: threading.Thread) -> None:
+    def setThread(self, thread: JavaThread) -> None:
         raise NotImplementedError()
 
 

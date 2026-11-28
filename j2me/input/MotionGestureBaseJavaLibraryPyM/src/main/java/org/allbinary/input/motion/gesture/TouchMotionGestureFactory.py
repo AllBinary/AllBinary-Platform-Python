@@ -22,20 +22,20 @@ class TouchMotionGestureFactory:
     instance: object = None
 
     def _init_fields(self) -> None:
-        self.LEFT: MotionGestureInput = None
-        self.RIGHT: MotionGestureInput = None
-        self.UP: MotionGestureInput = None
-        self.DOWN: MotionGestureInput = None
-        self.PRESSED: MotionGestureInput = None
-        self.RELEASED: MotionGestureInput = None
-        self.DIAGONAL_DOWN_RIGHT: MotionGestureInput = None
-        self.DIAGONAL_DOWN_LEFT: MotionGestureInput = None
-        self.DIAGONAL_UP_RIGHT: MotionGestureInput = None
-        self.DIAGONAL_UP_LEFT: MotionGestureInput = None
-        self.SCROLL_UP: MotionGestureInput = None
-        self.SCROLL_DOWN: MotionGestureInput = None
-        self.NO_MOTION: MotionGestureInput = None
-        self.LAST_MOTION: MotionGestureInput = None
+        if "LEFT" not in vars(self): self.LEFT: MotionGestureInput = None
+        if "RIGHT" not in vars(self): self.RIGHT: MotionGestureInput = None
+        if "UP" not in vars(self): self.UP: MotionGestureInput = None
+        if "DOWN" not in vars(self): self.DOWN: MotionGestureInput = None
+        if "PRESSED" not in vars(self): self.PRESSED: MotionGestureInput = None
+        if "RELEASED" not in vars(self): self.RELEASED: MotionGestureInput = None
+        if "DIAGONAL_DOWN_RIGHT" not in vars(self): self.DIAGONAL_DOWN_RIGHT: MotionGestureInput = None
+        if "DIAGONAL_DOWN_LEFT" not in vars(self): self.DIAGONAL_DOWN_LEFT: MotionGestureInput = None
+        if "DIAGONAL_UP_RIGHT" not in vars(self): self.DIAGONAL_UP_RIGHT: MotionGestureInput = None
+        if "DIAGONAL_UP_LEFT" not in vars(self): self.DIAGONAL_UP_LEFT: MotionGestureInput = None
+        if "SCROLL_UP" not in vars(self): self.SCROLL_UP: MotionGestureInput = None
+        if "SCROLL_DOWN" not in vars(self): self.SCROLL_DOWN: MotionGestureInput = None
+        if "NO_MOTION" not in vars(self): self.NO_MOTION: MotionGestureInput = None
+        if "LAST_MOTION" not in vars(self): self.LAST_MOTION: MotionGestureInput = None
     
 
     @staticmethod
@@ -62,7 +62,7 @@ class TouchMotionGestureFactory:
         from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
         from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
         from org.allbinary.game.input.InputFactory import InputFactory
-        self._init_fields()
+        __class__._init_fields(self)
         MAX: int = InputFactory.getInstance().MAX
         self.LEFT = MotionGestureInput(MAX - 3, "Left Touch")
         self.RIGHT = MotionGestureInput(MAX - 4, "Right Touch")

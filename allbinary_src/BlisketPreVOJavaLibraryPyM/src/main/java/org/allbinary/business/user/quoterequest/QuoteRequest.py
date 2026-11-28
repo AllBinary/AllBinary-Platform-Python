@@ -25,19 +25,19 @@ class QuoteRequest:
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.id: str = None
-        self.userName: str = None
-        self.projectInfo: str = None
-        self.userComments: str = None
-        self.budget: str = None
-        self.timeFrame: str = None
-        self.comments: str = None
+        if "id" not in vars(self): self.id: str = None
+        if "userName" not in vars(self): self.userName: str = None
+        if "projectInfo" not in vars(self): self.projectInfo: str = None
+        if "userComments" not in vars(self): self.userComments: str = None
+        if "budget" not in vars(self): self.budget: str = None
+        if "timeFrame" not in vars(self): self.timeFrame: str = None
+        if "comments" not in vars(self): self.comments: str = None
 
     def __init__(self, *args) -> None:
         if len(args) == 2:
-            self._constructor2(*args)
+            __class__._constructor2(self, *args)
         elif len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
     
 
     def _constructor2(self, userName: str, request: HttpServletRequest) -> None:
@@ -45,7 +45,7 @@ class QuoteRequest:
         from org.allbinary.data.generator.QuoteRequestIdGenerator import QuoteRequestIdGenerator
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-        self._init_fields()
+        __class__._init_fields(self)
         quoteRequestData: QuoteRequestData = QuoteRequestData.getInstance()
         self.id = QuoteRequestIdGenerator().getNext()
         self.setUserName(userName)
@@ -64,7 +64,7 @@ class QuoteRequest:
         from org.allbinary.business.user.UserData import UserData
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-        self._init_fields()
+        __class__._init_fields(self)
         quoteRequestData: QuoteRequestData = QuoteRequestData.getInstance()
         self.id = hashMap.get(quoteRequestData.ID)
         self.setUserName(hashMap.get(UserData.USERNAME))

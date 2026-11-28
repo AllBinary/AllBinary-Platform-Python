@@ -20,12 +20,12 @@ from __future__ import annotations
 class CacheType:
 
     def _init_fields(self) -> None:
-        self.vendor: str = None
-        self.type_: str = None
+        if "vendor" not in vars(self): self.vendor: str = None
+        if "type_" not in vars(self): self.type_: str = None
     
 
     def __init__(self, vendor: str, type_: str) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.vendor = vendor
         self.type_ = type_
     

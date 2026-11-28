@@ -23,13 +23,12 @@ from org.allbinary.business.user.commerce.inventory.basket.BasketInterface impor
 class Basket(*java_bases(BasketInterface, object)):
 
     def _init_fields(self) -> None:
-        from java.util.HashMap import HashMap
         from org.allbinary.logic.StdUtil import StdUtil
         self.items: HashMap = StdUtil.getInstance().createHashMap()
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def addItem(self, id: str, num: str) -> None:

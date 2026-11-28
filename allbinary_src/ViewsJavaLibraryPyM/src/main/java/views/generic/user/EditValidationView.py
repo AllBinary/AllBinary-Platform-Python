@@ -15,12 +15,18 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.validate.ValidationComponentInterface import ValidationComponentInterface
 from views.generic.user.UserView import UserView
 
 
+@java_inherited_overloads
 class EditValidationView(*java_bases(UserView, ValidationComponentInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -28,9 +34,10 @@ class EditValidationView(*java_bases(UserView, ValidationComponentInterface)):
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def isValid(self) -> bool:
@@ -48,7 +55,7 @@ class EditValidationView(*java_bases(UserView, ValidationComponentInterface)):
                 if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     self.logUtil.putF("User does not exist", self, self.commonStrings.IS_VALID)
                 return False
-            if self.user.isValid() == False:
+            if java_predicate(self.user, "isValid") == False:
                 if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     self.logUtil.putF("User exists but is invalid - Probably manually modified", self, self.commonStrings.IS_VALID)
                 return False
@@ -74,7 +81,7 @@ class EditValidationView(*java_bases(UserView, ValidationComponentInterface)):
                 if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     self.logUtil.putF("User does not exist", self, self.commonStrings.IS_VALID)
                 stringBuffer.append("User profile does not exist - Your session data has been logged!")
-            if self.user.isValid() == False:
+            if java_predicate(self.user, "isValid") == False:
                 if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     self.logUtil.putF("User exists but is invalid - Probably manually modified", self, self.commonStrings.IS_VALID)
                 stringBuffer.append(self.user.validationInfo())
@@ -99,7 +106,7 @@ class EditValidationView(*java_bases(UserView, ValidationComponentInterface)):
     # throws Exception
     def getTransformInfoInterface(self) -> TransformInfoInterface:
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-        return super().getTransformInfoInterface()
+        return java_super_call(super(), "getTransformInfoInterface")
 # from org.allbinary.business.user.username.UserName import UserName
 # from org.allbinary.data.tables.user.UserEntityFactory import UserEntityFactory
 # from org.allbinary.logic.communication.log.LogUtil import LogUtil

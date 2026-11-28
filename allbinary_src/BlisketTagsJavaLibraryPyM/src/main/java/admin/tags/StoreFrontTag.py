@@ -15,23 +15,30 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from tags.CustomTagSupport import CustomTagSupport
 
 
+@java_inherited_overloads
 class StoreFrontTag(CustomTagSupport):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("command", None)
+        vars(self).setdefault("storeName", None)
+        vars(self).setdefault("propertiesHashMap", None)
 
     def _init_fields(self) -> None:
-        from java.util.HashMap import HashMap
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.command: str = None
-        self.storeName: str = None
-        self.propertiesHashMap: HashMap = None
+        if "command" not in vars(self): self.command: str = None
+        if "storeName" not in vars(self): self.storeName: str = None
+        if "propertiesHashMap" not in vars(self): self.propertiesHashMap: HashMap = None
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def setCommand(self, command: str) -> None:

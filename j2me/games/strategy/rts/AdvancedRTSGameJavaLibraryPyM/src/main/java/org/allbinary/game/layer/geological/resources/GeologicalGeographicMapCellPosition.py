@@ -15,18 +15,23 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
 
 
+@java_inherited_overloads
 class GeologicalGeographicMapCellPosition(GeographicMapCellPosition):
+    def _java_defaults(self):
+        vars(self).setdefault("geologicalResource", None)
 
     def _init_fields(self) -> None:
-        self.geologicalResource: GeologicalResource = None
+        if "geologicalResource" not in vars(self): self.geologicalResource: GeologicalResource = None
     
 
     def __init__(self, column: int, row: int, columns: int, rows: int, width: int, height: int, geologicalResource: GeologicalResource) -> None:
+        __class__._java_defaults(self)
         super().__init__(column, row, columns, rows, width, height)
-        self._init_fields()
+        __class__._init_fields(self)
         self.geologicalResource = geologicalResource
     
 

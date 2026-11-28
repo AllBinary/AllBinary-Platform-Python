@@ -15,10 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.communication.smtp.info.BasicEmailInfo import BasicEmailInfo
 
 
+@java_inherited_overloads
 class AdminEmailInfo(BasicEmailInfo):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -26,11 +30,12 @@ class AdminEmailInfo(BasicEmailInfo):
     
 
     def __init__(self, subject: str, textBody: str) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.string.CommonStrings import CommonStrings
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__(subject, textBody)
-        self._init_fields()
+        __class__._init_fields(self)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGING):
             commonStrings: CommonStrings = CommonStrings.getInstance()
             self.logUtil.putF(commonStrings.START, self, commonStrings.CONSTRUCTOR)

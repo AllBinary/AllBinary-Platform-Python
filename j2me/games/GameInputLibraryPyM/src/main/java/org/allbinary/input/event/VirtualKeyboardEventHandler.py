@@ -16,13 +16,18 @@
 from __future__ import annotations
 
 import time
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.util.event.handler.BasicEventHandler import BasicEventHandler
 
 
+@java_inherited_overloads
 class VirtualKeyboardEventHandler(BasicEventHandler):
     gameKeyEventHandler: VirtualKeyboardEventHandler = None
+    def _java_defaults(self):
+        vars(self).setdefault("SHOW_EVENT", None)
+        vars(self).setdefault("HIDE_EVENT", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
@@ -31,8 +36,9 @@ class VirtualKeyboardEventHandler(BasicEventHandler):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

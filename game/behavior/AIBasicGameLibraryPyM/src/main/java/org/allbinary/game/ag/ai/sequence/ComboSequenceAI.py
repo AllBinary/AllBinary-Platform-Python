@@ -15,9 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.ag.ai.sequence.SequenceAI import SequenceAI
 
 
+@java_inherited_overloads
 class ComboSequenceAI(SequenceAI):
     
 
@@ -36,7 +39,7 @@ class ComboSequenceAI(SequenceAI):
         size: int = len(artificialIntelligenceInterfaceArray)
         for index in range(0, size):
             self.setIndex(index)
-            super().processAI(allBinaryLayerManager)
+            java_super_call(super(), "processAI", allBinaryLayerManager)
 # from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
 # from org.allbinary.game.input.GameInput import GameInput
 # from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer

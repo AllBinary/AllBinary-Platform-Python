@@ -21,13 +21,12 @@ from org.allbinary.animation.AnimationInterfaceFactoryInterface import Animation
 class LineAnimationFactory(AnimationInterfaceFactoryInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.color.BasicColor import BasicColor
-        self.basicColor: BasicColor = None
+        if "basicColor" not in vars(self): self.basicColor: BasicColor = None
     
 
     def __init__(self, basicColor: BasicColor) -> None:
         from org.allbinary.graphics.color.BasicColor import BasicColor
-        self._init_fields()
+        __class__._init_fields(self)
         self.basicColor = basicColor
     
 

@@ -27,13 +27,16 @@ class UrlGlobalsView(DomNodeInterface):
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
+        from org.allbinary.globals.UrlGlobalsData import UrlGlobalsData
+        from org.allbinary.globals.URLGLOBALS import URLGLOBALS
+        from org.allbinary.globals.UrlGlobalsData import UrlGlobalsData
         from java.util.HashMap import HashMap
         from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
         from org.allbinary.logic.StdUtil import StdUtil
         from org.w3c.dom.Document import Document
         from org.w3c.dom.Node import Node
         hashMap: HashMap = StdUtil.getInstance().createHashMap()
-        hashMap.put(UrlGlobalsData.WEBAPPPATH, self.URLGLOBALS.getWebappPath())
+        hashMap.put(UrlGlobalsData.WEBAPPPATH, URLGLOBALS.getWebappPath())
         node: Node = ModDomHelper.createNameValueNodes(document, UrlGlobalsData.NAME, hashMap)
         return node
 # from java.util.HashMap import HashMap

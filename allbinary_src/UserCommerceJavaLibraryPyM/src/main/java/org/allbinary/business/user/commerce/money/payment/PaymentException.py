@@ -15,8 +15,10 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 
 
+@java_inherited_overloads
 class PaymentException(Exception):
     
 

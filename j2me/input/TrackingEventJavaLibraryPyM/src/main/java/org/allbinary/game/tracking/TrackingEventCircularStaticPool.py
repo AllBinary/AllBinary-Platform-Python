@@ -28,7 +28,7 @@ class TrackingEventCircularStaticPool:
         self.EVENT_POOL: AllBinaryEventCircularPool = AllBinaryEventCircularPool(20)
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -44,7 +44,7 @@ class TrackingEventCircularStaticPool:
     # throws Exception
     def getNextInstance(self, layerInterface: AllBinaryLayer) -> TrackingEvent:
         with self._lock:
-            return self._getNextInstance_unlocked(layerInterface)
+            return __class__.__dict__["_getNextInstance_unlocked"].__get__(self, __class__)(layerInterface)
 
     def _getNextInstance_unlocked(self, layerInterface: AllBinaryLayer) -> TrackingEvent:
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer

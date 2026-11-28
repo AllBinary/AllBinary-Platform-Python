@@ -32,7 +32,7 @@ class BillingAddressesEntityFactory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getInstance_j1(self, userName: str) -> StreetAddressesEntity:
@@ -49,8 +49,11 @@ class BillingAddressesEntityFactory:
                 self.logUtil.put(commonStrings.EXCEPTION, self, commonStrings.GET_INSTANCE, e)
             return None
 
-    def getInstance(self, *args):
-        return getattr(self, "getInstance_j" + str(len(args)))(*args)
+    def getInstance(self=None, *args):
+        if self is None and not args: return __class__.getInstance_j0()
+        implementation = __class__.__dict__.get("getInstance_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getInstance(*args)
 # from org.allbinary.data.tables.user.address.StreetAddressesEntity import StreetAddressesEntity
 # from org.allbinary.logic.communication.log.LogUtil import LogUtil
 # from org.allbinary.string.CommonStrings import CommonStrings

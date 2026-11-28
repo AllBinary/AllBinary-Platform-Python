@@ -20,22 +20,22 @@ from __future__ import annotations
 class LogConfig:
 
     def _init_fields(self) -> None:
-        self.isEnabled: bool = None
-        self.name: str = None
-        self.description: str = None
-        self.path: str = None
-        self.fileName: str = None
+        if "isEnabled_field" not in vars(self): self.isEnabled_field: bool = False
+        if "name" not in vars(self): self.name: str = None
+        if "description" not in vars(self): self.description: str = None
+        if "path" not in vars(self): self.path: str = None
+        if "fileName" not in vars(self): self.fileName: str = None
 
     def __init__(self, *args) -> None:
         if len(args) == 4:
-            self._constructor4(*args)
+            __class__._constructor4(self, *args)
         elif len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
     
 
     def _constructor4(self, aName: str, aDescription: str, aPath: str, aFileName: str) -> None:
-        self._init_fields()
-        self.isEnabled = False
+        __class__._init_fields(self)
+        self.isEnabled_field = False
         self.name = aName
         self.description = aDescription
         self.path = aPath
@@ -43,15 +43,16 @@ class LogConfig:
     
 
     def _constructor1(self, node: Node) -> None:
+        from org.allbinary.logic.communication.log.config.LogConfigData import LogConfigData
         from org.allbinary.business.entry.EntryData import EntryData
         from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
         from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
         from org.allbinary.logic.java.bool.BooleanUtil import BooleanUtil
         from org.w3c.dom.Node import Node
-        self._init_fields()
+        __class__._init_fields(self)
         enabledValueNode: Node = DomSearchHelper.getNode(EntryData.getInstance().ENABLE, node.getChildNodes())
         isEnabledString: str = DomNodeHelper.getTextNodeValue(enabledValueNode)
-        self.isEnabled = BooleanUtil.getInstance().getFromString(isEnabledString)
+        self.isEnabled_field = BooleanUtil.getInstance().getFromString(isEnabledString)
         logConfigData: LogConfigData = LogConfigData.getInstance()
         nameValueNode: Node = DomSearchHelper.getNode(logConfigData.NAME, node.getChildNodes())
         self.name = DomNodeHelper.getTextNodeValue(nameValueNode)
@@ -66,15 +67,15 @@ class LogConfig:
     
 
     def isEnabled(self) -> bool:
-        return self.isEnabled
+        return self.isEnabled_field
     
 
     def enable(self) -> None:
-        self.isEnabled = True
+        self.isEnabled_field = True
     
 
     def disable(self) -> None:
-        self.isEnabled = False
+        self.isEnabled_field = False
     
 
     def getDescription(self) -> str:

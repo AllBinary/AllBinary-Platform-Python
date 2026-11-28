@@ -26,7 +26,7 @@ class PlatformTextureBaseFactory:
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def load(self, gl: GL10, target: int, level: int, image: Image, border: int, flip: bool) -> None:

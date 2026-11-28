@@ -15,27 +15,34 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.validate.ValidationComponentInterface import ValidationComponentInterface
 from views.business.context.modules.storefront.customizer.includes.style.theme.ThemeCustomizerView import ThemeCustomizerView
 
 
+@java_inherited_overloads
 class InsertThemeValidationView(*java_bases(ThemeCustomizerView, ValidationComponentInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("requestHashMap", None)
 
     def _init_fields(self) -> None:
-        from java.util.HashMap import HashMap
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.requestHashMap: HashMap = None
+        if "requestHashMap" not in vars(self): self.requestHashMap: HashMap = None
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.communication.http.request.NameSpaceRequestParams import NameSpaceRequestParams
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__(transformInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF(self.commonStrings.CONSTRUCTOR, self, "started")
         self.requestHashMap = NameSpaceRequestParams(self.getPageContext()).toHashMap()
@@ -60,10 +67,10 @@ class InsertThemeValidationView(*java_bases(ThemeCustomizerView, ValidationCompo
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 self.logUtil.putF("Started Validation", self, self.commonStrings.IS_VALID)
             themeValidation: ThemeValidation = ThemeValidation(self.getTransformInfoInterface(), self.requestHashMap)
-            if themeValidation.isValid() == False:
+            if java_predicate(themeValidation, "isValid") == False:
                 isValid = False
             self.validationInterface = themeValidation.getCssStyleValidation()
-            isValid = self.validationInterface.isValid()
+            isValid = java_predicate(self.validationInterface, "isValid")
             if isValid == True:
                 CustomizerUtil.getInstance().insert(self.getTransformInfoInterface(), self.validationInterface)
             return isValid
@@ -113,7 +120,7 @@ class InsertThemeValidationView(*java_bases(ThemeCustomizerView, ValidationCompo
     # throws Exception
     def getTransformInfoInterface(self) -> TransformInfoInterface:
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-        return super().getTransformInfoInterface()
+        return java_super_call(super(), "getTransformInfoInterface")
 # from java.util.HashMap import HashMap
 # from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 # from org.allbinary.logic.communication.http.request.NameSpaceRequestParams import NameSpaceRequestParams

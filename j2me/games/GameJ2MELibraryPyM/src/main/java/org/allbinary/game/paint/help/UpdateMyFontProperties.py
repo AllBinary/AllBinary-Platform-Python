@@ -28,10 +28,10 @@ class UpdateMyFontProperties:
         self.inputDeltaXArray: list[list[int]] = NullUtil.getInstance().NULL_INT_ARRAY_ARRAY
         self.sepArray: list[list[str]] = StringUtil.getInstance().ONE_EMPTY_STRING_ARRAY_OF_ARRAYS
         self.sepWidthArray: list[list[int]] = NullUtil.getInstance().NULL_INT_ARRAY_ARRAY
-        self.charHeight: int = 0
+        if "charHeight" not in vars(self): self.charHeight: int = 0
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
 # from org.allbinary.logic.NullUtil import NullUtil
 # from org.allbinary.logic.string.StringUtil import StringUtil
 

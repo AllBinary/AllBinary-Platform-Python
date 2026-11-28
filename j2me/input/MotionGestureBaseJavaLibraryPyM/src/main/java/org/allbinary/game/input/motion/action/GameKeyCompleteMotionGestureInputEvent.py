@@ -15,31 +15,39 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.input.CompleteMotionGestureInputEvent import CompleteMotionGestureInputEvent
 from org.allbinary.game.input.GameKeyEventSourceInterface import GameKeyEventSourceInterface
 
 
+@java_inherited_overloads
 class GameKeyCompleteMotionGestureInputEvent(*java_bases(CompleteMotionGestureInputEvent, GameKeyEventSourceInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("gameKeyEventFactory", None)
+        vars(self).setdefault("SOURCE_ID", 0)
+        vars(self).setdefault("gameKey", None)
+        vars(self).setdefault("gameKeyEvent", None)
+        vars(self).setdefault("inputToGameKeyMapping", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.game.input.GameKey import GameKey
         from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
         from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
-        from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
         self.gameKeyEventFactory: GameKeyEventFactory = GameKeyEventFactory.getInstance()
         self.SOURCE_ID: int = self.gameKeyEventFactory.MOTION_GESTURE_SOURCE_ID
         self.gameKey: GameKey = GameKey.NULL_GAME_KEY
         self.gameKeyEvent: GameKeyEvent = GameKeyEvent.NONE
-        self.inputToGameKeyMapping: InputToGameKeyMapping = None
+        if "inputToGameKeyMapping" not in vars(self): self.inputToGameKeyMapping: InputToGameKeyMapping = None
     
 
     def __init__(self, name: str, motionGestureInput: MotionGestureInput, inputToGameKeyMapping: InputToGameKeyMapping) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.input.motion.action.GameKeyCompleteMotionGestureInputEventFactory import GameKeyCompleteMotionGestureInputEventFactory
         from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
         from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
         super().__init__(name, motionGestureInput)
-        self._init_fields()
+        __class__._init_fields(self)
         self.inputToGameKeyMapping = inputToGameKeyMapping
         GameKeyCompleteMotionGestureInputEventFactory.getInstance().add(self)
         self.update()

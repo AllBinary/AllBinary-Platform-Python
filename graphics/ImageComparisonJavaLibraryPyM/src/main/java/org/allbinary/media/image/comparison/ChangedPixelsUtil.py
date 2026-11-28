@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.System import System
 import sys
 
 
@@ -55,7 +56,7 @@ class ChangedPixelsUtil:
             pixelDelta: PixelDelta = vector.get(index)
             if pixelDelta.getColorDelta() is None:
                 print("ColorDelta", end="")
-                sys.exit(0)
+                __import__("java.lang.System", fromlist=["System"]).System.exit(0)
             bufferedImageCacheables[0].getBufferedImage().setRGB(pixelDelta.getPoint().getX(), pixelDelta.getPoint().getY(), pixelDelta.getColorDelta().getRgb1())
             bufferedImageCacheables[1].getBufferedImage().setRGB(pixelDelta.getPoint().getX(), pixelDelta.getPoint().getY(), pixelDelta.getColorDelta().getRgb2())
         return bufferedImageCacheables

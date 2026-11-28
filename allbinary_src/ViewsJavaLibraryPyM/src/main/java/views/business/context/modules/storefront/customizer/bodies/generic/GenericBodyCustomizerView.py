@@ -15,25 +15,31 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 from views.business.context.modules.storefront.HttpStoreComponentView import HttpStoreComponentView
 
 
+@java_inherited_overloads
 class GenericBodyCustomizerView(*java_bases(HttpStoreComponentView, DomNodeInterface)):
     NAME: str = "None"
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("body", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.logic.visual.transform.template.customizer.bodies.GenericBodyValidation import GenericBodyValidation
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.body: GenericBodyValidation = None
+        if "body" not in vars(self): self.body: GenericBodyValidation = None
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception

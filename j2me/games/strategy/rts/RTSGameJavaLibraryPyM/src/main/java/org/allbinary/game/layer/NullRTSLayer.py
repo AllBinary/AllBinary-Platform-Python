@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.layer.NullPathFindingLayer import NullPathFindingLayer
 from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
 
 
+@java_inherited_overloads
 class NullRTSLayer(*java_bases(NullPathFindingLayer, RTSPlayerLayerInterface)):
     NULL_RTS_LAYER: NullRTSLayer = None
 

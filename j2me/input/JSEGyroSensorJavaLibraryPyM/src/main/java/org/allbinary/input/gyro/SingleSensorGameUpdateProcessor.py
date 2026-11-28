@@ -15,19 +15,24 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.input.gyro.SensorGameUpdateProcessor import SensorGameUpdateProcessor
 
 
+@java_inherited_overloads
 class SingleSensorGameUpdateProcessor(SensorGameUpdateProcessor):
+    def _java_defaults(self):
+        vars(self).setdefault("accelerometerSensorUpdateProcessor", None)
+        vars(self).setdefault("gyroSensorUpdateProcessor", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.canvas.Processor import Processor
         self.accelerometerSensorUpdateProcessor: Processor = AccelerometerSensorUpdateProcessor()
         self.gyroSensorUpdateProcessor: Processor = GyroSensorUpdateProcessor()
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception

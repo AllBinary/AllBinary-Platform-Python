@@ -15,53 +15,74 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.layer.WaypointBehaviorBase import WaypointBehaviorBase
 from org.allbinary.game.layer.waypoint.event.WaypointEventListenerInterface import WaypointEventListenerInterface
 
 
+@java_inherited_overloads
 class UnitWaypointBehavior(*java_bases(WaypointBehaviorBase, WaypointEventListenerInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("commonSeps", None)
+        vars(self).setdefault("unitWaypointStrings", None)
+        vars(self).setdefault("longWeaponRange", 0)
+        vars(self).setdefault("sensorAction", None)
+        vars(self).setdefault("completeTimeDelayHelper", None)
+        vars(self).setdefault("currentGeographicMapCellHistoryP", None)
+        vars(self).setdefault("lastPathGeographicMapCellPosition", None)
+        vars(self).setdefault("currentPathGeographicMapCellPosition", None)
+        vars(self).setdefault("FAKE_WAYPOINT_LAYER", None)
+        vars(self).setdefault("targetList", None)
+        vars(self).setdefault("possibleTargetList", None)
+        vars(self).setdefault("associatedAdvancedRTSGameLayer", None)
+        vars(self).setdefault("moving", False)
+        vars(self).setdefault("movingFromStopped", False)
+        vars(self).setdefault("waypointPathsListP", None)
+        vars(self).setdefault("currentTargetDistance", 0)
+        vars(self).setdefault("currentTargetLayerInterfaceP", None)
+        vars(self).setdefault("trackingWaypoint", False)
+        vars(self).setdefault("repeatedToLong", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.layer.SensorAction import SensorAction
         from org.allbinary.game.layer.SensorActionFactory import SensorActionFactory
         from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
-        from org.allbinary.media.graphics.geography.map.GeographicMapCellHistory import GeographicMapCellHistory
-        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
         from org.allbinary.string.CommonSeps import CommonSeps
         from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         self.commonSeps: CommonSeps = CommonSeps.getInstance()
         self.unitWaypointStrings: UnitWaypointStrings = UnitWaypointStrings.getInstance()
         self.longWeaponRange: int = 0
         self.sensorAction: SensorAction = SensorActionFactory.getInstance().ATTACK
-        self.completeTimeDelayHelper: TimeDelayHelper = None
-        self.currentGeographicMapCellHistoryP: GeographicMapCellHistory = None
+        if "completeTimeDelayHelper" not in vars(self): self.completeTimeDelayHelper: TimeDelayHelper = None
+        if "currentGeographicMapCellHistoryP" not in vars(self): self.currentGeographicMapCellHistoryP: GeographicMapCellHistory = None
         self.lastPathGeographicMapCellPosition: GeographicMapCellPosition = SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION
         self.currentPathGeographicMapCellPosition: GeographicMapCellPosition = SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION
-        self.FAKE_WAYPOINT_LAYER: CollidableDestroyableDamageableLayer = None
-        self.targetList: BasicArrayList = None
-        self.possibleTargetList: BasicArrayList = None
-        self.associatedAdvancedRTSGameLayer: UnitLayer = None
+        if "FAKE_WAYPOINT_LAYER" not in vars(self): self.FAKE_WAYPOINT_LAYER: CollidableDestroyableDamageableLayer = None
+        if "targetList" not in vars(self): self.targetList: BasicArrayList = None
+        if "possibleTargetList" not in vars(self): self.possibleTargetList: BasicArrayList = None
+        if "associatedAdvancedRTSGameLayer" not in vars(self): self.associatedAdvancedRTSGameLayer: UnitLayer = None
         self.moving: bool = False
         self.movingFromStopped: bool = False
         self.waypointPathsListP: BasicArrayList = BasicArrayListUtil.getInstance().getImmutableInstance()
         self.currentTargetDistance: int = 2147483647
         self.currentTargetLayerInterfaceP: CollidableDestroyableDamageableLayer = CollidableDestroyableDamageableLayer.getNullInstance()
-        self.trackingWaypoint: bool = False
+        if "trackingWaypoint" not in vars(self): self.trackingWaypoint: bool = False
         self.repeatedToLong: TimeDelayHelper = TimeDelayHelper(22000)
     
 
     def __init__(self, associatedAdvancedRTSGameLayer: UnitLayer, fakeWaypoint: CollidableDestroyableDamageableLayer) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
         from org.allbinary.media.graphics.geography.map.GeographicMapCellHistory import GeographicMapCellHistory
         from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.associatedAdvancedRTSGameLayer = associatedAdvancedRTSGameLayer
         self.completeTimeDelayHelper = TimeDelayHelper(30000)
         self.targetList = BasicArrayListD()
@@ -88,7 +109,7 @@ class UnitWaypointBehavior(*java_bases(WaypointBehaviorBase, WaypointEventListen
         from org.allbinary.game.layer.RTSLayerEvent import RTSLayerEvent
         advancedRTSGameLayer: AdvancedRTSGameLayer = event.getRtsLayer()
         self.associatedAdvancedRTSGameLayer.waypointLogHelperP.onWaypointEvent(self.associatedAdvancedRTSGameLayer, advancedRTSGameLayer)
-        if self.associatedAdvancedRTSGameLayer.isSelected():
+        if java_predicate(self.associatedAdvancedRTSGameLayer, "isSelected"):
             self.addWaypointFromUser(advancedRTSGameLayer)
         elif advancedRTSGameLayer.shouldAddWaypointFromBuilding():
             self.addWaypointFromBuilding(advancedRTSGameLayer)
@@ -105,9 +126,9 @@ class UnitWaypointBehavior(*java_bases(WaypointBehaviorBase, WaypointEventListen
         from org.allbinary.game.input.form.PrimaryWaypointHelper import PrimaryWaypointHelper
         from org.allbinary.game.layer.AdvancedRTSGameLayer import AdvancedRTSGameLayer
         if advancedRTSGameLayer == PrimaryWaypointHelper.getInstance().getWaypointLayer() or advancedRTSGameLayer.getParentLayer() == self.associatedAdvancedRTSGameLayer.getParentLayer():
-            if not self.targetList.contains(advancedRTSGameLayer):
+            if not (self.targetList.contains(advancedRTSGameLayer)):
                 self.associatedAdvancedRTSGameLayer.waypointLogHelperP.addWaypointFromBuilding(self.associatedAdvancedRTSGameLayer, advancedRTSGameLayer)
-                if advancedRTSGameLayer.isDestroyed():
+                if java_predicate(advancedRTSGameLayer, "isDestroyed"):
                     raise Exception("Trying to add a dead: " + str(advancedRTSGameLayer))
                 self.targetList.add(advancedRTSGameLayer)
                 self.associatedAdvancedRTSGameLayer.waypointLogHelperP.addWaypointFromBuildingList(self.associatedAdvancedRTSGameLayer, advancedRTSGameLayer, self.targetList)
@@ -122,7 +143,7 @@ class UnitWaypointBehavior(*java_bases(WaypointBehaviorBase, WaypointEventListen
         from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
         if self.canInsertWaypoint(index, rtsLayer):
             self.associatedAdvancedRTSGameLayer.waypointLogHelperP.insertWaypoint(self.associatedAdvancedRTSGameLayer, index, rtsLayer, self.getName())
-            if rtsLayer.isDestroyed():
+            if java_predicate(rtsLayer, "isDestroyed"):
                 raise Exception("Trying to add a dead: " + str(rtsLayer))
             self.targetList.addAt(index, rtsLayer)
             self.associatedAdvancedRTSGameLayer.waypointLogHelperP.insertWaypointList(self.associatedAdvancedRTSGameLayer, index, rtsLayer, self.getName(), self.targetList)
@@ -131,7 +152,7 @@ class UnitWaypointBehavior(*java_bases(WaypointBehaviorBase, WaypointEventListen
     
 
     def move(self) -> None:
-        if self.isMoving():
+        if java_predicate(self, "isMoving"):
             self.setMovingFromStopped(False)
         else:
             self.setMovingFromStopped(True)
@@ -202,10 +223,10 @@ class UnitWaypointBehavior(*java_bases(WaypointBehaviorBase, WaypointEventListen
         from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
         from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
         self.associatedAdvancedRTSGameLayer.waypointLogHelperP.needToMove(self.associatedAdvancedRTSGameLayer, self)
-        if self.isTrackingWaypoint() or self.sensorAction == SensorActionFactory.getInstance().EVADE or (self.currentTargetLayerInterfaceP != CollidableDestroyableDamageableLayer.getNullInstance() and self.getCurrentTargetDistance() >= self.longWeaponRange + self.currentTargetLayerInterfaceP.getHalfHeight()):
+        if java_predicate(self, "isTrackingWaypoint") or self.sensorAction == SensorActionFactory.getInstance().EVADE or (self.currentTargetLayerInterfaceP != CollidableDestroyableDamageableLayer.getNullInstance() and self.getCurrentTargetDistance() >= self.longWeaponRange + self.currentTargetLayerInterfaceP.getHalfHeight()):
             self.repeatedToLong.setStartTimeTNT()
             return True
-        if self.repeatedToLong.isTimeTNT():
+        if java_predicate(self.repeatedToLong, "isTimeTNT"):
             message: str = "Repeating too long: " + str(self.getMovementLogicAsString())
             ForcedLogUtil.log(message, self.associatedAdvancedRTSGameLayer)
         return False
@@ -217,7 +238,7 @@ class UnitWaypointBehavior(*java_bases(WaypointBehaviorBase, WaypointEventListen
         from org.allbinary.logic.string.StringUtil import StringUtil
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("isTrackingWaypoint: ")
-        stringBuffer.appendboolean(self.isTrackingWaypoint())
+        stringBuffer.appendboolean(java_predicate(self, "isTrackingWaypoint"))
         stringBuffer.append(" sensorAction: ")
         stringBuffer.append(self.sensorAction.name)
         stringBuffer.append(" getCurrentTargetLayerInterface: ")

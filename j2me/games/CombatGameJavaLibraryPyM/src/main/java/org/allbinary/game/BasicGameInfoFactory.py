@@ -10,9 +10,9 @@ class BasicGameInfoFactory:
     SINGLETON: BasicGameInfoFactory = None
 
     def _init_fields(self) -> None:
-        self.currentReleaseIndex: int = 0
-        self.currentDestroyIndex: int = 0
-        self.total: int = 0
+        if "currentReleaseIndex" not in vars(self): self.currentReleaseIndex: int = 0
+        if "currentDestroyIndex" not in vars(self): self.currentDestroyIndex: int = 0
+        if "total" not in vars(self): self.total: int = 0
     
 
     @staticmethod
@@ -21,7 +21,7 @@ class BasicGameInfoFactory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def init(self, total: int) -> None:

@@ -25,11 +25,12 @@ class OrderHistoryHelperFactory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws LicensingException
     def getInstance(self, hashMap: HashMap, pageContext: PageContext) -> object:
+        from taghelpers.OrderHistoryHelper import OrderHistoryHelper
         from java.util.HashMap import HashMap
         from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
         from org.allbinary.string.CommonStrings import CommonStrings

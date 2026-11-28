@@ -21,9 +21,8 @@ from org.allbinary.business.context.modules.storefront.statistics.inventory.Stor
 class StoreFrontInventoryStatistics(StoreFrontInventoryStatisticsInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.user.commerce.money.Money import Money
-        self.totalNumberOfItems: int = 0
-        self.totalInventorySaleValueMoney: Money = None
+        if "totalNumberOfItems" not in vars(self): self.totalNumberOfItems: int = 0
+        if "totalInventorySaleValueMoney" not in vars(self): self.totalInventorySaleValueMoney: Money = None
     
 
     def __init__(self, storeFrontInterface: StoreFrontInterface) -> None:
@@ -33,7 +32,7 @@ class StoreFrontInventoryStatistics(StoreFrontInventoryStatisticsInterface):
         from org.allbinary.business.user.commerce.money.Money import Money
         from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityFactory import InventoryEntityFactory
         from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityInterface import InventoryEntityInterface
-        self._init_fields()
+        __class__._init_fields(self)
         self.totalInventorySaleValueMoney = Money()
         inventoryEntityInterface: InventoryEntityInterface = InventoryEntityFactory.getInstance().getInventoryEntityInstance()
         itemVector: BasicArrayList = inventoryEntityInterface.getItems(storeFrontInterface)
@@ -57,6 +56,8 @@ class StoreFrontInventoryStatistics(StoreFrontInventoryStatisticsInterface):
     
 
     def toHashMap(self) -> HashMap:
+        from org.allbinary.business.context.modules.storefront.statistics.inventory.StoreFrontInventoryStatisticsData import StoreFrontInventoryStatisticsData
+        from org.allbinary.business.context.modules.storefront.statistics.inventory.StoreFrontInventoryStatisticsData import StoreFrontInventoryStatisticsData
         from java.util.HashMap import HashMap
         from org.allbinary.logic.StdUtil import StdUtil
         hashMap: HashMap = StdUtil.getInstance().createHashMap()

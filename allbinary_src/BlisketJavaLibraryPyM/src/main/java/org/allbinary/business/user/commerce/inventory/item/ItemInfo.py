@@ -20,14 +20,14 @@ from __future__ import annotations
 class ItemInfo:
 
     def _init_fields(self) -> None:
-        self.type_: list[str] = None
-        self.view: list[str] = None
-        self.data: list[str] = None
-        self.creationDate: list[str] = None
-        self.lastModified: list[str] = None
+        if "type_" not in vars(self): self.type_: list[str] = None
+        if "view" not in vars(self): self.view: list[str] = None
+        if "data" not in vars(self): self.data: list[str] = None
+        if "creationDate" not in vars(self): self.creationDate: list[str] = None
+        if "lastModified" not in vars(self): self.lastModified: list[str] = None
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
 
 

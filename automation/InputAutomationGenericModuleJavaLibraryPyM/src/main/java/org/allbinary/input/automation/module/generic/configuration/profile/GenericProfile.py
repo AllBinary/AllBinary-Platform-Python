@@ -20,23 +20,21 @@ from __future__ import annotations
 class GenericProfile:
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.GenericProfileActions import GenericProfileActions
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.name: str = None
-        self.vector: BasicArrayList = None
-        self.genericProfileActions: GenericProfileActions = None
+        if "name" not in vars(self): self.name: str = None
+        if "vector" not in vars(self): self.vector: BasicArrayList = None
+        if "genericProfileActions" not in vars(self): self.genericProfileActions: GenericProfileActions = None
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self.__jconstructor1(*args)
+            __class__.__jconstructor1(self, *args)
 
     def __jconstructor1(self, *args) -> None:
-        if True and not isinstance(args[0], (str, list, int, float)):
-            self._constructor1_1(*args)
+        if True and (args[0] is None or any(base.__name__ == "Node" for base in type(args[0]).__mro__)):
+            __class__._constructor1_1(self, *args)
         else:
-            self._constructor1_2(*args)
+            __class__._constructor1_2(self, *args)
     
 
     def _constructor1_1(self, node: Node) -> None:
@@ -46,7 +44,7 @@ class GenericProfile:
         from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
         from org.w3c.dom.Node import Node
         from org.w3c.dom.NodeList import NodeList
-        self._init_fields()
+        __class__._init_fields(self)
         self.setName(DomNodeHelper.getTextNodeValue(node))
         self.vector = BasicArrayListD()
         nodeList: NodeList = node.getChildNodes()
@@ -61,7 +59,7 @@ class GenericProfile:
 
     def _constructor1_2(self, name: str) -> None:
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
-        self._init_fields()
+        __class__._init_fields(self)
         self.setName(name)
         self.vector = BasicArrayListD()
     
@@ -72,7 +70,7 @@ class GenericProfile:
     
 
     def add(self, genericProfileDataWorkerType: GenericProfileDataWorkerType) -> None:
-        if not self.vector.contains(genericProfileDataWorkerType):
+        if not (self.vector.contains(genericProfileDataWorkerType)):
             self.vector.add(genericProfileDataWorkerType)
     
 

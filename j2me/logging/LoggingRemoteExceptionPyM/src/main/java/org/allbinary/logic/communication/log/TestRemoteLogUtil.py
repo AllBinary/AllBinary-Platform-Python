@@ -25,7 +25,7 @@ class TestRemoteLogUtil:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.globals.Globals import Globals
         from org.allbinary.string.CommonStrings import CommonStrings
-        Globals.getInstance().init(type(self).getClassLoader(), TestRemoteLogUtil.PATH)
+        Globals.getInstance().init(__import__("java.lang.ClassLoader", fromlist=["ClassLoader"]).ClassLoader.getSystemClassLoader(), TestRemoteLogUtil.PATH)
         logUtil: LogUtil = LogUtil.getInstance()
         commonStrings: CommonStrings = CommonStrings.getInstance()
         logUtil.put(commonStrings.EXCEPTION, "Test", "TestClass", Exception("Pretend Exception"))

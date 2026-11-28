@@ -15,11 +15,17 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.game.configuration.persistance.BasicPersitance import BasicPersitance
 
 
 #GameInputPersistanceLibrary
+@java_inherited_overloads
 class InputPersistance(BasicPersitance):
+    def _java_defaults(self):
+        vars(self).setdefault("tsUtil", None)
+        vars(self).setdefault("hashtableUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.TsUtil import TsUtil
@@ -29,14 +35,16 @@ class InputPersistance(BasicPersitance):
     
 
     def __init__(self, name: str) -> None:
+        __class__._java_defaults(self)
         super().__init__(name)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
     def loadAll(self, abeClientInformation: AbeClientInformationInterface) -> None:
         from org.allbinary.game.input.GameKeyMappingFactory import GameKeyMappingFactory
         from org.allbinary.game.input.InputFactory import InputFactory
+        from java.io.ByteArrayInputStream import ByteArrayInputStream
         from java.io.DataInputStream import DataInputStream
         from javax.microedition.rms.RecordEnumeration import RecordEnumeration
         from javax.microedition.rms.RecordStore import RecordStore
@@ -66,7 +74,7 @@ class InputPersistance(BasicPersitance):
             recordAsBytes: list[int] = None
             byteArrayInputStream: ByteArrayInputStream = None
             inputStream: DataInputStream = None
-            while recordEnum.hasNextElement():
+            while java_predicate(recordEnum, "hasNextElement"):
                 id: int = recordEnum.nextRecordId()
                 stringBuffer.delete(0, stringBuffer.length())
                 self.logUtil.putF(str(stringBuffer.append(self.persistanceStrings.LOADING_ID).appendint(id)), self, self.persistanceStrings.LOAD_ALL)
@@ -117,6 +125,7 @@ class InputPersistance(BasicPersitance):
 
     # throws Exception
     def save(self, abeClientInformation: AbeClientInformationInterface, hashtable: ABHashtable[object, object]) -> None:
+        from java.io.ByteArrayOutputStream import ByteArrayOutputStream
         from java.io.DataOutputStream import DataOutputStream
         from javax.microedition.rms.RecordStore import RecordStore
         from org.allbinary.game.configuration.persistance.NullRecordStore import NullRecordStore

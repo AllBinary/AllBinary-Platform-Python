@@ -15,10 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.input.Input import Input
 
 
+@java_inherited_overloads
 class GameKey(Input):
     NULL_GAME_KEY: GameKey = None
     
@@ -29,7 +32,7 @@ class GameKey(Input):
 
     def toString(self) -> str:
         from org.allbinary.logic.string.StringMaker import StringMaker
-        return str(StringMaker().append("GameKey ").append(str(super())))
+        return str(StringMaker().append("GameKey ").append(java_super_call(super(), "toString")))
 
     def __str__(self) -> str:
         return self.toString()

@@ -15,25 +15,33 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.business.context.AbContext import AbContext
 
 
+@java_inherited_overloads
 class SearchRequest(AbContext):
+    def _java_defaults(self):
+        vars(self).setdefault("xslFile", None)
+        vars(self).setdefault("pageName", None)
+        vars(self).setdefault("contentType", None)
+        vars(self).setdefault("searchParams", None)
+        vars(self).setdefault("storeFront", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-        self.xslFile: str = None
-        self.pageName: str = None
-        self.contentType: str = None
-        self.searchParams: SearchParams = None
-        self.storeFront: StoreFrontInterface = None
+        if "xslFile" not in vars(self): self.xslFile: str = None
+        if "pageName" not in vars(self): self.pageName: str = None
+        if "contentType" not in vars(self): self.contentType: str = None
+        if "searchParams" not in vars(self): self.searchParams: SearchParams = None
+        if "storeFront" not in vars(self): self.storeFront: StoreFrontInterface = None
     
 
     def __init__(self, storeFront: StoreFrontInterface, searchParams: SearchParams, xslFile: str, contentType: str, propertiesHashMap: HashMap, pageContext: PageContext) -> None:
+        __class__._java_defaults(self)
         from java.util.HashMap import HashMap
         from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
         super().__init__(propertiesHashMap, pageContext)
-        self._init_fields()
+        __class__._init_fields(self)
         self.storeFront = storeFront
         self.searchParams = searchParams
         self.xslFile = xslFile
@@ -85,6 +93,7 @@ class SearchRequest(AbContext):
 
     # throws Exception
     def getFileBaseNameNode(self, document: Document) -> Node:
+        from org.allbinary.logic.control.search.SearchData import SearchData
         from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
         from org.w3c.dom.Document import Document
         from org.w3c.dom.Node import Node

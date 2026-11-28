@@ -28,7 +28,7 @@ class TerrainEventCircularStaticPool:
         self.EVENT_POOL: AllBinaryEventCircularPool = AllBinaryEventCircularPool(20)
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -44,7 +44,7 @@ class TerrainEventCircularStaticPool:
     # throws Exception
     def getNext(self, basicTerrainInfo: BasicTerrainInfo) -> TerrainEvent:
         with self._lock:
-            return self._getNext_unlocked(basicTerrainInfo)
+            return __class__.__dict__["_getNext_unlocked"].__get__(self, __class__)(basicTerrainInfo)
 
     def _getNext_unlocked(self, basicTerrainInfo: BasicTerrainInfo) -> TerrainEvent:
         trackingEvent: TerrainEvent = self.EVENT_POOL.getNextInstance()

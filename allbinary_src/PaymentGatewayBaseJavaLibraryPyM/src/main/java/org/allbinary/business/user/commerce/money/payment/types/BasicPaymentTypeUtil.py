@@ -22,7 +22,6 @@ class BasicPaymentTypeUtil:
     instance: BasicPaymentTypeUtil = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.paymentTypeVector: BasicArrayList = BasicArrayListD()
     
@@ -38,7 +37,7 @@ class BasicPaymentTypeUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def add(self, paymentType: BasicPaymentType) -> None:
@@ -66,7 +65,7 @@ class BasicPaymentTypeUtil:
         size: int = self.paymentTypeVector.size()
         for i in range(0, size):
             paymentType: BasicPaymentType = self.paymentTypeVector.get(i)
-            if not a_PaymentTypeVector.contains(paymentType):
+            if not (a_PaymentTypeVector.contains(paymentType)):
                 diff.add(paymentType)
         return diff
 # from org.allbinary.util.BasicArrayList import BasicArrayList

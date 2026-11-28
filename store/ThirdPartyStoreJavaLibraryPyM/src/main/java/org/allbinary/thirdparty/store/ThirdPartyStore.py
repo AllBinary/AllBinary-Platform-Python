@@ -20,12 +20,12 @@ from __future__ import annotations
 class ThirdPartyStore:
 
     def _init_fields(self) -> None:
-        self.authorized: bool = False
-        self.name: str = None
+        if "authorized" not in vars(self): self.authorized: bool = False
+        if "name" not in vars(self): self.name: str = None
     
 
     def __init__(self, name: str) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.name = name
     
 

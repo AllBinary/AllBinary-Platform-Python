@@ -23,43 +23,43 @@ class AdminConfiguration(AdminConfigurationInterface):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.context.configuration.ContextConfigurationInterface import ContextConfigurationInterface
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.contextConfigurationInterface: ContextConfigurationInterface = None
+        if "contextConfigurationInterface" not in vars(self): self.contextConfigurationInterface: ContextConfigurationInterface = None
 
     def __init__(self, *args) -> None:
         if len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
         elif len(args) == 1:
-            self.__jconstructor1(*args)
+            __class__.__jconstructor1(self, *args)
 
     def __jconstructor1(self, *args) -> None:
-        if True and not isinstance(args[0], (str, list, int, float)):
-            self._constructor1_1(*args)
+        if True and (args[0] is None or any(base.__name__ == "HttpServletRequest" for base in type(args[0]).__mro__)):
+            __class__._constructor1_1(self, *args)
         else:
-            self._constructor1_2(*args)
+            __class__._constructor1_2(self, *args)
     
 
     def _constructor0(self) -> None:
+        from org.allbinary.business.user.modules.admin.configuration.AdminConfigurationData import AdminConfigurationData
         from org.allbinary.business.context.configuration.ContextConfigurationInterfaceFactory import ContextConfigurationInterfaceFactory
-        self._init_fields()
+        __class__._init_fields(self)
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
         self.contextConfigurationInterface = ContextConfigurationInterfaceFactory.getInstance().getInstance(AdminConfigurationData.CONTEXTNAME)
     
 
     def _constructor1_1(self, request: HttpServletRequest) -> None:
         from org.allbinary.logic.communication.http.request.RequestParams import RequestParams
-        self._init_fields()
+        __class__._init_fields(self)
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
         self.getFormData(RequestParams(request).toHashMap())
     
 
     def _constructor1_2(self, storeHashMap: HashMap) -> None:
         from java.util.HashMap import HashMap
-        self._init_fields()
+        __class__._init_fields(self)
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
         self.getFormData(storeHashMap)
     
@@ -76,9 +76,10 @@ class AdminConfiguration(AdminConfigurationInterface):
     # throws Exception
     def write(self) -> None:
         with self._lock:
-            return self._write_unlocked()
+            return __class__.__dict__["_write_unlocked"].__get__(self, __class__)()
 
     def _write_unlocked(self) -> None:
+        from org.allbinary.business.user.modules.admin.configuration.AdminConfigurationData import AdminConfigurationData
         from org.allbinary.business.context.configuration.ContextConfigurationData import ContextConfigurationData
         from org.allbinary.business.context.configuration.ContextConfigurationDomDocumentMapping import ContextConfigurationDomDocumentMapping
         from org.allbinary.business.context.configuration.ContextConfigurationPathUtil import ContextConfigurationPathUtil

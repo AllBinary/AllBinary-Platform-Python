@@ -23,7 +23,6 @@ class PrimaryWaypointHelper:
 
     def _init_fields(self) -> None:
         from org.allbinary.game.layer.NullPathFindingLayer import NullPathFindingLayer
-        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
         self.waypointLayer: PathFindingLayerInterface = NullPathFindingLayer.NULL_PATH_FINDING_LAYER
     
 
@@ -33,7 +32,7 @@ class PrimaryWaypointHelper:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getWaypointLayer(self) -> PathFindingLayerInterface:

@@ -27,6 +27,7 @@ class AdvancedRTSLayerUtil:
     
 
     def createFakeRTSLayerHashtable(self, baseRaceTrackGeographicMap: BaseRaceTrackGeographicMap) -> ABHashtable[object, object]:
+        from org.allbinary.game.layer.RTSLayerUtil import RTSLayerUtil
         from org.allbinary.game.layer.waypoint.WorkWaypoint import WorkWaypoint
         from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
         from org.allbinary.media.graphics.geography.map.racetrack.BaseRaceTrackGeographicMap import BaseRaceTrackGeographicMap

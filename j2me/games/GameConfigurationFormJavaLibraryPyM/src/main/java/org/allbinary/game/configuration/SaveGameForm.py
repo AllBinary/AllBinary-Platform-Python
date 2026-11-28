@@ -16,12 +16,16 @@
 from __future__ import annotations
 
 import time
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.graphics.displayable.screen.CommandForm import CommandForm
 
 
+@java_inherited_overloads
 class SaveGameForm(CommandForm):
     FORM: CommandForm = None
+    def _java_defaults(self):
+        vars(self).setdefault("meUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.MIDPUtil import MIDPUtil
@@ -43,12 +47,13 @@ class SaveGameForm(CommandForm):
     
 
     def __init__(self, commandListener: CommandListener, title: str, backgrounBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.CommandListener import CommandListener
         from javax.microedition.lcdui.TextField import TextField
         from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.logic.ABSystemWrapper import ABSystemWrapper
         super().__init__(commandListener, title, backgrounBasicColor, foregroundBasicColor)
-        self._init_fields()
+        __class__._init_fields(self)
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
         timeString: str = str(ABSystemWrapper.getInstance().currentTimeMillis())
         self.meUtil.appendItem(self, TextField("Name: ", timeString, 30, TextField.ANY))

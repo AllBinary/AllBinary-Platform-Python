@@ -3,9 +3,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.collision.CollisionProcessor import CollisionProcessor
 
 
+@java_inherited_overloads
 class Collision2DProcessor(CollisionProcessor):
 
     def __init__(self) -> None:

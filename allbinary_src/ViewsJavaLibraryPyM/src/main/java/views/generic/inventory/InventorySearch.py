@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from views.admin.inventory.listings.InventoryViewSearchInterface import InventoryViewSearchInterface
 
 
@@ -23,18 +24,17 @@ class InventorySearch(InventoryViewSearchInterface):
     def _init_fields(self) -> None:
         from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.logic.control.search.SearchRequest import SearchRequest
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.basicItemData: BasicItemData = BasicItemData.getInstance()
-        self.searchRequest: SearchRequest = None
+        if "searchRequest" not in vars(self): self.searchRequest: SearchRequest = None
     
 
     def __init__(self, searchRequest: SearchRequest) -> None:
         from org.allbinary.logic.control.search.SearchRequest import SearchRequest
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.searchRequest = searchRequest
     
 

@@ -15,16 +15,26 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.IndexedAnimation import IndexedAnimation
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 
 
+@java_inherited_overloads
 class TextAnimation(*java_bases(IndexedAnimation, UpdateMyFontInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("updateMyFontProcessor", None)
+        vars(self).setdefault("myFontProcessor", None)
+        vars(self).setdefault("textArrayP", None)
+        vars(self).setdefault("anchor", 0)
+        vars(self).setdefault("fontHeight", 0)
+        vars(self).setdefault("offsetY", 0)
+        vars(self).setdefault("textChangeListener", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.graphics.Anchor import Anchor
-        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
         from org.allbinary.logic.string.StringUtil import StringUtil
         self.updateMyFontProcessor: MyFontProcessor = UpdateMyFontProcessor(self)
@@ -37,9 +47,10 @@ class TextAnimation(*java_bases(IndexedAnimation, UpdateMyFontInterface)):
     
 
     def __init__(self, text: str, animationBehavior: AnimationBehavior) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         super().__init__(animationBehavior)
-        self._init_fields()
+        __class__._init_fields(self)
         self.setText(text)
     
 
@@ -52,7 +63,7 @@ class TextAnimation(*java_bases(IndexedAnimation, UpdateMyFontInterface)):
         font: Font = graphics.getFont()
         self.fontHeight = font.getHeight()
         adjustedFontHeight: int = int(-float(self.fontHeight) * 2.00)
-        self.offsetY = (adjustedFontHeight if SWTJOGLProcessor.getInstance().isJOGL() else 0)
+        self.offsetY = (adjustedFontHeight if java_predicate(SWTJOGLProcessor.getInstance(), "isJOGL") else 0)
         self.textChangeListener.onMeasure()
         self.textChangeListener = TextChangeListener.getInstance()
         self.myFontProcessor = MyFontProcessor.getInstance()

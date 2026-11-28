@@ -15,57 +15,92 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.media.image.ImageProcessorInputCompositeInterface import ImageProcessorInputCompositeInterface
 # from javax.swing.JPanel import JPanel
 
 
+@java_inherited_overloads
 class ImageUnifierJPanel(*java_bases(JPanel, ImageProcessorInputCompositeInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("imageStrings", None)
+        vars(self).setdefault("imagesRatioUtil", None)
+        vars(self).setdefault("imageProcessorInput", None)
+        vars(self).setdefault("icon", None)
+        vars(self).setdefault("imageUnifierProperties", None)
+        vars(self).setdefault("result", None)
+        vars(self).setdefault("isImageFillIn", False)
+        vars(self).setdefault("avgRatioJTextField", None)
+        vars(self).setdefault("cellHeightJTextField", None)
+        vars(self).setdefault("cellRatioJTextField", None)
+        vars(self).setdefault("cellWidthJTextField", None)
+        vars(self).setdefault("columnsJTextField", None)
+        vars(self).setdefault("downJButton", None)
+        vars(self).setdefault("fudgeItJButton", None)
+        vars(self).setdefault("imageJList", None)
+        vars(self).setdefault("jButton1", None)
+        vars(self).setdefault("jButton2", None)
+        vars(self).setdefault("jButtonOrder", None)
+        vars(self).setdefault("jLabel1", None)
+        vars(self).setdefault("jLabel2", None)
+        vars(self).setdefault("jLabel3", None)
+        vars(self).setdefault("jLabel4", None)
+        vars(self).setdefault("jLabel5", None)
+        vars(self).setdefault("jLabel6", None)
+        vars(self).setdefault("jPanel1", None)
+        vars(self).setdefault("jScrollPane1", None)
+        vars(self).setdefault("jScrollPane2", None)
+        vars(self).setdefault("rowsJTextField", None)
+        vars(self).setdefault("upJButton", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
         from org.allbinary.media.image.ImageStrings import ImageStrings
-        from org.allbinary.media.image.ImageUnifierProperties import ImageUnifierProperties
         from org.allbinary.media.image.ImagesRatioUtil import ImagesRatioUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.imageStrings: ImageStrings = ImageStrings.getInstance()
         self.imagesRatioUtil: ImagesRatioUtil = ImagesRatioUtil.getInstance()
-        self.imageProcessorInput: ImageProcessorInput = None
-        self.icon: list[ImageIconUnique] = None
-        self.imageUnifierProperties: ImageUnifierProperties = None
-        self.result: BufferedImage = None
+        if "imageProcessorInput" not in vars(self): self.imageProcessorInput: ImageProcessorInput = None
+        if "icon" not in vars(self): self.icon: list[ImageIconUnique] = None
+        if "imageUnifierProperties" not in vars(self): self.imageUnifierProperties: ImageUnifierProperties = None
+        if "result" not in vars(self): self.result: BufferedImage = None
         self.isImageFillIn: bool = True
-        self.avgRatioJTextField: JTextField = None
-        self.cellHeightJTextField: JTextField = None
-        self.cellRatioJTextField: JTextField = None
-        self.cellWidthJTextField: JTextField = None
-        self.columnsJTextField: JTextField = None
-        self.downJButton: JButton = None
-        self.fudgeItJButton: JButton = None
-        self.imageJList: JList = None
-        self.jButton1: JButton = None
-        self.jButton2: JButton = None
-        self.jButtonOrder: JButton = None
-        self.jLabel1: JLabel = None
-        self.jLabel2: JLabel = None
-        self.jLabel3: JLabel = None
-        self.jLabel4: JLabel = None
-        self.jLabel5: JLabel = None
-        self.jLabel6: JLabel = None
-        self.jPanel1: JPanel = None
-        self.jScrollPane1: JScrollPane = None
-        self.jScrollPane2: JScrollPane = None
-        self.rowsJTextField: JTextField = None
-        self.upJButton: JButton = None
+        if "avgRatioJTextField" not in vars(self): self.avgRatioJTextField: JTextField = None
+        if "cellHeightJTextField" not in vars(self): self.cellHeightJTextField: JTextField = None
+        if "cellRatioJTextField" not in vars(self): self.cellRatioJTextField: JTextField = None
+        if "cellWidthJTextField" not in vars(self): self.cellWidthJTextField: JTextField = None
+        if "columnsJTextField" not in vars(self): self.columnsJTextField: JTextField = None
+        if "downJButton" not in vars(self): self.downJButton: JButton = None
+        if "fudgeItJButton" not in vars(self): self.fudgeItJButton: JButton = None
+        if "imageJList" not in vars(self): self.imageJList: JList = None
+        if "jButton1" not in vars(self): self.jButton1: JButton = None
+        if "jButton2" not in vars(self): self.jButton2: JButton = None
+        if "jButtonOrder" not in vars(self): self.jButtonOrder: JButton = None
+        if "jLabel1" not in vars(self): self.jLabel1: JLabel = None
+        if "jLabel2" not in vars(self): self.jLabel2: JLabel = None
+        if "jLabel3" not in vars(self): self.jLabel3: JLabel = None
+        if "jLabel4" not in vars(self): self.jLabel4: JLabel = None
+        if "jLabel5" not in vars(self): self.jLabel5: JLabel = None
+        if "jLabel6" not in vars(self): self.jLabel6: JLabel = None
+        if "jPanel1" not in vars(self): self.jPanel1: JPanel = None
+        if "jScrollPane1" not in vars(self): self.jScrollPane1: JScrollPane = None
+        if "jScrollPane2" not in vars(self): self.jScrollPane2: JScrollPane = None
+        if "rowsJTextField" not in vars(self): self.rowsJTextField: JTextField = None
+        if "upJButton" not in vars(self): self.upJButton: JButton = None
     
 
     def __init__(self, imageProcessorInput: ImageProcessorInput) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.initComponents()
         self.setImageProcessorInput(imageProcessorInput)
     
@@ -110,7 +145,7 @@ class ImageUnifierJPanel(*java_bases(JPanel, ImageProcessorInputCompositeInterfa
                 averageRatioString = averageRatioString[0:4]
             self.avgRatioJTextField.setText(averageRatioString)
             self.fudgeItJButton.setEnabled(False)
-            if not self.imagesRatioUtil.isEqual(tempBufferedImageArray, totalImages):
+            if not (self.imagesRatioUtil.isEqual(tempBufferedImageArray, totalImages)):
                 if self.isImageFillIn:
                     self.fudgeItJButton.setEnabled(True)
             self.updateImage(tempBufferedImageArray)
@@ -144,13 +179,15 @@ class ImageUnifierJPanel(*java_bases(JPanel, ImageProcessorInputCompositeInterfa
         self.updateUI()
 
     def updateImage(self, *args):
-        return getattr(self, "updateImage_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("updateImage_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().updateImage(*args)
     
 
     def updateOnPropertiesChange(self) -> None:
         from org.allbinary.media.image.ImageUnifierCell import ImageUnifierCell
         from org.allbinary.media.image.ImageUnifierProperties import ImageUnifierProperties
-        if self.rowsJTextField.getText().length() > 0 and self.columnsJTextField.getText().length() > 0 and self.cellWidthJTextField.getText().length() > 0 and self.cellHeightJTextField.getText().length() > 0:
+        if __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(self.rowsJTextField.getText()) > 0 and __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(self.columnsJTextField.getText()) > 0 and __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(self.cellWidthJTextField.getText()) > 0 and __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(self.cellHeightJTextField.getText()) > 0:
             self.imageUnifierProperties = ImageUnifierProperties()
             self.imageUnifierProperties.setRows(int(self.rowsJTextField.getText()))
             self.imageUnifierProperties.setColumns(int(self.columnsJTextField.getText()))
@@ -194,99 +231,135 @@ class ImageUnifierJPanel(*java_bases(JPanel, ImageProcessorInputCompositeInterfa
         self.imageJList.setMinimumSize(Dimension(50, 0))
         self.jScrollPane1.setViewportView(self.imageJList)
         self.jButton1.setText("Save")
-        self.jButton1.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.jButton1ActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN71869(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "jButton1ActionPerformed") else _java_listener_owner).jButton1ActionPerformed(evt)
+        self.jButton1.addActionListener(_JavaListenerN71869()
+            )
         self.upJButton.setText("Up")
-        self.upJButton.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.upJButtonActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN72008(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "upJButtonActionPerformed") else _java_listener_owner).upJButtonActionPerformed(evt)
+        self.upJButton.addActionListener(_JavaListenerN72008()
+            )
         self.downJButton.setText("Down")
-        self.downJButton.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.downJButtonActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN72147(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "downJButtonActionPerformed") else _java_listener_owner).downJButtonActionPerformed(evt)
+        self.downJButton.addActionListener(_JavaListenerN72147()
+            )
         self.fudgeItJButton.setText("Fudge It!")
-        self.fudgeItJButton.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.fudgeItJButtonActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN72286(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "fudgeItJButtonActionPerformed") else _java_listener_owner).fudgeItJButtonActionPerformed(evt)
+        self.fudgeItJButton.addActionListener(_JavaListenerN72286()
+            )
         self.jLabel2.setText("Columns:")
         self.columnsJTextField.setText(commonPhoneStrings.TWO)
-        self.columnsJTextField.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.columnsJTextFieldActionPerformed(evt)
-))
-        self.columnsJTextField.addPropertyChangeListener((PropertyChangeListener()  # Java anonymous class body:
-#             
-# 
-#             def propertyChange(self, evt: PropertyChangeEvent) -> None:
-#                 self.columnsJTextFieldPropertyChange(evt)
-))
-        self.columnsJTextField.addKeyListener((KeyAdapter()  # Java anonymous class body:
-#             
-# 
-#             def keyPressed(self, evt: KeyEvent) -> None:
-#                 self.columnsJTextFieldKeyPressed(evt)
-#             
-# 
-#             def keyTyped(self, evt: KeyEvent) -> None:
-#                 self.columnsJTextFieldKeyTyped(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN72467(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "columnsJTextFieldActionPerformed") else _java_listener_owner).columnsJTextFieldActionPerformed(evt)
+        self.columnsJTextField.addActionListener(_JavaListenerN72467()
+            )
+        _java_listener_owner = self
+        class _JavaListenerN72576(PropertyChangeListener):
+            
+            
+
+            def propertyChange(self, evt: PropertyChangeEvent) -> None:
+                (self if hasattr(self, "columnsJTextFieldPropertyChange") else _java_listener_owner).columnsJTextFieldPropertyChange(evt)
+        self.columnsJTextField.addPropertyChangeListener(_JavaListenerN72576()
+            )
+        _java_listener_owner = self
+        class _JavaListenerN72685(KeyAdapter):
+            
+            
+
+            def keyPressed(self, evt: KeyEvent) -> None:
+                (self if hasattr(self, "columnsJTextFieldKeyPressed") else _java_listener_owner).columnsJTextFieldKeyPressed(evt)
+            
+
+            def keyTyped(self, evt: KeyEvent) -> None:
+                (self if hasattr(self, "columnsJTextFieldKeyTyped") else _java_listener_owner).columnsJTextFieldKeyTyped(evt)
+        self.columnsJTextField.addKeyListener(_JavaListenerN72685()
+            )
         self.jLabel1.setText("Rows:")
         self.rowsJTextField.setText(commonPhoneStrings.TWO)
-        self.rowsJTextField.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.rowsJTextFieldActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN72934(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "rowsJTextFieldActionPerformed") else _java_listener_owner).rowsJTextFieldActionPerformed(evt)
+        self.rowsJTextField.addActionListener(_JavaListenerN72934()
+            )
         self.jLabel3.setText("Cell Width:")
         self.cellWidthJTextField.setText("200")
-        self.cellWidthJTextField.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.cellWidthJTextFieldActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN73103(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "cellWidthJTextFieldActionPerformed") else _java_listener_owner).cellWidthJTextFieldActionPerformed(evt)
+        self.cellWidthJTextField.addActionListener(_JavaListenerN73103()
+            )
         self.jLabel4.setText("Cell Height:")
         self.cellHeightJTextField.setText("150")
-        self.cellHeightJTextField.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.cellHeightJTextFieldActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN73272(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "cellHeightJTextFieldActionPerformed") else _java_listener_owner).cellHeightJTextFieldActionPerformed(evt)
+        self.cellHeightJTextField.addActionListener(_JavaListenerN73272()
+            )
         self.jLabel5.setText("Cell Ratio:")
         self.cellRatioJTextField.setEditable(False)
         self.jLabel6.setText("Avg Image Ratio:")
         self.avgRatioJTextField.setEditable(False)
         self.jButton2.setText(self.commonStrings.UPDATE)
-        self.jButton2.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.jButton2ActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN73546(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "jButton2ActionPerformed") else _java_listener_owner).jButton2ActionPerformed(evt)
+        self.jButton2.addActionListener(_JavaListenerN73546()
+            )
         self.jButtonOrder.setText("Order")
-        self.jButtonOrder.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.jButtonOrderActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN73685(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "jButtonOrderActionPerformed") else _java_listener_owner).jButtonOrderActionPerformed(evt)
+        self.jButtonOrder.addActionListener(_JavaListenerN73685()
+            )
         jPanel1Layout: GroupLayout = GroupLayout(self.jPanel1)
         self.jPanel1.setLayout(jPanel1Layout)
         jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup().addContainerGap().addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.TRAILING).addComponent(self.jButton1, GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE).addGroup(jPanel1Layout.createSequentialGroup().addComponent(self.upJButton, GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE).addComponent(self.downJButton, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)).addComponent(self.fudgeItJButton, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE).addGroup(GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup().addComponent(self.jLabel3).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 99, GroupLayout.PREFERRED_SIZE)).addGroup(GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup().addComponent(self.jLabel4).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 96, GroupLayout.PREFERRED_SIZE)).addComponent(self.avgRatioJTextField, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE).addComponent(self.jLabel6, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE).addComponent(self.cellRatioJTextField, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE).addComponent(self.jLabel5, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE).addComponent(self.cellHeightJTextField, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE).addComponent(self.cellWidthJTextField, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE).addComponent(self.jButton2, GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE).addGroup(GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup().addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(self.jLabel2).addComponent(self.jLabel1)).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(self.rowsJTextField, GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE).addGroup(jPanel1Layout.createSequentialGroup().addComponent(self.columnsJTextField, GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE).addGap(1, 1, 1)))).addComponent(self.jButtonOrder, GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)).addContainerGap()))
@@ -334,6 +407,7 @@ class ImageUnifierJPanel(*java_bases(JPanel, ImageProcessorInputCompositeInterfa
     
 
     def jButton1ActionPerformed(self, evt: ActionEvent) -> None:
+        from java.io.File import File
         from org.allbinary.logic.io.file.FileWrapperUtil import FileWrapperUtil
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.logic.string.StringUtil import StringUtil

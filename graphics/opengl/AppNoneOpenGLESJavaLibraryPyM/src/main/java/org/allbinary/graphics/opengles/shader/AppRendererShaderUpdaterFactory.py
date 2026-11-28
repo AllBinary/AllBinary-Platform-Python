@@ -15,12 +15,18 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.graphics.opengles.shader.ShaderUpdater import ShaderUpdater
 
 
+@java_inherited_overloads
 class AppRendererShaderUpdaterFactory(ShaderUpdater):
     instanceC: AppRendererShaderUpdaterFactory = None
+    def _java_defaults(self):
+        vars(self).setdefault("NULL_SHADER_COMPOSITE_ARRAY", None)
+        vars(self).setdefault("shaderCompositeArray", None)
+        vars(self).setdefault("shaderOpenGLProcessorArray", None)
 
     def _init_fields(self) -> None:
         self.NULL_SHADER_COMPOSITE_ARRAY: list[ShaderComposite] = [None] * (0)
@@ -28,8 +34,9 @@ class AppRendererShaderUpdaterFactory(ShaderUpdater):
         self.shaderOpenGLProcessorArray: list[ShaderOpenGLProcessor] = [None] * (0)
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

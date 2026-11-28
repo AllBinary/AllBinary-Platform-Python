@@ -15,28 +15,37 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.input.automation.actions.script.condition.BasicProfileActionScriptCondition import BasicProfileActionScriptCondition
 from org.allbinary.input.automation.actions.script.condition.AlwaysActionScriptConditionInterface import AlwaysActionScriptConditionInterface
 
 
+@java_inherited_overloads
 class AlwaysActionScriptCondition(*java_bases(BasicProfileActionScriptCondition, AlwaysActionScriptConditionInterface)):
     NAME: str = "Always On/Off"
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("alwaysActionScriptConditionJPanel", None)
+        vars(self).setdefault("isOn", False)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.alwaysActionScriptConditionJPanel: AlwaysActionScriptConditionJPanel = None
-        self.isOn: bool = False
+        if "alwaysActionScriptConditionJPanel" not in vars(self): self.alwaysActionScriptConditionJPanel: AlwaysActionScriptConditionJPanel = None
+        if "isOn" not in vars(self): self.isOn: bool = False
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
         elif len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
     
 
     def _constructor1(self, node: Node) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.input.automation.actions.script.condition.AlwaysActionScriptConditionData import AlwaysActionScriptConditionData
         from org.allbinary.input.automation.actions.script.condition.AlwaysActionScriptConditionData import AlwaysActionScriptConditionData
         from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
@@ -44,7 +53,7 @@ class AlwaysActionScriptCondition(*java_bases(BasicProfileActionScriptCondition,
         from org.w3c.dom.Node import Node
         from org.w3c.dom.NodeList import NodeList
         super().__init__(AlwaysActionScriptCondition.NAME, node)
-        self._init_fields()
+        __class__._init_fields(self)
         actionNode: Node = DomSearchHelper.getNode(AlwaysActionScriptConditionData.NAME, node.getChildNodes())
         if actionNode is not None:
             nodeList: NodeList = actionNode.getChildNodes()
@@ -61,8 +70,9 @@ class AlwaysActionScriptCondition(*java_bases(BasicProfileActionScriptCondition,
     
 
     def _constructor0(self) -> None:
+        __class__._java_defaults(self)
         super().__init__(AlwaysActionScriptCondition.NAME)
-        self._init_fields()
+        __class__._init_fields(self)
         self.init()
     
 
@@ -88,7 +98,7 @@ class AlwaysActionScriptCondition(*java_bases(BasicProfileActionScriptCondition,
         from java.util.HashMap import HashMap
         from org.allbinary.logic.StdUtil import StdUtil
         hashMap: HashMap = StdUtil.getInstance().createHashMap()
-        hashMap.put(AlwaysActionScriptConditionData.IS_ON, str(self.isIsOn()))
+        hashMap.put(AlwaysActionScriptConditionData.IS_ON, str(java_predicate(self, "isIsOn")))
         self.logUtil.putF("HashMap: " + str(hashMap), self, "toHashMap()")
         return hashMap
     
@@ -99,20 +109,20 @@ class AlwaysActionScriptCondition(*java_bases(BasicProfileActionScriptCondition,
         from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
         from org.w3c.dom.Document import Document
         from org.w3c.dom.Node import Node
-        node: Node = super().toXmlNode(document)
+        node: Node = java_super_call(super(), "toXmlNode", document)
         node.appendChild(ModDomHelper.createNodeWithValueNodes(document, AlwaysActionScriptConditionData.NAME, self.toHashMap()))
         return node
     
 
     # throws Exception
     def shouldProcess(self, frame: int) -> bool:
-        if self.isIsOn():
-            return super().shouldProcess(frame)
+        if java_predicate(self, "isIsOn"):
+            return java_super_call(super(), "shouldProcess", frame)
         return False
     
 
     def log(self) -> None:
-        self.logUtil.putF("Is On: " + str(self.isIsOn()), self, "log")
+        self.logUtil.putF("Is On: " + str(java_predicate(self, "isIsOn")), self, "log")
 # from java.util.HashMap import HashMap
 # from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
 # from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper

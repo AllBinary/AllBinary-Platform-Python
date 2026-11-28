@@ -20,15 +20,14 @@ from __future__ import annotations
 class ShowVirtualKeyboardRunnable(object):
 
     def _init_fields(self) -> None:
-        from android.app.Activity import Activity
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.activity: Activity = None
+        if "activity" not in vars(self): self.activity: Activity = None
     
 
     def __init__(self, activity: Activity) -> None:
         from android.app.Activity import Activity
-        self._init_fields()
+        __class__._init_fields(self)
         self.activity = activity
     
 

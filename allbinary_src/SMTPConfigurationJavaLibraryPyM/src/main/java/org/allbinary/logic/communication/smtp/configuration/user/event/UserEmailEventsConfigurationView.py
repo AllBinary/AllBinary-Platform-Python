@@ -25,27 +25,28 @@ class UserEmailEventsConfigurationView(DomNodeInterface):
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.userEmailEventsConfigurationInterface: UserEmailEventsConfigurationInterface = None
+        if "userEmailEventsConfigurationInterface" not in vars(self): self.userEmailEventsConfigurationInterface: UserEmailEventsConfigurationInterface = None
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self.__jconstructor1(*args)
+            __class__.__jconstructor1(self, *args)
 
     def __jconstructor1(self, *args) -> None:
-        if True and not isinstance(args[0], (str, list, int, float)):
-            self._constructor1_1(*args)
+        if True and (args[0] is None or any(base.__name__ == "Node" for base in type(args[0]).__mro__)):
+            __class__._constructor1_1(self, *args)
         else:
-            self._constructor1_2(*args)
+            __class__._constructor1_2(self, *args)
     
 
     def _constructor1_1(self, node: Node) -> None:
         from org.allbinary.logic.communication.smtp.configuration.user.event.UserEmailEventsConfiguration import UserEmailEventsConfiguration
+        from org.allbinary.logic.communication.smtp.configuration.user.event.UserEmailEventConfigurationData import UserEmailEventConfigurationData
         from org.allbinary.logic.communication.smtp.configuration.user.event.UserEmailEventConfigurationView import UserEmailEventConfigurationView
         from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
         from org.w3c.dom.Node import Node
         from org.w3c.dom.NodeList import NodeList
-        self._init_fields()
+        __class__._init_fields(self)
         self.userEmailEventsConfigurationInterface = UserEmailEventsConfiguration()
         childNodeList: NodeList = node.getChildNodes()
         emailEventConfigurationNodeVector: BasicArrayList = DomSearchHelper.getAllNodesNoThrow(UserEmailEventConfigurationData.NAME, childNodeList)
@@ -57,7 +58,7 @@ class UserEmailEventsConfigurationView(DomNodeInterface):
     
 
     def _constructor1_2(self, userEmailEventsConfigurationInterface: UserEmailEventsConfigurationInterface) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.userEmailEventsConfigurationInterface = userEmailEventsConfigurationInterface
     
 
@@ -68,6 +69,7 @@ class UserEmailEventsConfigurationView(DomNodeInterface):
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
         from org.allbinary.logic.communication.smtp.configuration.user.event.UserEmailEventsConfigurationMapping import UserEmailEventsConfigurationMapping
+        from org.allbinary.logic.communication.smtp.configuration.user.event.UserEmailEventsConfigurationData import UserEmailEventsConfigurationData
         from org.allbinary.logic.communication.smtp.configuration.user.event.UserEmailEventConfigurationView import UserEmailEventConfigurationView
         from java.util.HashMap import HashMap
         from java.util.Set import Set

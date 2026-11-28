@@ -15,21 +15,27 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.communication.sql.AbSqlBean import AbSqlBean
 from org.allbinary.data.tables.log.LogTableEntityInterface import LogTableEntityInterface
 
 
+@java_inherited_overloads
 class LogTableEntity(*java_bases(AbSqlBean, LogTableEntityInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("tableName", None)
 
     def _init_fields(self) -> None:
         self.tableName: str = "log"
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.init.db.LogDbInitInfo import LogDbInitInfo
         super().__init__(LogDbInitInfo())
-        self._init_fields()
+        __class__._init_fields(self)
         self.setTableName(self.tableName)
     
 
@@ -44,20 +50,20 @@ class LogTableEntity(*java_bases(AbSqlBean, LogTableEntityInterface)):
     
 
     def createTable(self) -> str:
-        return super().createTable(self.createTableStatement())
+        return java_super_call(super(), "createTable", self.createTableStatement())
     
 
     def deleteWhere(self, key: str, value: str) -> None:
-        super().deleteWhere(key, value)
+        java_super_call(super(), "deleteWhere", key, value)
     
 
     def insert(self, values: BasicArrayList) -> None:
         from org.allbinary.util.BasicArrayList import BasicArrayList
-        super().insert(values)
+        java_super_call(super(), "insert", values)
     
 
     def dropTable(self) -> str:
-        return super().dropTable()
+        return java_super_call(super(), "dropTable")
 # from org.allbinary.business.entry.EntryData import EntryData
 # from org.allbinary.business.init.db.LogDbInitInfo import LogDbInitInfo
 # from org.allbinary.logic.communication.http.request.AbeHttpRequestInfoData import AbeHttpRequestInfoData

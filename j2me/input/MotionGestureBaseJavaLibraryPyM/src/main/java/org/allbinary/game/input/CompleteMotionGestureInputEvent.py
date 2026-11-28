@@ -15,15 +15,20 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
 from org.allbinary.game.input.CompleteMotionGestureInputInterface import CompleteMotionGestureInputInterface
 
 
+@java_inherited_overloads
 class CompleteMotionGestureInputEvent(*java_bases(AllBinaryEventObject, CompleteMotionGestureInputInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("name", None)
+        vars(self).setdefault("motionGestureInput", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
         from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.logic.string.StringUtil import StringUtil
@@ -33,10 +38,11 @@ class CompleteMotionGestureInputEvent(*java_bases(AllBinaryEventObject, Complete
     
 
     def __init__(self, name: str, motionGestureInput: MotionGestureInput) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
         from org.allbinary.string.CommonStrings import CommonStrings
         super().__init__(motionGestureInput)
-        self._init_fields()
+        __class__._init_fields(self)
         self.setName(name)
         try:
             self.setMotionGestureInput(motionGestureInput)

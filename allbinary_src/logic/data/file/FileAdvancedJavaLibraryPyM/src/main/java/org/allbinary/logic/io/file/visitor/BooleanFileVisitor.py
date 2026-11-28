@@ -22,15 +22,14 @@ class BooleanFileVisitor(VisitorInterface):
 
     def _init_fields(self) -> None:
         from org.allbinary.string.CommonStrings import CommonStrings
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.filterStringBasicArrayList: BasicArrayList = None
+        if "filterStringBasicArrayList" not in vars(self): self.filterStringBasicArrayList: BasicArrayList = None
     
 
     def __init__(self, filterStringBasicArrayList: BasicArrayList) -> None:
         from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         from org.allbinary.util.BasicArrayList import BasicArrayList
-        self._init_fields()
+        __class__._init_fields(self)
         self.setFilterStringBasicArrayList(filterStringBasicArrayList)
         PreLogUtil.put("Filter BasicArrayList: " + str(self.getFilterStringBasicArrayList()), self, self.commonStrings.CONSTRUCTOR)
     
@@ -71,10 +70,12 @@ class BooleanFileVisitor(VisitorInterface):
 
     def visit(self, *args):
         if len(args) == 1 and True:
-            return self.visit_j1_1(*args)
+            return __class__.__dict__["visit_j1_1"].__get__(self, __class__)(*args)
         if len(args) == 1:
-            return self.visit_j1_2(*args)
-        return getattr(self, "visit_j" + str(len(args)))(*args)
+            return __class__.__dict__["visit_j1_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("visit_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().visit(*args)
 # from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
 # from org.allbinary.logic.io.file.AbFile import AbFile
 # from org.allbinary.string.CommonStrings import CommonStrings

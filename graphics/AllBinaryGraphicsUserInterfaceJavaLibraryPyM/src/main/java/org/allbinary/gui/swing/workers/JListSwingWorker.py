@@ -15,19 +15,25 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 # from javax.swing.SwingWorker import SwingWorker
 
 
+@java_inherited_overloads
 class JListSwingWorker(SwingWorker):
+    def _java_defaults(self):
+        vars(self).setdefault("jList", None)
+        vars(self).setdefault("listModel", None)
 
     def _init_fields(self) -> None:
-        self.jList: JList = None
-        self.listModel: ListModel = None
+        if "jList" not in vars(self): self.jList: JList = None
+        if "listModel" not in vars(self): self.listModel: ListModel = None
     
 
     def __init__(self, jList: JList, listModel: ListModel) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.setJList(jList)
         self.setListModel(listModel)
     

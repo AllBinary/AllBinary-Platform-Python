@@ -15,31 +15,40 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.logic.visual.transform.AbTransformer import AbTransformer
 
 
+@java_inherited_overloads
 class BasicTransformer(AbTransformer):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("streamUtil", None)
+        vars(self).setdefault("abeClientInformation", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.logic.io.StreamUtil import StreamUtil
-        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.streamUtil: StreamUtil = StreamUtil.getInstance()
-        self.abeClientInformation: AbeClientInformationInterface = None
+        if "abeClientInformation" not in vars(self): self.abeClientInformation: AbeClientInformationInterface = None
     
 
     def __init__(self, abeClientInformation: AbeClientInformationInterface, transformInfoInterface: TransformInfoInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
         self.abeClientInformation = abeClientInformation
         self.setTemplateAsInputStream()
     
 
     # throws Exception
     def setEncryptedTemplateFileAsInputStream(self, file: AbFile) -> None:
+        from java.io.ByteArrayInputStream import ByteArrayInputStream
+        from java.io.ByteArrayOutputStream import ByteArrayOutputStream
         from java.io.InputStream import InputStream
         from org.allbinary.data.tree.dom.BasicUriResolver import BasicUriResolver
         from org.allbinary.logic.control.crypt.jcehelper.AbCrypt import AbCrypt
@@ -79,6 +88,8 @@ class BasicTransformer(AbTransformer):
 
     # throws Exception
     def setEncryptedTemplateAsInputStream(self) -> None:
+        from java.io.ByteArrayInputStream import ByteArrayInputStream
+        from java.io.ByteArrayOutputStream import ByteArrayOutputStream
         from java.io.InputStream import InputStream
         from org.allbinary.data.tree.dom.BasicUriResolver import BasicUriResolver
         from org.allbinary.logic.control.crypt.jcehelper.AbCrypt import AbCrypt
@@ -110,6 +121,8 @@ class BasicTransformer(AbTransformer):
 
     # throws Exception
     def setTemplateAsInputStream(self) -> None:
+        from java.io.ByteArrayInputStream import ByteArrayInputStream
+        from java.io.ByteArrayOutputStream import ByteArrayOutputStream
         from java.io.InputStream import InputStream
         from org.allbinary.data.tree.dom.BasicUriResolver import BasicUriResolver
         from org.allbinary.logic.io.AbFileInputStream import AbFileInputStream
@@ -143,11 +156,11 @@ class BasicTransformer(AbTransformer):
                     if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERFACTORY):
                         stringBuffer = StringMaker()
                         stringBuffer.append("Encrypted Template File isFile=")
-                        stringBuffer.appendboolean(encFile.isFile())
+                        stringBuffer.appendboolean(java_predicate(encFile, "isFile"))
                         stringBuffer.append("\nEncTemplateFilePath: ")
                         stringBuffer.append(encFile.getPath())
                         self.logUtil.putF(str(stringBuffer), self, "setTemplateAsInputStream()")
-                    if encFile.isFile():
+                    if java_predicate(encFile, "isFile"):
                         self.setEncryptedTemplateFileAsInputStream(encFile)
                         return
                     else:
@@ -155,8 +168,8 @@ class BasicTransformer(AbTransformer):
                         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERFACTORY):
                             self.logUtil.putF(self.getTransformInfoInterface().log(), self, "setTemplateAsInputStream()")
                         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERFACTORY):
-                            self.logUtil.putF("Template File isFile=" + str(file.isFile()), self, "setTemplateAsInputStream()")
-                        if file.isFile():
+                            self.logUtil.putF("Template File isFile=" + str(java_predicate(file, "isFile")), self, "setTemplateAsInputStream()")
+                        if java_predicate(file, "isFile"):
                             inputStream = AbFileInputStream.createFromAbFile(file)
                             outputStream = ByteArrayOutputStream()
                             outputStream = self.streamUtil.get(inputStream, outputStream, [0] * (16384))
@@ -171,7 +184,7 @@ class BasicTransformer(AbTransformer):
                     stringBuffer.append(AbPathData.getInstance().EXTENSION_SEP)
                     stringBuffer.append(transformInfoTemplateData.ENCRYPTED_EXTENSION)
                     file: AbFile = AbFile.createAbFile(str(stringBuffer))
-                    if file.isFile():
+                    if java_predicate(file, "isFile"):
                         self.setEncryptedTemplateFileAsInputStream(file)
                 else:
                     raise Exception("View Template File Type Is Not Recognized: " + str(self.getTransformInfoInterface().getTemplateFilePath()))

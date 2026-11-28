@@ -15,10 +15,19 @@
 
 from __future__ import annotations
 
+from java.lang.JavaThread import JavaThread
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import threading
 
 
-class PooledThread(threading.Thread):
+@java_inherited_overloads
+class PooledThread(JavaThread):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("threadObjectUtil", None)
+        vars(self).setdefault("threadPool", None)
+        vars(self).setdefault("INTERRUPT_EXCEPTION", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -26,13 +35,14 @@ class PooledThread(threading.Thread):
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.threadObjectUtil: ThreadObjectUtil = ThreadObjectUtil.getInstance()
-        self.threadPool: ThreadPool = None
+        if "threadPool" not in vars(self): self.threadPool: ThreadPool = None
         self.INTERRUPT_EXCEPTION: str = "Exit InterruptedException"
     
 
     def __init__(self, threadPool: ThreadPool) -> None:
+        __class__._java_defaults(self)
         super().__init__(name=threadPool.createName())
-        self._init_fields()
+        __class__._init_fields(self)
         self.logUtil.putF(self.commonStrings.CONSTRUCTOR, self, self.commonStrings.CONSTRUCTOR)
         self.threadPool = threadPool
     

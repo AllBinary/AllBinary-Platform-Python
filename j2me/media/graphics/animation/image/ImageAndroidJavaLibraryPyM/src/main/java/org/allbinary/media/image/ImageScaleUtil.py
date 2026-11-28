@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -25,7 +27,6 @@ class ImageScaleUtil:
         from org.allbinary.graphics.Anchor import Anchor
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
@@ -42,7 +43,7 @@ class ImageScaleUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -99,10 +100,10 @@ class ImageScaleUtil:
         from org.allbinary.image.ImageCache import ImageCache
         image: Image = NullImage.NULL_IMAGE
         if cached:
-            image = imageCache.get(type(self).__module__ + "." + type(self).__qualname__, width, height)
+            image = imageCache.get(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(self)), width, height)
         else:
             image = imageCache.get(self.commonStrings.CREATE_IMAGE, width, height)
-        if image.isMutable():
+        if java_predicate(image, "isMutable"):
             matrix: Matrix = Matrix()
             self.scale(image, matrix, scaleX, scaleY)
             image.getGraphics().drawImage(originalImage, 0, 0, self.anchor)

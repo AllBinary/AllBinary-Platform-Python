@@ -15,21 +15,28 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.media.image.comparison.motion.MotionRectangles import MotionRectangles
 
 
+@java_inherited_overloads
 class ConstrainedMotionRectangles(MotionRectangles):
     NAME: str = "constrainedMotionRectangles_"
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("motionRectangleConstraintsInterface", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.motionRectangleConstraintsInterface: MotionRectangleConstraintsInterface = None
+        if "motionRectangleConstraintsInterface" not in vars(self): self.motionRectangleConstraintsInterface: MotionRectangleConstraintsInterface = None
     
 
     def __init__(self, motionRectangleConstraintsInterface: MotionRectangleConstraintsInterface, motionRectangles: MotionRectangles) -> None:
+        __class__._java_defaults(self)
         super().__init__(ConstrainedMotionRectangles.NAME, motionRectangles.getImageComparisonResult())
-        self._init_fields()
+        __class__._init_fields(self)
         self.setMotionRectangleConstraintsInterface(motionRectangleConstraintsInterface)
     
 
@@ -56,9 +63,9 @@ class ConstrainedMotionRectangles(MotionRectangles):
             if isTooBig:
                 continue
             isValid: bool = self.getMotionRectangleConstraintsInterface().isValid(self.getImageComparisonResult().getFrameTwo(), bufferedImage, motionRectangle.getRectangle())
-            if not isValid:
+            if not (isValid):
                 continue
-            if not isTooSmall and not isAreaTooSmall and not isTooBig and isValid:
+            if not (isTooSmall) and not (isAreaTooSmall) and not (isTooBig) and isValid:
                 vector.add(motionRectangle)
         self.setVector(vector)
     

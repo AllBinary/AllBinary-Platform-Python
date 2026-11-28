@@ -23,7 +23,7 @@ class LogUtil:
     instance: LogUtil = None
 
     def _init_fields(self) -> None:
-        self.logger: Logger = Logger.getLogger(LogUtil.__module__ + "." + LogUtil.__qualname__)
+        self.logger: Logger = Logger.getLogger(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(LogUtil))
         self.logFormatUtil: LogFormatUtil = LogFormatUtil.getInstance()
     
 
@@ -33,10 +33,11 @@ class LogUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def init(self) -> None:
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         PreLogUtil.put("Loggin Initialized", self, "init()")
     
 
@@ -50,8 +51,8 @@ class LogUtil:
                 functionName: str = log.getFunctionName()
                 className: str = CommonStrings.getInstance().EMPTY
                 clazz: type = type(anyType)
-                if clazz.__module__ + "." + clazz.__qualname__ is not None:
-                    className = clazz.__module__ + "." + clazz.__qualname__
+                if __import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(clazz) is not None:
+                    className = __import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(clazz)
                 message: str = self.logFormatUtil.get(className, functionName, specialMessage, exception)
                 self.logger.log(Level.INFO, message)
         except Exception as e:
@@ -63,8 +64,8 @@ class LogUtil:
         try:
             className: str = CommonStrings.getInstance().EMPTY
             clazz: type = type(anyType)
-            if clazz.__module__ + "." + clazz.__qualname__ is not None:
-                className = clazz.__module__ + "." + clazz.__qualname__
+            if __import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(clazz) is not None:
+                className = __import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(clazz)
             message: str = self.logFormatUtil.getS(className, functionName, specialMessage)
             if exception is not None:
                 self.logger.log(Level.SEVERE, message, exception)
@@ -76,6 +77,7 @@ class LogUtil:
 # from org.allbinary.logic.string.StringMaker import StringMaker
 # from java.util.logging.Logger import Logger
 # from org.allbinary.string.CommonStrings import CommonStrings
+from org.allbinary.logic.communication.log.LogFormatUtil import LogFormatUtil
 
 
 def _LogUtil_instance() -> object:

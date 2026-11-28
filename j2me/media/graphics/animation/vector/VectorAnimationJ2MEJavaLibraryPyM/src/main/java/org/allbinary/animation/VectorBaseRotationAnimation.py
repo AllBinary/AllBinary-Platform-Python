@@ -15,12 +15,18 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.RotationAnimation import RotationAnimation
 from org.allbinary.animation.VectorAnimationInterface import VectorAnimationInterface
 
 
+@java_inherited_overloads
 class VectorBaseRotationAnimation(*java_bases(RotationAnimation, VectorAnimationInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("currentPoints", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.NullUtil import NullUtil
@@ -28,11 +34,13 @@ class VectorBaseRotationAnimation(*java_bases(RotationAnimation, VectorAnimation
     
 
     def __init__(self, angleInfo: AngleInfo, currentPoints: list[list[list[int]]], basicColor: BasicColor, animationBehavior: AnimationBehavior) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.math.AngleInfo import AngleInfo
         from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
-        super().__init__(angleInfo, CircularIndexUtil.createInstance(360 / angleInfo.getAngleIncrementInfo().getAngleIncrement()), animationBehavior)
-        self._init_fields()
+        super().__init__(angleInfo, CircularIndexUtil.createInstance(java_divide(360, angleInfo.getAngleIncrementInfo().getAngleIncrement())
+            ), animationBehavior)
+        __class__._init_fields(self)
         self.setPoints(currentPoints)
         self.setBasicColorP(basicColor)
     
@@ -107,12 +115,12 @@ class VectorBaseRotationAnimation(*java_bases(RotationAnimation, VectorAnimation
 
     def getBasicColorP(self) -> BasicColor:
         from org.allbinary.graphics.color.BasicColor import BasicColor
-        return super().getBasicColorP()
+        return java_super_call(super(), "getBasicColorP")
     
 
     def setBasicColorP(self, basicColor: BasicColor) -> None:
         from org.allbinary.graphics.color.BasicColor import BasicColor
-        super().setBasicColorP(basicColor)
+        java_super_call(super(), "setBasicColorP", basicColor)
 # from javax.microedition.lcdui.Graphics import Graphics
 # from org.allbinary.graphics.color.BasicColor import BasicColor
 # from org.allbinary.logic.NullUtil import NullUtil

@@ -15,41 +15,49 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.logic.io.file.visitor.IncludeFileExtensionsBooleanFileVisitor import IncludeFileExtensionsBooleanFileVisitor
 
 
+@java_inherited_overloads
 class DirectoryOrIncludeFileExtensionBooleanFileVisitor(IncludeFileExtensionsBooleanFileVisitor):
+    def _java_defaults(self):
+        vars(self).setdefault("includesString", None)
 
     def _init_fields(self) -> None:
-        self.includesString: str = None
+        if "includesString" not in vars(self): self.includesString: str = None
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
         elif len(args) == 2:
-            self._constructor2(*args)
+            __class__._constructor2(self, *args)
     
 
     def _constructor1(self, filterStringBasicArrayList: BasicArrayList) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.util.BasicArrayList import BasicArrayList
         super().__init__(filterStringBasicArrayList)
-        self._init_fields()
+        __class__._init_fields(self)
         self.includesString = None
     
 
     def _constructor2(self, filterStringBasicArrayList: BasicArrayList, includesString: str) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.util.BasicArrayList import BasicArrayList
         super().__init__(filterStringBasicArrayList)
-        self._init_fields()
+        __class__._init_fields(self)
         self.includesString = includesString
     
 
     def visit(self, file: AbFile) -> bool:
         from org.allbinary.logic.io.file.AbFile import AbFile
-        if file.isDirectory():
+        if java_predicate(file, "isDirectory"):
             return True
         if self.includesString is None or file.getAbsolutePath().indexOf(self.includesString) >= 0:
-            return super().visit(file)
+            return java_super_call(super(), "visit", file)
         else:
             return False
 # from org.allbinary.logic.io.file.AbFile import AbFile

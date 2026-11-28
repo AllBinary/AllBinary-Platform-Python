@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -30,7 +31,7 @@ class FormTypeFactory:
         self.VERTICAL_CENTER_FORM: FormType = FormType("Vertical")
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -42,7 +43,7 @@ class FormTypeFactory:
         from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
         displayInfo: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
         formType: FormType = None
-        if displayInfo.isPortrait():
+        if java_predicate(displayInfo, "isPortrait"):
             formType = self.VERTICAL_CENTER_FORM
         else:
             formType = self.HORIZONTAL_FORM

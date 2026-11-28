@@ -29,7 +29,7 @@ class CircularIndexUtil:
 
     def __init__(self, index: int, size: int) -> None:
         from jsinterop.annotations.JsConstructor import JsConstructor
-        self._init_fields()
+        __class__._init_fields(self)
         self.setSize(size)
         self.setIndex(index)
     

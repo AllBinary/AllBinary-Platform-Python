@@ -21,16 +21,15 @@ from org.osgi.framework.ServiceFactory import ServiceFactory
 class InputAutomationModuleServiceFactory(ServiceFactory):
 
     def _init_fields(self) -> None:
-        from org.allbinary.input.automation.module.InputAutomationModuleFactoryInterface import InputAutomationModuleFactoryInterface
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.inputAutomationModuleInterfaceArray: list[InputAutomationModuleFactoryInterface] = None
+        if "inputAutomationModuleInterfaceArray" not in vars(self): self.inputAutomationModuleInterfaceArray: list[InputAutomationModuleFactoryInterface] = None
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getService(self, bundle: Bundle, registration: ServiceRegistration) -> object:

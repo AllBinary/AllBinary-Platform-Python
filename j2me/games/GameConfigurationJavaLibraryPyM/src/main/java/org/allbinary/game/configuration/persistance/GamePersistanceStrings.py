@@ -28,7 +28,7 @@ class GamePersistanceStrings:
         self.SAVED_INPUT_CONFIGURATION_RECORD_ID: str = "_SIC"
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

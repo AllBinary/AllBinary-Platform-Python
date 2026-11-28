@@ -24,14 +24,14 @@ class DemoRunnable(object):
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.demoGameMidlet: DemoGameMidlet = None
-        self.startDemoGameMidletEvent: DemoGameMidletEvent = None
+        if "demoGameMidlet" not in vars(self): self.demoGameMidlet: DemoGameMidlet = None
+        if "startDemoGameMidletEvent" not in vars(self): self.startDemoGameMidletEvent: DemoGameMidletEvent = None
     
 
     def __init__(self, demoGameMidlet: DemoGameMidlet) -> None:
         from org.allbinary.game.midlet.DemoGameMidletEvent import DemoGameMidletEvent
         from org.allbinary.game.midlet.DemoGameMidletStateFactory import DemoGameMidletStateFactory
-        self._init_fields()
+        __class__._init_fields(self)
         self.demoGameMidlet = demoGameMidlet
         self.startDemoGameMidletEvent = DemoGameMidletEvent(self.demoGameMidlet, DemoGameMidletStateFactory.getInstance().START_DEMO)
     

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -34,13 +35,16 @@ class ColorFillPaintableFactory:
         from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
         from org.allbinary.logic.system.os.OperatingSystemFactory import OperatingSystemFactory
         operatingSystem: GenericOperatingSystem = OperatingSystemFactory.getInstance().getOperatingSystemInstance()
-        if operatingSystem.isOverScan():
+        if java_predicate(operatingSystem, "isOverScan"):
             return OverScanColorFillPaintable(basicColor)
         else:
             return ColorFillPaintable(basicColor)
 
-    def getInstance(self, *args):
-        return getattr(self, "getInstance_j" + str(len(args)))(*args)
+    def getInstance(self=None, *args):
+        if self is None and not args: return __class__.getInstance_j0()
+        implementation = __class__.__dict__.get("getInstance_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getInstance(*args)
 # from org.allbinary.graphics.color.BasicColor import BasicColor
 # from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
 # from org.allbinary.logic.system.os.OperatingSystemFactory import OperatingSystemFactory

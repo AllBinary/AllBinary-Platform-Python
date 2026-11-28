@@ -15,18 +15,23 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 # from javax.swing.JPanel import JPanel
 
 
+@java_inherited_overloads
 class BlankModuleConfigurationJPanel(JPanel):
+    def _java_defaults(self):
+        vars(self).setdefault("jLabel1", None)
 
     def _init_fields(self) -> None:
-        self.jLabel1: JLabel = None
+        if "jLabel1" not in vars(self): self.jLabel1: JLabel = None
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.initComponents()
     
 

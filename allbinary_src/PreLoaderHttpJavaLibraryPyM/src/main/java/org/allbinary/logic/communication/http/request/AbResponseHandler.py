@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 
 
 class AbResponseHandler:
@@ -25,7 +26,7 @@ class AbResponseHandler:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws JspTagException
@@ -106,7 +107,7 @@ class AbResponseHandler:
         request: HttpServletRequest = pageContext.getRequest()
         response: HttpServletResponse = pageContext.getResponse()
         requestDispatcher: RequestDispatcher = request.getRequestDispatcher(page)
-        if response.isCommitted():
+        if java_predicate(response, "isCommitted"):
             response.sendRedirect(page)
         else:
             try:

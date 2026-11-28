@@ -15,37 +15,50 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.game.input.PlayerGameInput import PlayerGameInput
 
 
+@java_inherited_overloads
 class RTSPlayerGameInput(PlayerGameInput):
+    def _java_defaults(self):
+        vars(self).setdefault("inputProcessorArray", None)
+        vars(self).setdefault("removeInputProcessorArray", None)
+        vars(self).setdefault("inputList", None)
+        vars(self).setdefault("isSingleKeyProcessing", False)
+        vars(self).setdefault("gameCanvas", None)
+        vars(self).setdefault("motionGestureInputList", None)
+        vars(self).setdefault("scrollPlayerGameInput", None)
+        vars(self).setdefault("selectedRTSLayerPlayerGameInput", None)
+        vars(self).setdefault("towerInfoPaintable", None)
+        vars(self).setdefault("rtsPlayerLayerInterface", None)
+        vars(self).setdefault("layerPositionFinderInterface", None)
+        vars(self).setdefault("selectedRtsFormInput", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.input.form.RTSFormInput import RTSFormInput
-        from org.allbinary.game.layer.RTSLayerInfoPaintable import RTSLayerInfoPaintable
-        from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         from org.allbinary.game.configuration.feature.Features import Features
         from org.allbinary.game.configuration.feature.InputFeatureFactory import InputFeatureFactory
-        from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
         from org.allbinary.game.input.form.NullRTSFormInputFactory import NullRTSFormInputFactory
         self.inputProcessorArray: list[GameInputProcessor] = [None] * (InputFactory.getInstance().MAX)
         self.removeInputProcessorArray: list[GameInputProcessor] = [None] * (InputFactory.getInstance().MAX)
-        self.inputList: BasicArrayList = None
+        if "inputList" not in vars(self): self.inputList: BasicArrayList = None
         self.isSingleKeyProcessing: bool = Features.getInstance().isFeature(InputFeatureFactory.getInstance().SINGLE_KEY_REPEAT_PRESS) or Features.getInstance().isFeature(InputFeatureFactory.getInstance().SINGLE_KEY_PRESS)
-        self.gameCanvas: AllBinaryGameCanvas = None
+        if "gameCanvas" not in vars(self): self.gameCanvas: AllBinaryGameCanvas = None
         self.motionGestureInputList: BasicArrayList = BasicArrayListD()
-        self.scrollPlayerGameInput: ScrollMapPlayerGameInput = None
-        self.selectedRTSLayerPlayerGameInput: SelectedRTSLayersPlayerGameInput = None
-        self.towerInfoPaintable: RTSLayerInfoPaintable = None
-        self.rtsPlayerLayerInterface: RTSPlayerLayerInterface = None
-        self.layerPositionFinderInterface: LayerPositionFinderInterface = None
+        if "scrollPlayerGameInput" not in vars(self): self.scrollPlayerGameInput: ScrollMapPlayerGameInput = None
+        if "selectedRTSLayerPlayerGameInput" not in vars(self): self.selectedRTSLayerPlayerGameInput: SelectedRTSLayersPlayerGameInput = None
+        if "towerInfoPaintable" not in vars(self): self.towerInfoPaintable: RTSLayerInfoPaintable = None
+        if "rtsPlayerLayerInterface" not in vars(self): self.rtsPlayerLayerInterface: RTSPlayerLayerInterface = None
+        if "layerPositionFinderInterface" not in vars(self): self.layerPositionFinderInterface: LayerPositionFinderInterface = None
         self.selectedRtsFormInput: RTSFormInput = NullRTSFormInputFactory.getInstance()
     
 
     def __init__(self, gameCanvas: AllBinaryGameCanvas, inputList: BasicArrayList, playerInputId: int, towerInfoPaintable: RTSLayerInfoPaintable, rtsPlayerLayerInterface: RTSPlayerLayerInterface, layerPositionFinderInterface: LayerPositionFinderInterface, selectRTSLayerVisitorFactoryInterface: SelectRTSLayerVisitorFactoryInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.input.SelectedRTSLayersPlayerGameInput import SelectedRTSLayersPlayerGameInput
+        from org.allbinary.game.input.ScrollMapPlayerGameInput import ScrollMapPlayerGameInput
         from org.allbinary.game.layer.RTSLayerInfoPaintable import RTSLayerInfoPaintable
         from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
         from org.allbinary.util.BasicArrayList import BasicArrayList
@@ -55,7 +68,7 @@ class RTSPlayerGameInput(PlayerGameInput):
         from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
         from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
         super().__init__(inputList, BasicArrayListD(), playerInputId)
-        self._init_fields()
+        __class__._init_fields(self)
         self.initInputProcessors()
         self.gameCanvas = gameCanvas
         self.inputList = inputList
@@ -104,6 +117,8 @@ class RTSPlayerGameInput(PlayerGameInput):
         from org.allbinary.game.input.RTSPlayerLeftGameInputProcessor import RTSPlayerLeftGameInputProcessor
         from org.allbinary.game.input.RTSPlayerRightGameInputProcessor import RTSPlayerRightGameInputProcessor
         from org.allbinary.game.input.RTSPlayerFireGameInputProcessor import RTSPlayerFireGameInputProcessor
+        from org.allbinary.game.input.GameInputProcessorUtil import GameInputProcessorUtil
+        from org.allbinary.game.input.GameInputProcessorUtil import GameInputProcessorUtil
         from javax.microedition.lcdui.Canvas import Canvas
         self.inputProcessorArray[Canvas.LEFT] = RTSPlayerLeftGameInputProcessor(self)
         self.inputProcessorArray[Canvas.KEY_NUM0] = self.inputProcessorArray[Canvas.LEFT]
@@ -135,7 +150,7 @@ class RTSPlayerGameInput(PlayerGameInput):
                 self.getSelectedBuildingPlayerGameInput().processInputKey(key)
                 self.inputProcessorArray[key].processEvent(layerManager, gameKeyEvent)
                 self.removeInputProcessorArray[key].processEvent(layerManager, gameKeyEvent)
-            if self.isIsSingleKeyProcessing():
+            if java_predicate(self, "isIsSingleKeyProcessing"):
                 self.clear()
             else:
                 self.update()
@@ -303,5 +318,6 @@ class RTSPlayerGameInput(PlayerGameInput):
 # from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
 # from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
 # from org.allbinary.string.CommonLabels import CommonLabels
+from org.allbinary.game.input.InputFactory import InputFactory
 
 

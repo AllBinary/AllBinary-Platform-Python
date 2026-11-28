@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.layer.pickup.PickupBehaviorInterface import PickupBehaviorInterface
 
@@ -23,11 +24,10 @@ class PickupBehavior(PickupBehaviorInterface):
     NULL_PICKUP_BEHAVIOR: object = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.countedIndex: int = None
-        self.ownerLayerInterface: CollidableCompositeLayer = None
+        if "countedIndex" not in vars(self): self.countedIndex: int = 0
+        if "ownerLayerInterface" not in vars(self): self.ownerLayerInterface: CollidableCompositeLayer = None
     
 
     @staticmethod
@@ -41,7 +41,7 @@ class PickupBehavior(PickupBehaviorInterface):
 
     def __init__(self, ownerLayerInterface: CollidableCompositeLayer, countedIndex: int) -> None:
         from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
-        self._init_fields()
+        __class__._init_fields(self)
         self.ownerLayerInterface = ownerLayerInterface
         self.countedIndex = countedIndex
     
@@ -51,7 +51,7 @@ class PickupBehavior(PickupBehaviorInterface):
         from org.allbinary.string.CommonStrings import CommonStrings
         try:
             healthInterfaceCompositeInterface: HealthInterfaceCompositeInterface = self.ownerLayerInterface
-            if healthInterfaceCompositeInterface.getHealthInterface().isAlive():
+            if java_predicate(healthInterfaceCompositeInterface.getHealthInterface(), "isAlive"):
                 pickupProcessorInterface.process(self.ownerLayerInterface)
         except Exception as e:
             commonStrings: CommonStrings = CommonStrings.getInstance()

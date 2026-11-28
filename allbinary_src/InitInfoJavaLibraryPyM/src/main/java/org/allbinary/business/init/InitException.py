@@ -15,15 +15,17 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 
 
+@java_inherited_overloads
 class InitException(Exception):
 
     def __init__(self, *args) -> None:
         if len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
         elif len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
     
 
     def _constructor0(self) -> None:

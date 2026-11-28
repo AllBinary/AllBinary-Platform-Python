@@ -21,11 +21,11 @@ from org.allbinary.animation.AnimationInterfaceFactoryInterface import Animation
 class AnimationInterfaceFactoryInterfaceComposite(AnimationInterfaceFactoryInterface):
 
     def _init_fields(self) -> None:
-        self.animationInterfaceFactoryInterfaceArray: list[AnimationInterfaceFactoryInterface] = None
+        if "animationInterfaceFactoryInterfaceArray" not in vars(self): self.animationInterfaceFactoryInterfaceArray: list[AnimationInterfaceFactoryInterface] = None
     
 
     def __init__(self, basicAnimationInterfaceFactoryInterfaceArray: list[AnimationInterfaceFactoryInterface]) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.animationInterfaceFactoryInterfaceArray = basicAnimationInterfaceFactoryInterfaceArray
     
 

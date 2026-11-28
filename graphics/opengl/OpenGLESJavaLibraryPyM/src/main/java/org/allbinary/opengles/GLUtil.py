@@ -16,6 +16,8 @@
 from __future__ import annotations
 
 import math
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -27,7 +29,7 @@ class GLUtil:
         self.NULL_FLOAT_BUFFER: FloatBuffer = ByteBuffer.allocateDirect(0).asFloatBuffer()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -64,7 +66,7 @@ class GLUtil:
         buffer: FloatBuffer = b.asFloatBuffer()
         unsigned: int = 0
         v: float = 0.0
-        while byteBuffer.hasRemaining():
+        while java_predicate(byteBuffer, "hasRemaining"):
             unsigned = (int(byteBuffer.get())) & 0xFF
             v = (float(unsigned)) / 255.0
             buffer.put(v)

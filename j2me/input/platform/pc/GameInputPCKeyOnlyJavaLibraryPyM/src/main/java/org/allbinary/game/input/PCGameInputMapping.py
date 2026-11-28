@@ -15,9 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.game.input.mapping.PersistentInputMapping import PersistentInputMapping
 
 
+@java_inherited_overloads
 class PCGameInputMapping(PersistentInputMapping):
     
 
@@ -32,8 +36,8 @@ class PCGameInputMapping(PersistentInputMapping):
         from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.INIT)
         PCKeyFactory.getInstance()
-        super().init(abeClientInformation)
-        if self.getTotalMapped() == 0 or self.isDefaultNew():
+        java_super_call(super(), "init", abeClientInformation)
+        if self.getTotalMapped() == 0 or java_predicate(self, "isDefaultNew"):
             self.getInputMapping().addMapping(self.getDefault())
             self.save(abeClientInformation)
     

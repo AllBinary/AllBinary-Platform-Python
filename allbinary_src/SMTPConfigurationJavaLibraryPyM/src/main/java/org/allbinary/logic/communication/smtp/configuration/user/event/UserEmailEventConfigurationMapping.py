@@ -21,15 +21,17 @@ from org.allbinary.data.tables.TableMappingInterface import TableMappingInterfac
 class UserEmailEventConfigurationMapping(TableMappingInterface):
 
     def _init_fields(self) -> None:
-        self.userEmailEventConfigurationInterface: UserEmailEventConfigurationInterface = None
+        if "userEmailEventConfigurationInterface" not in vars(self): self.userEmailEventConfigurationInterface: UserEmailEventConfigurationInterface = None
     
 
     def __init__(self, userEmailEventConfigurationInterface: UserEmailEventConfigurationInterface) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.userEmailEventConfigurationInterface = userEmailEventConfigurationInterface
     
 
     def toHashMap(self) -> HashMap:
+        from org.allbinary.logic.communication.smtp.configuration.user.event.UserEmailEventConfigurationData import UserEmailEventConfigurationData
+        from org.allbinary.logic.communication.smtp.configuration.user.event.UserEmailEventConfigurationData import UserEmailEventConfigurationData
         from java.util.HashMap import HashMap
         from org.allbinary.logic.StdUtil import StdUtil
         hashMap: HashMap = StdUtil.getInstance().createHashMap()
@@ -40,6 +42,7 @@ class UserEmailEventConfigurationMapping(TableMappingInterface):
 
     # throws Exception
     def getKey(self) -> object:
+        from org.allbinary.logic.communication.smtp.configuration.user.event.UserEmailEventConfigurationData import UserEmailEventConfigurationData
         return UserEmailEventConfigurationData.NAME
     
 

@@ -15,23 +15,34 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.graphics.opengles.shader.ShaderUpdater import ShaderUpdater
 
 
+@java_inherited_overloads
 class CompositeShaderUpdater(ShaderUpdater):
     instanceC: CompositeShaderUpdater = None
+    def _java_defaults(self):
+        vars(self).setdefault("commonSeps", None)
+        vars(self).setdefault("shaderStrings", None)
+        vars(self).setdefault("uniformBlockHandleArray", None)
+        vars(self).setdefault("uniformBlockArray", None)
+        vars(self).setdefault("uniformHandleArray", None)
+        vars(self).setdefault("uniformArray", None)
+        vars(self).setdefault("attributeHandleArray", None)
+        vars(self).setdefault("attributeArray", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.string.CommonSeps import CommonSeps
         self.commonSeps: CommonSeps = CommonSeps.getInstance()
         self.shaderStrings: ShaderStrings = ShaderStrings.getInstance()
-        self.uniformBlockHandleArray: list[int] = None
-        self.uniformBlockArray: list[str] = None
-        self.uniformHandleArray: list[int] = None
-        self.uniformArray: list[str] = None
-        self.attributeHandleArray: list[int] = None
-        self.attributeArray: list[str] = None
+        if "uniformBlockHandleArray" not in vars(self): self.uniformBlockHandleArray: list[int] = None
+        if "uniformBlockArray" not in vars(self): self.uniformBlockArray: list[str] = None
+        if "uniformHandleArray" not in vars(self): self.uniformHandleArray: list[int] = None
+        if "uniformArray" not in vars(self): self.uniformArray: list[str] = None
+        if "attributeHandleArray" not in vars(self): self.attributeHandleArray: list[int] = None
+        if "attributeArray" not in vars(self): self.attributeArray: list[str] = None
     
 
     @staticmethod
@@ -40,8 +51,9 @@ class CompositeShaderUpdater(ShaderUpdater):
     
 
     def __init__(self, uniformBlockArray: list[str], uniformArray: list[str], attributeArray: list[str], attributeHandleArray: list[int]) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.uniformBlockArray = uniformBlockArray
         self.uniformBlockHandleArray = [0] * (len(self.uniformBlockArray))
         self.uniformArray = uniformArray

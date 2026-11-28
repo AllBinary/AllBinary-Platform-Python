@@ -15,12 +15,19 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.layer.resources.BasicGameResources import BasicGameResources
 
 
+@java_inherited_overloads
 class MineWeaponResources(BasicGameResources):
     instance: object = None
+    def _java_defaults(self):
+        vars(self).setdefault("DROP_TEXT_RESOURCE", None)
+        vars(self).setdefault("DROP_RESOURCE", None)
+        vars(self).setdefault("DROP_ICON_RESOURCE", None)
 
     def _init_fields(self) -> None:
         self.DROP_TEXT_RESOURCE: str = "/mine_drop_text_20_by_20.png"
@@ -37,8 +44,9 @@ class MineWeaponResources(BasicGameResources):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         ROOT: str = "/mine"
         SMALL: str = "_20_by_20.png"
         MEDIUM: str = SMALL
@@ -46,7 +54,7 @@ class MineWeaponResources(BasicGameResources):
         SIZE_FIVE: str = SMALL
         SIZE_SIX: str = SMALL
         SIZE: list[str] = [SMALL, MEDIUM, SIZE_FOUR, SIZE_FIVE, SIZE_SIX]
-        super().init(ROOT, SIZE)
+        java_super_call(super(), "init", ROOT, SIZE)
 # from org.allbinary.logic.NullUtil import NullUtil
 
 

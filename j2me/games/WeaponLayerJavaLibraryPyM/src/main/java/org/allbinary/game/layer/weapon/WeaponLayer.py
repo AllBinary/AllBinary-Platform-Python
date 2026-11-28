@@ -15,36 +15,51 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.multiplayer.layer.MultiPlayerGameLayer import MultiPlayerGameLayer
 from org.allbinary.game.tick.TickableInterface import TickableInterface
 
 
+@java_inherited_overloads
 class WeaponLayer(*java_bases(MultiPlayerGameLayer, TickableInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("animationInterface", None)
+        vars(self).setdefault("initAnimationInterface", None)
+        vars(self).setdefault("destroyedAnimationInterface", None)
+        vars(self).setdefault("sourceLayerInterface", None)
+        vars(self).setdefault("totalDamage", 0)
+        vars(self).setdefault("initDamage", 0)
+        vars(self).setdefault("destroyed", False)
+        vars(self).setdefault("scoreableInterface", None)
+        vars(self).setdefault("movement", None)
+        vars(self).setdefault("weaponProperties", None)
+        vars(self).setdefault("multiPlayerType", 0)
+        vars(self).setdefault("collidableWeaponBehavior", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.animation.Animation import Animation
         from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
         from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
         from org.allbinary.game.score.NoScoreable import NoScoreable
-        from org.allbinary.game.score.ScoreableInterface import ScoreableInterface
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-        from org.allbinary.physics.movement.Movement import Movement
         self.animationInterface: Animation = NullAnimationFactory.getFactoryInstance().getInstance(0)
-        self.initAnimationInterface: Animation = None
-        self.destroyedAnimationInterface: Animation = None
+        if "initAnimationInterface" not in vars(self): self.initAnimationInterface: Animation = None
+        if "destroyedAnimationInterface" not in vars(self): self.destroyedAnimationInterface: Animation = None
         self.sourceLayerInterface: AllBinaryLayer = AllBinaryLayer.NULL_ALLBINARY_LAYER
-        self.totalDamage: int = 0
-        self.initDamage: int = 0
+        if "totalDamage" not in vars(self): self.totalDamage: int = 0
+        if "initDamage" not in vars(self): self.initDamage: int = 0
         self.destroyed: bool = True
         self.scoreableInterface: ScoreableInterface = NoScoreable.getInstance()
-        self.movement: Movement = None
+        if "movement" not in vars(self): self.movement: Movement = None
         self.weaponProperties: WeaponProperties = WeaponProperties.NULL_WEAPON_PROPERTIES
-        self.multiPlayerType: int = None
+        if "multiPlayerType" not in vars(self): self.multiPlayerType: int = 0
         self.collidableWeaponBehavior: CollidableWeaponBehavior = CollidableWeaponBehavior.getNullInstance()
     
 
     def __init__(self, name: str, remoteInfo: RemoteInfo, multiPlayerType: int, movement: Movement, animationInterface: Animation, destroyedAnimationInterface: Animation, rectangle: Rectangle, viewPosition: ViewPositionBase) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.animation.Animation import Animation
         from org.allbinary.game.identification.BasicGroupFactory import BasicGroupFactory
         from org.allbinary.game.multiplayer.layer.RemoteInfo import RemoteInfo
@@ -52,7 +67,7 @@ class WeaponLayer(*java_bases(MultiPlayerGameLayer, TickableInterface)):
         from org.allbinary.physics.movement.Movement import Movement
         from org.allbinary.view.ViewPositionBase import ViewPositionBase
         super().__init__(remoteInfo, BasicGroupFactory.getInstance().NONE_ARRAY, name, rectangle, viewPosition)
-        self._init_fields()
+        __class__._init_fields(self)
         self.initAnimationInterface = animationInterface
         self.setAnimationInterface(animationInterface)
         self.destroyedAnimationInterface = destroyedAnimationInterface
@@ -62,7 +77,7 @@ class WeaponLayer(*java_bases(MultiPlayerGameLayer, TickableInterface)):
 
     def setCollidableInferface(self, collidableInferface: CollidableBaseBehavior) -> None:
         from org.allbinary.game.collision.CollidableBaseBehavior import CollidableBaseBehavior
-        super().setCollidableInferface(collidableInferface)
+        java_super_call(super(), "setCollidableInferface", collidableInferface)
         self.collidableWeaponBehavior = self.getCollidableInferface()
     
 
@@ -105,8 +120,8 @@ class WeaponLayer(*java_bases(MultiPlayerGameLayer, TickableInterface)):
     def processTick(self, allBinaryLayerManager: AllBinaryLayerManager) -> None:
         from org.allbinary.animation.IndexedAnimation import IndexedAnimation
         from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-        if self.isExhausted() and not self.isDestroyed():
-            if self.isReadyForExplosion():
+        if java_predicate(self, "isExhausted") and not (java_predicate(self, "isDestroyed")):
+            if java_predicate(self, "isReadyForExplosion"):
                 indexedAnimationInterface: IndexedAnimation = self.getAnimationInterface()
                 currentFrame: int = indexedAnimationInterface.getFrame()
                 if currentFrame < indexedAnimationInterface.getAnimationSize() - 1:
@@ -115,7 +130,7 @@ class WeaponLayer(*java_bases(MultiPlayerGameLayer, TickableInterface)):
                     self.setDestroyed(True)
             else:
                 collidableWeaponBehavior: CollidableWeaponBehavior = self.getCollidableInferface()
-                if collidableWeaponBehavior.isCollided():
+                if java_predicate(collidableWeaponBehavior, "isCollided"):
                     self.setAnimationInterface(self.destroyedAnimationInterface)
                     self.getMovement().stop()
                     self.setReadyForExplosion(True)
@@ -146,7 +161,7 @@ class WeaponLayer(*java_bases(MultiPlayerGameLayer, TickableInterface)):
     
 
     def getDamage(self, damageType: int) -> int:
-        if not self.isExhausted():
+        if not (java_predicate(self, "isExhausted")):
             total: int = self.getInitDamage() - self.totalDamage
             self.givePoints(total)
             return total
@@ -157,7 +172,7 @@ class WeaponLayer(*java_bases(MultiPlayerGameLayer, TickableInterface)):
         from org.allbinary.game.combat.destroy.DestroyedLayerProcessor import DestroyedLayerProcessor
         from org.allbinary.game.score.NoScoreable import NoScoreable
         self.destroyed = destroyed
-        if self.isDestroyed():
+        if java_predicate(self, "isDestroyed"):
             self.scoreableInterface = NoScoreable.getInstance()
             DestroyedLayerProcessor.getInstance().add(self)
     

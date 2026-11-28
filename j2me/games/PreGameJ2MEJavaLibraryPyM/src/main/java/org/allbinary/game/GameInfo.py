@@ -26,18 +26,18 @@ class GameInfo:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.gameInfoData: GameInfoData = GameInfoData.getInstance()
-        self.gameType: GameType = None
-        self.gameMode: GameMode = None
-        self.playerType: PlayerType = None
-        self.highestLevel: int = 0
-        self.currentLevel: int = None
+        if "gameType" not in vars(self): self.gameType: GameType = None
+        if "gameMode" not in vars(self): self.gameMode: GameMode = None
+        if "playerType" not in vars(self): self.playerType: PlayerType = None
+        if "highestLevel" not in vars(self): self.highestLevel: int = 0
+        if "currentLevel" not in vars(self): self.currentLevel: int = 0
         self.NEW_LEVEL: str = "New Level: "
         self.SET_CURRENT_LEVEL: str = "setCurrentLevel"
         self.NEXT_GAME_LEVEL: str = "nextGameLevel"
     
 
     def __init__(self, gameType: GameType, gameMode: GameMode, playerType: PlayerType, highestLevel: int, currentLevel: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.gameType = gameType
         self.gameMode = gameMode
         self.setHighestLevel(highestLevel)

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.ClassLoader import ClassLoader
 from java.lang.JavaRuntimeStatic import lazy_static
 
@@ -33,7 +34,7 @@ class Globals:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def init(self, classLoader: ClassLoader, pathString: str) -> None:
@@ -55,7 +56,7 @@ class Globals:
         stringBuffer.append("Setting Up AllBinary System Configuration Args: ")
         stringBuffer.append(pathString)
         stringBuffer.append(" ClassLoader: ")
-        stringBuffer.append(type(classLoader).__module__ + "." + type(classLoader).__qualname__)
+        stringBuffer.append(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(classLoader)))
         self.logUtil.putF(str(stringBuffer), self, commonStrings.INIT)
         stringValidationUtil: StringValidationUtil = StringValidationUtil.getInstance()
         if stringValidationUtil.isEmpty(pathString):

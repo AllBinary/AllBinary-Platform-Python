@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.System import System
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -32,7 +33,7 @@ class OrderedIntArrayPermutationUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getNext(self, data: list[int]) -> None:

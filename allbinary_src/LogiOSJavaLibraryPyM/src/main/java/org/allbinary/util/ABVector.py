@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.util.Vector import Vector
 
 
+@java_inherited_overloads
 class ABVector(Vector):
 
     def __init__(self) -> None:

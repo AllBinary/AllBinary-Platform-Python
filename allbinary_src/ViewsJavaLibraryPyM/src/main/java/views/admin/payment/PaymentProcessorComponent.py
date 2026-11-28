@@ -15,10 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from views.business.context.modules.storefront.HttpStoreComponentView import HttpStoreComponentView
 
 
+@java_inherited_overloads
 class PaymentProcessorComponent(HttpStoreComponentView):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -26,9 +31,10 @@ class PaymentProcessorComponent(HttpStoreComponentView):
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -50,7 +56,7 @@ class PaymentProcessorComponent(HttpStoreComponentView):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             self.addDomNodeInterfaces()
-            return super().view()
+            return java_super_call(super(), "view")
         except Exception as e:
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEWERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "view()", e)

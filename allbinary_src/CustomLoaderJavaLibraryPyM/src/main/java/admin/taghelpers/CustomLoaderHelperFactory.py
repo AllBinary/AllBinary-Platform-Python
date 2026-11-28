@@ -46,7 +46,9 @@ class CustomLoaderHelperFactory(TagHelperFactoryInterface):
         return HelperFactory.getInstance(abeClientInformation, CustomLoaderHelperFactory.FACTORYNAME, CustomLoaderHelperFactory.CLASSNAME)
 
     def getInstance(self, *args):
-        return getattr(self, "getInstance_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("getInstance_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getInstance(*args)
 # from java.util.HashMap import HashMap
 # from javax.servlet.jsp.PageContext import PageContext
 # from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface

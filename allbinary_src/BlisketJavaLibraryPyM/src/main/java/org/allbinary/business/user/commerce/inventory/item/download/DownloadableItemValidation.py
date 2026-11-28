@@ -15,20 +15,27 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.logic.control.validate.Validation import Validation
 
 
+@java_inherited_overloads
 class DownloadableItemValidation(Validation):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("downloadableItem", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.downloadableItem: DownloadableItem = None
+        if "downloadableItem" not in vars(self): self.downloadableItem: DownloadableItem = None
     
 
     def __init__(self, downloadableItem: DownloadableItem) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.downloadableItem = downloadableItem
     
 
@@ -38,19 +45,19 @@ class DownloadableItemValidation(Validation):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            if self.downloadableItem.getId() is None or self.downloadableItem.getId().length() < 1 or self.downloadableItem.getId().length() > AbSqlData.MAXNUM:
+            if self.downloadableItem.getId() is None or __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(self.downloadableItem.getId()) < 1 or __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(self.downloadableItem.getId()) > AbSqlData.MAXNUM:
                 return False
-            if self.downloadableItem.getId() is not None and not StringValidationUtil.getInstance().isNumber(self.downloadableItem.getId()):
+            if self.downloadableItem.getId() is not None and not (StringValidationUtil.getInstance().isNumber(self.downloadableItem.getId())):
                 return False
-            if self.downloadableItem.getSystem() is None or self.downloadableItem.getSystem().length() < 1 or self.downloadableItem.getSystem().length() > AbSqlData.MAXSTRING:
+            if self.downloadableItem.getSystem() is None or __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(self.downloadableItem.getSystem()) < 1 or __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(self.downloadableItem.getSystem()) > AbSqlData.MAXSTRING:
                 return False
-            if self.downloadableItem.getPlatform() is None or self.downloadableItem.getPlatform().length() < 1 or self.downloadableItem.getPlatform().length() > AbSqlData.MAXSTRING:
+            if self.downloadableItem.getPlatform() is None or __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(self.downloadableItem.getPlatform()) < 1 or __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(self.downloadableItem.getPlatform()) > AbSqlData.MAXSTRING:
                 return False
-            if self.downloadableItem.getSpecialName() is None or self.downloadableItem.getSpecialName().length() < 0 or self.downloadableItem.getSpecialName().length() > AbSqlData.MAXSTRING:
+            if self.downloadableItem.getSpecialName() is None or __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(self.downloadableItem.getSpecialName()) < 0 or __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(self.downloadableItem.getSpecialName()) > AbSqlData.MAXSTRING:
                 return False
-            if self.downloadableItem.getVersion() is None or self.downloadableItem.getVersion().length() < 1 or self.downloadableItem.getVersion().length() > AbSqlData.MAXSTRING:
+            if self.downloadableItem.getVersion() is None or __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(self.downloadableItem.getVersion()) < 1 or __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(self.downloadableItem.getVersion()) > AbSqlData.MAXSTRING:
                 return False
-            if self.downloadableItem.getChanges() is None or self.downloadableItem.getChanges().length() < 1 or self.downloadableItem.getChanges().length() > AbSqlData.MAXBLOB:
+            if self.downloadableItem.getChanges() is None or __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(self.downloadableItem.getChanges()) < 1 or __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(self.downloadableItem.getChanges()) > AbSqlData.MAXBLOB:
                 return False
             if self.downloadableItem.getSize() is None:
                 return False
@@ -85,29 +92,29 @@ class DownloadableItemValidation(Validation):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             stringBuffer: StringMaker = StringMaker()
-            if self.downloadableItem.getId() is None or self.downloadableItem.getId().length() < 1 or self.downloadableItem.getId().length() > AbSqlData.MAXNUM:
+            if self.downloadableItem.getId() is None or __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(self.downloadableItem.getId()) < 1 or __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(self.downloadableItem.getId()) > AbSqlData.MAXNUM:
                 stringBuffer.append("Id is invalid. Must be number < ")
                 stringBuffer.appendint(int(AbSqlData.MAXNUM))
                 stringBuffer.append(" and > 0 digits.<br/>")
-            if self.downloadableItem.getId() is not None and not StringValidationUtil.getInstance().isNumber(self.downloadableItem.getId()):
+            if self.downloadableItem.getId() is not None and not (StringValidationUtil.getInstance().isNumber(self.downloadableItem.getId())):
                 stringBuffer.append("Id is invalid. Must be > 0.<br/>")
-            if self.downloadableItem.getSystem() is None or self.downloadableItem.getSystem().length() < 1 or self.downloadableItem.getSystem().length() > AbSqlData.MAXSTRING:
+            if self.downloadableItem.getSystem() is None or __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(self.downloadableItem.getSystem()) < 1 or __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(self.downloadableItem.getSystem()) > AbSqlData.MAXSTRING:
                 stringBuffer.append("System value is invalid. Must be < ")
                 stringBuffer.appendint(int(AbSqlData.MAXSTRING))
                 stringBuffer.append(" and > 0 characters long.<br/>")
-            if self.downloadableItem.getPlatform() is None or self.downloadableItem.getPlatform().length() < 1 or self.downloadableItem.getPlatform().length() > AbSqlData.MAXSTRING:
+            if self.downloadableItem.getPlatform() is None or __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(self.downloadableItem.getPlatform()) < 1 or __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(self.downloadableItem.getPlatform()) > AbSqlData.MAXSTRING:
                 stringBuffer.append("Platform value is invalid. Must be < ")
                 stringBuffer.appendint(int(AbSqlData.MAXSTRING))
                 stringBuffer.append(" and > 0 characters long.<br/>")
-            if self.downloadableItem.getSpecialName() is None or self.downloadableItem.getSpecialName().length() < 0 or self.downloadableItem.getSpecialName().length() > AbSqlData.MAXSTRING:
+            if self.downloadableItem.getSpecialName() is None or __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(self.downloadableItem.getSpecialName()) < 0 or __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(self.downloadableItem.getSpecialName()) > AbSqlData.MAXSTRING:
                 stringBuffer.append("Special Name value is invalid. Must be < ")
                 stringBuffer.appendint(int(AbSqlData.MAXSTRING))
                 stringBuffer.append(" and > 0 characters long.<br/>")
-            if self.downloadableItem.getVersion() is None or self.downloadableItem.getVersion().length() < 1 or self.downloadableItem.getVersion().length() > AbSqlData.MAXSTRING:
+            if self.downloadableItem.getVersion() is None or __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(self.downloadableItem.getVersion()) < 1 or __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(self.downloadableItem.getVersion()) > AbSqlData.MAXSTRING:
                 stringBuffer.append("Version value is invalid. Must be < ")
                 stringBuffer.appendint(int(AbSqlData.MAXSTRING))
                 stringBuffer.append(" and > 0 characters long.<br/>")
-            if self.downloadableItem.getChanges() is None or self.downloadableItem.getChanges().length() < 0 or self.downloadableItem.getChanges().length() > AbSqlData.MAXBLOB:
+            if self.downloadableItem.getChanges() is None or __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(self.downloadableItem.getChanges()) < 0 or __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(self.downloadableItem.getChanges()) > AbSqlData.MAXBLOB:
                 stringBuffer.append("Changes value is invalid. Must be < ")
                 stringBuffer.appendint(int(AbSqlData.MAXBLOB))
                 stringBuffer.append(" and >= 0 characters long.<br/>")

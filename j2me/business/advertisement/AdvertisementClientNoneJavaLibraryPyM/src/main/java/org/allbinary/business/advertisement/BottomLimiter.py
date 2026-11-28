@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -22,10 +23,10 @@ class BottomLimiter:
     instance: BottomLimiter = None
 
     def _init_fields(self) -> None:
-        self.bottom: int = 0
-        self.deltaY: int = 0
-        self.lower: int = 0
-        self.higher: int = 0
+        if "bottom" not in vars(self): self.bottom: int = 0
+        if "deltaY" not in vars(self): self.deltaY: int = 0
+        if "lower" not in vars(self): self.lower: int = 0
+        if "higher" not in vars(self): self.higher: int = 0
     
 
     @staticmethod
@@ -34,7 +35,7 @@ class BottomLimiter:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def init(self, lower: int, higher: int) -> None:
@@ -48,7 +49,7 @@ class BottomLimiter:
         from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
         displayInfo: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
         gameAdState: GameAdState = GameAdStateFactory.getInstance().getCurrentInstance()
-        if gameAdState.isShowingAt():
+        if java_predicate(gameAdState, "isShowingAt"):
             self.deltaY = self.higher
         else:
             self.deltaY = self.lower

@@ -15,22 +15,30 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from admin.tags.TableTag import TableTag
 
 
+@java_inherited_overloads
 class OrderItemsTag(TableTag):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("status", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.status: str = None
+        if "status" not in vars(self): self.status: str = None
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from admin.taghelpers.OrderItemsHelperFactory import OrderItemsHelperFactory
         from admin.taghelpers.OrderItemsRequestHelperFactory import OrderItemsRequestHelperFactory
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.setTagHelperFactory(OrderItemsHelperFactory())
         self.setTagRequestHelperFactory(OrderItemsRequestHelperFactory())
     
@@ -74,13 +82,13 @@ class OrderItemsTag(TableTag):
         from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
         from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
         try:
-            if self.isEnabled():
+            if java_predicate(self, "isEnabled"):
                 if self.getCommand() is not None:
                     self.getPropertiesHashMap().put(OrderHistoryData.STATUS, self.status)
                     if self.getCommand().compareTo(OrderHistoryData.SETSTATUS) == 0:
                         self.pageContext.getOut().print_(self.setOrderStatus())
                     else:
-                        return super().doStartTag()
+                        return java_super_call(super(), "doStartTag")
             return self.SKIP_BODY
         except LicensingException as e:
             AbResponseHandler.sendJspTagLicensingRedirect(self.pageContext, e)

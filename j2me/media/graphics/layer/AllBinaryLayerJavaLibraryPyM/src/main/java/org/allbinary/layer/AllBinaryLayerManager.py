@@ -15,12 +15,21 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from org.allbinary.layer.LayerManager import LayerManager
 
 
+@java_inherited_overloads
 class AllBinaryLayerManager(LayerManager):
     _lock = threading.RLock()
+    def _java_defaults(self):
+        vars(self).setdefault("layerManagerEventHandler", None)
+        vars(self).setdefault("createLayerManagerEvent", None)
+        vars(self).setdefault("deleteLayerManagerEvent", None)
+        vars(self).setdefault("basicLayerProcessorArray", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.layer.event.LayerManagerEvent import LayerManagerEvent
@@ -32,9 +41,10 @@ class AllBinaryLayerManager(LayerManager):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.layer.LayerManagerNoDebug import LayerManagerNoDebug
         super().__init__(LayerManagerNoDebug.getInstance())
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getLayerProcessorArray(self) -> list[LayerProcessor]:
@@ -53,16 +63,16 @@ class AllBinaryLayerManager(LayerManager):
 
     # throws Exception
     def append(self, layerInterface: AllBinaryLayer) -> None:
-        if not self.contains(layerInterface):
+        if not (self.contains(layerInterface)):
             self.appendProcessors(layerInterface)
-            super().append(layerInterface)
+            java_super_call(super(), "append", layerInterface)
     
 
     # throws Exception
     def appendAt(self, layerInterface: AllBinaryLayer, index: int) -> None:
-        if not self.contains(layerInterface):
+        if not (self.contains(layerInterface)):
             self.appendProcessors(layerInterface)
-            super().appendAt(layerInterface, index)
+            java_super_call(super(), "appendAt", layerInterface, index)
     
 
     # throws Exception
@@ -80,7 +90,7 @@ class AllBinaryLayerManager(LayerManager):
     # throws Exception
     def remove(self, layerInterface: AllBinaryLayer) -> None:
         with self._lock:
-            return self._remove_unlocked(layerInterface)
+            return __class__.__dict__["_remove_unlocked"].__get__(self, __class__)(layerInterface)
 
     def _remove_unlocked(self, layerInterface: AllBinaryLayer) -> None:
         self.deleteLayerManagerEvent.setLayerInterface(layerInterface)
@@ -90,7 +100,7 @@ class AllBinaryLayerManager(LayerManager):
         while (index := index - 1) >= 0:
             layerProcessorInterface = self.basicLayerProcessorArray[index]
             layerProcessorInterface.getLayerManager().remove(layerInterface)
-        super().remove(layerInterface)
+        java_super_call(super(), "remove", layerInterface)
     
 
     # throws Exception
@@ -109,7 +119,7 @@ class AllBinaryLayerManager(LayerManager):
         for index in range(0, size):
             layerProcessorInterface = self.basicLayerProcessorArray[index]
             layerProcessorInterface.getLayerManager().cleanup()
-        super().cleanup()
+        java_super_call(super(), "cleanup")
 # from org.allbinary.layer.event.LayerManagerEvent import LayerManagerEvent
 # from org.allbinary.layer.event.LayerManagerEventHandler import LayerManagerEventHandler
 

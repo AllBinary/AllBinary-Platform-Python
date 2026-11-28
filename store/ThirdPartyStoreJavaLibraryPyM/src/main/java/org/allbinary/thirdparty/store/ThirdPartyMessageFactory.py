@@ -27,7 +27,7 @@ class ThirdPartyMessageFactory:
         self.LINKAGE_ERROR: str = "Linkage Error"
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

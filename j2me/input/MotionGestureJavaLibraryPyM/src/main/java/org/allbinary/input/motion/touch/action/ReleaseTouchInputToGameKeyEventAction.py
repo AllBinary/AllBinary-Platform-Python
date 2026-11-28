@@ -15,15 +15,18 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.input.motion.action.GameKeyCompleteMotionGestureInputEvent import GameKeyCompleteMotionGestureInputEvent
 
 
+@java_inherited_overloads
 class ReleaseTouchInputToGameKeyEventAction(GameKeyCompleteMotionGestureInputEvent):
     instance: object = None
+    def _java_defaults(self):
+        vars(self).setdefault("NONE", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.input.GameKey import GameKey
         from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
         self.NONE: GameKey = GameKeyFactory.getInstance().NONE
     
@@ -37,12 +40,13 @@ class ReleaseTouchInputToGameKeyEventAction(GameKeyCompleteMotionGestureInputEve
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
         from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
         from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
         from org.allbinary.string.CommonStrings import CommonStrings
         super().__init__("Release Action", TouchMotionGestureFactory.getInstance().RELEASED, PlatformInputMappingFactory.getInstance().getPersistentInputMappingInstance().getInputMapping())
-        self._init_fields()
+        __class__._init_fields(self)
         try:
             self.setGameKey(self.NONE)
             self.setGameKeyEvent(GameKeyEventFactory.getInstance().getInstanceForInput(self, self.NONE))

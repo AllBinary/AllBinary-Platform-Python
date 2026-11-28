@@ -15,12 +15,20 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.input.mapping.InputMapping import InputMapping
 
 
+@java_inherited_overloads
 class InputToGameKeyMapping(InputMapping):
     instance: object = None
+    def _java_defaults(self):
+        vars(self).setdefault("gameKeyFactory", None)
+        vars(self).setdefault("mappedGameKeys", None)
+        vars(self).setdefault("platformToGameKeyMapping", None)
+        vars(self).setdefault("negativePlatformToGameKeyMapping", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.game.input.GameKey import GameKey
@@ -41,8 +49,9 @@ class InputToGameKeyMapping(InputMapping):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
         self.clear()
     
@@ -53,7 +62,7 @@ class InputToGameKeyMapping(InputMapping):
     
 
     def removeAll(self) -> None:
-        super().removeAll()
+        java_super_call(super(), "removeAll")
         self.clear()
     
 
@@ -75,7 +84,7 @@ class InputToGameKeyMapping(InputMapping):
 
     def add(self, input: Input, mappedToInput: Input) -> None:
         from org.allbinary.game.input.Input import Input
-        super().add(input, mappedToInput)
+        java_super_call(super(), "add", input, mappedToInput)
         self.set(input, mappedToInput)
     
 
@@ -85,7 +94,7 @@ class InputToGameKeyMapping(InputMapping):
         from org.allbinary.logic.string.StringUtil import StringUtil
         from org.allbinary.string.CommonLabels import CommonLabels
         self.logUtil.putF(str(StringMaker().append(CommonLabels.getInstance().START_LABEL).append(StringUtil.getInstance().toString(input)).append(" == ").append(StringUtil.getInstance().toString(mappedToInput))), self, "InputToGameKeyMapping::remove")
-        super().remove(input, mappedToInput)
+        java_super_call(super(), "remove", input, mappedToInput)
         self.set(input, self.gameKeyFactory.NONE)
     
 

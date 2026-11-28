@@ -20,12 +20,12 @@ from __future__ import annotations
 class LogConfigType:
 
     def _init_fields(self) -> None:
-        self.name: str = None
-        self.description: str = None
+        if "name" not in vars(self): self.name: str = None
+        if "description" not in vars(self): self.description: str = None
     
 
     def __init__(self, name: str, description: str) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.name = name
         self.description = description
     

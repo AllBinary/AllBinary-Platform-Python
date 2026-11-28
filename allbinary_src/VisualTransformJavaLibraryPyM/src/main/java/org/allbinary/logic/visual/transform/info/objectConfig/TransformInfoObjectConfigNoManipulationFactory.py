@@ -32,11 +32,12 @@ class TransformInfoObjectConfigNoManipulationFactory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
     def getInstance_j2(self, transformInfoInterface: TransformInfoInterface, objectConfigFileAbPath: AbPath) -> TransformInfoObjectConfigInterface:
+        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigData import TransformInfoObjectConfigData
         from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfig import TransformInfoObjectConfig
         from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
         from org.allbinary.logic.control.crypt.file.CryptFileReader import CryptFileReader
@@ -55,8 +56,11 @@ class TransformInfoObjectConfigNoManipulationFactory:
                 self.logUtil.put("Could Not Load Object Config", self, commonStrings.GET_INSTANCE, e)
             raise e
 
-    def getInstance(self, *args):
-        return getattr(self, "getInstance_j" + str(len(args)))(*args)
+    def getInstance(self=None, *args):
+        if self is None and not args: return __class__.getInstance_j0()
+        implementation = __class__.__dict__.get("getInstance_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getInstance(*args)
 # from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
 # from org.allbinary.logic.communication.log.LogUtil import LogUtil
 # from org.allbinary.logic.control.crypt.file.CryptFileReader import CryptFileReader

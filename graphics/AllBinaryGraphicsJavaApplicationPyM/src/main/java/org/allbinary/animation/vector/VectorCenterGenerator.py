@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_divide
 
 
 class VectorCenterGenerator:
@@ -30,12 +31,12 @@ class VectorCenterGenerator:
         self.maxY: int = -2147483648
         self.dx: int = 0
         self.dy: int = 0
-        self.width: int = 0
-        self.height: int = 0
+        if "width" not in vars(self): self.width: int = 0
+        if "height" not in vars(self): self.height: int = 0
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception

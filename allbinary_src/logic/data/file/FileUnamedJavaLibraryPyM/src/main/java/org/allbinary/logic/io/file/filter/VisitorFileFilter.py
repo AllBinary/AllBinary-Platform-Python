@@ -15,43 +15,46 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 # from java.io.FileFilter import FileFilter
 
 
 class VisitorFileFilter(FileFilter):
 
     def _init_fields(self) -> None:
-        from org.allbinary.logic.util.visitor.VisitorInterface import VisitorInterface
-        self.booleanVisitorInterface: VisitorInterface = None
+        if "booleanVisitorInterface" not in vars(self): self.booleanVisitorInterface: VisitorInterface = None
     
 
     def __init__(self, booleanVisitorInterface: VisitorInterface) -> None:
         from org.allbinary.logic.util.visitor.VisitorInterface import VisitorInterface
-        self._init_fields()
+        __class__._init_fields(self)
         self.booleanVisitorInterface = booleanVisitorInterface
     
 
     # Java overloaded method with the same parameter count: Python keeps the last definition
     def accept_j1_1(self, file: File) -> bool:
+        from java.io.File import File
         from org.allbinary.logic.io.file.AbFile import AbFile
         from org.allbinary.logic.io.file.FileWrapperUtil import FileWrapperUtil
         abFile: AbFile = FileWrapperUtil.wrapFile(file)
         isFileAcceptable: bool = (self.booleanVisitorInterface.visit(abFile))
-        return isFileAcceptable or file.isDirectory()
+        return isFileAcceptable or java_predicate(file, "isDirectory")
     
 
     # Java overloaded method with the same parameter count: Python keeps the last definition
     def accept_j1_2(self, file: AbFile) -> bool:
         from org.allbinary.logic.io.file.AbFile import AbFile
         isFileAcceptable: bool = (self.booleanVisitorInterface.visit(file))
-        return isFileAcceptable or file.isDirectory()
+        return isFileAcceptable or java_predicate(file, "isDirectory")
 
     def accept(self, *args):
-        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
-            return self.accept_j1_1(*args)
+        if len(args) == 1 and True and (args[0] is None or any(base.__name__ == "File" for base in type(args[0]).__mro__)):
+            return __class__.__dict__["accept_j1_1"].__get__(self, __class__)(*args)
         if len(args) == 1:
-            return self.accept_j1_2(*args)
-        return getattr(self, "accept_j" + str(len(args)))(*args)
+            return __class__.__dict__["accept_j1_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("accept_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().accept(*args)
 # from java.io.File import File
 # from org.allbinary.logic.io.file.AbFile import AbFile
 # from org.allbinary.logic.io.file.FileWrapperUtil import FileWrapperUtil

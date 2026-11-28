@@ -35,7 +35,7 @@ class AboutPaintableFactory:
     def __init__(self) -> None:
         from org.allbinary.game.paint.AboutPaintable import AboutPaintable
         from org.allbinary.logic.string.StringUtil import StringUtil
-        self._init_fields()
+        __class__._init_fields(self)
         INFO: list[str] = ["Built with the", "AllBinary Platform", StringUtil.getInstance().EMPTY_STRING, "Comments or Questions:", "support@allbinary.com"]
         DEVELOPERS: list[str] = ["Developed By:", "Travis Berthelot"]
         self.paintableArray = AboutPaintable.getInstance(INFO, DEVELOPERS).getPaintableArrayInstance()

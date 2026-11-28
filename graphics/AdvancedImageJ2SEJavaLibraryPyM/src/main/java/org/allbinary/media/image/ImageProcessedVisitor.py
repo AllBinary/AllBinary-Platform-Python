@@ -15,10 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.media.image.ImageProcessorInputCompositeInterface import ImageProcessorInputCompositeInterface
 
 
 # Java interface
+@java_inherited_overloads
 class ImageProcessedVisitor(ImageProcessorInputCompositeInterface):
     
 

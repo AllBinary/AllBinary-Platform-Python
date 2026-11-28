@@ -9,12 +9,11 @@ from org.allbinary.game.terrain.TerrainEventListenerInterface import TerrainEven
 class TerrainEventListener(TerrainEventListenerInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.list_: BasicArrayList = BasicArrayListD()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def onEvent(self, eventObject: AllBinaryEventObject) -> None:

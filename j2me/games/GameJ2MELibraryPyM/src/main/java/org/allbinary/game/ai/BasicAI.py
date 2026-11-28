@@ -15,35 +15,43 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.ai.ArtificialIntelligence import ArtificialIntelligence
 from org.allbinary.game.input.GameKeyEventSourceInterface import GameKeyEventSourceInterface
 
 
+@java_inherited_overloads
 class BasicAI(*java_bases(ArtificialIntelligence, GameKeyEventSourceInterface)):
     AI_VISITOR: int = None
     ID: int = None
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("gameKeyEventFactory", None)
+        vars(self).setdefault("ownerLayerInterface", None)
+        vars(self).setdefault("gameInput", None)
+        vars(self).setdefault("lastKey", 0)
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.input.GameInput import GameInput
         from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
-        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.gameKeyEventFactory: GameKeyEventFactory = GameKeyEventFactory.getInstance()
-        self.ownerLayerInterface: AllBinaryLayer = None
-        self.gameInput: GameInput = None
+        if "ownerLayerInterface" not in vars(self): self.ownerLayerInterface: AllBinaryLayer = None
+        if "gameInput" not in vars(self): self.gameInput: GameInput = None
         self.lastKey: int = -1
     
 
     def __init__(self, ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.input.GameInput import GameInput
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.ownerLayerInterface = ownerLayerInterface
         self.gameInput = gameInput
     
@@ -79,7 +87,7 @@ class BasicAI(*java_bases(ArtificialIntelligence, GameKeyEventSourceInterface)):
     
 
     def getName(self) -> str:
-        return type(self).__module__ + "." + type(self).__qualname__
+        return __import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(self))
     
 
     def toString(self) -> str:

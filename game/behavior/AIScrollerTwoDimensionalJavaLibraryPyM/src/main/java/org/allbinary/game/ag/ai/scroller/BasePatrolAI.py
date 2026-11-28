@@ -15,31 +15,40 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.ai.BasicAI import BasicAI
 
 
+@java_inherited_overloads
 class BasePatrolAI(BasicAI):
     MAX_DISTANCE: int = None
     DIRECTION_ARRAY: int = None
     FIRING_DISTANCE: int = None
     SPEED: int = None
+    def _java_defaults(self):
+        vars(self).setdefault("maxDistance", None)
+        vars(self).setdefault("currentDistance", 0)
+        vars(self).setdefault("xTotalDistance", 0)
+        vars(self).setdefault("lastKeyDirection", 0)
+        vars(self).setdefault("keyDirection", 0)
 
     def _init_fields(self) -> None:
         from javax.microedition.lcdui.Canvas import Canvas
-        self.maxDistance: int = None
-        self.currentDistance: int = None
-        self.xTotalDistance: int = 0
+        if "maxDistance" not in vars(self): self.maxDistance: int = None
+        if "currentDistance" not in vars(self): self.currentDistance: int = 0
+        if "xTotalDistance" not in vars(self): self.xTotalDistance: int = 0
         self.lastKeyDirection: int = Canvas.RIGHT
         self.keyDirection: int = Canvas.RIGHT
     
 
     def __init__(self, hashtable: ABHashtable[object, object], ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.input.GameInput import GameInput
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         from org.allbinary.util.ABHashtable import ABHashtable
         super().__init__(ownerLayerInterface, gameInput)
-        self._init_fields()
+        __class__._init_fields(self)
         self.maxDistance = hashtable.get(BasePatrolAI.MAX_DISTANCE)
         self.currentDistance = int(self.maxDistance)
     

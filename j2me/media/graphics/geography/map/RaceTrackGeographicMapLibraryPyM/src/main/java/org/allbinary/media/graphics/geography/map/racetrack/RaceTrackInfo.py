@@ -20,20 +20,19 @@ from __future__ import annotations
 class RaceTrackInfo:
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.color.BasicColor import BasicColor
-        self.id: int = None
-        self.name: str = None
-        self.raceTrackFrictionProperties: RaceTrackFrictionProperties = None
-        self.foregroundBasicColor: BasicColor = None
-        self.backgroundBasicColor: BasicColor = None
-        self.qualifyTime: int = None
-        self.worstContinuePosition: int = None
-        self.totalLaps: int = None
+        if "id" not in vars(self): self.id: int = None
+        if "name" not in vars(self): self.name: str = None
+        if "raceTrackFrictionProperties" not in vars(self): self.raceTrackFrictionProperties: RaceTrackFrictionProperties = None
+        if "foregroundBasicColor" not in vars(self): self.foregroundBasicColor: BasicColor = None
+        if "backgroundBasicColor" not in vars(self): self.backgroundBasicColor: BasicColor = None
+        if "qualifyTime" not in vars(self): self.qualifyTime: int = 0
+        if "worstContinuePosition" not in vars(self): self.worstContinuePosition: int = 0
+        if "totalLaps" not in vars(self): self.totalLaps: int = 0
     
 
     def __init__(self, id: int, name: str, raceTrackFrictionProperties: RaceTrackFrictionProperties, foregroundBasicColor: BasicColor, backgroundBasicColor: BasicColor, qualifyTime: int, worstContinuePosition: int, totalLaps: int) -> None:
         from org.allbinary.graphics.color.BasicColor import BasicColor
-        self._init_fields()
+        __class__._init_fields(self)
         self.id = id
         self.name = name
         self.raceTrackFrictionProperties = raceTrackFrictionProperties

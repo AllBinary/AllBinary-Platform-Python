@@ -20,12 +20,12 @@ from __future__ import annotations
 class GameInputMotionInfo:
 
     def _init_fields(self) -> None:
-        self.MAX_API: int = None
-        self.MAX_POINTERS: int = None
+        if "MAX_API" not in vars(self): self.MAX_API: int = 0
+        if "MAX_POINTERS" not in vars(self): self.MAX_POINTERS: int = 0
     
 
     def __init__(self, maxApi: int, maxPointers: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.MAX_API = maxApi
         self.MAX_POINTERS = maxPointers
 

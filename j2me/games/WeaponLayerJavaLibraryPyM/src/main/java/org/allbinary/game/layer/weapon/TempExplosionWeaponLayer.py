@@ -3,10 +3,17 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.game.layer.weapon.SimpleWeaponLayer import SimpleWeaponLayer
 
 
+@java_inherited_overloads
 class TempExplosionWeaponLayer(SimpleWeaponLayer):
+    def _java_defaults(self):
+        vars(self).setdefault("weaponProperties", None)
+        vars(self).setdefault("timeDelayHelper", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
@@ -16,6 +23,7 @@ class TempExplosionWeaponLayer(SimpleWeaponLayer):
     
 
     def __init__(self, name: str, movement: Movement, animationInterface: Animation, rectangle: Rectangle, viewPosition: ViewPositionBase, timeDelay: int) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.layer.weapon.SimpleWeaponLayer import SimpleWeaponLayer
         from org.allbinary.animation.Animation import Animation
         from org.allbinary.game.multiplayer.layer.RemoteInfo import RemoteInfo
@@ -23,7 +31,7 @@ class TempExplosionWeaponLayer(SimpleWeaponLayer):
         from org.allbinary.physics.movement.Movement import Movement
         from org.allbinary.view.ViewPositionBase import ViewPositionBase
         super().__init__(name, RemoteInfo.REMOTE_INFO, -1, movement, animationInterface, SimpleWeaponLayer.createDestroyed(), rectangle, viewPosition)
-        self._init_fields()
+        __class__._init_fields(self)
         self.timeDelayHelper.delay = timeDelay
     
 
@@ -34,7 +42,7 @@ class TempExplosionWeaponLayer(SimpleWeaponLayer):
         if self.timeDelayHelper.isTime(GameTickTimeDelayHelperFactory.getInstance().startTime):
             self.getCollidableInferface().collide(self, self)
             self.totalDamage = self.getInitDamage() + 1
-        super().processTick(allBinaryLayerManager)
+        java_super_call(super(), "processTick", allBinaryLayerManager)
 # from org.allbinary.animation.Animation import Animation
 # from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
 # from org.allbinary.game.multiplayer.layer.RemoteInfo import RemoteInfo

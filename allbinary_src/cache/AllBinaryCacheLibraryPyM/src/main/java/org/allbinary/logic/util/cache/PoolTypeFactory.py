@@ -13,7 +13,7 @@ class PoolTypeFactory:
         self.VECTOR_POOL: PoolType = PoolType(CacheTypeFactory.getInstance().NO_CACHE)
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

@@ -3,10 +3,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from javax.microedition.khronos.opengles.GL import GL
 
 
 # Java interface
+@java_inherited_overloads
 class GL10(GL):
     GL_ADD: int = 260
     GL_ALIASED_LINE_WIDTH_RANGE: int = 33902
@@ -323,7 +325,9 @@ class GL10(GL):
         raise NotImplementedError()
 
     def glDeleteTextures(self, *args):
-        return getattr(self, "glDeleteTextures_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glDeleteTextures_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glDeleteTextures(*args)
     
 
     def glDepthFunc(self, func: int) -> None:
@@ -382,7 +386,9 @@ class GL10(GL):
         raise NotImplementedError()
 
     def glFogfv(self, *args):
-        return getattr(self, "glFogfv_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glFogfv_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glFogfv(*args)
     
 
     def glFrontFace(self, mode: int) -> None:
@@ -401,7 +407,9 @@ class GL10(GL):
         raise NotImplementedError()
 
     def glGenTextures(self, *args):
-        return getattr(self, "glGenTextures_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glGenTextures_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glGenTextures(*args)
     
 
     def glGetError(self) -> int:
@@ -416,7 +424,9 @@ class GL10(GL):
         raise NotImplementedError()
 
     def glGetIntegerv(self, *args):
-        return getattr(self, "glGetIntegerv_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glGetIntegerv_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glGetIntegerv(*args)
     
 
     def glGetString(self, name: int) -> str:
@@ -439,7 +449,9 @@ class GL10(GL):
         raise NotImplementedError()
 
     def glLightModelfv(self, *args):
-        return getattr(self, "glLightModelfv_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glLightModelfv_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glLightModelfv(*args)
     
 
     def glLightf(self, light: int, pname: int, param: float) -> None:
@@ -454,7 +466,9 @@ class GL10(GL):
         raise NotImplementedError()
 
     def glLightfv(self, *args):
-        return getattr(self, "glLightfv_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glLightfv_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glLightfv(*args)
     
 
     def glLineWidth(self, width: float) -> None:
@@ -473,7 +487,9 @@ class GL10(GL):
         raise NotImplementedError()
 
     def glLoadMatrixf(self, *args):
-        return getattr(self, "glLoadMatrixf_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glLoadMatrixf_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glLoadMatrixf(*args)
     
 
     def glLogicOp(self, opcode: int) -> None:
@@ -492,7 +508,9 @@ class GL10(GL):
         raise NotImplementedError()
 
     def glMaterialfv(self, *args):
-        return getattr(self, "glMaterialfv_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glMaterialfv_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glMaterialfv(*args)
     
 
     def glMatrixMode(self, mode: int) -> None:
@@ -507,7 +525,9 @@ class GL10(GL):
         raise NotImplementedError()
 
     def glMultMatrixf(self, *args):
-        return getattr(self, "glMultMatrixf_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glMultMatrixf_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glMultMatrixf(*args)
     
 
     def glMultiTexCoord4f(self, target: int, s: float, t: float, r: float, q: float) -> None:
@@ -606,7 +626,9 @@ class GL10(GL):
         raise NotImplementedError()
 
     def glTexEnvfv(self, *args):
-        return getattr(self, "glTexEnvfv_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glTexEnvfv_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glTexEnvfv(*args)
     
 
     def glTexImage2D(self, target: int, level: int, internalformat: int, width: int, height: int, border: int, format: int, type_: int, pixels: Buffer) -> None:

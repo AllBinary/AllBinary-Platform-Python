@@ -15,18 +15,18 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_divide
 
 
 class AngleIncrementInfo:
     INCREMENT: str = "Inc: "
 
     def _init_fields(self) -> None:
-        from jsinterop.annotations.JsProperty import JsProperty
-        self.angleIncrement: int = None
-        self.DOWN_FRAME: int = None
-        self.UP_FRAME: int = None
-        self.LEFT_FRAME: int = None
-        self.RIGHT_FRAME: int = None
+        if "angleIncrement" not in vars(self): self.angleIncrement: int = 0
+        if "DOWN_FRAME" not in vars(self): self.DOWN_FRAME: int = None
+        if "UP_FRAME" not in vars(self): self.UP_FRAME: int = None
+        if "LEFT_FRAME" not in vars(self): self.LEFT_FRAME: int = None
+        if "RIGHT_FRAME" not in vars(self): self.RIGHT_FRAME: int = None
         self.frameUtil: FrameUtil = FrameUtil.getInstance()
     
 
@@ -34,14 +34,17 @@ class AngleIncrementInfo:
         from org.allbinary.math.AngleFactory import AngleFactory
         from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
         from jsinterop.annotations.JsConstructor import JsConstructor
-        self._init_fields()
+        __class__._init_fields(self)
         self.angleIncrement = angleIncrement
         angleFactory: AngleFactory = AngleFactory.getInstance()
         smallIntegerSingletonFactory: SmallIntegerSingletonFactory = SmallIntegerSingletonFactory.getInstance()
-        self.DOWN_FRAME = smallIntegerSingletonFactory.getAt(angleFactory.DOWN.getValue() / self.angleIncrement)
+        self.DOWN_FRAME = smallIntegerSingletonFactory.getAt(java_divide(angleFactory.DOWN.getValue(), self.angleIncrement)
+            )
         self.UP_FRAME = smallIntegerSingletonFactory.getAt(int(angleFactory.UP.getValue()))
-        self.LEFT_FRAME = smallIntegerSingletonFactory.getAt(angleFactory.LEFT.getValue() / self.angleIncrement)
-        self.RIGHT_FRAME = smallIntegerSingletonFactory.getAt(angleFactory.RIGHT.getValue() / self.angleIncrement)
+        self.LEFT_FRAME = smallIntegerSingletonFactory.getAt(java_divide(angleFactory.LEFT.getValue(), self.angleIncrement)
+            )
+        self.RIGHT_FRAME = smallIntegerSingletonFactory.getAt(java_divide(angleFactory.RIGHT.getValue(), self.angleIncrement)
+            )
     
 
     def getFrameAngle(self, frame: int) -> int:

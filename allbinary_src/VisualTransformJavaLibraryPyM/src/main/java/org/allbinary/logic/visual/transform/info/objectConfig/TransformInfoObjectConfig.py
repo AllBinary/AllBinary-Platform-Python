@@ -22,22 +22,20 @@ class TransformInfoObjectConfig(TransformInfoObjectConfigInterface):
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         from org.allbinary.string.CommonStrings import CommonStrings
-        from org.w3c.dom.Document import Document
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.ownerTransformInfoInterface: TransformInfoInterface = None
-        self.document: Document = None
-        self.outputTypeName: str = None
+        if "ownerTransformInfoInterface" not in vars(self): self.ownerTransformInfoInterface: TransformInfoInterface = None
+        if "document" not in vars(self): self.document: Document = None
+        if "outputTypeName" not in vars(self): self.outputTypeName: str = None
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
         elif len(args) == 2:
-            self._constructor2(*args)
+            __class__._constructor2(self, *args)
         elif len(args) == 3:
-            self._constructor3(*args)
+            __class__._constructor3(self, *args)
     
 
     def _constructor1(self, transformInfoInterface: TransformInfoInterface) -> None:
@@ -45,7 +43,7 @@ class TransformInfoObjectConfig(TransformInfoObjectConfigInterface):
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-        self._init_fields()
+        __class__._init_fields(self)
         self.ownerTransformInfoInterface = transformInfoInterface
         self.createDocument()
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
@@ -70,7 +68,7 @@ class TransformInfoObjectConfig(TransformInfoObjectConfigInterface):
         from org.w3c.dom.Node import Node
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-        self._init_fields()
+        __class__._init_fields(self)
         self.ownerTransformInfoInterface = transformInfoInterface
         self.document = document
         node: Node = DomSearchHelper.getNodeNoThrow(OutputTypeData.getInstance().NAME, self.getRootNode().getChildNodes())
@@ -89,13 +87,15 @@ class TransformInfoObjectConfig(TransformInfoObjectConfigInterface):
     
 
     def _constructor3(self, transformInfoInterface: TransformInfoInterface, name: str, type_: str) -> None:
+        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigData import TransformInfoObjectConfigData
+        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigData import TransformInfoObjectConfigData
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         from org.w3c.dom.Attr import Attr
         from org.w3c.dom.Node import Node
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-        self._init_fields()
+        __class__._init_fields(self)
         self.ownerTransformInfoInterface = transformInfoInterface
         self.createDocument()
         configNameAttr: Attr = self.document.createAttribute(TransformInfoObjectConfigData.getInstance().NAME)
@@ -115,6 +115,7 @@ class TransformInfoObjectConfig(TransformInfoObjectConfigInterface):
     
 
     def createDocument(self) -> None:
+        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigData import TransformInfoObjectConfigData
         from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
         from org.w3c.dom.Node import Node
         self.document = DomDocumentHelper.create()
@@ -139,6 +140,7 @@ class TransformInfoObjectConfig(TransformInfoObjectConfigInterface):
     
 
     def containsView(self, transformInfoInterface: TransformInfoInterface) -> bool:
+        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigData import TransformInfoObjectConfigData
         from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         from org.w3c.dom.Attr import Attr
@@ -159,6 +161,7 @@ class TransformInfoObjectConfig(TransformInfoObjectConfigInterface):
 
     # throws Exception
     def getTemplateAttributes(self) -> NamedNodeMap:
+        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigData import TransformInfoObjectConfigData
         from org.w3c.dom.NamedNodeMap import NamedNodeMap
         from org.w3c.dom.Node import Node
         componentNode: Node = self.document.getElementsByTagName(TransformInfoObjectConfigData.getInstance().NAME).item(0)
@@ -167,6 +170,7 @@ class TransformInfoObjectConfig(TransformInfoObjectConfigInterface):
 
     # throws Exception
     def getName(self) -> str:
+        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigData import TransformInfoObjectConfigData
         from org.w3c.dom.Attr import Attr
         attrNode: Attr = self.getTemplateAttributes().getNamedItem(TransformInfoObjectConfigData.getInstance().NAME)
         return attrNode.getValue()
@@ -174,6 +178,7 @@ class TransformInfoObjectConfig(TransformInfoObjectConfigInterface):
 
     # throws Exception
     def setName(self, name: str) -> None:
+        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigData import TransformInfoObjectConfigData
         from org.w3c.dom.Attr import Attr
         attrNode: Attr = self.getTemplateAttributes().getNamedItem(TransformInfoObjectConfigData.getInstance().NAME)
         attrNode.setValue(name)
@@ -288,7 +293,9 @@ class TransformInfoObjectConfig(TransformInfoObjectConfigInterface):
         return self.getTransformDomNodes(TransformInfosData.getInstance().GROUP)
 
     def getTransformDomNodes(self, *args):
-        return getattr(self, "getTransformDomNodes_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("getTransformDomNodes_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getTransformDomNodes(*args)
     
 
     # throws Exception
@@ -298,7 +305,9 @@ class TransformInfoObjectConfig(TransformInfoObjectConfigInterface):
         return self.getTransforms(TransformInfosData.getInstance().NAME)
 
     def getTransforms(self, *args):
-        return getattr(self, "getTransforms_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("getTransforms_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getTransforms(*args)
     
 
     # throws Exception
@@ -316,6 +325,7 @@ class TransformInfoObjectConfig(TransformInfoObjectConfigInterface):
     
 
     def getRootNode(self) -> Node:
+        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigData import TransformInfoObjectConfigData
         from org.w3c.dom.Node import Node
         return self.document.getElementsByTagName(TransformInfoObjectConfigData.getInstance().NAME).item(0)
     

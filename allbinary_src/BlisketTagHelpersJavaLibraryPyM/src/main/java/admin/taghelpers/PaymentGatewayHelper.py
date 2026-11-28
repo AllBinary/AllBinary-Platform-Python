@@ -15,29 +15,35 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from admin.taghelpers.BasicTable import BasicTable
 
 
+@java_inherited_overloads
 class PaymentGatewayHelper(BasicTable):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("weblisketSession", None)
+        vars(self).setdefault("httpServletRequest", None)
+        vars(self).setdefault("portion", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.installer.Portion import Portion
-        from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.weblisketSession: WeblisketSession = None
-        self.httpServletRequest: HttpServletRequest = None
-        self.portion: Portion = None
+        if "weblisketSession" not in vars(self): self.weblisketSession: WeblisketSession = None
+        if "httpServletRequest" not in vars(self): self.httpServletRequest: HttpServletRequest = None
+        if "portion" not in vars(self): self.portion: Portion = None
     
 
     def __init__(self, hashMap: HashMap, pageContext: PageContext) -> None:
+        __class__._java_defaults(self)
         from java.util.HashMap import HashMap
         from org.allbinary.business.installer.Portion import Portion
         from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         try:
             self.weblisketSession = WeblisketSession(hashMap, pageContext)
             self.httpServletRequest = pageContext.getRequest()

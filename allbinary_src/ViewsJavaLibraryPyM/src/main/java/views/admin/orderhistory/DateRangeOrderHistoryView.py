@@ -15,6 +15,9 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 import datetime
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
@@ -22,7 +25,35 @@ from org.allbinary.logic.control.validate.ValidationComponentInterface import Va
 from views.business.context.modules.storefront.HttpStoreComponentView import HttpStoreComponentView
 
 
+@java_inherited_overloads
 class DateRangeOrderHistoryView(*java_bases(HttpStoreComponentView, ValidationComponentInterface, DomNodeInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("VIEWALLORDERS", None)
+        vars(self).setdefault("VIEWORDERSINLASTHOUR", None)
+        vars(self).setdefault("VIEWORDERSINLASTDAY", None)
+        vars(self).setdefault("VIEWORDERSINLASTWEEK", None)
+        vars(self).setdefault("VIEWORDERSINLAST30DAYS", None)
+        vars(self).setdefault("request", None)
+        vars(self).setdefault("shipped", None)
+        vars(self).setdefault("partiallyShipped", None)
+        vars(self).setdefault("processing", None)
+        vars(self).setdefault("preprocessing", None)
+        vars(self).setdefault("cancelled", None)
+        vars(self).setdefault("dateType", None)
+        vars(self).setdefault("toDate", None)
+        vars(self).setdefault("fromDate", None)
+        vars(self).setdefault("fromYear", None)
+        vars(self).setdefault("fromMonth", None)
+        vars(self).setdefault("fromDay", None)
+        vars(self).setdefault("fromHour", None)
+        vars(self).setdefault("toYear", None)
+        vars(self).setdefault("toMonth", None)
+        vars(self).setdefault("toDay", None)
+        vars(self).setdefault("toHour", None)
+        vars(self).setdefault("command", None)
+        vars(self).setdefault("ON", None)
+        vars(self).setdefault("MAXLEN", 0)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -32,32 +63,33 @@ class DateRangeOrderHistoryView(*java_bases(HttpStoreComponentView, ValidationCo
         self.VIEWORDERSINLASTDAY: str = "Last Day"
         self.VIEWORDERSINLASTWEEK: str = "Last Week"
         self.VIEWORDERSINLAST30DAYS: str = "30 Days"
-        self.request: HttpServletRequest = None
-        self.shipped: str = None
-        self.partiallyShipped: str = None
-        self.processing: str = None
-        self.preprocessing: str = None
-        self.cancelled: str = None
-        self.dateType: str = None
-        self.toDate: str = None
-        self.fromDate: str = None
-        self.fromYear: str = None
-        self.fromMonth: str = None
-        self.fromDay: str = None
-        self.fromHour: str = None
-        self.toYear: str = None
-        self.toMonth: str = None
-        self.toDay: str = None
-        self.toHour: str = None
-        self.command: str = None
+        if "request" not in vars(self): self.request: HttpServletRequest = None
+        if "shipped" not in vars(self): self.shipped: str = None
+        if "partiallyShipped" not in vars(self): self.partiallyShipped: str = None
+        if "processing" not in vars(self): self.processing: str = None
+        if "preprocessing" not in vars(self): self.preprocessing: str = None
+        if "cancelled" not in vars(self): self.cancelled: str = None
+        if "dateType" not in vars(self): self.dateType: str = None
+        if "toDate" not in vars(self): self.toDate: str = None
+        if "fromDate" not in vars(self): self.fromDate: str = None
+        if "fromYear" not in vars(self): self.fromYear: str = None
+        if "fromMonth" not in vars(self): self.fromMonth: str = None
+        if "fromDay" not in vars(self): self.fromDay: str = None
+        if "fromHour" not in vars(self): self.fromHour: str = None
+        if "toYear" not in vars(self): self.toYear: str = None
+        if "toMonth" not in vars(self): self.toMonth: str = None
+        if "toDay" not in vars(self): self.toDay: str = None
+        if "toHour" not in vars(self): self.toHour: str = None
+        if "command" not in vars(self): self.command: str = None
         self.ON: str = "on"
         self.MAXLEN: int = 15
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
         self.request = self.getPageContext().getRequest()
         self.getFormData()
     
@@ -92,7 +124,7 @@ class DateRangeOrderHistoryView(*java_bases(HttpStoreComponentView, ValidationCo
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             self.addDomNodeInterfaces()
-            return super().view()
+            return java_super_call(super(), "view")
         except Exception as e:
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "view()", e)
@@ -271,7 +303,7 @@ class DateRangeOrderHistoryView(*java_bases(HttpStoreComponentView, ValidationCo
     # throws Exception
     def getTransformInfoInterface(self) -> TransformInfoInterface:
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-        return super().getTransformInfoInterface()
+        return java_super_call(super(), "getTransformInfoInterface")
 # from java.util.Calendar import Calendar
 # from org.allbinary.util.BasicArrayList import BasicArrayList
 # from org.allbinary.util.BasicArrayListD import BasicArrayListD

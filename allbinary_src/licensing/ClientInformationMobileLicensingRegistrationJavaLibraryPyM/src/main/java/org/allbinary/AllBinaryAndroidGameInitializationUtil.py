@@ -22,6 +22,7 @@ class AllBinaryAndroidGameInitializationUtil:
 
     @staticmethod
     def init() -> None:
+        from org.allbinary.AndroidResources import AndroidResources
         from org.allbinary.business.init.LicenseInitInfoUtil import LicenseInitInfoUtil
         from org.allbinary.data.resource.ResourceUtil import ResourceUtil
         from org.allbinary.logic.system.security.licensing.PartnerIdentifierFileUtil import PartnerIdentifierFileUtil

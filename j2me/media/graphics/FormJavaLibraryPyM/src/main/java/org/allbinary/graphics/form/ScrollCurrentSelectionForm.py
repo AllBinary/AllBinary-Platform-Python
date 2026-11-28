@@ -15,32 +15,45 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
 
 
+@java_inherited_overloads
 class ScrollCurrentSelectionForm(*java_bases(ScrollSelectionForm, UpdateMyFontInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("moveForSmallScreen", False)
+        vars(self).setdefault("updateMyFontProcessor", None)
+        vars(self).setdefault("myFontProcessor", None)
+        vars(self).setdefault("processor", None)
+        vars(self).setdefault("preItemIndexDx", None)
+        vars(self).setdefault("dx", 0)
+        vars(self).setdefault("dy", 0)
+        vars(self).setdefault("maxWidth", 0)
 
     def _init_fields(self) -> None:
         from org.allbinary.canvas.Processor import Processor
-        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
-        self.moveForSmallScreen: bool = None
+        if "moveForSmallScreen" not in vars(self): self.moveForSmallScreen: bool = False
         self.updateMyFontProcessor: MyFontProcessor = UpdateMyFontProcessor(self)
         self.myFontProcessor: MyFontProcessor = self.updateMyFontProcessor
         self.processor: Processor = Processor.getInstance()
         self.preItemIndexDx: ItemIndexDx = ItemIndexDx.getInstance()
-        self.dx: int = 0
-        self.dy: int = 0
+        if "dx" not in vars(self): self.dx: int = 0
+        if "dy" not in vars(self): self.dy: int = 0
         self.maxWidth: int = 0
     
 
     def __init__(self, title: str, items: list[ABCustomItem], formPaintableFactory: ItemPaintableFactory, border: int, adjustedExtraBorder: int, moveForSmallScreen: bool, backgroundBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
         super().__init__(title, items, formPaintableFactory, border, adjustedExtraBorder, backgroundBasicColor, foregroundBasicColor)
-        self._init_fields()
+        __class__._init_fields(self)
         self.moveForSmallScreen = moveForSmallScreen
     
 
@@ -54,7 +67,7 @@ class ScrollCurrentSelectionForm(*java_bases(ScrollSelectionForm, UpdateMyFontIn
         from org.allbinary.graphics.form.TempHorizontalFormProcessor import TempHorizontalFormProcessor
         from org.allbinary.graphics.form.TempHorizontalItemIndexDx import TempHorizontalItemIndexDx
         from org.allbinary.graphics.Rectangle import Rectangle
-        super().init(rectangle, formType)
+        java_super_call(super(), "init", rectangle, formType)
         formTypeFactory: FormTypeFactory = FormTypeFactory.getInstance()
         if formType == formTypeFactory.TEMP_HORIZONTAL_FORM:
             self.processor = TempHorizontalFormProcessor(self)
@@ -91,7 +104,7 @@ class ScrollCurrentSelectionForm(*java_bases(ScrollSelectionForm, UpdateMyFontIn
         for index in range(0, size):
             item = self.get(index)
             totalWidth += item.getMinimumWidth() + self.border
-        self.dx = self.x + (self.rectangle.getWidth() >> 1) - (totalWidth >> 1)
+        self.dx = self.x + (self.rectangle.getWidth() >> 1) - (int(totalWidth) >> (int(1) & 31))
         self.dy = self.y + (self.rectangle.getHeight() >> 1)
         if self.moveForSmallScreen:
             maxTitleHeight: int = 175
@@ -109,9 +122,11 @@ class ScrollCurrentSelectionForm(*java_bases(ScrollSelectionForm, UpdateMyFontIn
             if self.maxWidth < item2.getMinimumWidth():
                 self.maxWidth = item2.getMinimumWidth()
             totalHeight += item2.getMinimumHeight() + self.border
-        self.dx = ((self.rectangle.getWidth() - self.maxWidth) / 2)
+        self.dx = (java_divide((self.rectangle.getWidth() - self.maxWidth), 2)
+            )
         if self.size() > 0:
-            self.dy = self.y + ((self.rectangle.getHeight() - totalHeight) / 2)
+            self.dy = self.y + (java_divide((self.rectangle.getHeight() - totalHeight), 2)
+            )
             if self.moveForSmallScreen:
                 maxTitleHeight: int = 175
                 if self.dy < maxTitleHeight:

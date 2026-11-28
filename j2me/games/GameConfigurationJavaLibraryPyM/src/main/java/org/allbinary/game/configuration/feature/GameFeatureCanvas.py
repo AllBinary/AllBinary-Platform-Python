@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from javax.microedition.lcdui.Canvas import Canvas
 
 
+@java_inherited_overloads
 class GameFeatureCanvas(Canvas):
     
 

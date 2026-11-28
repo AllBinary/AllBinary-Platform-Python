@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
 
 
@@ -24,37 +25,37 @@ class CategoryProperties(CategoryPropertiesInterface):
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.category: str = None
+        if "category" not in vars(self): self.category: str = None
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self.__jconstructor1(*args)
+            __class__.__jconstructor1(self, *args)
 
     def __jconstructor1(self, *args) -> None:
         if True and (args[0] is None or isinstance(args[0], str)):
-            self._constructor1_1(*args)
-        elif True and not isinstance(args[0], (str, list, int, float)):
-            self._constructor1_2(*args)
+            __class__._constructor1_1(self, *args)
+        elif True and (args[0] is None or any(base.__name__ == "Node" for base in type(args[0]).__mro__)):
+            __class__._constructor1_2(self, *args)
         else:
-            self._constructor1_3(*args)
+            __class__._constructor1_3(self, *args)
     
 
     def _constructor1_1(self, name: str) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.category = name
     
 
     def _constructor1_2(self, node: Node) -> None:
         from org.allbinary.business.category.CategoryUtil import CategoryUtil
         from org.w3c.dom.Node import Node
-        self._init_fields()
+        __class__._init_fields(self)
         self.category = CategoryUtil.getNameFromNode(node)
     
 
     def _constructor1_3(self, categoryPropertiesHashMap: HashMap) -> None:
         from java.util.HashMap import HashMap
         from org.allbinary.business.category.CategoryData import CategoryData
-        self._init_fields()
+        __class__._init_fields(self)
         self.category = str(categoryPropertiesHashMap.get(CategoryData.getInstance().NAME))
     
 
@@ -90,12 +91,12 @@ class CategoryProperties(CategoryPropertiesInterface):
         pathStringBuffer: StringMaker = StringMaker()
         list_: BasicArrayList = BasicArrayListD()
         nextParentCategoryInterface: CategoryInterface = categoryHierarchyInterface.getParent()
-        if self != nextParentCategoryInterface.getProperties():
+        if self is not nextParentCategoryInterface.getProperties():
             depthIndex: int = 0
             while nextParentCategoryInterface is not None:
-                if nextParentCategoryInterface.getProperties().isRealRoot():
+                if java_predicate(nextParentCategoryInterface.getProperties(), "isRealRoot"):
                     break
-                if nextParentCategoryInterface.getProperties().isRoot():
+                if java_predicate(nextParentCategoryInterface.getProperties(), "isRoot"):
                     list_.addAt(0, str(nextParentCategoryInterface.getPath()))
                 else:
                     pathStringBuffer.delete(0, pathStringBuffer.length())

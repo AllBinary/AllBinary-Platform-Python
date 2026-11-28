@@ -22,7 +22,6 @@ class AllBinarySensorManager:
     instance: object = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.ORIENTATION_SENSOR_INPUT: str = "Orientation Sensor Input"
         self.ORIENTATION_TYPE: str = "Orientation Type"
@@ -38,7 +37,7 @@ class AllBinarySensorManager:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def init(self) -> None:

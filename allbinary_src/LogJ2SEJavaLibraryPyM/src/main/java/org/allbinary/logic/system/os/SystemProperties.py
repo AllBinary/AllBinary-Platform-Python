@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.System import System
 import os
 import platform
 from java.lang.JavaRuntimeStatic import lazy_static
@@ -37,23 +38,23 @@ class SystemProperties:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getName(self) -> str:
-        return {"os.name": platform.system(), "os.arch": platform.machine(), "os.version": platform.version(), "user.home": os.path.expanduser("~"), "user.dir": os.getcwd(), "file.separator": os.sep, "path.separator": os.pathsep, "line.separator": os.linesep, "java.version": "1.8.0"}.get(self.OS_NAME, os.environ.get(str(self.OS_NAME)))
+        return System.getProperty(self.OS_NAME)
     
 
     def getArch(self) -> str:
-        return {"os.name": platform.system(), "os.arch": platform.machine(), "os.version": platform.version(), "user.home": os.path.expanduser("~"), "user.dir": os.getcwd(), "file.separator": os.sep, "path.separator": os.pathsep, "line.separator": os.linesep, "java.version": "1.8.0"}.get(self.OS_ARCH, os.environ.get(str(self.OS_ARCH)))
+        return System.getProperty(self.OS_ARCH)
     
 
     def getVersion(self) -> str:
-        return {"os.name": platform.system(), "os.arch": platform.machine(), "os.version": platform.version(), "user.home": os.path.expanduser("~"), "user.dir": os.getcwd(), "file.separator": os.sep, "path.separator": os.pathsep, "line.separator": os.linesep, "java.version": "1.8.0"}.get(self.OS_VERSION, os.environ.get(str(self.OS_VERSION)))
+        return System.getProperty(self.OS_VERSION)
     
 
     def getUserHomePath(self) -> str:
-        return {"os.name": platform.system(), "os.arch": platform.machine(), "os.version": platform.version(), "user.home": os.path.expanduser("~"), "user.dir": os.getcwd(), "file.separator": os.sep, "path.separator": os.pathsep, "line.separator": os.linesep, "java.version": "1.8.0"}.get(self.USER_HOME, os.environ.get(str(self.USER_HOME)))
+        return System.getProperty(self.USER_HOME)
 
 
 def _SystemProperties_instance() -> object:

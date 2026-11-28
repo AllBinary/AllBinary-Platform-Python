@@ -21,13 +21,12 @@ from org.allbinary.business.advertisement.campaign.AdvertisementCampaignInterfac
 class AdvertisementCampaign(AdvertisementCampaignInterface):
 
     def _init_fields(self) -> None:
-        from java.util.HashMap import HashMap
-        self.hashMap: HashMap = None
+        if "hashMap" not in vars(self): self.hashMap: HashMap = None
     
 
     def __init__(self, hashMap: HashMap) -> None:
         from java.util.HashMap import HashMap
-        self._init_fields()
+        __class__._init_fields(self)
         self.hashMap = hashMap
     
 
@@ -36,6 +35,7 @@ class AdvertisementCampaign(AdvertisementCampaignInterface):
     
 
     def getName(self) -> str:
+        from org.allbinary.business.advertisement.campaign.AdvertisementCampaignData import AdvertisementCampaignData
         return self.hashMap.get(AdvertisementCampaignData.getInstance().NAME)
     
 
@@ -45,6 +45,7 @@ class AdvertisementCampaign(AdvertisementCampaignInterface):
     
 
     def setName(self, name: str) -> None:
+        from org.allbinary.business.advertisement.campaign.AdvertisementCampaignData import AdvertisementCampaignData
         self.hashMap.put(AdvertisementCampaignData.getInstance().NAME, name)
     
 

@@ -30,7 +30,7 @@ class StaticPathGenerator(PathGeneratorInterface):
     def __init__(self) -> None:
         from org.allbinary.string.CommonStrings import CommonStrings
         from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-        self._init_fields()
+        __class__._init_fields(self)
         PreLogUtil.put("Using Static Path Finding", self, CommonStrings.getInstance().CONSTRUCTOR)
     
 
@@ -59,6 +59,7 @@ class StaticPathGenerator(PathGeneratorInterface):
 
     # throws Exception
     def createList(self, geographicMapInterface: BasicGeographicMap, geographicMapCellHistory: GeographicMapCellHistory, pathFindingInfo: PathFindingInfo, totalPaths: int) -> BasicArrayList:
+        from org.allbinary.media.graphics.geography.pathfinding.PathCacheFactory import PathCacheFactory
         from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         from org.allbinary.string.CommonStrings import CommonStrings

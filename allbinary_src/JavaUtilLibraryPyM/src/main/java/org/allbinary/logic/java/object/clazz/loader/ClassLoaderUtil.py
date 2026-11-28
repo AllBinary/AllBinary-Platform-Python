@@ -28,9 +28,9 @@ class ClassLoaderUtil:
     # throws Exception
     @staticmethod
     def getName(anyType: object) -> str:
-        classLoader: ClassLoader = type(anyType).getClassLoader()
+        classLoader: ClassLoader = __import__("java.lang.ClassLoader", fromlist=["ClassLoader"]).ClassLoader.getSystemClassLoader()
         if classLoader is not None:
-            return "ClassLoader: " + type(classLoader).__module__ + "." + type(classLoader).__qualname__
+            return "ClassLoader: " + __import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(classLoader))
         raise Exception("Unable to get ClassLoader")
 
 

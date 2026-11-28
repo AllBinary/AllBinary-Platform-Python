@@ -28,7 +28,7 @@ class LicenseLoadingTypeFactory:
         self.OTHER: LicenseLoadingType = LicenseLoadingType("Other/Usually The First Non Demo Level")
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

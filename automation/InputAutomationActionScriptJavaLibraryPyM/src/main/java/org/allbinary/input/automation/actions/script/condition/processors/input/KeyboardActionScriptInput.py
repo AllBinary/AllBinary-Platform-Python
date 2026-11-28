@@ -15,32 +15,44 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.input.automation.actions.script.condition.processors.input.BasicProfileActionScriptInput import BasicProfileActionScriptInput
 from org.allbinary.input.automation.actions.script.condition.processors.input.KeyboardActionScriptInputInterface import KeyboardActionScriptInputInterface
 
 
+@java_inherited_overloads
 class KeyboardActionScriptInput(*java_bases(BasicProfileActionScriptInput, KeyboardActionScriptInputInterface)):
     NAME: str = "Keyboard"
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("keyArray", None)
+        vars(self).setdefault("keyboardActionScriptInputJPanel", None)
+        vars(self).setdefault("press", False)
+        vars(self).setdefault("release", False)
+        vars(self).setdefault("delayBetweenKeys", 0)
 
     def _init_fields(self) -> None:
         from org.allbinary.input.KeySingletonFactory import KeySingletonFactory
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.keyArray: list[int] = [KeySingletonFactory.getInstance(KeyEvent.VK_0)]
-        self.keyboardActionScriptInputJPanel: KeyboardActionScriptInputJPanel = None
-        self.press: bool = False
-        self.release: bool = False
-        self.delayBetweenKeys: int = 0
+        self.keyArray: list[int] = [KeySingletonFactory.getInstance(48)]
+        if "keyboardActionScriptInputJPanel" not in vars(self): self.keyboardActionScriptInputJPanel: KeyboardActionScriptInputJPanel = None
+        if "press" not in vars(self): self.press: bool = False
+        if "release" not in vars(self): self.release: bool = False
+        if "delayBetweenKeys" not in vars(self): self.delayBetweenKeys: int = 0
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
         elif len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
     
 
     def _constructor1(self, node: Node) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.input.automation.actions.script.condition.processors.input.KeyboardActionScriptInputData import KeyboardActionScriptInputData
         from org.allbinary.input.automation.actions.script.condition.processors.input.KeyboardActionScriptInputData import KeyboardActionScriptInputData
         from org.allbinary.input.automation.actions.script.condition.processors.input.KeyboardActionScriptInputData import KeyboardActionScriptInputData
@@ -54,7 +66,7 @@ class KeyboardActionScriptInput(*java_bases(BasicProfileActionScriptInput, Keybo
         from org.w3c.dom.Node import Node
         from org.w3c.dom.NodeList import NodeList
         super().__init__(KeyboardActionScriptInput.NAME, node)
-        self._init_fields()
+        __class__._init_fields(self)
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
         actionNode: Node = DomSearchHelper.getNode(KeyboardActionScriptInputData.NAME, node.getChildNodes())
         if actionNode is not None:
@@ -80,16 +92,17 @@ class KeyboardActionScriptInput(*java_bases(BasicProfileActionScriptInput, Keybo
         else:
             raise Exception("Action Script Input Node Null")
         self.setAllowsChildren(False)
-        if not self.isPress() and not self.isRelease():
+        if not (java_predicate(self, "isPress")) and not (java_predicate(self, "isRelease")):
             self.setNormal()
         self.keyboardActionScriptInputJPanel = KeyboardActionScriptInputJPanel(self)
     
 
     def _constructor0(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.input.automation.actions.script.condition.processors.input.KeyboardActionScriptInputJPanel import KeyboardActionScriptInputJPanel
         super().__init__(KeyboardActionScriptInput.NAME)
-        self._init_fields()
-        if not self.isPress() and not self.isRelease():
+        __class__._init_fields(self)
+        if not (java_predicate(self, "isPress")) and not (java_predicate(self, "isRelease")):
             self.setNormal()
         self.setAllowsChildren(False)
         self.setTime(120)
@@ -121,7 +134,7 @@ class KeyboardActionScriptInput(*java_bases(BasicProfileActionScriptInput, Keybo
     
 
     def isNormal(self) -> bool:
-        return self.isRelease() and self.isPress()
+        return java_predicate(self, "isRelease") and java_predicate(self, "isPress")
     
 
     def setNormal(self) -> None:
@@ -171,7 +184,9 @@ class KeyboardActionScriptInput(*java_bases(BasicProfileActionScriptInput, Keybo
         return str(stringBuffer)
 
     def getText(self, *args):
-        return getattr(self, "getText_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("getText_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getText(*args)
     
 
     def integerArrayValue(self, text: str) -> list[int]:
@@ -210,8 +225,8 @@ class KeyboardActionScriptInput(*java_bases(BasicProfileActionScriptInput, Keybo
         for index in range(0, len(self.getKeyArray())):
             hashMap.put(KeyboardActionScriptInputData.KEY + index, str(self.getKeyArray()[index]))
         hashMap.put(KeyboardActionScriptInputData.DELAY_BETWEEN_KEYS, str(self.getDelayBetweenKeys()))
-        hashMap.put(KeyboardActionScriptInputData.PRESS, str(self.isPress()))
-        hashMap.put(KeyboardActionScriptInputData.RELEASE, str(self.isRelease()))
+        hashMap.put(KeyboardActionScriptInputData.PRESS, str(java_predicate(self, "isPress")))
+        hashMap.put(KeyboardActionScriptInputData.RELEASE, str(java_predicate(self, "isRelease")))
         self.logUtil.putF("HashMap: " + str(hashMap), self, "toHashMap()")
         return hashMap
     
@@ -222,7 +237,7 @@ class KeyboardActionScriptInput(*java_bases(BasicProfileActionScriptInput, Keybo
         from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
         from org.w3c.dom.Document import Document
         from org.w3c.dom.Node import Node
-        node: Node = super().toXmlNode(document)
+        node: Node = java_super_call(super(), "toXmlNode", document)
         node.appendChild(ModDomHelper.createNodeWithValueNodes(document, KeyboardActionScriptInputData.NAME, self.toHashMap()))
         return node
     
@@ -240,13 +255,13 @@ class KeyboardActionScriptInput(*java_bases(BasicProfileActionScriptInput, Keybo
     def toString(self) -> str:
         from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
-        stringBuffer.append(str(super()))
+        stringBuffer.append(java_super_call(super(), "toString"))
         stringBuffer.append(" Text: ")
         stringBuffer.append(self.getText())
         stringBuffer.append(" isPress: ")
-        stringBuffer.appendboolean(self.isPress())
+        stringBuffer.appendboolean(java_predicate(self, "isPress"))
         stringBuffer.append(" isRelease: ")
-        stringBuffer.appendboolean(self.isRelease())
+        stringBuffer.appendboolean(java_predicate(self, "isRelease"))
         stringBuffer.append(" Between Key Delay: ")
         stringBuffer.appendint(self.getDelayBetweenKeys())
         return str(stringBuffer)

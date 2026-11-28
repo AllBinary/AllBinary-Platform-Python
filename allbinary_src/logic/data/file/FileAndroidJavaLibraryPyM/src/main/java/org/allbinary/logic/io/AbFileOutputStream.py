@@ -15,19 +15,23 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.io.OutputStream import OutputStream
 
 
+@java_inherited_overloads
 class AbFileOutputStream(OutputStream):
+    def _java_defaults(self):
+        vars(self).setdefault("fileOutputStream", None)
 
     def _init_fields(self) -> None:
-        from java.io.FileOutputStream import FileOutputStream
-        self.fileOutputStream: FileOutputStream = None
+        if "fileOutputStream" not in vars(self): self.fileOutputStream: FileOutputStream = None
     
 
     # throws FileNotFoundException
     @staticmethod
     def createFromAbFile(file: AbFile) -> AbFileOutputStream:
+        from java.io.FileNotFoundException import FileNotFoundException
         from java.io.FileOutputStream import FileOutputStream
         from org.allbinary.logic.io.file.AbFile import AbFile
         from org.allbinary.logic.io.file.AbFileNativeUtil import AbFileNativeUtil
@@ -37,6 +41,7 @@ class AbFileOutputStream(OutputStream):
     # throws FileNotFoundException
     @staticmethod
     def createFromAbFileAppend(file: AbFile, append: bool) -> AbFileOutputStream:
+        from java.io.FileNotFoundException import FileNotFoundException
         from java.io.FileOutputStream import FileOutputStream
         from org.allbinary.logic.io.file.AbFile import AbFile
         return AbFileOutputStream(FileOutputStream(file.getPath()))
@@ -45,6 +50,7 @@ class AbFileOutputStream(OutputStream):
     # throws FileNotFoundException
     @staticmethod
     def createFromFilePath(name: str) -> AbFileOutputStream:
+        from java.io.FileNotFoundException import FileNotFoundException
         from java.io.FileOutputStream import FileOutputStream
         return AbFileOutputStream(FileOutputStream(name))
     
@@ -52,14 +58,17 @@ class AbFileOutputStream(OutputStream):
     # throws FileNotFoundException
     @staticmethod
     def createFromFilePathAppend(name: str, append: bool) -> AbFileOutputStream:
+        from java.io.FileNotFoundException import FileNotFoundException
         from java.io.FileOutputStream import FileOutputStream
         return AbFileOutputStream(FileOutputStream(name))
     
 
     def __init__(self, fileOutputStream: FileOutputStream) -> None:
+        __class__._java_defaults(self)
+        from java.io.FileNotFoundException import FileNotFoundException
         from java.io.FileOutputStream import FileOutputStream
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.fileOutputStream = fileOutputStream
     
 
@@ -90,10 +99,12 @@ class AbFileOutputStream(OutputStream):
 
     def write(self, *args):
         if len(args) == 1 and True and (args[0] is None or isinstance(args[0], list)):
-            return self.write_j1_1(*args)
+            return __class__.__dict__["write_j1_1"].__get__(self, __class__)(*args)
         if len(args) == 1:
-            return self.write_j1_2(*args)
-        return getattr(self, "write_j" + str(len(args)))(*args)
+            return __class__.__dict__["write_j1_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("write_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().write(*args)
 # from java.io.FileNotFoundException import FileNotFoundException
 # from java.io.FileOutputStream import FileOutputStream
 # from java.io.IOException import IOException

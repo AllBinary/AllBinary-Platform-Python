@@ -15,25 +15,32 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.validate.ValidationComponentInterface import ValidationComponentInterface
 from views.admin.workflow.WorkFlowView import WorkFlowView
 
 
+@java_inherited_overloads
 class EditValidationView(*java_bases(WorkFlowView, ValidationComponentInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("workFlowName", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.workFlowName: str = None
+        if "workFlowName" not in vars(self): self.workFlowName: str = None
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.control.workflow.WorkFlowData import WorkFlowData
         from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
         httpTransformInfoInterface: TransformInfoHttpInterface = self.getTransformInfoInterface()
         self.workFlowName = httpTransformInfoInterface.getPageContext().getRequest().getParameter(WorkFlowData.getInstance().NAME)
     
@@ -90,7 +97,7 @@ class EditValidationView(*java_bases(WorkFlowView, ValidationComponentInterface)
     # throws Exception
     def getTransformInfoInterface(self) -> TransformInfoInterface:
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-        return super().getTransformInfoInterface()
+        return java_super_call(super(), "getTransformInfoInterface")
 # from org.allbinary.data.tables.workflow.WorkFlowEntityFactory import WorkFlowEntityFactory
 # from org.allbinary.logic.communication.log.LogUtil import LogUtil
 # from org.allbinary.logic.control.workflow.WorkFlowData import WorkFlowData

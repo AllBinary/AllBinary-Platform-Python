@@ -15,20 +15,26 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.input.automation.module.game.MeteredGameObject import MeteredGameObject
 from org.allbinary.input.automation.module.game.MagicGameObjectInterface import MagicGameObjectInterface
 
 
+@java_inherited_overloads
 class MagicGameObject(*java_bases(MeteredGameObject, MagicGameObjectInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("MP_LABEL", None)
 
     def _init_fields(self) -> None:
         self.MP_LABEL: str = "MP:"
     
 
     def __init__(self, bufferedImage: list[BufferedImage], minX: int, maxX: int, y: int) -> None:
+        __class__._java_defaults(self)
         super().__init__(bufferedImage, minX, maxX, y)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def toString(self) -> str:
@@ -37,7 +43,7 @@ class MagicGameObject(*java_bases(MeteredGameObject, MagicGameObjectInterface)):
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(CommonSeps.getInstance().NEW_LINE)
         stringBuffer.append(self.MP_LABEL)
-        stringBuffer.append(str(super()))
+        stringBuffer.append(java_super_call(super(), "toString"))
         return str(stringBuffer)
 
     def __str__(self) -> str:

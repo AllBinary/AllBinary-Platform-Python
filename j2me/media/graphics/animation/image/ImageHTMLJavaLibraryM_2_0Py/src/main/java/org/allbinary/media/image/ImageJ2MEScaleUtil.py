@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -32,7 +33,7 @@ class ImageJ2MEScaleUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -57,7 +58,7 @@ class ImageJ2MEScaleUtil:
         from playn.html.HtmlGraphics import HtmlGraphics
         from playn.html.HtmlImage import HtmlImage
         originalPlayNImage: CoreImage = None
-        if image.isMutable():
+        if java_predicate(image, "isMutable"):
             originalHTMLImage: PlaynMutableImage = image
             originalPlayNImage = originalHTMLImage.getImage()
         else:

@@ -37,7 +37,7 @@ class Orientation:
     
 
     def __init__(self, yaw: int, pitch: int, roll: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.yaw.setint(yaw)
         self.pitch.setint(pitch)
         self.roll.setint(roll)

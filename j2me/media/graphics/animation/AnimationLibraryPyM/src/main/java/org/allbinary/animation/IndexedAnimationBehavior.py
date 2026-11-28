@@ -15,21 +15,29 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.animation.AnimationBehavior import AnimationBehavior
 
 
+@java_inherited_overloads
 class IndexedAnimationBehavior(AnimationBehavior):
+    def _java_defaults(self):
+        vars(self).setdefault("frameDelayTime", 0)
+        vars(self).setdefault("loopTotal", 0)
+        vars(self).setdefault("elapsedTime", 0)
+        vars(self).setdefault("loopIndex", 0)
 
     def _init_fields(self) -> None:
-        self.frameDelayTime: int = None
-        self.loopTotal: int = None
-        self.elapsedTime: int = 0
-        self.loopIndex: int = 0
+        if "frameDelayTime" not in vars(self): self.frameDelayTime: int = 0
+        if "loopTotal" not in vars(self): self.loopTotal: int = 0
+        if "elapsedTime" not in vars(self): self.elapsedTime: int = 0
+        if "loopIndex" not in vars(self): self.loopIndex: int = 0
     
 
     def __init__(self, loopTotal: int, frameDelayTime: int) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.loopTotal = loopTotal
         self.frameDelayTime = frameDelayTime
     

@@ -97,7 +97,9 @@ class WeblisketSessionInterface:
         raise NotImplementedError()
 
     def setAuthenticated(self, *args):
-        return getattr(self, "setAuthenticated_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("setAuthenticated_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().setAuthenticated(*args)
     
 
     def setPassword(self, password: str) -> None:

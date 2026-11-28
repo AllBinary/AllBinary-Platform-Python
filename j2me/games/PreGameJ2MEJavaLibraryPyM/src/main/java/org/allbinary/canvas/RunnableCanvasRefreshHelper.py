@@ -15,20 +15,24 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.canvas.Processor import Processor
 
 
+@java_inherited_overloads
 class RunnableCanvasRefreshHelper(Processor):
+    def _java_defaults(self):
+        vars(self).setdefault("runnableCanvas", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
-        self.runnableCanvas: MyCanvas = None
+        if "runnableCanvas" not in vars(self): self.runnableCanvas: MyCanvas = None
     
 
     def __init__(self, runnableCanvas: MyCanvas) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.runnableCanvas = runnableCanvas
     
 

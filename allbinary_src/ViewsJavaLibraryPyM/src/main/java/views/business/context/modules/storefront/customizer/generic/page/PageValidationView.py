@@ -15,12 +15,18 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.validate.ValidationComponentInterface import ValidationComponentInterface
 from views.business.context.modules.storefront.customizer.generic.page.PageView import PageView
 
 
+@java_inherited_overloads
 class PageValidationView(*java_bases(PageView, ValidationComponentInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -28,11 +34,12 @@ class PageValidationView(*java_bases(PageView, ValidationComponentInterface)):
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__(transformInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF("View Name: " + transformInfoInterface.getName(), self, "PageViewValidation()")
     
@@ -84,13 +91,13 @@ class PageValidationView(*java_bases(PageView, ValidationComponentInterface)):
                     stringBuffer.append(viewNameOfViewToBeModified)
                     self.logUtil.putF(str(stringBuffer), self, "insert()")
                 hashMap: HashMap = StdUtil.getInstance().createHashMap()
-                title: str = specifiedTransformInfoInterface.getName().substring(self.getTransformInfoInterface().getStoreName().length())
+                title: str = specifiedTransformInfoInterface.getName().substring(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(self.getTransformInfoInterface().getStoreName()))
                 if ((title > "index") - (title < "index")) == 0:
                     hashMap.put(TitleData.getInstance().TEXT, str(self.getTransformInfoInterface().getStoreName()) + " - Home Page")
                 else:
                     hashMap.put(TitleData.getInstance().TEXT, str(self.getTransformInfoInterface().getStoreName()) + " -" + title)
                 pageValidation: PageValidation = PageValidation(hashMap)
-                if pageValidation.isValid() == False:
+                if java_predicate(pageValidation, "isValid") == False:
                     isValid = False
                 if isValid == True:
                     document: Document = DomDocumentHelper.create()
@@ -139,13 +146,13 @@ class PageValidationView(*java_bases(PageView, ValidationComponentInterface)):
                 viewNameOfViewToBeModified: str = transformInfoInterface.getName()
                 specifiedTransformInfoInterface: TransformInfoInterface = transformInfoEntityInterface.get(viewNameOfViewToBeModified, httpTransformInfoInterface.getPropertiesHashMap(), httpTransformInfoInterface.getPageContext())
                 hashMap: HashMap = StdUtil.getInstance().createHashMap()
-                title: str = specifiedTransformInfoInterface.getName().substring(self.getTransformInfoInterface().getStoreName().length())
+                title: str = specifiedTransformInfoInterface.getName().substring(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(self.getTransformInfoInterface().getStoreName()))
                 if ((title > "index") - (title < "index")) == 0:
                     hashMap.put(TitleData.getInstance().TEXT, str(self.getTransformInfoInterface().getStoreName()) + " - Home Page")
                 else:
                     hashMap.put(TitleData.getInstance().TEXT, str(self.getTransformInfoInterface().getStoreName()) + " -" + title)
                 pageValidation: PageValidation = PageValidation(hashMap)
-                if pageValidation.isValid() == False:
+                if java_predicate(pageValidation, "isValid") == False:
                     stringBuffer.append("TransformInfo Name for PageValidation:" + specifiedTransformInfoInterface.getName())
                     stringBuffer.append("PageValidation:" + str(hashMap))
                     stringBuffer.append("PageValidation Info:" + str(pageValidation.validationInfo()))
@@ -170,7 +177,7 @@ class PageValidationView(*java_bases(PageView, ValidationComponentInterface)):
     # throws Exception
     def getTransformInfoInterface(self) -> TransformInfoInterface:
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-        return super().getTransformInfoInterface()
+        return java_super_call(super(), "getTransformInfoInterface")
 # from java.util.HashMap import HashMap
 # from org.allbinary.util.BasicArrayList import BasicArrayList
 # from org.allbinary.data.tables.transform.info.TransformInfoEntity import TransformInfoEntity

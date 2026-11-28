@@ -23,16 +23,15 @@ class PathFindingInfo(PathFindingInfoInterface):
     NULL_PATH_FINDING_INFO: PathFindingInfo = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.pathFinder: GeographicPathFinderBase = GeographicPathFinderBase.NULL_GEOGRAPHIC_PATH_FINDER_BASE
-        self.startPathFindingNodeList: BasicArrayList = None
-        self.endPathFindingNodeList: BasicArrayList = None
-        self.pathFindingNodeCostInfoFactoryInterface: PathFindingNodeCostInfoFactoryBase = None
+        if "startPathFindingNodeList" not in vars(self): self.startPathFindingNodeList: BasicArrayList = None
+        if "endPathFindingNodeList" not in vars(self): self.endPathFindingNodeList: BasicArrayList = None
+        if "pathFindingNodeCostInfoFactoryInterface" not in vars(self): self.pathFindingNodeCostInfoFactoryInterface: PathFindingNodeCostInfoFactoryBase = None
     
 
     def __init__(self, pathFindingNodeCostInfoFactoryInterface: PathFindingNodeCostInfoFactoryBase, startPathFindingNodeList: BasicArrayList, endPathFindingNodeList: BasicArrayList) -> None:
         from org.allbinary.util.BasicArrayList import BasicArrayList
-        self._init_fields()
+        __class__._init_fields(self)
         self.pathFindingNodeCostInfoFactoryInterface = pathFindingNodeCostInfoFactoryInterface
         self.startPathFindingNodeList = startPathFindingNodeList
         self.endPathFindingNodeList = endPathFindingNodeList

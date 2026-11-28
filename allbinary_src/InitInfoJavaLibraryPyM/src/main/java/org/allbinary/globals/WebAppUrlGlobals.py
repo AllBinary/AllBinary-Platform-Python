@@ -15,25 +15,32 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from org.allbinary.globals.UrlGlobalsInterface import UrlGlobalsInterface
 
 
+@java_inherited_overloads
 class WebAppUrlGlobals(UrlGlobalsInterface):
     _lock = threading.RLock()
+    def _java_defaults(self):
+        vars(self).setdefault("path", None)
+        vars(self).setdefault("isWebappPathSet", False)
 
     def _init_fields(self) -> None:
-        self.path: str = None
+        if "path" not in vars(self): self.path: str = None
         self.isWebappPathSet: bool = False
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def isTestingMode(self) -> bool:
         from org.allbinary.business.init.InitInfo import InitInfo
-        return InitInfo.getInstance().isTesting()
+        return java_predicate(InitInfo.getInstance(), "isTesting")
     
 
     def getWebappPath(self) -> str:
@@ -42,7 +49,7 @@ class WebAppUrlGlobals(UrlGlobalsInterface):
 
     def setWebappPath(self, path: str) -> None:
         with self._lock:
-            return self._setWebappPath_unlocked(path)
+            return __class__.__dict__["_setWebappPath_unlocked"].__get__(self, __class__)(path)
 
     def _setWebappPath_unlocked(self, path: str) -> None:
         path = path
@@ -59,7 +66,7 @@ class WebAppUrlGlobals(UrlGlobalsInterface):
         from org.allbinary.business.init.InitInfo import InitInfo
         from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         mainPath: str = InitInfo.getInstance().getMainPath()
-        if not StringValidationUtil.getInstance().isEmpty(mainPath):
+        if not (StringValidationUtil.getInstance().isEmpty(mainPath)):
             return mainPath
         elif self.isWebappPathSet:
             return self.getWebappPath()

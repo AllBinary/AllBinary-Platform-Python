@@ -36,8 +36,11 @@ class NullAIFactory(ArtificialIntelligenceInterfaceFactoryInterface):
         from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
         return NullAIFactory.NULL_AI
 
-    def getInstance(self, *args):
-        return getattr(self, "getInstance_j" + str(len(args)))(*args)
+    def getInstance(self=None, *args):
+        if self is None and not args: return __class__.getInstance_j0()
+        implementation = __class__.__dict__.get("getInstance_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getInstance(*args)
 # from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
 # from org.allbinary.game.input.GameInput import GameInput
 # from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer

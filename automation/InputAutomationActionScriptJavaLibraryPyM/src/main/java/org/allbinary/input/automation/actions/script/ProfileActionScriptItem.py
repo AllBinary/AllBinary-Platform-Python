@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 # from java.awt.event.ActionListener import ActionListener
 # from javax.swing.tree.DefaultMutableTreeNode import DefaultMutableTreeNode
 from org.allbinary.input.automation.actions.script.ProfileActionScriptItemInterface import ProfileActionScriptItemInterface
 
 
+@java_inherited_overloads
 class ProfileActionScriptItem(*java_bases(DefaultMutableTreeNode, ProfileActionScriptItemInterface, ActionListener)):
     EDIT: str = "Edit"
     DELETE: str = "Delete"
@@ -34,32 +36,38 @@ class ProfileActionScriptItem(*java_bases(DefaultMutableTreeNode, ProfileActionS
     NEW_MOUSE_INPUT: str = "Mouse"
     NEW_JOYSTICK_INPUT: str = "Joystick"
     NEW_IMAGE_OUTPUT: str = "Image"
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("jPopupMenu", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.jPopupMenu: JPopupMenu = None
+        if "jPopupMenu" not in vars(self): self.jPopupMenu: JPopupMenu = None
 
     def __init__(self, *args) -> None:
         if len(args) == 2:
-            self._constructor2(*args)
+            __class__._constructor2(self, *args)
         elif len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
     
 
     def _constructor2(self, label: str, node: Node) -> None:
+        __class__._java_defaults(self)
         from org.w3c.dom.Node import Node
         super().__init__(label)
-        self._init_fields()
+        __class__._init_fields(self)
         self.init()
         self.logUtil.putF("Label: " + label, self, self.commonStrings.CONSTRUCTOR)
     
 
     def _constructor1(self, label: str) -> None:
+        __class__._java_defaults(self)
         super().__init__(label)
-        self._init_fields()
+        __class__._init_fields(self)
         self.init()
         self.logUtil.putF("Label: " + label, self, self.commonStrings.CONSTRUCTOR)
     

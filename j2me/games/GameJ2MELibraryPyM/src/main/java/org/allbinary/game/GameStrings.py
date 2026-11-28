@@ -34,7 +34,7 @@ class GameStrings:
         self.STOP_GAME_CANVAS_RUNNABLE_INTERFACE: str = "stopGameCanvasRunnableInterface"
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

@@ -15,10 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.visual.transform.info.objectConfig.GenericStoreTransformInfoObjectConfig import GenericStoreTransformInfoObjectConfig
 
 
+@java_inherited_overloads
 class CompoundContextTransformInfoObjectConfig(GenericStoreTransformInfoObjectConfig):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -26,34 +30,37 @@ class CompoundContextTransformInfoObjectConfig(GenericStoreTransformInfoObjectCo
 
     def __init__(self, *args) -> None:
         if len(args) == 2:
-            self._constructor2(*args)
+            __class__._constructor2(self, *args)
         elif len(args) == 3:
-            self._constructor3(*args)
+            __class__._constructor3(self, *args)
         elif len(args) == 4:
-            self._constructor4(*args)
+            __class__._constructor4(self, *args)
     
 
     def _constructor2(self, abeClientInformation: AbeClientInformationInterface, transformInfoInterface: TransformInfoInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(abeClientInformation, transformInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def _constructor3(self, abeClientInformation: AbeClientInformationInterface, transformInfoInterface: TransformInfoInterface, document: Document) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         from org.w3c.dom.Document import Document
         super().__init__(abeClientInformation, transformInfoInterface, document)
-        self._init_fields()
+        __class__._init_fields(self)
         self.setDocument(self.generate(self.toXmlDoc()))
     
 
     def _constructor4(self, abeClientInformation: AbeClientInformationInterface, transformInfoInterface: TransformInfoInterface, name: str, type_: str) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(abeClientInformation, transformInfoInterface, name, type_)
-        self._init_fields()
+        __class__._init_fields(self)
         self.setDocument(self.generate(self.toXmlDoc()))
     
 
@@ -116,13 +123,14 @@ class CompoundContextTransformInfoObjectConfig(GenericStoreTransformInfoObjectCo
 
     # throws Exception
     def createInputStream(self) -> InputStream:
+        from java.io.ByteArrayInputStream import ByteArrayInputStream
         from java.io.InputStream import InputStream
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         completeTemplateViewBytes: list[int] = self.get().getBytes()
         bais: ByteArrayInputStream = ByteArrayInputStream(completeTemplateViewBytes)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
-            self.logUtil.putF("Template: " + str(bytes(completeTemplateViewBytes).decode()), self, "createInputStream()")
+            self.logUtil.putF("Template: " + bytes(completeTemplateViewBytes).decode(), self, "createInputStream()")
         return bais
 # from java.io.ByteArrayInputStream import ByteArrayInputStream
 # from java.io.InputStream import InputStream

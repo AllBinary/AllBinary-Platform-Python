@@ -27,7 +27,7 @@ class ItemColorFactory:
         self.TEXT_FIELD_NO_FOCUS: int = 0x7F7F7F
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

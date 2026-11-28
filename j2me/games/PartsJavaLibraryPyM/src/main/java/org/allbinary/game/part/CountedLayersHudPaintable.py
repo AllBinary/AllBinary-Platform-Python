@@ -25,20 +25,19 @@ class CountedLayersHudPaintable(*java_bases(PaintableInterface, UpdateMyFontInte
 
     def _init_fields(self) -> None:
         from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
         self.displayInfoSingleton: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
-        self.partInterfaceArray: list[PartInterface] = None
-        self.countedTotalStringColor: int = None
-        self.countedPartsBorder: int = None
-        self.startIndex: int = None
-        self.dropSize: int = None
+        if "partInterfaceArray" not in vars(self): self.partInterfaceArray: list[PartInterface] = None
+        if "countedTotalStringColor" not in vars(self): self.countedTotalStringColor: int = 0
+        if "countedPartsBorder" not in vars(self): self.countedPartsBorder: int = 0
+        if "startIndex" not in vars(self): self.startIndex: int = 0
+        if "dropSize" not in vars(self): self.dropSize: int = 0
         self.myFontProcessor: MyFontProcessor = UpdateMyFontProcessor(self)
-        self.height: int = 0
+        if "height" not in vars(self): self.height: int = 0
     
 
     def __init__(self, partInterfaceArray: list[PartInterface], dropSize: int, startIndex: int, countedTotalStringColor: int, countedPartsBorder: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.partInterfaceArray = partInterfaceArray
         self.startIndex = startIndex
         self.countedTotalStringColor = countedTotalStringColor

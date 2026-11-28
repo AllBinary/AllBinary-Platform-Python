@@ -15,12 +15,19 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.android.api1.ActivityFractureUtilAPI1 import ActivityFractureUtilAPI1
 
 
+@java_inherited_overloads
 class ActivityFractureUtilAPI5(ActivityFractureUtilAPI1):
     instance5: ActivityFractureUtilAPI5 = None
+    def _java_defaults(self):
+        vars(self).setdefault("FEATURE_TOUCHSCREEN_MULTITOUCH", None)
+        vars(self).setdefault("FEATURE_TOUCHSCREEN", None)
+        vars(self).setdefault("FEATURE_TOUCHSCREEN_MULTITOUCH_DISTINCT", None)
 
     def _init_fields(self) -> None:
         self.FEATURE_TOUCHSCREEN_MULTITOUCH: str = "android.hardware.touchscreen.multitouch"
@@ -28,8 +35,9 @@ class ActivityFractureUtilAPI5(ActivityFractureUtilAPI1):
         self.FEATURE_TOUCHSCREEN_MULTITOUCH_DISTINCT: str = "android.hardware.touchscreen.multitouch.distinct"
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

@@ -15,33 +15,48 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 from org.allbinary.logic.control.validate.ValidationComponentInterface import ValidationComponentInterface
 from views.business.context.modules.storefront.HttpStoreComponentView import HttpStoreComponentView
 
 
+@java_inherited_overloads
 class UserNameOrderHistoryView(*java_bases(HttpStoreComponentView, ValidationComponentInterface, DomNodeInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("request", None)
+        vars(self).setdefault("userName", None)
+        vars(self).setdefault("shipped", None)
+        vars(self).setdefault("partiallyShipped", None)
+        vars(self).setdefault("processing", None)
+        vars(self).setdefault("preprocessing", None)
+        vars(self).setdefault("cancelled", None)
+        vars(self).setdefault("ON", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.request: HttpServletRequest = None
-        self.userName: str = None
-        self.shipped: str = None
-        self.partiallyShipped: str = None
-        self.processing: str = None
-        self.preprocessing: str = None
-        self.cancelled: str = None
+        if "request" not in vars(self): self.request: HttpServletRequest = None
+        if "userName" not in vars(self): self.userName: str = None
+        if "shipped" not in vars(self): self.shipped: str = None
+        if "partiallyShipped" not in vars(self): self.partiallyShipped: str = None
+        if "processing" not in vars(self): self.processing: str = None
+        if "preprocessing" not in vars(self): self.preprocessing: str = None
+        if "cancelled" not in vars(self): self.cancelled: str = None
         self.ON: str = "on"
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.user.UserData import UserData
         from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
         self.request = self.getPageContext().getRequest()
         self.userName = self.request.getParameter(UserData.USERNAME)
         self.preprocessing = self.request.getParameter(OrderHistoryData.PREPROCESSINGNAME)
@@ -61,7 +76,7 @@ class UserNameOrderHistoryView(*java_bases(HttpStoreComponentView, ValidationCom
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             self.addDomNodeInterfaces()
-            return super().view()
+            return java_super_call(super(), "view")
         except Exception as e:
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "view()", e)
@@ -139,7 +154,7 @@ class UserNameOrderHistoryView(*java_bases(HttpStoreComponentView, ValidationCom
     # throws Exception
     def getTransformInfoInterface(self) -> TransformInfoInterface:
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-        return super().getTransformInfoInterface()
+        return java_super_call(super(), "getTransformInfoInterface")
 # from org.allbinary.util.BasicArrayList import BasicArrayList
 # from org.allbinary.util.BasicArrayListD import BasicArrayListD
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest

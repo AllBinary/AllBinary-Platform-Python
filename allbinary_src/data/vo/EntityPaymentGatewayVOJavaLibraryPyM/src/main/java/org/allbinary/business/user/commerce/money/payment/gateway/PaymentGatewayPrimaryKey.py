@@ -21,12 +21,12 @@ from __future__ import annotations
 class PaymentGatewayPrimaryKey(object):
 
     def _init_fields(self) -> None:
-        self.storeName: str = None
-        self.name: str = None
+        if "storeName" not in vars(self): self.storeName: str = None
+        if "name" not in vars(self): self.name: str = None
     
 
     def __init__(self, storeName: str, gatewayName: str) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.setStoreName(storeName)
         self.setName(gatewayName)
     
@@ -52,12 +52,12 @@ class PaymentGatewayPrimaryKey(object):
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.string.CommonSeps import CommonSeps
         stringBuffer: StringMaker = StringMaker()
-        stringBuffer.append(PaymentGatewayPrimaryKey.__module__ + "." + PaymentGatewayPrimaryKey.__qualname__)
-        stringBuffer.append(StoreFront.__module__ + "." + StoreFront.__qualname__)
+        stringBuffer.append(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(PaymentGatewayPrimaryKey))
+        stringBuffer.append(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(StoreFront))
         stringBuffer.append(" =")
         stringBuffer.append(self.getStoreName())
         stringBuffer.append(CommonSeps.getInstance().SPACE)
-        stringBuffer.append(PaymentGateway.__module__ + "." + PaymentGateway.__qualname__)
+        stringBuffer.append(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(PaymentGateway))
         stringBuffer.append("=")
         stringBuffer.append(self.getName())
         return str(stringBuffer)

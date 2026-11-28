@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 
 
 class MotionGestureReceiveInterfaceFactory:
@@ -27,7 +28,7 @@ class MotionGestureReceiveInterfaceFactory:
         from org.allbinary.input.motion.gesture.configuration.MotionGestureConfiguration import MotionGestureConfiguration
         from org.allbinary.input.motion.gesture.configuration.MotionGestureConfigurationFactory import MotionGestureConfigurationFactory
         configuration: MotionGestureConfiguration = MotionGestureConfigurationFactory.getInstance()
-        if not configuration.isExecutingActionsAllowed():
+        if not (java_predicate(configuration, "isExecutingActionsAllowed")):
             return NullCompleteMotionGestureReceiver()
         else:
             return ResolveCompleteMotionGestureListener()

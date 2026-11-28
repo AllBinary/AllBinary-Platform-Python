@@ -15,20 +15,28 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from admin.tags.TableTag import TableTag
 
 
+@java_inherited_overloads
 class UserTag(TableTag):
+    def _java_defaults(self):
+        vars(self).setdefault("role", None)
+        vars(self).setdefault("enable", None)
 
     def _init_fields(self) -> None:
-        self.role: str = None
-        self.enable: str = None
+        if "role" not in vars(self): self.role: str = None
+        if "enable" not in vars(self): self.enable: str = None
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from admin.taghelpers.UserHelperFactory import UserHelperFactory
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.setTagHelperFactory(UserHelperFactory())
         self.setTagRequestHelperFactory(UserHelperFactory())
     
@@ -49,8 +57,8 @@ class UserTag(TableTag):
     def doStartTag(self) -> int:
         from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
         try:
-            if self.isEnabled():
-                return super().doStartTag()
+            if java_predicate(self, "isEnabled"):
+                return java_super_call(super(), "doStartTag")
             return self.SKIP_BODY
         except Exception as e:
             AbResponseHandler.sendJspTagRedirect(self.pageContext, e)

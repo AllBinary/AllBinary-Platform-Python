@@ -3,10 +3,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.graphics.form.CustomScreen import CustomScreen
 
 
+@java_inherited_overloads
 class ABCustomForm(CustomScreen):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("commonStrings", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -16,10 +21,11 @@ class ABCustomForm(CustomScreen):
     
 
     def __init__(self, title: str, items: list[ABCustomItem], backgroundBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getAllitems(self) -> list[ABCustomItem]:

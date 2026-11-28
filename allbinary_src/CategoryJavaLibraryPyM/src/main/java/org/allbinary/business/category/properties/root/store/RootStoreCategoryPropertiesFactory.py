@@ -21,31 +21,30 @@ from org.allbinary.business.category.properties.CategoryPropertiesFactoryInterfa
 class RootStoreCategoryPropertiesFactory(CategoryPropertiesFactoryInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.categoryPropertiesInterface: CategoryPropertiesInterface = None
+        if "categoryPropertiesInterface" not in vars(self): self.categoryPropertiesInterface: CategoryPropertiesInterface = None
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
         elif len(args) == 2:
-            self.__jconstructor2(*args)
+            __class__.__jconstructor2(self, *args)
 
     def __jconstructor2(self, *args) -> None:
-        if True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)):
-            self._constructor2_1(*args)
-        elif True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)):
-            self._constructor2_2(*args)
+        if True and (args[0] is None or any(base.__name__ == "TransformInfoInterface" for base in type(args[0]).__mro__)) and (args[1] is None or any(base.__name__ == "AbPath" for base in type(args[1]).__mro__)):
+            __class__._constructor2_1(self, *args)
+        elif True and (args[0] is None or any(base.__name__ == "TransformInfoInterface" for base in type(args[0]).__mro__)) and (args[1] is None or any(base.__name__ == "Node" for base in type(args[1]).__mro__)):
+            __class__._constructor2_2(self, *args)
         else:
-            self._constructor2_3(*args)
+            __class__._constructor2_3(self, *args)
     
 
     def _constructor1(self, transformInfoInterface: TransformInfoInterface) -> None:
         from org.allbinary.business.category.properties.root.store.RootStoreCategoryProperties import RootStoreCategoryProperties
         from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-        self._init_fields()
+        __class__._init_fields(self)
         self.categoryPropertiesInterface = RootStoreCategoryProperties(transformInfoInterface)
     
 
@@ -54,7 +53,7 @@ class RootStoreCategoryPropertiesFactory(CategoryPropertiesFactoryInterface):
         from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
         from org.allbinary.logic.io.path.AbPath import AbPath
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-        self._init_fields()
+        __class__._init_fields(self)
         self.categoryPropertiesInterface = RootStoreCategoryProperties(transformInfoInterface, abPath)
     
 
@@ -63,7 +62,7 @@ class RootStoreCategoryPropertiesFactory(CategoryPropertiesFactoryInterface):
         from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         from org.w3c.dom.Node import Node
-        self._init_fields()
+        __class__._init_fields(self)
         self.categoryPropertiesInterface = RootStoreCategoryProperties(transformInfoInterface, node)
     
 
@@ -72,7 +71,7 @@ class RootStoreCategoryPropertiesFactory(CategoryPropertiesFactoryInterface):
         from java.util.HashMap import HashMap
         from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-        self._init_fields()
+        __class__._init_fields(self)
         self.categoryPropertiesInterface = RootStoreCategoryProperties(transformInfoInterface, categoryPropertiesHashMap)
     
 

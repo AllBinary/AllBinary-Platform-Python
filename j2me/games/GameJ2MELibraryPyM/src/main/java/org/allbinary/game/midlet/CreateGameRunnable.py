@@ -22,19 +22,18 @@ class CreateGameRunnable(object):
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
-        from org.allbinary.util.ABHashtable import ABHashtable
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.demoGameMidlet: DemoGameMidlet = None
-        self.hashtable: ABHashtable[object, object] = None
-        self.startGameMidletEvent: DemoGameMidletEvent = None
+        if "demoGameMidlet" not in vars(self): self.demoGameMidlet: DemoGameMidlet = None
+        if "hashtable" not in vars(self): self.hashtable: ABHashtable[object, object] = None
+        if "startGameMidletEvent" not in vars(self): self.startGameMidletEvent: DemoGameMidletEvent = None
     
 
     def __init__(self, demoGameMidlet: DemoGameMidlet, hashtable: ABHashtable[object, object]) -> None:
         from org.allbinary.game.midlet.DemoGameMidletEvent import DemoGameMidletEvent
         from org.allbinary.game.midlet.DemoGameMidletStateFactory import DemoGameMidletStateFactory
         from org.allbinary.util.ABHashtable import ABHashtable
-        self._init_fields()
+        __class__._init_fields(self)
         self.demoGameMidlet = demoGameMidlet
         self.hashtable = hashtable
         self.startGameMidletEvent = DemoGameMidletEvent(self, DemoGameMidletStateFactory.getInstance().START_GAME)

@@ -15,9 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.layer.AllBinaryLayerCircularPool import AllBinaryLayerCircularPool
 
 
+@java_inherited_overloads
 class WeaponLayerCircularPool(AllBinaryLayerCircularPool):
     
 
@@ -30,7 +33,7 @@ class WeaponLayerCircularPool(AllBinaryLayerCircularPool):
         from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
         from org.allbinary.game.score.ScoreableInterface import ScoreableInterface
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-        weaponLayer: WeaponLayer = super().getNextInstance()
+        weaponLayer: WeaponLayer = java_super_call(super(), "getNextInstance")
         weaponLayer.initXYZ(x, y, z)
         weaponLayer.init(sourceLayerInterface, angle, otherAngle, weaponProperties, scoreable)
         return weaponLayer

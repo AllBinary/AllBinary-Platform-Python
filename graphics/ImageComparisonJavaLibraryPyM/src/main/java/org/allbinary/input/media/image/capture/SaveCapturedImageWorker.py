@@ -15,34 +15,41 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import threading
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.util.event.handler.BasicEventHandler import BasicEventHandler
 from org.allbinary.input.media.image.capture.CapturedImageWorkerResultsListener import CapturedImageWorkerResultsListener
 
 
+@java_inherited_overloads
 class SaveCapturedImageWorker(*java_bases(BasicEventHandler, CapturedImageWorkerResultsListener)):
     _lock = threading.RLock()
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("running", False)
+        vars(self).setdefault("capturedImageWorkerResultsEventVector", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.running: bool = False
+        if "running" not in vars(self): self.running: bool = False
         self.capturedImageWorkerResultsEventVector: BasicArrayList = BasicArrayListD()
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def isRunning(self) -> bool:
         with self._lock:
-            return self._isRunning_unlocked()
+            return __class__.__dict__["_isRunning_unlocked"].__get__(self, __class__)()
 
     def _isRunning_unlocked(self) -> bool:
         return self.running
@@ -50,7 +57,7 @@ class SaveCapturedImageWorker(*java_bases(BasicEventHandler, CapturedImageWorker
 
     def setRunning(self, running: bool) -> None:
         with self._lock:
-            return self._setRunning_unlocked(running)
+            return __class__.__dict__["_setRunning_unlocked"].__get__(self, __class__)(running)
 
     def _setRunning_unlocked(self, running: bool) -> None:
         self.running = running

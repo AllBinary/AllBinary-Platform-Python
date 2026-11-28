@@ -14,7 +14,7 @@ class OpenGLProcessor:
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def process(self, gl: GL10) -> None:

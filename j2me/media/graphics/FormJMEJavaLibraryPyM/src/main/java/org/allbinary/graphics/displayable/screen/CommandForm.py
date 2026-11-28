@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from java.lang.JavaRuntimeStatic import java_bases
 from javax.microedition.lcdui.Form import Form
@@ -22,18 +24,22 @@ from org.allbinary.game.displayable.canvas.MenuListener import MenuListener
 from org.allbinary.graphics.displayable.command.MyCommandInterface import MyCommandInterface
 
 
+@java_inherited_overloads
 class CommandForm(*java_bases(Form, MyCommandInterface, MenuListener)):
     NULL_COMMAND_FORM: object = None
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("repaintProcessor", None)
+        vars(self).setdefault("commandStack", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.canvas.Processor import Processor
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
-        from org.allbinary.util.ABStack import ABStack
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.repaintProcessor: Processor = ScreenRepaintProcessorFactory.getInstance().create(self)
-        self.commandStack: ABStack[object] = None
+        if "commandStack" not in vars(self): self.commandStack: ABStack[object] = None
     
 
     @staticmethod
@@ -48,11 +54,12 @@ class CommandForm(*java_bases(Form, MyCommandInterface, MenuListener)):
     
 
     def __init__(self, commandListener: CommandListener, formTitle: str, backgrounBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.CommandListener import CommandListener
         from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.logic.StdUtil import StdUtil
         super().__init__(formTitle)
-        self._init_fields()
+        __class__._init_fields(self)
         self.commandStack = StdUtil.getInstance().createStack()
         try:
             self.repaintProcessor.process()
@@ -86,14 +93,14 @@ class CommandForm(*java_bases(Form, MyCommandInterface, MenuListener)):
     def addCommand(self, command: Command) -> None:
         from javax.microedition.lcdui.Command import Command
         self.commandStack.push(command)
-        super().addCommand(command)
+        java_super_call(super(), "addCommand", command)
     
 
     def removeAllCommands(self) -> None:
         from javax.microedition.lcdui.Command import Command
         size: int = self.commandStack.size()
         for index in range(0, size):
-            super().removeCommand(self.commandStack.pop())
+            java_super_call(super(), "removeCommand", self.commandStack.pop())
 # from javax.microedition.lcdui.Command import Command
 # from javax.microedition.lcdui.CommandListener import CommandListener
 # from javax.microedition.lcdui.NullCommandListener import NullCommandListener

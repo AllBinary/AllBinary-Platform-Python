@@ -15,32 +15,39 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.input.PlayerGameInput import PlayerGameInput
 
 
+@java_inherited_overloads
 class CheatGameInputProcessor(PlayerGameInput):
     inputProcessor: SpecialGameInputInterface = None
     _lock = threading.RLock()
+    def _java_defaults(self):
+        vars(self).setdefault("PROCESS_GAME", None)
+        vars(self).setdefault("gameCanvas", None)
+        vars(self).setdefault("gameKeyFactory", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
         self.PROCESS_GAME: str = "processGame"
-        self.gameCanvas: AllBinaryGameCanvas = None
+        if "gameCanvas" not in vars(self): self.gameCanvas: AllBinaryGameCanvas = None
         self.gameKeyFactory: GameKeyFactory = GameKeyFactory.getInstance()
     
 
     def __init__(self, gameCanvas: AllBinaryGameCanvas) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         super().__init__(BasicArrayListD(), BasicArrayListD(), -1)
-        self._init_fields()
+        __class__._init_fields(self)
         self.gameCanvas = gameCanvas
     
 
     def update(self) -> None:
         with self._lock:
-            return self._update_unlocked()
+            return __class__.__dict__["_update_unlocked"].__get__(self, __class__)()
 
     def _update_unlocked(self) -> None:
         from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent

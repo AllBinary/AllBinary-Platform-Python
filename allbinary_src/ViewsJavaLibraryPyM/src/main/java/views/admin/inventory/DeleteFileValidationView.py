@@ -15,22 +15,29 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.validate.ValidationComponentInterface import ValidationComponentInterface
 from views.admin.inventory.InventoryItemView import InventoryItemView
 
 
+@java_inherited_overloads
 class DeleteFileValidationView(*java_bases(InventoryItemView, ValidationComponentInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("id", None)
 
     def _init_fields(self) -> None:
-        self.id: str = None
+        if "id" not in vars(self): self.id: str = None
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.string.StringUtil import StringUtil
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface, StringUtil.getInstance().EMPTY_STRING)
-        self._init_fields()
+        __class__._init_fields(self)
         self.getFormData()
     
 
@@ -48,7 +55,7 @@ class DeleteFileValidationView(*java_bases(InventoryItemView, ValidationComponen
         from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityFactory import InventoryEntityFactory
         from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         try:
-            if self.id is None or not StringValidationUtil.getInstance().isNumber(self.id):
+            if self.id is None or not (StringValidationUtil.getInstance().isNumber(self.id)):
                 return False
             self.itemInterface = InventoryEntityFactory.getInstance().getInventoryEntityInstance().getItem(self.id)
             if self.itemInterface is None:
@@ -75,7 +82,7 @@ class DeleteFileValidationView(*java_bases(InventoryItemView, ValidationComponen
         from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         try:
             stringBuffer: StringMaker = StringMaker()
-            if self.id is None or not StringValidationUtil.getInstance().isNumber(self.id):
+            if self.id is None or not (StringValidationUtil.getInstance().isNumber(self.id)):
                 stringBuffer.append("Id is not valid.<br />")
             if InventoryEntityFactory.getInstance().getInventoryEntityInstance().getItem(self.id) is None:
                 stringBuffer.append("Item does not exist.<br />")
@@ -87,7 +94,7 @@ class DeleteFileValidationView(*java_bases(InventoryItemView, ValidationComponen
     # throws Exception
     def getTransformInfoInterface(self) -> TransformInfoInterface:
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-        return super().getTransformInfoInterface()
+        return java_super_call(super(), "getTransformInfoInterface")
 # from java.util.HashMap import HashMap
 # from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
 # from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityFactory import InventoryEntityFactory

@@ -15,36 +15,41 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from javax.microedition.khronos.opengles.GL11 import GL11
 from org.allbinary.opengles.JOGL10 import JOGL10
 
 
 #JOGLEToKhronosGL11
+@java_inherited_overloads
 class JOGL11(*java_bases(JOGL10, GL11)):
+    def _java_defaults(self):
+        vars(self).setdefault("gl11", None)
 
     def _init_fields(self) -> None:
-        from com.jogamp.opengl.GL2 import GL2
-        self.gl11: GL2 = None
+        if "gl11" not in vars(self): self.gl11: GL2 = None
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
         elif len(args) == 2:
-            self._constructor2(*args)
+            __class__._constructor2(self, *args)
     
 
     def _constructor1(self, gl: GL) -> None:
+        __class__._java_defaults(self)
         from com.jogamp.opengl.GL import GL
         from com.jogamp.opengl.GL2 import GL2
-        self._constructor2(gl, gl)
+        __class__._constructor2(self, gl, gl)
     
 
     def _constructor2(self, gl: GL, gl2: GL2) -> None:
+        __class__._java_defaults(self)
         from com.jogamp.opengl.GL import GL
         from com.jogamp.opengl.GL2 import GL2
         super().__init__(gl, gl2)
-        self._init_fields()
+        __class__._init_fields(self)
         self.gl11 = self.getJOGLGL()
     
 
@@ -68,7 +73,9 @@ class JOGL11(*java_bases(JOGL10, GL11)):
         self.gl11.glClipPlanef(plane, equation)
 
     def glClipPlanef(self, *args):
-        return getattr(self, "glClipPlanef_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glClipPlanef_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glClipPlanef(*args)
     
 
     def glColor4ub(self, red: int, green: int, blue: int, alpha: int) -> None:
@@ -87,7 +94,9 @@ class JOGL11(*java_bases(JOGL10, GL11)):
         self.gl11.glDeleteBuffers(n, buffers)
 
     def glDeleteBuffers(self, *args):
-        return getattr(self, "glDeleteBuffers_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glDeleteBuffers_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glDeleteBuffers(*args)
     
 
     def glDrawElements(self, mode: int, count: int, type_: int, offset: int) -> None:
@@ -102,7 +111,9 @@ class JOGL11(*java_bases(JOGL10, GL11)):
         self.gl11.glGenBuffers(n, buffers)
 
     def glGenBuffers(self, *args):
-        return getattr(self, "glGenBuffers_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glGenBuffers_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glGenBuffers(*args)
     
 
     def glGetBufferParameteriv_j4(self, target: int, pname: int, params: list[int], offset: int) -> None:
@@ -113,7 +124,9 @@ class JOGL11(*java_bases(JOGL10, GL11)):
         self.gl11.glGetBufferParameteriv(target, pname, params)
 
     def glGetBufferParameteriv(self, *args):
-        return getattr(self, "glGetBufferParameteriv_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glGetBufferParameteriv_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glGetBufferParameteriv(*args)
     
 
     def glGetClipPlanef_j3(self, pname: int, eqn: list[float], offset: int) -> None:
@@ -124,7 +137,9 @@ class JOGL11(*java_bases(JOGL10, GL11)):
         self.gl11.glGetClipPlanef(pname, eqn)
 
     def glGetClipPlanef(self, *args):
-        return getattr(self, "glGetClipPlanef_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glGetClipPlanef_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glGetClipPlanef(*args)
     
 
     def glGetFloatv_j3(self, pname: int, params: list[float], offset: int) -> None:
@@ -135,7 +150,9 @@ class JOGL11(*java_bases(JOGL10, GL11)):
         self.gl11.glGetFloatv(pname, params)
 
     def glGetFloatv(self, *args):
-        return getattr(self, "glGetFloatv_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glGetFloatv_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glGetFloatv(*args)
     
 
     def glGetLightfv_j4(self, light: int, pname: int, params: list[float], offset: int) -> None:
@@ -146,7 +163,9 @@ class JOGL11(*java_bases(JOGL10, GL11)):
         self.gl11.glGetLightfv(light, pname, params)
 
     def glGetLightfv(self, *args):
-        return getattr(self, "glGetLightfv_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glGetLightfv_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glGetLightfv(*args)
     
 
     def glGetMaterialfv_j4(self, face: int, pname: int, params: list[float], offset: int) -> None:
@@ -157,7 +176,9 @@ class JOGL11(*java_bases(JOGL10, GL11)):
         self.gl11.glGetMaterialfv(face, pname, params)
 
     def glGetMaterialfv(self, *args):
-        return getattr(self, "glGetMaterialfv_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glGetMaterialfv_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glGetMaterialfv(*args)
     
 
     def glGetTexEnviv_j4(self, env: int, pname: int, params: list[int], offset: int) -> None:
@@ -168,7 +189,9 @@ class JOGL11(*java_bases(JOGL10, GL11)):
         self.gl11.glGetTexEnviv(env, pname, params)
 
     def glGetTexEnviv(self, *args):
-        return getattr(self, "glGetTexEnviv_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glGetTexEnviv_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glGetTexEnviv(*args)
     
 
     def glGetTexParameterfv_j4(self, target: int, pname: int, params: list[float], offset: int) -> None:
@@ -179,7 +202,9 @@ class JOGL11(*java_bases(JOGL10, GL11)):
         self.gl11.glGetTexParameterfv(target, pname, params)
 
     def glGetTexParameterfv(self, *args):
-        return getattr(self, "glGetTexParameterfv_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glGetTexParameterfv_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glGetTexParameterfv(*args)
     
 
     def glGetTexParameteriv_j4(self, target: int, pname: int, params: list[int], offset: int) -> None:
@@ -190,7 +215,9 @@ class JOGL11(*java_bases(JOGL10, GL11)):
         self.gl11.glGetTexParameteriv(target, pname, params)
 
     def glGetTexParameteriv(self, *args):
-        return getattr(self, "glGetTexParameteriv_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glGetTexParameteriv_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glGetTexParameteriv(*args)
     
 
     def glIsBuffer(self, buffer: int) -> bool:
@@ -221,7 +248,9 @@ class JOGL11(*java_bases(JOGL10, GL11)):
         self.gl11.glPointParameterfv(pname, params)
 
     def glPointParameterfv(self, *args):
-        return getattr(self, "glPointParameterfv_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glPointParameterfv_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glPointParameterfv(*args)
     
 
     def glTexCoordPointer(self, size: int, type_: int, stride: int, offset: int) -> None:
@@ -240,7 +269,9 @@ class JOGL11(*java_bases(JOGL10, GL11)):
         self.gl11.glTexEnviv(target, pname, params)
 
     def glTexEnviv(self, *args):
-        return getattr(self, "glTexEnviv_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glTexEnviv_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glTexEnviv(*args)
     
 
     def glTexParameterfv_j4(self, target: int, pname: int, params: list[float], offset: int) -> None:
@@ -251,7 +282,9 @@ class JOGL11(*java_bases(JOGL10, GL11)):
         self.gl11.glTexParameterfv(target, pname, params)
 
     def glTexParameterfv(self, *args):
-        return getattr(self, "glTexParameterfv_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glTexParameterfv_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glTexParameterfv(*args)
     
 
     def glTexParameteri(self, target: int, pname: int, param: int) -> None:
@@ -266,7 +299,9 @@ class JOGL11(*java_bases(JOGL10, GL11)):
         self.gl11.glTexParameteriv(target, pname, params)
 
     def glTexParameteriv(self, *args):
-        return getattr(self, "glTexParameteriv_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glTexParameteriv_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glTexParameteriv(*args)
     
 
     def glTexParameterxv(self, target: int, pname: int, params: list[int], offset: int) -> None:

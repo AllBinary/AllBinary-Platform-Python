@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -32,7 +33,7 @@ class GameFeatureUtil:
         self.GAME_FEATURE_CHANGED: str = "Game Feature Changed: "
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -100,9 +101,9 @@ class GameFeatureUtil:
             self.logUtil.putF(str(stringBuffer), self, METHOD_NAME)
             selectedChoiceLabel: str = choiceGroup.getString(index)
             gameFeature: Feature = Feature.getInstance(selectedChoiceLabel)
-            if not isSelected and features.isFeature(gameFeature):
+            if not (isSelected) and features.isFeature(gameFeature):
                 features.remove(gameFeature)
-            elif isSelected and not features.isFeature(gameFeature):
+            elif isSelected and not (features.isFeature(gameFeature)):
                 features.add(gameFeature)
     
 

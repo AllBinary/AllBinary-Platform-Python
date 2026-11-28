@@ -33,7 +33,7 @@ class AndroidSystemProperties:
 
     def __init__(self, context: Context) -> None:
         from android.content.Context import Context
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getDeviceId(self) -> str:

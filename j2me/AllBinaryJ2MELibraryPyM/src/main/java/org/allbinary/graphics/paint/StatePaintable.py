@@ -15,11 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.displayable.StateControlledInterface import StateControlledInterface
 from org.allbinary.graphics.paint.Paintable import Paintable
 
 
+@java_inherited_overloads
 class StatePaintable(*java_bases(Paintable, StateControlledInterface)):
     
 

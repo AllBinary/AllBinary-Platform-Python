@@ -15,9 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.io.file.visitor.BooleanFileVisitor import BooleanFileVisitor
 
 
+@java_inherited_overloads
 class IncludeFileExtensionsBooleanFileVisitor(BooleanFileVisitor):
     
 
@@ -30,7 +33,7 @@ class IncludeFileExtensionsBooleanFileVisitor(BooleanFileVisitor):
         from org.allbinary.logic.io.file.AbFile import AbFile
         if self.getFilterStringBasicArrayList().size() == 0:
             return False
-        return super().visit(file)
+        return java_super_call(super(), "visit", file)
     
 
     def visit_j2(self, file: AbFile, fileNameString: str) -> bool:
@@ -44,7 +47,9 @@ class IncludeFileExtensionsBooleanFileVisitor(BooleanFileVisitor):
         return False
 
     def visit(self, *args):
-        return getattr(self, "visit_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("visit_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().visit(*args)
 # from org.allbinary.logic.io.file.AbFile import AbFile
 # from org.allbinary.util.BasicArrayList import BasicArrayList
 

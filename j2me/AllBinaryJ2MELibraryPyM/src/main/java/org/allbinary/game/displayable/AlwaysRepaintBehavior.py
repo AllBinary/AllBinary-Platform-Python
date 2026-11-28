@@ -15,20 +15,27 @@
 
 from __future__ import annotations
 
+from java.lang.JavaThread import JavaThread
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.displayable.RepaintBehavior import RepaintBehavior
 
 
+@java_inherited_overloads
 class AlwaysRepaintBehavior(RepaintBehavior):
     instanceC: AlwaysRepaintBehavior = None
+    def _java_defaults(self):
+        vars(self).setdefault("NAME", None)
 
     def _init_fields(self) -> None:
         self.NAME: str = "AlwaysRepaintBehavior"
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -47,7 +54,7 @@ class AlwaysRepaintBehavior(RepaintBehavior):
         if features.isFeature(openGLFeatureFactory.OPENGL):
             DisplayInfoSingleton.getInstance().process()
         else:
-            thread: threading.Thread = threading.Thread(target=RepaintRunnable(canvas).run, name=self.NAME)
+            thread: JavaThread = JavaThread(target=RepaintRunnable(canvas).run, name=self.NAME)
             thread.start()
     
 

@@ -21,18 +21,17 @@ from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterf
 class KeyValueDrawString(UpdateMyFontInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
         from org.allbinary.logic.string.StringUtil import StringUtil
         self.myFontProcessor: MyFontProcessor = UpdateMyFontProcessor(self)
-        self.LABEL: str = None
-        self.labelX: int = None
-        self.valueX: int = 0
+        if "LABEL" not in vars(self): self.LABEL: str = None
+        if "labelX" not in vars(self): self.labelX: int = 0
+        if "valueX" not in vars(self): self.valueX: int = 0
         self.value: str = StringUtil.getInstance().EMPTY_STRING
     
 
     def __init__(self, label: str, x: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.LABEL = label
         self.labelX = x
     

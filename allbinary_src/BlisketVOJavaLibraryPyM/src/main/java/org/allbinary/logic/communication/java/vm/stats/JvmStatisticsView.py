@@ -15,11 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 from org.allbinary.logic.communication.java.vm.stats.JvmStatisticsMapping import JvmStatisticsMapping
 
 
+@java_inherited_overloads
 class JvmStatisticsView(*java_bases(JvmStatisticsMapping, DomNodeInterface)):
     
 
@@ -29,6 +31,7 @@ class JvmStatisticsView(*java_bases(JvmStatisticsMapping, DomNodeInterface)):
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
+        from org.allbinary.logic.communication.java.vm.stats.JvmStatisticsData import JvmStatisticsData
         from java.util.HashMap import HashMap
         from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
         from org.w3c.dom.Document import Document

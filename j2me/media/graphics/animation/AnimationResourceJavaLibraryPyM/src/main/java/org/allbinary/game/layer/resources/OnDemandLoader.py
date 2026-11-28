@@ -15,22 +15,21 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 
 
 class OnDemandLoader:
 
     def _init_fields(self) -> None:
-        from org.allbinary.animation.resource.BaseResourceAnimationInterfaceFactoryInterfaceFactory import BaseResourceAnimationInterfaceFactoryInterfaceFactory
-        from org.allbinary.game.layer.GameLayerPlacementInterfaceBasicArrayListFactoryInterfaceFactory import GameLayerPlacementInterfaceBasicArrayListFactoryInterfaceFactory
-        self.onDemandResourcesFactory: OnDemandResourcesFactory = None
-        self.gameLayerPlacementInterfaceBasicArrayListFactoryInterfaceFactory: GameLayerPlacementInterfaceBasicArrayListFactoryInterfaceFactory = None
-        self.resourceAnimationInterfaceFactoryInterfaceFactory: BaseResourceAnimationInterfaceFactoryInterfaceFactory = None
+        if "onDemandResourcesFactory" not in vars(self): self.onDemandResourcesFactory: OnDemandResourcesFactory = None
+        if "gameLayerPlacementInterfaceBasicArrayListFactoryInterfaceFactory" not in vars(self): self.gameLayerPlacementInterfaceBasicArrayListFactoryInterfaceFactory: GameLayerPlacementInterfaceBasicArrayListFactoryInterfaceFactory = None
+        if "resourceAnimationInterfaceFactoryInterfaceFactory" not in vars(self): self.resourceAnimationInterfaceFactoryInterfaceFactory: BaseResourceAnimationInterfaceFactoryInterfaceFactory = None
     
 
     def __init__(self, onDemandResourcesFactory: OnDemandResourcesFactory, gameLayerPlacementInterfaceBasicArrayListFactoryInterfaceFactory: GameLayerPlacementInterfaceBasicArrayListFactoryInterfaceFactory, resourceAnimationInterfaceFactoryInterfaceFactory: BaseResourceAnimationInterfaceFactoryInterfaceFactory) -> None:
         from org.allbinary.animation.resource.BaseResourceAnimationInterfaceFactoryInterfaceFactory import BaseResourceAnimationInterfaceFactoryInterfaceFactory
         from org.allbinary.game.layer.GameLayerPlacementInterfaceBasicArrayListFactoryInterfaceFactory import GameLayerPlacementInterfaceBasicArrayListFactoryInterfaceFactory
-        self._init_fields()
+        __class__._init_fields(self)
         self.onDemandResourcesFactory = onDemandResourcesFactory
         self.gameLayerPlacementInterfaceBasicArrayListFactoryInterfaceFactory = gameLayerPlacementInterfaceBasicArrayListFactoryInterfaceFactory
         self.resourceAnimationInterfaceFactoryInterfaceFactory = resourceAnimationInterfaceFactoryInterfaceFactory
@@ -45,7 +44,7 @@ class OnDemandLoader:
         from org.allbinary.image.ImageCache import ImageCache
         resourceLoadingLevelFactory: ResourceLoadingLevelFactory = ResourceLoadingLevelFactory.getInstance()
         if Features.getInstance().isFeature(MainFeatureFactory.getInstance().LOAD_ALL):
-            if self.resourceAnimationInterfaceFactoryInterfaceFactory.isInitialized():
+            if java_predicate(self.resourceAnimationInterfaceFactoryInterfaceFactory, "isInitialized"):
                 return
             self.initAll(imageCache, loadingString)
         elif level != resourceLoadingLevelFactory.LOAD_ALL.getLevel():

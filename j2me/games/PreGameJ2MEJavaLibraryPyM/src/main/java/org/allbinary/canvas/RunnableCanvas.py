@@ -16,14 +16,41 @@
 from __future__ import annotations
 
 import time
+from java.lang.JavaMonitor import java_monitor, java_wait
+from java.lang.JavaThread import JavaThread
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
 from org.allbinary.thread.RunnableInterface import RunnableInterface
 
 
+@java_inherited_overloads
 class RunnableCanvas(*java_bases(MyCanvas, RunnableInterface)):
     _lock = threading.RLock()
+    def _java_defaults(self):
+        vars(self).setdefault("nullUtil", None)
+        vars(self).setdefault("stdUtil", None)
+        vars(self).setdefault("systemWrapper", None)
+        vars(self).setdefault("tsUtil", None)
+        vars(self).setdefault("thread", None)
+        vars(self).setdefault("currentThread", None)
+        vars(self).setdefault("running", False)
+        vars(self).setdefault("loopTimeHelper", None)
+        vars(self).setdefault("runnableCanvasRefreshHelper", None)
+        vars(self).setdefault("commonLabels", None)
+        vars(self).setdefault("threadObjectUtil", None)
+        vars(self).setdefault("SET_RUNNING", None)
+        vars(self).setdefault("IS_RUNNING", None)
+        vars(self).setdefault("THREAD", None)
+        vars(self).setdefault("NOT_EQUAL", None)
+        vars(self).setdefault("PAUSE_SLEEP", None)
+        vars(self).setdefault("START_PAUSE", None)
+        vars(self).setdefault("END_PAUSE", None)
+        vars(self).setdefault("PROCESS_LOOP_SLEEP", None)
+        vars(self).setdefault("pauseWait", 0)
+        vars(self).setdefault("notified", False)
 
     def _init_fields(self) -> None:
         from org.allbinary.TsUtil import TsUtil
@@ -39,9 +66,9 @@ class RunnableCanvas(*java_bases(MyCanvas, RunnableInterface)):
         self.stdUtil: StdUtil = StdUtil.getInstance()
         self.systemWrapper: ABSystemWrapper = ABSystemWrapper.getInstance()
         self.tsUtil: TsUtil = TsUtil.getInstance()
-        self.thread: threading.Thread = NullThread.NULL_THREAD
-        self.currentThread: threading.Thread = NullThread.NULL_THREAD
-        self.running: bool = False
+        self.thread: JavaThread = NullThread.NULL_THREAD
+        self.currentThread: JavaThread = NullThread.NULL_THREAD
+        if "running" not in vars(self): self.running: bool = False
         self.loopTimeHelper: TimeDelayHelper = TimeDelayHelper(NullWaitGameRunnable.getInstance().WAIT)
         self.runnableCanvasRefreshHelper: Processor = Processor.getInstance()
         self.commonLabels: CommonLabels = CommonLabels.getInstance()
@@ -59,13 +86,14 @@ class RunnableCanvas(*java_bases(MyCanvas, RunnableInterface)):
     
 
     def __init__(self, commandListener: CommandListener, childNameList: BasicArrayList, hasParam: bool) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.canvas.RunnableCanvasRefreshHelper import RunnableCanvasRefreshHelper
         from javax.microedition.lcdui.CommandListener import CommandListener
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.string.CommonStrings import CommonStrings
         from org.allbinary.util.BasicArrayList import BasicArrayList
         super().__init__(CommonStrings.getInstance().UNKNOWN, childNameList)
-        self._init_fields()
+        __class__._init_fields(self)
         self.logUtil.putF(str(StringMaker().append("RunnableCanvas delay: ").appendint(int(self.loopTimeHelper.delay))), self, self.commonStrings.CONSTRUCTOR)
         self.runnableCanvasRefreshHelper = RunnableCanvasRefreshHelper(self)
         if commandListener is not None:
@@ -86,7 +114,7 @@ class RunnableCanvas(*java_bases(MyCanvas, RunnableInterface)):
             return False
     
 
-    def setThread(self, thread: threading.Thread) -> None:
+    def setThread(self, thread: JavaThread) -> None:
         self.thread = thread
     
 
@@ -94,16 +122,16 @@ class RunnableCanvas(*java_bases(MyCanvas, RunnableInterface)):
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.thread.NullThread import NullThread
         self.running = running
-        if not self.running:
+        if not (self.running):
             self.thread = NullThread.NULL_THREAD
-            with self._lock:  # synchronized (self)
+            with java_monitor(self):
                 self.threadObjectUtil.notifyObject(self)
         self.logUtil.putF(str(StringMaker().append(self.IS_RUNNING).appendboolean(self.running)), self, self.SET_RUNNING)
     
 
     def isRunning(self) -> bool:
         with self._lock:
-            return self._isRunning_unlocked()
+            return __class__.__dict__["_isRunning_unlocked"].__get__(self, __class__)()
 
     def _isRunning_unlocked(self) -> bool:
         from org.allbinary.logic.string.StringMaker import StringMaker
@@ -151,12 +179,16 @@ class RunnableCanvas(*java_bases(MyCanvas, RunnableInterface)):
             self.stopWaiting()
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, "showNotify", e)
+    _declared_showNotify = showNotify
+    def showNotify(self, *args, **kwargs):
+        if len(args) + len(kwargs) == 0 and (kwargs or (True)): return __class__._declared_showNotify(self, *args, **kwargs)
+        return super().showNotify(*args, **kwargs)
     
 
     # throws Exception
     def stopWaiting(self) -> None:
         self.notified = True
-        with self._lock:  # synchronized (self)
+        with java_monitor(self):
             self.threadObjectUtil.notifyObject(self)
         self.repaint()
     
@@ -164,10 +196,10 @@ class RunnableCanvas(*java_bases(MyCanvas, RunnableInterface)):
     # throws Exception
     def waitOnNotify(self, wait: int) -> None:
         with self._lock:
-            return self._waitOnNotify_unlocked(wait)
+            return __class__.__dict__["_waitOnNotify_unlocked"].__get__(self, __class__)(wait)
 
     def _waitOnNotify_unlocked(self, wait: int) -> None:
-        if not self.notified:
+        if not (self.notified):
             if wait > 0:
                 self.threadObjectUtil.waitObjectFor(self, wait)
             else:
@@ -192,15 +224,15 @@ class RunnableCanvas(*java_bases(MyCanvas, RunnableInterface)):
     def processLoopSleep(self) -> None:
         from org.allbinary.logic.string.StringMaker import StringMaker
         self.runnableCanvasRefreshHelper.process()
-        if self.isPaused():
+        if java_predicate(self, "isPaused"):
             stringMaker: StringMaker = StringMaker()
-            if self.isRunning() and not self.isSingleThread():
+            if java_predicate(self, "isRunning") and not (java_predicate(self, "isSingleThread")):
                 stringMaker.delete(0, stringMaker.length())
                 currentTimeMillis: int = self.systemWrapper.currentTimeMillis()
                 self.logUtil.putF(str(stringMaker.append(self.START_PAUSE).appendlong(currentTimeMillis).append(self.PAUSE_SLEEP).appendlong(self.pauseWait)), self, self.PROCESS_LOOP_SLEEP)
-                while self.isPaused() and self.isRunning() and not self.isSingleThread():
+                while java_predicate(self, "isPaused") and java_predicate(self, "isRunning") and not (java_predicate(self, "isSingleThread")):
                     self.processSleep()
-                    if not self.isPausable():
+                    if not (java_predicate(self, "isPausable")):
                         stringMaker.delete(0, stringMaker.length())
                         self.logUtil.putF(str(stringMaker.append(self.END_PAUSE).appendlong(currentTimeMillis)), self, self.PROCESS_LOOP_SLEEP)
                         return

@@ -15,32 +15,40 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.color.ColorChangeListener import ColorChangeListener
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 from org.allbinary.graphics.paint.Paintable import Paintable
 
 
+@java_inherited_overloads
 class HighScoresPaintable(*java_bases(Paintable, ColorChangeListener, UpdateMyFontInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("displayInfoSingleton", None)
+        vars(self).setdefault("myFontProcessor", None)
+        vars(self).setdefault("basicColor", None)
+        vars(self).setdefault("highScores", None)
+        vars(self).setdefault("anchor", 0)
+        vars(self).setdefault("charHeight", 0)
 
     def _init_fields(self) -> None:
         from org.allbinary.graphics.Anchor import Anchor
-        from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
         self.displayInfoSingleton: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
         self.myFontProcessor: MyFontProcessor = UpdateMyFontProcessor(self)
         self.basicColor: BasicColor = BasicColorFactory.getInstance().WHITE
         self.highScores: HighScores = NullHighScoresSingletonFactory.getInstance()
         self.anchor: int = Anchor.TOP_LEFT
-        self.charHeight: int = 0
+        if "charHeight" not in vars(self): self.charHeight: int = 0
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
@@ -69,7 +77,7 @@ class HighScoresPaintable(*java_bases(Paintable, ColorChangeListener, UpdateMyFo
         heading: str = self.highScores.getHeading()
         topScoresWidth: int = (graphics.getFont().stringWidth(heading) >> 1)
         charHeight: int = self.charHeight
-        graphics.drawString(heading, (width >> 1) - topScoresWidth, charHeight, self.anchor)
+        graphics.drawString(heading, (int(width) >> (int(1) & 31)) - topScoresWidth, charHeight, self.anchor)
         graphics.drawString(self.highScores.getColumnOneHeading(), 10, charHeight * 3, self.anchor)
         columnTwoHeading: str = self.highScores.getColumnTwoHeading()
         columnTwoHeadingWidth: int = graphics.getFont().stringWidth(columnTwoHeading)

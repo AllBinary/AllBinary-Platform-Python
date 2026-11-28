@@ -22,13 +22,13 @@ class MotionEventFactory(AllBinaryEventObjectFactoryInterface):
     index: int = 0
 
     def _init_fields(self) -> None:
-        self.source: object = None
-        self.id: int = None
+        if "source" not in vars(self): self.source: object = None
+        if "id" not in vars(self): self.id: int = 0
     
 
     def __init__(self, source: object, id: int) -> None:
         from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
-        self._init_fields()
+        __class__._init_fields(self)
         self.source = source
         self.id = id
         MotionEventFactory.index = TouchMotionGestureFactory.getInstance().LAST_MOTION.getId()

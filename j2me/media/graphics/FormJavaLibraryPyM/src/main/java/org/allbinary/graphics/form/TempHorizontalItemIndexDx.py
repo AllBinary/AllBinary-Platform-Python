@@ -15,18 +15,23 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.graphics.form.ItemIndexDx import ItemIndexDx
 
 
+@java_inherited_overloads
 class TempHorizontalItemIndexDx(ItemIndexDx):
+    def _java_defaults(self):
+        vars(self).setdefault("scrollCurrentSelectionForm", None)
 
     def _init_fields(self) -> None:
-        self.scrollCurrentSelectionForm: ScrollCurrentSelectionForm = None
+        if "scrollCurrentSelectionForm" not in vars(self): self.scrollCurrentSelectionForm: ScrollCurrentSelectionForm = None
     
 
     def __init__(self, scrollCurrentSelectionForm: ScrollCurrentSelectionForm) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.scrollCurrentSelectionForm = scrollCurrentSelectionForm
     
 

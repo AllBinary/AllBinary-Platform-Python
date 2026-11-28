@@ -35,7 +35,7 @@ class ImageCreationUtil:
     def createImageWH(self, width: int, height: int) -> Image:
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
-        image: Image = GameFeatureImageCacheFactory.getInstance().get(type(self).__module__ + "." + type(self).__qualname__, width, height)
+        image: Image = GameFeatureImageCacheFactory.getInstance().get(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(self)), width, height)
         return image
     
 
@@ -43,7 +43,7 @@ class ImageCreationUtil:
     def createImage(self, width: int, height: int, maxScaleX: float, maxScaleY: float) -> Image:
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
-        image: Image = GameFeatureImageCacheFactory.getInstance().get(type(self).__module__ + "." + type(self).__qualname__, int((float(width) * maxScaleX)) + 1, int((float(height) * maxScaleY)) + 1)
+        image: Image = GameFeatureImageCacheFactory.getInstance().get(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(self)), int((float(width) * maxScaleX)) + 1, int((float(height) * maxScaleY)) + 1)
         return image
 # from javax.microedition.lcdui.Image import Image
 # from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_divide
 
 
 class PrimitiveLongUtil:
@@ -22,11 +23,11 @@ class PrimitiveLongUtil:
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.powerOfTen: int = None
-        self.maxValue: int = None
-        self.maxDigits: int = None
-        self.charArray: list[str] = None
-        self.currentTotalDigits: int = 0
+        if "powerOfTen" not in vars(self): self.powerOfTen: int = 0
+        if "maxValue" not in vars(self): self.maxValue: int = 0
+        if "maxDigits" not in vars(self): self.maxDigits: int = 0
+        if "charArray" not in vars(self): self.charArray: list[str] = None
+        if "currentTotalDigits" not in vars(self): self.currentTotalDigits: int = 0
         self.primitiveLongSingleton: PrimitiveLongSingleton = PrimitiveLongSingleton.getInstance()
     
 
@@ -45,7 +46,7 @@ class PrimitiveLongUtil:
 
     def __init__(self, powerOfTen: int, unused: object) -> None:
         from org.allbinary.logic.math.MathUtil import MathUtil
-        self._init_fields()
+        __class__._init_fields(self)
         self.maxDigits = MathUtil.getInstance().getTotalDigits(powerOfTen)
         self.powerOfTen = powerOfTen
         self.maxValue = (powerOfTen * 10) - 1

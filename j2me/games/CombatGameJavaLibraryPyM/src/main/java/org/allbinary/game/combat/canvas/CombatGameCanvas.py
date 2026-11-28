@@ -15,10 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
 from org.allbinary.layer.BasicLayerProcessor import BasicLayerProcessor
 
 
+@java_inherited_overloads
 class CombatGameCanvas(AllBinaryGameCanvas):
     basicLayerProcessor: list[BasicLayerProcessor] = [None] * (0)
     
@@ -42,7 +46,7 @@ class CombatGameCanvas(AllBinaryGameCanvas):
     def initApp(self, abeClientInformation: AbeClientInformationInterface) -> None:
         from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         self.CombatGameCanvas_init()
-        super().initApp(abeClientInformation)
+        java_super_call(super(), "initApp", abeClientInformation)
     
 
     def initConfigurablePortion(self, portion: int) -> None:
@@ -66,7 +70,7 @@ class CombatGameCanvas(AllBinaryGameCanvas):
 
     # throws Exception
     def processPlayingGame(self) -> None:
-        super().processPlayingGame()
+        java_super_call(super(), "processPlayingGame")
         index = len(CombatGameCanvas.basicLayerProcessor)
         while (index := index - 1) >= 0:
             CombatGameCanvas.basicLayerProcessor[index].process(self.gameLayerManager)
@@ -76,7 +80,7 @@ class CombatGameCanvas(AllBinaryGameCanvas):
     def cleanupGame(self) -> None:
         from org.allbinary.game.combat.destroy.event.DestroyedEventHandler import DestroyedEventHandler
         from org.allbinary.game.layer.identification.GroupLayerManagerListener import GroupLayerManagerListener
-        super().cleanupGame()
+        java_super_call(super(), "cleanupGame")
         index = len(CombatGameCanvas.basicLayerProcessor)
         while (index := index - 1) >= 0:
             CombatGameCanvas.basicLayerProcessor[index].getList().clear()

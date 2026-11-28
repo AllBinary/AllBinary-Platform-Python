@@ -23,13 +23,12 @@ class AbeNoLicense(AbeLicenseInterface):
     abeNoLicense: AbeNoLicense = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.serverVector: BasicArrayList = BasicArrayListD()
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

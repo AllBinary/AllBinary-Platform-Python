@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 
 
 class CanvasDom:
@@ -31,23 +32,22 @@ class CanvasDom:
     REAL_SIZE: str = "realSize"
 
     def _init_fields(self) -> None:
-        from java.util.HashMap import HashMap
         from org.allbinary.graphics.GraphicsStrings import GraphicsStrings
         self.graphicsStrings: GraphicsStrings = GraphicsStrings.getInstance()
-        self.graphicItemHashMap: HashMap = None
-        self.angle: float = None
-        self.dimension: IntegerDimension = None
-        self.grid: Grid = None
+        if "graphicItemHashMap" not in vars(self): self.graphicItemHashMap: HashMap = None
+        if "angle" not in vars(self): self.angle: float = 0.0
+        if "dimension" not in vars(self): self.dimension: IntegerDimension = None
+        if "grid" not in vars(self): self.grid: Grid = None
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self.__jconstructor1(*args)
+            __class__.__jconstructor1(self, *args)
 
     def __jconstructor1(self, *args) -> None:
-        if True and not isinstance(args[0], (str, list, int, float)):
-            self._constructor1_1(*args)
+        if True and (args[0] is None or any(base.__name__ == "Node" for base in type(args[0]).__mro__)):
+            __class__._constructor1_1(self, *args)
         else:
-            self._constructor1_2(*args)
+            __class__._constructor1_2(self, *args)
     
 
     def _constructor1_1(self, canvasNode: Node) -> None:
@@ -59,44 +59,44 @@ class CanvasDom:
         from org.allbinary.logic.StdUtil import StdUtil
         from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.w3c.dom.Node import Node
-        self._init_fields()
+        __class__._init_fields(self)
         self.grid = Grid()
         self.grid.grid = PointFactory.getInstance().createXY(0, 0)
         self.dimension = IntegerDimension(0, 0)
         name: str = canvasNode.getNodeName()
         if ((name > CanvasDom.FRAME) - (name < CanvasDom.FRAME)) == 0:
             self.graphicItemHashMap = StdUtil.getInstance().createHashMap()
-            angleNode: Node = DomHelper.getInstance().searchNodeList(self.ROTATE, canvasNode.getChildNodes())
+            angleNode: Node = DomHelper.getInstance().searchNodeList(CanvasDom.ROTATE, canvasNode.getChildNodes())
             angleTextNode: Node = angleNode.getFirstChild()
             angle: float = float(float(angleTextNode.getNodeValue()))
             self.setAngle(angle)
-            sizeNode: Node = DomHelper.getInstance().searchNodeList(self.SIZE, canvasNode.getChildNodes())
-            xNode: Node = DomHelper.getInstance().searchNodeList(self.X, sizeNode.getChildNodes())
+            sizeNode: Node = DomHelper.getInstance().searchNodeList(CanvasDom.SIZE, canvasNode.getChildNodes())
+            xNode: Node = DomHelper.getInstance().searchNodeList(CanvasDom.X, sizeNode.getChildNodes())
             xTextNode: Node = xNode.getFirstChild()
             x: int = int(int(xTextNode.getNodeValue()))
-            yNode: Node = DomHelper.getInstance().searchNodeList(self.Y, sizeNode.getChildNodes())
+            yNode: Node = DomHelper.getInstance().searchNodeList(CanvasDom.Y, sizeNode.getChildNodes())
             yTextNode: Node = yNode.getFirstChild()
             y: int = int(int(yTextNode.getNodeValue()))
             self.setWorkArea(x, y)
-            zoomNode: Node = DomHelper.getInstance().searchNodeList(self.ZOOM, canvasNode.getChildNodes())
+            zoomNode: Node = DomHelper.getInstance().searchNodeList(CanvasDom.ZOOM, canvasNode.getChildNodes())
             zoomTextNode: Node = zoomNode.getFirstChild()
             self.grid.setZoom(int(int(zoomTextNode.getNodeValue())))
-            gridNode: Node = DomHelper.getInstance().searchNodeList(self.GRID, canvasNode.getChildNodes())
-            gridSizeNode: Node = DomHelper.getInstance().searchNodeList(self.SIZE, gridNode.getChildNodes())
-            gridXNode: Node = DomHelper.getInstance().searchNodeList(self.X, gridSizeNode.getChildNodes())
+            gridNode: Node = DomHelper.getInstance().searchNodeList(CanvasDom.GRID, canvasNode.getChildNodes())
+            gridSizeNode: Node = DomHelper.getInstance().searchNodeList(CanvasDom.SIZE, gridNode.getChildNodes())
+            gridXNode: Node = DomHelper.getInstance().searchNodeList(CanvasDom.X, gridSizeNode.getChildNodes())
             gridXTextNode: Node = gridXNode.getFirstChild()
             gridX: int = int(int(gridXTextNode.getNodeValue()))
-            gridYNode: Node = DomHelper.getInstance().searchNodeList(self.Y, gridSizeNode.getChildNodes())
+            gridYNode: Node = DomHelper.getInstance().searchNodeList(CanvasDom.Y, gridSizeNode.getChildNodes())
             gridYTextNode: Node = gridYNode.getFirstChild()
             gridY: int = int(int(gridYTextNode.getNodeValue()))
             self.setGrid(gridX, gridY)
-            enableNode: Node = DomHelper.getInstance().searchNodeList(self.ENABLED, gridNode.getChildNodes())
+            enableNode: Node = DomHelper.getInstance().searchNodeList(CanvasDom.ENABLED, gridNode.getChildNodes())
             enableTextNode: Node = enableNode.getFirstChild()
             self.grid.showGrid(enableTextNode.getNodeValue())
-            possibleNode: Node = DomHelper.getInstance().searchNodeList(self.POSSIBLE, gridNode.getChildNodes())
+            possibleNode: Node = DomHelper.getInstance().searchNodeList(CanvasDom.POSSIBLE, gridNode.getChildNodes())
             possibleTextNode: Node = possibleNode.getFirstChild()
             self.grid.isGridPossible = possibleTextNode.getNodeValue()
-            graphicItemNodeList: BasicArrayList = DomHelper.getInstance().getChildrenWithoutTextNodes(self.GRAPHICITEMS, canvasNode.getChildNodes())
+            graphicItemNodeList: BasicArrayList = DomHelper.getInstance().getChildrenWithoutTextNodes(CanvasDom.GRAPHICITEMS, canvasNode.getChildNodes())
             if graphicItemNodeList is not None:
                 self.graphicItemHashMap = GraphicItemFactory.getInstance().getInstance(graphicItemNodeList)
         else:
@@ -105,7 +105,7 @@ class CanvasDom:
 
     def _constructor1_2(self, canvasJPanel: CanvasJPanel) -> None:
         from org.allbinary.graphics.j2me.workarea.canvas.Grid import Grid
-        self._init_fields()
+        __class__._init_fields(self)
         self.angle = canvasJPanel.getAngle()
         self.graphicItemHashMap = canvasJPanel.getGraphicItemHashMap()
         self.dimension = canvasJPanel.getCanvasDimension()
@@ -145,10 +145,10 @@ class CanvasDom:
         from org.w3c.dom.Document import Document
         document: Document = WorkAreaJPanel.getDocument()
         pointNode: Node = document.createElement(pointName)
-        xNode: Node = document.createElement(self.X)
+        xNode: Node = document.createElement(CanvasDom.X)
         xTextNode: Node = document.createTextNode(str(point.getX()))
         xNode.appendChild(xTextNode)
-        yNode: Node = document.createElement(self.Y)
+        yNode: Node = document.createElement(CanvasDom.Y)
         yTextNode: Node = document.createTextNode(str(point.getY()))
         yNode.appendChild(yTextNode)
         pointNode.appendChild(xNode)
@@ -166,23 +166,23 @@ class CanvasDom:
         from org.w3c.dom.Node import Node
         from org.w3c.dom.Document import Document
         document: Document = WorkAreaJPanel.getDocument()
-        frameNode: Node = document.createElement(self.FRAME)
-        angleNode: Node = document.createElement(self.ROTATE)
+        frameNode: Node = document.createElement(CanvasDom.FRAME)
+        angleNode: Node = document.createElement(CanvasDom.ROTATE)
         angleTextNode: Node = document.createTextNode(str(float(self.getAngle())))
         angleNode.appendChild(angleTextNode)
-        sizeNode: Node = self.getPointNode(PointFactory.getInstance().createXY(self.getDimension().getWidth(), self.getDimension().getHeight()), self.SIZE)
-        zoomNode: Node = document.createElement(self.ZOOM)
+        sizeNode: Node = self.getPointNode(PointFactory.getInstance().createXY(self.getDimension().getWidth(), self.getDimension().getHeight()), CanvasDom.SIZE)
+        zoomNode: Node = document.createElement(CanvasDom.ZOOM)
         zoomTextNode: Node = document.createTextNode(str(int(self.getGrid().getZoom())))
         zoomNode.appendChild(zoomTextNode)
-        gridNode: Node = document.createElement(self.GRID)
-        gridSizeNode: Node = self.getPointNode(self.getGrid().grid, self.SIZE)
+        gridNode: Node = document.createElement(CanvasDom.GRID)
+        gridSizeNode: Node = self.getPointNode(self.getGrid().grid, CanvasDom.SIZE)
         gridNode.appendChild(gridSizeNode)
-        enableNode: Node = document.createElement(self.ENABLED)
-        enableTextNode: Node = document.createTextNode(str(self.getGrid().isGridOn()))
+        enableNode: Node = document.createElement(CanvasDom.ENABLED)
+        enableTextNode: Node = document.createTextNode(str(java_predicate(self.getGrid(), "isGridOn")))
         enableNode.appendChild(enableTextNode)
         gridNode.appendChild(enableNode)
-        possibleNode: Node = document.createElement(self.POSSIBLE)
-        possibleTextNode: Node = document.createTextNode(str(self.getGrid().isGridPossible()))
+        possibleNode: Node = document.createElement(CanvasDom.POSSIBLE)
+        possibleTextNode: Node = document.createTextNode(str(java_predicate(self.getGrid(), "isGridPossible")))
         possibleNode.appendChild(possibleTextNode)
         gridNode.appendChild(possibleNode)
         realSizeNode: Node = document.createElement(CanvasDom.REAL_SIZE)
@@ -201,13 +201,13 @@ class CanvasDom:
         frameNode.appendChild(zoomNode)
         frameNode.appendChild(gridNode)
         frameNode.appendChild(realSizeNode)
-        graphicItemNode: Node = document.createElement(self.GRAPHICITEMS)
+        graphicItemNode: Node = document.createElement(CanvasDom.GRAPHICITEMS)
         graphicItemArray: list[object] = self.getGraphicItemHashMap().keySet().toArray()
         size: int = len(graphicItemArray)
         for index in range(0, size):
             item: GraphicItemInterface = self.graphicItemHashMap.get(graphicItemArray[index])
             if item.getName() == LinesGraphicItem.getStaticName():
-                if item.isValid():
+                if java_predicate(item, "isValid"):
                     graphicItemNode.appendChild(item.toDom(self))
         frameNode.appendChild(graphicItemNode)
         return frameNode

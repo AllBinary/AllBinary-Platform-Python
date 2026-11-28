@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.System import System
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -33,7 +35,7 @@ class LogUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def putL(self, log: Log) -> None:
@@ -50,8 +52,8 @@ class LogUtil:
         from org.allbinary.string.CommonSeps import CommonSeps
         from org.allbinary.string.CommonStrings import CommonStrings
         className: str = CommonStrings.getInstance().EMPTY
-        if type(anyType).__module__ + "." + type(anyType).__qualname__ is not None:
-            className = str(str(StringMaker().append(type(anyType).__module__ + "." + type(anyType).__qualname__).append(CommonSeps.getInstance().COLON).append(format(TsUtil.getInstance().hashCode(anyType), "x"))))
+        if __import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(anyType)) is not None:
+            className = str(str(StringMaker().append(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(anyType))).append(CommonSeps.getInstance().COLON).append(format(TsUtil.getInstance().hashCode(anyType), "x"))))
         message: str = self.logFormatUtil.getS(className, functionName, specialMessage)
         print(self.LOG_SUCCESS, end="")
         print(message)
@@ -69,10 +71,10 @@ class LogUtil:
         from org.allbinary.string.CommonSeps import CommonSeps
         from org.allbinary.string.CommonStrings import CommonStrings
         className: str = CommonStrings.getInstance().EMPTY
-        if type(anyType).__module__ + "." + type(anyType).__qualname__ is not None:
+        if __import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(anyType)) is not None:
             hashCodeValue: int = TsUtil.getInstance().hashCode(anyType)
             hexString: str = format(hashCodeValue, "x")
-            className = str(str(StringMaker().append(type(anyType).__module__ + "." + type(anyType).__qualname__).append(CommonSeps.getInstance().COLON).append(hexString)))
+            className = str(str(StringMaker().append(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(anyType))).append(CommonSeps.getInstance().COLON).append(hexString)))
         message: str = self.logFormatUtil.get(className, functionName, specialMessage, exception)
         print(self.LOG_SUCCESS, end="")
         print(message)

@@ -20,20 +20,20 @@ from __future__ import annotations
 class SimpleTransform:
 
     def _init_fields(self) -> None:
-        from org.allbinary.logic.io.path.AbPath import AbPath
-        self.xsltFilePath: AbPath = None
-        self.dataFilePath: AbPath = None
+        if "xsltFilePath" not in vars(self): self.xsltFilePath: AbPath = None
+        if "dataFilePath" not in vars(self): self.dataFilePath: AbPath = None
     
 
     def __init__(self, xsltFilePath: AbPath, dataFilePath: AbPath) -> None:
         from org.allbinary.logic.io.path.AbPath import AbPath
-        self._init_fields()
+        __class__._init_fields(self)
         self.xsltFilePath = xsltFilePath
         self.dataFilePath = dataFilePath
     
 
     # throws Exception
     def transform(self) -> str:
+        from org.allbinary.data.tree.dom.XslHelper import XslHelper
         from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
         from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
         from org.allbinary.logic.io.AbFileLocalInputStream import AbFileLocalInputStream

@@ -15,11 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.validate.ValidationComponentInterface import ValidationComponentInterface
 from views.admin.inventory.download.DownloadableInventoryItemView import DownloadableInventoryItemView
 
 
+@java_inherited_overloads
 class NewValidationView(*java_bases(DownloadableInventoryItemView, ValidationComponentInterface)):
     
 
@@ -59,7 +62,7 @@ class NewValidationView(*java_bases(DownloadableInventoryItemView, ValidationCom
     # throws Exception
     def getTransformInfoInterface(self) -> TransformInfoInterface:
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-        return super().getTransformInfoInterface()
+        return java_super_call(super(), "getTransformInfoInterface")
 # from org.allbinary.business.user.commerce.inventory.item.BasicItem import BasicItem
 # from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
 # from org.allbinary.business.user.commerce.inventory.item.download.DownloadableItem import DownloadableItem

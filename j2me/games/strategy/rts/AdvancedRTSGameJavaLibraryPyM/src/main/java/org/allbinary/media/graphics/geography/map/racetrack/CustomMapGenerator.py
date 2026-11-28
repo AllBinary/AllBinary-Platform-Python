@@ -15,23 +15,31 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.media.graphics.geography.map.racetrack.CustomMapGeneratorBase import CustomMapGeneratorBase
 
 
+@java_inherited_overloads
 class CustomMapGenerator(CustomMapGeneratorBase):
+    def _java_defaults(self):
+        vars(self).setdefault("customMapArray", None)
+        vars(self).setdefault("raceTrackGeographicMap", None)
+        vars(self).setdefault("geographicMapCellTypeFactory", None)
+        vars(self).setdefault("dropCellPositionHistory", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.media.graphics.geography.map.GeographicMapCellTypeFactory import GeographicMapCellTypeFactory
         from org.allbinary.media.graphics.geography.map.drop.DropCellPositionHistory import DropCellPositionHistory
-        self.customMapArray: list[list[int]] = None
-        self.raceTrackGeographicMap: RaceTrackGeographicMap = None
-        self.geographicMapCellTypeFactory: GeographicMapCellTypeFactory = None
+        if "customMapArray" not in vars(self): self.customMapArray: list[list[int]] = None
+        if "raceTrackGeographicMap" not in vars(self): self.raceTrackGeographicMap: RaceTrackGeographicMap = None
+        if "geographicMapCellTypeFactory" not in vars(self): self.geographicMapCellTypeFactory: GeographicMapCellTypeFactory = None
         self.dropCellPositionHistory: DropCellPositionHistory = DropCellPositionHistory.getInstance()
     
 
     def __init__(self, raceTrackGeographicMap: RaceTrackGeographicMap) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.raceTrackGeographicMap = raceTrackGeographicMap
         self.geographicMapCellTypeFactory = self.raceTrackGeographicMap.getGeographicMapCellTypeFactory()
         mapArray: list[list[int]] = raceTrackGeographicMap.getRaceTrackData().getMapArray()
@@ -65,7 +73,7 @@ class CustomMapGenerator(CustomMapGeneratorBase):
             if layer == AllBinaryLayer.NULL_ALLBINARY_LAYER:
                 return emptyType
             rtsLayer: AdvancedRTSGameLayer = layer
-            if not rtsLayer.getType() == WaypointLayer.getStaticType():
+            if not (rtsLayer.getType() == WaypointLayer.getStaticType()):
                 return emptyType
         return currentType
     

@@ -15,10 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.communication.sql.AbSqlRow import AbSqlRow
 
 
+@java_inherited_overloads
 class AbSqlBean(AbSqlRow):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("METHOD_GET_FIELD", None)
+        vars(self).setdefault("METHOD_IS_SUBSET_OF_ENTRY", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -28,9 +34,10 @@ class AbSqlBean(AbSqlRow):
     
 
     def __init__(self, databaseConnectionInfoInterface: DbConnectionInfo) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
         super().__init__(databaseConnectionInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getField_j3(self, key: str, value: str, requestedField: str) -> str:
@@ -116,7 +123,9 @@ class AbSqlBean(AbSqlRow):
             return str(self.FAILED_SQL_STATEMENT) + sqlStatement
 
     def getField(self, *args):
-        return getattr(self, "getField_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("getField_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getField(*args)
     
 
     def isSubsetOfEntry(self, key: str, value: str, columnsAndValues: HashMap) -> str:

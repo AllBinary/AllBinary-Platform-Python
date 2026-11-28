@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -63,9 +65,9 @@ class ImageScaleUtil:
         from playn.core.CanvasImage import CanvasImage
         from playn.core.CanvasSurface import CanvasSurface
         image: Image = ImageCreationUtil.getInstance().createImageWH(int((originalImage.getWidth() * scaleX)), int((originalImage.getHeight() * scaleY)))
-        if image.isMutable():
+        if java_predicate(image, "isMutable"):
             originalPlayNImage: Image = None
-            if originalImage.isMutable():
+            if java_predicate(originalImage, "isMutable"):
                 originalHTMLImage: PlaynMutableImage = originalImage
                 originalPlayNImage = originalHTMLImage.getImage()
             else:

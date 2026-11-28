@@ -20,15 +20,13 @@ from __future__ import annotations
 class SimpleGeographicMap:
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
-        from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         from org.allbinary.string.CommonStrings import CommonStrings
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.id: int = None
-        self.name: str = None
-        self.cellTypeIdToGeographicMapCellType: list[int] = None
-        self.tiledLayer: AllBinaryTiledLayer = None
+        if "id" not in vars(self): self.id: int = None
+        if "name" not in vars(self): self.name: str = None
+        if "cellTypeIdToGeographicMapCellType" not in vars(self): self.cellTypeIdToGeographicMapCellType: list[int] = None
+        if "tiledLayer" not in vars(self): self.tiledLayer: AllBinaryTiledLayer = None
         self.foregroundBasicColor: BasicColor = BasicColorFactory.getInstance().NULL_COLOR
         self.backgroundBasicColor: BasicColor = BasicColorFactory.getInstance().NULL_COLOR
         self.geographicMapCellTypeFactory: GeographicMapCellTypeFactory = GeographicMapCellTypeFactory.getInstance()
@@ -37,7 +35,7 @@ class SimpleGeographicMap:
     def __init__(self, id: int, name: str, cellTypeIdToGeographicMapCellType: list[int], tiledLayer: AllBinaryTiledLayer, foregroundBasicColor: BasicColor, backgroundBasicColor: BasicColor) -> None:
         from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
         from org.allbinary.graphics.color.BasicColor import BasicColor
-        self._init_fields()
+        __class__._init_fields(self)
         self.id = id
         self.name = name
         self.cellTypeIdToGeographicMapCellType = cellTypeIdToGeographicMapCellType

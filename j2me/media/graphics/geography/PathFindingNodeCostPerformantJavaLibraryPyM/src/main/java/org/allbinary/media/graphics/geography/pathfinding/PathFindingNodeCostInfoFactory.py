@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.media.graphics.geography.pathfinding.PathFindingNodeCostInfoFactoryBase import PathFindingNodeCostInfoFactoryBase
 
 
+@java_inherited_overloads
 class PathFindingNodeCostInfoFactory(PathFindingNodeCostInfoFactoryBase):
     
 

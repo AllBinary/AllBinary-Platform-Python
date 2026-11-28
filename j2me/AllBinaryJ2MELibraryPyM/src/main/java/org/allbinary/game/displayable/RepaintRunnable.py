@@ -15,20 +15,24 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.thread.ARunnable import ARunnable
 
 
+@java_inherited_overloads
 class RepaintRunnable(ARunnable):
+    def _java_defaults(self):
+        vars(self).setdefault("canvas", None)
 
     def _init_fields(self) -> None:
-        from javax.microedition.lcdui.Canvas import Canvas
-        self.canvas: Canvas = None
+        if "canvas" not in vars(self): self.canvas: Canvas = None
     
 
     def __init__(self, canvas: Canvas) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.Canvas import Canvas
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.canvas = canvas
     
 

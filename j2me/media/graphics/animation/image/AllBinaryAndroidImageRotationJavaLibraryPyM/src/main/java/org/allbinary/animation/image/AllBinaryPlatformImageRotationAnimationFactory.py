@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.animation.image.AllBinaryAndroidImageRotationAnimationFactory import AllBinaryAndroidImageRotationAnimationFactory
 
 
+@java_inherited_overloads
 class AllBinaryPlatformImageRotationAnimationFactory(AllBinaryAndroidImageRotationAnimationFactory):
     
 

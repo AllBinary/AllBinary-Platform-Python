@@ -15,10 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.data.tree.category.CategoryModifierTreeInterface import CategoryModifierTreeInterface
 
 
 # Java interface
+@java_inherited_overloads
 class CategoryLoaderInterface(CategoryModifierTreeInterface):
     
 

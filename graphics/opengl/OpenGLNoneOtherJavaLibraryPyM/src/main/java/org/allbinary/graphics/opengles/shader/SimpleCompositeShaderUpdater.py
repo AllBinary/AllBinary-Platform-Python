@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.graphics.opengles.shader.CompositeShaderUpdater import CompositeShaderUpdater
 
 
+@java_inherited_overloads
 class SimpleCompositeShaderUpdater(CompositeShaderUpdater):
     
 

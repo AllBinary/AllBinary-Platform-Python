@@ -21,15 +21,14 @@ from org.allbinary.business.advertisement.product.AdvertisementProductInterface 
 class AdvertisementProduct(AdvertisementProductInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.logic.control.contraints.size.TwoDimensionalConstraintInterface import TwoDimensionalConstraintInterface
-        self.type_: str = None
-        self.link: str = None
-        self.number: int = 0
-        self.constraint: TwoDimensionalConstraintInterface = None
+        if "type_" not in vars(self): self.type_: str = None
+        if "link" not in vars(self): self.link: str = None
+        if "number" not in vars(self): self.number: int = 0
+        if "constraint" not in vars(self): self.constraint: TwoDimensionalConstraintInterface = None
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getType(self) -> str:

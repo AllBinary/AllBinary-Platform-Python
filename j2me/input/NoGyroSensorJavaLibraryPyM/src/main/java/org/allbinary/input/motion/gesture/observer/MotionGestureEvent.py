@@ -15,30 +15,38 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
 
 
+@java_inherited_overloads
 class MotionGestureEvent(AllBinaryEventObject):
     PREVIOUS: str = " Previous: "
     HASHCODE: str = " hashcode: "
+    def _java_defaults(self):
+        vars(self).setdefault("motionGesture", None)
+        vars(self).setdefault("id", 0)
+        vars(self).setdefault("previousPoint", None)
+        vars(self).setdefault("currentPoint", None)
+        vars(self).setdefault("commonLabels", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.GPoint import GPoint
         from org.allbinary.graphics.PointFactory import PointFactory
-        from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
         from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
         from org.allbinary.string.CommonLabels import CommonLabels
         self.motionGesture: MotionGestureInput = TouchMotionGestureFactory.getInstance().NO_MOTION
-        self.id: int = None
+        if "id" not in vars(self): self.id: int = 0
         self.previousPoint: GPoint = PointFactory.getInstance().ZERO_ZERO
         self.currentPoint: GPoint = PointFactory.getInstance().ZERO_ZERO
         self.commonLabels: CommonLabels = CommonLabels.getInstance()
     
 
     def __init__(self, source: object, id: int, motionGesture: MotionGestureInput) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
         super().__init__(source)
-        self._init_fields()
+        __class__._init_fields(self)
         self.id = id
         self.setMotionGesture(motionGesture)
     

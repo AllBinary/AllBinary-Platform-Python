@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from java.lang.JavaRuntimeStatic import java_bases
 from javax.microedition.media.Controllable import Controllable
@@ -28,25 +29,24 @@ class PlayerComposite(*java_bases(Controllable, Player)):
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
-        from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
         from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
         from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.player: Player = None
+        if "player" not in vars(self): self.player: Player = None
         self.timeElapsedHelper: TimeDelayHelper = TimeDelayHelper(0)
         self.gameTickTimeDelayHelper: GameTickTimeDelayHelper = GameTickTimeDelayHelperFactory.getInstance()
     
 
     def __init__(self, player: Player, repeatTime: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.player = player
         self.timeElapsedHelper.delay = repeatTime
     
 
     def addPlayerListener(self, playerListener: PlayerListener) -> None:
         with self._lock:
-            return self._addPlayerListener_unlocked(playerListener)
+            return __class__.__dict__["_addPlayerListener_unlocked"].__get__(self, __class__)(playerListener)
 
     def _addPlayerListener_unlocked(self, playerListener: PlayerListener) -> None:
         from javax.microedition.media.PlayerListener import PlayerListener
@@ -86,7 +86,7 @@ class PlayerComposite(*java_bases(Controllable, Player)):
     # throws MediaException
     def setTimeBase(self, timeBase: TimeBase) -> None:
         with self._lock:
-            return self._setTimeBase_unlocked(timeBase)
+            return __class__.__dict__["_setTimeBase_unlocked"].__get__(self, __class__)(timeBase)
 
     def _setTimeBase_unlocked(self, timeBase: TimeBase) -> None:
         from javax.microedition.media.MediaException import MediaException

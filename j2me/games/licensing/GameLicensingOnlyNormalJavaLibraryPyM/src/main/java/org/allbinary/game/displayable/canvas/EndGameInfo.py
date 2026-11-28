@@ -28,7 +28,7 @@ class EndGameInfo:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def update(self, gameInfo: GameInfo, myCanvas: MyCanvas) -> None:

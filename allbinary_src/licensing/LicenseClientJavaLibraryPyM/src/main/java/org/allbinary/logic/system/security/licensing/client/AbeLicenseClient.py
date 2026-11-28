@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 
 
@@ -30,13 +31,13 @@ class AbeLicenseClient:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
     def get(self, abeClientInformation: AbeClientInformationInterface) -> AbeLicenseInterface:
         with self._lock:
-            return self._get_unlocked(abeClientInformation)
+            return __class__.__dict__["_get_unlocked"].__get__(self, __class__)(abeClientInformation)
 
     def _get_unlocked(self, abeClientInformation: AbeClientInformationInterface) -> AbeLicenseInterface:
         from org.allbinary.logic.system.security.licensing.client.XmlRpcAbeLicenseRetrievalClient import XmlRpcAbeLicenseRetrievalClient
@@ -56,7 +57,7 @@ class AbeLicenseClient:
             isNewLicenseId: bool = False
             isBetterServerList: bool = False
             stringValidationUtil: StringValidationUtil = StringValidationUtil.getInstance()
-            if stringValidationUtil.isEmpty(abeClientInformation.getLicenseId()) and not abeClientInformation.isSameId(licenseId):
+            if stringValidationUtil.isEmpty(abeClientInformation.getLicenseId()) and not (abeClientInformation.isSameId(licenseId)):
                 isNewLicenseId = True
             if servers.size() >= self.MINSERVERS and abeClientInformation.isLargerOrDifferentServerList(servers):
                 isBetterServerList = True

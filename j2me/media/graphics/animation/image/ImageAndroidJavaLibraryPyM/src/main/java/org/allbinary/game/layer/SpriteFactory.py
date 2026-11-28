@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.layer.SpriteFactoryInterface import SpriteFactoryInterface
 
@@ -27,7 +28,7 @@ class SpriteFactory(SpriteFactoryInterface):
         self.logUtil: LogUtil = LogUtil.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -38,7 +39,9 @@ class SpriteFactory(SpriteFactoryInterface):
     def createSprite(self, image: Image, frameWidth: int, frameHeight: int) -> Sprite:
         from javax.microedition.lcdui.Image import Image
         from javax.microedition.lcdui.game.Sprite import Sprite
-        return Sprite(image, frameWidth, frameHeight, image.getWidth() / frameWidth, image.getHeight() / frameHeight)
+        return Sprite(image, frameWidth, frameHeight, java_divide(image.getWidth(), frameWidth)
+            , java_divide(image.getHeight(), frameHeight)
+            )
 # from javax.microedition.lcdui.Image import Image
 # from javax.microedition.lcdui.game.Sprite import Sprite
 # from org.allbinary.string.CommonSeps import CommonSeps

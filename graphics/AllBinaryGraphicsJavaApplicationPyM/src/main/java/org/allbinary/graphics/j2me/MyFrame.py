@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.JavaThread import JavaThread
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import sys
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
@@ -25,6 +27,7 @@ from org.allbinary.gui.dialog.HashMapJDialogListenerInterface import HashMapJDia
 # from javax.swing.JFrame import JFrame
 
 
+@java_inherited_overloads
 class MyFrame(*java_bases(JFrame, FileJDialogListenerInterface, HashMapJDialogListenerInterface, KeyListener)):
     MAXWORKAREAS: int = 10
     numberOfWorkAreas: int = 0
@@ -32,11 +35,65 @@ class MyFrame(*java_bases(JFrame, FileJDialogListenerInterface, HashMapJDialogLi
     SAVE_PATH: str = None
     TEMPLATE_EXPORT_PATH: str = None
     statusJLabel: JLabel = None
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("guiLog", None)
+        vars(self).setdefault("xslHelper", None)
+        vars(self).setdefault("JAVA_TEMPLATE", None)
+        vars(self).setdefault("SAVEEXTENSION", None)
+        vars(self).setdefault("JAVAEXTENSION", None)
+        vars(self).setdefault("fileJDialog", None)
+        vars(self).setdefault("rotateJDialog", None)
+        vars(self).setdefault("animateJButton", None)
+        vars(self).setdefault("autoDamageJMenuItem", None)
+        vars(self).setdefault("autoExplodeJMenuItem", None)
+        vars(self).setdefault("autoGrowJMenuItem", None)
+        vars(self).setdefault("autoRotateGenerationJMenuItem", None)
+        vars(self).setdefault("autoSheildMenuItem", None)
+        vars(self).setdefault("autoShrinkJMenuItem", None)
+        vars(self).setdefault("centerJMenuItem", None)
+        vars(self).setdefault("copyJMenuItem1", None)
+        vars(self).setdefault("exitJMenuItem", None)
+        vars(self).setdefault("explodeAllJMenuItem", None)
+        vars(self).setdefault("exportJMenuItem1", None)
+        vars(self).setdefault("fileJMenu", None)
+        vars(self).setdefault("frameJMenu", None)
+        vars(self).setdefault("generateJMenu", None)
+        vars(self).setdefault("insertAfterJMenuItem", None)
+        vars(self).setdefault("insertBeforeJMenuItem", None)
+        vars(self).setdefault("jButton1", None)
+        vars(self).setdefault("jButton2", None)
+        vars(self).setdefault("jButton3", None)
+        vars(self).setdefault("jButton4", None)
+        vars(self).setdefault("jButton41", None)
+        vars(self).setdefault("jButton5", None)
+        vars(self).setdefault("jMenu1", None)
+        vars(self).setdefault("jMenuItem1", None)
+        vars(self).setdefault("jPanel1", None)
+        vars(self).setdefault("jTabbedPane", None)
+        vars(self).setdefault("jToolBar1", None)
+        vars(self).setdefault("mainJPanel", None)
+        vars(self).setdefault("menuJMenuBar", None)
+        vars(self).setdefault("newJMenuItem", None)
+        vars(self).setdefault("nextFrameJMenuItem", None)
+        vars(self).setdefault("objectJMenu", None)
+        vars(self).setdefault("openJButton", None)
+        vars(self).setdefault("openJMenuItem", None)
+        vars(self).setdefault("playJButton", None)
+        vars(self).setdefault("previousFrameJMenuItem", None)
+        vars(self).setdefault("removeJMenuItem", None)
+        vars(self).setdefault("saveAsJMenuItem", None)
+        vars(self).setdefault("saveJButton", None)
+        vars(self).setdefault("saveJMenuItem", None)
+        vars(self).setdefault("statusJPanel", None)
+        vars(self).setdefault("stopJjButton", None)
+        vars(self).setdefault("viewJMenu", None)
+        vars(self).setdefault("zoomInJMenuItem", None)
+        vars(self).setdefault("zoomOutJMenuItem", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.data.tree.dom.XslHelper import XslHelper
-        from org.allbinary.graphics.j2me.dialog.RotateJDialog import RotateJDialog
-        from org.allbinary.gui.dialog.FileJDialog import FileJDialog
         from org.allbinary.logic.communication.log.GuiLog import GuiLog
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
@@ -47,61 +104,62 @@ class MyFrame(*java_bases(JFrame, FileJDialogListenerInterface, HashMapJDialogLi
         self.JAVA_TEMPLATE: str = "svgExport.xsl"
         self.SAVEEXTENSION: str = ".gxml"
         self.JAVAEXTENSION: str = ".javax"
-        self.fileJDialog: FileJDialog = None
-        self.rotateJDialog: RotateJDialog = None
-        self.animateJButton: JButton = None
-        self.autoDamageJMenuItem: JMenuItem = None
-        self.autoExplodeJMenuItem: JMenuItem = None
-        self.autoGrowJMenuItem: JMenuItem = None
-        self.autoRotateGenerationJMenuItem: JMenuItem = None
-        self.autoSheildMenuItem: JMenuItem = None
-        self.autoShrinkJMenuItem: JMenuItem = None
-        self.centerJMenuItem: JMenuItem = None
-        self.copyJMenuItem1: JMenuItem = None
-        self.exitJMenuItem: JMenuItem = None
-        self.explodeAllJMenuItem: JMenuItem = None
-        self.exportJMenuItem1: JMenuItem = None
-        self.fileJMenu: JMenu = None
-        self.frameJMenu: JMenu = None
-        self.generateJMenu: JMenu = None
-        self.insertAfterJMenuItem: JMenuItem = None
-        self.insertBeforeJMenuItem: JMenuItem = None
-        self.jButton1: JButton = None
-        self.jButton2: JButton = None
-        self.jButton3: JButton = None
-        self.jButton4: JButton = None
-        self.jButton41: JButton = None
-        self.jButton5: JButton = None
-        self.jMenu1: JMenu = None
-        self.jMenuItem1: JMenuItem = None
-        self.jPanel1: JPanel = None
-        self.jTabbedPane: JTabbedPane = None
-        self.jToolBar1: JToolBar = None
-        self.mainJPanel: JPanel = None
-        self.menuJMenuBar: JMenuBar = None
-        self.newJMenuItem: JMenuItem = None
-        self.nextFrameJMenuItem: JMenuItem = None
-        self.objectJMenu: JMenu = None
-        self.openJButton: JButton = None
-        self.openJMenuItem: JMenuItem = None
-        self.playJButton: JButton = None
-        self.previousFrameJMenuItem: JMenuItem = None
-        self.removeJMenuItem: JMenuItem = None
-        self.saveAsJMenuItem: JMenuItem = None
-        self.saveJButton: JButton = None
-        self.saveJMenuItem: JMenuItem = None
-        self.statusJPanel: JPanel = None
-        self.stopJjButton: JButton = None
-        self.viewJMenu: JMenu = None
-        self.zoomInJMenuItem: JMenuItem = None
-        self.zoomOutJMenuItem: JMenuItem = None
+        if "fileJDialog" not in vars(self): self.fileJDialog: FileJDialog = None
+        if "rotateJDialog" not in vars(self): self.rotateJDialog: RotateJDialog = None
+        if "animateJButton" not in vars(self): self.animateJButton: JButton = None
+        if "autoDamageJMenuItem" not in vars(self): self.autoDamageJMenuItem: JMenuItem = None
+        if "autoExplodeJMenuItem" not in vars(self): self.autoExplodeJMenuItem: JMenuItem = None
+        if "autoGrowJMenuItem" not in vars(self): self.autoGrowJMenuItem: JMenuItem = None
+        if "autoRotateGenerationJMenuItem" not in vars(self): self.autoRotateGenerationJMenuItem: JMenuItem = None
+        if "autoSheildMenuItem" not in vars(self): self.autoSheildMenuItem: JMenuItem = None
+        if "autoShrinkJMenuItem" not in vars(self): self.autoShrinkJMenuItem: JMenuItem = None
+        if "centerJMenuItem" not in vars(self): self.centerJMenuItem: JMenuItem = None
+        if "copyJMenuItem1" not in vars(self): self.copyJMenuItem1: JMenuItem = None
+        if "exitJMenuItem" not in vars(self): self.exitJMenuItem: JMenuItem = None
+        if "explodeAllJMenuItem" not in vars(self): self.explodeAllJMenuItem: JMenuItem = None
+        if "exportJMenuItem1" not in vars(self): self.exportJMenuItem1: JMenuItem = None
+        if "fileJMenu" not in vars(self): self.fileJMenu: JMenu = None
+        if "frameJMenu" not in vars(self): self.frameJMenu: JMenu = None
+        if "generateJMenu" not in vars(self): self.generateJMenu: JMenu = None
+        if "insertAfterJMenuItem" not in vars(self): self.insertAfterJMenuItem: JMenuItem = None
+        if "insertBeforeJMenuItem" not in vars(self): self.insertBeforeJMenuItem: JMenuItem = None
+        if "jButton1" not in vars(self): self.jButton1: JButton = None
+        if "jButton2" not in vars(self): self.jButton2: JButton = None
+        if "jButton3" not in vars(self): self.jButton3: JButton = None
+        if "jButton4" not in vars(self): self.jButton4: JButton = None
+        if "jButton41" not in vars(self): self.jButton41: JButton = None
+        if "jButton5" not in vars(self): self.jButton5: JButton = None
+        if "jMenu1" not in vars(self): self.jMenu1: JMenu = None
+        if "jMenuItem1" not in vars(self): self.jMenuItem1: JMenuItem = None
+        if "jPanel1" not in vars(self): self.jPanel1: JPanel = None
+        if "jTabbedPane" not in vars(self): self.jTabbedPane: JTabbedPane = None
+        if "jToolBar1" not in vars(self): self.jToolBar1: JToolBar = None
+        if "mainJPanel" not in vars(self): self.mainJPanel: JPanel = None
+        if "menuJMenuBar" not in vars(self): self.menuJMenuBar: JMenuBar = None
+        if "newJMenuItem" not in vars(self): self.newJMenuItem: JMenuItem = None
+        if "nextFrameJMenuItem" not in vars(self): self.nextFrameJMenuItem: JMenuItem = None
+        if "objectJMenu" not in vars(self): self.objectJMenu: JMenu = None
+        if "openJButton" not in vars(self): self.openJButton: JButton = None
+        if "openJMenuItem" not in vars(self): self.openJMenuItem: JMenuItem = None
+        if "playJButton" not in vars(self): self.playJButton: JButton = None
+        if "previousFrameJMenuItem" not in vars(self): self.previousFrameJMenuItem: JMenuItem = None
+        if "removeJMenuItem" not in vars(self): self.removeJMenuItem: JMenuItem = None
+        if "saveAsJMenuItem" not in vars(self): self.saveAsJMenuItem: JMenuItem = None
+        if "saveJButton" not in vars(self): self.saveJButton: JButton = None
+        if "saveJMenuItem" not in vars(self): self.saveJMenuItem: JMenuItem = None
+        if "statusJPanel" not in vars(self): self.statusJPanel: JPanel = None
+        if "stopJjButton" not in vars(self): self.stopJjButton: JButton = None
+        if "viewJMenu" not in vars(self): self.viewJMenu: JMenu = None
+        if "zoomInJMenuItem" not in vars(self): self.zoomInJMenuItem: JMenuItem = None
+        if "zoomOutJMenuItem" not in vars(self): self.zoomOutJMenuItem: JMenuItem = None
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.j2me.dialog.RotateJDialog import RotateJDialog
         from org.allbinary.gui.dialog.FileJDialog import FileJDialog
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.initComponents()
         self.setSize(Dimension(550, 400))
         self.mainJPanel.setSize(Dimension(550, 400))
@@ -160,43 +218,58 @@ class MyFrame(*java_bases(JFrame, FileJDialogListenerInterface, HashMapJDialogLi
         self.autoSheildMenuItem = JMenuItem()
         self.autoShrinkJMenuItem = JMenuItem()
         self.jMenu1 = JMenu()
-        self.addWindowListener((WindowAdapter()  # Java anonymous class body:
-#             
-# 
-#             def windowClosing(self, evt: WindowEvent) -> None:
-#                 self.exitForm(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN69289(WindowAdapter):
+            
+            
+
+            def windowClosing(self, evt: WindowEvent) -> None:
+                (self if hasattr(self, "exitForm") else _java_listener_owner).exitForm(evt)
+        self.addWindowListener(_JavaListenerN69289()
+            )
         self.jButton2.setText("New")
-        self.jButton2.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.jButton2ActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN69428(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "jButton2ActionPerformed") else _java_listener_owner).jButton2ActionPerformed(evt)
+        self.jButton2.addActionListener(_JavaListenerN69428()
+            )
         self.jToolBar1.add(self.jButton2)
         self.saveJButton.setText("Save")
-        self.saveJButton.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.saveJButtonActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN69604(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "saveJButtonActionPerformed") else _java_listener_owner).saveJButtonActionPerformed(evt)
+        self.saveJButton.addActionListener(_JavaListenerN69604()
+            )
         self.jToolBar1.add(self.saveJButton)
         self.jButton1.setText("Export")
-        self.jButton1.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.jButton1ActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN69780(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "jButton1ActionPerformed") else _java_listener_owner).jButton1ActionPerformed(evt)
+        self.jButton1.addActionListener(_JavaListenerN69780()
+            )
         self.jToolBar1.add(self.jButton1)
         self.openJButton.setText("Open")
-        self.openJButton.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.openJButtonActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN69956(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "openJButtonActionPerformed") else _java_listener_owner).openJButtonActionPerformed(evt)
+        self.openJButton.addActionListener(_JavaListenerN69956()
+            )
         self.jToolBar1.add(self.openJButton)
         self.jButton3.setText("Copy")
         self.jToolBar1.add(self.jButton3)
@@ -209,31 +282,40 @@ class MyFrame(*java_bases(JFrame, FileJDialogListenerInterface, HashMapJDialogLi
         self.animateJButton.setText("AnimateEdit")
         self.jToolBar1.add(self.animateJButton)
         self.playJButton.setText("Play")
-        self.playJButton.addMouseListener((MouseAdapter()  # Java anonymous class body:
-#             
-# 
-#             def mousePressed(self, evt: MouseEvent) -> None:
-#                 self.playJButtonMousePressed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN70467(MouseAdapter):
+            
+            
+
+            def mousePressed(self, evt: MouseEvent) -> None:
+                (self if hasattr(self, "playJButtonMousePressed") else _java_listener_owner).playJButtonMousePressed(evt)
+        self.playJButton.addMouseListener(_JavaListenerN70467()
+            )
         self.jToolBar1.add(self.playJButton)
         self.stopJjButton.setText("Stop")
-        self.stopJjButton.addMouseListener((MouseAdapter()  # Java anonymous class body:
-#             
-# 
-#             def mousePressed(self, evt: MouseEvent) -> None:
-#                 self.stopJjButtonMousePressed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN70643(MouseAdapter):
+            
+            
+
+            def mousePressed(self, evt: MouseEvent) -> None:
+                (self if hasattr(self, "stopJjButtonMousePressed") else _java_listener_owner).stopJjButtonMousePressed(evt)
+        self.stopJjButton.addMouseListener(_JavaListenerN70643()
+            )
         self.jToolBar1.add(self.stopJjButton)
         self.getContentPane().add(self.jToolBar1, BorderLayout.NORTH)
         self.jPanel1.setLayout(GridLayout(1, 0))
         self.mainJPanel.setLayout(GridLayout(1, 0))
         self.jTabbedPane.setMinimumSize(Dimension(550, 400))
-        self.jTabbedPane.addChangeListener((ChangeListener()  # Java anonymous class body:
-#             
-# 
-#             def stateChanged(self, evt: ChangeEvent) -> None:
-#                 self.jTabbedPaneStateChanged(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN70986(ChangeListener):
+            
+            
+
+            def stateChanged(self, evt: ChangeEvent) -> None:
+                (self if hasattr(self, "jTabbedPaneStateChanged") else _java_listener_owner).jTabbedPaneStateChanged(evt)
+        self.jTabbedPane.addChangeListener(_JavaListenerN70986()
+            )
         self.mainJPanel.add(self.jTabbedPane)
         self.jPanel1.add(self.mainJPanel)
         self.getContentPane().add(self.jPanel1, BorderLayout.CENTER)
@@ -242,90 +324,120 @@ class MyFrame(*java_bases(JFrame, FileJDialogListenerInterface, HashMapJDialogLi
         self.statusJPanel.add(MyFrame.statusJLabel)
         self.getContentPane().add(self.statusJPanel, BorderLayout.SOUTH)
         self.fileJMenu.setText("File")
-        self.fileJMenu.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.fileJMenuActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN71425(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "fileJMenuActionPerformed") else _java_listener_owner).fileJMenuActionPerformed(evt)
+        self.fileJMenu.addActionListener(_JavaListenerN71425()
+            )
         self.newJMenuItem.setText("New")
-        self.newJMenuItem.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.newJMenuItemActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN71564(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "newJMenuItemActionPerformed") else _java_listener_owner).newJMenuItemActionPerformed(evt)
+        self.newJMenuItem.addActionListener(_JavaListenerN71564()
+            )
         self.fileJMenu.add(self.newJMenuItem)
         self.openJMenuItem.setText("Open")
-        self.openJMenuItem.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.openJMenuItemActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN71740(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "openJMenuItemActionPerformed") else _java_listener_owner).openJMenuItemActionPerformed(evt)
+        self.openJMenuItem.addActionListener(_JavaListenerN71740()
+            )
         self.fileJMenu.add(self.openJMenuItem)
         self.saveJMenuItem.setText("Save")
-        self.saveJMenuItem.addMouseListener((MouseAdapter()  # Java anonymous class body:
-#             
-# 
-#             def mousePressed(self, evt: MouseEvent) -> None:
-#                 self.saveJMenuItemMousePressed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN71916(MouseAdapter):
+            
+            
+
+            def mousePressed(self, evt: MouseEvent) -> None:
+                (self if hasattr(self, "saveJMenuItemMousePressed") else _java_listener_owner).saveJMenuItemMousePressed(evt)
+        self.saveJMenuItem.addMouseListener(_JavaListenerN71916()
+            )
         self.fileJMenu.add(self.saveJMenuItem)
         self.saveAsJMenuItem.setText("SaveAs")
         self.fileJMenu.add(self.saveAsJMenuItem)
         self.exportJMenuItem1.setText("Export")
-        self.exportJMenuItem1.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.exportJMenuItem1ActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN72159(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "exportJMenuItem1ActionPerformed") else _java_listener_owner).exportJMenuItem1ActionPerformed(evt)
+        self.exportJMenuItem1.addActionListener(_JavaListenerN72159()
+            )
         self.fileJMenu.add(self.exportJMenuItem1)
         self.exitJMenuItem.setText("Exit")
-        self.exitJMenuItem.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.exitJMenuItemActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN72335(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "exitJMenuItemActionPerformed") else _java_listener_owner).exitJMenuItemActionPerformed(evt)
+        self.exitJMenuItem.addActionListener(_JavaListenerN72335()
+            )
         self.fileJMenu.add(self.exitJMenuItem)
         self.menuJMenuBar.add(self.fileJMenu)
         self.viewJMenu.setText("View")
         self.zoomInJMenuItem.setText("Zoom In")
-        self.zoomInJMenuItem.addMouseListener((MouseAdapter()  # Java anonymous class body:
-#             
-# 
-#             def mousePressed(self, evt: MouseEvent) -> None:
-#                 self.zoomInJMenuItemMousePressed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN72578(MouseAdapter):
+            
+            
+
+            def mousePressed(self, evt: MouseEvent) -> None:
+                (self if hasattr(self, "zoomInJMenuItemMousePressed") else _java_listener_owner).zoomInJMenuItemMousePressed(evt)
+        self.zoomInJMenuItem.addMouseListener(_JavaListenerN72578()
+            )
         self.viewJMenu.add(self.zoomInJMenuItem)
         self.zoomOutJMenuItem.setText("Zoom Out")
-        self.zoomOutJMenuItem.addMouseListener((MouseAdapter()  # Java anonymous class body:
-#             
-# 
-#             def mousePressed(self, evt: MouseEvent) -> None:
-#                 self.zoomOutJMenuItemMousePressed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN72754(MouseAdapter):
+            
+            
+
+            def mousePressed(self, evt: MouseEvent) -> None:
+                (self if hasattr(self, "zoomOutJMenuItemMousePressed") else _java_listener_owner).zoomOutJMenuItemMousePressed(evt)
+        self.zoomOutJMenuItem.addMouseListener(_JavaListenerN72754()
+            )
         self.viewJMenu.add(self.zoomOutJMenuItem)
         self.menuJMenuBar.add(self.viewJMenu)
         self.objectJMenu.setText("Objects")
         self.explodeAllJMenuItem.setText("Explode All")
-        self.explodeAllJMenuItem.addMouseListener((MouseAdapter()  # Java anonymous class body:
-#             
-# 
-#             def mousePressed(self, evt: MouseEvent) -> None:
-#                 self.explodeAllJMenuItemMousePressed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN72997(MouseAdapter):
+            
+            
+
+            def mousePressed(self, evt: MouseEvent) -> None:
+                (self if hasattr(self, "explodeAllJMenuItemMousePressed") else _java_listener_owner).explodeAllJMenuItemMousePressed(evt)
+        self.explodeAllJMenuItem.addMouseListener(_JavaListenerN72997()
+            )
         self.objectJMenu.add(self.explodeAllJMenuItem)
         self.menuJMenuBar.add(self.objectJMenu)
         self.frameJMenu.setText("Frame")
-        self.frameJMenu.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.frameJMenuActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN73210(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "frameJMenuActionPerformed") else _java_listener_owner).frameJMenuActionPerformed(evt)
+        self.frameJMenu.addActionListener(_JavaListenerN73210()
+            )
         self.previousFrameJMenuItem.setText("Previous")
         self.frameJMenu.add(self.previousFrameJMenuItem)
         self.nextFrameJMenuItem.setText(CommonLabels.getInstance().NEXT)
@@ -341,40 +453,52 @@ class MyFrame(*java_bases(JFrame, FileJDialogListenerInterface, HashMapJDialogLi
         self.menuJMenuBar.add(self.frameJMenu)
         self.generateJMenu.setText("Generate")
         self.centerJMenuItem.setText("Center")
-        self.centerJMenuItem.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.centerJMenuItemActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN73838(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "centerJMenuItemActionPerformed") else _java_listener_owner).centerJMenuItemActionPerformed(evt)
+        self.centerJMenuItem.addActionListener(_JavaListenerN73838()
+            )
         self.generateJMenu.add(self.centerJMenuItem)
         self.autoDamageJMenuItem.setText("Damage")
         self.generateJMenu.add(self.autoDamageJMenuItem)
         self.autoExplodeJMenuItem.setText("Explode")
-        self.autoExplodeJMenuItem.addMouseListener((MouseAdapter()  # Java anonymous class body:
-#             
-# 
-#             def mousePressed(self, evt: MouseEvent) -> None:
-#                 self.autoExplodeJMenuItemMousePressed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN74081(MouseAdapter):
+            
+            
+
+            def mousePressed(self, evt: MouseEvent) -> None:
+                (self if hasattr(self, "autoExplodeJMenuItemMousePressed") else _java_listener_owner).autoExplodeJMenuItemMousePressed(evt)
+        self.autoExplodeJMenuItem.addMouseListener(_JavaListenerN74081()
+            )
         self.generateJMenu.add(self.autoExplodeJMenuItem)
         self.autoGrowJMenuItem.setText("Grow")
         self.generateJMenu.add(self.autoGrowJMenuItem)
         self.jMenuItem1.setText("Mirror")
-        self.jMenuItem1.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.jMenuItem1ActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN74324(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "jMenuItem1ActionPerformed") else _java_listener_owner).jMenuItem1ActionPerformed(evt)
+        self.jMenuItem1.addActionListener(_JavaListenerN74324()
+            )
         self.generateJMenu.add(self.jMenuItem1)
         self.autoRotateGenerationJMenuItem.setText("Rotate")
-        self.autoRotateGenerationJMenuItem.addMouseListener((MouseAdapter()  # Java anonymous class body:
-#             
-# 
-#             def mousePressed(self, evt: MouseEvent) -> None:
-#                 self.autoRotateGenerationJMenuItemMousePressed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN74500(MouseAdapter):
+            
+            
+
+            def mousePressed(self, evt: MouseEvent) -> None:
+                (self if hasattr(self, "autoRotateGenerationJMenuItemMousePressed") else _java_listener_owner).autoRotateGenerationJMenuItemMousePressed(evt)
+        self.autoRotateGenerationJMenuItem.addMouseListener(_JavaListenerN74500()
+            )
         self.generateJMenu.add(self.autoRotateGenerationJMenuItem)
         self.autoSheildMenuItem.setText("Shield")
         self.generateJMenu.add(self.autoSheildMenuItem)
@@ -448,7 +572,7 @@ class MyFrame(*java_bases(JFrame, FileJDialogListenerInterface, HashMapJDialogLi
     
 
     def exitJMenuItemActionPerformed(self, evt: ActionEvent) -> None:
-        sys.exit(0)
+        __import__("java.lang.System", fromlist=["System"]).System.exit(0)
     
 
     def newJMenuItemActionPerformed(self, evt: ActionEvent) -> None:
@@ -460,7 +584,7 @@ class MyFrame(*java_bases(JFrame, FileJDialogListenerInterface, HashMapJDialogLi
     
 
     def exitForm(self, evt: WindowEvent) -> None:
-        sys.exit(0)
+        __import__("java.lang.System", fromlist=["System"]).System.exit(0)
     
 
     def openJButtonActionPerformed(self, evt: ActionEvent) -> None:
@@ -497,6 +621,7 @@ class MyFrame(*java_bases(JFrame, FileJDialogListenerInterface, HashMapJDialogLi
     
 
     def onFiles(self, files: list[File]) -> None:
+        from java.io.File import File
         from org.allbinary.dom.DomHelper import DomHelper
         from org.allbinary.graphics.j2me.workarea.WorkAreaDom import WorkAreaDom
         from org.allbinary.graphics.j2me.workarea.WorkAreaJPanel import WorkAreaJPanel
@@ -537,13 +662,14 @@ class MyFrame(*java_bases(JFrame, FileJDialogListenerInterface, HashMapJDialogLi
     
 
     def export(self) -> None:
+        from java.io.File import File
         from org.allbinary.dom.DomHelper import DomHelper
         from org.allbinary.graphics.j2me.workarea.WorkAreaJPanelInterface import WorkAreaJPanelInterface
         from org.allbinary.log.LOGGING import LOGGING
         from org.w3c.dom.Document import Document
         try:
             workAreaJPanel: WorkAreaJPanelInterface = self.jTabbedPane.getSelectedComponent()
-            file: File = File(self.SAVE_PATH + "/" + workAreaJPanel.getName() + self.JAVAEXTENSION)
+            file: File = File(MyFrame.SAVE_PATH + "/" + workAreaJPanel.getName() + self.JAVAEXTENSION)
             document: Document = workAreaJPanel.toDocument()
             self.logUtil.putF("Export: " + DomHelper.getInstance().toString(document), self, "exportJMenuItem1ActionPerformed")
             self.xslHelper.export(file, str(MyFrame.TEMPLATE_EXPORT_PATH) + "/" + self.JAVA_TEMPLATE, document)
@@ -553,12 +679,13 @@ class MyFrame(*java_bases(JFrame, FileJDialogListenerInterface, HashMapJDialogLi
     
 
     def save(self) -> None:
+        from java.io.File import File
         from org.allbinary.dom.DomHelper import DomHelper
         from org.allbinary.graphics.j2me.workarea.WorkAreaJPanelInterface import WorkAreaJPanelInterface
         from org.allbinary.log.LOGGING import LOGGING
         try:
             workAreaJPanel: WorkAreaJPanelInterface = self.jTabbedPane.getSelectedComponent()
-            DomHelper.getInstance().save(File(self.SAVE_PATH + "/" + workAreaJPanel.getName() + self.SAVEEXTENSION), workAreaJPanel.toDocument())
+            DomHelper.getInstance().save(File(MyFrame.SAVE_PATH + "/" + workAreaJPanel.getName() + self.SAVEEXTENSION), workAreaJPanel.toDocument())
         except Exception as e:
             if LOGGING.contains(LOGGING.MENUEVENT):
                 self.guiLog.put(self.commonStrings.EXCEPTION, self, self.commonStrings.SAVE, e)
@@ -593,12 +720,12 @@ class MyFrame(*java_bases(JFrame, FileJDialogListenerInterface, HashMapJDialogLi
         from org.allbinary.graphics.j2me.workarea.WorkAreaJPanelInterface import WorkAreaJPanelInterface
         from org.allbinary.log.LOGGING import LOGGING
         try:
-            self.numberOfWorkAreas += 1
-            if self.numberOfWorkAreas == MyFrame.MAXWORKAREAS:
+            MyFrame.numberOfWorkAreas += 1
+            if MyFrame.numberOfWorkAreas == MyFrame.MAXWORKAREAS:
                 raise Exception()
             self.jTabbedPane.addTab(newCanvasInterface.getName(), newCanvasInterface)
             self.jTabbedPane.setSelectedComponent(newCanvasInterface)
-            animationThread: threading.Thread = threading.Thread(target=newCanvasInterface.run)
+            animationThread: JavaThread = JavaThread(target=newCanvasInterface.run)
             animationThread.start()
             self.updateSelectedWorkArea()
         except Exception as e:

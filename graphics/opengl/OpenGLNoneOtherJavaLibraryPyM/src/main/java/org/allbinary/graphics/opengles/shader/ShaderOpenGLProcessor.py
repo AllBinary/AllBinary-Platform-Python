@@ -3,9 +3,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.graphics.opengles.OpenGLProcessor import OpenGLProcessor
 
 
+@java_inherited_overloads
 class ShaderOpenGLProcessor(OpenGLProcessor):
     
 

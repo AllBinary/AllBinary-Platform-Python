@@ -20,13 +20,12 @@ from __future__ import annotations
 class HtmlTags:
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
-        self.htmlTagVector: BasicArrayList = None
+        if "htmlTagVector" not in vars(self): self.htmlTagVector: BasicArrayList = None
     
 
     def __init__(self) -> None:
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
-        self._init_fields()
+        __class__._init_fields(self)
         self.htmlTagVector = BasicArrayListD()
     
 

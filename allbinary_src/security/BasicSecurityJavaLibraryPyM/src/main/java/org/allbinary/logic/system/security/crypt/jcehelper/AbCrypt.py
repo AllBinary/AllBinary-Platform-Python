@@ -24,11 +24,11 @@ class AbCrypt(CryptInterface):
         from org.allbinary.TsUtil import TsUtil
         self.tsUtil: TsUtil = TsUtil.getInstance()
         self.secretComposite: BaseSecretComposite = BaseSecretComposite.NULL_SECRET_COMPOSITE
-        self.algorithm: str = None
+        if "algorithm" not in vars(self): self.algorithm: str = None
     
 
     def __init__(self, algorithm: str) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.algorithm = algorithm
     
 

@@ -15,26 +15,31 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from admin.taghelpers.BasicTable import BasicTable
 
 
+@java_inherited_overloads
 class QuoteHelper(BasicTable):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("abeClientInformation", None)
+        vars(self).setdefault("weblisketSession", None)
+        vars(self).setdefault("storeFrontInterface", None)
+        vars(self).setdefault("portion", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-        from org.allbinary.business.installer.Portion import Portion
-        from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.abeClientInformation: AbeClientInformationInterface = ServiceClientInformationInterfaceFactory.getInstance()
-        self.weblisketSession: WeblisketSession = None
-        self.storeFrontInterface: StoreFrontInterface = None
-        self.portion: Portion = None
+        if "weblisketSession" not in vars(self): self.weblisketSession: WeblisketSession = None
+        if "storeFrontInterface" not in vars(self): self.storeFrontInterface: StoreFrontInterface = None
+        if "portion" not in vars(self): self.portion: Portion = None
     
 
     def __init__(self, hashMap: HashMap, pageContext: PageContext) -> None:
+        __class__._java_defaults(self)
         from java.util.HashMap import HashMap
         from org.allbinary.business.context.modules.storefront.StoreFront import StoreFront
         from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
@@ -42,7 +47,7 @@ class QuoteHelper(BasicTable):
         from org.allbinary.business.installer.Portion import Portion
         from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         storeName: str = hashMap.get(StoreFrontData.getInstance().NAME)
         if storeName is not None:
             self.storeFrontInterface = StoreFrontFactory.getInstance(storeName)

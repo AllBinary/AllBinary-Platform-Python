@@ -21,17 +21,16 @@ from org.allbinary.game.score.HighScoresInterface import HighScoresInterface
 class HighScores(HighScoresInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.orderedHighScoresList: BasicArrayList = BasicArrayListD()
-        self.name: str = None
-        self.heading: str = None
+        if "name" not in vars(self): self.name: str = None
+        if "heading" not in vars(self): self.heading: str = None
         self.columnOneHeading: str = "Name"
-        self.columnTwoHeading: str = None
+        if "columnTwoHeading" not in vars(self): self.columnTwoHeading: str = None
     
 
     def __init__(self, name: str, heading: str, columnTwoHeading: str) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.name = name
         self.heading = heading
         self.columnTwoHeading = columnTwoHeading

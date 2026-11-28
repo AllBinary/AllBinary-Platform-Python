@@ -15,25 +15,31 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.graphics.displayable.screen.CommandForm import CommandForm
 
 
+@java_inherited_overloads
 class GameDifficultyOptions(CommandForm):
+    def _java_defaults(self):
+        vars(self).setdefault("meUtil", None)
+        vars(self).setdefault("list_", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.MIDPUtil import MIDPUtil
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.meUtil: MIDPUtil = MIDPUtil.getInstance()
-        self.list_: BasicArrayList = None
+        if "list_" not in vars(self): self.list_: BasicArrayList = None
     
 
     def __init__(self, commandListener: CommandListener, title: str, list_: BasicArrayList, backgrounBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.CommandListener import CommandListener
         from org.allbinary.game.configuration.persistance.GameDifficultyFactory import GameDifficultyFactory
         from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.util.BasicArrayList import BasicArrayList
         super().__init__(commandListener, title, backgrounBasicColor, foregroundBasicColor)
-        self._init_fields()
+        __class__._init_fields(self)
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
         self.list_ = list_
         self.update()
@@ -43,12 +49,12 @@ class GameDifficultyOptions(CommandForm):
     
 
     def open(self) -> None:
-        super().open()
+        java_super_call(super(), "open")
     
 
     # throws Exception
     def close(self) -> None:
-        super().close()
+        java_super_call(super(), "close")
         self.save()
     
 
@@ -73,7 +79,7 @@ class GameDifficultyOptions(CommandForm):
         from javax.microedition.lcdui.Choice import Choice
         self.deleteAll()
         self.add(self.list_, "Difficulty", Choice.EXCLUSIVE)
-        super().update()
+        java_super_call(super(), "update")
     
 
     def add(self, list_: BasicArrayList, name: str, option: int) -> None:

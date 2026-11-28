@@ -15,10 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.media.graphics.geography.map.GeographicMapCellHistoryProgressBase import GeographicMapCellHistoryProgressBase
 
 
+@java_inherited_overloads
 class GeographicMapCellHistoryProgress(GeographicMapCellHistoryProgressBase):
+    def _java_defaults(self):
+        vars(self).setdefault("totalVisitedArray", None)
+        vars(self).setdefault("geographicMapCellHistoryArray", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.NullUtil import NullUtil
@@ -27,8 +32,9 @@ class GeographicMapCellHistoryProgress(GeographicMapCellHistoryProgressBase):
     
 
     def __init__(self, geographicMapCellHistoryArray: list[GeographicMapCellHistory]) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.geographicMapCellHistoryArray = geographicMapCellHistoryArray
         self.init()
     

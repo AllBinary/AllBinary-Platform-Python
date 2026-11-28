@@ -21,15 +21,14 @@ from javax.microedition.lcdui.ItemCommandListener import ItemCommandListener
 class GameFeatureItemCommandListener(ItemCommandListener):
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.configuration.GameOptionsForm import GameOptionsForm
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.gameOptionsForm: GameOptionsForm = None
+        if "gameOptionsForm" not in vars(self): self.gameOptionsForm: GameOptionsForm = None
     
 
     def __init__(self, gameOptionsForm: GameOptionsForm) -> None:
         from org.allbinary.game.configuration.GameOptionsForm import GameOptionsForm
-        self._init_fields()
+        __class__._init_fields(self)
         self.gameOptionsForm = gameOptionsForm
     
 

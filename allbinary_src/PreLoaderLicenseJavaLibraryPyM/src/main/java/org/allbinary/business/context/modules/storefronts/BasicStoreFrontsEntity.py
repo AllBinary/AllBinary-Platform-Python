@@ -15,10 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.business.init.InitSql import InitSql
 
 
+@java_inherited_overloads
 class BasicStoreFrontsEntity(InitSql):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("tableName", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -27,9 +33,10 @@ class BasicStoreFrontsEntity(InitSql):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
         super().__init__(UserDbInitInfo())
-        self._init_fields()
+        __class__._init_fields(self)
         self.setTable(self.tableName)
     
 
@@ -43,7 +50,7 @@ class BasicStoreFrontsEntity(InitSql):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         keysAndValues: HashMap = StdUtil.getInstance().createHashMap()
         keysAndValues.put(StoreFrontData.getInstance().NAME, name)
-        storeHashMap: HashMap = super().getRow(keysAndValues)
+        storeHashMap: HashMap = java_super_call(super(), "getRow", keysAndValues)
         if storeHashMap is None:
             raise Exception("No Such Store: " + name)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().FACTORYERROR):

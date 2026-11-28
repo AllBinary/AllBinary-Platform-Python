@@ -15,27 +15,34 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.animation.IndexedAnimation import IndexedAnimation
 
 
+@java_inherited_overloads
 class ImageArrayAnimation(IndexedAnimation):
+    def _java_defaults(self):
+        vars(self).setdefault("imageArray", None)
+        vars(self).setdefault("totalFrames", 0)
+        vars(self).setdefault("circularIndexUtil", None)
+        vars(self).setdefault("anchor", 0)
 
     def _init_fields(self) -> None:
-        from javax.microedition.lcdui.Image import Image
         from javax.microedition.lcdui.NullImage import NullImage
         from org.allbinary.graphics.Anchor import Anchor
         from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         self.imageArray: list[Image] = NullImage.NULL_IMAGE_ARRAY
-        self.totalFrames: int = 0
+        if "totalFrames" not in vars(self): self.totalFrames: int = 0
         self.circularIndexUtil: CircularIndexUtil = CircularIndexUtil.NULL_CIRCULAR_INDEX_UTIL
         self.anchor: int = Anchor.TOP_LEFT
     
 
     def __init__(self, imageArray: list[Image], animationBehavior: AnimationBehavior) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         super().__init__(animationBehavior)
-        self._init_fields()
+        __class__._init_fields(self)
         self.setImageArray(imageArray)
     
 

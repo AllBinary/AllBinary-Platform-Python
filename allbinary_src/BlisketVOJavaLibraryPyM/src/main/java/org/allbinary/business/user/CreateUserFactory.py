@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 
 
 class CreateUserFactory:
@@ -34,7 +35,7 @@ class CreateUserFactory:
         from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         if hashMap is not None:
             roleString: str = hashMap.get(str(UserRoleData.NAME))
-            if not StringValidationUtil.getInstance().isEmpty(roleString):
+            if not (StringValidationUtil.getInstance().isEmpty(roleString)):
                 role: UserRole = UserRoleB.getRole(roleString)
                 return role.getUserFactory().getInstance(hashMap)
             else:

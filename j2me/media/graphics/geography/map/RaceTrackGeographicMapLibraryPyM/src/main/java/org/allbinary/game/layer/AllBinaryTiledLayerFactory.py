@@ -23,6 +23,7 @@ class AllBinaryTiledLayerFactory(AllBinaryTiledLayerFactoryInterface):
 
     # throws Exception
     def getInstance(self, raceTrackInfo: RaceTrackInfo, raceTrackData: RaceTrackData) -> AllBinaryTiledLayer:
+        from org.allbinary.game.layer.AllBinaryJ2METiledLayer import AllBinaryJ2METiledLayer
         from javax.microedition.lcdui.game.TiledLayer import TiledLayer
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackData import RaceTrackData
@@ -37,6 +38,7 @@ class AllBinaryTiledLayerFactory(AllBinaryTiledLayerFactoryInterface):
 
     # throws Exception
     def getMiniInstance(self, raceTrackData: RaceTrackData) -> AllBinaryTiledLayer:
+        from org.allbinary.game.layer.AllBinaryJ2METiledLayer import AllBinaryJ2METiledLayer
         from javax.microedition.lcdui.game.TiledLayer import TiledLayer
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory

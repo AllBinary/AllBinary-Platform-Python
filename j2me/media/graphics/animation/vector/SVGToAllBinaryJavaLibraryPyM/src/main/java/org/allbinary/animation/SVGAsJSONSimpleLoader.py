@@ -16,6 +16,10 @@
 from __future__ import annotations
 
 import math
+from java.lang.System import System
+from java.lang.JavaRuntimeStatic import java_equals
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 import traceback
 from java.lang.JavaRuntimeStatic import lazy_static
 
@@ -48,7 +52,7 @@ class SVGAsJSONSimpleLoader:
         self.CIRCLE_SEGMENTS: int = 16
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -74,11 +78,11 @@ class SVGAsJSONSimpleLoader:
             for index in range(0, size):
                 key: str = objectArray[index]
                 value: object = svg.opt(key)
-                if self.shapeTypeFactory.KEY_LINE.equals(key):
+                if java_equals(self.shapeTypeFactory.KEY_LINE, key):
                     self.addShapes(pointVector, value, self.shapeTypeFactory.LINE)
-                elif self.shapeTypeFactory.equals(key):
+                elif java_equals(self.shapeTypeFactory, key):
                     self.addShapes(pointVector, value, self.shapeTypeFactory.CIRCLE)
-                elif self.shapeTypeFactory.KEY_RECT.equals(key) or self.shapeTypeFactory.KEY_RECTANGLE.equals(key):
+                elif java_equals(self.shapeTypeFactory.KEY_RECT, key) or java_equals(self.shapeTypeFactory.KEY_RECTANGLE, key):
                     self.addShapes(pointVector, value, self.shapeTypeFactory.RECTANGLE)
             return self.toPoints(pointVector)
         except JSONException as e:
@@ -128,7 +132,8 @@ class SVGAsJSONSimpleLoader:
         cy: int = self.readInt(circle, self.KEY_CY)
         radius: int = self.readInt(circle, self.KEY_R)
         for index in range(0, self.CIRCLE_SEGMENTS + 1):
-            angle: float = (math.pi * 2.0 * index) / self.CIRCLE_SEGMENTS
+            angle: float = java_divide((math.pi * 2.0 * index), self.CIRCLE_SEGMENTS)
+            
             x: int = int(int(math.floor(cx + (math.cos(angle) * radius) + 0.5)))
             y: int = int(int(math.floor(cy + (math.sin(angle) * radius) + 0.5)))
             self.addPoint(pointVector, x, y)
@@ -181,7 +186,9 @@ class SVGAsJSONSimpleLoader:
         return defaultValue
 
     def readInt(self, *args):
-        return getattr(self, "readInt_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("readInt_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().readInt(*args)
     
 
     def toInt(self, value: object, key: str) -> int:

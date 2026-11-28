@@ -15,34 +15,44 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.combat.weapon.SimpleWeaponProperties import SimpleWeaponProperties
 
 
+@java_inherited_overloads
 class WeaponProperties(SimpleWeaponProperties):
     NULL_WEAPON_PROPERTIES: WeaponProperties = None
     messageSent: bool = False
     DAMAGE: str = "Damage: "
     RANGE: str = "Range: "
     RELOAD: str = "Reload: "
+    def _java_defaults(self):
+        vars(self).setdefault("reloadTime", 0)
+        vars(self).setdefault("targetingTime", 0)
+        vars(self).setdefault("speed", None)
+        vars(self).setdefault("MAX", 0)
+        vars(self).setdefault("ZERO", 0)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.math.BasicDecimal import BasicDecimal
-        self.reloadTime: int = 0
-        self.targetingTime: int = 0
+        if "reloadTime" not in vars(self): self.reloadTime: int = 0
+        if "targetingTime" not in vars(self): self.targetingTime: int = 0
         self.speed: BasicDecimal = BasicDecimal.ZERO_BIGDECIMAL
         self.MAX: int = 10240
         self.ZERO: int = 0
     
 
     def __init__(self, reloadTime: int, targetingTime: int, speed: int, damage: int, dissipation: int) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.string.CommonStrings import CommonStrings
         super().__init__()
-        self._init_fields()
-        if speed < self.MAX and speed != 0 and not WeaponProperties.messageSent:
+        __class__._init_fields(self)
+        if speed < self.MAX and speed != 0 and not (WeaponProperties.messageSent):
             MESSAGE: str = "Danger Danger Danger: Speed probably to slow if using 1 degree calculations as velocity for a single axis could be below 1024: "
             commonStrings: CommonStrings = CommonStrings.getInstance()
             PreLogUtil.put(str(StringMaker().append(MESSAGE).appendlong(speed)), self, commonStrings.CONSTRUCTOR)
@@ -86,7 +96,8 @@ class WeaponProperties(SimpleWeaponProperties):
     
 
     def getDamageI(self, range: int) -> int:
-        return self.getDamage() - ((self.getDissipation() * range) / self.speed.getScaled())
+        return self.getDamage() - (java_divide((self.getDissipation() * range), self.speed.getScaled())
+            )
     
 
     def toStringArray(self) -> list[str]:

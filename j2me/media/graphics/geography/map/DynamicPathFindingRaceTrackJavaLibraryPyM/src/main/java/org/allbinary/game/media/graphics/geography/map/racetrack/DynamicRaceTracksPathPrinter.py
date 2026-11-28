@@ -15,18 +15,24 @@
 
 from __future__ import annotations
 
+from java.lang.System import System
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.media.graphics.geography.map.racetrack.RaceTracksPathPrinter import RaceTracksPathPrinter
 
 
+@java_inherited_overloads
 class DynamicRaceTracksPathPrinter(RaceTracksPathPrinter):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def printAllPaths(self, raceTrackGeographicMapInterfaceFactoryInterface: RaceTrackGeographicMapInterfaceFactoryInterface, pathFindingInfo: PathFindingInfo, size: int) -> None:

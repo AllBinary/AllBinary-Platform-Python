@@ -21,21 +21,24 @@ from org.allbinary.business.advertisement.area.AdvertisementAreaInterface import
 class AdvertisementArea(AdvertisementAreaInterface):
 
     def _init_fields(self) -> None:
-        self.name: str = None
-        self.storeName: str = None
-        self.description: str = None
-        self.advertisementAreaConstraintsInterface: AdvertisementAreaConstraintsInterface = None
-        self.campaign: str = None
+        if "name" not in vars(self): self.name: str = None
+        if "storeName" not in vars(self): self.storeName: str = None
+        if "description" not in vars(self): self.description: str = None
+        if "advertisementAreaConstraintsInterface" not in vars(self): self.advertisementAreaConstraintsInterface: AdvertisementAreaConstraintsInterface = None
+        if "campaign" not in vars(self): self.campaign: str = None
     
 
     def __init__(self, hashMap: HashMap) -> None:
+        from org.allbinary.business.advertisement.area.AdvertisementAreaData import AdvertisementAreaData
+        from org.allbinary.business.advertisement.area.AdvertisementAreaData import AdvertisementAreaData
+        from org.allbinary.business.advertisement.area.AdvertisementAreaData import AdvertisementAreaData
         from org.allbinary.business.advertisement.area.AdvertisementAreaConstraints import AdvertisementAreaConstraints
         from java.util.HashMap import HashMap
         from org.allbinary.business.advertisement.campaign.AdvertisementCampaignData import AdvertisementCampaignData
         from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
         from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
         from org.w3c.dom.Document import Document
-        self._init_fields()
+        __class__._init_fields(self)
         self.name = hashMap.get(AdvertisementAreaData.getInstance().NAME)
         self.storeName = hashMap.get(StoreFrontData.getInstance().NAME)
         self.description = hashMap.get(AdvertisementAreaData.getInstance().DESCRIPTION)

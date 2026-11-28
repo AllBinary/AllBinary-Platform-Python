@@ -15,10 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from admin.tags.TableTag import TableTag
 
 
+@java_inherited_overloads
 class StoreFrontsTag(TableTag):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -26,10 +32,11 @@ class StoreFrontsTag(TableTag):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from admin.taghelpers.StoreFrontsHelperFactory import StoreFrontsHelperFactory
         from admin.taghelpers.StoreFrontsRequestHelperFactory import StoreFrontsRequestHelperFactory
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.setTagHelperFactory(StoreFrontsHelperFactory())
         self.setTagRequestHelperFactory(StoreFrontsRequestHelperFactory())
     
@@ -97,7 +104,7 @@ class StoreFrontsTag(TableTag):
         from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
         from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
         try:
-            if self.isEnabled():
+            if java_predicate(self, "isEnabled"):
                 if self.getCommand() is not None:
                     storeFrontData: StoreFrontData = StoreFrontData.getInstance()
                     if self.getCommand().compareTo(storeFrontData.SELECT) == 0:
@@ -111,7 +118,7 @@ class StoreFrontsTag(TableTag):
                     elif self.getCommand().compareTo(storeFrontData.INSTALL_COMPLETE) == 0:
                         self.sendStoreCreatedEmails()
                     else:
-                        return super().doStartTag()
+                        return java_super_call(super(), "doStartTag")
             return self.SKIP_BODY
         except LicensingException as e:
             AbResponseHandler.sendJspTagLicensingRedirect(self.pageContext, e)

@@ -15,12 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.media.AllBinaryVibrationME import AllBinaryVibrationME
 
 
+@java_inherited_overloads
 class AllBinaryVibration(AllBinaryVibrationME):
     VIBRATION: AllBinaryVibrationME = None
+    def _java_defaults(self):
+        vars(self).setdefault("vibrator", None)
 
     def _init_fields(self) -> None:
         from android.content.Context import Context
@@ -30,8 +34,9 @@ class AllBinaryVibration(AllBinaryVibrationME):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -41,6 +46,7 @@ class AllBinaryVibration(AllBinaryVibrationME):
 
     @staticmethod
     def init() -> None:
+        from org.allbinary.media.AllBinaryNoVibration import AllBinaryNoVibration
         from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
         if int(GameConfigurationCentral.getInstance().VIBRATION.getValue()) == 0:
             AllBinaryVibration.VIBRATION = AllBinaryNoVibration.NO_VIBRATION
@@ -57,6 +63,7 @@ class AllBinaryVibration(AllBinaryVibrationME):
 
 
 def _AllBinaryVibration_VIBRATION() -> object:
+    from org.allbinary.media.AllBinaryNoVibration import AllBinaryNoVibration
     return AllBinaryNoVibration.NO_VIBRATION
 
 lazy_static(AllBinaryVibration, "VIBRATION", _AllBinaryVibration_VIBRATION)

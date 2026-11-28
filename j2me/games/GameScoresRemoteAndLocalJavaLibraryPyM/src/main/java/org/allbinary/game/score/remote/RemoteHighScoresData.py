@@ -30,7 +30,7 @@ class RemoteHighScoresData:
         self.GAME_CONFIGURATION: str = "GAME_CONFIGURATION"
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

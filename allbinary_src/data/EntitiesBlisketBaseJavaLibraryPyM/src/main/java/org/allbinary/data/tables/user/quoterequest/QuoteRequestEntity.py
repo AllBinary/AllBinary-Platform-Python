@@ -15,12 +15,18 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.communication.sql.AbSqlBean import AbSqlBean
 from org.allbinary.data.tables.user.quoterequest.QuoteRequestEntityInterface import QuoteRequestEntityInterface
 
 
+@java_inherited_overloads
 class QuoteRequestEntity(*java_bases(AbSqlBean, QuoteRequestEntityInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("tableName", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -29,9 +35,10 @@ class QuoteRequestEntity(*java_bases(AbSqlBean, QuoteRequestEntityInterface)):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
         super().__init__(UserDbInitInfo())
-        self._init_fields()
+        __class__._init_fields(self)
         self.setTableName(self.tableName)
     
 
@@ -40,7 +47,7 @@ class QuoteRequestEntity(*java_bases(AbSqlBean, QuoteRequestEntityInterface)):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            super().insert(values)
+            java_super_call(super(), "insert", values)
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, self.INSERT)
         except Exception as e:
@@ -58,7 +65,7 @@ class QuoteRequestEntity(*java_bases(AbSqlBean, QuoteRequestEntityInterface)):
         row: HashMap = StdUtil.getInstance().createHashMap()
         row.put(UserData.USERNAME, userName)
         row.put(QuoteRequestData.getInstance().ID, str(id))
-        quoteRequestHashMap: HashMap = super().getRow(row)
+        quoteRequestHashMap: HashMap = java_super_call(super(), "getRow", row)
         if quoteRequestHashMap is not None:
             return QuoteRequest(quoteRequestHashMap)
         else:
@@ -69,14 +76,14 @@ class QuoteRequestEntity(*java_bases(AbSqlBean, QuoteRequestEntityInterface)):
         from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.business.quoterequest.QuoteRequestData import QuoteRequestData
         from org.allbinary.business.user.UserData import UserData
-        return super().getColumnWhere(QuoteRequestData.getInstance().ID, UserData.USERNAME, userName)
+        return java_super_call(super(), "getColumnWhere", QuoteRequestData.getInstance().ID, UserData.USERNAME, userName)
     
 
     def deleteWhere(self, key: str, value: str) -> None:
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            super().deleteWhere(key, value)
+            java_super_call(super(), "deleteWhere", key, value)
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, "deleteWhere")
         except Exception as e:
@@ -116,18 +123,18 @@ class QuoteRequestEntity(*java_bases(AbSqlBean, QuoteRequestEntityInterface)):
     
 
     def createTable(self) -> str:
-        return super().createTable(self.createTableStatement())
+        return java_super_call(super(), "createTable", self.createTableStatement())
     
 
     def dropTable(self) -> str:
-        result: str = str(super().dropTable())
+        result: str = str(java_super_call(super(), "dropTable"))
         return result
     
 
     def update(self, userName: str, updatedValues: HashMap) -> None:
         from java.util.HashMap import HashMap
         from org.allbinary.business.user.UserData import UserData
-        super().updateWhere(UserData.USERNAME, userName, updatedValues)
+        java_super_call(super(), "updateWhere", UserData.USERNAME, userName, updatedValues)
 # from java.util.HashMap import HashMap
 # from org.allbinary.util.BasicArrayList import BasicArrayList
 # from org.allbinary.util.BasicArrayListD import BasicArrayListD

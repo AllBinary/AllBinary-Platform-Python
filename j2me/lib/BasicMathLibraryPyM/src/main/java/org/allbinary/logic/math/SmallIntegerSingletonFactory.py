@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -43,9 +44,9 @@ class SmallIntegerSingletonFactory:
         from org.allbinary.logic.string.StringMaker import StringMaker
         minAllowed: int = self.getMinAllowed()
         if self.MIN <= minAllowed:
-            if J2MEUtil.isJ2ME():
+            if java_predicate(J2MEUtil, "isJ2ME"):
                 pass
-            elif AndroidUtil.isAndroid():
+            elif java_predicate(AndroidUtil, "isAndroid"):
                 logUtil: LogUtil = LogUtil.getInstance()
                 logUtil.putF(str(StringMaker().append("Android InputFactory was initialized before GameMidlet: ").appendint(self.MIN)), self, "getMin")
                 self.initWithRange(0x291, 6)
@@ -62,10 +63,10 @@ class SmallIntegerSingletonFactory:
     def getMinAllowed(self) -> int:
         from org.allbinary.AndroidUtil import AndroidUtil
         from org.allbinary.J2MEUtil import J2MEUtil
-        if J2MEUtil.isJ2ME():
+        if java_predicate(J2MEUtil, "isJ2ME"):
             return 0
         else:
-            if AndroidUtil.isAndroid():
+            if java_predicate(AndroidUtil, "isAndroid"):
                 return 0x101
             else:
                 return 23
@@ -95,7 +96,7 @@ class SmallIntegerSingletonFactory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.initWithRange(23, 0)
     
 

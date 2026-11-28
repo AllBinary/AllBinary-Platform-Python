@@ -55,7 +55,9 @@ class ImageFactory:
         return Image.createImageFromInputStream(inputStream)
 
     def createImageFromInputStream(self, *args):
-        return getattr(self, "createImageFromInputStream_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("createImageFromInputStream_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().createImageFromInputStream(*args)
 # from java.io.InputStream import InputStream
 # from javax.microedition.lcdui.Image import Image
 

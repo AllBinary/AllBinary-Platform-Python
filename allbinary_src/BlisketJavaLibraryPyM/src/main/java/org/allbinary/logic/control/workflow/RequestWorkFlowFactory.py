@@ -41,6 +41,7 @@ class RequestWorkFlowFactory:
     # throws Exception, LicensingException
     @staticmethod
     def getInstance_j2(hashMap: HashMap, pageContext: PageContext) -> WorkFlowInterface:
+        from org.allbinary.logic.control.workflow.WorkFlowData import WorkFlowData
         from java.util.HashMap import HashMap
         from org.allbinary.data.tables.workflow.WorkFlowEntityFactory import WorkFlowEntityFactory
         from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession

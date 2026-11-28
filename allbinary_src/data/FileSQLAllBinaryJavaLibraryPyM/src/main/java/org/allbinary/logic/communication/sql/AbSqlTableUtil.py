@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_divide
 import datetime
 import threading
 from java.lang.StringBuffer import StringBuilder
@@ -58,7 +59,7 @@ class AbSqlTableUtil:
         self.sqlStrings: SqlStrings = SqlStrings.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -68,7 +69,7 @@ class AbSqlTableUtil:
 
     def getOutputStream(self, backupPath: str, tableName: str) -> OutputStream:
         with self._lock:
-            return self._getOutputStream_unlocked(backupPath, tableName)
+            return __class__.__dict__["_getOutputStream_unlocked"].__get__(self, __class__)(backupPath, tableName)
 
     def _getOutputStream_unlocked(self, backupPath: str, tableName: str) -> OutputStream:
         from org.allbinary.logic.io.AbFileOutputStream import AbFileOutputStream
@@ -97,7 +98,7 @@ class AbSqlTableUtil:
 
     def backupFile(self, path: AbPath, backupPath: str, tableName: str) -> bool:
         with self._lock:
-            return self._backupFile_unlocked(path, backupPath, tableName)
+            return __class__.__dict__["_backupFile_unlocked"].__get__(self, __class__)(path, backupPath, tableName)
 
     def _backupFile_unlocked(self, path: AbPath, backupPath: str, tableName: str) -> bool:
         from org.allbinary.logic.string.StringMaker import StringMaker
@@ -157,7 +158,7 @@ class AbSqlTableUtil:
 
     def backupTable(self, abSqlTable: AbSqlTable) -> str:
         with self._lock:
-            return self._backupTable_unlocked(abSqlTable)
+            return __class__.__dict__["_backupTable_unlocked"].__get__(self, __class__)(abSqlTable)
 
     def _backupTable_unlocked(self, abSqlTable: AbSqlTable) -> str:
         from org.allbinary.logic.string.StringMaker import StringMaker
@@ -174,7 +175,7 @@ class AbSqlTableUtil:
             count: int = 0
             sqlStatement: str = str(self.sqlStrings.SELECT_ALL_FROM) + tableName
             path: str = URLGLOBALS.getMainPath() + PATH_GLOBALS.getInstance().BACKUP_PATH
-            if not Directory.create(AbPath(path)):
+            if not (Directory.create(AbPath(path))):
                 if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                     self.logUtil.putF(self.ERROR_CREATING + str(path), self, self.METHOD_BACKUP_TABLE)
             rset: ResultSet = abSqlTable.executeSQLStatement(sqlStatement)
@@ -206,7 +207,7 @@ class AbSqlTableUtil:
 
     def restoreTable(self, abSqlTable: AbSqlTable, portion: Portion) -> str:
         with self._lock:
-            return self._restoreTable_unlocked(abSqlTable, portion)
+            return __class__.__dict__["_restoreTable_unlocked"].__get__(self, __class__)(abSqlTable, portion)
 
     def _restoreTable_unlocked(self, abSqlTable: AbSqlTable, portion: Portion) -> str:
         from org.allbinary.logic.string.StringMaker import StringMaker
@@ -230,7 +231,8 @@ class AbSqlTableUtil:
             backupFile: AbFile = AbFile.createAbFile(path, tableName + self.EXTENSION)
             bufferedLineReader: BufferedLineReader = BufferedLineReader(backupFile)
             size: int = bufferedLineReader.getSize()
-            section: int = size / int(portion.getTotal()) + 1
+            section: int = java_divide(size, int(portion.getTotal()))
+             + 1
             start: int = section * current
             end: int = start + section
             if end > size:
@@ -285,6 +287,7 @@ class AbSqlTableUtil:
 # from org.allbinary.globals.URLGLOBALS import URLGLOBALS
 # from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
 # from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+from org.allbinary.logic.communication.sql.SqlStrings import SqlStrings
 
 
 def _AbSqlTableUtil_instance() -> object:

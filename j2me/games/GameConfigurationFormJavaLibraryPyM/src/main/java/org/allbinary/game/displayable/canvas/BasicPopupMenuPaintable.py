@@ -15,35 +15,47 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 from org.allbinary.graphics.paint.Paintable import Paintable
 
 
+@java_inherited_overloads
 class BasicPopupMenuPaintable(*java_bases(Paintable, UpdateMyFontInterface)):
     NAME: str = "MENU"
+    def _java_defaults(self):
+        vars(self).setdefault("basicSetColorUtil", None)
+        vars(self).setdefault("drawStringUtil", None)
+        vars(self).setdefault("label", None)
+        vars(self).setdefault("foregroundBasicColor", None)
+        vars(self).setdefault("myFontProcessor", None)
+        vars(self).setdefault("rectangle", None)
+        vars(self).setdefault("BORDER", 0)
+        vars(self).setdefault("heightOffset", 0)
+        vars(self).setdefault("offset", 0)
+        vars(self).setdefault("animationInterface", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.animation.Animation import Animation
-        from org.allbinary.graphics.Rectangle import Rectangle
-        from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.color.BasicColorSetUtil import BasicColorSetUtil
         from org.allbinary.graphics.draw.DrawVerticalStringUtil import DrawVerticalStringUtil
-        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
         self.basicSetColorUtil: BasicColorSetUtil = BasicColorSetUtil.getInstance()
         self.drawStringUtil: DrawVerticalStringUtil = DrawVerticalStringUtil.getInstance()
-        self.label: str = None
-        self.foregroundBasicColor: BasicColor = None
+        if "label" not in vars(self): self.label: str = None
+        if "foregroundBasicColor" not in vars(self): self.foregroundBasicColor: BasicColor = None
         self.myFontProcessor: MyFontProcessor = UpdateMyFontProcessor(self)
-        self.rectangle: Rectangle = None
-        self.BORDER: int = 0
-        self.heightOffset: int = 0
-        self.offset: int = 0
-        self.animationInterface: Animation = None
+        if "rectangle" not in vars(self): self.rectangle: Rectangle = None
+        if "BORDER" not in vars(self): self.BORDER: int = 0
+        if "heightOffset" not in vars(self): self.heightOffset: int = 0
+        if "offset" not in vars(self): self.offset: int = 0
+        if "animationInterface" not in vars(self): self.animationInterface: Animation = None
     
 
     def __init__(self, rectangle: Rectangle, backgroundBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.J2MEUtil import J2MEUtil
         from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
         from org.allbinary.animation.vector.RectangleFilledAnimation import RectangleFilledAnimation
@@ -51,11 +63,11 @@ class BasicPopupMenuPaintable(*java_bases(Paintable, UpdateMyFontInterface)):
         from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.foregroundBasicColor = foregroundBasicColor
         self.label = BasicPopupMenuPaintable.NAME
         self.rectangle = rectangle
-        if J2MEUtil.isJ2ME() or J2MEUtil.isHTML():
+        if java_predicate(J2MEUtil, "isJ2ME") or java_predicate(J2MEUtil, "isHTML"):
             self.animationInterface = NullAnimationFactory.getFactoryInstance().getInstance(0)
         else:
             self.animationInterface = RectangleFilledAnimation(self.rectangle.getWidth(), self.rectangle.getHeight(), BasicColorFactory.getInstance().TRANSPARENT_GREY)
@@ -78,21 +90,22 @@ class BasicPopupMenuPaintable(*java_bases(Paintable, UpdateMyFontInterface)):
         isOpenGL: bool = features.isDefault(OpenGLFeatureFactory.getInstance().OPENGL)
         self.drawStringUtil.updateMeasurement(graphics, self.label)
         BORDER: int = 0
-        if J2MEUtil.isHTML() or isOpenGL:
-            BORDER = MyFontProcessor.defaultCharWidth(font) / 2
-        elif AndroidUtil.isAndroid() or J2MEUtil.isJ2SE() or SWTUtil.isSWT:
+        if java_predicate(J2MEUtil, "isHTML") or isOpenGL:
+            BORDER = java_divide(MyFontProcessor.defaultCharWidth(font), 2)
+            
+        elif java_predicate(AndroidUtil, "isAndroid") or java_predicate(J2MEUtil, "isJ2SE") or SWTUtil.isSWT:
             BORDER = MyFontProcessor.defaultCharWidth(font)
         else:
             BORDER = MyFontProcessor.defaultCharWidth(font) * 2
         self.BORDER = BORDER
-        self.heightOffset = self.rectangle.getHeight() - (font.getHeight() * BasicPopupMenuPaintable.NAME.length())
-        if OpenGLFeatureUtil.getInstance().isAnyThreed():
+        self.heightOffset = self.rectangle.getHeight() - (font.getHeight() * __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(BasicPopupMenuPaintable.NAME))
+        if java_predicate(OpenGLFeatureUtil.getInstance(), "isAnyThreed"):
             self.heightOffset -= font.getHeight() + 2
-            if AndroidUtil.isAndroid():
+            if java_predicate(AndroidUtil, "isAndroid"):
                 self.heightOffset = font.getHeight()
             else:
                 self.heightOffset -= font.getHeight() + 2
-        self.offset = (self.heightOffset >> 1) + ((4 if SWTJOGLProcessor.getInstance().isJOGL() else 0))
+        self.offset = (int(self.heightOffset) >> (int(1) & 31)) + ((4 if java_predicate(SWTJOGLProcessor.getInstance(), "isJOGL") else 0))
         self.myFontProcessor = MyFontProcessor.getInstance()
     
 
@@ -104,7 +117,7 @@ class BasicPopupMenuPaintable(*java_bases(Paintable, UpdateMyFontInterface)):
         self.rectangle = rectangle
         width: int = self.rectangle.getWidth()
         height: int = self.rectangle.getHeight()
-        if J2MEUtil.isJ2ME() or J2MEUtil.isHTML():
+        if java_predicate(J2MEUtil, "isJ2ME") or java_predicate(J2MEUtil, "isHTML"):
             pass
         else:
             rectangleFilledAnimation: RectangleFilledAnimation = self.animationInterface

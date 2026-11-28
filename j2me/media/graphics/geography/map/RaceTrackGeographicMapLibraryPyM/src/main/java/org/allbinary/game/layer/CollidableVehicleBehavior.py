@@ -15,20 +15,28 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.layer.special.CollidableDestroyableDamageableBehavior import CollidableDestroyableDamageableBehavior
 
 
+@java_inherited_overloads
 class CollidableVehicleBehavior(CollidableDestroyableDamageableBehavior):
+    def _java_defaults(self):
+        vars(self).setdefault("totalImpactVelocity", 0)
+        vars(self).setdefault("halfImpactVelocityX", 0)
+        vars(self).setdefault("halfImpactVelocityY", 0)
 
     def _init_fields(self) -> None:
         self.totalImpactVelocity: int = 0
-        self.halfImpactVelocityX: int = 0
-        self.halfImpactVelocityY: int = 0
+        if "halfImpactVelocityX" not in vars(self): self.halfImpactVelocityX: int = 0
+        if "halfImpactVelocityY" not in vars(self): self.halfImpactVelocityY: int = 0
     
 
     def __init__(self, collidable: bool) -> None:
+        __class__._java_defaults(self)
         super().__init__(collidable)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -43,7 +51,7 @@ class CollidableVehicleBehavior(CollidableDestroyableDamageableBehavior):
             collidableDestroyableDamageableLayer: CollidableDestroyableDamageableLayer = (ownerLayer)
             collidableDestroyableDamageableLayer.getPickupBehavior().doPickupLayer(collidableInterfaceCompositeInterface)
         elif collisionType == collisionTypeFactory.COLLISION:
-            super().collide(ownerLayer, collidableInterfaceCompositeInterface)
+            java_super_call(super(), "collide", ownerLayer, collidableInterfaceCompositeInterface)
         else:
             self.collideVehicle(ownerLayer, collidableInterfaceCompositeInterface)
     
@@ -61,13 +69,13 @@ class CollidableVehicleBehavior(CollidableDestroyableDamageableBehavior):
         impactVelocityX: int = ownerVehicleProperties.getVelocityProperties().getVelocityXBasicDecimalP().getUnscaled() - vehicleProperties.getVelocityProperties().getVelocityXBasicDecimalP().getUnscaled()
         impactVelocityY: int = ownerVehicleProperties.getVelocityProperties().getVelocityYBasicDecimalP().getUnscaled() - vehicleProperties.getVelocityProperties().getVelocityYBasicDecimalP().getUnscaled()
         if impactVelocityX != 0:
-            self.halfImpactVelocityX = (impactVelocityX >> 1)
+            self.halfImpactVelocityX = (int(impactVelocityX) >> (int(1) & 63))
             ownerVehicleProperties.getVelocityProperties().getVelocityXBasicDecimalP().addlong(self.halfImpactVelocityX)
             vehicleProperties.getVelocityProperties().getVelocityXBasicDecimalP().addlong(self.halfImpactVelocityX)
         else:
             pass
         if impactVelocityY != 0:
-            self.halfImpactVelocityY = (impactVelocityY >> 1)
+            self.halfImpactVelocityY = (int(impactVelocityY) >> (int(1) & 63))
             ownerVehicleProperties.getVelocityProperties().getVelocityYBasicDecimalP().addlong(self.halfImpactVelocityY)
             vehicleProperties.getVelocityProperties().getVelocityXBasicDecimalP().addlong(self.halfImpactVelocityY)
         else:

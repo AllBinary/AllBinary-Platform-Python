@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 from javax.microedition.lcdui.ItemStateListener import ItemStateListener
 
@@ -23,16 +24,15 @@ class GameFeatureItemStateListener(ItemStateListener):
     toggleList: BasicArrayList = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.configuration.GameOptionsForm import GameOptionsForm
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.gameOptionsForm: GameOptionsForm = None
+        if "gameOptionsForm" not in vars(self): self.gameOptionsForm: GameOptionsForm = None
     
 
     def __init__(self, gameOptionsForm: GameOptionsForm) -> None:
         from org.allbinary.game.configuration.feature.GameFeatureFactory import GameFeatureFactory
         from org.allbinary.game.configuration.GameOptionsForm import GameOptionsForm
-        self._init_fields()
+        __class__._init_fields(self)
         self.gameOptionsForm = gameOptionsForm
         gameFeatureFactory: GameFeatureFactory = GameFeatureFactory.getInstance()
         GameFeatureItemStateListener.add(gameFeatureFactory.ARTIFICIAL_INTELLEGENCE_PROCESSOR)
@@ -47,7 +47,7 @@ class GameFeatureItemStateListener(ItemStateListener):
 
     @staticmethod
     def add(gameFeature: GameFeature) -> None:
-        if not GameFeatureItemStateListener.toggleList.contains(gameFeature):
+        if not (GameFeatureItemStateListener.toggleList.contains(gameFeature)):
             GameFeatureItemStateListener.toggleList.add(gameFeature)
     
 

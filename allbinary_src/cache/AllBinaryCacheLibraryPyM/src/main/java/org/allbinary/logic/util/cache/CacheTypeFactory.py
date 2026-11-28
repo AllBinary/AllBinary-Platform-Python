@@ -17,7 +17,7 @@ class CacheTypeFactory:
         self.CACHE_VECTOR: CacheType = CacheType(StringUtil.getInstance().EMPTY_STRING, StringUtil.getInstance().EMPTY_STRING)
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

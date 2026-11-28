@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -25,11 +26,10 @@ class InputRobotFactory:
         from org.allbinary.logic.StdUtil import StdUtil
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
-        from org.allbinary.util.ABHashtable import ABHashtable
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.hashtable: ABHashtable[object, object] = StdUtil.getInstance().createHashtable()
-        self.helpSetListenerInterface: HelpSetListener = None
+        if "helpSetListenerInterface" not in vars(self): self.helpSetListenerInterface: HelpSetListener = None
     
 
     # throws Exception
@@ -40,7 +40,7 @@ class InputRobotFactory:
 
     def __init__(self) -> None:
         from org.allbinary.input.automation.robot.InputRobot import InputRobot
-        self._init_fields()
+        __class__._init_fields(self)
         try:
             graphenv: GraphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment()
             screens: list[GraphicsDevice] = graphenv.getScreenDevices()
@@ -66,7 +66,7 @@ class InputRobotFactory:
         helpSet: HelpSet = inputRobotInterface.getHelpSet()
         if self.helpSetListenerInterface is not None:
             if helpSet is not None:
-                if not JavaHelpSetNotifier.isNotified(helpSet):
+                if not (JavaHelpSetNotifier.isNotified(helpSet)):
                     helpSetEvent: HelpSetEvent = HelpSetEvent(self, helpSet, HelpSetEvent.HELPSET_ADDED)
                     self.helpSetListenerInterface.helpSetAdded(helpSetEvent)
             else:
@@ -96,11 +96,13 @@ class InputRobotFactory:
         logUtil: LogUtil = LogUtil.getInstance()
         logUtil.putF("Loading Libraries", "InputRobotFactory", "loadLibraries")
         iterator: Iterator = collection.iterator()
-        while iterator.hasNext():
+        while java_predicate(iterator, "hasNext"):
             InputRobotFactory.loadLibrary(iterator.next())
 
     def loadLibraries(self, *args):
-        return getattr(self, "loadLibraries_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("loadLibraries_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().loadLibraries(*args)
     
 
     # throws Exception
@@ -145,7 +147,9 @@ class InputRobotFactory:
         return self.hashtable.get(name)
 
     def get(self, *args):
-        return getattr(self, "get_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("get_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().get(*args)
 # from java.awt.GraphicsDevice import GraphicsDevice
 # from java.awt.GraphicsEnvironment import GraphicsEnvironment
 # from java.util.Collection import Collection

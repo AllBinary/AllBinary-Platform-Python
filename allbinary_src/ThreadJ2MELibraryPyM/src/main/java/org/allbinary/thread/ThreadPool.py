@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaMonitor import java_monitor, java_wait
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 
@@ -27,24 +28,23 @@ class ThreadPool:
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.NULL_RUNNABLE: NullRunnable = NullRunnable.getInstance()
         self.threadPoolStrings: ThreadPoolStrings = ThreadPoolStrings.getInstance()
         self.threadObjectUtil: ThreadObjectUtil = ThreadObjectUtil.getInstance()
-        self.poolName: str = None
-        self.priority: int = None
+        if "poolName" not in vars(self): self.poolName: str = None
+        if "priority" not in vars(self): self.priority: int = 0
         self.isAlive: bool = False
         self.taskQueue: BasicArrayList = BasicArrayListUtil.getInstance().getImmutableInstance()
-        self.threadID: int = 0
-        self.numThreads: int = None
-        self.runningTask: bool = False
+        if "threadID" not in vars(self): self.threadID: int = 0
+        if "numThreads" not in vars(self): self.numThreads: int = 0
+        if "runningTask" not in vars(self): self.runningTask: bool = False
     
 
     def __init__(self, poolName: str, numThreads: int, priority: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.poolName = poolName
         self.priority = priority
         self.numThreads = numThreads
@@ -53,7 +53,7 @@ class ThreadPool:
     def init(self) -> None:
         from org.allbinary.thread.PooledThread import PooledThread
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
-        if not self.isAlive:
+        if not (self.isAlive):
             self.isAlive = True
             self.taskQueue = BasicArrayListD()
             pooledThread: PooledThread = None
@@ -69,8 +69,8 @@ class ThreadPool:
     
 
     def runTaskWithPriority(self, task: PriorityRunnable) -> None:
-        with self._lock:  # synchronized (self)
-            if not self.isAlive:
+        with java_monitor(self):
+            if not (self.isAlive):
                 self.init()
             if task is not None:
                 size: int = self.taskQueue.size()
@@ -86,51 +86,51 @@ class ThreadPool:
                 else:
                     index: int = self.taskQueue.indexOf(lowerPriorityRunnable)
                     self.taskQueue.addAt(index, task)
-                self.notify()
+                java_monitor(self).notify()
     
 
     def runTask(self, task: object) -> None:
-        with self._lock:  # synchronized (self)
-            if not self.isAlive:
+        with java_monitor(self):
+            if not (self.isAlive):
                 self.init()
             if task is not None:
                 self.taskQueue.add(task)
-                self.notify()
+                java_monitor(self).notify()
     
 
     # throws InterruptedException
     def getTask(self) -> object:
-        with self._lock:  # synchronized (self)
+        with java_monitor(self):
             while self.taskQueue.size() == 0:
-                if not self.isAlive:
+                if not (self.isAlive):
                     return self.NULL_RUNNABLE
-                self.wait()
+                java_wait(self)
             runnable: object = self.taskQueue.removeAt(0)
             return runnable
     
 
     def clear(self) -> None:
-        with self._lock:  # synchronized (self)
+        with java_monitor(self):
             if self.isAlive:
                 self.taskQueue.clear()
     
 
     def close(self) -> None:
-        with self._lock:  # synchronized (self)
+        with java_monitor(self):
             if self.isAlive:
                 self.isAlive = False
                 self.taskQueue.clear()
     
 
     def join(self) -> None:
-        with self._lock:  # synchronized (self)
+        with java_monitor(self):
             self.isAlive = False
             self.taskQueue.clear()
-            self.notifyAll()
+            java_monitor(self).notify_all()
     
 
     def isBusy(self) -> bool:
-        if not self.isAlive:
+        if not (self.isAlive):
             return False
         if self.taskQueue.size() > 0:
             return True

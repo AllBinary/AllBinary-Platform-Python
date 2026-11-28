@@ -36,7 +36,7 @@ class CancelTouchButtonInputFactory:
 
     def __init__(self) -> None:
         from org.allbinary.input.motion.button.BasicTouchInputFactory import BasicTouchInputFactory
-        self._init_fields()
+        __class__._init_fields(self)
         basicTouchInputFactory: BasicTouchInputFactory = BasicTouchInputFactory.getInstance()
         for index in range(len(self.cancelInputArray) - 1, 0 - 1, -1):
             self.cancelInputArray[index] = basicTouchInputFactory.NONE

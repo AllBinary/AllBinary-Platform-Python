@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.ag.layer.hud.basic.notification.GameNotificationHud import GameNotificationHud
 
 
+@java_inherited_overloads
 class NoGameGameNotificationHud(GameNotificationHud):
     
 

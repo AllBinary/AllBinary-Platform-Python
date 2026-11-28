@@ -15,10 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.animation.image.BaseImageAnimationFactory import BaseImageAnimationFactory
 
 
+@java_inherited_overloads
 class OneRowSpriteIndexedAnimationFactory(BaseImageAnimationFactory):
+    def _java_defaults(self):
+        vars(self).setdefault("animationFactorySpriteScaleUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.image.sprite.AnimationFactorySpriteScaleUtil import AnimationFactorySpriteScaleUtil
@@ -66,10 +70,11 @@ class OneRowSpriteIndexedAnimationFactory(BaseImageAnimationFactory):
     
 
     def __init__(self, image: Image, sequenceArray: list[int], width: int, height: int, dx: int, dy: int, animationBehaviorFactory: AnimationBehaviorFactory) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
         super().__init__(image, sequenceArray, width, height, dx, dy, animationBehaviorFactory)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def init(self, dx: int, dy: int) -> None:

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -22,13 +23,12 @@ class PaymentTypeUtil:
     instance: PaymentTypeUtil = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.PAYMENTGATEWAYFILEPATHSTRING: str = None
+        if "PAYMENTGATEWAYFILEPATHSTRING" not in vars(self): self.PAYMENTGATEWAYFILEPATHSTRING: str = None
         self.SHIPPINGMETHODSFILENAME: str = "paymentGatewayTypes.xml"
         self.defaultName: str = None
         self.paymentTypeVector: BasicArrayList = BasicArrayListD()
@@ -47,7 +47,7 @@ class PaymentTypeUtil:
     def __init__(self) -> None:
         from org.allbinary.logic.io.path.AbPathData import AbPathData
         from org.allbinary.logic.string.StringMaker import StringMaker
-        self._init_fields()
+        __class__._init_fields(self)
         stringBuffer: StringMaker = StringMaker()
         sep: str = AbPathData.getInstance().SEPARATOR
         stringBuffer.append(sep)
@@ -119,7 +119,7 @@ class PaymentTypeUtil:
                 defaultPaymentGatewayNodeValue: str = DomNodeHelper.getTextNodeValue(defaultPaymentGatewayNode)
                 if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PAYMENT):
                     self.logUtil.putF("DefaultPaymentGatewayNodeValue: " + defaultPaymentGatewayNodeValue, self, "initDefault")
-                if not StringValidationUtil.getInstance().isEmpty(defaultPaymentGatewayNodeValue):
+                if not (StringValidationUtil.getInstance().isEmpty(defaultPaymentGatewayNodeValue)):
                     self.defaultName = defaultPaymentGatewayNodeValue
     
 
@@ -131,7 +131,7 @@ class PaymentTypeUtil:
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PAYMENT):
             self.logUtil.putF(self.commonStrings.START, self, "getDefault")
         self.initDefault(storeName)
-        if not StringValidationUtil.getInstance().isEmpty(self.defaultName):
+        if not (StringValidationUtil.getInstance().isEmpty(self.defaultName)):
             return self.get(self.defaultName)
         raise Exception("No Default: " + self.defaultName)
     
@@ -147,7 +147,7 @@ class PaymentTypeUtil:
         size: int = self.paymentTypeVector.size()
         for i in range(0, size):
             paymentType: PaymentType = self.paymentTypeVector.get(i)
-            if not a_PaymentTypeVector.contains(paymentType):
+            if not (a_PaymentTypeVector.contains(paymentType)):
                 diff.add(paymentType)
         return diff
 # from org.allbinary.util.BasicArrayList import BasicArrayList

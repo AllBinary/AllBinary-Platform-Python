@@ -25,13 +25,13 @@ class FrameLog:
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.string.StringMaker import StringMaker
-        self.frame: int = None
+        if "frame" not in vars(self): self.frame: int = None
         self.infoStringBuffer: StringMaker = StringMaker()
         self.actionsStringBuffer: StringMaker = StringMaker()
     
 
     def __init__(self, frame: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.frame = frame
     
 
@@ -54,6 +54,7 @@ class FrameLog:
 
     # throws Exception
     def write(self) -> None:
+        from java.io.File import File
         from java.io.FileOutputStream import FileOutputStream
         from org.allbinary.input.automation.ImageOutputData import ImageOutputData
         from org.allbinary.logic.java.number.LongUtil import LongUtil
@@ -88,17 +89,17 @@ class FrameLog:
 
 
 def _FrameLog_frameBytes() -> object:
-    return str("Frame: ").getBytes()
+    return list(str("Frame: ").encode())
 
 lazy_static(FrameLog, "frameBytes", _FrameLog_frameBytes)
 
 def _FrameLog_info() -> object:
-    return str("Info: \n").getBytes()
+    return list(str("Info: \n").encode())
 
 lazy_static(FrameLog, "info", _FrameLog_info)
 
 def _FrameLog_actions() -> object:
-    return str("Actions: \n").getBytes()
+    return list(str("Actions: \n").encode())
 
 lazy_static(FrameLog, "actions", _FrameLog_actions)
 

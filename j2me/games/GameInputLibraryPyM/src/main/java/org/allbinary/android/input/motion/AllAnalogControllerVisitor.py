@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.android.input.motion.AnalogControllerVisitor import AnalogControllerVisitor
 
 
+@java_inherited_overloads
 class AllAnalogControllerVisitor(AnalogControllerVisitor):
 
     def __init__(self) -> None:

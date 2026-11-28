@@ -21,18 +21,19 @@ from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 class UserDomNode(DomNodeInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.data.tables.TableMappingInterface import TableMappingInterface
-        self.dataMappingInterface: TableMappingInterface = None
+        if "dataMappingInterface" not in vars(self): self.dataMappingInterface: TableMappingInterface = None
     
 
     def __init__(self, dataMappingInterface: TableMappingInterface) -> None:
         from org.allbinary.data.tables.TableMappingInterface import TableMappingInterface
-        self._init_fields()
+        __class__._init_fields(self)
         self.dataMappingInterface = dataMappingInterface
     
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
+        from org.allbinary.business.user.UserData import UserData
+        from org.allbinary.business.user.UserData import UserData
         from java.util.HashMap import HashMap
         from org.allbinary.business.entry.EntryData import EntryData
         from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper

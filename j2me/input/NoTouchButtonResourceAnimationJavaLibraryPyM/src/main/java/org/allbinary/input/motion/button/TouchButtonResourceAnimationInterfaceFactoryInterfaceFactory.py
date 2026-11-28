@@ -15,9 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.animation.resource.BaseResourceAnimationInterfaceFactoryInterfaceFactory import BaseResourceAnimationInterfaceFactoryInterfaceFactory
 
 
+@java_inherited_overloads
 class TouchButtonResourceAnimationInterfaceFactoryInterfaceFactory(BaseResourceAnimationInterfaceFactoryInterfaceFactory):
     
 
@@ -40,9 +44,9 @@ class TouchButtonResourceAnimationInterfaceFactoryInterfaceFactory(BaseResourceA
     # throws Exception
     def initImageCache(self, imageCache: ImageCache, level: int) -> None:
         from org.allbinary.image.ImageCache import ImageCache
-        if self.isInitialized():
+        if java_predicate(self, "isInitialized"):
             return
-        super().init(level)
+        java_super_call(super(), "init", level)
     
 
     def isLoadingLevel(self, level: int) -> bool:
@@ -51,13 +55,13 @@ class TouchButtonResourceAnimationInterfaceFactoryInterfaceFactory(BaseResourceA
         if level == resourceLoadingLevelFactory.LOAD_TOUCH.getLevel():
             return True
         else:
-            return super().isLoadingLevel(level)
+            return java_super_call(super(), "isLoadingLevel", level)
     
 
     def isFeature(self) -> bool:
         from org.allbinary.game.configuration.feature.Features import Features
         from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
-        if not Features.getInstance().isDefault(OpenGLFeatureFactory.getInstance().OPENGL):
+        if not (Features.getInstance().isDefault(OpenGLFeatureFactory.getInstance().OPENGL)):
             return True
         else:
             return False

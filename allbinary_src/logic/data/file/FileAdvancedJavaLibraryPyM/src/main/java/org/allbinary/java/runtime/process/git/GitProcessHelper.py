@@ -35,7 +35,7 @@ class GitProcessHelper:
     def __init__(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
-        self._init_fields()
+        __class__._init_fields(self)
         logUtil: LogUtil = LogUtil.getInstance()
         commonStrings: CommonStrings = CommonStrings.getInstance()
         THIS_IS_SLOW: str = "This is slow consider path exclusion instead"
@@ -70,10 +70,13 @@ class GitProcessHelper:
         return files
 
     def trackedFiles(self, *args):
-        return getattr(self, "trackedFiles_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("trackedFiles_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().trackedFiles(*args)
     
 
     def isTracked(self, file: AbFile) -> bool:
+        from java.io.File import File
         from org.allbinary.logic.io.file.AbFile import AbFile
         from org.allbinary.logic.io.file.AbFileNativeUtil import AbFileNativeUtil
         try:

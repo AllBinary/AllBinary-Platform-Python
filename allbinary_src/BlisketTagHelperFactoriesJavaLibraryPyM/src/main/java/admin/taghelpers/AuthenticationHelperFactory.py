@@ -15,10 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from admin.taghelpers.TagHelperFactory import TagHelperFactory
 
 
+@java_inherited_overloads
 class AuthenticationHelperFactory(TagHelperFactory):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -26,13 +30,15 @@ class AuthenticationHelperFactory(TagHelperFactory):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws LicensingException
     # Java overloaded method with the same parameter count: Python keeps the last definition
     def getInstance_j2_1(self, hashMap: HashMap, pageContext: PageContext) -> object:
+        from admin.taghelpers.AuthenticationHelper import AuthenticationHelper
         from java.util.HashMap import HashMap
         from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
@@ -48,6 +54,7 @@ class AuthenticationHelperFactory(TagHelperFactory):
     # throws LicensingException
     # Java overloaded method with the same parameter count: Python keeps the last definition
     def getInstance_j2_2(self, hashMap: HashMap, httpServletRequest: HttpServletRequest) -> object:
+        from admin.taghelpers.AuthenticationHelper import AuthenticationHelper
         from java.util.HashMap import HashMap
         from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
@@ -60,11 +67,13 @@ class AuthenticationHelperFactory(TagHelperFactory):
             return None
 
     def getInstance(self, *args):
-        if len(args) == 2 and True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)):
-            return self.getInstance_j2_1(*args)
+        if len(args) == 2 and True and not isinstance(args[0], (str, list, int, float)) and (args[1] is None or any(base.__name__ == "PageContext" for base in type(args[1]).__mro__)):
+            return __class__.__dict__["getInstance_j2_1"].__get__(self, __class__)(*args)
         if len(args) == 2:
-            return self.getInstance_j2_2(*args)
-        return getattr(self, "getInstance_j" + str(len(args)))(*args)
+            return __class__.__dict__["getInstance_j2_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("getInstance_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getInstance(*args)
 # from java.util.HashMap import HashMap
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
 # from javax.servlet.jsp.PageContext import PageContext

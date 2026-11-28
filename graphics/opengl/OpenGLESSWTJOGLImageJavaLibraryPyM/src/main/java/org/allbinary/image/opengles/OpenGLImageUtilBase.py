@@ -31,7 +31,9 @@ class OpenGLImageUtilBase:
         raise RuntimeError()
 
     def paint(self, *args):
-        return getattr(self, "paint_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("paint_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().paint(*args)
     
 
     # throws IOException

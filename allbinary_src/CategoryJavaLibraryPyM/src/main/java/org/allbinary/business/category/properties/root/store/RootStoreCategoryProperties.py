@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
 from org.allbinary.business.category.properties.root.RootCategoryPropertiesInterface import RootCategoryPropertiesInterface
@@ -24,42 +25,40 @@ class RootStoreCategoryProperties(*java_bases(RootCategoryPropertiesInterface, C
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.logic.io.path.AbPath import AbPath
         from org.allbinary.logic.io.path.AbPathData import AbPathData
-        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.pathData: AbPathData = AbPathData.getInstance()
-        self.fileAbPath: AbPath = None
-        self.abPath: AbPath = None
-        self.category: str = None
-        self.isRealRoot: bool = None
-        self.webAppAbPath: AbPath = None
-        self.transformInfoInterface: TransformInfoInterface = None
+        if "fileAbPath" not in vars(self): self.fileAbPath: AbPath = None
+        if "abPath" not in vars(self): self.abPath: AbPath = None
+        if "category" not in vars(self): self.category: str = None
+        if "isRealRoot_field" not in vars(self): self.isRealRoot_field: bool = False
+        if "webAppAbPath" not in vars(self): self.webAppAbPath: AbPath = None
+        if "transformInfoInterface" not in vars(self): self.transformInfoInterface: TransformInfoInterface = None
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
         elif len(args) == 2:
-            self.__jconstructor2(*args)
+            __class__.__jconstructor2(self, *args)
 
     def __jconstructor2(self, *args) -> None:
-        if True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)):
-            self._constructor2_1(*args)
-        elif True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)):
-            self._constructor2_2(*args)
+        if True and (args[0] is None or any(base.__name__ == "TransformInfoInterface" for base in type(args[0]).__mro__)) and (args[1] is None or any(base.__name__ == "AbPath" for base in type(args[1]).__mro__)):
+            __class__._constructor2_1(self, *args)
+        elif True and (args[0] is None or any(base.__name__ == "TransformInfoInterface" for base in type(args[0]).__mro__)) and (args[1] is None or any(base.__name__ == "Node" for base in type(args[1]).__mro__)):
+            __class__._constructor2_2(self, *args)
         else:
-            self._constructor2_3(*args)
+            __class__._constructor2_3(self, *args)
     
 
     def _constructor1(self, transformInfoInterface: TransformInfoInterface) -> None:
         from org.allbinary.business.category.CategoryData import CategoryData
         from org.allbinary.logic.io.path.AbPath import AbPath
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-        self._init_fields()
+        __class__._init_fields(self)
         self.transformInfoInterface = transformInfoInterface
         self.abPath = AbPath.createAbPath()
         self.category = CategoryData.getInstance().ROOTCATEGORY
-        self.isRealRoot = True
+        self.isRealRoot_field = True
         self.initPath()
         self.log()
     
@@ -69,12 +68,12 @@ class RootStoreCategoryProperties(*java_bases(RootCategoryPropertiesInterface, C
         from org.allbinary.logic.io.path.AbPath import AbPath
         from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-        self._init_fields()
+        __class__._init_fields(self)
         self.transformInfoInterface = transformInfoInterface
         self.abPath = categoryAbPath
         self.category = self.pathData.getNameFromPath(str(categoryAbPath))
         if StringValidationUtil.getInstance().isEmpty(self.category):
-            self.isRealRoot = True
+            self.isRealRoot_field = True
             self.category = CategoryData.getInstance().ROOTCATEGORY
         self.initPath()
         self.log()
@@ -88,13 +87,13 @@ class RootStoreCategoryProperties(*java_bases(RootCategoryPropertiesInterface, C
         from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         from org.w3c.dom.Node import Node
-        self._init_fields()
+        __class__._init_fields(self)
         self.transformInfoInterface = transformInfoInterface
         categoryPath: str = CategoryUtil.getNameFromNode(node)
         self.abPath = AbPath(categoryPath, StringUtil.getInstance().EMPTY_STRING)
         self.category = self.pathData.getNameFromPath(categoryPath)
         if StringValidationUtil.getInstance().isEmpty(self.category):
-            self.isRealRoot = True
+            self.isRealRoot_field = True
             self.category = CategoryData.getInstance().ROOTCATEGORY
         self.initPath()
         self.log()
@@ -107,13 +106,13 @@ class RootStoreCategoryProperties(*java_bases(RootCategoryPropertiesInterface, C
         from org.allbinary.logic.string.StringUtil import StringUtil
         from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-        self._init_fields()
+        __class__._init_fields(self)
         self.transformInfoInterface = transformInfoInterface
         categoryPath: str = str(categoryPropertiesHashMap.get(CategoryData.getInstance().NAME))
         self.abPath = AbPath(categoryPath, StringUtil.getInstance().EMPTY_STRING)
         self.category = self.pathData.getNameFromPath(categoryPath)
         if StringValidationUtil.getInstance().isEmpty(self.category):
-            self.isRealRoot = True
+            self.isRealRoot_field = True
             self.category = CategoryData.getInstance().ROOTCATEGORY
         self.initPath()
         self.log()
@@ -136,7 +135,7 @@ class RootStoreCategoryProperties(*java_bases(RootCategoryPropertiesInterface, C
     
 
     def isRealRoot(self) -> bool:
-        return self.isRealRoot
+        return self.isRealRoot_field
     
 
     def isRoot(self) -> bool:

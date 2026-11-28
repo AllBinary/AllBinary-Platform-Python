@@ -29,7 +29,7 @@ class GameTickDisplayInfoSingleton:
         self.lastHalfHeight: int = self.displayInfoSingleton.getLastHalfHeight()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

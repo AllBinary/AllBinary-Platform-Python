@@ -22,17 +22,15 @@ class CombatBaseBehavior:
     NULL_COMBAT_BEHAVIOR: CombatBaseBehavior = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.combat.damage.DamageableBaseBehavior import DamageableBaseBehavior
-        from org.allbinary.game.combat.destroy.DestroyableBaseBehavior import DestroyableBaseBehavior
-        self.damageableBaseBehavior: DamageableBaseBehavior = None
-        self.destroyableBaseBehavior: DestroyableBaseBehavior = None
-        self.readyForExplosion: bool = False
+        if "damageableBaseBehavior" not in vars(self): self.damageableBaseBehavior: DamageableBaseBehavior = None
+        if "destroyableBaseBehavior" not in vars(self): self.destroyableBaseBehavior: DestroyableBaseBehavior = None
+        if "readyForExplosion" not in vars(self): self.readyForExplosion: bool = False
     
 
     def __init__(self, damageableBaseBehavior: DamageableBaseBehavior, destroyableBaseBehavior: DestroyableBaseBehavior) -> None:
         from org.allbinary.game.combat.damage.DamageableBaseBehavior import DamageableBaseBehavior
         from org.allbinary.game.combat.destroy.DestroyableBaseBehavior import DestroyableBaseBehavior
-        self._init_fields()
+        __class__._init_fields(self)
         self.damageableBaseBehavior = damageableBaseBehavior
         self.destroyableBaseBehavior = destroyableBaseBehavior
     

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaThread import JavaThread
 import threading
 from org.allbinary.thread.RunnableInterface import RunnableInterface
 
@@ -26,16 +27,16 @@ class ABRunnable(RunnableInterface):
         self.running: bool = False
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
-    def setThread(self, thread: threading.Thread) -> None:
+    def setThread(self, thread: JavaThread) -> None:
         pass
     
 
     def isRunning(self) -> bool:
         with self._lock:
-            return self._isRunning_unlocked()
+            return __class__.__dict__["_isRunning_unlocked"].__get__(self, __class__)()
 
     def _isRunning_unlocked(self) -> bool:
         return self.running
@@ -43,7 +44,7 @@ class ABRunnable(RunnableInterface):
 
     def setRunning(self, running: bool) -> None:
         with self._lock:
-            return self._setRunning_unlocked(running)
+            return __class__.__dict__["_setRunning_unlocked"].__get__(self, __class__)(running)
 
     def _setRunning_unlocked(self, running: bool) -> None:
         self.running = running

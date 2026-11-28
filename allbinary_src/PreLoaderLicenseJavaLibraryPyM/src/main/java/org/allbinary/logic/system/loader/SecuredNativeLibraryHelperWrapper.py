@@ -15,18 +15,23 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.system.loader.NativeLibraryHelperWrapper import NativeLibraryHelperWrapper
 
 
+@java_inherited_overloads
 class SecuredNativeLibraryHelperWrapper(NativeLibraryHelperWrapper):
+    def _java_defaults(self):
+        vars(self).setdefault("securedNativeLibraryInterface", None)
 
     def _init_fields(self) -> None:
-        self.securedNativeLibraryInterface: SecuredNativeLibraryInterface = None
+        if "securedNativeLibraryInterface" not in vars(self): self.securedNativeLibraryInterface: SecuredNativeLibraryInterface = None
     
 
     def __init__(self, securedNativeLibraryInterface: SecuredNativeLibraryInterface) -> None:
+        __class__._java_defaults(self)
         super().__init__(securedNativeLibraryInterface.getLibraryName())
-        self._init_fields()
+        __class__._init_fields(self)
         self.securedNativeLibraryInterface = securedNativeLibraryInterface
     
 

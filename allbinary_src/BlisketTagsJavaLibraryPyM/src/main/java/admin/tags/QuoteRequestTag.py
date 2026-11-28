@@ -15,22 +15,29 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from admin.tags.TableTag import TableTag
 
 
+@java_inherited_overloads
 class QuoteRequestTag(TableTag):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("storeName", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.storeName: str = None
+        if "storeName" not in vars(self): self.storeName: str = None
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from admin.taghelpers.QuoteHelperFactory import QuoteHelperFactory
         from admin.taghelpers.QuoteRequestHelperFactory import QuoteRequestHelperFactory
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.setTagHelperFactory(QuoteHelperFactory())
         self.setTagRequestHelperFactory(QuoteRequestHelperFactory())
     
@@ -72,7 +79,7 @@ class QuoteRequestTag(TableTag):
                     self.email()
                     return self.EVAL_BODY_INCLUDE
                 else:
-                    return super().doStartTag()
+                    return java_super_call(super(), "doStartTag")
             return self.SKIP_BODY
         except LicensingException as e:
             AbResponseHandler.sendJspTagLicensingRedirect(self.pageContext, e)

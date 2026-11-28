@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -38,7 +39,7 @@ class ImageUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         try:
             self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
         except Exception as e:
@@ -64,8 +65,10 @@ class ImageUtil:
         for index in range(0, size):
             bufferedImage = bufferedImageArray[index]
             imageData = bufferedImage.getImageData()
-            newWidth: int = int((imageData.width * percent / 100))
-            newHeight: int = int((imageData.height * percent / 100))
+            newWidth: int = int((java_divide(imageData.width * percent, 100)
+            ))
+            newHeight: int = int((java_divide(imageData.height * percent, 100)
+            ))
             scaledBufferedImageArray[index] = self.createBufferedImage5(bufferedImage, newWidth, newHeight, scale)
         return scaledBufferedImageArray
     
@@ -133,7 +136,7 @@ class ImageUtil:
         self.logUtil.putF(str(StringMaker().appendfloat(width).append(self.commonSeps.FORWARD_SLASH).appendfloat(height).append(self.commonSeps.COLON).appendint(newWidth).append(self.commonSeps.FORWARD_SLASH).appendint(newHeight).append(self.commonSeps.COLON).appendfloat(widthRatio).append(self.commonSeps.FORWARD_SLASH).appendfloat(heightRatio)), self, self.CREATE_BUFFERED_IMAGE)
         dx: float = 0.0
         dy: float = 0.0
-        if not scale and allowTranslate:
+        if not (scale) and allowTranslate:
             dx = (float(newWidth) - width) / 2.0
             dy = (float(newHeight) - height) / 2.0
             self.logUtil.putF(str(StringMaker().append("Translate dx: ").appendfloat(dx).append(" dy: ").appendfloat(dy)), self, self.CREATE_BUFFERED_IMAGE)
@@ -160,21 +163,24 @@ class ImageUtil:
         from org.eclipse.swt.graphics.Transform import Transform
         from org.eclipse.swt.graphics.Image import Image
         imageCanvas: Canvas = Canvas(parent, SWT.NONE)
-        imageCanvas.addPaintListener((PaintListener()  # Java anonymous class body:
-#             
-# 
-#             def paintControl(self, event: PaintEvent) -> None:
-#                 from org.eclipse.swt.SWT import SWT
-#                 from org.eclipse.swt.graphics.GC import GC
-#                 from org.eclipse.swt.events.PaintEvent import PaintEvent
-#                 from org.eclipse.swt.graphics.Transform import Transform
-#                 gc: GC = event.gc
-#                 affineTransform: Transform = Transform(gc.getDevice())
-#                 affineTransform.translate(dx, dy)
-#                 gc.setAntialias(SWT.ON)
-#                 gc.setInterpolation(SWT.HIGH)
-#                 gc.drawImage(image, 0, 0, image.getBounds().width, image.getBounds().height, 0, 0, width, height)
-))
+        _java_listener_owner = self
+        class _JavaListenerN70717(PaintListener):
+            
+            
+
+            def paintControl(self, event: PaintEvent) -> None:
+                from org.eclipse.swt.SWT import SWT
+                from org.eclipse.swt.graphics.GC import GC
+                from org.eclipse.swt.events.PaintEvent import PaintEvent
+                from org.eclipse.swt.graphics.Transform import Transform
+                gc: GC = event.gc
+                affineTransform: Transform = Transform(gc.getDevice())
+                affineTransform.translate(dx, dy)
+                gc.setAntialias(SWT.ON)
+                gc.setInterpolation(SWT.HIGH)
+                gc.drawImage(image, 0, 0, image.getBounds().width, image.getBounds().height, 0, 0, width, height)
+        imageCanvas.addPaintListener(_JavaListenerN70717()
+            )
         return imageCanvas
     
 

@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -40,12 +42,12 @@ class ImageSwtRotationUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getRotatedImage(self, bufferedImage: Image, totalAngle: int) -> Image:
         from org.eclipse.swt.graphics.Image import Image
-        if not self.features.isFeature(self.gameFeatureFactory.POST_IMAGE_LOADING_MODIFICATION):
+        if not (self.features.isFeature(self.gameFeatureFactory.POST_IMAGE_LOADING_MODIFICATION)):
             self.logUtil.putF(self.NO_COPY, self, self.commonStrings.CONSTRUCTOR)
             return bufferedImage
         return bufferedImage
@@ -54,7 +56,7 @@ class ImageSwtRotationUtil:
     def getRotatedImage2(self, bufferedImage: Image, newBufferedImage: Image, gc: GC, angle: float) -> Image:
         from org.eclipse.swt.graphics.GC import GC
         from org.eclipse.swt.graphics.Image import Image
-        if not self.features.isFeature(self.gameFeatureFactory.POST_IMAGE_LOADING_MODIFICATION):
+        if not (self.features.isFeature(self.gameFeatureFactory.POST_IMAGE_LOADING_MODIFICATION)):
             self.logUtil.putF(self.NO_COPY, self, self.commonStrings.CONSTRUCTOR)
             return bufferedImage
         return bufferedImage

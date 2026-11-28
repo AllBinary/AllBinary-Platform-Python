@@ -15,14 +15,20 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.validate.ValidationComponentInterface import ValidationComponentInterface
 from views.admin.inventory.InventoryItemView import InventoryItemView
 
 
+@java_inherited_overloads
 class UpdateFileValidationView(*java_bases(InventoryItemView, ValidationComponentInterface)):
     UPDATEPRODUCT: str = None
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -30,9 +36,10 @@ class UpdateFileValidationView(*java_bases(InventoryItemView, ValidationComponen
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def isValid_j0(self) -> bool:
@@ -55,7 +62,7 @@ class UpdateFileValidationView(*java_bases(InventoryItemView, ValidationComponen
                 if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     self.logUtil.putF("Invalid AdminCommand=" + command, self, self.commonStrings.IS_VALID)
                 return False
-            if BasicItemValidation(self.itemInterface).isValid() == False:
+            if java_predicate(BasicItemValidation(self.itemInterface), "isValid") == False:
                 if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     self.logUtil.putF("BasicItem is not valid", self, self.commonStrings.IS_VALID)
                 return False
@@ -66,7 +73,7 @@ class UpdateFileValidationView(*java_bases(InventoryItemView, ValidationComponen
             stringBuffer.append(self.itemInterface.getCategory())
             fullCategory: str = str(stringBuffer)
             categoryFile: AbFile = AbFile.createAbFile(fullCategory)
-            if not categoryFile.isDirectory():
+            if not (java_predicate(categoryFile, "isDirectory")):
                 if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     self.logUtil.putF("Category Does Not Exist: " + fullCategory, self, self.commonStrings.IS_VALID)
                 return False
@@ -149,7 +156,7 @@ class UpdateFileValidationView(*java_bases(InventoryItemView, ValidationComponen
         fileData: FileData = FileData.getInstance()
         if size > fileData.MINIMAGEFILESIZE:
             if size < fileData.MAXIMAGEFILESIZE:
-                if not StringValidationUtil.getInstance().isValidRequired(fileName, fileData.MINLEN, fileData.MAXLEN):
+                if not (StringValidationUtil.getInstance().isValidRequired(fileName, fileData.MINLEN, fileData.MAXLEN)):
                     return False
             else:
                 if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
@@ -164,7 +171,9 @@ class UpdateFileValidationView(*java_bases(InventoryItemView, ValidationComponen
         return True
 
     def isValid(self, *args):
-        return getattr(self, "isValid_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("isValid_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().isValid(*args)
     
 
     def validationInfo_j4(self, stringBuffer: StringMaker, fileName: str, fileItemFieldName: str, size: int) -> None:
@@ -175,7 +184,7 @@ class UpdateFileValidationView(*java_bases(InventoryItemView, ValidationComponen
         if size > fileData.MINIMAGEFILESIZE:
             if ((fileItemFieldName > self.basicItemData.IMAGE) - (fileItemFieldName < self.basicItemData.IMAGE)) == 0:
                 if size < fileData.MAXIMAGEFILESIZE:
-                    if not StringValidationUtil.getInstance().isValidRequired(fileName, fileData.MINLEN, fileData.MAXLEN):
+                    if not (StringValidationUtil.getInstance().isValidRequired(fileName, fileData.MINLEN, fileData.MAXLEN)):
                         stringBuffer.append("FileName must be >")
                         stringBuffer.appendint(int(fileData.MINLEN))
                         stringBuffer.append("and <")
@@ -189,13 +198,15 @@ class UpdateFileValidationView(*java_bases(InventoryItemView, ValidationComponen
                     stringBuffer.append("<br />")
 
     def validationInfo(self, *args):
-        return getattr(self, "validationInfo_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("validationInfo_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().validationInfo(*args)
     
 
     # throws Exception
     def getTransformInfoInterface(self) -> TransformInfoInterface:
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-        return super().getTransformInfoInterface()
+        return java_super_call(super(), "getTransformInfoInterface")
 # from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
 # from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
 # from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData

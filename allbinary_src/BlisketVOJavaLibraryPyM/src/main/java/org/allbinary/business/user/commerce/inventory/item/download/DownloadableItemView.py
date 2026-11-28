@@ -26,16 +26,23 @@ class DownloadableItemView(DomNodeInterface):
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.downloadableItem: DownloadableItem = None
+        if "downloadableItem" not in vars(self): self.downloadableItem: DownloadableItem = None
     
 
     def __init__(self, downloadableItem: DownloadableItem) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.downloadableItem = downloadableItem
     
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
+        from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
+        from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
+        from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
+        from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
+        from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
+        from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
+        from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
         from java.util.HashMap import HashMap
         from java.util.Set import Set
         from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper

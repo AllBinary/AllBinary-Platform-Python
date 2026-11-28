@@ -16,28 +16,36 @@
 from __future__ import annotations
 
 import math
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.tracking.TrackingEventListenerInterface import TrackingEventListenerInterface
 from org.allbinary.game.ag.ai.scroller.BasePatrolAI import BasePatrolAI
 
 
+@java_inherited_overloads
 class PacePatrolAI(*java_bases(BasePatrolAI, TrackingEventListenerInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("trackingList", None)
+        vars(self).setdefault("firingDistance", 0)
+        vars(self).setdefault("isFollowLimitedByTerrain", False)
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
-        self.trackingList: BasicArrayList = None
-        self.firingDistance: int = 0
+        if "trackingList" not in vars(self): self.trackingList: BasicArrayList = None
+        if "firingDistance" not in vars(self): self.firingDistance: int = 0
         self.isFollowLimitedByTerrain: bool = False
     
 
     def __init__(self, hashtable: ABHashtable[object, object], ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.input.GameInput import GameInput
         from org.allbinary.game.tracking.TrackingEventHandler import TrackingEventHandler
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         from org.allbinary.util.ABHashtable import ABHashtable
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         super().__init__(hashtable, ownerLayerInterface, gameInput)
-        self._init_fields()
+        __class__._init_fields(self)
         TrackingEventHandler.getInstance().addListenerInterface(self)
         self.trackingList = BasicArrayListD()
     
@@ -52,21 +60,21 @@ class PacePatrolAI(*java_bases(BasePatrolAI, TrackingEventListenerInterface)):
         direction: Direction = self.setFiringDirectionForTargetIfInRange()
         directionFactory: DirectionFactory = DirectionFactory.getInstance()
         if direction == directionFactory.LEFT:
-            if self.lastKeyDirection != self.keyDirection or not self.isFollowLimitedByTerrain:
-                super().processKeyAI(Canvas.LEFT)
+            if self.lastKeyDirection != self.keyDirection or not (self.isFollowLimitedByTerrain):
+                java_super_call(super(), "processKeyAI", Canvas.LEFT)
             self.keyDirection = Canvas.LEFT
             self.lastKeyDirection = self.keyDirection
             self.xTotalDistance = 0
-            super().processKeyAI(Canvas.KEY_NUM1)
+            java_super_call(super(), "processKeyAI", Canvas.KEY_NUM1)
         elif direction == directionFactory.RIGHT:
-            if self.lastKeyDirection != self.keyDirection or not self.isFollowLimitedByTerrain:
-                super().processKeyAI(Canvas.RIGHT)
+            if self.lastKeyDirection != self.keyDirection or not (self.isFollowLimitedByTerrain):
+                java_super_call(super(), "processKeyAI", Canvas.RIGHT)
             self.keyDirection = Canvas.RIGHT
             self.lastKeyDirection = self.keyDirection
             self.xTotalDistance = 0
-            super().processKeyAI(Canvas.KEY_NUM1)
+            java_super_call(super(), "processKeyAI", Canvas.KEY_NUM1)
         else:
-            super().processKeyAI(self.keyDirection)
+            java_super_call(super(), "processKeyAI", self.keyDirection)
     
 
     def setFiringDirectionForTargetIfInRange(self) -> Direction:

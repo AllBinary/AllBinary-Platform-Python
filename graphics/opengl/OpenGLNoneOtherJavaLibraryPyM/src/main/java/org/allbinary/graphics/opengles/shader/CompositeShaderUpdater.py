@@ -15,12 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.graphics.opengles.shader.ShaderUpdater import ShaderUpdater
 
 
+@java_inherited_overloads
 class CompositeShaderUpdater(ShaderUpdater):
     instanceC: CompositeShaderUpdater = None
+    def _java_defaults(self):
+        vars(self).setdefault("commonSeps", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.string.CommonSeps import CommonSeps
@@ -33,8 +37,9 @@ class CompositeShaderUpdater(ShaderUpdater):
     
 
     def __init__(self, uniformBlockArray: list[str], uniformArray: list[str], attributeArray: list[str], attributeHandleArray: list[int]) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def onSurfaceCreated(self, gl: GL10, eglConfig: EGLConfig, programHandle: int) -> None:

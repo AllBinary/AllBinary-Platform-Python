@@ -40,7 +40,7 @@ class ResizableListenerHandler:
     # throws Exception
     def fireEvent(self, value: bool) -> None:
         with self._lock:
-            return self._fireEvent_unlocked(value)
+            return __class__.__dict__["_fireEvent_unlocked"].__get__(self, __class__)(value)
 
     def _fireEvent_unlocked(self, value: bool) -> None:
         pass

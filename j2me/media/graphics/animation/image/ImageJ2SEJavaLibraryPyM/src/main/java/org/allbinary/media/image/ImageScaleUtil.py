@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -33,7 +34,7 @@ class ImageScaleUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -53,7 +54,7 @@ class ImageScaleUtil:
         scaleY: float = scaleNominatorY / scaleDenominatorY
         image: Image = None
         if cached:
-            image = imageCache.get(type(self).__module__ + "." + type(self).__qualname__, int((float(width) * scaleX)), int((float(height) * scaleY)))
+            image = imageCache.get(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(self)), int((float(width) * scaleX)), int((float(height) * scaleY)))
         else:
             image = imageCache.get("createImage", int((float(width) * scaleX)), int((float(height) * scaleY)))
         self.scale(originalImage, image, scaleX, scaleY, True)

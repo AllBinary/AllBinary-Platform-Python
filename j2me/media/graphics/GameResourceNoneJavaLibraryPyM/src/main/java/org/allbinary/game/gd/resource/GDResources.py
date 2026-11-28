@@ -23,10 +23,10 @@ class GDResources:
 
     def _init_fields(self) -> None:
         self.resourceStringArray: list[str] = []
-        self.currentLayoutRequiredTotal: int = 0
+        if "currentLayoutRequiredTotal" not in vars(self): self.currentLayoutRequiredTotal: int = 0
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

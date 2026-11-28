@@ -22,29 +22,30 @@ class TransformInfoDomNode:
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.transformInfoInterface: TransformInfoInterface = None
-        self.mappedName: str = None
+        if "transformInfoInterface" not in vars(self): self.transformInfoInterface: TransformInfoInterface = None
+        if "mappedName" not in vars(self): self.mappedName: str = None
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self.__jconstructor1(*args)
+            __class__.__jconstructor1(self, *args)
         elif len(args) == 2:
-            self.__jconstructor2(*args)
+            __class__.__jconstructor2(self, *args)
 
     def __jconstructor1(self, *args) -> None:
-        if True and not isinstance(args[0], (str, list, int, float)):
-            self._constructor1_1(*args)
+        if True and (args[0] is None or any(base.__name__ == "Node" for base in type(args[0]).__mro__)):
+            __class__._constructor1_1(self, *args)
         else:
-            self._constructor1_2(*args)
+            __class__._constructor1_2(self, *args)
 
     def __jconstructor2(self, *args) -> None:
-        if True and not isinstance(args[0], (str, list, int, float)) and (args[1] is None or isinstance(args[1], str)):
-            self._constructor2_1(*args)
+        if True and (args[0] is None or any(base.__name__ == "TransformInfoInterface" for base in type(args[0]).__mro__)) and (args[1] is None or isinstance(args[1], str)):
+            __class__._constructor2_1(self, *args)
         else:
-            self._constructor2_2(*args)
+            __class__._constructor2_2(self, *args)
     
 
     def _constructor1_1(self, node: Node) -> None:
+        from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
         from org.allbinary.logic.visual.transform.info.TransformInfo import TransformInfo
         from org.allbinary.logic.visual.transform.info.TransformInfo import TransformInfo
         from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
@@ -56,7 +57,7 @@ class TransformInfoDomNode:
         from org.w3c.dom.NodeList import NodeList
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-        self._init_fields()
+        __class__._init_fields(self)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF("Constructing TransformInfo From TransformInfoDomNode: " + str(node.getNodeName()), self, "TransformInfoDomNode(Node node)")
         transformInfoData: TransformInfoData = TransformInfoData.getInstance()
@@ -100,20 +101,20 @@ class TransformInfoDomNode:
     
 
     def _constructor1_2(self, transformInfoInterface: TransformInfoInterface) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.transformInfoInterface = transformInfoInterface
         self.mappedName = transformInfoInterface.getName()
     
 
     def _constructor2_1(self, transformInfoInterface: TransformInfoInterface, mappedName: str) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.transformInfoInterface = transformInfoInterface
         self.mappedName = mappedName
     
 
     def _constructor2_2(self, name: str, mappedName: str) -> None:
         from org.allbinary.logic.visual.transform.info.TransformInfo import TransformInfo
-        self._init_fields()
+        __class__._init_fields(self)
         self.transformInfoInterface = TransformInfo(name)
         self.mappedName = mappedName
     

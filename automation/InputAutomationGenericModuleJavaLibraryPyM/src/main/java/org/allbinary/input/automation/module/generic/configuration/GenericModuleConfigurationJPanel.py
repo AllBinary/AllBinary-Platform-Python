@@ -15,50 +15,78 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 # from javax.swing.JPanel import JPanel
 from org.allbinary.input.automation.module.generic.configuration.GenericModuleConfigurationInterface import GenericModuleConfigurationInterface
 
 
+@java_inherited_overloads
 class GenericModuleConfigurationJPanel(*java_bases(JPanel, GenericModuleConfigurationInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("stringUtil", None)
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("genericProfiles", None)
+        vars(self).setdefault("selectedGenericProfile", None)
+        vars(self).setdefault("blankGenericProfileActionsJPanel", None)
+        vars(self).setdefault("buttonGroup2", None)
+        vars(self).setdefault("captureComparisonJCheckBox", None)
+        vars(self).setdefault("captureMotionAnalysisJCheckBox", None)
+        vars(self).setdefault("deleteProfileJButton", None)
+        vars(self).setdefault("genericJTabbedPane", None)
+        vars(self).setdefault("genericProfilesJList", None)
+        vars(self).setdefault("genericProfilesJPanel", None)
+        vars(self).setdefault("genericProfilesJScrollPane", None)
+        vars(self).setdefault("jLabel1", None)
+        vars(self).setdefault("jLabel2", None)
+        vars(self).setdefault("jLabel3", None)
+        vars(self).setdefault("jPanel1", None)
+        vars(self).setdefault("newProfileJButton", None)
+        vars(self).setdefault("newProfileJDialog", None)
+        vars(self).setdefault("newProfileNameJLabel", None)
+        vars(self).setdefault("newProfileNameJTextField", None)
+        vars(self).setdefault("okNewProfileJButton", None)
+        vars(self).setdefault("savedCaptureJRadioButton", None)
+        vars(self).setdefault("screenCaptureJRadioButton", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.input.automation.module.generic.configuration.profile.GenericProfile import GenericProfile
-        from org.allbinary.input.automation.module.generic.configuration.profile.GenericProfiles import GenericProfiles
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.logic.string.StringUtil import StringUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.stringUtil: StringUtil = StringUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.genericProfiles: GenericProfiles = None
-        self.selectedGenericProfile: GenericProfile = None
-        self.blankGenericProfileActionsJPanel: JPanel = None
-        self.buttonGroup2: ButtonGroup = None
-        self.captureComparisonJCheckBox: JCheckBox = None
-        self.captureMotionAnalysisJCheckBox: JCheckBox = None
-        self.deleteProfileJButton: JButton = None
-        self.genericJTabbedPane: JTabbedPane = None
-        self.genericProfilesJList: JList = None
-        self.genericProfilesJPanel: JPanel = None
-        self.genericProfilesJScrollPane: JScrollPane = None
-        self.jLabel1: JLabel = None
-        self.jLabel2: JLabel = None
-        self.jLabel3: JLabel = None
-        self.jPanel1: JPanel = None
-        self.newProfileJButton: JButton = None
-        self.newProfileJDialog: JDialog = None
-        self.newProfileNameJLabel: JLabel = None
-        self.newProfileNameJTextField: JTextField = None
-        self.okNewProfileJButton: JButton = None
-        self.savedCaptureJRadioButton: JRadioButton = None
-        self.screenCaptureJRadioButton: JRadioButton = None
+        if "genericProfiles" not in vars(self): self.genericProfiles: GenericProfiles = None
+        if "selectedGenericProfile" not in vars(self): self.selectedGenericProfile: GenericProfile = None
+        if "blankGenericProfileActionsJPanel" not in vars(self): self.blankGenericProfileActionsJPanel: JPanel = None
+        if "buttonGroup2" not in vars(self): self.buttonGroup2: ButtonGroup = None
+        if "captureComparisonJCheckBox" not in vars(self): self.captureComparisonJCheckBox: JCheckBox = None
+        if "captureMotionAnalysisJCheckBox" not in vars(self): self.captureMotionAnalysisJCheckBox: JCheckBox = None
+        if "deleteProfileJButton" not in vars(self): self.deleteProfileJButton: JButton = None
+        if "genericJTabbedPane" not in vars(self): self.genericJTabbedPane: JTabbedPane = None
+        if "genericProfilesJList" not in vars(self): self.genericProfilesJList: JList = None
+        if "genericProfilesJPanel" not in vars(self): self.genericProfilesJPanel: JPanel = None
+        if "genericProfilesJScrollPane" not in vars(self): self.genericProfilesJScrollPane: JScrollPane = None
+        if "jLabel1" not in vars(self): self.jLabel1: JLabel = None
+        if "jLabel2" not in vars(self): self.jLabel2: JLabel = None
+        if "jLabel3" not in vars(self): self.jLabel3: JLabel = None
+        if "jPanel1" not in vars(self): self.jPanel1: JPanel = None
+        if "newProfileJButton" not in vars(self): self.newProfileJButton: JButton = None
+        if "newProfileJDialog" not in vars(self): self.newProfileJDialog: JDialog = None
+        if "newProfileNameJLabel" not in vars(self): self.newProfileNameJLabel: JLabel = None
+        if "newProfileNameJTextField" not in vars(self): self.newProfileNameJTextField: JTextField = None
+        if "okNewProfileJButton" not in vars(self): self.okNewProfileJButton: JButton = None
+        if "savedCaptureJRadioButton" not in vars(self): self.savedCaptureJRadioButton: JRadioButton = None
+        if "screenCaptureJRadioButton" not in vars(self): self.screenCaptureJRadioButton: JRadioButton = None
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.input.automation.module.generic.configuration.profile.GenericProfiles import GenericProfiles
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.initComponents()
         self.setGenericProfiles(GenericProfiles(GenericProfiles.DEFAULT_FILE))
         self.selectFirstElement()
@@ -88,12 +116,15 @@ class GenericModuleConfigurationJPanel(*java_bases(JPanel, GenericModuleConfigur
         self.newProfileJDialog.setMinimumSize(Dimension(250, 150))
         self.newProfileJDialog.setResizable(False)
         self.okNewProfileJButton.setText("Ok")
-        self.okNewProfileJButton.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.okNewProfileJButtonActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN67566(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "okNewProfileJButtonActionPerformed") else _java_listener_owner).okNewProfileJButtonActionPerformed(evt)
+        self.okNewProfileJButton.addActionListener(_JavaListenerN67566()
+            )
         self.newProfileNameJLabel.setText("New Profile Name")
         newProfileJDialogLayout: GroupLayout = GroupLayout(self.newProfileJDialog.getContentPane())
         self.newProfileJDialog.getContentPane().setLayout(newProfileJDialogLayout)
@@ -106,72 +137,93 @@ class GenericModuleConfigurationJPanel(*java_bases(JPanel, GenericModuleConfigur
         self.genericJTabbedPane.setMinimumSize(Dimension(800, 600))
         self.genericProfilesJPanel.setMinimumSize(Dimension(400, 300))
         self.genericProfilesJPanel.setPreferredSize(Dimension(0, 0))
-        self.genericProfilesJList.addListSelectionListener((ListSelectionListener()  # Java anonymous class body:
-#             
-# 
-#             def valueChanged(self, evt: ListSelectionEvent) -> None:
-#                 self.genericProfilesJListValueChanged(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN68802(ListSelectionListener):
+            
+            
+
+            def valueChanged(self, evt: ListSelectionEvent) -> None:
+                (self if hasattr(self, "genericProfilesJListValueChanged") else _java_listener_owner).genericProfilesJListValueChanged(evt)
+        self.genericProfilesJList.addListSelectionListener(_JavaListenerN68802()
+            )
         self.genericProfilesJScrollPane.setViewportView(self.genericProfilesJList)
         self.newProfileJButton.setText("New")
         self.newProfileJButton.setToolTipText("Creates a new profile")
-        self.newProfileJButton.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.newProfileJButtonActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN69008(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "newProfileJButtonActionPerformed") else _java_listener_owner).newProfileJButtonActionPerformed(evt)
+        self.newProfileJButton.addActionListener(_JavaListenerN69008()
+            )
         self.deleteProfileJButton.setText("Delete")
         self.deleteProfileJButton.setToolTipText("Deletes the selected profile")
-        self.deleteProfileJButton.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.deleteProfileJButtonActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN69177(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "deleteProfileJButtonActionPerformed") else _java_listener_owner).deleteProfileJButtonActionPerformed(evt)
+        self.deleteProfileJButton.addActionListener(_JavaListenerN69177()
+            )
         self.jPanel1.setPreferredSize(Dimension(1000, 100))
         self.screenCaptureJRadioButton.setText("Screen Captures")
         self.screenCaptureJRadioButton.setToolTipText("Records the screen into memory for logical processing")
         self.screenCaptureJRadioButton.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0))
         self.screenCaptureJRadioButton.setMargin(Insets(0, 0, 0, 0))
-        self.screenCaptureJRadioButton.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.screenCaptureJRadioButtonActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN69513(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "screenCaptureJRadioButtonActionPerformed") else _java_listener_owner).screenCaptureJRadioButtonActionPerformed(evt)
+        self.screenCaptureJRadioButton.addActionListener(_JavaListenerN69513()
+            )
         self.jLabel1.setText("Profile Options")
         self.jLabel2.setText("Process From:")
         self.savedCaptureJRadioButton.setText("Saved Images")
         self.savedCaptureJRadioButton.setToolTipText("Loads images from files for logical processing.  Usually for debugging your profile actions")
         self.savedCaptureJRadioButton.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0))
         self.savedCaptureJRadioButton.setMargin(Insets(0, 0, 0, 0))
-        self.savedCaptureJRadioButton.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.savedCaptureJRadioButtonActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN69860(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "savedCaptureJRadioButtonActionPerformed") else _java_listener_owner).savedCaptureJRadioButtonActionPerformed(evt)
+        self.savedCaptureJRadioButton.addActionListener(_JavaListenerN69860()
+            )
         self.captureMotionAnalysisJCheckBox.setText("Motion Analysis")
         self.captureMotionAnalysisJCheckBox.setToolTipText("Uses image comparison and contraints to locate moving objects")
         self.captureMotionAnalysisJCheckBox.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0))
         self.captureMotionAnalysisJCheckBox.setMargin(Insets(0, 0, 0, 0))
-        self.captureMotionAnalysisJCheckBox.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.captureMotionAnalysisJCheckBoxActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN70147(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "captureMotionAnalysisJCheckBoxActionPerformed") else _java_listener_owner).captureMotionAnalysisJCheckBoxActionPerformed(evt)
+        self.captureMotionAnalysisJCheckBox.addActionListener(_JavaListenerN70147()
+            )
         self.captureComparisonJCheckBox.setText("Comparison")
         self.captureComparisonJCheckBox.setToolTipText("Compares the last two input images for multi image logic")
         self.captureComparisonJCheckBox.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0))
         self.captureComparisonJCheckBox.setMargin(Insets(0, 0, 0, 0))
-        self.captureComparisonJCheckBox.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.captureComparisonJCheckBoxActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN70434(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "captureComparisonJCheckBoxActionPerformed") else _java_listener_owner).captureComparisonJCheckBoxActionPerformed(evt)
+        self.captureComparisonJCheckBox.addActionListener(_JavaListenerN70434()
+            )
         self.jLabel3.setText("Image Processing:")
         self.jLabel3.setToolTipText("Turns on/off various extended image processing")
         jPanel1Layout: GroupLayout = GroupLayout(self.jPanel1)
@@ -194,7 +246,7 @@ class GenericModuleConfigurationJPanel(*java_bases(JPanel, GenericModuleConfigur
     def savedCaptureJRadioButtonActionPerformed(self, evt: ActionEvent) -> None:
         from org.allbinary.input.automation.module.generic.configuration.profile.GenericProfileDataWorkerType import GenericProfileDataWorkerType
         try:
-            if self.savedCaptureJRadioButton.isSelected():
+            if java_predicate(self.savedCaptureJRadioButton, "isSelected"):
                 self.logUtil.putF("Selected", self, "savedCaptureJRadioButtonActionPerformed")
                 self.getSelectedGenericProfile().add(GenericProfileDataWorkerType.SAVED_CAPTURE)
                 self.getSelectedGenericProfile().remove(GenericProfileDataWorkerType.SCREEN_CAPTURE)
@@ -207,7 +259,7 @@ class GenericModuleConfigurationJPanel(*java_bases(JPanel, GenericModuleConfigur
     def screenCaptureJRadioButtonActionPerformed(self, evt: ActionEvent) -> None:
         from org.allbinary.input.automation.module.generic.configuration.profile.GenericProfileDataWorkerType import GenericProfileDataWorkerType
         try:
-            if self.screenCaptureJRadioButton.isSelected():
+            if java_predicate(self.screenCaptureJRadioButton, "isSelected"):
                 self.logUtil.putF("Selected", self, "screenCaptureJRadioButtonActionPerformed")
                 self.getSelectedGenericProfile().add(GenericProfileDataWorkerType.SCREEN_CAPTURE)
                 self.getSelectedGenericProfile().remove(GenericProfileDataWorkerType.SAVED_CAPTURE)
@@ -220,7 +272,7 @@ class GenericModuleConfigurationJPanel(*java_bases(JPanel, GenericModuleConfigur
     def captureMotionAnalysisJCheckBoxActionPerformed(self, evt: ActionEvent) -> None:
         from org.allbinary.input.automation.module.generic.configuration.profile.GenericProfileDataWorkerType import GenericProfileDataWorkerType
         try:
-            if self.captureMotionAnalysisJCheckBox.isSelected():
+            if java_predicate(self.captureMotionAnalysisJCheckBox, "isSelected"):
                 self.getSelectedGenericProfile().add(GenericProfileDataWorkerType.MOTION)
             else:
                 self.getSelectedGenericProfile().remove(GenericProfileDataWorkerType.MOTION)
@@ -232,7 +284,7 @@ class GenericModuleConfigurationJPanel(*java_bases(JPanel, GenericModuleConfigur
     def captureComparisonJCheckBoxActionPerformed(self, evt: ActionEvent) -> None:
         from org.allbinary.input.automation.module.generic.configuration.profile.GenericProfileDataWorkerType import GenericProfileDataWorkerType
         try:
-            if self.captureComparisonJCheckBox.isSelected():
+            if java_predicate(self.captureComparisonJCheckBox, "isSelected"):
                 self.getSelectedGenericProfile().add(GenericProfileDataWorkerType.COMPARISON)
             else:
                 self.getSelectedGenericProfile().remove(GenericProfileDataWorkerType.COMPARISON)
@@ -297,7 +349,7 @@ class GenericModuleConfigurationJPanel(*java_bases(JPanel, GenericModuleConfigur
             elif genericProfileDataWorkerType == GenericProfileDataWorkerType.MOTION:
                 self.logUtil.putF("Checking Motion Box", self, "updateProfileOptions")
                 self.captureMotionAnalysisJCheckBox.setSelected(True)
-        if not self.screenCaptureJRadioButton.isSelected() and not self.savedCaptureJRadioButton.isSelected():
+        if not (java_predicate(self.screenCaptureJRadioButton, "isSelected")) and not (java_predicate(self.savedCaptureJRadioButton, "isSelected")):
             self.screenCaptureJRadioButton.setSelected(True)
             self.getSelectedGenericProfile().add(GenericProfileDataWorkerType.SCREEN_CAPTURE)
         self.logUtil.putF(self.commonStrings.END, self, "updateProfileOptions")

@@ -22,13 +22,12 @@ class CountedPickedUpLayerInterfaceFactoryPool:
     SINGLETON: CountedPickedUpLayerInterfaceFactoryPool = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
-        self.list_: BasicArrayList = None
+        if "list_" not in vars(self): self.list_: BasicArrayList = None
     
 
     def __init__(self) -> None:
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
-        self._init_fields()
+        __class__._init_fields(self)
         self.list_ = BasicArrayListD()
     
 

@@ -27,18 +27,18 @@ class CustomLoaderHelper:
 
     def __init__(self, *args) -> None:
         if len(args) == 2:
-            self._constructor2(*args)
+            __class__._constructor2(self, *args)
         elif len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
     
 
     def _constructor2(self, hashMap: HashMap, pageContext: PageContext) -> None:
         from java.util.HashMap import HashMap
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def _constructor0(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception

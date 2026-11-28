@@ -22,11 +22,11 @@ class AbstractInputRobot:
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.helpSet: HelpSet = None
+        if "helpSet" not in vars(self): self.helpSet: HelpSet = None
     
 
     def __init__(self, helpSet: HelpSet) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.setHelpSet(helpSet)
     
 
@@ -52,14 +52,18 @@ class AbstractInputRobot:
         self.mouseMoveToTarget(rectangle, 0, 0)
 
     def mouseMoveToTarget(self, *args):
-        return getattr(self, "mouseMoveToTarget_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("mouseMoveToTarget_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().mouseMoveToTarget(*args)
     
 
     def mouseMove_j2(self, x: int, y: int) -> None:
         raise RuntimeError()
 
     def mouseMove(self, *args):
-        return getattr(self, "mouseMove_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("mouseMove_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().mouseMove(*args)
     
 
     def setHelpSet(self, helpSet: HelpSet) -> None:

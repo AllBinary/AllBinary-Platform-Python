@@ -15,22 +15,28 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.util.EventObject import EventObject
 
 
+@java_inherited_overloads
 class EmailEvent(EventObject):
+    def _java_defaults(self):
+        vars(self).setdefault("emailInfo", None)
+        vars(self).setdefault("userEmailEventNameData", None)
+        vars(self).setdefault("attempts", 0)
 
     def _init_fields(self) -> None:
-        from org.allbinary.logic.communication.smtp.info.EmailInfo import EmailInfo
-        self.emailInfo: EmailInfo = None
-        self.userEmailEventNameData: UserEmailEventNameData = None
-        self.attempts: int = 0
+        if "emailInfo" not in vars(self): self.emailInfo: EmailInfo = None
+        if "userEmailEventNameData" not in vars(self): self.userEmailEventNameData: UserEmailEventNameData = None
+        if "attempts" not in vars(self): self.attempts: int = 0
     
 
     def __init__(self, emailEventHandler: object, userEmailEventNameData: UserEmailEventNameData, emailInfo: EmailInfo, attempts: int) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.communication.smtp.info.EmailInfo import EmailInfo
         super().__init__(emailEventHandler)
-        self._init_fields()
+        __class__._init_fields(self)
         self.userEmailEventNameData = userEmailEventNameData
         self.emailInfo = emailInfo
     

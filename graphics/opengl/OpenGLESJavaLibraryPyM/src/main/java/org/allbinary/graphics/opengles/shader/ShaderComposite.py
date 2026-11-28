@@ -20,16 +20,15 @@ from __future__ import annotations
 class ShaderComposite:
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.opengles.OpenGLProcessor import OpenGLProcessor
         from org.allbinary.graphics.opengles.NullOpenGLProcessorFactory import NullOpenGLProcessorFactory
-        self.disableProgramShaderOpenGLProcessor: OpenGLProcessor = None
-        self.requiresOpenGLVersion: str = None
-        self.shaderArray: list[Shader] = None
-        self.shaderInitializer: ShaderInitializer = None
-        self.compositeShaderUpdater: CompositeShaderUpdater = None
-        self.modelViewProjection: ModelViewProjection = None
-        self.colorOpenGLProcessor: OpenGLProcessor = None
-        self.vertexOpenGLProcessor: OpenGLProcessor = None
+        if "disableProgramShaderOpenGLProcessor" not in vars(self): self.disableProgramShaderOpenGLProcessor: OpenGLProcessor = None
+        if "requiresOpenGLVersion" not in vars(self): self.requiresOpenGLVersion: str = None
+        if "shaderArray" not in vars(self): self.shaderArray: list[Shader] = None
+        if "shaderInitializer" not in vars(self): self.shaderInitializer: ShaderInitializer = None
+        if "compositeShaderUpdater" not in vars(self): self.compositeShaderUpdater: CompositeShaderUpdater = None
+        if "modelViewProjection" not in vars(self): self.modelViewProjection: ModelViewProjection = None
+        if "colorOpenGLProcessor" not in vars(self): self.colorOpenGLProcessor: OpenGLProcessor = None
+        if "vertexOpenGLProcessor" not in vars(self): self.vertexOpenGLProcessor: OpenGLProcessor = None
         self.useProgramShaderOpenGLProcessor: OpenGLProcessor = NullOpenGLProcessorFactory.getInstance()
         self.shaderMatrixOpenGLProcessor: OpenGLProcessor = NullOpenGLProcessorFactory.getInstance()
         self.colorEnableVertexAttribArrayOpenGLProcessor: OpenGLProcessor = NullOpenGLProcessorFactory.getInstance()
@@ -44,12 +43,12 @@ class ShaderComposite:
         self.uniformLightColorOpenGLProcessor: OpenGLObject3dProcessor = NullOpenGLTextureProcessor.getInstance()
         self.uniformCameraPositionOpenGLProcessor: OpenGLObject3dProcessor = NullOpenGLTextureProcessor.getInstance()
         self.uniformTextureUnitOpenGLProcessor: OpenGLObject3dProcessor = NullOpenGLTextureProcessor.getInstance()
-        self.programHandle: int = 0
+        if "programHandle" not in vars(self): self.programHandle: int = 0
     
 
     def __init__(self, requiresOpenGLVersion: str, shaderArray: list[Shader], compositeShaderUpdater: CompositeShaderUpdater, shaderInitializer: ShaderInitializer, modelViewProjection: ModelViewProjection, colorOpenGLProcessor: OpenGLProcessor, vertexOpenGLProcessor: OpenGLProcessor, disableProgramShaderOpenGLProcessor: OpenGLProcessor) -> None:
         from org.allbinary.graphics.opengles.OpenGLProcessor import OpenGLProcessor
-        self._init_fields()
+        __class__._init_fields(self)
         self.requiresOpenGLVersion = requiresOpenGLVersion
         self.shaderArray = shaderArray
         self.shaderInitializer = shaderInitializer

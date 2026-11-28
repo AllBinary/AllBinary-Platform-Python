@@ -22,14 +22,14 @@ class MediaData:
     hashMap: HashMap = None
 
     def _init_fields(self) -> None:
-        self.name: str = None
-        self.type_: str = None
-        self.extension: str = None
+        if "name" not in vars(self): self.name: str = None
+        if "type_" not in vars(self): self.type_: str = None
+        if "extension" not in vars(self): self.extension: str = None
     
 
     def __init__(self, a_Name: str) -> None:
         from org.allbinary.logic.visual.media.MediaTypeData import MediaTypeData
-        self._init_fields()
+        __class__._init_fields(self)
         self.name = a_Name
         self.extension = "." + self.name
         self.type_ = MediaTypeData.getInstance().NOT_RESIZABLE_MEDIA
@@ -51,7 +51,7 @@ class MediaData:
     def isConvertableTo(self, mediaData: MediaData) -> bool:
         from org.allbinary.logic.visual.media.MediaDataFactory import MediaDataFactory
         from org.allbinary.logic.visual.media.MediaDataFactory import MediaDataFactory
-        if self == MediaDataFactory.getInstance().GIF and mediaData == MediaDataFactory.getInstance().JPG:
+        if self is MediaDataFactory.getInstance().GIF and mediaData == MediaDataFactory.getInstance().JPG:
             return True
         return False
     

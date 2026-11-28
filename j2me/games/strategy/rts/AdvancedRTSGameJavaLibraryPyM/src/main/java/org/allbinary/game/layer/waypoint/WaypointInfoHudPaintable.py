@@ -15,31 +15,37 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.layer.SelectionHudPaintable import SelectionHudPaintable
 
 
+@java_inherited_overloads
 class WaypointInfoHudPaintable(SelectionHudPaintable):
+    def _java_defaults(self):
+        vars(self).setdefault("keyvalueDrawString", None)
+        vars(self).setdefault("rtsLayerP", None)
+        vars(self).setdefault("textLine2Y", 0)
 
     def _init_fields(self) -> None:
         from org.allbinary.game.layer.NullPathFindingLayer import NullPathFindingLayer
-        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
-        from org.allbinary.graphics.draw.KeyValueDrawString import KeyValueDrawString
-        self.keyvalueDrawString: KeyValueDrawString = None
+        if "keyvalueDrawString" not in vars(self): self.keyvalueDrawString: KeyValueDrawString = None
         self.rtsLayerP: PathFindingLayerInterface = NullPathFindingLayer.NULL_PATH_FINDING_LAYER
-        self.textLine2Y: int = 0
+        if "textLine2Y" not in vars(self): self.textLine2Y: int = 0
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.draw.KeyValueDrawString import KeyValueDrawString
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.keyvalueDrawString = KeyValueDrawString("Owner: ", self.textX)
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
         from javax.microedition.lcdui.Font import Font
         from javax.microedition.lcdui.Graphics import Graphics
-        super().updateMeasurement(graphics)
+        java_super_call(super(), "updateMeasurement", graphics)
         font: Font = graphics.getFont()
         self.textLine2Y = (self.y + font.getHeight())
     
@@ -64,7 +70,7 @@ class WaypointInfoHudPaintable(SelectionHudPaintable):
 
     def paint(self, graphics: Graphics) -> None:
         from javax.microedition.lcdui.Graphics import Graphics
-        super().paint(graphics)
+        java_super_call(super(), "paint", graphics)
         self.keyvalueDrawString.paint(graphics, self.textLine2Y)
         self.getAnimationInterface().paintXY(graphics, self.imageX, self.y)
 # from javax.microedition.lcdui.Font import Font

@@ -15,10 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.media.audio.Sound import Sound
 
 
+@java_inherited_overloads
 class NoSound(Sound):
     instance: NoSound = None
     

@@ -20,21 +20,19 @@ from __future__ import annotations
 class NewPasswordEmail:
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.user.UserInterface import UserInterface
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.abeClientInformation: AbeClientInformationInterface = None
-        self.userInterface: UserInterface = None
-        self.newPassword: str = None
+        if "abeClientInformation" not in vars(self): self.abeClientInformation: AbeClientInformationInterface = None
+        if "userInterface" not in vars(self): self.userInterface: UserInterface = None
+        if "newPassword" not in vars(self): self.newPassword: str = None
     
 
     def __init__(self, abeClientInformation: AbeClientInformationInterface, userInterface: UserInterface, newPassword: str) -> None:
         from org.allbinary.business.user.UserInterface import UserInterface
         from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-        self._init_fields()
+        __class__._init_fields(self)
         self.abeClientInformation = abeClientInformation
         self.userInterface = userInterface
         self.newPassword = newPassword

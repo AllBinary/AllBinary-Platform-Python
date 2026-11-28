@@ -15,11 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.health.HealthVisitorInterface import HealthVisitorInterface
 from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
 
 
+@java_inherited_overloads
 class HealLayer(*java_bases(AllBinaryLayer, HealthVisitorInterface)):
     
 
@@ -38,7 +41,7 @@ class HealLayer(*java_bases(AllBinaryLayer, HealthVisitorInterface)):
 
     def visit(self, healthInterface: HealthInterface) -> None:
         from org.allbinary.game.health.HealthInterface import HealthInterface
-        if healthInterface.isAlive():
+        if java_predicate(healthInterface, "isAlive"):
             healthInterface.healMax()
         else:
             self.logUtil.putF("Heal attempt on dead: Does not currently occur", self, "visit")

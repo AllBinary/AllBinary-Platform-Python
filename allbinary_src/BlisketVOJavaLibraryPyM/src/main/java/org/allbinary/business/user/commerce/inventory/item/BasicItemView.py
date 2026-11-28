@@ -21,19 +21,18 @@ from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 class BasicItemView(DomNodeInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.basicItemData: BasicItemData = BasicItemData.getInstance()
-        self.itemInterface: ItemInterface = None
-        self.vector: BasicArrayList = None
+        if "itemInterface" not in vars(self): self.itemInterface: ItemInterface = None
+        if "vector" not in vars(self): self.vector: BasicArrayList = None
     
 
     def __init__(self, itemInterface: ItemInterface, vector: BasicArrayList) -> None:
         from org.allbinary.util.BasicArrayList import BasicArrayList
-        self._init_fields()
+        __class__._init_fields(self)
         self.itemInterface = itemInterface
         self.vector = vector
     
@@ -92,5 +91,6 @@ class BasicItemView(DomNodeInterface):
 # from org.w3c.dom.Node import Node
 # from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
 # from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
 
 

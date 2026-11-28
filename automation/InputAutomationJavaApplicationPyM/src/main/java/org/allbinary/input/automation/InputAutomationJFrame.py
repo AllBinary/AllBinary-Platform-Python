@@ -15,6 +15,9 @@
 
 from __future__ import annotations
 
+from java.lang.JavaThread import JavaThread
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from java.lang.JavaRuntimeStatic import java_bases
 # from javax.help.event.HelpSetListener import HelpSetListener
@@ -23,56 +26,84 @@ from bundle.input.automation.robot.InputAutomationRobotChangeListener import Inp
 # from javax.swing.JFrame import JFrame
 
 
+@java_inherited_overloads
 class InputAutomationJFrame(*java_bases(JFrame, InputAutomationConfigurationModuleChangeListener, InputAutomationRobotChangeListener, HelpSetListener)):
     INPUTAUTOMATION_JFRAME: InputAutomationJFrame = None
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("inputAutomationModuleConfigurations", None)
+        vars(self).setdefault("inputAutomationModuleFactory", None)
+        vars(self).setdefault("inputAutomationModuleInterface", None)
+        vars(self).setdefault("runnableInterface", None)
+        vars(self).setdefault("thread", None)
+        vars(self).setdefault("helpSet", None)
+        vars(self).setdefault("uri", None)
+        vars(self).setdefault("aboutJMenuItem", None)
+        vars(self).setdefault("automationModuleConfigurationJPanel", None)
+        vars(self).setdefault("gameRobotJTabbedPane", None)
+        vars(self).setdefault("helpJMenuItem", None)
+        vars(self).setdefault("inputAutomationModuleJList", None)
+        vars(self).setdefault("inputAutomationModuleJPanel", None)
+        vars(self).setdefault("jScrollPane1", None)
+        vars(self).setdefault("mainJMenuBar", None)
+        vars(self).setdefault("modulesJMenuItem", None)
+        vars(self).setdefault("noModuleSelectedJDialog", None)
+        vars(self).setdefault("noModuleSelectedJLabel", None)
+        vars(self).setdefault("optionsJMenu", None)
+        vars(self).setdefault("processingJMenu", None)
+        vars(self).setdefault("startJMenuItem", None)
+        vars(self).setdefault("stopJMenuItem", None)
+        vars(self).setdefault("stopOnFocusJCheckBoxMenuItem", None)
+        vars(self).setdefault("subscriptionJMenuItem", None)
+        vars(self).setdefault("toolsJMenu", None)
+        vars(self).setdefault("updatesJMenuItem", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.input.automation.module.InputAutomationModuleFactoryFactory import InputAutomationModuleFactoryFactory
-        from org.allbinary.input.automation.module.InputAutomationModuleFactoryInterface import InputAutomationModuleFactoryInterface
         from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfigurations import InputAutomationModuleConfigurations
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
-        from org.allbinary.thread.RunnableInterface import RunnableInterface
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.inputAutomationModuleConfigurations: InputAutomationModuleConfigurations = InputAutomationModuleConfigurations()
-        self.inputAutomationModuleFactory: InputAutomationModuleFactoryFactory = None
-        self.inputAutomationModuleInterface: InputAutomationModuleFactoryInterface = None
-        self.runnableInterface: RunnableInterface = None
-        self.thread: threading.Thread = None
-        self.helpSet: HelpSet = None
+        if "inputAutomationModuleFactory" not in vars(self): self.inputAutomationModuleFactory: InputAutomationModuleFactoryFactory = None
+        if "inputAutomationModuleInterface" not in vars(self): self.inputAutomationModuleInterface: InputAutomationModuleFactoryInterface = None
+        if "runnableInterface" not in vars(self): self.runnableInterface: RunnableInterface = None
+        if "thread" not in vars(self): self.thread: JavaThread = None
+        if "helpSet" not in vars(self): self.helpSet: HelpSet = None
         self.uri: URI = URI("http://geocities.com/allbinary/")
-        self.aboutJMenuItem: JMenuItem = None
-        self.automationModuleConfigurationJPanel: JPanel = None
-        self.gameRobotJTabbedPane: JTabbedPane = None
-        self.helpJMenuItem: JMenuItem = None
-        self.inputAutomationModuleJList: JList = None
-        self.inputAutomationModuleJPanel: JPanel = None
-        self.jScrollPane1: JScrollPane = None
-        self.mainJMenuBar: JMenuBar = None
-        self.modulesJMenuItem: JMenuItem = None
-        self.noModuleSelectedJDialog: JDialog = None
-        self.noModuleSelectedJLabel: JLabel = None
-        self.optionsJMenu: JMenu = None
-        self.processingJMenu: JMenu = None
-        self.startJMenuItem: JMenuItem = None
-        self.stopJMenuItem: JMenuItem = None
-        self.stopOnFocusJCheckBoxMenuItem: JCheckBoxMenuItem = None
-        self.subscriptionJMenuItem: JMenuItem = None
-        self.toolsJMenu: JMenu = None
-        self.updatesJMenuItem: JMenuItem = None
+        if "aboutJMenuItem" not in vars(self): self.aboutJMenuItem: JMenuItem = None
+        if "automationModuleConfigurationJPanel" not in vars(self): self.automationModuleConfigurationJPanel: JPanel = None
+        if "gameRobotJTabbedPane" not in vars(self): self.gameRobotJTabbedPane: JTabbedPane = None
+        if "helpJMenuItem" not in vars(self): self.helpJMenuItem: JMenuItem = None
+        if "inputAutomationModuleJList" not in vars(self): self.inputAutomationModuleJList: JList = None
+        if "inputAutomationModuleJPanel" not in vars(self): self.inputAutomationModuleJPanel: JPanel = None
+        if "jScrollPane1" not in vars(self): self.jScrollPane1: JScrollPane = None
+        if "mainJMenuBar" not in vars(self): self.mainJMenuBar: JMenuBar = None
+        if "modulesJMenuItem" not in vars(self): self.modulesJMenuItem: JMenuItem = None
+        if "noModuleSelectedJDialog" not in vars(self): self.noModuleSelectedJDialog: JDialog = None
+        if "noModuleSelectedJLabel" not in vars(self): self.noModuleSelectedJLabel: JLabel = None
+        if "optionsJMenu" not in vars(self): self.optionsJMenu: JMenu = None
+        if "processingJMenu" not in vars(self): self.processingJMenu: JMenu = None
+        if "startJMenuItem" not in vars(self): self.startJMenuItem: JMenuItem = None
+        if "stopJMenuItem" not in vars(self): self.stopJMenuItem: JMenuItem = None
+        if "stopOnFocusJCheckBoxMenuItem" not in vars(self): self.stopOnFocusJCheckBoxMenuItem: JCheckBoxMenuItem = None
+        if "subscriptionJMenuItem" not in vars(self): self.subscriptionJMenuItem: JMenuItem = None
+        if "toolsJMenu" not in vars(self): self.toolsJMenu: JMenu = None
+        if "updatesJMenuItem" not in vars(self): self.updatesJMenuItem: JMenuItem = None
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from java.net.URL import URL
         from org.allbinary.logic.java.help.JavaHelpUtil import JavaHelpUtil
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.initComponents()
-        url: URL = type(self).getResource("/help/Help.hs")
+        url: URL = __import__("java.lang.ClassLoader", fromlist=["ClassLoader"]).ClassLoader.classResource(type(self), "/help/Help.hs", False)
         self.logUtil.putF("URL: " + str(url), self, self.commonStrings.CONSTRUCTOR)
         self.helpSet = JavaHelpUtil.getInstance().getHelpSet(url)
-        url = type(self).getResource("/resources/allbinaryicon8bit.jpg")
+        url = __import__("java.lang.ClassLoader", fromlist=["ClassLoader"]).ClassLoader.classResource(type(self), "/resources/allbinaryicon8bit.jpg", False)
         imageIcon: ImageIcon = ImageIcon(url)
         self.setIconImage(imageIcon.getImage())
         self.init()
@@ -137,34 +168,43 @@ class InputAutomationJFrame(*java_bases(JFrame, InputAutomationConfigurationModu
         self.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
         self.setMinimumSize(Dimension(325, 215))
         self.setResizable(False)
-        self.addWindowFocusListener((WindowFocusListener()  # Java anonymous class body:
-#             
-# 
-#             def windowGainedFocus(self, evt: WindowEvent) -> None:
-#                 self.formWindowGainedFocus(evt)
-#             
-# 
-#             def windowLostFocus(self, evt: WindowEvent) -> None:
-#                 self.formWindowLostFocus(evt)
-))
-        self.addFocusListener((FocusAdapter()  # Java anonymous class body:
-#             
-# 
-#             def focusGained(self, evt: FocusEvent) -> None:
-#                 self.formFocusGained(evt)
-#             
-# 
-#             def focusLost(self, evt: FocusEvent) -> None:
-#                 self.formFocusLost(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN69680(WindowFocusListener):
+            
+            
+
+            def windowGainedFocus(self, evt: WindowEvent) -> None:
+                (self if hasattr(self, "formWindowGainedFocus") else _java_listener_owner).formWindowGainedFocus(evt)
+            
+
+            def windowLostFocus(self, evt: WindowEvent) -> None:
+                (self if hasattr(self, "formWindowLostFocus") else _java_listener_owner).formWindowLostFocus(evt)
+        self.addWindowFocusListener(_JavaListenerN69680()
+            )
+        _java_listener_owner = self
+        class _JavaListenerN69846(FocusAdapter):
+            
+            
+
+            def focusGained(self, evt: FocusEvent) -> None:
+                (self if hasattr(self, "formFocusGained") else _java_listener_owner).formFocusGained(evt)
+            
+
+            def focusLost(self, evt: FocusEvent) -> None:
+                (self if hasattr(self, "formFocusLost") else _java_listener_owner).formFocusLost(evt)
+        self.addFocusListener(_JavaListenerN69846()
+            )
         self.gameRobotJTabbedPane.setMinimumSize(Dimension(320, 200))
         self.inputAutomationModuleJList.setMinimumSize(Dimension(200, 0))
-        self.inputAutomationModuleJList.addListSelectionListener((ListSelectionListener()  # Java anonymous class body:
-#             
-# 
-#             def valueChanged(self, evt: ListSelectionEvent) -> None:
-#                 self.inputAutomationModuleJListValueChanged(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN70121(ListSelectionListener):
+            
+            
+
+            def valueChanged(self, evt: ListSelectionEvent) -> None:
+                (self if hasattr(self, "inputAutomationModuleJListValueChanged") else _java_listener_owner).inputAutomationModuleJListValueChanged(evt)
+        self.inputAutomationModuleJList.addListSelectionListener(_JavaListenerN70121()
+            )
         self.jScrollPane1.setViewportView(self.inputAutomationModuleJList)
         inputAutomationModuleJPanelLayout: GroupLayout = GroupLayout(self.inputAutomationModuleJPanel)
         self.inputAutomationModuleJPanel.setLayout(inputAutomationModuleJPanelLayout)
@@ -179,80 +219,107 @@ class InputAutomationJFrame(*java_bases(JFrame, InputAutomationConfigurationModu
         self.processingJMenu.setText("Processing")
         self.processingJMenu.setToolTipText("Set module processing state")
         self.startJMenuItem.setText(self.commonStrings.START)
-        self.startJMenuItem.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.startJMenuItemActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN71194(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "startJMenuItemActionPerformed") else _java_listener_owner).startJMenuItemActionPerformed(evt)
+        self.startJMenuItem.addActionListener(_JavaListenerN71194()
+            )
         self.processingJMenu.add(self.startJMenuItem)
         self.stopJMenuItem.setText("Stop")
-        self.stopJMenuItem.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.stopJMenuItemActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN71370(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "stopJMenuItemActionPerformed") else _java_listener_owner).stopJMenuItemActionPerformed(evt)
+        self.stopJMenuItem.addActionListener(_JavaListenerN71370()
+            )
         self.processingJMenu.add(self.stopJMenuItem)
         self.mainJMenuBar.add(self.processingJMenu)
         self.optionsJMenu.setText("Options")
-        self.optionsJMenu.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.optionsJMenuActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN71583(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "optionsJMenuActionPerformed") else _java_listener_owner).optionsJMenuActionPerformed(evt)
+        self.optionsJMenu.addActionListener(_JavaListenerN71583()
+            )
         self.stopOnFocusJCheckBoxMenuItem.setSelected(True)
         self.stopOnFocusJCheckBoxMenuItem.setEnabled(False)
         self.stopOnFocusJCheckBoxMenuItem.setLabel("Stop Module On Focus")
-        self.stopOnFocusJCheckBoxMenuItem.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.stopOnFocusJCheckBoxMenuItemActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN71782(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "stopOnFocusJCheckBoxMenuItemActionPerformed") else _java_listener_owner).stopOnFocusJCheckBoxMenuItemActionPerformed(evt)
+        self.stopOnFocusJCheckBoxMenuItem.addActionListener(_JavaListenerN71782()
+            )
         self.optionsJMenu.add(self.stopOnFocusJCheckBoxMenuItem)
         self.mainJMenuBar.add(self.optionsJMenu)
         self.toolsJMenu.setText("Help")
         self.helpJMenuItem.setText("Help")
-        self.helpJMenuItem.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.helpJMenuItemActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN72025(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "helpJMenuItemActionPerformed") else _java_listener_owner).helpJMenuItemActionPerformed(evt)
+        self.helpJMenuItem.addActionListener(_JavaListenerN72025()
+            )
         self.toolsJMenu.add(self.helpJMenuItem)
         self.updatesJMenuItem.setText("Updates")
-        self.updatesJMenuItem.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.updatesJMenuItemActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN72201(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "updatesJMenuItemActionPerformed") else _java_listener_owner).updatesJMenuItemActionPerformed(evt)
+        self.updatesJMenuItem.addActionListener(_JavaListenerN72201()
+            )
         self.toolsJMenu.add(self.updatesJMenuItem)
         self.subscriptionJMenuItem.setText("Subscription")
-        self.subscriptionJMenuItem.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.subscriptionJMenuItemActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN72377(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "subscriptionJMenuItemActionPerformed") else _java_listener_owner).subscriptionJMenuItemActionPerformed(evt)
+        self.subscriptionJMenuItem.addActionListener(_JavaListenerN72377()
+            )
         self.toolsJMenu.add(self.subscriptionJMenuItem)
         self.modulesJMenuItem.setText("Module Manager")
-        self.modulesJMenuItem.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.modulesJMenuItemActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN72553(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "modulesJMenuItemActionPerformed") else _java_listener_owner).modulesJMenuItemActionPerformed(evt)
+        self.modulesJMenuItem.addActionListener(_JavaListenerN72553()
+            )
         self.toolsJMenu.add(self.modulesJMenuItem)
         self.aboutJMenuItem.setText("About")
-        self.aboutJMenuItem.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.aboutJMenuItemActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN72729(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "aboutJMenuItemActionPerformed") else _java_listener_owner).aboutJMenuItemActionPerformed(evt)
+        self.aboutJMenuItem.addActionListener(_JavaListenerN72729()
+            )
         self.toolsJMenu.add(self.aboutJMenuItem)
         self.mainJMenuBar.add(self.toolsJMenu)
         self.setJMenuBar(self.mainJMenuBar)
@@ -310,7 +377,7 @@ class InputAutomationJFrame(*java_bases(JFrame, InputAutomationConfigurationModu
     
 
     def formWindowGainedFocus(self, evt: WindowEvent) -> None:
-        if self.stopOnFocusJCheckBoxMenuItem.isSelected():
+        if java_predicate(self.stopOnFocusJCheckBoxMenuItem, "isSelected"):
             self.logUtil.putF("Stopping", self, "focusGained")
             if self.runnableInterface is not None:
                 self.runnableInterface.setRunning(False)
@@ -356,7 +423,7 @@ class InputAutomationJFrame(*java_bases(JFrame, InputAutomationConfigurationModu
             if self.inputAutomationModuleInterface is not None:
                 self.runnableInterface = self.inputAutomationModuleInterface.getInstance()
                 if self.runnableInterface is not None:
-                    self.thread = threading.Thread(target=self.runnableInterface.run)
+                    self.thread = JavaThread(target=self.runnableInterface.run)
                     self.thread.setPriority(1 + 1)
                     self.thread.start()
                 else:
@@ -396,27 +463,29 @@ class InputAutomationJFrame(*java_bases(JFrame, InputAutomationConfigurationModu
         appUrlGlobals: AppUrlGlobals = AppUrlGlobals()
         appUrlGlobals.setWebappPath("G:/mnt/bc/mydev/work_automation/automation/run/")
         URLGLOBALS.init(appUrlGlobals)
-        WebappClassLoaderInfo.setLoader(type(appUrlGlobals).getClassLoader())
-        EventQueue.invokeLater((ARunnable()  # Java anonymous class body:
-#             
-# 
-#             def run(self) -> None:
-#                 from org.allbinary.input.automation.robot.InputRobotFactory import InputRobotFactory
-#                 from org.allbinary.logic.communication.log.LogUtil import LogUtil
-#                 from org.allbinary.string.CommonStrings import CommonStrings
-#                 logUtil: LogUtil = LogUtil.getInstance()
-#                 commonStrings: CommonStrings = CommonStrings.getInstance()
-#                 try:
-#                     logUtil.putF("Running", self, commonStrings.RUN)
-#                     InputAutomationJFrame.INPUTAUTOMATION_JFRAME = InputAutomationJFrame()
-#                     InputRobotFactory.getInstance().addListener(InputAutomationJFrame.getInstance())
-#                     if inputAutomationBundleActivatorListenerInterface is not None:
-#                         inputAutomationBundleActivatorListenerInterface.registerAsService()
-#                         inputAutomationBundleActivatorListenerInterface.useServices()
-#                     InputAutomationJFrame.INPUTAUTOMATION_JFRAME.setVisible(True)
-#                 except Exception as e:
-#                     logUtil.put(commonStrings.EXCEPTION, self, commonStrings.RUN, e)
-))
+        WebappClassLoaderInfo.setLoader(__import__("java.lang.ClassLoader", fromlist=["ClassLoader"]).ClassLoader.getSystemClassLoader())
+        class _JavaListenerN76836(ARunnable):
+            
+            
+
+            def run(self) -> None:
+                from org.allbinary.input.automation.robot.InputRobotFactory import InputRobotFactory
+                from org.allbinary.logic.communication.log.LogUtil import LogUtil
+                from org.allbinary.string.CommonStrings import CommonStrings
+                logUtil: LogUtil = LogUtil.getInstance()
+                commonStrings: CommonStrings = CommonStrings.getInstance()
+                try:
+                    logUtil.putF("Running", self, commonStrings.RUN)
+                    InputAutomationJFrame.INPUTAUTOMATION_JFRAME = InputAutomationJFrame()
+                    InputRobotFactory.getInstance().addListener(InputAutomationJFrame.getInstance())
+                    if inputAutomationBundleActivatorListenerInterface is not None:
+                        inputAutomationBundleActivatorListenerInterface.registerAsService()
+                        inputAutomationBundleActivatorListenerInterface.useServices()
+                    InputAutomationJFrame.INPUTAUTOMATION_JFRAME.setVisible(True)
+                except Exception as e:
+                    logUtil.put(commonStrings.EXCEPTION, self, commonStrings.RUN, e)
+        EventQueue.invokeLater(_JavaListenerN76836()
+            )
     
 
     # throws Exception
@@ -466,11 +535,13 @@ class InputAutomationJFrame(*java_bases(JFrame, InputAutomationConfigurationModu
             self.logUtil.put(self.commonStrings.EXCEPTION, self, "onAdd", e)
 
     def onAdd(self, *args):
-        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
-            return self.onAdd_j1_1(*args)
+        if len(args) == 1 and True and (args[0] is None or any(base.__name__ == "InputAutomationRobotChangeEvent" for base in type(args[0]).__mro__)):
+            return __class__.__dict__["onAdd_j1_1"].__get__(self, __class__)(*args)
         if len(args) == 1:
-            return self.onAdd_j1_2(*args)
-        return getattr(self, "onAdd_j" + str(len(args)))(*args)
+            return __class__.__dict__["onAdd_j1_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("onAdd_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().onAdd(*args)
     
 
     # Java overloaded method with the same parameter count: Python keeps the last definition
@@ -499,11 +570,13 @@ class InputAutomationJFrame(*java_bases(JFrame, InputAutomationConfigurationModu
             self.logUtil.put(self.commonStrings.EXCEPTION, self, "onRemove", e)
 
     def onRemove(self, *args):
-        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
-            return self.onRemove_j1_1(*args)
+        if len(args) == 1 and True and (args[0] is None or any(base.__name__ == "InputAutomationRobotChangeEvent" for base in type(args[0]).__mro__)):
+            return __class__.__dict__["onRemove_j1_1"].__get__(self, __class__)(*args)
         if len(args) == 1:
-            return self.onRemove_j1_2(*args)
-        return getattr(self, "onRemove_j" + str(len(args)))(*args)
+            return __class__.__dict__["onRemove_j1_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("onRemove_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().onRemove(*args)
 # from org.allbinary.thread.ARunnable import ARunnable
 # from java.net.URI import URI
 # from java.net.URL import URL

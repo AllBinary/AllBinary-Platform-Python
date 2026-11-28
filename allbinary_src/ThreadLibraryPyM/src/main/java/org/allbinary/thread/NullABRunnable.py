@@ -15,11 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.thread.ABRunnable import ABRunnable
 
 
+@java_inherited_overloads
 class NullABRunnable(ABRunnable):
     instance: NullABRunnable = None
     _lock = threading.RLock()
@@ -35,7 +37,7 @@ class NullABRunnable(ABRunnable):
 
     def isRunning(self) -> bool:
         with self._lock:
-            return self._isRunning_unlocked()
+            return __class__.__dict__["_isRunning_unlocked"].__get__(self, __class__)()
 
     def _isRunning_unlocked(self) -> bool:
         return False

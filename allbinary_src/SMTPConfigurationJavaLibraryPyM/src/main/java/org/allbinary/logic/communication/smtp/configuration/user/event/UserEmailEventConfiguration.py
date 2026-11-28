@@ -23,21 +23,21 @@ class UserEmailEventConfiguration(UserEmailEventConfigurationInterface):
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.name: str = None
-        self.eventListenerClassPath: str = None
+        if "name" not in vars(self): self.name: str = None
+        if "eventListenerClassPath" not in vars(self): self.eventListenerClassPath: str = None
 
     def __init__(self, *args) -> None:
         if len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
         elif len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
     
 
     def _constructor0(self) -> None:
         from org.allbinary.logic.string.StringUtil import StringUtil
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-        self._init_fields()
+        __class__._init_fields(self)
         self.setName(StringUtil.getInstance().EMPTY_STRING)
         self.setEventListenerClassPath(StringUtil.getInstance().EMPTY_STRING)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGING):
@@ -45,10 +45,12 @@ class UserEmailEventConfiguration(UserEmailEventConfigurationInterface):
     
 
     def _constructor1(self, hashMap: HashMap) -> None:
+        from org.allbinary.logic.communication.smtp.configuration.user.event.UserEmailEventConfigurationData import UserEmailEventConfigurationData
+        from org.allbinary.logic.communication.smtp.configuration.user.event.UserEmailEventConfigurationData import UserEmailEventConfigurationData
         from java.util.HashMap import HashMap
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-        self._init_fields()
+        __class__._init_fields(self)
         self.setName(hashMap.get(UserEmailEventConfigurationData.NAME))
         self.setEventListenerClassPath(hashMap.get(UserEmailEventConfigurationData.LISTENER_CLASSPATH))
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGING):

@@ -36,10 +36,11 @@ class FileUtil2:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def loadFileAsList(self, file: AbFile, max: int, byteArray1: list[int]) -> BasicArrayList:
+        from org.allbinary.logic.io.file.SimpleFileUtil import SimpleFileUtil
         from org.allbinary.logic.io.AbFileInputStream import AbFileInputStream
         from org.allbinary.util.BasicArrayList import BasicArrayList
         inputStream: AbFileInputStream = None

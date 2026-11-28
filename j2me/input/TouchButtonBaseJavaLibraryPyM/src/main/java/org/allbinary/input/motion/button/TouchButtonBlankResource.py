@@ -15,10 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.input.motion.button.TouchButtonResource import TouchButtonResource
 
 
+@java_inherited_overloads
 class TouchButtonBlankResource(TouchButtonResource):
     instance: TouchButtonResource = None
     

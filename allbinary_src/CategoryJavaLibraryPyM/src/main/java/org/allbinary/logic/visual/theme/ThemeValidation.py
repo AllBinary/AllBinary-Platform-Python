@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 from org.allbinary.logic.control.validate.ValidationInterface import ValidationInterface
@@ -26,30 +27,28 @@ class ThemeValidation(*java_bases(ThemeInterface, ValidationInterface, DomNodeIn
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.logic.io.path.AbPath import AbPath
-        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.transformInfoInterface: TransformInfoInterface = None
-        self.styleValidationInterface: ValidationInterface = None
-        self.themeName: str = None
-        self.themePreviewImageName: str = None
-        self.webAppAbPath: AbPath = None
-        self.categoryAbPath: AbPath = None
-        self.fileAbPath: AbPath = None
+        if "transformInfoInterface" not in vars(self): self.transformInfoInterface: TransformInfoInterface = None
+        if "styleValidationInterface" not in vars(self): self.styleValidationInterface: ValidationInterface = None
+        if "themeName" not in vars(self): self.themeName: str = None
+        if "themePreviewImageName" not in vars(self): self.themePreviewImageName: str = None
+        if "webAppAbPath" not in vars(self): self.webAppAbPath: AbPath = None
+        if "categoryAbPath" not in vars(self): self.categoryAbPath: AbPath = None
+        if "fileAbPath" not in vars(self): self.fileAbPath: AbPath = None
 
     def __init__(self, *args) -> None:
         if len(args) == 3:
-            self._constructor3(*args)
+            __class__._constructor3(self, *args)
         elif len(args) == 2:
-            self.__jconstructor2(*args)
+            __class__.__jconstructor2(self, *args)
 
     def __jconstructor2(self, *args) -> None:
-        if True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)):
-            self._constructor2_1(*args)
+        if True and (args[0] is None or any(base.__name__ == "TransformInfoInterface" for base in type(args[0]).__mro__)) and not isinstance(args[1], (str, list, int, float)):
+            __class__._constructor2_1(self, *args)
         else:
-            self._constructor2_2(*args)
+            __class__._constructor2_2(self, *args)
     
 
     def _constructor3(self, transformInfoInterface: TransformInfoInterface, cssStyleValidation: CssStyleValidation, categoryThemePath: str) -> None:
@@ -57,7 +56,7 @@ class ThemeValidation(*java_bases(ThemeInterface, ValidationInterface, DomNodeIn
         from org.allbinary.logic.io.path.PathUtil import PathUtil
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         from org.allbinary.logic.visual.transform.template.customizer.includes.style.css.template.retail.CssStyleValidation import CssStyleValidation
-        self._init_fields()
+        __class__._init_fields(self)
         self.transformInfoInterface = transformInfoInterface
         pathData: AbPathData = AbPathData.getInstance()
         pathUtil: PathUtil = PathUtil.getInstance()
@@ -68,6 +67,7 @@ class ThemeValidation(*java_bases(ThemeInterface, ValidationInterface, DomNodeIn
     
 
     def _constructor2_1(self, transformInfoInterface: TransformInfoInterface, hashMap: HashMap) -> None:
+        from org.allbinary.logic.visual.theme.ThemeData import ThemeData
         from java.util.HashMap import HashMap
         from org.allbinary.logic.io.path.AbPath import AbPath
         from org.allbinary.logic.io.path.AbPathData import AbPathData
@@ -77,7 +77,7 @@ class ThemeValidation(*java_bases(ThemeInterface, ValidationInterface, DomNodeIn
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-        self._init_fields()
+        __class__._init_fields(self)
         self.transformInfoInterface = transformInfoInterface
         categoryThemeAbPath: AbPath = AbPath(hashMap.get(ThemeData.getInstance().PATH), StringUtil.getInstance().EMPTY_STRING)
         pathData: AbPathData = AbPathData.getInstance()
@@ -97,12 +97,14 @@ class ThemeValidation(*java_bases(ThemeInterface, ValidationInterface, DomNodeIn
     
 
     def _constructor2_2(self, storeThemeCategoryInterface: StoreThemeCategoryInterface, node: Node) -> None:
+        from org.allbinary.logic.visual.theme.ThemeData import ThemeData
+        from org.allbinary.logic.visual.theme.ThemeData import ThemeData
         from org.allbinary.business.category.store.theme.StoreThemeCategoryInterface import StoreThemeCategoryInterface
         from org.allbinary.data.tree.dom.DomData import DomData
         from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
         from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
         from org.w3c.dom.Node import Node
-        self._init_fields()
+        __class__._init_fields(self)
         self.transformInfoInterface = storeThemeCategoryInterface.getTransformInfoInterface()
         self.categoryAbPath = storeThemeCategoryInterface.getPath()
         themeNameNode: Node = DomSearchHelper.getNode(ThemeData.getInstance().NAME, node.getChildNodes())
@@ -137,7 +139,9 @@ class ThemeValidation(*java_bases(ThemeInterface, ValidationInterface, DomNodeIn
         self.webAppAbPath = storeThemeCategoryInterface.getWebAppPath()
 
     def init(self, *args):
-        return getattr(self, "init_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("init_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().init(*args)
     
 
     # throws Exception
@@ -188,11 +192,11 @@ class ThemeValidation(*java_bases(ThemeInterface, ValidationInterface, DomNodeIn
             isValid: bool = True
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.IS_VALID)
-            if not StringValidationUtil.getInstance().isValidRequired(str(self.categoryAbPath), AbSqlData.MINSTRING, AbSqlData.MAXSTRING):
+            if not (StringValidationUtil.getInstance().isValidRequired(str(self.categoryAbPath), AbSqlData.MINSTRING, AbSqlData.MAXSTRING)):
                 isValid = False
-            if not StringValidationUtil.getInstance().isValidRequired(self.themeName, AbSqlData.MINSTRING, AbSqlData.MAXSTRING):
+            if not (StringValidationUtil.getInstance().isValidRequired(self.themeName, AbSqlData.MINSTRING, AbSqlData.MAXSTRING)):
                 isValid = False
-            if not self.getCssStyleValidation().isValid():
+            if not (java_predicate(self.getCssStyleValidation(), "isValid")):
                 isValid = False
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 self.logUtil.putF("End: " + str(isValid), self, self.commonStrings.IS_VALID)
@@ -244,6 +248,7 @@ class ThemeValidation(*java_bases(ThemeInterface, ValidationInterface, DomNodeIn
     
 
     def toHashMap(self) -> HashMap:
+        from org.allbinary.logic.visual.theme.ThemeData import ThemeData
         from java.util.HashMap import HashMap
         from org.allbinary.logic.StdUtil import StdUtil
         themeData: ThemeData = ThemeData.getInstance()
@@ -257,6 +262,7 @@ class ThemeValidation(*java_bases(ThemeInterface, ValidationInterface, DomNodeIn
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
+        from org.allbinary.logic.visual.theme.ThemeData import ThemeData
         from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
         from org.w3c.dom.Document import Document
         from org.w3c.dom.Node import Node

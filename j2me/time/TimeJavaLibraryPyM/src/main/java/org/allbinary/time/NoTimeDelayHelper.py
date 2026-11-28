@@ -15,10 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
 
 
+@java_inherited_overloads
 class NoTimeDelayHelper(TimeDelayHelper):
     SINGLETON: NoTimeDelayHelper = None
     

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 
 
 class StreetAddress:
@@ -22,43 +23,49 @@ class StreetAddress:
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.id: str = None
-        self.name: str = None
-        self.street: str = None
-        self.city: str = None
-        self.state: str = None
-        self.code: str = None
-        self.country: str = None
-        self.isDefault: bool = False
+        if "id" not in vars(self): self.id: str = None
+        if "name" not in vars(self): self.name: str = None
+        if "street" not in vars(self): self.street: str = None
+        if "city" not in vars(self): self.city: str = None
+        if "state" not in vars(self): self.state: str = None
+        if "code" not in vars(self): self.code: str = None
+        if "country" not in vars(self): self.country: str = None
+        self.isDefault_field: bool = False
 
     def __init__(self, *args) -> None:
         if len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
         elif len(args) == 1:
-            self.__jconstructor1(*args)
+            __class__.__jconstructor1(self, *args)
         elif len(args) == 6:
-            self._constructor6(*args)
+            __class__._constructor6(self, *args)
 
     def __jconstructor1(self, *args) -> None:
-        if True and not isinstance(args[0], (str, list, int, float)):
-            self._constructor1_1(*args)
-        elif True and not isinstance(args[0], (str, list, int, float)):
-            self._constructor1_2(*args)
-        elif True and not isinstance(args[0], (str, list, int, float)):
-            self._constructor1_3(*args)
+        if True and (args[0] is None or any(base.__name__ == "Node" for base in type(args[0]).__mro__)):
+            __class__._constructor1_1(self, *args)
+        elif True and (args[0] is None or any(base.__name__ == "StreetAddress" for base in type(args[0]).__mro__)):
+            __class__._constructor1_2(self, *args)
+        elif True and (args[0] is None or any(base.__name__ == "HttpServletRequest" for base in type(args[0]).__mro__)):
+            __class__._constructor1_3(self, *args)
         else:
-            self._constructor1_4(*args)
+            __class__._constructor1_4(self, *args)
     
 
     def _constructor0(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def _constructor1_1(self, node: Node) -> None:
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
         from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
         from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
         from org.w3c.dom.Node import Node
-        self._init_fields()
+        __class__._init_fields(self)
         nameNode: Node = DomSearchHelper.getNode(StreetAddressData.NAME, node.getChildNodes())
         self.name = DomNodeHelper.getTextNodeValue(nameNode)
         streetNode: Node = DomSearchHelper.getNode(StreetAddressData.STREET, node.getChildNodes())
@@ -75,7 +82,7 @@ class StreetAddress:
     
 
     def _constructor1_2(self, streetAddress: StreetAddress) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.id = streetAddress.getId()
         self.name = streetAddress.getName()
         self.street = streetAddress.getStreet()
@@ -83,12 +90,19 @@ class StreetAddress:
         self.state = streetAddress.getState()
         self.code = streetAddress.getCode()
         self.country = streetAddress.getCountry()
-        self.isDefault = streetAddress.isDefault()
+        self.isDefault_field = java_predicate(streetAddress, "isDefault")
         self.log()
     
 
     def _constructor1_3(self, request: HttpServletRequest) -> None:
-        self._init_fields()
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        __class__._init_fields(self)
         self.setId(request.getParameter(StreetAddressData.ID))
         self.setName(request.getParameter(StreetAddressData.NAME))
         self.setStreet(request.getParameter(StreetAddressData.STREET))
@@ -100,7 +114,7 @@ class StreetAddress:
     
 
     def _constructor6(self, name: str, street: str, city: str, state: str, code: str, country: str) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.name = name
         self.street = street
         self.city = city
@@ -111,8 +125,17 @@ class StreetAddress:
     
 
     def _constructor1_4(self, address: HashMap) -> None:
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
         from java.util.HashMap import HashMap
-        self._init_fields()
+        __class__._init_fields(self)
         self.id = address.get(StreetAddressData.ID)
         self.name = address.get(StreetAddressData.NAME)
         self.street = address.get(StreetAddressData.STREET)
@@ -122,9 +145,9 @@ class StreetAddress:
         self.country = address.get(StreetAddressData.COUNTRY)
         def_: str = address.get(StreetAddressData.DEFAULT)
         if def_ is not None and ((def_ > StreetAddressData.DEFAULT) - (def_ < StreetAddressData.DEFAULT)) == 0:
-            self.isDefault = True
+            self.isDefault_field = True
         else:
-            self.isDefault = False
+            self.isDefault_field = False
         self.log()
     
 
@@ -192,7 +215,7 @@ class StreetAddress:
     
 
     def isDefault(self) -> bool:
-        return self.isDefault
+        return self.isDefault_field
     
 
     def isEmpty(self) -> bool:
@@ -212,27 +235,39 @@ class StreetAddress:
     
 
     def validationInfo(self) -> str:
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("Address Failed To Validate - All fields must contain data.<br></br>")
         stringValidationUtil: StringValidationUtil = StringValidationUtil.getInstance()
-        if not stringValidationUtil.isValidRequired(self.getName(), StreetAddressData.MIN, StreetAddressData.MAX):
+        if not (stringValidationUtil.isValidRequired(self.getName(), StreetAddressData.MIN, StreetAddressData.MAX)):
             stringBuffer.append("Please enter a valid name")
             stringBuffer.append("<br></br>")
-        if not stringValidationUtil.isValidRequired(self.getStreet(), StreetAddressData.MIN, StreetAddressData.MAX):
+        if not (stringValidationUtil.isValidRequired(self.getStreet(), StreetAddressData.MIN, StreetAddressData.MAX)):
             stringBuffer.append("Please enter a valid street")
             stringBuffer.append("<br></br>")
-        if not stringValidationUtil.isValidRequired(self.getCity(), StreetAddressData.MIN, StreetAddressData.MAX):
+        if not (stringValidationUtil.isValidRequired(self.getCity(), StreetAddressData.MIN, StreetAddressData.MAX)):
             stringBuffer.append("Please enter a valid city")
             stringBuffer.append("<br></br>")
-        if not stringValidationUtil.isValidRequired(self.getState(), StreetAddressData.MIN, StreetAddressData.MAX):
+        if not (stringValidationUtil.isValidRequired(self.getState(), StreetAddressData.MIN, StreetAddressData.MAX)):
             stringBuffer.append("Please enter a valid state")
             stringBuffer.append("<br></br>")
-        if not stringValidationUtil.isValidRequired(self.getCode(), StreetAddressData.MIN, StreetAddressData.MAX):
+        if not (stringValidationUtil.isValidRequired(self.getCode(), StreetAddressData.MIN, StreetAddressData.MAX)):
             stringBuffer.append("Please enter a valid zipcode")
             stringBuffer.append("<br></br>")
-        if not stringValidationUtil.isValidRequired(self.getCountry(), StreetAddressData.MIN, StreetAddressData.MAX):
+        if not (stringValidationUtil.isValidRequired(self.getCountry(), StreetAddressData.MIN, StreetAddressData.MAX)):
             stringBuffer.append("Please enter a valid country")
             stringBuffer.append("<br></br>")
         return str(stringBuffer)
@@ -244,6 +279,7 @@ class StreetAddress:
     
 
     def toValidationInfoNode(self, document: Document) -> Node:
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
         from org.allbinary.string.CommonStrings import CommonStrings
         from org.w3c.dom.Document import Document
         from org.w3c.dom.Node import Node
@@ -261,6 +297,13 @@ class StreetAddress:
     
 
     def toHashMap(self) -> HashMap:
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
         from java.util.HashMap import HashMap
         from org.allbinary.logic.StdUtil import StdUtil
         hashMap: HashMap = StdUtil.getInstance().createHashMap()
@@ -276,6 +319,7 @@ class StreetAddress:
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
+        from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
         from java.util.HashMap import HashMap
         from java.util.Set import Set
         from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper

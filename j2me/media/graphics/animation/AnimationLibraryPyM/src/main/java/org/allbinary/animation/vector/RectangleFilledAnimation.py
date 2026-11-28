@@ -15,22 +15,29 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.Animation import Animation
 from org.allbinary.graphics.color.ColorCompositeInterface import ColorCompositeInterface
 
 
+@java_inherited_overloads
 class RectangleFilledAnimation(*java_bases(Animation, ColorCompositeInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("widthP", 0)
+        vars(self).setdefault("heightP", 0)
 
     def _init_fields(self) -> None:
-        self.widthP: int = None
-        self.heightP: int = None
+        if "widthP" not in vars(self): self.widthP: int = 0
+        if "heightP" not in vars(self): self.heightP: int = 0
     
 
     def __init__(self, width: int, height: int, basicColor: BasicColor) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.widthP = width
         self.heightP = height
         self.setBasicColorP(basicColor)
@@ -56,12 +63,12 @@ class RectangleFilledAnimation(*java_bases(Animation, ColorCompositeInterface)):
 
     def getBasicColorP(self) -> BasicColor:
         from org.allbinary.graphics.color.BasicColor import BasicColor
-        return super().getBasicColorP()
+        return java_super_call(super(), "getBasicColorP")
     
 
     def setBasicColorP(self, basicColor: BasicColor) -> None:
         from org.allbinary.graphics.color.BasicColor import BasicColor
-        super().setBasicColorP(basicColor)
+        java_super_call(super(), "setBasicColorP", basicColor)
 # from javax.microedition.lcdui.Graphics import Graphics
 # from org.allbinary.graphics.color.BasicColor import BasicColor
 

@@ -20,13 +20,13 @@ from __future__ import annotations
 class ImageUnifierProperties:
 
     def _init_fields(self) -> None:
-        self.rows: int = None
-        self.columns: int = None
-        self.imageUnifierCell: ImageUnifierCell = None
+        if "rows" not in vars(self): self.rows: int = None
+        if "columns" not in vars(self): self.columns: int = None
+        if "imageUnifierCell" not in vars(self): self.imageUnifierCell: ImageUnifierCell = None
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getWidth(self) -> int:

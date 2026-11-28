@@ -23,11 +23,11 @@ class ScoreComparator(RecordComparator):
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.isHighestBest: bool = None
+        if "isHighestBest" not in vars(self): self.isHighestBest: bool = False
     
 
     def __init__(self, isHighestBest: bool) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.isHighestBest = isHighestBest
     
 
@@ -36,6 +36,7 @@ class ScoreComparator(RecordComparator):
     
 
     def compare(self, recordOne: list[int], recordTwo: list[int]) -> int:
+        from java.io.ByteArrayInputStream import ByteArrayInputStream
         from java.io.DataInputStream import DataInputStream
         from org.allbinary.string.CommonStrings import CommonStrings
         byteArrayInputStreamOne: ByteArrayInputStream = ByteArrayInputStream(recordOne)

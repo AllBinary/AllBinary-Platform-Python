@@ -15,50 +15,51 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.business.context.modules.storefronts.BasicStoreFrontInterface import BasicStoreFrontInterface
 
 
 class BasicStoreFront(BasicStoreFrontInterface):
 
     def _init_fields(self) -> None:
-        self.name: str = None
-        self.userName: str = None
-        self.basketName: str = None
-        self.homeHostName: str = None
-        self.homeHostNamePath: str = None
-        self.hostName: str = None
-        self.hostNamePath: str = None
-        self.testHomeHostName: str = None
-        self.testHomeHostNamePath: str = None
-        self.testHostName: str = None
-        self.testHostNamePath: str = None
-        self.imagePath: str = None
-        self.staticPath: str = None
-        self.categoryPath: str = None
-        self.inventoryControl: str = None
-        self.subStores: str = None
-        self.tagLocation: str = None
-        self.packageLocation: str = None
-        self.ftp: str = None
-        self.ftpPath: str = None
-        self.ftpUserName: str = None
-        self.ftpPassword: str = None
-        self.testFtp: str = None
-        self.testFtpPath: str = None
-        self.testFtpUserName: str = None
-        self.testFtpPassword: str = None
-        self.timeCreated: str = None
-        self.lastModified: str = None
+        if "name" not in vars(self): self.name: str = None
+        if "userName" not in vars(self): self.userName: str = None
+        if "basketName" not in vars(self): self.basketName: str = None
+        if "homeHostName" not in vars(self): self.homeHostName: str = None
+        if "homeHostNamePath" not in vars(self): self.homeHostNamePath: str = None
+        if "hostName" not in vars(self): self.hostName: str = None
+        if "hostNamePath" not in vars(self): self.hostNamePath: str = None
+        if "testHomeHostName" not in vars(self): self.testHomeHostName: str = None
+        if "testHomeHostNamePath" not in vars(self): self.testHomeHostNamePath: str = None
+        if "testHostName" not in vars(self): self.testHostName: str = None
+        if "testHostNamePath" not in vars(self): self.testHostNamePath: str = None
+        if "imagePath" not in vars(self): self.imagePath: str = None
+        if "staticPath" not in vars(self): self.staticPath: str = None
+        if "categoryPath" not in vars(self): self.categoryPath: str = None
+        if "inventoryControl" not in vars(self): self.inventoryControl: str = None
+        if "subStores" not in vars(self): self.subStores: str = None
+        if "tagLocation" not in vars(self): self.tagLocation: str = None
+        if "packageLocation" not in vars(self): self.packageLocation: str = None
+        if "ftp" not in vars(self): self.ftp: str = None
+        if "ftpPath" not in vars(self): self.ftpPath: str = None
+        if "ftpUserName" not in vars(self): self.ftpUserName: str = None
+        if "ftpPassword" not in vars(self): self.ftpPassword: str = None
+        if "testFtp" not in vars(self): self.testFtp: str = None
+        if "testFtpPath" not in vars(self): self.testFtpPath: str = None
+        if "testFtpUserName" not in vars(self): self.testFtpUserName: str = None
+        if "testFtpPassword" not in vars(self): self.testFtpPassword: str = None
+        if "timeCreated" not in vars(self): self.timeCreated: str = None
+        if "lastModified" not in vars(self): self.lastModified: str = None
 
     def __init__(self, *args) -> None:
         if len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
         elif len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
     
 
     def _constructor0(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def _constructor1(self, storeHashMap: HashMap) -> None:
@@ -66,7 +67,7 @@ class BasicStoreFront(BasicStoreFrontInterface):
         from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
         from org.allbinary.business.entry.EntryData import EntryData
         from org.allbinary.business.user.UserData import UserData
-        self._init_fields()
+        __class__._init_fields(self)
         storeFrontData: StoreFrontData = StoreFrontData.getInstance()
         self.name = storeHashMap.get(storeFrontData.NAME)
         self.userName = storeHashMap.get(UserData.USERNAME)
@@ -106,7 +107,7 @@ class BasicStoreFront(BasicStoreFrontInterface):
     def getCurrentHostName(self) -> str:
         from org.allbinary.globals.URLGLOBALS import URLGLOBALS
         location: str = None
-        if URLGLOBALS.isTestingMode():
+        if java_predicate(URLGLOBALS, "isTestingMode"):
             location = self.getTestHostName()
         else:
             location = self.getHostName()
@@ -116,7 +117,7 @@ class BasicStoreFront(BasicStoreFrontInterface):
     def getCurrentHostNamePath(self) -> str:
         from org.allbinary.globals.URLGLOBALS import URLGLOBALS
         location: str = None
-        if URLGLOBALS.isTestingMode():
+        if java_predicate(URLGLOBALS, "isTestingMode"):
             location = self.getTestHostNamePath()
         else:
             location = self.getHostNamePath()
@@ -126,7 +127,7 @@ class BasicStoreFront(BasicStoreFrontInterface):
     def getCurrentHomeHostName(self) -> str:
         from org.allbinary.globals.URLGLOBALS import URLGLOBALS
         location: str = None
-        if URLGLOBALS.isTestingMode():
+        if java_predicate(URLGLOBALS, "isTestingMode"):
             location = self.getTestHomeHostName()
         else:
             location = self.getHomeHostName()
@@ -136,7 +137,7 @@ class BasicStoreFront(BasicStoreFrontInterface):
     def getCurrentHomeHostNamePath(self) -> str:
         from org.allbinary.globals.URLGLOBALS import URLGLOBALS
         location: str = None
-        if URLGLOBALS.isTestingMode():
+        if java_predicate(URLGLOBALS, "isTestingMode"):
             location = self.getTestHomeHostNamePath()
         else:
             location = self.getHomeHostNamePath()

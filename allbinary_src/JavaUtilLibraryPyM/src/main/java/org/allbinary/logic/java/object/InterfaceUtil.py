@@ -53,7 +53,7 @@ class InterfaceUtil:
     def isImplemented_j2_1(clazz: type, anyType: object) -> bool:
         classes: list[type] = type(anyType).getInterfaces()
         for index in range(0, len(classes)):
-            if clazz.__module__ + "." + clazz.__qualname__.compareTo(classes[index].getName()) == 0:
+            if __import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(clazz).compareTo(classes[index].getName()) == 0:
                 return True
         return False
     
@@ -84,7 +84,7 @@ class InterfaceUtil:
         classes: list[type] = type(anyType).getInterfaces()
         stringBuffer.append("isImplementedView: \n")
         for index in range(0, len(classes)):
-            stringBuffer.append(clazz.__module__ + "." + clazz.__qualname__)
+            stringBuffer.append(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(clazz))
             stringBuffer.append(" should be = ")
             stringBuffer.append(classes[index].getName())
             stringBuffer.append(classes[index].getName())

@@ -15,23 +15,28 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.globals.UrlGlobalsInterface import UrlGlobalsInterface
 
 
 #implements
+@java_inherited_overloads
 class AppUrlGlobals(UrlGlobalsInterface):
     NULL_APP_URL_GLOBALS: AppUrlGlobals = None
     _lock = threading.RLock()
+    def _java_defaults(self):
+        vars(self).setdefault("path", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.string.StringUtil import StringUtil
         self.path: str = StringUtil.getInstance().EMPTY_STRING
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def isTestingMode(self) -> bool:
@@ -44,11 +49,11 @@ class AppUrlGlobals(UrlGlobalsInterface):
 
     def setWebappPath(self, path: str) -> None:
         with self._lock:
-            return self._setWebappPath_unlocked(path)
+            return __class__.__dict__["_setWebappPath_unlocked"].__get__(self, __class__)(path)
 
     def _setWebappPath_unlocked(self, path: str) -> None:
         self.path = path
-        if not self.path.endswith("\\") or self.path.endswith("/"):
+        if not (self.path.endswith("\\") or self.path.endswith("/")):
             self.path = self.path + "\\"
     
 

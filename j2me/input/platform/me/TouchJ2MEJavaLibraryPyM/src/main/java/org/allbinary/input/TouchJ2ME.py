@@ -32,7 +32,7 @@ class TouchJ2ME:
         from org.allbinary.input.motion.gesture.observer.BasicMotionGesturesHandler import BasicMotionGesturesHandler
         from org.allbinary.input.motion.gesture.observer.GameMotionGestureListener import GameMotionGestureListener
         from org.allbinary.input.motion.gesture.observer.MotionGestureReceiveInterfaceFactory import MotionGestureReceiveInterfaceFactory
-        self._init_fields()
+        __class__._init_fields(self)
         motionGesturesHandler: BasicMotionGesturesHandler = self.motionRecognizer.getMotionGestureRecognizer().getMotionGesturesHandler()
         motionGesturesHandler.addListenerInterface(GameMotionGestureListener(MotionGestureReceiveInterfaceFactory.getInstance()))
     

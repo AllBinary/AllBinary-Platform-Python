@@ -15,10 +15,18 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 # from javax.swing.JPanel import JPanel
 
 
+@java_inherited_overloads
 class ImageJPanel(JPanel):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("canvasStrings", None)
+        vars(self).setdefault("isDrawn", False)
+        vars(self).setdefault("bufferedImage", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
@@ -28,19 +36,20 @@ class ImageJPanel(JPanel):
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.canvasStrings: CanvasStrings = CanvasStrings.getInstance()
         self.isDrawn: bool = False
-        self.bufferedImage: BufferedImage = None
+        if "bufferedImage" not in vars(self): self.bufferedImage: BufferedImage = None
     
 
     def __init__(self, bufferedImage: BufferedImage) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.initComponents()
         self.bufferedImage = bufferedImage
         self.setSize(self.bufferedImage.getWidth(None), self.bufferedImage.getHeight(None))
     
 
     def paint(self, graphics: Graphics) -> None:
-        if not self.isDrawn:
+        if not (self.isDrawn):
             self.logUtil.putF(self.commonStrings.START, self, self.canvasStrings.PAINT)
             graphics.drawImage(self.bufferedImage, 0, 0, self.bufferedImage.getWidth(None), self.bufferedImage.getHeight(None), None)
             self.isDrawn = True

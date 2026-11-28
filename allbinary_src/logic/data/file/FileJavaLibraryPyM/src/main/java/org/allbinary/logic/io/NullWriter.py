@@ -15,10 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from java.io.Writer import Writer
 
 
+@java_inherited_overloads
 class NullWriter(Writer):
     NULL_WRITER: NullWriter = None
 
@@ -51,14 +53,16 @@ class NullWriter(Writer):
 
     def write(self, *args):
         if len(args) == 1 and True and isinstance(args[0], int) and not isinstance(args[0], bool):
-            return self.write_j1_1(*args)
+            return __class__.__dict__["write_j1_1"].__get__(self, __class__)(*args)
         if len(args) == 3 and True and (args[0] is None or isinstance(args[0], list)) and isinstance(args[1], int) and not isinstance(args[1], bool) and isinstance(args[2], int) and not isinstance(args[2], bool):
-            return self.write_j3_1(*args)
+            return __class__.__dict__["write_j3_1"].__get__(self, __class__)(*args)
         if len(args) == 1:
-            return self.write_j1_2(*args)
+            return __class__.__dict__["write_j1_2"].__get__(self, __class__)(*args)
         if len(args) == 3:
-            return self.write_j3_2(*args)
-        return getattr(self, "write_j" + str(len(args)))(*args)
+            return __class__.__dict__["write_j3_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("write_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().write(*args)
     
 
     # throws IOException

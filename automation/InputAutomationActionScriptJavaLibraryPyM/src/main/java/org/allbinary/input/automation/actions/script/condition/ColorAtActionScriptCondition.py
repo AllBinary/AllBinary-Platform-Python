@@ -15,31 +15,41 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.input.automation.actions.script.condition.BasicProfileActionScriptCondition import BasicProfileActionScriptCondition
 from org.allbinary.input.automation.actions.script.condition.ColorAtActionScriptConditionInterface import ColorAtActionScriptConditionInterface
 
 
+@java_inherited_overloads
 class ColorAtActionScriptCondition(*java_bases(BasicProfileActionScriptCondition, ColorAtActionScriptConditionInterface)):
     NAME: str = "If Color At"
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("colorAtActionScriptConditionJPanel", None)
+        vars(self).setdefault("point", None)
+        vars(self).setdefault("colorRangeInterface", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.media.image.analysis.ColorRange import ColorRange
         from org.allbinary.media.image.analysis.ColorRangeInterface import ColorRangeInterface
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.colorAtActionScriptConditionJPanel: ColorAtActionScriptConditionJPanel = None
-        self.point: Point = None
+        if "colorAtActionScriptConditionJPanel" not in vars(self): self.colorAtActionScriptConditionJPanel: ColorAtActionScriptConditionJPanel = None
+        if "point" not in vars(self): self.point: Point = None
         self.colorRangeInterface: ColorRangeInterface = ColorRange()
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
         elif len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
     
 
     def _constructor1(self, node: Node) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.input.automation.actions.script.condition.ColorAtActionScriptConditionData import ColorAtActionScriptConditionData
         from org.allbinary.input.automation.actions.script.condition.ColorAtActionScriptConditionData import ColorAtActionScriptConditionData
         from org.allbinary.input.automation.actions.script.condition.ColorAtActionScriptConditionData import ColorAtActionScriptConditionData
@@ -54,7 +64,7 @@ class ColorAtActionScriptCondition(*java_bases(BasicProfileActionScriptCondition
         from org.w3c.dom.Node import Node
         from org.w3c.dom.NodeList import NodeList
         super().__init__(ColorAtActionScriptCondition.NAME, node)
-        self._init_fields()
+        __class__._init_fields(self)
         self.point = Point(0, 0)
         actionNode: Node = DomSearchHelper.getNode(ColorAtActionScriptConditionData.NAME, node.getChildNodes())
         if actionNode is not None:
@@ -91,8 +101,9 @@ class ColorAtActionScriptCondition(*java_bases(BasicProfileActionScriptCondition
     
 
     def _constructor0(self) -> None:
+        __class__._java_defaults(self)
         super().__init__(ColorAtActionScriptCondition.NAME)
-        self._init_fields()
+        __class__._init_fields(self)
         self.point = Point(0, 0)
         self.init()
     
@@ -144,7 +155,7 @@ class ColorAtActionScriptCondition(*java_bases(BasicProfileActionScriptCondition
         from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
         from org.w3c.dom.Document import Document
         from org.w3c.dom.Node import Node
-        node: Node = super().toXmlNode(document)
+        node: Node = java_super_call(super(), "toXmlNode", document)
         node.appendChild(ModDomHelper.createNodeWithValueNodes(document, ColorAtActionScriptConditionData.NAME, self.toHashMap()))
         return node
     
@@ -163,7 +174,7 @@ class ColorAtActionScriptCondition(*java_bases(BasicProfileActionScriptCondition
         colorCacheable: ColorCacheable = automaticCacheInterface.get(colorInteger)
         color: Color = colorCacheable.getColor()
         if self.colorRangeInterface.isInRange(color):
-            return super().shouldProcess(frame)
+            return java_super_call(super(), "shouldProcess", frame)
         return False
     
 

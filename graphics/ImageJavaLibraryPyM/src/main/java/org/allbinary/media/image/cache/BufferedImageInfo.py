@@ -20,13 +20,13 @@ from __future__ import annotations
 class BufferedImageInfo:
 
     def _init_fields(self) -> None:
-        self.width: int = None
-        self.height: int = None
-        self.type_: int = None
+        if "width" not in vars(self): self.width: int = 0
+        if "height" not in vars(self): self.height: int = 0
+        if "type_" not in vars(self): self.type_: int = 0
     
 
     def __init__(self, width: int, height: int, type_: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.width = width
         self.height = height
         self.type_ = type_

@@ -15,10 +15,18 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 # from javax.servlet.http.HttpServlet import HttpServlet
 
 
+@java_inherited_overloads
 class DownloadFileServlet(HttpServlet):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("DOWNLOAD", None)
+        vars(self).setdefault("DEFAULT_BUFFER_SIZE", 0)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -29,8 +37,9 @@ class DownloadFileServlet(HttpServlet):
         self.DEFAULT_BUFFER_SIZE: int = 16384
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws ServletException, IOException
@@ -65,12 +74,12 @@ class DownloadFileServlet(HttpServlet):
             else:
                 response.sendError(HttpServletResponse.SC_NOT_FOUND)
             file: AbFile = AbFile.createAbFile(str(URLGLOBALS.getWebappPath()) + filePath)
-            if not file.exists():
+            if not (file.exists()):
                 response.sendError(HttpServletResponse.SC_NOT_FOUND)
                 return
             hashMap: HashMap = StdUtil.getInstance().createHashMap()
             authenticationHelper: AuthenticationHelper = AuthenticationHelperFactory().getInstance(hashMap, request)
-            if authenticationHelper.isAuthenticated():
+            if java_predicate(authenticationHelper, "isAuthenticated"):
                 if AuthenticationHelperUtil.getInstance().isAuthorized(authenticationHelper, filePath):
                     inputStream = CloudStreamUtil.getInstance().getFile(file)
                     contentType: str = self.getServletContext().getMimeType(file.getName())
@@ -96,7 +105,7 @@ class DownloadFileServlet(HttpServlet):
             response.sendError(HttpServletResponse.SC_NOT_FOUND)
         finally:
             StreamUtil.getInstance().close(response.getOutputStream())
-            if not StreamUtil.getInstance().close(inputStream):
+            if not (StreamUtil.getInstance().close(inputStream)):
                 pass
     
 

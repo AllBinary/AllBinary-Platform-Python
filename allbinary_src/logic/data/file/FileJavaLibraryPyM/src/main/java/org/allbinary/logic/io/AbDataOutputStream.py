@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.io.DataOutputStream import DataOutputStream
 
 
+@java_inherited_overloads
 class AbDataOutputStream(DataOutputStream):
     
 

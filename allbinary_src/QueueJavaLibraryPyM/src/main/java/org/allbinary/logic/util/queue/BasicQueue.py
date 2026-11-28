@@ -22,19 +22,18 @@ class BasicQueue:
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.queueVector: BasicArrayList = BasicArrayListD()
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
     def offer(self, anyType: object) -> bool:
         with self._lock:
-            return self._offer_unlocked(anyType)
+            return __class__.__dict__["_offer_unlocked"].__get__(self, __class__)(anyType)
 
     def _offer_unlocked(self, anyType: object) -> bool:
         self.queueVector.add(anyType)
@@ -43,7 +42,7 @@ class BasicQueue:
 
     def remove(self, anyType: object) -> None:
         with self._lock:
-            return self._remove_unlocked(anyType)
+            return __class__.__dict__["_remove_unlocked"].__get__(self, __class__)(anyType)
 
     def _remove_unlocked(self, anyType: object) -> None:
         self.queueVector.remove(anyType)
@@ -51,7 +50,7 @@ class BasicQueue:
 
     def removeLast(self) -> object:
         with self._lock:
-            return self._removeLast_unlocked()
+            return __class__.__dict__["_removeLast_unlocked"].__get__(self, __class__)()
 
     def _removeLast_unlocked(self) -> object:
         anyType: object = self.queueVector.get(self.queueVector.size() - 1)

@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -36,7 +38,7 @@ class ImageUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getDefaultConfiguration(self) -> GraphicsConfiguration:
@@ -57,8 +59,10 @@ class ImageUtil:
         bufferedImage: BufferedImage = None
         for index in range(0, size):
             bufferedImage = bufferedImageArray[index]
-            newWidth: int = int((bufferedImage.getWidth() * percent / 100))
-            newHeight: int = int((bufferedImage.getHeight() * percent / 100))
+            newWidth: int = int((java_divide(bufferedImage.getWidth() * percent, 100)
+            ))
+            newHeight: int = int((java_divide(bufferedImage.getHeight() * percent, 100)
+            ))
             scaledBufferedImageArray[index] = self.createBufferedImage(bufferedImage, newWidth, newHeight, scale)
         return scaledBufferedImageArray
     
@@ -109,7 +113,7 @@ class ImageUtil:
             ratioX = widthRatio
             ratioY = heightRatio
         affineTransform: AffineTransform = AffineTransform.getScaleInstance(ratioX, ratioY)
-        if not scale and allowTranslate:
+        if not (scale) and allowTranslate:
             dx: float = (float(newWidth) - width) / 2.0
             dy: float = (float(newHeight) - height) / 2.0
             affineTransform.translate(dx, dy)
@@ -155,7 +159,7 @@ class ImageUtil:
         from org.microemu.device.j2se.J2SEImmutableImage import J2SEImmutableImage
         from org.microemu.device.j2se.J2SEMutableImage import J2SEMutableImage
         bufferedImage: BufferedImage = None
-        if image.isMutable():
+        if java_predicate(image, "isMutable"):
             j2seImage: J2SEMutableImage = image
             bufferedImage = j2seImage.getImage()
         else:

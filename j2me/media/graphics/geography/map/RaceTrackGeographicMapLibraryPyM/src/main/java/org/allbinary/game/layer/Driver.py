@@ -25,11 +25,11 @@ class Driver:
         from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
         self.turnSpeed: int = SmallIntegerSingletonFactory.getInstance().getAt(0)
         self.trackPathSelectionSkill: int = SmallIntegerSingletonFactory.getInstance().getAt(0)
-        self.aggression: Aggression = None
+        if "aggression" not in vars(self): self.aggression: Aggression = None
     
 
     def __init__(self, turnSpeed: int, trackPathSelectionSkill: int, aggression: Aggression) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.setTurnSpeed(turnSpeed)
         self.setTrackPathSelectionSkill(trackPathSelectionSkill)
         self.aggression = aggression

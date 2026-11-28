@@ -21,14 +21,13 @@ from __future__ import annotations
 class UserRole(object):
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.user.UserFactoryInterface import UserFactoryInterface
-        self.basicUserRole: BasicUserRole = None
-        self.userFactoryInterface: UserFactoryInterface = None
+        if "basicUserRole" not in vars(self): self.basicUserRole: BasicUserRole = None
+        if "userFactoryInterface" not in vars(self): self.userFactoryInterface: UserFactoryInterface = None
     
 
     def __init__(self, aBasicUserRole: BasicUserRole, aUserFactoryInterface: UserFactoryInterface) -> None:
         from org.allbinary.business.user.UserFactoryInterface import UserFactoryInterface
-        self._init_fields()
+        __class__._init_fields(self)
         self.basicUserRole = aBasicUserRole
         self.userFactoryInterface = aUserFactoryInterface
     

@@ -15,21 +15,32 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.score.HighScores import HighScores
 
 
+@java_inherited_overloads
 class RecordStoreHighScores(HighScores):
     hashTable: ABHashtable[object, object] = None
     _lock = threading.RLock()
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("platformRecordIdUtil", None)
+        vars(self).setdefault("tsUtil", None)
+        vars(self).setdefault("RECORD_ID", None)
+        vars(self).setdefault("MAXHIGHSCORES", 0)
+        vars(self).setdefault("gameInfo", None)
+        vars(self).setdefault("abeClientInformation", None)
+        vars(self).setdefault("recordComparatorInterface", None)
 
     def _init_fields(self) -> None:
-        from javax.microedition.rms.RecordComparator import RecordComparator
         from org.allbinary.TsUtil import TsUtil
-        from org.allbinary.game.GameInfo import GameInfo
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         from org.allbinary.persistance.PlatformRecordIdUtil import PlatformRecordIdUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
@@ -38,17 +49,18 @@ class RecordStoreHighScores(HighScores):
         self.tsUtil: TsUtil = TsUtil.getInstance()
         self.RECORD_ID: str = "_HS"
         self.MAXHIGHSCORES: int = 100
-        self.gameInfo: GameInfo = None
-        self.abeClientInformation: AbeClientInformationInterface = None
-        self.recordComparatorInterface: RecordComparator = None
+        if "gameInfo" not in vars(self): self.gameInfo: GameInfo = None
+        if "abeClientInformation" not in vars(self): self.abeClientInformation: AbeClientInformationInterface = None
+        if "recordComparatorInterface" not in vars(self): self.recordComparatorInterface: RecordComparator = None
     
 
     def __init__(self, abeClientInformation: AbeClientInformationInterface, gameInfo: GameInfo, name: str, heading: str, columnTwoHeading: str, recordComparatorInterface: RecordComparator) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.rms.RecordComparator import RecordComparator
         from org.allbinary.game.GameInfo import GameInfo
         from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         super().__init__(name, heading, columnTwoHeading)
-        self._init_fields()
+        __class__._init_fields(self)
         self.abeClientInformation = abeClientInformation
         self.gameInfo = gameInfo
         self.recordComparatorInterface = recordComparatorInterface
@@ -82,7 +94,7 @@ class RecordStoreHighScores(HighScores):
 
     def addHighScore(self, newHighScore: HighScore) -> None:
         with self._lock:
-            return self._addHighScore_unlocked(newHighScore)
+            return __class__.__dict__["_addHighScore_unlocked"].__get__(self, __class__)(newHighScore)
 
     def _addHighScore_unlocked(self, newHighScore: HighScore) -> None:
         from javax.microedition.rms.RecordStore import RecordStore
@@ -93,7 +105,7 @@ class RecordStoreHighScores(HighScores):
         recordStore: RecordStore = NullRecordStore.NULL_RECORD_STORE
         try:
             self.logUtil.putF(str(StringMaker().append("Adding HighScore: ").appendlong(int(newHighScore.getScore()))), self, self.commonStrings.ADD)
-            if self.isTooManyHighScores():
+            if java_predicate(self, "isTooManyHighScores"):
                 self.logUtil.putF("Removing Lowest Score", self, self.commonStrings.ADD)
                 self.removeLowestHighScore()
             recordStore = RecordStore.openRecordStore(self.getRecordId(self.abeClientInformation), True)
@@ -118,6 +130,7 @@ class RecordStoreHighScores(HighScores):
     def removeLowestHighScore(self) -> None:
         from org.allbinary.game.score.HighScore import HighScore
         from org.allbinary.game.score.HighScore import HighScore
+        from java.io.ByteArrayInputStream import ByteArrayInputStream
         from java.io.DataInputStream import DataInputStream
         from javax.microedition.rms.RecordComparator import RecordComparator
         from javax.microedition.rms.RecordEnumeration import RecordEnumeration
@@ -138,7 +151,7 @@ class RecordStoreHighScores(HighScores):
             recordAsBytes: list[int] = None
             byteArrayInputStream: ByteArrayInputStream = None
             inputStream: DataInputStream = None
-            while recordEnum.hasNextElement():
+            while java_predicate(recordEnum, "hasNextElement"):
                 id: int = recordEnum.nextRecordId()
                 recordAsBytes = self.tsUtil.getRecord(recordStore, id)
                 if recordAsBytes is not None:
@@ -167,6 +180,7 @@ class RecordStoreHighScores(HighScores):
 
     def load(self) -> None:
         from org.allbinary.game.score.HighScore import HighScore
+        from java.io.ByteArrayInputStream import ByteArrayInputStream
         from java.io.DataInputStream import DataInputStream
         from javax.microedition.rms.RecordComparator import RecordComparator
         from javax.microedition.rms.RecordEnumeration import RecordEnumeration
@@ -188,7 +202,7 @@ class RecordStoreHighScores(HighScores):
             recordAsBytes: list[int] = None
             byteArrayInputStream: ByteArrayInputStream = None
             inputStream: DataInputStream = None
-            while recordEnum.hasNextElement():
+            while java_predicate(recordEnum, "hasNextElement"):
                 id: int = recordEnum.nextRecordId()
                 recordAsBytes = self.tsUtil.getRecord(recordStore, id)
                 if recordAsBytes is not None:
@@ -239,13 +253,13 @@ class RecordStoreHighScores(HighScores):
     # throws Exception
     def isBestScore(self, newHighScore: HighScore) -> bool:
         with self._lock:
-            return self._isBestScore_unlocked(newHighScore)
+            return __class__.__dict__["_isBestScore_unlocked"].__get__(self, __class__)(newHighScore)
 
     def _isBestScore_unlocked(self, newHighScore: HighScore) -> bool:
         from javax.microedition.rms.RecordComparator import RecordComparator
         from org.allbinary.util.BasicArrayList import BasicArrayList
         try:
-            if not self.isTooManyHighScores():
+            if not (java_predicate(self, "isTooManyHighScores")):
                 self.logUtil.putF("Slot Available for a High Score", self, "isBestScore")
                 return True
             else:
@@ -268,7 +282,7 @@ class RecordStoreHighScores(HighScores):
         from org.allbinary.string.CommonSeps import CommonSeps
         from org.allbinary.util.BasicArrayList import BasicArrayList
         stringBuffer: StringMaker = StringMaker()
-        stringBuffer.append(str(super()))
+        stringBuffer.append(java_super_call(super(), "toString"))
         list_: BasicArrayList = self.getList()
         size: int = list_.size()
         for index in range(0, size):

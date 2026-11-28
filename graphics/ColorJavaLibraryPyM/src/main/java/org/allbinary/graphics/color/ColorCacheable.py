@@ -21,12 +21,12 @@ from org.allbinary.logic.util.cache.CacheableInterface import CacheableInterface
 class ColorCacheable(CacheableInterface):
 
     def _init_fields(self) -> None:
-        self.key: object = None
-        self.color: Color = None
+        if "key" not in vars(self): self.key: object = None
+        if "color" not in vars(self): self.color: Color = None
     
 
     def __init__(self, key: object) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.key = key
         self.color = Color(int((key)))
     

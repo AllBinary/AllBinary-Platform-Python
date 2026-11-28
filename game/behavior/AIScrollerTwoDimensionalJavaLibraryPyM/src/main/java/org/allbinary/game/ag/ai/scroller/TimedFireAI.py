@@ -15,24 +15,32 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.ai.BasicAI import BasicAI
 
 
+@java_inherited_overloads
 class TimedFireAI(BasicAI):
     TIME: int = None
+    def _java_defaults(self):
+        vars(self).setdefault("maxFireDelayTimeHelper", None)
+        vars(self).setdefault("delay", 0)
 
     def _init_fields(self) -> None:
         from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         self.maxFireDelayTimeHelper: TimeDelayHelper = TimeDelayHelper(0)
-        self.delay: int = None
+        if "delay" not in vars(self): self.delay: int = 0
     
 
     def __init__(self, delay: int, ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.input.GameInput import GameInput
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         super().__init__(ownerLayerInterface, gameInput)
-        self._init_fields()
+        __class__._init_fields(self)
         self.delay = delay
     
 
@@ -43,7 +51,7 @@ class TimedFireAI(BasicAI):
         from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
         timeFiredInterface: TimeFiredInterface = self.getOwnerLayerInterface()
         if self.maxFireDelayTimeHelper.isTime(GameTickTimeDelayHelperFactory.getInstance().startTime) and timeFiredInterface.getLastFireTime() + self.maxFireDelayTimeHelper.delay < self.maxFireDelayTimeHelper.getStartTime():
-            super().processKeyAI(Canvas.KEY_NUM1)
+            java_super_call(super(), "processKeyAI", Canvas.KEY_NUM1)
             self.maxFireDelayTimeHelper.delay = self.delay
 # from javax.microedition.lcdui.Canvas import Canvas
 # from org.allbinary.game.input.GameInput import GameInput

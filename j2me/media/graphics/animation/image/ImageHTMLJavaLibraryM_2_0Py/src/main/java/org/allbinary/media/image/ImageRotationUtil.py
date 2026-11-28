@@ -16,6 +16,8 @@
 from __future__ import annotations
 
 import math
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -33,7 +35,7 @@ class ImageRotationUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def rotateImage(self, originalImage: Image, image: Image, totalAngle: int) -> Image:
@@ -41,13 +43,15 @@ class ImageRotationUtil:
         from org.microemu.device.playn.PlaynMutableImage import PlaynMutableImage
         from playn.core.Canvas import Canvas
         from playn.core.ImageImpl import ImageImpl
-        if image.isMutable():
+        if java_predicate(image, "isMutable"):
             htmlImage: PlaynMutableImage = image
             canvasImage: ImageImpl = htmlImage.getImage()
             canvas: Canvas = self.playnUtil.getCanvas(canvasImage)
             canvas.save()
             canvas.clear()
-            canvas.translate(originalImage.getWidth() / 2, originalImage.getHeight() / 2)
+            canvas.translate(java_divide(originalImage.getWidth(), 2)
+            , java_divide(originalImage.getHeight(), 2)
+            )
             image2: Image = self.rotateImageCanvasSurface(originalImage, image, canvas, totalAngle)
             self.drawImage(originalImage, image, canvas)
             canvas.restore()
@@ -59,10 +63,14 @@ class ImageRotationUtil:
     def rotateImageCanvasSurfaceClear(self, originalImage: Image, image: Image, canvasSurface: Canvas, totalAngle: int) -> Image:
         from javax.microedition.lcdui.Image import Image
         from playn.core.Canvas import Canvas
-        if image.isMutable():
-            canvasSurface.translate(-originalImage.getWidth() / 2, -originalImage.getHeight() / 2)
+        if java_predicate(image, "isMutable"):
+            canvasSurface.translate(java_divide(-originalImage.getWidth(), 2)
+            , java_divide(-originalImage.getHeight(), 2)
+            )
             canvasSurface.clear()
-            canvasSurface.translate(originalImage.getWidth() / 2, originalImage.getHeight() / 2)
+            canvasSurface.translate(java_divide(originalImage.getWidth(), 2)
+            , java_divide(originalImage.getHeight(), 2)
+            )
             return self.rotateImageCanvasSurface(originalImage, image, canvasSurface, totalAngle)
         else:
             return None
@@ -71,7 +79,7 @@ class ImageRotationUtil:
     def rotateImageCanvasSurface(self, originalImage: Image, image: Image, canvasSurface: Canvas, totalAngle: int) -> Image:
         from javax.microedition.lcdui.Image import Image
         from playn.core.Canvas import Canvas
-        if image.isMutable():
+        if java_predicate(image, "isMutable"):
             canvasSurface.rotate(float(math.radians(totalAngle)))
             return image
         else:
@@ -85,13 +93,15 @@ class ImageRotationUtil:
         from playn.core.Canvas import Canvas
         from playn.core.CoreImage import CoreImage
         originalPlayNImage: CoreImage = None
-        if originalImage.isMutable():
+        if java_predicate(originalImage, "isMutable"):
             originalHTMLImage: PlaynMutableImage = originalImage
             originalPlayNImage = originalHTMLImage.getImage()
         else:
             originalHTMLImage: PlaynImmutableImage = originalImage
             originalPlayNImage = originalHTMLImage.getImage()
-        canvasSurface.draw(originalPlayNImage, -originalImage.getWidth() / 2, -originalImage.getHeight() / 2)
+        canvasSurface.draw(originalPlayNImage, java_divide(-originalImage.getWidth(), 2)
+            , java_divide(-originalImage.getHeight(), 2)
+            )
     
 
     # throws Exception

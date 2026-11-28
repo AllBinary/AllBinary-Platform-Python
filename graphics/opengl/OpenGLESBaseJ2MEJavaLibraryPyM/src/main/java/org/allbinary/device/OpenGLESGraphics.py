@@ -11,14 +11,13 @@ from org.allbinary.device.GraphicsInterface import GraphicsInterface
 class OpenGLESGraphics(*java_bases(OpenGLSurfaceChangedInterface, GraphicsInterface)):
 
     def _init_fields(self) -> None:
-        from javax.microedition.khronos.opengles.GL10 import GL10
         from org.allbinary.string.CommonStrings import CommonStrings
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.gl: GL10 = NullGL10.NULL_GL10
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def updateGL(self, gl: GL) -> None:

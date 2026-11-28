@@ -15,11 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import threading
 from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
 
 
 #import org.allbinary.logic.communication.log.config.type.LogConfigTypes;
+@java_inherited_overloads
 class DbInitInfo(DbConnectionInfo):
     _lock = threading.RLock()
     
@@ -30,7 +33,7 @@ class DbInitInfo(DbConnectionInfo):
 
     def getUrl(self) -> str:
         from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-        url: str = super().getUrl()
+        url: str = java_super_call(super(), "getUrl")
         PreLogUtil.put("Url: " + url, self, "getUrl")
         return url
     
@@ -38,7 +41,7 @@ class DbInitInfo(DbConnectionInfo):
     # throws Exception
     def write(self) -> None:
         with self._lock:
-            return self._write_unlocked()
+            return __class__.__dict__["_write_unlocked"].__get__(self, __class__)()
 
     def _write_unlocked(self) -> None:
         pass
@@ -47,7 +50,7 @@ class DbInitInfo(DbConnectionInfo):
     # throws Exception
     def load(self) -> None:
         with self._lock:
-            return self._load_unlocked()
+            return __class__.__dict__["_load_unlocked"].__get__(self, __class__)()
 
     def _load_unlocked(self) -> None:
         pass
@@ -55,7 +58,7 @@ class DbInitInfo(DbConnectionInfo):
 
     def setHasRead(self, value: bool) -> None:
         with self._lock:
-            return self._setHasRead_unlocked(value)
+            return __class__.__dict__["_setHasRead_unlocked"].__get__(self, __class__)(value)
 
     def _setHasRead_unlocked(self, value: bool) -> None:
         pass

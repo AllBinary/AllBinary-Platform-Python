@@ -26,7 +26,7 @@ class AnalogControllerConfigurationFactory:
         from org.allbinary.logic.math.ScaleFactorFactory import ScaleFactorFactory
         self.SCALE_FACTOR: int = ScaleFactorFactory.getInstance().DEFAULT_SCALE_FACTOR
         self.SCALE_VALUE: int = ScaleFactorFactory.getInstance().DEFAULT_SCALE_VALUE
-        self.available: bool = False
+        if "available" not in vars(self): self.available: bool = False
         self.analogControllerConfigurationEvent: AnalogControllerConfigurationEvent = AnalogControllerConfigurationEvent(self)
     
 
@@ -36,7 +36,7 @@ class AnalogControllerConfigurationFactory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def isAvailable(self) -> bool:

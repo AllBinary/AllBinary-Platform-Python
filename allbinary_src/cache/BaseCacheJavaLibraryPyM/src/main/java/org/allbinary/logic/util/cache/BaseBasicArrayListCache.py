@@ -20,13 +20,11 @@ from __future__ import annotations
 class BaseBasicArrayListCache:
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
-        from jsinterop.annotations.JsProperty import JsProperty
         self.list_: BasicArrayList = BasicArrayListD()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def log(self) -> str:

@@ -33,7 +33,7 @@ class VectorMirrorGenerator:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # Java overloaded method with the same parameter count: Python keeps the last definition
@@ -77,12 +77,15 @@ class VectorMirrorGenerator:
         graphicsPipe.mirror(width)
         return graphicsPipe.getMatrix()
 
-    def getInstance(self, *args):
+    def getInstance(self=None, *args):
+        if self is None and not args: return __class__.getInstance_j0()
         if len(args) == 2 and True and (args[0] is None or isinstance(args[0], list)) and isinstance(args[1], int) and not isinstance(args[1], bool):
-            return self.getInstance_j2_1(*args)
+            return __class__.__dict__["getInstance_j2_1"].__get__(self, __class__)(*args)
         if len(args) == 2:
-            return self.getInstance_j2_2(*args)
-        return getattr(self, "getInstance_j" + str(len(args)))(*args)
+            return __class__.__dict__["getInstance_j2_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("getInstance_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getInstance(*args)
 # from org.allbinary.graphics.PointFactory import PointFactory
 # from org.allbinary.graphics.pipeline.BasicGraphicsPipeline import BasicGraphicsPipeline
 # from org.allbinary.logic.NullUtil import NullUtil

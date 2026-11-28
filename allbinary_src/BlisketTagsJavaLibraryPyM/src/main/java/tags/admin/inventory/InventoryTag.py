@@ -15,9 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from tags.StoreValidationTransformTag import StoreValidationTransformTag
 
 
+@java_inherited_overloads
 class InventoryTag(StoreValidationTransformTag):
     
 
@@ -51,7 +54,7 @@ class InventoryTag(StoreValidationTransformTag):
                     self.setObjectFile("views.admin.inventory.UpdateFileValidationView")
                 else:
                     raise Exception("No Such View Command: " + str(self.getCommand()))
-                return super().doStartTag()
+                return java_super_call(super(), "doStartTag")
             raise Exception("Command Null")
         except LicensingException as e:
             AbResponseHandler.sendJspTagLicensingRedirect(self.pageContext, e)

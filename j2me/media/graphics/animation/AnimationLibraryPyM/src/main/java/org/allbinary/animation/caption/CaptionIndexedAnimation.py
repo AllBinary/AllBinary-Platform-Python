@@ -15,36 +15,48 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 from org.allbinary.animation.IndexedAnimation import IndexedAnimation
 
 
+@java_inherited_overloads
 class CaptionIndexedAnimation(IndexedAnimation):
+    def _java_defaults(self):
+        vars(self).setdefault("animationInterface", None)
+        vars(self).setdefault("movieIndexedAnimationInterface", None)
+        vars(self).setdefault("captionDx", 0)
+        vars(self).setdefault("captionDy", 0)
+        vars(self).setdefault("dx", 0)
+        vars(self).setdefault("dy", 0)
+        vars(self).setdefault("time", 0)
+        vars(self).setdefault("END_EVENT", None)
+        vars(self).setdefault("timeDelayHelper", None)
+        vars(self).setdefault("player", None)
 
     def _init_fields(self) -> None:
-        from javax.microedition.media.Player import Player
-        from org.allbinary.animation.Animation import Animation
-        from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
-        self.animationInterface: Animation = None
-        self.movieIndexedAnimationInterface: IndexedAnimation = None
-        self.captionDx: int = None
-        self.captionDy: int = None
-        self.dx: int = None
-        self.dy: int = None
-        self.time: int = None
-        self.END_EVENT: AllBinaryEventObject = None
-        self.timeDelayHelper: TimeDelayHelper = None
-        self.player: Player = None
+        if "animationInterface" not in vars(self): self.animationInterface: Animation = None
+        if "movieIndexedAnimationInterface" not in vars(self): self.movieIndexedAnimationInterface: IndexedAnimation = None
+        if "captionDx" not in vars(self): self.captionDx: int = 0
+        if "captionDy" not in vars(self): self.captionDy: int = 0
+        if "dx" not in vars(self): self.dx: int = 0
+        if "dy" not in vars(self): self.dy: int = 0
+        if "time" not in vars(self): self.time: int = 0
+        if "END_EVENT" not in vars(self): self.END_EVENT: AllBinaryEventObject = None
+        if "timeDelayHelper" not in vars(self): self.timeDelayHelper: TimeDelayHelper = None
+        if "player" not in vars(self): self.player: Player = None
     
 
     def __init__(self, animationInterface: Animation, movieIndexedAnimationInterface: IndexedAnimation, player: Player, captionDx: int, captionDy: int, dx: int, dy: int, time: int, animationBehavior: AnimationBehavior) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.media.Player import Player
         from org.allbinary.animation.Animation import Animation
         from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
         from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         super().__init__(animationBehavior)
-        self._init_fields()
+        __class__._init_fields(self)
         self.animationInterface = animationInterface
         self.movieIndexedAnimationInterface = movieIndexedAnimationInterface
         self.captionDx = captionDx
@@ -65,7 +77,7 @@ class CaptionIndexedAnimation(IndexedAnimation):
         from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
         if self.timeDelayHelper.isTime(GameTickTimeDelayHelperFactory.getInstance().startTime):
             self.movieIndexedAnimationInterface.nextFrame()
-        if self.isLastFrame():
+        if java_predicate(self, "isLastFrame"):
             AnimationEventHandler.getInstance().fireEvent(self.END_EVENT)
     
 

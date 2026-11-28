@@ -20,13 +20,12 @@ from __future__ import annotations
 class InputAutomationRobotInterfaceWrapper:
 
     def _init_fields(self) -> None:
-        from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
-        self.inputRobotInterface: InputRobotInterface = None
+        if "inputRobotInterface" not in vars(self): self.inputRobotInterface: InputRobotInterface = None
     
 
     def __init__(self, inputRobotInterface: InputRobotInterface) -> None:
         from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
-        self._init_fields()
+        __class__._init_fields(self)
         self.setInputRobotInterface(inputRobotInterface)
     
 

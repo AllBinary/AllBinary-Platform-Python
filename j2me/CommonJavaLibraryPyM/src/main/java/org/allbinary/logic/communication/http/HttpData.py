@@ -22,9 +22,9 @@ class HttpData:
     instance: HttpData = None
 
     def _init_fields(self) -> None:
-        self.EQUALS: str = None
-        self.PARAM_SEP: str = None
-        self.URL_PARAM_SEP: str = None
+        if "EQUALS" not in vars(self): self.EQUALS: str = None
+        if "PARAM_SEP" not in vars(self): self.PARAM_SEP: str = None
+        if "URL_PARAM_SEP" not in vars(self): self.URL_PARAM_SEP: str = None
         self.URL_LABEL: str = "Url: "
     
 
@@ -35,7 +35,7 @@ class HttpData:
 
     def __init__(self) -> None:
         from org.allbinary.string.CommonSeps import CommonSeps
-        self._init_fields()
+        __class__._init_fields(self)
         commonSeps: CommonSeps = CommonSeps.getInstance()
         self.EQUALS = commonSeps.EQUALS
         self.PARAM_SEP = commonSeps.AMPERSAND

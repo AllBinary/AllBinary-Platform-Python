@@ -21,16 +21,17 @@ from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 class StoreFrontAdvertisementsStatisticsView(DomNodeInterface):
 
     def _init_fields(self) -> None:
-        self.storeFrontAdvertisementsStatisticsInterface: StoreFrontAdvertisementsStatisticsInterface = None
+        if "storeFrontAdvertisementsStatisticsInterface" not in vars(self): self.storeFrontAdvertisementsStatisticsInterface: StoreFrontAdvertisementsStatisticsInterface = None
     
 
     def __init__(self, storeFrontAdvertisementsStatisticsInterface: StoreFrontAdvertisementsStatisticsInterface) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.storeFrontAdvertisementsStatisticsInterface = storeFrontAdvertisementsStatisticsInterface
     
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
+        from org.allbinary.business.context.modules.storefront.statistics.advertisements.StoreFrontAdvertisementsStatisticsData import StoreFrontAdvertisementsStatisticsData
         from java.util.HashMap import HashMap
         from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
         from org.w3c.dom.Document import Document

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -35,7 +36,7 @@ class GameConfiguration:
 
     def __init__(self, name: str, defaultValue: int, minValue: int, maxValue: int) -> None:
         from org.allbinary.game.configuration.GameConfigurationSingleton import GameConfigurationSingleton
-        self._init_fields()
+        __class__._init_fields(self)
         self.setName(name)
         self.setDefaultValue(defaultValue)
         self.value = self.getDefaultValue()
@@ -110,7 +111,7 @@ class GameConfiguration:
         stringBuffer.append(" Default: ")
         stringBuffer.appendint(int(int(self.getDefaultValue())))
         stringBuffer.append(" Modifiable: ")
-        stringBuffer.appendboolean(self.isModifiable())
+        stringBuffer.appendboolean(java_predicate(self, "isModifiable"))
         return str(stringBuffer)
 
     def __str__(self) -> str:

@@ -15,22 +15,27 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.media.graphics.geography.map.racetrack.BasePathFindingInfoFactory import BasePathFindingInfoFactory
 
 
+@java_inherited_overloads
 class PathFindingInfoFactory(BasePathFindingInfoFactory):
     instance: PathFindingInfoFactory = None
+    def _java_defaults(self):
+        vars(self).setdefault("MAX_DIRECTIONS", 0)
+        vars(self).setdefault("pathFindingInfo", None)
+        vars(self).setdefault("basicGeographicMapGraph", None)
+        vars(self).setdefault("basicGeographicMapPathFinder", None)
+        vars(self).setdefault("pathFinderGraphVisitorFactoryInterface", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.media.graphics.geography.pathfinding.BasicGeographicMapGraph import BasicGeographicMapGraph
-        from org.allbinary.media.graphics.geography.pathfinding.BasicGeographicMapPathFinder import BasicGeographicMapPathFinder
-        from org.allbinary.media.graphics.geography.pathfinding.PathFinderGraphVisitorFactoryBase import PathFinderGraphVisitorFactoryBase
-        from org.allbinary.media.graphics.geography.pathfinding.PathFindingInfo import PathFindingInfo
         self.MAX_DIRECTIONS: int = 4
-        self.pathFindingInfo: PathFindingInfo = None
-        self.basicGeographicMapGraph: BasicGeographicMapGraph = None
-        self.basicGeographicMapPathFinder: BasicGeographicMapPathFinder = None
-        self.pathFinderGraphVisitorFactoryInterface: PathFinderGraphVisitorFactoryBase = None
+        if "pathFindingInfo" not in vars(self): self.pathFindingInfo: PathFindingInfo = None
+        if "basicGeographicMapGraph" not in vars(self): self.basicGeographicMapGraph: BasicGeographicMapGraph = None
+        if "basicGeographicMapPathFinder" not in vars(self): self.basicGeographicMapPathFinder: BasicGeographicMapPathFinder = None
+        if "pathFinderGraphVisitorFactoryInterface" not in vars(self): self.pathFinderGraphVisitorFactoryInterface: PathFinderGraphVisitorFactoryBase = None
     
 
     @staticmethod
@@ -45,6 +50,7 @@ class PathFindingInfoFactory(BasePathFindingInfoFactory):
     
 
     def __init__(self, pathFinderGraphVisitorFactoryInterface: PathFinderGraphVisitorFactoryBase, max: int) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.string.CommonStrings import CommonStrings
         from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         from org.allbinary.media.graphics.geography.pathfinding.BasicGeographicMapGraph import BasicGeographicMapGraph
@@ -54,7 +60,7 @@ class PathFindingInfoFactory(BasePathFindingInfoFactory):
         from org.allbinary.media.graphics.geography.pathfinding.PathFindingNodeCostInfoFactory import PathFindingNodeCostInfoFactory
         from org.allbinary.util.BasicArrayListS import BasicArrayListS
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         commonStrings: CommonStrings = CommonStrings.getInstance()
         PreLogUtil.put("Using Dynamic Path Finding", self, commonStrings.GET_INSTANCE)
         self.basicGeographicMapPathFinder = BasicGeographicMapPathFinder(max)
@@ -81,7 +87,7 @@ class PathFindingInfoFactory(BasePathFindingInfoFactory):
     def init(self, geographicMapInterface: BasicGeographicMap, pathFindingInfo: PathFindingInfo, mapArray: list[list[int]]) -> None:
         from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
         from org.allbinary.media.graphics.geography.pathfinding.PathFindingInfo import PathFindingInfo
-        super().init(geographicMapInterface, pathFindingInfo, mapArray)
+        java_super_call(super(), "init", geographicMapInterface, pathFindingInfo, mapArray)
         self.buildPathFindingNodes(geographicMapInterface, pathFindingInfo, mapArray)
     
 

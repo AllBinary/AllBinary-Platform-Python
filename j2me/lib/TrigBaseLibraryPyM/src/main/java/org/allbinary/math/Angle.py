@@ -20,12 +20,12 @@ from __future__ import annotations
 class Angle:
 
     def _init_fields(self) -> None:
-        self.value: int = None
+        if "value" not in vars(self): self.value: int = 0
     
 
     def __init__(self, angle: int) -> None:
         from jsinterop.annotations.JsConstructor import JsConstructor
-        self._init_fields()
+        __class__._init_fields(self)
         self.value = angle
     
 

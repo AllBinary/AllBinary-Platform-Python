@@ -3,9 +3,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_divide
 from org.allbinary.animation.RotationAnimation import RotationAnimation
 
 
+@java_inherited_overloads
 class NullRotationAnimation(RotationAnimation):
     
 
@@ -13,7 +16,8 @@ class NullRotationAnimation(RotationAnimation):
     def createTotalAngle(angleInfo: AngleInfo, totalAngle: int, animationBehavior: AnimationBehavior) -> NullRotationAnimation:
         from org.allbinary.math.AngleInfo import AngleInfo
         from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
-        return NullRotationAnimation(angleInfo, CircularIndexUtil.createInstance(totalAngle / angleInfo.getAngleIncrementInfo().getAngleIncrement()), animationBehavior)
+        return NullRotationAnimation(angleInfo, CircularIndexUtil.createInstance(java_divide(totalAngle, angleInfo.getAngleIncrementInfo().getAngleIncrement())
+            ), animationBehavior)
     
 
     @staticmethod

@@ -22,20 +22,19 @@ class ViewHelper(TransformInterface):
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.abeClientInformation: AbeClientInformationInterface = ServiceClientInformationInterfaceFactory.getInstance()
-        self.componentInterface: TransformInterface = None
+        if "componentInterface" not in vars(self): self.componentInterface: TransformInterface = None
         self.NO_TYPE: int = 0
     
 
     def __init__(self, hashMap: HashMap, pageContext: PageContext) -> None:
         from java.util.HashMap import HashMap
         from org.allbinary.logic.visual.transform.TransformFactory import TransformFactory
-        self._init_fields()
+        __class__._init_fields(self)
         self.componentInterface = TransformFactory.getInstance().getInstance(self.abeClientInformation, hashMap, pageContext)
     
 
@@ -52,7 +51,7 @@ class ViewHelper(TransformInterface):
         except Exception as e:
             error: str = "Failed to View: "
             if self.componentInterface is not None:
-                error += str(type(self.componentInterface).__module__ + "." + type(self.componentInterface).__qualname__)
+                error += str(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(self.componentInterface)))
             else:
                 error += "Unknown"
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):
@@ -70,7 +69,7 @@ class ViewHelper(TransformInterface):
         except Exception as e:
             error: str = "Failed to View: "
             if self.componentInterface is not None:
-                error += str(type(self.componentInterface).__module__ + "." + type(self.componentInterface).__qualname__)
+                error += str(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(self.componentInterface)))
             else:
                 error += "Unknown"
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLTAGSERROR):

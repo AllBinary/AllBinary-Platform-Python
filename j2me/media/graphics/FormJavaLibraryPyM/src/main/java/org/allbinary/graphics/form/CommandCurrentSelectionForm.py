@@ -15,12 +15,19 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 from org.allbinary.graphics.form.ScrollCurrentSelectionForm import ScrollCurrentSelectionForm
 
 
+@java_inherited_overloads
 class CommandCurrentSelectionForm(*java_bases(ScrollCurrentSelectionForm, UpdateMyFontInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("selectedAnimationArray", None)
+        vars(self).setdefault("unSelectedAnimationArray", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.animation.Animation import Animation
@@ -29,11 +36,12 @@ class CommandCurrentSelectionForm(*java_bases(ScrollCurrentSelectionForm, Update
     
 
     def __init__(self, title: str, items: list[ABCustomItem], border: int, moveForSmallScreen: bool, backgroundBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.form.ItemPaintableFactory import ItemPaintableFactory
         from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
         super().__init__(title, items, ItemPaintableFactory.getInstance(), border, -3, moveForSmallScreen, backgroundBasicColor, foregroundBasicColor)
-        self._init_fields()
+        __class__._init_fields(self)
         self.initAnimations()
         self.addAll(items)
     
@@ -41,7 +49,7 @@ class CommandCurrentSelectionForm(*java_bases(ScrollCurrentSelectionForm, Update
     def updateMeasurement(self, graphics: Graphics) -> None:
         from javax.microedition.lcdui.Graphics import Graphics
         self.updateAll(graphics, self.getAllitems())
-        super().updateMeasurement(graphics)
+        java_super_call(super(), "updateMeasurement", graphics)
     
 
     def initAnimations(self) -> None:
@@ -79,12 +87,12 @@ class CommandCurrentSelectionForm(*java_bases(ScrollCurrentSelectionForm, Update
         offset: int = -self.halfBorder + adjustedBorder
         rectWidth: int = width + self.border - adjustedBorder
         rectHeight: int = height + self.border - adjustedBorder
-        if J2MEUtil.isJ2ME() or J2MEUtil.isHTML():
+        if java_predicate(J2MEUtil, "isJ2ME") or java_predicate(J2MEUtil, "isHTML"):
             self.selectedAnimationArray[index] = RectangleAdjustedAnimation(rectWidth, rectHeight, offset, offset, selectedButtonColor)
         else:
             self.selectedAnimationArray[index] = RectangleFilledAdjustedAnimation(rectWidth, rectHeight, offset, offset, selectedButtonColor)
         adjustedBorder = 4
-        if J2MEUtil.isJ2ME() or J2MEUtil.isHTML():
+        if java_predicate(J2MEUtil, "isJ2ME") or java_predicate(J2MEUtil, "isHTML"):
             self.unSelectedAnimationArray[index] = RectangleAdjustedAnimation(rectWidth, rectHeight, offset, offset, buttonColor)
         else:
             self.unSelectedAnimationArray[index] = RectangleFilledAdjustedAnimation(rectWidth, rectHeight, offset, offset, buttonColor)
@@ -115,7 +123,7 @@ class CommandCurrentSelectionForm(*java_bases(ScrollCurrentSelectionForm, Update
         offset: int = -self.halfBorder + adjustedBorder
         rectWidth: int = width + self.border - adjustedBorder
         rectHeight: int = height + self.border - adjustedBorder
-        if J2MEUtil.isJ2ME() or J2MEUtil.isHTML():
+        if java_predicate(J2MEUtil, "isJ2ME") or java_predicate(J2MEUtil, "isHTML"):
             rectangleAdjustedAnimation: RectangleAdjustedAnimation = self.selectedAnimationArray[index]
             rectangleAdjustedAnimation.setWidth(rectWidth)
             rectangleAdjustedAnimation.setHeight(rectHeight)
@@ -130,7 +138,7 @@ class CommandCurrentSelectionForm(*java_bases(ScrollCurrentSelectionForm, Update
             rectangleAdjustedAnimation.setOffsetY(offset)
             rectangleAdjustedAnimation.setBasicColorP(selectedButtonColor)
         adjustedBorder = 4
-        if J2MEUtil.isJ2ME() or J2MEUtil.isHTML():
+        if java_predicate(J2MEUtil, "isJ2ME") or java_predicate(J2MEUtil, "isHTML"):
             rectangleAdjustedAnimation: RectangleAdjustedAnimation = self.unSelectedAnimationArray[index]
             rectangleAdjustedAnimation.setWidth(rectWidth)
             rectangleAdjustedAnimation.setHeight(rectHeight)
@@ -149,41 +157,41 @@ class CommandCurrentSelectionForm(*java_bases(ScrollCurrentSelectionForm, Update
     def getSelectedCommand(self) -> Command:
         from javax.microedition.lcdui.Command import Command
         from org.allbinary.graphics.form.item.CommandTextItem import CommandTextItem
-        index: int = super().getSelectedIndex()
+        index: int = java_super_call(super(), "getSelectedIndex")
         commandTextItem: CommandTextItem = self.get(index)
         return commandTextItem.getCommand()
     
 
     def append(self, item: ABCustomItem) -> int:
         from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
-        result: int = super().append(item)
+        result: int = java_super_call(super(), "append", item)
         self.addAt(result, item)
         return result
     
 
     def delete(self, itemNum: int) -> None:
-        super().delete(itemNum)
+        java_super_call(super(), "delete", itemNum)
     
 
     def deleteAll(self) -> None:
         self.initAnimations()
-        super().deleteAll()
+        java_super_call(super(), "deleteAll")
     
 
     def insert(self, itemNum: int, item: ABCustomItem) -> None:
         from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
-        super().insert(itemNum, item)
+        java_super_call(super(), "insert", itemNum, item)
     
 
     def set(self, itemNum: int, item: ABCustomItem) -> None:
         from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
-        super().set(itemNum, item)
+        java_super_call(super(), "set", itemNum, item)
     
 
     def paint(self, graphics: Graphics) -> None:
         from javax.microedition.lcdui.Graphics import Graphics
         self.myFontProcessor.process(graphics)
-        super().paint(graphics)
+        java_super_call(super(), "paint", graphics)
     
 
     # throws Exception
@@ -191,7 +199,7 @@ class CommandCurrentSelectionForm(*java_bases(ScrollCurrentSelectionForm, Update
         from javax.microedition.lcdui.Graphics import Graphics
         from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
         self.selectedAnimationArray[index].paintXY(graphics, x, y)
-        return super().paintItem(graphics, index, item, x, y)
+        return java_super_call(super(), "paintItem", graphics, index, item, x, y)
     
 
     # throws Exception
@@ -199,7 +207,7 @@ class CommandCurrentSelectionForm(*java_bases(ScrollCurrentSelectionForm, Update
         from javax.microedition.lcdui.Graphics import Graphics
         from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
         self.unSelectedAnimationArray[index].paintXY(graphics, x, y)
-        return super().paintUnselectedItem(graphics, index, item, x, y)
+        return java_super_call(super(), "paintUnselectedItem", graphics, index, item, x, y)
 # from javax.microedition.lcdui.Command import Command
 # from javax.microedition.lcdui.Graphics import Graphics
 # from org.allbinary.J2MEUtil import J2MEUtil

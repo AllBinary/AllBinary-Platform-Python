@@ -21,25 +21,25 @@ from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 class CssPropertyValues(DomNodeInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.propertyValueVector: BasicArrayList = None
+        if "propertyValueVector" not in vars(self): self.propertyValueVector: BasicArrayList = None
 
     def __init__(self, *args) -> None:
         if len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
         elif len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
     
 
     def _constructor0(self) -> None:
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
-        self._init_fields()
+        __class__._init_fields(self)
         self.propertyValueVector = BasicArrayListD()
     
 
     def _constructor1(self, node: Node) -> None:
+        from org.allbinary.logic.visual.dhtml.style.css.property.CssPropertyValueData import CssPropertyValueData
         from java.util.HashMap import HashMap
         from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
@@ -50,7 +50,7 @@ class CssPropertyValues(DomNodeInterface):
         from org.w3c.dom.Node import Node
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-        self._init_fields()
+        __class__._init_fields(self)
         indexPropertyValueHashMap: HashMap = StdUtil.getInstance().createHashMap()
         self.propertyValueVector = BasicArrayListD()
         cssPropertyNodeVector: BasicArrayList = DomSearchHelper.getAllNodes(CssPropertyValueData.getInstance().NAME, node.getChildNodes())
@@ -74,6 +74,7 @@ class CssPropertyValues(DomNodeInterface):
     
 
     def toHashMap(self) -> HashMap:
+        from org.allbinary.logic.visual.dhtml.style.css.property.CssPropertyValueData import CssPropertyValueData
         from java.util.HashMap import HashMap
         from org.allbinary.logic.StdUtil import StdUtil
         from org.allbinary.logic.string.StringMaker import StringMaker
@@ -99,6 +100,8 @@ class CssPropertyValues(DomNodeInterface):
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
+        from org.allbinary.logic.visual.dhtml.style.css.property.CssPropertyData import CssPropertyData
+        from org.allbinary.logic.visual.dhtml.style.css.property.CssPropertyValueData import CssPropertyValueData
         from java.util.HashMap import HashMap
         from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
         from org.w3c.dom.Document import Document

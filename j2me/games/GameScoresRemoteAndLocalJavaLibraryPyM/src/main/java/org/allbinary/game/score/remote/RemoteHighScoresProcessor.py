@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from org.allbinary.game.score.remote.RemoteHighScoresProcessorInterface import RemoteHighScoresProcessorInterface
 
@@ -32,13 +33,13 @@ class RemoteHighScoresProcessor(RemoteHighScoresProcessorInterface):
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
     def process(self, remoteHighScores: RemoteHighScores, abeClientInformation: AbeClientInformationInterface, gameInfo: GameInfo) -> None:
         with self._lock:
-            return self._process_unlocked(remoteHighScores, abeClientInformation, gameInfo)
+            return __class__.__dict__["_process_unlocked"].__get__(self, __class__)(remoteHighScores, abeClientInformation, gameInfo)
 
     def _process_unlocked(self, remoteHighScores: RemoteHighScores, abeClientInformation: AbeClientInformationInterface, gameInfo: GameInfo) -> None:
         from org.allbinary.game.score.remote.RemoteHighScoresData import RemoteHighScoresData
@@ -59,7 +60,7 @@ class RemoteHighScoresProcessor(RemoteHighScoresProcessorInterface):
         hashtable.put(gameInfoData.SOFTWARE_INFORMATION, str(remoteHighScores.getSoftwareInformation()))
         hashtable.put(remoteHighScores.ASCENDING, str(remoteHighScores.getAscending()))
         displayInfoSingleton: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
-        hashtable.put(displayInfoSingleton.ORIENTATION, BooleanFactory.getInstance().toStringb(displayInfoSingleton.isPortrait()))
+        hashtable.put(displayInfoSingleton.ORIENTATION, BooleanFactory.getInstance().toStringb(java_predicate(displayInfoSingleton, "isPortrait")))
         hashtable.put(RemoteHighScoresData.getInstance().GAME_CONFIGURATION, str(GameConfigurationCentral.getInstance()))
         if XmlRpcAbeClient.isOnline:
             resultHashtable: ABHashtable[object, object] = XmlRpcRemoteHighScoresClient(abeClientInformation, "highscoresservicessl.php", "HighScoresService.process").get(hashtable, self.noCrypt)

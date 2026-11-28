@@ -21,18 +21,16 @@ from org.allbinary.animation.AnimationInterfaceFactoryInterface import Animation
 class AllBinaryFlickerAndroidImageRotationAnimationFactory(AnimationInterfaceFactoryInterface):
 
     def _init_fields(self) -> None:
-        from javax.microedition.lcdui.Image import Image
         from javax.microedition.lcdui.NullImage import NullImage
-        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
         self.image: Image = NullImage.NULL_IMAGE
-        self.angleIncrement: int = None
-        self.animationBehaviorFactory: AnimationBehaviorFactory = None
+        if "angleIncrement" not in vars(self): self.angleIncrement: int = 0
+        if "animationBehaviorFactory" not in vars(self): self.animationBehaviorFactory: AnimationBehaviorFactory = None
     
 
     def __init__(self, image: Image, width: int, height: int, angleIncrement: int, animationBehaviorFactory: AnimationBehaviorFactory) -> None:
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
-        self._init_fields()
+        __class__._init_fields(self)
         self.setImage(image)
         self.angleIncrement = angleIncrement
         self.animationBehaviorFactory = animationBehaviorFactory

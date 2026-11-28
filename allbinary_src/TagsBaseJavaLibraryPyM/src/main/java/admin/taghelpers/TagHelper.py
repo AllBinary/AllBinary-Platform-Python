@@ -25,7 +25,7 @@ class TagHelper(TagHelperInterface):
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
 # from org.allbinary.string.CommonStrings import CommonStrings
 
 

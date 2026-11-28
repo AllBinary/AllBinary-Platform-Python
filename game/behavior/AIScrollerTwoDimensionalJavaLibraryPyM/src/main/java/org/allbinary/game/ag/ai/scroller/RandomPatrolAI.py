@@ -15,21 +15,27 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.ag.ai.scroller.BasePatrolAI import BasePatrolAI
 
 
+@java_inherited_overloads
 class RandomPatrolAI(BasePatrolAI):
+    def _java_defaults(self):
+        vars(self).setdefault("changedDirection", False)
 
     def _init_fields(self) -> None:
         self.changedDirection: bool = True
     
 
     def __init__(self, hashtable: ABHashtable[object, object], ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.input.GameInput import GameInput
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         from org.allbinary.util.ABHashtable import ABHashtable
         super().__init__(hashtable, ownerLayerInterface, gameInput)
-        self._init_fields()
+        __class__._init_fields(self)
         self.updateRandomDistance()
     
 
@@ -42,16 +48,16 @@ class RandomPatrolAI(BasePatrolAI):
     def processAI(self, allBinaryLayerManager: AllBinaryLayerManager) -> None:
         from javax.microedition.lcdui.Canvas import Canvas
         from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-        super().update()
-        super().processKeyAI(self.keyDirection)
+        java_super_call(super(), "update")
+        java_super_call(super(), "processKeyAI", self.keyDirection)
         if self.changedDirection:
-            super().processKeyAI(Canvas.KEY_NUM1)
+            java_super_call(super(), "processKeyAI", Canvas.KEY_NUM1)
             self.updateRandomDistance()
             self.changedDirection = False
     
 
     def nextDirection(self) -> None:
-        super().nextDirection()
+        java_super_call(super(), "nextDirection")
         self.changedDirection = True
 # from javax.microedition.lcdui.Canvas import Canvas
 # from org.allbinary.game.input.GameInput import GameInput

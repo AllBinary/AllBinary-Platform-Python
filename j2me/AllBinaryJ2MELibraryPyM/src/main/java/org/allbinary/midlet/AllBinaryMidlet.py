@@ -15,20 +15,30 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from java.lang.JavaRuntimeStatic import java_bases
 from javax.microedition.lcdui.CommandListener import CommandListener
 from javax.microedition.midlet.MIDlet import MIDlet
 
 
+@java_inherited_overloads
 class AllBinaryMidlet(*java_bases(MIDlet, CommandListener)):
     NULL_ALLBINARY_MIDLET: object = None
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("SET_DISPLAY", None)
+        vars(self).setdefault("SETTING_", None)
+        vars(self).setdefault("_DISPLAY_", None)
+        vars(self).setdefault("SETTING_NO_TITLE", None)
+        vars(self).setdefault("hashtable", None)
+        vars(self).setdefault("midletDestroyed", False)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.StdUtil import StdUtil
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
-        from org.allbinary.util.ABHashtable import ABHashtable
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.SET_DISPLAY: str = "setDisplay"
@@ -36,7 +46,7 @@ class AllBinaryMidlet(*java_bases(MIDlet, CommandListener)):
         self._DISPLAY_: str = " Display: "
         self.SETTING_NO_TITLE: str = "Setting: No Title, Display: "
         self.hashtable: ABHashtable[object, object] = StdUtil.getInstance().createHashtable()
-        self.midletDestroyed: bool = False
+        if "midletDestroyed" not in vars(self): self.midletDestroyed: bool = False
     
 
     @staticmethod
@@ -48,8 +58,9 @@ class AllBinaryMidlet(*java_bases(MIDlet, CommandListener)):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.logUtil.putF(self.commonStrings.CONSTRUCTOR, self, "AllBinaryMidlet::AllBinaryMidlet")
     
 

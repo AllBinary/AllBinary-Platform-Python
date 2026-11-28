@@ -15,12 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 
 
 class BasicPlatormGeographicMapCellType:
 
     def _init_fields(self) -> None:
-        self.types: list[int] = None
+        if "types" not in vars(self): self.types: list[int] = None
     
 
     @staticmethod
@@ -37,7 +38,7 @@ class BasicPlatormGeographicMapCellType:
     def __init__(self, types: BasicArrayList) -> None:
         from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
         from org.allbinary.util.BasicArrayList import BasicArrayList
-        self._init_fields()
+        __class__._init_fields(self)
         size: int = types.size()
         typeArray: list[int] = [0] * (size)
         typeAsInteger: int = None

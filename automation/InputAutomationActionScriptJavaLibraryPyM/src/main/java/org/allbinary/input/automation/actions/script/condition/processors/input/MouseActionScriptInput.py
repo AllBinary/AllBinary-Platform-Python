@@ -15,29 +15,38 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.input.automation.actions.script.condition.processors.input.BasicProfileActionScriptInput import BasicProfileActionScriptInput
 from org.allbinary.input.automation.actions.script.condition.processors.input.MouseActionScriptInputInterface import MouseActionScriptInputInterface
 
 
+@java_inherited_overloads
 class MouseActionScriptInput(*java_bases(BasicProfileActionScriptInput, MouseActionScriptInputInterface)):
     NAME: str = "Mouse"
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("point", None)
+        vars(self).setdefault("buttons", 0)
+        vars(self).setdefault("mouseActionScriptInputJPanel", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.point: Point = None
-        self.buttons: int = 0
-        self.mouseActionScriptInputJPanel: MouseActionScriptInputJPanel = None
+        if "point" not in vars(self): self.point: Point = None
+        if "buttons" not in vars(self): self.buttons: int = 0
+        if "mouseActionScriptInputJPanel" not in vars(self): self.mouseActionScriptInputJPanel: MouseActionScriptInputJPanel = None
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
         elif len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
     
 
     def _constructor1(self, node: Node) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.input.automation.actions.script.condition.processors.input.MouseActionScriptInputData import MouseActionScriptInputData
         from org.allbinary.input.automation.actions.script.condition.processors.input.MouseActionScriptInputData import MouseActionScriptInputData
         from org.allbinary.input.automation.actions.script.condition.processors.input.MouseActionScriptInputData import MouseActionScriptInputData
@@ -49,7 +58,7 @@ class MouseActionScriptInput(*java_bases(BasicProfileActionScriptInput, MouseAct
         from org.w3c.dom.Node import Node
         from org.w3c.dom.NodeList import NodeList
         super().__init__(MouseActionScriptInput.NAME, node)
-        self._init_fields()
+        __class__._init_fields(self)
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
         self.point = Point()
         actionNode: Node = DomSearchHelper.getNode(MouseActionScriptInputData.NAME, node.getChildNodes())
@@ -78,9 +87,10 @@ class MouseActionScriptInput(*java_bases(BasicProfileActionScriptInput, MouseAct
     
 
     def _constructor0(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.input.automation.actions.script.condition.processors.input.MouseActionScriptInputJPanel import MouseActionScriptInputJPanel
         super().__init__(MouseActionScriptInput.NAME)
-        self._init_fields()
+        __class__._init_fields(self)
         self.point = Point()
         self.setAllowsChildren(False)
         self.mouseActionScriptInputJPanel = MouseActionScriptInputJPanel(self)
@@ -127,7 +137,7 @@ class MouseActionScriptInput(*java_bases(BasicProfileActionScriptInput, MouseAct
         from org.allbinary.logic.StdUtil import StdUtil
         from org.w3c.dom.Document import Document
         from org.w3c.dom.Node import Node
-        node: Node = super().toXmlNode(document)
+        node: Node = java_super_call(super(), "toXmlNode", document)
         mouseNode: Node = ModDomHelper.createNodeWithValueNodes(document, MouseActionScriptInputData.NAME, self.toHashMap())
         node.appendChild(mouseNode)
         hashMap: HashMap = StdUtil.getInstance().createHashMap()

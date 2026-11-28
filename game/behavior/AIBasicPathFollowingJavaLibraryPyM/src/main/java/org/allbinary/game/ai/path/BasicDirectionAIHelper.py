@@ -21,14 +21,13 @@ import math
 class BasicDirectionAIHelper:
 
     def _init_fields(self) -> None:
-        from org.allbinary.math.AngleInfo import AngleInfo
-        self.name: str = None
-        self.angleInfo: AngleInfo = None
+        if "name" not in vars(self): self.name: str = None
+        if "angleInfo" not in vars(self): self.angleInfo: AngleInfo = None
     
 
     def __init__(self, name: str, angleInfo: AngleInfo) -> None:
         from org.allbinary.math.AngleInfo import AngleInfo
-        self._init_fields()
+        __class__._init_fields(self)
         self.name = name
         self.angleInfo = angleInfo
     

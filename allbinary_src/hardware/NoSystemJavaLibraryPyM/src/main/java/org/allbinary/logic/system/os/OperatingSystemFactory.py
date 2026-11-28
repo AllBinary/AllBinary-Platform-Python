@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.System import System
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 
@@ -35,12 +36,12 @@ class OperatingSystemFactory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getOperatingSystemInstance(self) -> GenericOperatingSystem:
         with self._lock:
-            return self._getOperatingSystemInstance_unlocked()
+            return __class__.__dict__["_getOperatingSystemInstance_unlocked"].__get__(self, __class__)()
 
     def _getOperatingSystemInstance_unlocked(self) -> GenericOperatingSystem:
         from org.allbinary.logic.string.StringMaker import StringMaker

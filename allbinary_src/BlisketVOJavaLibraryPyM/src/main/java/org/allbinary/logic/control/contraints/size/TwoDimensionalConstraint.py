@@ -21,13 +21,13 @@ from org.allbinary.logic.control.contraints.size.TwoDimensionalConstraintInterfa
 class TwoDimensionalConstraint(TwoDimensionalConstraintInterface):
 
     def _init_fields(self) -> None:
-        self.widthSizeConstraintInterface: SizeConstraintInterface = None
-        self.heightSizeConstraintInterface: SizeConstraintInterface = None
+        if "widthSizeConstraintInterface" not in vars(self): self.widthSizeConstraintInterface: SizeConstraintInterface = None
+        if "heightSizeConstraintInterface" not in vars(self): self.heightSizeConstraintInterface: SizeConstraintInterface = None
     
 
     def __init__(self, node: Node) -> None:
         from org.w3c.dom.Node import Node
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getHeight(self) -> SizeConstraintInterface:

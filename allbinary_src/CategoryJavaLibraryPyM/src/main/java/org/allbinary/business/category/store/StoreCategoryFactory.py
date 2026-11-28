@@ -15,26 +15,31 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.business.category.CategoryAbstractFactory import CategoryAbstractFactory
 from org.allbinary.business.category.CategoryFactoryInterface import CategoryFactoryInterface
 
 
+@java_inherited_overloads
 class StoreCategoryFactory(*java_bases(CategoryAbstractFactory, CategoryFactoryInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("transformInfoInterface", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.transformInfoInterface: TransformInfoInterface = None
+        if "transformInfoInterface" not in vars(self): self.transformInfoInterface: TransformInfoInterface = None
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().CATEGORY):
             self.logUtil.putF(self.commonStrings.START, self, "StoreCategoryFactory(TransformInfoInterface transformInfoInterface)")
         self.transformInfoInterface = transformInfoInterface
@@ -75,7 +80,9 @@ class StoreCategoryFactory(*java_bases(CategoryAbstractFactory, CategoryFactoryI
             return None
 
     def getRootInstance(self, *args):
-        return getattr(self, "getRootInstance_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("getRootInstance_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getRootInstance(*args)
     
 
     def getRootInstanceFromNode(self, node: Node) -> CategoryInterface:

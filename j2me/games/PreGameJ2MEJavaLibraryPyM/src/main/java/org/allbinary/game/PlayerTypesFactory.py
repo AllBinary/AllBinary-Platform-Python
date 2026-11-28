@@ -27,7 +27,7 @@ class PlayerTypesFactory:
         self.PLAYER_TYPE_THREE: PlayerType = PlayerType("Player Type Three", 2)
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

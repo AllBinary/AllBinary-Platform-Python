@@ -24,19 +24,18 @@ class TestInputForMotionRectanglesResultsWorker(MotionRectanglesResultsListener)
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.index: int = 0
-        self.running: bool = False
-        self.motionRectanglesVector: BasicArrayList = None
+        if "index" not in vars(self): self.index: int = 0
+        if "running" not in vars(self): self.running: bool = False
+        if "motionRectanglesVector" not in vars(self): self.motionRectanglesVector: BasicArrayList = None
     
 
     def __init__(self) -> None:
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
-        self._init_fields()
+        __class__._init_fields(self)
         self.motionRectanglesVector = BasicArrayListD()
     
 
@@ -57,7 +56,7 @@ class TestInputForMotionRectanglesResultsWorker(MotionRectanglesResultsListener)
 
     def isRunning(self) -> bool:
         with self._lock:
-            return self._isRunning_unlocked()
+            return __class__.__dict__["_isRunning_unlocked"].__get__(self, __class__)()
 
     def _isRunning_unlocked(self) -> bool:
         return self.running
@@ -65,7 +64,7 @@ class TestInputForMotionRectanglesResultsWorker(MotionRectanglesResultsListener)
 
     def setRunning(self, running: bool) -> None:
         with self._lock:
-            return self._setRunning_unlocked(running)
+            return __class__.__dict__["_setRunning_unlocked"].__get__(self, __class__)(running)
 
     def _setRunning_unlocked(self, running: bool) -> None:
         self.running = running
@@ -105,21 +104,21 @@ class TestInputForMotionRectanglesResultsWorker(MotionRectanglesResultsListener)
                         inputRobotInterface.mousePress(InputEvent.BUTTON3_MASK)
                         time.sleep((300) / 1000)
                         inputRobotInterface.mouseRelease(InputEvent.BUTTON3_MASK)
-                        inputRobotInterface.keyPress(KeyEvent.VK_1)
+                        inputRobotInterface.keyPress(49)
                         time.sleep((300) / 1000)
-                        inputRobotInterface.keyRelease(KeyEvent.VK_1)
-                        inputRobotInterface.keyPress(KeyEvent.VK_2)
+                        inputRobotInterface.keyRelease(49)
+                        inputRobotInterface.keyPress(50)
                         time.sleep((300) / 1000)
-                        inputRobotInterface.keyRelease(KeyEvent.VK_2)
-                        inputRobotInterface.keyPress(KeyEvent.VK_3)
+                        inputRobotInterface.keyRelease(50)
+                        inputRobotInterface.keyPress(51)
                         time.sleep((300) / 1000)
-                        inputRobotInterface.keyRelease(KeyEvent.VK_3)
-                        inputRobotInterface.keyPress(KeyEvent.VK_4)
+                        inputRobotInterface.keyRelease(51)
+                        inputRobotInterface.keyPress(52)
                         time.sleep((300) / 1000)
-                        inputRobotInterface.keyRelease(KeyEvent.VK_4)
-                        inputRobotInterface.keyPress(KeyEvent.VK_F1)
+                        inputRobotInterface.keyRelease(52)
+                        inputRobotInterface.keyPress(112)
                         time.sleep((300) / 1000)
-                        inputRobotInterface.keyRelease(KeyEvent.VK_F1)
+                        inputRobotInterface.keyRelease(112)
             self.index += 1
             self.getMotionRectanglesVector().remove(motionRectangles)
             self.logUtil.putF(CommonLabels.getInstance().ELAPSED + timeHelper.getElapsedTNT(), self, self.commonStrings.RUN)

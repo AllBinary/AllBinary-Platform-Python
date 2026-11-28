@@ -21,49 +21,76 @@ from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayIn
 class PaymentGateway(PaymentGatewayInterface):
 
     def _init_fields(self) -> None:
-        self.storeName: str = None
-        self.name: str = None
-        self.enable: str = None
-        self.paymentMethod: str = None
-        self.mode: str = None
-        self.testProtocol: str = None
-        self.testServer: str = None
-        self.testPort: str = None
-        self.testPath: str = None
-        self.serverProtocol: str = None
-        self.server: str = None
-        self.serverPort: str = None
-        self.serverPath: str = None
-        self.timeout: str = None
-        self.userName: str = None
-        self.password: str = None
-        self.proxyProtocol: str = None
-        self.proxyServer: str = None
-        self.proxyPort: str = None
-        self.proxyPath: str = None
-        self.proxyUserName: str = None
-        self.proxyPassword: str = None
-        self.proxyTimeout: str = None
-        self.special1: str = None
-        self.special2: str = None
-        self.special3: str = None
-        self.special4: str = None
-        self.special5: str = None
-        self.special6: str = None
-        self.special7: str = None
-        self.special8: str = None
-        self.special9: str = None
-        self.lastModified: str = None
-        self.timeEntered: str = None
+        if "storeName" not in vars(self): self.storeName: str = None
+        if "name" not in vars(self): self.name: str = None
+        if "enable" not in vars(self): self.enable: str = None
+        if "paymentMethod" not in vars(self): self.paymentMethod: str = None
+        if "mode" not in vars(self): self.mode: str = None
+        if "testProtocol" not in vars(self): self.testProtocol: str = None
+        if "testServer" not in vars(self): self.testServer: str = None
+        if "testPort" not in vars(self): self.testPort: str = None
+        if "testPath" not in vars(self): self.testPath: str = None
+        if "serverProtocol" not in vars(self): self.serverProtocol: str = None
+        if "server" not in vars(self): self.server: str = None
+        if "serverPort" not in vars(self): self.serverPort: str = None
+        if "serverPath" not in vars(self): self.serverPath: str = None
+        if "timeout" not in vars(self): self.timeout: str = None
+        if "userName" not in vars(self): self.userName: str = None
+        if "password" not in vars(self): self.password: str = None
+        if "proxyProtocol" not in vars(self): self.proxyProtocol: str = None
+        if "proxyServer" not in vars(self): self.proxyServer: str = None
+        if "proxyPort" not in vars(self): self.proxyPort: str = None
+        if "proxyPath" not in vars(self): self.proxyPath: str = None
+        if "proxyUserName" not in vars(self): self.proxyUserName: str = None
+        if "proxyPassword" not in vars(self): self.proxyPassword: str = None
+        if "proxyTimeout" not in vars(self): self.proxyTimeout: str = None
+        if "special1" not in vars(self): self.special1: str = None
+        if "special2" not in vars(self): self.special2: str = None
+        if "special3" not in vars(self): self.special3: str = None
+        if "special4" not in vars(self): self.special4: str = None
+        if "special5" not in vars(self): self.special5: str = None
+        if "special6" not in vars(self): self.special6: str = None
+        if "special7" not in vars(self): self.special7: str = None
+        if "special8" not in vars(self): self.special8: str = None
+        if "special9" not in vars(self): self.special9: str = None
+        if "lastModified" not in vars(self): self.lastModified: str = None
+        if "timeEntered" not in vars(self): self.timeEntered: str = None
     
 
     def __init__(self, hashMap: HashMap) -> None:
         from java.util.HashMap import HashMap
-        self._init_fields()
+        __class__._init_fields(self)
         self.getFormData(hashMap)
     
 
     def getFormData(self, hashMap: HashMap) -> None:
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
         from java.util.HashMap import HashMap
         from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
         from org.allbinary.business.entry.EntryData import EntryData
@@ -440,6 +467,43 @@ class PaymentGateway(PaymentGatewayInterface):
 
     # throws Exception
     def toHashMap_j1(self, isEncrypted: bool) -> HashMap:
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
         from java.util.HashMap import HashMap
         from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
         from org.allbinary.business.entry.EntryData import EntryData
@@ -500,7 +564,9 @@ class PaymentGateway(PaymentGatewayInterface):
         return paymentGatewayHashMap
 
     def toHashMap(self, *args):
-        return getattr(self, "toHashMap_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("toHashMap_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().toHashMap(*args)
     
 
     def toVector_j0(self) -> BasicArrayList:
@@ -509,6 +575,8 @@ class PaymentGateway(PaymentGatewayInterface):
     
 
     def toVector_j1(self, isEncrypted: bool) -> BasicArrayList:
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
         from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         from org.allbinary.logic.control.crypt.SuperCrypt import SuperCrypt
@@ -565,7 +633,9 @@ class PaymentGateway(PaymentGatewayInterface):
         return updateVector
 
     def toVector(self, *args):
-        return getattr(self, "toVector_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("toVector_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().toVector(*args)
     
 
     # throws Exception

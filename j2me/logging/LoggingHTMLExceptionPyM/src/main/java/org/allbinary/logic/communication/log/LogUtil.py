@@ -33,7 +33,7 @@ class LogUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def putL(self, log: Log) -> None:
@@ -47,6 +47,7 @@ class LogUtil:
     
 
     def putF(self, specialMessage: str, anyType: object, functionName: str) -> None:
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         from playn.core.PlayN import PlayN
         className: str = PreLogUtil.getClassName(anyType)
@@ -63,6 +64,7 @@ class LogUtil:
     
 
     def put(self, specialMessage: str, anyType: object, functionName: str, exception: object) -> None:
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         from playn.core.PlayN import PlayN
         className: str = PreLogUtil.getClassName(anyType)
@@ -75,6 +77,7 @@ class LogUtil:
             PlayN.log().debug(self.LOG_SUCCESS + message)
 # from org.allbinary.string.CommonStrings import CommonStrings
 # from playn.core.PlayN import PlayN
+from org.allbinary.logic.communication.log.LogFormatUtil import LogFormatUtil
 
 
 def _LogUtil_instance() -> object:

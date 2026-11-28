@@ -45,6 +45,7 @@ class VirtualKeyboardFactory:
 
 
 def _VirtualKeyboardFactory_virtualKeyboard() -> object:
+    from org.allbinary.android.input.VirtualKeyboard import VirtualKeyboard
     return VirtualKeyboard.NULL_VIRTUAL_KEYBOARD
 
 lazy_static(VirtualKeyboardFactory, "virtualKeyboard", _VirtualKeyboardFactory_virtualKeyboard)

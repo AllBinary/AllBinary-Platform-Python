@@ -15,12 +15,32 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.ag.layer.hud.basic.notification.GameNotificationHud import GameNotificationHud
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 
 
+@java_inherited_overloads
 class PlayerGameNotificationHud(*java_bases(GameNotificationHud, UpdateMyFontInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("gameTickTimeDelayHelper", None)
+        vars(self).setdefault("EMPTY_STRING", None)
+        vars(self).setdefault("displayInfo", None)
+        vars(self).setdefault("timeDelayHelper", None)
+        vars(self).setdefault("circularIndexUtil", None)
+        vars(self).setdefault("gameNotification", None)
+        vars(self).setdefault("permanentGameNotification", None)
+        vars(self).setdefault("setAndRemoveProcessor", None)
+        vars(self).setdefault("nextUnremoveableProcessor", None)
+        vars(self).setdefault("processor", None)
+        vars(self).setdefault("PERMANENT_GAME_NOTIFICATION", None)
+        vars(self).setdefault("lastString", None)
+        vars(self).setdefault("string", None)
+        vars(self).setdefault("point", None)
+        vars(self).setdefault("width", 0)
 
     def _init_fields(self) -> None:
         from org.allbinary.canvas.Processor import Processor
@@ -28,15 +48,13 @@ class PlayerGameNotificationHud(*java_bases(GameNotificationHud, UpdateMyFontInt
         from org.allbinary.graphics.CustomGPoint import CustomGPoint
         from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
         from org.allbinary.logic.string.StringUtil import StringUtil
-        from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
         from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
         from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
-        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         self.gameTickTimeDelayHelper: GameTickTimeDelayHelper = GameTickTimeDelayHelperFactory.getInstance()
         self.EMPTY_STRING: str = StringUtil.getInstance().EMPTY_STRING
         self.displayInfo: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
         self.timeDelayHelper: TimeDelayHelper = TimeDelayHelper(0)
-        self.circularIndexUtil: CircularIndexUtil = None
+        if "circularIndexUtil" not in vars(self): self.circularIndexUtil: CircularIndexUtil = None
         self.gameNotification: GameNotification = GameNotification()
         self.permanentGameNotification: GameNotification = GameNotification()
         self.setAndRemoveProcessor: Processor = SetAndRemoveProcessor(self)
@@ -46,15 +64,16 @@ class PlayerGameNotificationHud(*java_bases(GameNotificationHud, UpdateMyFontInt
         self.lastString: str = StringUtil.getInstance().EMPTY_STRING
         self.string: str = self.EMPTY_STRING
         self.point: CustomGPoint = CustomGPoint.NULL_CUSTOM_POINT
-        self.width: int = 0
+        if "width" not in vars(self): self.width: int = 0
     
 
     def __init__(self, location: int, direction: int, bufferZone: int, basicColor: BasicColor) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.layer.hud.event.GameNotificationEventHandler import GameNotificationEventHandler
         from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         super().__init__(location, direction, bufferZone, basicColor)
-        self._init_fields()
+        __class__._init_fields(self)
         self.circularIndexUtil = CircularIndexUtil.createInstance(0)
         gameNotificationEventHandler: GameNotificationEventHandler = GameNotificationEventHandler.getInstance()
         gameNotificationEventHandler.removeAllListeners()
@@ -68,7 +87,7 @@ class PlayerGameNotificationHud(*java_bases(GameNotificationHud, UpdateMyFontInt
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         try:
-            super().updateMeasurement(graphics)
+            java_super_call(super(), "updateMeasurement", graphics)
             font: Font = graphics.getFont()
             self.width = font.stringWidth(self.string)
             self.processor.process()
@@ -167,7 +186,7 @@ class PlayerGameNotificationHud(*java_bases(GameNotificationHud, UpdateMyFontInt
     def paint(self, graphics: Graphics) -> None:
         from javax.microedition.lcdui.Graphics import Graphics
         self.myFontProcessor.process(graphics)
-        super().paintString(graphics, self.string)
+        java_super_call(super(), "paintString", graphics, self.string)
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
 # from org.allbinary.business.advertisement.GameAdStateFactory import GameAdStateFactory

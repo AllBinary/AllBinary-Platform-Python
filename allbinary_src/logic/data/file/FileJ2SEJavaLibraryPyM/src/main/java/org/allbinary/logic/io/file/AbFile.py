@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_equals
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.io.file.AbFileInterface import AbFileInterface
 
@@ -23,18 +25,20 @@ class AbFile(AbFileInterface):
     NULL_FILE: AbFile = None
 
     def _init_fields(self) -> None:
-        self.file: File = None
+        if "file" not in vars(self): self.file: File = None
     
 
     # throws Exception
     @staticmethod
     def createAbFileWithChild(file: AbFile, childPathName: str) -> AbFile:
+        from java.io.File import File
         return AbFile(File(file.getFile(), childPathName))
     
 
     # throws Exception
     @staticmethod
     def createAbFile(filePath: str) -> AbFile:
+        from java.io.File import File
         from org.allbinary.logic.io.path.AbPath import AbPath
         from org.allbinary.logic.string.StringUtil import StringUtil
         return AbFile(File(AbPath(filePath, StringUtil.getInstance().EMPTY_STRING).toFileSystemString()))
@@ -43,6 +47,7 @@ class AbFile(AbFileInterface):
     # throws Exception
     @staticmethod
     def createAbFilePathAndName(filePath: str, fileName: str) -> AbFile:
+        from java.io.File import File
         from org.allbinary.logic.io.path.AbPath import AbPath
         from org.allbinary.logic.string.StringUtil import StringUtil
         return AbFile(File(AbPath(filePath, StringUtil.getInstance().EMPTY_STRING).toFileSystemString(), fileName))
@@ -50,21 +55,25 @@ class AbFile(AbFileInterface):
 
     @staticmethod
     def createAbFileFromAbPath(abPath: AbPath) -> AbFile:
+        from java.io.File import File
         from org.allbinary.logic.io.path.AbPath import AbPath
         return AbFile(File(abPath.toFileSystemString()))
     
 
     @staticmethod
     def createAbFileFromRawPath(filePath: str) -> AbFile:
+        from java.io.File import File
         return AbFile(File(filePath))
     
 
     def __init__(self, file: File) -> None:
-        self._init_fields()
+        from java.io.File import File
+        __class__._init_fields(self)
         self.file = file
     
 
     def getFile(self) -> File:
+        from java.io.File import File
         return self.file
     
 
@@ -85,7 +94,7 @@ class AbFile(AbFileInterface):
     
 
     def isAbsolute(self) -> bool:
-        return self.file.isAbsolute()
+        return java_predicate(self.file, "isAbsolute")
     
 
     def getAbsolutePath(self) -> str:
@@ -123,15 +132,15 @@ class AbFile(AbFileInterface):
     
 
     def isDirectory(self) -> bool:
-        return self.file.isDirectory()
+        return java_predicate(self.file, "isDirectory")
     
 
     def isFile(self) -> bool:
-        return self.file.isFile()
+        return java_predicate(self.file, "isFile")
     
 
     def isHidden(self) -> bool:
-        return self.file.isHidden()
+        return java_predicate(self.file, "isHidden")
     
 
     def lastModified(self) -> int:
@@ -161,6 +170,7 @@ class AbFile(AbFileInterface):
     
 
     def listWithFilter(self, filter: FilenameFilter) -> list[str]:
+        from java.io.FilenameFilter import FilenameFilter
         return self.file.list_(filter)
     
 
@@ -169,6 +179,7 @@ class AbFile(AbFileInterface):
     
 
     def listFilesFileNameFilter(self, filter: FilenameFilter) -> list[object]:
+        from java.io.FilenameFilter import FilenameFilter
         return self.file.listFiles(filter)
     
 
@@ -204,7 +215,9 @@ class AbFile(AbFileInterface):
         return self.file.setWritable(writable)
 
     def setWritable(self, *args):
-        return getattr(self, "setWritable_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("setWritable_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().setWritable(*args)
     
 
     def setReadable_j2(self, readable: bool, ownerOnly: bool) -> bool:
@@ -215,7 +228,9 @@ class AbFile(AbFileInterface):
         return self.file.setReadable(readable)
 
     def setReadable(self, *args):
-        return getattr(self, "setReadable_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("setReadable_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().setReadable(*args)
     
 
     def setExecutable_j2(self, executable: bool, ownerOnly: bool) -> bool:
@@ -226,7 +241,9 @@ class AbFile(AbFileInterface):
         return self.file.setExecutable(executable)
 
     def setExecutable(self, *args):
-        return getattr(self, "setExecutable_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("setExecutable_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().setExecutable(*args)
     
 
     def canExecute(self) -> bool:
@@ -246,6 +263,7 @@ class AbFile(AbFileInterface):
     
 
     def compareTo(self, pathname: File) -> int:
+        from java.io.File import File
         return self.file.compareTo(pathname)
     
 
@@ -258,7 +276,7 @@ class AbFile(AbFileInterface):
     
 
     def hashCode(self) -> int:
-        return hash(self.file)
+        return java_predicate(self.file, "hashCode")
 
     def __hash__(self) -> int:
         return self.hashCode()

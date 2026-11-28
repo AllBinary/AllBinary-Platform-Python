@@ -3,10 +3,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.input.AndroidAPI9KeyFactory import AndroidAPI9KeyFactory
 
 
+@java_inherited_overloads
 class AndroidAPI12KeyFactory(AndroidAPI9KeyFactory):
     instance12: object = None
     

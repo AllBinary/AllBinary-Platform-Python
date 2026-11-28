@@ -36,6 +36,7 @@ class LogFactory:
 
 
 def _LogFactory_LOG() -> object:
+    from org.allbinary.logic.communication.log.Log import Log
     from org.allbinary.logic.NullUtil import NullUtil
     from org.allbinary.logic.string.StringUtil import StringUtil
     return Log(StringUtil.getInstance().EMPTY_STRING, NullUtil.getInstance().NULL_OBJECT, StringUtil.getInstance().EMPTY_STRING, NullUtil.getInstance().NULL_OBJECT)

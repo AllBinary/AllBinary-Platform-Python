@@ -15,19 +15,21 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 from org.allbinary.input.automation.module.game.MeteredGameObjectInterface import MeteredGameObjectInterface
 
 
 class MeteredGameObject(MeteredGameObjectInterface):
 
     def _init_fields(self) -> None:
-        self.ratios: list[float] = None
+        if "ratios" not in vars(self): self.ratios: list[float] = None
         self.good: bool = False
         self.dropping: bool = False
-        self.minX: int = None
-        self.maxX: int = None
-        self.y: int = None
-        self.size: int = None
+        if "minX" not in vars(self): self.minX: int = None
+        if "maxX" not in vars(self): self.maxX: int = None
+        if "y" not in vars(self): self.y: int = None
+        if "size" not in vars(self): self.size: int = None
         self.RATIOS_LABEL: str = "Ratios: "
         self.IS_GOOD_LABEL: str = "isGood: "
         self.IS_DROPPPING_LABEL: str = "isDropping: "
@@ -35,7 +37,7 @@ class MeteredGameObject(MeteredGameObjectInterface):
 
     def __init__(self, bufferedImage: list[BufferedImage], minX: int, maxX: int, y: int) -> None:
         from org.allbinary.input.automation.module.game.GraphicsAnalysisUtil import GraphicsAnalysisUtil
-        self._init_fields()
+        __class__._init_fields(self)
         self.setRatios([None] * (len(bufferedImage)))
         self.setMinX(minX)
         self.setMaxX(maxX)
@@ -87,10 +89,10 @@ class MeteredGameObject(MeteredGameObjectInterface):
                 stringBuffer.append(commonSeps.COMMA_SEP)
         stringBuffer.append(commonSeps.NEW_LINE)
         stringBuffer.append(self.IS_GOOD_LABEL)
-        stringBuffer.appendboolean(self.isGood())
+        stringBuffer.appendboolean(java_predicate(self, "isGood"))
         stringBuffer.append(commonSeps.NEW_LINE)
         stringBuffer.append(self.IS_DROPPPING_LABEL)
-        stringBuffer.appendboolean(self.isDropping())
+        stringBuffer.appendboolean(java_predicate(self, "isDropping"))
         return str(stringBuffer)
 
     def __str__(self) -> str:

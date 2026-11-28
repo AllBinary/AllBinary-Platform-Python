@@ -15,24 +15,24 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 
 
 class Advertisements:
 
     def _init_fields(self) -> None:
         from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.bannerList: BasicArrayList = BasicArrayListD()
         self.pageList: BasicArrayList = BasicArrayListD()
         self.myRandomFactory: MyRandomFactory = MyRandomFactory.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def addPage(self, advertisementProcessorInterface: AdvertisementProcessorInterface) -> None:
-        if not self.pageList.contains(advertisementProcessorInterface):
+        if not (self.pageList.contains(advertisementProcessorInterface)):
             self.pageList.add(advertisementProcessorInterface)
     
 
@@ -46,7 +46,7 @@ class Advertisements:
 
     def processRandomPage(self) -> None:
         from org.allbinary.logic.system.security.licensing.LockedUtil import LockedUtil
-        if LockedUtil.getInstance().isLocked():
+        if java_predicate(LockedUtil.getInstance(), "isLocked"):
             size: int = self.pageList.size()
             if size > 0:
                 random: int = self.myRandomFactory.getAbsoluteNextInt(size)
@@ -62,7 +62,7 @@ class Advertisements:
     
 
     def addBanner(self, advertisementProcessorInterface: AdvertisementProcessorInterface) -> None:
-        if not self.bannerList.contains(advertisementProcessorInterface):
+        if not (self.bannerList.contains(advertisementProcessorInterface)):
             self.bannerList.add(advertisementProcessorInterface)
     
 

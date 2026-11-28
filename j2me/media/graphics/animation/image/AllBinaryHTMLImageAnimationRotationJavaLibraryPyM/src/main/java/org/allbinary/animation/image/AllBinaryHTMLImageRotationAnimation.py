@@ -15,10 +15,23 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_divide
 from org.allbinary.animation.image.ImageBaseRotationAnimation import ImageBaseRotationAnimation
 
 
+@java_inherited_overloads
 class AllBinaryHTMLImageRotationAnimation(ImageBaseRotationAnimation):
+    def _java_defaults(self):
+        vars(self).setdefault("imageRotationUtil", None)
+        vars(self).setdefault("imageModifierUtil", None)
+        vars(self).setdefault("originalImage", None)
+        vars(self).setdefault("twoImages", None)
+        vars(self).setdefault("canvasSurfaceArray", None)
+        vars(self).setdefault("imageToShow", None)
+        vars(self).setdefault("bufferedImageIndex", 0)
+        vars(self).setdefault("alphaProcessor", None)
 
     def _init_fields(self) -> None:
         from javax.microedition.lcdui.Image import Image
@@ -27,21 +40,22 @@ class AllBinaryHTMLImageRotationAnimation(ImageBaseRotationAnimation):
         from playn.core.CanvasSurface import CanvasSurface
         self.imageRotationUtil: ImageRotationUtil = ImageRotationUtil.getInstance()
         self.imageModifierUtil: ImageModifierUtil = ImageModifierUtil.getInstanceOrCreate()
-        self.originalImage: Image = None
+        if "originalImage" not in vars(self): self.originalImage: Image = None
         self.twoImages: list[Image] = [None] * (2)
         self.canvasSurfaceArray: list[CanvasSurface] = [None] * (2)
-        self.imageToShow: Image = None
-        self.bufferedImageIndex: int = 0
+        if "imageToShow" not in vars(self): self.imageToShow: Image = None
+        if "bufferedImageIndex" not in vars(self): self.bufferedImageIndex: int = 0
         self.alphaProcessor: AlphaBaseProcessor = AlphaBaseProcessor.getInstance()
     
 
     def __init__(self, originalImage: Image, image: Image, angleInfo: AngleInfo, totalAngle: int, animationBehavior: AnimationBehavior) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         from org.allbinary.math.AngleInfo import AngleInfo
         from org.allbinary.media.image.ImageCopyUtil import ImageCopyUtil
         super().__init__(image, angleInfo, totalAngle, animationBehavior)
-        self._init_fields()
+        __class__._init_fields(self)
         self.originalImage = originalImage
         self.imageToShow = image
         self.twoImages[0] = image
@@ -58,7 +72,9 @@ class AllBinaryHTMLImageRotationAnimation(ImageBaseRotationAnimation):
         htmlImage: PlaynMutableImage = image
         canvasImage: CanvasImage = htmlImage.getImage()
         canvasSurface: CanvasSurface = htmlImage.getCanvasSurface(canvasImage)
-        canvasSurface.translate(self.originalImage.getWidth() / 2, self.originalImage.getHeight() / 2)
+        canvasSurface.translate(java_divide(self.originalImage.getWidth(), 2)
+            , java_divide(self.originalImage.getHeight(), 2)
+            )
         return canvasSurface
     
 
@@ -67,7 +83,7 @@ class AllBinaryHTMLImageRotationAnimation(ImageBaseRotationAnimation):
         changed: bool = False
         if self.getBasicColorP() is None or int(self.getBasicColorP()) != int(basicColor):
             changed = True
-        super().setBasicColorP(basicColor)
+        java_super_call(super(), "setBasicColorP", basicColor)
         if changed:
             self.updateImage()
     
@@ -77,19 +93,19 @@ class AllBinaryHTMLImageRotationAnimation(ImageBaseRotationAnimation):
         changed: bool = False
         if self.alphaP != alpha:
             changed = True
-        super().setAlpha(alpha)
+        java_super_call(super(), "setAlpha", alpha)
         if changed:
             self.alphaProcessor = AlphaProcessor.getInstance()
             self.updateImage()
     
 
     def nextRotation(self) -> None:
-        super().nextRotation()
+        java_super_call(super(), "nextRotation")
         self.updateImage()
     
 
     def previousRotation(self) -> None:
-        super().previousRotation()
+        java_super_call(super(), "previousRotation")
         self.updateImage()
     
 
@@ -105,7 +121,7 @@ class AllBinaryHTMLImageRotationAnimation(ImageBaseRotationAnimation):
     
 
     def setFrame(self, index: int) -> None:
-        super().setFrame(index)
+        java_super_call(super(), "setFrame", index)
         self.updateImage()
     
 

@@ -20,19 +20,18 @@ from __future__ import annotations
 class ImageTypes:
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.vector: BasicArrayList = BasicArrayListD()
 
     def __init__(self, *args) -> None:
         if len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
         elif len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
     
 
     def _constructor0(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def _constructor1(self, node: Node) -> None:
@@ -41,7 +40,7 @@ class ImageTypes:
         from org.allbinary.input.media.image.InputImageType import InputImageType
         from org.w3c.dom.Node import Node
         from org.w3c.dom.NodeList import NodeList
-        self._init_fields()
+        __class__._init_fields(self)
         nodeList: NodeList = node.getChildNodes()
         for index in range(0, nodeList.getLength()):
             childNode: Node = nodeList.item(index)

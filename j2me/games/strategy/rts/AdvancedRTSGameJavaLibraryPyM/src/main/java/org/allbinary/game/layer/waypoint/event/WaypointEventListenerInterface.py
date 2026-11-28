@@ -14,10 +14,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
 
 
 # Java interface
+@java_inherited_overloads
 class WaypointEventListenerInterface(EventListenerInterface):
     
 

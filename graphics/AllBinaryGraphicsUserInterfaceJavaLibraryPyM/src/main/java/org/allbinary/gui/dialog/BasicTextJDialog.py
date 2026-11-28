@@ -15,26 +15,33 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 # from javax.swing.JDialog import JDialog
 
 
+@java_inherited_overloads
 class BasicTextJDialog(JDialog):
+    def _java_defaults(self):
+        vars(self).setdefault("closeListenerInterface", None)
+        vars(self).setdefault("jButton1", None)
+        vars(self).setdefault("textJLabel", None)
 
     def _init_fields(self) -> None:
-        self.closeListenerInterface: CloseJDialogListenerInterface = None
-        self.jButton1: JButton = None
-        self.textJLabel: JLabel = None
+        if "closeListenerInterface" not in vars(self): self.closeListenerInterface: CloseJDialogListenerInterface = None
+        if "jButton1" not in vars(self): self.jButton1: JButton = None
+        if "textJLabel" not in vars(self): self.textJLabel: JLabel = None
 
     def __init__(self, *args) -> None:
         if len(args) == 3:
-            self._constructor3(*args)
+            __class__._constructor3(self, *args)
         elif len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
     
 
     def _constructor3(self, parent: Frame, modal: bool, text: str) -> None:
+        __class__._java_defaults(self)
         super().__init__(parent, modal)
-        self._init_fields()
+        __class__._init_fields(self)
         self.initComponents()
         self.setText(text)
     
@@ -48,8 +55,9 @@ class BasicTextJDialog(JDialog):
     
 
     def _constructor1(self, text: str) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.initComponents()
         self.textJLabel.setText(text)
     
@@ -59,12 +67,15 @@ class BasicTextJDialog(JDialog):
         self.textJLabel = JLabel()
         self.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE)
         self.jButton1.setText("OK")
-        self.jButton1.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.jButton1ActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN66400(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "jButton1ActionPerformed") else _java_listener_owner).jButton1ActionPerformed(evt)
+        self.jButton1.addActionListener(_JavaListenerN66400()
+            )
         self.textJLabel.setText("No Text Set")
         layout: GroupLayout = GroupLayout(self.getContentPane())
         self.getContentPane().setLayout(layout)
@@ -82,12 +93,14 @@ class BasicTextJDialog(JDialog):
     @staticmethod
     def main(args: list[str]) -> None:
         from org.allbinary.thread.ARunnable import ARunnable
-        EventQueue.invokeLater((ARunnable()  # Java anonymous class body:
-#             
-# 
-#             def run(self) -> None:
-#                 BasicTextJDialog(JFrame(), True, "Test").setVisible(True)
-))
+        class _JavaListenerN67327(ARunnable):
+            
+            
+
+            def run(self) -> None:
+                BasicTextJDialog(JFrame(), True, "Test").setVisible(True)
+        EventQueue.invokeLater(_JavaListenerN67327()
+            )
 # from org.allbinary.thread.ARunnable import ARunnable
 # from java.awt.EventQueue import EventQueue
 # from java.awt.Frame import Frame

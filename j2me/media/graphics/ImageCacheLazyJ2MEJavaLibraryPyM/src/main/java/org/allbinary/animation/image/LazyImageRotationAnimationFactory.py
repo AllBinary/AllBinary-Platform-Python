@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.animation.AnimationInterfaceFactoryInterface import AnimationInterfaceFactoryInterface
 
 
@@ -22,8 +23,8 @@ class LazyImageRotationAnimationFactory(AnimationInterfaceFactoryInterface):
 
     def _init_fields(self) -> None:
         from org.allbinary.media.ScaleProperties import ScaleProperties
-        self.layoutIndex: int = None
-        self.animationInterfaceFactoryInterface: BaseImageAnimationFactory = None
+        if "layoutIndex" not in vars(self): self.layoutIndex: int = 0
+        if "animationInterfaceFactoryInterface" not in vars(self): self.animationInterfaceFactoryInterface: BaseImageAnimationFactory = None
         self.scaleProperties: ScaleProperties = ScaleProperties.instance
     
 
@@ -31,7 +32,7 @@ class LazyImageRotationAnimationFactory(AnimationInterfaceFactoryInterface):
         from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
         from org.allbinary.image.ImageCacheFactory import ImageCacheFactory
         from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
-        self._init_fields()
+        __class__._init_fields(self)
         self.layoutIndex = layoutIndex
         self.animationInterfaceFactoryInterface = animationInterfaceFactoryInterface
         ImageCacheFactory.getInstance().hasAnyLazyAnimationFactories = True
@@ -43,7 +44,7 @@ class LazyImageRotationAnimationFactory(AnimationInterfaceFactoryInterface):
     def getInstance(self, instanceId: int) -> Animation:
         from org.allbinary.animation.image.LazyImageRotationAnimation import LazyImageRotationAnimation
         from org.allbinary.animation.Animation import Animation
-        if self.animationInterfaceFactoryInterface.getImage().isReady():
+        if java_predicate(self.animationInterfaceFactoryInterface.getImage(), "isReady"):
             self.animationInterfaceFactoryInterface.setInitialScale(self.scaleProperties)
             return self.animationInterfaceFactoryInterface.getInstance(instanceId)
         else:

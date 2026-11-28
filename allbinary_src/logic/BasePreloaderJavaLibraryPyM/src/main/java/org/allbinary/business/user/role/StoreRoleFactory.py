@@ -22,7 +22,6 @@ class StoreRoleFactory:
     instance: StoreRoleFactory = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.roles: BasicArrayList = BasicArrayListD()
         self.subscriberRoles: BasicArrayList = BasicArrayListD()
@@ -36,7 +35,7 @@ class StoreRoleFactory:
 
     def __init__(self) -> None:
         from org.allbinary.business.user.role.BasicUserRoleFactory import BasicUserRoleFactory
-        self._init_fields()
+        __class__._init_fields(self)
         basicUserRoleFactory: BasicUserRoleFactory = BasicUserRoleFactory.getInstance()
         self.roles.add(basicUserRoleFactory.CUSTOMER)
         self.roles.add(basicUserRoleFactory.SUBSCRIBERCUSTOMER)

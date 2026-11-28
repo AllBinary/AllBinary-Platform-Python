@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 
@@ -24,7 +25,6 @@ class InitInfo:
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
-        from org.allbinary.logic.io.path.AbPath import AbPath
         self.TESTING: str = "TESTING"
         self.MAINPATH: str = "MAINPATH"
         self.TESTHTMLPATH: str = "TESTHTMLPATH"
@@ -40,13 +40,13 @@ class InitInfo:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws InitException
     def set_j0(self) -> None:
         with self._lock:
-            return self._set_j0_unlocked()
+            return __class__.__dict__["_set_j0_unlocked"].__get__(self, __class__)()
 
     def _set_j0_unlocked(self) -> None:
         from org.allbinary.business.init.InitInfoEntity import InitInfoEntity
@@ -57,7 +57,7 @@ class InitInfo:
             initInfoEntity: InitInfoEntity = InitInfoEntity()
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PRELOADER):
                 PreLogUtil.put("created entity", "InitInfo", "set()")
-            if not initInfoEntity.is_():
+            if not (java_predicate(initInfoEntity, "is")):
                 if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PRELOADER):
                     PreLogUtil.put("adding", "InitInfo", "set()")
                 initInfoEntity.add()
@@ -73,7 +73,7 @@ class InitInfo:
 
     def set_j1(self, hashMap: HashMap) -> None:
         with self._lock:
-            return self._set_j1_unlocked(hashMap)
+            return __class__.__dict__["_set_j1_unlocked"].__get__(self, __class__)(hashMap)
 
     def _set_j1_unlocked(self, hashMap: HashMap) -> None:
         from java.util.HashMap import HashMap
@@ -91,12 +91,14 @@ class InitInfo:
                 PreLogUtil.putOE("error", "InitInfo", "set()", e)
 
     def set(self, *args):
-        return getattr(self, "set_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("set_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().set(*args)
     
 
     def get(self) -> None:
         with self._lock:
-            return self._get_unlocked()
+            return __class__.__dict__["_get_unlocked"].__get__(self, __class__)()
 
     def _get_unlocked(self) -> None:
         from org.allbinary.business.init.InitInfoEntity import InitInfoEntity
@@ -117,7 +119,7 @@ class InitInfo:
 
     def setHasRead(self, value: bool) -> None:
         with self._lock:
-            return self._setHasRead_unlocked(value)
+            return __class__.__dict__["_setHasRead_unlocked"].__get__(self, __class__)(value)
 
     def _setHasRead_unlocked(self, value: bool) -> None:
         self.hasRead = value
@@ -125,14 +127,14 @@ class InitInfo:
 
     def updateIfNeeded(self) -> None:
         with self._lock:
-            return self._updateIfNeeded_unlocked()
+            return __class__.__dict__["_updateIfNeeded_unlocked"].__get__(self, __class__)()
 
     def _updateIfNeeded_unlocked(self) -> None:
         from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            if not self.hasRead:
+            if not (self.hasRead):
                 self.hasRead = True
                 self.get()
         except Exception as e:

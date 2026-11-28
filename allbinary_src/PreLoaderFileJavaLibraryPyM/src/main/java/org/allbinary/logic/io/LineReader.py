@@ -20,20 +20,20 @@ from __future__ import annotations
 class LineReader:
 
     def _init_fields(self) -> None:
-        from java.io.DataInputStream import DataInputStream
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.fileName: str = None
-        self.string: str = None
+        if "fileName" not in vars(self): self.fileName: str = None
+        if "string" not in vars(self): self.string: str = None
         self.index: int = 0
-        self.idFile: AbFileInputStream = None
-        self.idData: DataInputStream = None
+        if "idFile" not in vars(self): self.idFile: AbFileInputStream = None
+        if "idData" not in vars(self): self.idData: DataInputStream = None
     
 
     def __init__(self, fileName: str) -> None:
-        self._init_fields()
+        from org.allbinary.logic.io.AbFileInputStream import AbFileInputStream
+        __class__._init_fields(self)
         try:
             bytes: list[int] = [0] * (100000)
             self.fileName = fileName

@@ -24,11 +24,11 @@ class ContextUriResolver(URIResolver):
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.uriResolverStrings: URIResolverStrings = URIResolverStrings.getInstance()
-        self.basicURIResolver: BasicUriResolver = None
+        if "basicURIResolver" not in vars(self): self.basicURIResolver: BasicUriResolver = None
     
 
     def __init__(self, basicURIResolver: BasicUriResolver) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.basicURIResolver = basicURIResolver
     
 

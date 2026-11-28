@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.System import System
+from java.lang.JavaRuntimeStatic import java_predicate
 import traceback
 from java.lang.JavaRuntimeStatic import lazy_static
 
@@ -25,12 +27,11 @@ class LogUtil:
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.string.StringMaker import StringMaker
-        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         self.MESSAGE: str = "message"
         self.isFirstException: bool = True
         self.timeDelayHelper: TimeDelayHelper = TimeDelayHelper(200000)
-        self.abeClientInformation: AbeClientInformationInterface = None
+        if "abeClientInformation" not in vars(self): self.abeClientInformation: AbeClientInformationInterface = None
         self.stringBuffer: StringMaker = StringMaker()
     
 
@@ -40,7 +41,7 @@ class LogUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def putL(self, log: Log) -> None:
@@ -62,6 +63,7 @@ class LogUtil:
     
 
     def put(self, specialMessage: str, anyType: object, functionName: str, exception: object) -> None:
+        from org.allbinary.logic.communication.log.LogFormatUtil import LogFormatUtil
         from org.allbinary.logic.communication.log.XmlRpcRemoteLogClient import XmlRpcRemoteLogClient
         from org.apache.xmlrpc.XmlRpcException import XmlRpcException
         from org.allbinary.string.CommonSeps import CommonSeps
@@ -69,15 +71,15 @@ class LogUtil:
         from org.allbinary.string.CommonStrings import CommonStrings
         from org.allbinary.util.ABHashtable import ABHashtable
         if exception is not None:
-            if type(exception).__module__ + "." + type(exception).__qualname__.compareTo(XmlRpcException.__module__ + "." + XmlRpcException.__qualname__) == 0:
+            if __import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(exception)).compareTo(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(XmlRpcException)) == 0:
                 return
-            if type(exception).__module__ + "." + type(exception).__qualname__.compareTo(IOException.__module__ + "." + IOException.__qualname__) == 0:
+            if __import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(exception)).compareTo(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(IOException)) == 0:
                 return
-            if self.isFirstException or self.timeDelayHelper.isTimeTNT():
+            if self.isFirstException or java_predicate(self.timeDelayHelper, "isTimeTNT"):
                 className: str = CommonStrings.getInstance().EMPTY
                 self.isFirstException = False
-                if anyType is not None and type(anyType).__module__ + "." + type(anyType).__qualname__ is not None:
-                    className = str(type(anyType).__module__ + "." + type(anyType).__qualname__)
+                if anyType is not None and __import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(anyType)) is not None:
+                    className = str(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(anyType)))
                 message: str = LogFormatUtil.getInstance().get(className, functionName, specialMessage, exception)
                 try:
                     print("Eeeek")

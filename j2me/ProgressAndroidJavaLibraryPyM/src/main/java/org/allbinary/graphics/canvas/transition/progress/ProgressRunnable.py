@@ -15,23 +15,28 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.thread.ARunnable import ARunnable
 
 
+@java_inherited_overloads
 class ProgressRunnable(ARunnable):
+    def _java_defaults(self):
+        vars(self).setdefault("midletActivity", None)
+        vars(self).setdefault("progressCanvas", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.android.activity.SimpleProgressActivityInterface import SimpleProgressActivityInterface
-        self.midletActivity: SimpleProgressActivityInterface = None
-        self.progressCanvas: ProgressCanvas = None
+        if "midletActivity" not in vars(self): self.midletActivity: SimpleProgressActivityInterface = None
+        if "progressCanvas" not in vars(self): self.progressCanvas: ProgressCanvas = None
     
 
     def __init__(self, midletActivity: Activity, progressCanvas: ProgressCanvas) -> None:
+        __class__._java_defaults(self)
         from android.app.Activity import Activity
         from org.allbinary.android.activity.MidletActivityBase import MidletActivityBase
         from org.allbinary.android.activity.SimpleProgressActivityInterface import SimpleProgressActivityInterface
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         midletActivity2: MidletActivityBase = midletActivity
         self.midletActivity = midletActivity2
         self.progressCanvas = progressCanvas

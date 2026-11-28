@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 
 
@@ -32,15 +33,15 @@ class TouchButtonRecognizer:
         self.downGameKeyEventHandler: DownGameKeyEventHandler = DownGameKeyEventHandler.getInstance()
         self.lastPressedTouchButtonInput: TouchButtonInput = BasicTouchInputFactory.getInstance().NONE
         self.currentlyPressedTouchButtonSingleton: CurrentlyPressedTouchButtonSingleton = CurrentlyPressedTouchButtonSingleton.getInstance()
-        self.releaseHelper: ReleaseHelper = None
+        if "releaseHelper" not in vars(self): self.releaseHelper: ReleaseHelper = None
     
 
     def __init__(self) -> None:
         from org.allbinary.input.motion.button.TouchScreenFactory import TouchScreenFactory
         from org.allbinary.input.motion.button.ReleaseHelper import ReleaseHelper
         from org.allbinary.input.motion.button.MultitouchReleaseHelper import MultitouchReleaseHelper
-        self._init_fields()
-        if TouchScreenFactory.getInstance().isMultiTouch():
+        __class__._init_fields(self)
+        if java_predicate(TouchScreenFactory.getInstance(), "isMultiTouch"):
             self.releaseHelper = MultitouchReleaseHelper(self)
         else:
             self.releaseHelper = ReleaseHelper(self)
@@ -59,7 +60,7 @@ class TouchButtonRecognizer:
     # throws Exception
     def releaseTouchButtonInput(self, x: int, y: int, deviceId: int) -> bool:
         with self._lock:
-            return self._releaseTouchButtonInput_unlocked(x, y, deviceId)
+            return __class__.__dict__["_releaseTouchButtonInput_unlocked"].__get__(self, __class__)(x, y, deviceId)
 
     def _releaseTouchButtonInput_unlocked(self, x: int, y: int, deviceId: int) -> bool:
         from org.allbinary.input.motion.button.TouchButtonFactory import TouchButtonFactory
@@ -91,7 +92,7 @@ class TouchButtonRecognizer:
     # throws Exception
     def pressTouchButtonInput(self, x: int, y: int, deviceId: int) -> bool:
         with self._lock:
-            return self._pressTouchButtonInput_unlocked(x, y, deviceId)
+            return __class__.__dict__["_pressTouchButtonInput_unlocked"].__get__(self, __class__)(x, y, deviceId)
 
     def _pressTouchButtonInput_unlocked(self, x: int, y: int, deviceId: int) -> bool:
         from org.allbinary.input.motion.button.TouchButtonFactory import TouchButtonFactory
@@ -111,7 +112,7 @@ class TouchButtonRecognizer:
             point = rectangle.getPoint()
             if self.rectangleCollisionUtil.isInside(point.getX(), point.getY(), rectangle.getMaxX(), rectangle.getMaxY(), x, y):
                 touchButtonInput = touchButton.getTouchButtonInput()
-                if not self.currentlyPressedTouchButtonSingleton.contains(touchButtonInput):
+                if not (self.currentlyPressedTouchButtonSingleton.contains(touchButtonInput)):
                     self.releaseHelper.release(touchButtonInput, deviceId)
                     self.lastPressedTouchButtonInput = touchButtonInput
                     self.currentlyPressedTouchButtonSingleton.add(touchButtonInput)

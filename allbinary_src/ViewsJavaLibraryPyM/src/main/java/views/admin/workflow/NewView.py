@@ -15,28 +15,34 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.validate.ValidationComponentInterface import ValidationComponentInterface
 from views.admin.workflow.WorkFlowView import WorkFlowView
 
 
+@java_inherited_overloads
 class NewView(*java_bases(WorkFlowView, ValidationComponentInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("abeClientInformation", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.abeClientInformation: AbeClientInformationInterface = ServiceClientInformationInterfaceFactory.getInstance()
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.DynamicObjectData import DynamicObjectData
         from org.allbinary.logic.control.workflow.NewWorkFlowFactory import NewWorkFlowFactory
         from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
         httpTransformInfoInterface: TransformInfoHttpInterface = self.getTransformInfoInterface()
         self.workFlowInterface = NewWorkFlowFactory.getInstance().getInstance(self.abeClientInformation, httpTransformInfoInterface.getPropertiesHashMap().get(DynamicObjectData.NAME))
     
@@ -80,7 +86,7 @@ class NewView(*java_bases(WorkFlowView, ValidationComponentInterface)):
     # throws Exception
     def getTransformInfoInterface(self) -> TransformInfoInterface:
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-        return super().getTransformInfoInterface()
+        return java_super_call(super(), "getTransformInfoInterface")
 # from org.allbinary.business.DynamicObjectData import DynamicObjectData
 # from org.allbinary.logic.communication.log.LogUtil import LogUtil
 # from org.allbinary.logic.control.workflow.NewWorkFlowFactory import NewWorkFlowFactory

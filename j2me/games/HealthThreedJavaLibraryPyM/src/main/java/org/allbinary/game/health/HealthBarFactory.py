@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 
 
 class HealthBarFactory:
@@ -22,10 +23,14 @@ class HealthBarFactory:
 
     # throws Exception
     def getInstance(self, layerInterface: AllBinaryLayer, healthInterface: Health, location: int, direction: int) -> HealthBar:
+        from org.allbinary.game.health.HealthBar import HealthBar
+        from org.allbinary.game.health.HealthBarTwodAnimation import HealthBarTwodAnimation
+        from org.allbinary.game.health.Health import Health
+        from org.allbinary.game.health.HealthBar import HealthBar
         from org.allbinary.graphics.opengles.OpenGLFeatureUtil import OpenGLFeatureUtil
         from org.allbinary.animation.FeaturedAnimationInterfaceFactoryInterfaceFactory import FeaturedAnimationInterfaceFactoryInterfaceFactory
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-        if OpenGLFeatureUtil.getInstance().isAnyThreed():
+        if java_predicate(OpenGLFeatureUtil.getInstance(), "isAnyThreed"):
             featuredAnimationInterfaceFactoryInterfaceFactory: FeaturedAnimationInterfaceFactoryInterfaceFactory = FeaturedAnimationInterfaceFactoryInterfaceFactory.getInstance()
             healthBarAnimationInterfaceFactory: HealthBarAnimationInterfaceFactory = featuredAnimationInterfaceFactoryInterfaceFactory.get(Health.NAME)
             return HealthBar(layerInterface, healthInterface, healthBarAnimationInterfaceFactory.getInstanceByLocation(layerInterface, location), direction)

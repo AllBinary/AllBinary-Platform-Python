@@ -23,7 +23,6 @@ from java.lang.ClassLoader import ClassLoader
 class AbSqlBasic:
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
         from org.allbinary.logic.StdUtil import StdUtil
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.logic.communication.sql.connection.pool.SqlConnectionPool import SqlConnectionPool
@@ -32,9 +31,9 @@ class AbSqlBasic:
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.sqlConnectionPool: SqlConnectionPool = SqlConnectionPool.getInstance()
-        self.databaseConnectionInfoInterface: DbConnectionInfo = None
-        self.connectAttemptCounter: int = None
-        self.conn: Connection = None
+        if "databaseConnectionInfoInterface" not in vars(self): self.databaseConnectionInfoInterface: DbConnectionInfo = None
+        if "connectAttemptCounter" not in vars(self): self.connectAttemptCounter: int = 0
+        if "conn" not in vars(self): self.conn: Connection = None
         self.stringUtil: StringUtil = StringUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.commonSeps: CommonSeps = CommonSeps.getInstance()
@@ -59,7 +58,7 @@ class AbSqlBasic:
 
     def __init__(self, databaseConnectionInfoInterface: DbConnectionInfo) -> None:
         from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
-        self._init_fields()
+        __class__._init_fields(self)
         self.databaseConnectionInfoInterface = databaseConnectionInfoInterface
         self.connectAttemptCounter = 0
         self.conn = None
@@ -127,7 +126,7 @@ class AbSqlBasic:
                 try:
                     loader: ClassLoader = threading.current_thread().getContextClassLoader()
                     jdbcDriverClass: type = loader.loadClass(self.getDatabaseConnectionInfoInterface().getJdbcDriver())
-                    jdbcDriverClass.newInstance()
+                    jdbcDriverClass()
                 except Exception as e:
                     if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):
                         self.logUtil.put(self.LOAD_JDBC_DRIVER_FAILED_LABEL + str(self.getDatabaseConnectionInfoInterface().getJdbcDriver()), self, self.METHOD_INITIALIZE, e)
@@ -159,5 +158,7 @@ class AbSqlBasic:
 # from org.allbinary.string.CommonStrings import CommonStrings
 # from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
 # from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+from org.allbinary.logic.communication.sql.SqlTypeStrings import SqlTypeStrings
+from org.allbinary.logic.communication.sql.SqlStrings import SqlStrings
 
 

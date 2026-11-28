@@ -22,6 +22,7 @@ class SpecialCharacterUtil:
 
     @staticmethod
     def getHashMap() -> HashMap:
+        from org.allbinary.logic.string.StringUtil import StringUtil
         from java.util.HashMap import HashMap
         from org.allbinary.logic.StdUtil import StdUtil
         from org.allbinary.logic.io.path.AbPathData import AbPathData

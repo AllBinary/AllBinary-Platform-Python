@@ -15,6 +15,10 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.multiplayer.layer.MultiPlayerGameLayer import MultiPlayerGameLayer
 from org.allbinary.game.input.GameInputInterface import GameInputInterface
@@ -24,15 +28,50 @@ from org.allbinary.game.layer.RTSInterface import RTSInterface
 from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
 
 
+@java_inherited_overloads
 class RTSLayer(*java_bases(MultiPlayerGameLayer, TickableInterface, GameInputInterface, GameKeyEventSourceInterface, RTSInterface, PathFindingLayerInterface)):
     id: int = 0
     MAIN_INDEX: int = 0
     SECONDARY_INDEX: int = 1
+    def _java_defaults(self):
+        vars(self).setdefault("debug", False)
+        vars(self).setdefault("showMoreCaptionStates", False)
+        vars(self).setdefault("inputProcessorArray", None)
+        vars(self).setdefault("rtsLayer2LogHelper", None)
+        vars(self).setdefault("waypointLogHelperP", None)
+        vars(self).setdefault("waypoint2LogHelperP", None)
+        vars(self).setdefault("waypointRunnableLogHelperP", None)
+        vars(self).setdefault("rtsFormInput", None)
+        vars(self).setdefault("verticleBuildAnimationInterface", None)
+        vars(self).setdefault("rangeAnimation", None)
+        vars(self).setdefault("initRangeAnimation", None)
+        vars(self).setdefault("sensorRangeAnimation", None)
+        vars(self).setdefault("initSensorRangeAnimation", None)
+        vars(self).setdefault("baseAnimationInterface", None)
+        vars(self).setdefault("buildFrameTimeHelper", None)
+        vars(self).setdefault("buildAnimationInterface", None)
+        vars(self).setdefault("animationInterface", None)
+        vars(self).setdefault("initAnimationInterface", None)
+        vars(self).setdefault("indexedButShouldBeRotationAnimationInterface", None)
+        vars(self).setdefault("emptyAnimationInterface", None)
+        vars(self).setdefault("destroyAnimationInterface", None)
+        vars(self).setdefault("fireTimeHelper", None)
+        vars(self).setdefault("rootName", None)
+        vars(self).setdefault("hashtable", None)
+        vars(self).setdefault("BUILD_VALUE", 0)
+        vars(self).setdefault("geographicMapCellPositionAreaBase", None)
+        vars(self).setdefault("healthInterface", None)
+        vars(self).setdefault("level", 0)
+        vars(self).setdefault("maxLevel", 0)
+        vars(self).setdefault("hackVerticleBuild", 0)
+        vars(self).setdefault("slightAngle", 0)
+        vars(self).setdefault("percentCompleteP", 0)
+        vars(self).setdefault("destroyed", False)
+        vars(self).setdefault("selected", False)
+        vars(self).setdefault("rtsLayerUtil", None)
+        vars(self).setdefault("layerDistanceUtil", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.input.form.RTSFormInput import RTSFormInput
-        from org.allbinary.animation.Animation import Animation
-        from org.allbinary.animation.IndexedAnimation import IndexedAnimation
         from org.allbinary.game.health.Health import Health
         from org.allbinary.game.input.GameInputProcessor import GameInputProcessor
         from org.allbinary.game.input.InputFactory import InputFactory
@@ -42,7 +81,6 @@ class RTSLayer(*java_bases(MultiPlayerGameLayer, TickableInterface, GameInputInt
         from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         from org.allbinary.logic.StdUtil import StdUtil
         from org.allbinary.math.LayerDistanceUtil import LayerDistanceUtil
-        from org.allbinary.util.ABHashtable import ABHashtable
         self.debug: bool = True
         self.showMoreCaptionStates: bool = self.debug
         self.inputProcessorArray: list[GameInputProcessor] = [None] * (InputFactory.getInstance().MAX)
@@ -50,31 +88,31 @@ class RTSLayer(*java_bases(MultiPlayerGameLayer, TickableInterface, GameInputInt
         self.waypointLogHelperP: WaypointLogHelper = WaypointLogHelper.getInstance()
         self.waypoint2LogHelperP: Waypoint2LogHelper = Waypoint2LogHelper.getInstance()
         self.waypointRunnableLogHelperP: WaypointRunnableLogHelper = WaypointRunnableLogHelper.getInstance()
-        self.rtsFormInput: RTSFormInput = None
-        self.verticleBuildAnimationInterface: IndexedAnimation = None
-        self.rangeAnimation: Animation = None
-        self.initRangeAnimation: Animation = None
-        self.sensorRangeAnimation: Animation = None
-        self.initSensorRangeAnimation: Animation = None
-        self.baseAnimationInterface: Animation = None
+        if "rtsFormInput" not in vars(self): self.rtsFormInput: RTSFormInput = None
+        if "verticleBuildAnimationInterface" not in vars(self): self.verticleBuildAnimationInterface: IndexedAnimation = None
+        if "rangeAnimation" not in vars(self): self.rangeAnimation: Animation = None
+        if "initRangeAnimation" not in vars(self): self.initRangeAnimation: Animation = None
+        if "sensorRangeAnimation" not in vars(self): self.sensorRangeAnimation: Animation = None
+        if "initSensorRangeAnimation" not in vars(self): self.initSensorRangeAnimation: Animation = None
+        if "baseAnimationInterface" not in vars(self): self.baseAnimationInterface: Animation = None
         self.buildFrameTimeHelper: TimeDelayHelper = TimeDelayHelper(50)
-        self.buildAnimationInterface: Animation = None
-        self.animationInterface: Animation = None
-        self.initAnimationInterface: IndexedAnimation = None
-        self.indexedButShouldBeRotationAnimationInterface: IndexedAnimation = None
-        self.emptyAnimationInterface: IndexedAnimation = None
-        self.destroyAnimationInterface: IndexedAnimation = None
+        if "buildAnimationInterface" not in vars(self): self.buildAnimationInterface: Animation = None
+        if "animationInterface" not in vars(self): self.animationInterface: Animation = None
+        if "initAnimationInterface" not in vars(self): self.initAnimationInterface: IndexedAnimation = None
+        if "indexedButShouldBeRotationAnimationInterface" not in vars(self): self.indexedButShouldBeRotationAnimationInterface: IndexedAnimation = None
+        if "emptyAnimationInterface" not in vars(self): self.emptyAnimationInterface: IndexedAnimation = None
+        if "destroyAnimationInterface" not in vars(self): self.destroyAnimationInterface: IndexedAnimation = None
         self.fireTimeHelper: TimeDelayHelper = TimeDelayHelper(700)
-        self.rootName: str = None
+        if "rootName" not in vars(self): self.rootName: str = None
         self.hashtable: ABHashtable[object, object] = StdUtil.getInstance().createHashtable()
         self.BUILD_VALUE: int = 63
-        self.geographicMapCellPositionAreaBase: GeographicMapCellPositionAreaBase = None
+        if "geographicMapCellPositionAreaBase" not in vars(self): self.geographicMapCellPositionAreaBase: GeographicMapCellPositionAreaBase = None
         self.healthInterface: Health = Health.NULL_HEALTH
         self.level: int = 1
         self.maxLevel: int = 1
         self.hackVerticleBuild: int = self.BUILD_VALUE
         self.slightAngle: int = 0
-        self.percentCompleteP: int = 0
+        if "percentCompleteP" not in vars(self): self.percentCompleteP: int = 0
         self.destroyed: bool = False
         self.selected: bool = False
         self.rtsLayerUtil: RTSLayerUtil = RTSLayerUtil.getInstance()
@@ -100,6 +138,7 @@ class RTSLayer(*java_bases(MultiPlayerGameLayer, TickableInterface, GameInputInt
     
 
     def __init__(self, remoteInfo: RemoteInfo, groupInterface: list[Group], rootName: str, name: str, healthInterface: Health, rtsFormInput: RTSFormInput, animationInterfaceFactoryInterface: AnimationInterfaceFactoryInterface, emptyAnimationInterfaceFactoryInterface: AnimationInterfaceFactoryInterface, baseAnimationInterfaceFactoryInterface: AnimationInterfaceFactoryInterface, buildAnimationInterfaceFactoryInterface: AnimationInterfaceFactoryInterface, verticleBuildAnimationInterfaceFactoryInterface: AnimationInterfaceFactoryInterface, proceduralAnimationInterfaceFactoryInterface: ProceduralAnimationInterfaceFactoryInterface, rectangle: Rectangle, x: int, y: int, viewPosition: ViewPositionBase) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.layer.GeographicMapCellPositionArea import GeographicMapCellPositionArea
         from org.allbinary.game.input.form.RTSFormInput import RTSFormInput
         from org.allbinary.animation.Animation import Animation
@@ -113,7 +152,7 @@ class RTSLayer(*java_bases(MultiPlayerGameLayer, TickableInterface, GameInputInt
         from org.allbinary.game.multiplayer.layer.RemoteInfo import RemoteInfo
         from org.allbinary.view.ViewPositionBase import ViewPositionBase
         super().__init__(remoteInfo, groupInterface, name, rectangle, viewPosition)
-        self._init_fields()
+        __class__._init_fields(self)
         self.initInputProcessors()
         self.rootName = rootName
         self.healthInterface = healthInterface
@@ -140,7 +179,7 @@ class RTSLayer(*java_bases(MultiPlayerGameLayer, TickableInterface, GameInputInt
         from org.allbinary.game.view.TileLayerPositionIntoViewPosition import TileLayerPositionIntoViewPosition
         from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
         from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
-        super().setAllBinaryGameLayerManager(allBinaryGameLayerManager)
+        java_super_call(super(), "setAllBinaryGameLayerManager", allBinaryGameLayerManager)
         geographicMapCompositeInterface: GeographicMapCompositeInterface = self.allBinaryGameLayerManagerP
         geographicMapInterface: BasicGeographicMap = geographicMapCompositeInterface.getGeographicMapInterface()[0]
         tiledLayer: AllBinaryTiledLayer = geographicMapInterface.getAllBinaryTiledLayer()
@@ -210,7 +249,7 @@ class RTSLayer(*java_bases(MultiPlayerGameLayer, TickableInterface, GameInputInt
     def processTick(self, allBinaryLayerManager: AllBinaryLayerManager) -> None:
         from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         try:
-            if self.isCompleted():
+            if java_predicate(self, "isCompleted"):
                 self.processBuiltTick(allBinaryLayerManager)
             else:
                 self.build()
@@ -242,7 +281,7 @@ class RTSLayer(*java_bases(MultiPlayerGameLayer, TickableInterface, GameInputInt
     def paint(self, graphics: Graphics) -> None:
         from javax.microedition.lcdui.Graphics import Graphics
         from org.allbinary.view.ViewPositionBase import ViewPositionBase
-        super().paintFirst(graphics)
+        java_super_call(super(), "paintFirst", graphics)
         viewPosition: ViewPositionBase = self.getViewPosition()
         viewX: int = viewPosition.getX()
         viewY: int = viewPosition.getY()
@@ -275,7 +314,7 @@ class RTSLayer(*java_bases(MultiPlayerGameLayer, TickableInterface, GameInputInt
 
     # throws Exception
     def build(self) -> None:
-        if self.buildFrameTimeHelper.isTimeTNT():
+        if java_predicate(self.buildFrameTimeHelper, "isTimeTNT"):
             self.animationInterface = self.buildAnimationInterface
             self.verticleBuildAnimationInterface.nextFrame()
             self.hackVerticleBuild += 1
@@ -385,7 +424,7 @@ class RTSLayer(*java_bases(MultiPlayerGameLayer, TickableInterface, GameInputInt
         from org.allbinary.game.combat.destroy.DestroyedLayerProcessor import DestroyedLayerProcessor
         from org.allbinary.view.event.ViewPositionEventHandler import ViewPositionEventHandler
         self.destroyed = destroyed
-        if self.isDestroyed():
+        if java_predicate(self, "isDestroyed"):
             DestroyedLayerProcessor.getInstance().add(self)
             ViewPositionEventHandler.getInstance().removeListener(self)
     

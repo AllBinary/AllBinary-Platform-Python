@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 
 
 class DeleteCloud:
@@ -25,7 +27,7 @@ class DeleteCloud:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def delete(self, prePath: str, current: int, total: int) -> bool:

@@ -43,7 +43,7 @@ class UnitWaypointStrings:
         self.RETURNING_AS_WAYPOINT_PATH_LIST: str = " returning as waypointPathsList was runningWaypointPathList"
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

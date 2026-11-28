@@ -21,13 +21,13 @@ import time
 class GameTickTimeDelayHelper:
 
     def _init_fields(self) -> None:
-        self.timeDelta: int = 0
-        self.startTime: int = None
-        self.lastStartTime: int = None
+        if "timeDelta" not in vars(self): self.timeDelta: int = 0
+        if "startTime" not in vars(self): self.startTime: int = 0
+        if "lastStartTime" not in vars(self): self.lastStartTime: int = 0
     
 
     def __init__(self, startTime: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.startTime = startTime
         self.lastStartTime = 0
     

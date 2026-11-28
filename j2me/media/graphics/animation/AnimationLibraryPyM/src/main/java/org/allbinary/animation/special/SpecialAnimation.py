@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.IndexedAnimation import IndexedAnimation
 from org.allbinary.animation.special.SpecialAnimationInterface import SpecialAnimationInterface
 
 
+@java_inherited_overloads
 class SpecialAnimation(*java_bases(IndexedAnimation, SpecialAnimationInterface)):
     NULL_SPECIAL_ANIMATION: SpecialAnimation = None
     

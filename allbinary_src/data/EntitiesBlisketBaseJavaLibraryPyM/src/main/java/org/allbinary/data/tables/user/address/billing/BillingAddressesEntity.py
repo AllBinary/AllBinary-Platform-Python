@@ -15,18 +15,23 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.data.tables.user.address.StreetAddressesEntity import StreetAddressesEntity
 
 
+@java_inherited_overloads
 class BillingAddressesEntity(StreetAddressesEntity):
+    def _java_defaults(self):
+        vars(self).setdefault("TABLENAME", None)
 
     def _init_fields(self) -> None:
         self.TABLENAME: str = "billing"
     
 
     def __init__(self, userName: str) -> None:
+        __class__._java_defaults(self)
         super().__init__(userName)
-        self._init_fields()
+        __class__._init_fields(self)
         self.setTableName(self.TABLENAME)
 
 

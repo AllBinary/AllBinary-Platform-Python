@@ -20,11 +20,11 @@ from __future__ import annotations
 class LayerPlacementType:
 
     def _init_fields(self) -> None:
-        self.type_: int = None
+        if "type_" not in vars(self): self.type_: int = 0
     
 
     def __init__(self, type_: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.type_ = type_
     
 

@@ -16,13 +16,20 @@
 from __future__ import annotations
 
 import time
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.image.ImageCacheBase import ImageCacheBase
 
 
+@java_inherited_overloads
 class ImageCache(ImageCacheBase):
     NULL_IMAGE_CACHE: ImageCache = None
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("systemWrapper", None)
+        vars(self).setdefault("tsUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.TsUtil import TsUtil
@@ -36,8 +43,9 @@ class ImageCache(ImageCacheBase):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -89,7 +97,9 @@ class ImageCache(ImageCacheBase):
         return image
 
     def get(self, *args):
-        return getattr(self, "get_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("get_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().get(*args)
     
 
     def getIndex(self, key: object) -> int:
@@ -111,6 +121,10 @@ class ImageCache(ImageCacheBase):
         from java.io.InputStream import InputStream
         from javax.microedition.lcdui.Image import Image
         return Image.createImageLater(key, -1, -1)
+    _declared_createImage = createImage
+    def createImage(self, *args, **kwargs):
+        if len(args) + len(kwargs) == 2 and (kwargs or (True and (args[1] is None or any(base.__name__ == "InputStream" for base in type(args[1]).__mro__)))): return __class__._declared_createImage(self, *args, **kwargs)
+        return super().createImage(*args, **kwargs)
     
 
     def isLazy(self) -> bool:

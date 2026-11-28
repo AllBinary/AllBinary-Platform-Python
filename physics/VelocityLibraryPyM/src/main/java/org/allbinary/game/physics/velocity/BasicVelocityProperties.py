@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_divide
 from org.allbinary.game.physics.velocity.BasicVelocityInterface import BasicVelocityInterface
 
 
@@ -23,19 +24,18 @@ class BasicVelocityProperties(BasicVelocityInterface):
     def _init_fields(self) -> None:
         from org.allbinary.direction.DirectionUtil import DirectionUtil
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         from org.allbinary.logic.math.vector.AxisMathVectorUtil import AxisMathVectorUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.velocityXBasicDecimal: BasicDecimal = None
-        self.velocityYBasicDecimal: BasicDecimal = None
-        self.velocityZBasicDecimal: BasicDecimal = None
+        if "velocityXBasicDecimal" not in vars(self): self.velocityXBasicDecimal: BasicDecimal = None
+        if "velocityYBasicDecimal" not in vars(self): self.velocityYBasicDecimal: BasicDecimal = None
+        if "velocityZBasicDecimal" not in vars(self): self.velocityZBasicDecimal: BasicDecimal = None
         self.axisMathVectorUtil: AxisMathVectorUtil = AxisMathVectorUtil.getInstance()
         self.directionUtil: DirectionUtil = DirectionUtil.getInstance()
     
 
     def __init__(self) -> None:
         from org.allbinary.logic.math.BasicDecimal import BasicDecimal
-        self._init_fields()
+        __class__._init_fields(self)
         self.velocityXBasicDecimal = BasicDecimal(0)
         self.velocityYBasicDecimal = BasicDecimal(0)
         self.velocityZBasicDecimal = BasicDecimal(0)
@@ -121,18 +121,24 @@ class BasicVelocityProperties(BasicVelocityInterface):
     
 
     def setVelocityi(self, magnitude: int, angle: int, otherAngle: int) -> None:
-        xVector: int = (self.axisMathVectorUtil.calculateX(magnitude, angle) / self.velocityXBasicDecimal.getScaledFactorValue())
-        yVector: int = (self.axisMathVectorUtil.calculateY(magnitude, angle) / self.velocityYBasicDecimal.getScaledFactorValue())
-        zVector: int = (self.axisMathVectorUtil.calculateZ(magnitude, otherAngle) / self.velocityZBasicDecimal.getScaledFactorValue())
+        xVector: int = (java_divide(self.axisMathVectorUtil.calculateX(magnitude, angle), self.velocityXBasicDecimal.getScaledFactorValue())
+            )
+        yVector: int = (java_divide(self.axisMathVectorUtil.calculateY(magnitude, angle), self.velocityYBasicDecimal.getScaledFactorValue())
+            )
+        zVector: int = (java_divide(self.axisMathVectorUtil.calculateZ(magnitude, otherAngle), self.velocityZBasicDecimal.getScaledFactorValue())
+            )
         self.velocityXBasicDecimal.setlong(xVector)
         self.velocityYBasicDecimal.setlong(yVector)
         self.velocityZBasicDecimal.setlong(zVector)
     
 
     def addVelocityi(self, magnitude: int, angle: int, otherAngle: int) -> None:
-        xVector: int = (self.axisMathVectorUtil.calculateX(magnitude, angle) / self.velocityXBasicDecimal.getScaledFactorValue())
-        yVector: int = (self.axisMathVectorUtil.calculateY(magnitude, angle) / self.velocityYBasicDecimal.getScaledFactorValue())
-        zVector: int = (self.axisMathVectorUtil.calculateZ(magnitude, otherAngle) / self.velocityZBasicDecimal.getScaledFactorValue())
+        xVector: int = (java_divide(self.axisMathVectorUtil.calculateX(magnitude, angle), self.velocityXBasicDecimal.getScaledFactorValue())
+            )
+        yVector: int = (java_divide(self.axisMathVectorUtil.calculateY(magnitude, angle), self.velocityYBasicDecimal.getScaledFactorValue())
+            )
+        zVector: int = (java_divide(self.axisMathVectorUtil.calculateZ(magnitude, otherAngle), self.velocityZBasicDecimal.getScaledFactorValue())
+            )
         self.velocityXBasicDecimal.addlong(xVector)
         self.velocityYBasicDecimal.addlong(yVector)
         self.velocityZBasicDecimal.addlong(zVector)

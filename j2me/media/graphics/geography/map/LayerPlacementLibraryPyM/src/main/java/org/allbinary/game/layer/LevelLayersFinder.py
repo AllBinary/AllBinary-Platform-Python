@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -26,7 +27,7 @@ class LevelLayersFinder:
         self.enumerationUtil: EnumerationUtil = EnumerationUtil.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -51,7 +52,7 @@ class LevelLayersFinder:
             layerHashtableCanBeNull = hashtable.get(self.enumerationUtil.nextElement(enumeration))
             integerCanBeNull = layerHashtableCanBeNull.get(Layer.ID)
             cachedIntegerCanBeNull = smallIntegerSingletonFactory.getAt(int(integerCanBeNull))
-            if not list_.contains(cachedIntegerCanBeNull):
+            if not (list_.contains(cachedIntegerCanBeNull)):
                 list_.add(cachedIntegerCanBeNull)
         return list_
 # from java.util.Enumeration import Enumeration

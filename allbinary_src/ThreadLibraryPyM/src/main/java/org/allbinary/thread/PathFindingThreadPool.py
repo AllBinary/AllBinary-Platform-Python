@@ -15,11 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.thread.ThreadPool import ThreadPool
 
 
 #This is mainly for network communications.
+@java_inherited_overloads
 class PathFindingThreadPool(ThreadPool):
     instance: ThreadPool = None
     
@@ -35,11 +38,11 @@ class PathFindingThreadPool(ThreadPool):
     
 
     def runTaskWithPriority(self, task: PriorityRunnable) -> None:
-        super().runTaskWithPriority(task)
+        java_super_call(super(), "runTaskWithPriority", task)
     
 
     def runTask(self, task: object) -> None:
-        super().runTask(task)
+        java_super_call(super(), "runTask", task)
     
 
     def startTask(self, task: object) -> None:

@@ -24,17 +24,16 @@ class UniqueIdGenerator(IdGeneratorInterface):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
-        from org.allbinary.data.tables.generator.IdGeneratorEntity import IdGeneratorEntity
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.idGeneratorEntity: IdGeneratorEntity = None
-        self.name: str = None
+        if "idGeneratorEntity" not in vars(self): self.idGeneratorEntity: IdGeneratorEntity = None
+        if "name" not in vars(self): self.name: str = None
     
 
     def __init__(self) -> None:
         from org.allbinary.data.tables.generator.IdGeneratorEntity import IdGeneratorEntity
         from org.allbinary.data.tables.generator.IdGeneratorEntityFactory import IdGeneratorEntityFactory
-        self._init_fields()
+        __class__._init_fields(self)
         self.idGeneratorEntity = IdGeneratorEntityFactory.getInstance()
     
 
@@ -58,7 +57,7 @@ class UniqueIdGenerator(IdGeneratorInterface):
     # throws Exception
     def setFile(self, filePathName: str, name: str) -> None:
         with self._lock:
-            return self._setFile_unlocked(filePathName, name)
+            return __class__.__dict__["_setFile_unlocked"].__get__(self, __class__)(filePathName, name)
 
     def _setFile_unlocked(self, filePathName: str, name: str) -> None:
         self.name = name
@@ -67,7 +66,7 @@ class UniqueIdGenerator(IdGeneratorInterface):
     # throws IOException
     def getNext(self) -> str:
         with self._lock:
-            return self._getNext_unlocked()
+            return __class__.__dict__["_getNext_unlocked"].__get__(self, __class__)()
 
     def _getNext_unlocked(self) -> str:
         from org.allbinary.string.CommonStrings import CommonStrings

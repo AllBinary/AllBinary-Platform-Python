@@ -15,17 +15,21 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.util.event.handler.BasicEventHandler import BasicEventHandler
 
 
+@java_inherited_overloads
 class GeographicMapCellPositionEventHandler(BasicEventHandler):
     instance: GeographicMapCellPositionEventHandler = None
     _lock = threading.RLock()
+    def _java_defaults(self):
+        vars(self).setdefault("list_", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.list_: BasicArrayList = BasicArrayListD()
     
@@ -36,25 +40,26 @@ class GeographicMapCellPositionEventHandler(BasicEventHandler):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def addListener(self, miniMapLayer: MiniMapLayer) -> None:
         from org.allbinary.game.layer.geographic.map.MiniMapLayer import MiniMapLayer
-        if not self.list_.contains(miniMapLayer):
+        if not (self.list_.contains(miniMapLayer)):
             self.list_.add(miniMapLayer)
     
 
     def removeAllListeners(self) -> None:
         self.list_.clear()
-        super().removeAllListeners()
+        java_super_call(super(), "removeAllListeners")
     
 
     def removeListener(self, eventListenerInterface: EventListenerInterface) -> None:
         from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         self.list_.remove(eventListenerInterface)
-        super().removeListener(eventListenerInterface)
+        java_super_call(super(), "removeListener", eventListenerInterface)
     
 
     # throws Exception
@@ -69,13 +74,13 @@ class GeographicMapCellPositionEventHandler(BasicEventHandler):
                 miniMapLayer.onGeographicMapCellPositionEvent(eventObject)
             except Exception as e:
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, EventStrings.getInstance().FIRE_EVENT, e)
-        super().fireEvent(eventObject)
+        java_super_call(super(), "fireEvent", eventObject)
     
 
     # throws Exception
     def fireRemoveEvent(self, eventObject: AllBinaryEventObject) -> None:
         with self._lock:
-            return self._fireRemoveEvent_unlocked(eventObject)
+            return __class__.__dict__["_fireRemoveEvent_unlocked"].__get__(self, __class__)(eventObject)
 
     def _fireRemoveEvent_unlocked(self, eventObject: AllBinaryEventObject) -> None:
         from org.allbinary.util.BasicArrayList import BasicArrayList

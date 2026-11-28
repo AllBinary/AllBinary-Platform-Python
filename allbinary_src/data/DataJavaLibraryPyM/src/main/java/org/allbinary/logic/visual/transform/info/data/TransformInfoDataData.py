@@ -33,7 +33,7 @@ class TransformInfoDataData:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
 # from org.allbinary.logic.io.file.CommonDataFileStrings import CommonDataFileStrings
 
 

@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -23,7 +25,6 @@ class AnimationFactorySpriteScaleUtil:
 
     def _init_fields(self) -> None:
         from org.allbinary.graphics.opengles.OpenGLUtil import OpenGLUtil
-        from org.allbinary.image.ImageCache import ImageCache
         from org.allbinary.image.ImageCacheFactory import ImageCacheFactory
         from org.allbinary.image.opengles.OpenGLESImageExclusionUtil import OpenGLESImageExclusionUtil
         from org.allbinary.logic.math.J2SEMath import J2SEMath
@@ -35,7 +36,7 @@ class AnimationFactorySpriteScaleUtil:
         self.openGLESImageExclusionUtil: OpenGLESImageExclusionUtil = OpenGLESImageExclusionUtil.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

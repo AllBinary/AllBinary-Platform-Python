@@ -35,7 +35,7 @@ class TrackedStrings:
         self.SEP_BY_NULL_CHAR_INSTEAD_OF_NEW_LINE: str = "-z"
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

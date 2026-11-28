@@ -15,22 +15,28 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.ag.ai.ArrayAI import ArrayAI
 
 
+@java_inherited_overloads
 class SequenceAI(ArrayAI):
     SEQUENCE_AI: str = "Sequence AI"
+    def _java_defaults(self):
+        vars(self).setdefault("index", 0)
 
     def _init_fields(self) -> None:
-        self.index: int = 0
+        if "index" not in vars(self): self.index: int = 0
     
 
     def __init__(self, artificialIntelligenceInterfaceArray: list[ArtificialIntelligenceInterface], ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
         from org.allbinary.game.input.GameInput import GameInput
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         super().__init__(artificialIntelligenceInterfaceArray, ownerLayerInterface, gameInput)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -71,7 +77,7 @@ class SequenceAI(ArrayAI):
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.logic.string.StringUtil import StringUtil
         stringBuffer: StringMaker = StringMaker()
-        stringBuffer.append(str(super()))
+        stringBuffer.append(java_super_call(super(), "toString"))
         stringBuffer.append(" Selected AI: ")
         stringBuffer.append(StringUtil.getInstance().toString(self.getSelectedArtificialIntelligenceInterface()))
         return str(stringBuffer)

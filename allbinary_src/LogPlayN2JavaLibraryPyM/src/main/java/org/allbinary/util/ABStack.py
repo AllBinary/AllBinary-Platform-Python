@@ -15,9 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.util.Stack import Stack
 
 
+@java_inherited_overloads
 class ABStack(Stack):
 
     def __init__(self) -> None:
@@ -25,27 +28,27 @@ class ABStack(Stack):
     
 
     def push(self, item: E) -> E:
-        return super().push(item)
+        return java_super_call(super(), "push", item)
     
 
     def pop(self) -> E:
-        return super().pop()
+        return java_super_call(super(), "pop")
     
 
     def peek(self) -> E:
-        return super().peek()
+        return java_super_call(super(), "peek")
     
 
     def empty(self) -> bool:
-        return super().empty()
+        return java_super_call(super(), "empty")
     
 
     def search(self, obj: object) -> int:
-        return super().search(obj)
+        return java_super_call(super(), "search", obj)
     
 
     def removeElement(self, obj: object) -> bool:
-        return super().removeElement(obj)
+        return java_super_call(super(), "removeElement", obj)
 # from jsinterop.annotations.JsType import JsType
 
 

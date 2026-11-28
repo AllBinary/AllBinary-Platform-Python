@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
@@ -27,17 +28,16 @@ class GenericProfiles(*java_bases(DomNodeInterface, DomDocumentMappingInterface)
     DEFAULT_FILE: str = None
 
     def _init_fields(self) -> None:
-        from java.util.HashMap import HashMap
-        from org.allbinary.input.automation.module.DefaultListModelHelper import DefaultListModelHelper
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.hashMap: HashMap = None
-        self.profilesDefaultListModelHelper: DefaultListModelHelper = None
-        self.fileName: str = None
+        if "hashMap" not in vars(self): self.hashMap: HashMap = None
+        if "profilesDefaultListModelHelper" not in vars(self): self.profilesDefaultListModelHelper: DefaultListModelHelper = None
+        if "fileName" not in vars(self): self.fileName: str = None
     
 
     def __init__(self, fileName: str) -> None:
         from org.allbinary.input.automation.module.generic.configuration.profile.GenericProfilesData import GenericProfilesData
+        from java.io.File import File
         from java.io.FileInputStream import FileInputStream
         from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
         from org.allbinary.input.automation.module.DefaultListModelHelper import DefaultListModelHelper
@@ -45,11 +45,11 @@ class GenericProfiles(*java_bases(DomNodeInterface, DomDocumentMappingInterface)
         from org.allbinary.logic.StdUtil import StdUtil
         from org.w3c.dom.Document import Document
         from org.w3c.dom.NodeList import NodeList
-        self._init_fields()
+        __class__._init_fields(self)
         self.fileName = fileName
         self.profilesDefaultListModelHelper = DefaultListModelHelper()
         self.hashMap = StdUtil.getInstance().createHashMap()
-        if File(fileName).isFile():
+        if java_predicate(File(fileName), "isFile"):
             bytes: list[int] = [0] * (100000)
             idFile: FileInputStream = FileInputStream(fileName)
             length: int = idFile.read(bytes)

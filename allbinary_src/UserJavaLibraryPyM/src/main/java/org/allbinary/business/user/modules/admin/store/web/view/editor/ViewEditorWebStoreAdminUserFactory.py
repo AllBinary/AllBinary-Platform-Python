@@ -40,7 +40,9 @@ class ViewEditorWebStoreAdminUserFactory(UserFactoryInterface):
         return ViewEditorWebStoreAdminUser(hashMap)
 
     def getInstance(self, *args):
-        return getattr(self, "getInstance_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("getInstance_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getInstance(*args)
 # from java.util.HashMap import HashMap
 # from org.allbinary.business.user.UserInterface import UserInterface
 

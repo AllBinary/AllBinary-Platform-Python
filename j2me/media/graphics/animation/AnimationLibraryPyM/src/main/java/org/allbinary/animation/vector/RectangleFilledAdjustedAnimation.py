@@ -15,22 +15,29 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.color.ColorCompositeInterface import ColorCompositeInterface
 from org.allbinary.animation.vector.RectangleFilledAnimation import RectangleFilledAnimation
 
 
+@java_inherited_overloads
 class RectangleFilledAdjustedAnimation(*java_bases(RectangleFilledAnimation, ColorCompositeInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("offsetX", 0)
+        vars(self).setdefault("offsetY", 0)
 
     def _init_fields(self) -> None:
-        self.offsetX: int = None
-        self.offsetY: int = None
+        if "offsetX" not in vars(self): self.offsetX: int = 0
+        if "offsetY" not in vars(self): self.offsetY: int = 0
     
 
     def __init__(self, width: int, height: int, offsetX: int, offsetY: int, basicColor: BasicColor) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(width, height, basicColor)
-        self._init_fields()
+        __class__._init_fields(self)
         self.offsetX = offsetX
         self.offsetY = offsetY
         self.setBasicColorP(basicColor)
@@ -43,7 +50,7 @@ class RectangleFilledAdjustedAnimation(*java_bases(RectangleFilledAnimation, Col
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
         from javax.microedition.lcdui.Graphics import Graphics
         self.basicSetColorUtil.setBasicColorP3(graphics, self.getBasicColorP(), self.getColor())
-        super().paintXY(graphics, x + self.offsetX, y + self.offsetY)
+        java_super_call(super(), "paintXY", graphics, x + self.offsetX, y + self.offsetY)
     
 
     def setOffsetX(self, offsetX: int) -> None:
@@ -56,12 +63,12 @@ class RectangleFilledAdjustedAnimation(*java_bases(RectangleFilledAnimation, Col
 
     def getBasicColorP(self) -> BasicColor:
         from org.allbinary.graphics.color.BasicColor import BasicColor
-        return super().getBasicColorP()
+        return java_super_call(super(), "getBasicColorP")
     
 
     def setBasicColorP(self, basicColor: BasicColor) -> None:
         from org.allbinary.graphics.color.BasicColor import BasicColor
-        super().setBasicColorP(basicColor)
+        java_super_call(super(), "setBasicColorP", basicColor)
 # from javax.microedition.lcdui.Graphics import Graphics
 # from org.allbinary.graphics.color.BasicColor import BasicColor
 

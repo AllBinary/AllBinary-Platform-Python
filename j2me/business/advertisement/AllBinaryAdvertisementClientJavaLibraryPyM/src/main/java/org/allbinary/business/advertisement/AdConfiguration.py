@@ -20,13 +20,13 @@ from __future__ import annotations
 class AdConfiguration:
 
     def _init_fields(self) -> None:
-        self.INNERACTIVE: str = None
-        self.LEADBOLT: str = None
-        self.ADMOB: str = None
+        if "INNERACTIVE" not in vars(self): self.INNERACTIVE: str = None
+        if "LEADBOLT" not in vars(self): self.LEADBOLT: str = None
+        if "ADMOB" not in vars(self): self.ADMOB: str = None
     
 
     def __init__(self, advertIdArray: list[object]) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.INNERACTIVE = advertIdArray[0]
         self.ADMOB = advertIdArray[1]
         self.LEADBOLT = advertIdArray[2]

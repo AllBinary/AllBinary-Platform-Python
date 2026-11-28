@@ -72,7 +72,7 @@ class BasicViewData:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
 
 
 def _BasicViewData_instance() -> object:

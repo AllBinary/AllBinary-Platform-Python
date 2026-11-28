@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -22,7 +23,7 @@ class LayerCollisionUtil:
     instance: LayerCollisionUtil = None
 
     def _init_fields(self) -> None:
-        self.collisionProcessor: CollisionProcessor = None
+        if "collisionProcessor" not in vars(self): self.collisionProcessor: CollisionProcessor = None
     
 
     @staticmethod
@@ -36,10 +37,10 @@ class LayerCollisionUtil:
         from org.allbinary.game.configuration.feature.Features import Features
         from org.allbinary.game.configuration.feature.GameFeatureFactory import GameFeatureFactory
         from org.allbinary.graphics.opengles.OpenGLFeatureUtil import OpenGLFeatureUtil
-        self._init_fields()
+        __class__._init_fields(self)
         features: Features = Features.getInstance()
         gameFeatureFactory: GameFeatureFactory = GameFeatureFactory.getInstance()
-        if OpenGLFeatureUtil.getInstance().isAnyThreed() and not features.isFeature(gameFeatureFactory.COLLISIONS_FORCED_TWO_DIMENSIONAL):
+        if java_predicate(OpenGLFeatureUtil.getInstance(), "isAnyThreed") and not (features.isFeature(gameFeatureFactory.COLLISIONS_FORCED_TWO_DIMENSIONAL)):
             self.collisionProcessor = CollisionThreedProcessor()
         else:
             self.collisionProcessor = Collision2DProcessor()

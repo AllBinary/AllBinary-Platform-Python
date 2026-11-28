@@ -29,7 +29,7 @@ class MainFeatureFactory:
         self.LOAD_ALL: Feature = Feature("Load All")
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

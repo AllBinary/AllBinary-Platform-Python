@@ -22,13 +22,12 @@ class ColorFromEventUtil:
     instance: ColorFromEventUtil = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         self.YELLOW: BasicColor = BasicColorFactory.getInstance().YELLOW
         self.COLOR_INT: int = int(self.YELLOW)
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

@@ -43,7 +43,7 @@ class InputFactory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         size: int = len(self.inputIntegerArray)
         for index in range(0, size):
             self.inputIntegerArray[index] = self.NO_INPUT

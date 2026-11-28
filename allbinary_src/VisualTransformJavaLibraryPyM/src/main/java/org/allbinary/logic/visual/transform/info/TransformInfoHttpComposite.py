@@ -24,13 +24,13 @@ class TransformInfoHttpComposite:
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.transformInfoInterface: TransformInfoHttpInterface = None
+        if "transformInfoInterface" not in vars(self): self.transformInfoInterface: TransformInfoHttpInterface = None
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-        self._init_fields()
+        __class__._init_fields(self)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF("View Name: " + transformInfoInterface.getName(), self, self.commonStrings.CONSTRUCTOR)
         self.transformInfoInterface = transformInfoInterface

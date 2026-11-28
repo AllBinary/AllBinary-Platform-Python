@@ -21,16 +21,17 @@ from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 class TransformInfoInterfaceView(DomNodeInterface):
 
     def _init_fields(self) -> None:
-        self.transformInfoInterface: TransformInfoInterface = None
+        if "transformInfoInterface" not in vars(self): self.transformInfoInterface: TransformInfoInterface = None
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.transformInfoInterface = transformInfoInterface
     
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
+        from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
         from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
         from org.w3c.dom.Document import Document
         from org.w3c.dom.Node import Node

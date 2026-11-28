@@ -15,9 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_equals
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.util.Hashtable import Hashtable
 
 
+@java_inherited_overloads
 class ABHashtable(Hashtable):
     
 
@@ -26,58 +31,58 @@ class ABHashtable(Hashtable):
     
 
     def size(self) -> int:
-        return super().size()
+        return java_super_call(super(), "size")
     
 
     def isEmpty(self) -> bool:
-        return super().isEmpty()
+        return java_super_call(super(), "isEmpty")
     
 
     def elements(self) -> Enumeration[V]:
         from java.util.Enumeration import Enumeration
-        return super().elements()
+        return java_super_call(super(), "elements")
     
 
     def contains(self, value: object) -> bool:
-        return super().contains(value)
+        return java_super_call(super(), "contains", value)
     
 
     def containsValue(self, value: object) -> bool:
-        return super().containsValue(value)
+        return java_super_call(super(), "containsValue", value)
     
 
     def containsKey(self, key: object) -> bool:
-        return super().containsKey(key)
+        return java_super_call(super(), "containsKey", key)
     
 
     def get(self, key: object) -> V:
-        return super().get(key)
+        return java_super_call(super(), "get", key)
     
 
     def clear(self) -> None:
-        super().clear()
+        java_super_call(super(), "clear")
     
 
     def clone(self) -> object:
-        return super().clone()
+        return java_super_call(super(), "clone")
     
 
     def toString(self) -> str:
-        return str(super())
+        return java_super_call(super(), "toString")
 
     def __str__(self) -> str:
         return self.toString()
     
 
     def equals(self, obj: object) -> bool:
-        return super().equals(obj)
+        return java_super_call(super(), "equals", obj)
 
     def __eq__(self, other: object) -> bool:
         return self.equals(other)
     
 
     def hashCode(self) -> int:
-        return super().hashCode()
+        return java_super_call(super(), "hashCode")
 
     def __hash__(self) -> int:
         return self.hashCode()

@@ -15,25 +15,33 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_new_inner
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.layer.SteeringVisitor import SteeringVisitor
 from org.allbinary.game.layer.unit.UnitWaypointBehavior import UnitWaypointBehavior
 
 
+@java_inherited_overloads
 class UnitWaypointBehavior2(UnitWaypointBehavior):
     runningWaypointPathList: BasicArrayList = None
     TARGET_DISTANCE: str = "Target Distance"
     TARGET_LAYER: str = "Target Layer"
+    @java_inherited_overloads
     class BuildingSteeringVisitor(SteeringVisitor):
+        def _java_defaults(self):
+            vars(self).setdefault("positionList", None)
 
         def _init_fields(self) -> None:
-            from org.allbinary.util.BasicArrayList import BasicArrayList
             from org.allbinary.util.BasicArrayListD import BasicArrayListD
             self.positionList: BasicArrayList = BasicArrayListD()
 
         def __init__(self) -> None:
+            __class__._java_defaults(self)
             super().__init__()
-            self._init_fields()
+            __class__._init_fields(self)
         
 
         def visit(self, anyType: object) -> object:
@@ -48,7 +56,7 @@ class UnitWaypointBehavior2(UnitWaypointBehavior):
                 if self.getList().size() > 0:
                     allbinaryLayer: AllBinaryLayer = self.getList().get(0)
                     cellPosition: GeographicMapCellPosition = self.getPositionList().get(0)
-                    clear: bool = self.buildingChase(allbinaryLayer, cellPosition)
+                    clear: bool = self._java_outer.buildingChase(allbinaryLayer, cellPosition)
                     if clear:
                         self.getList().clear()
                         self.positionList.clear()
@@ -64,38 +72,51 @@ class UnitWaypointBehavior2(UnitWaypointBehavior):
         def getPositionList(self) -> BasicArrayList:
             from org.allbinary.util.BasicArrayList import BasicArrayList
             return self.positionList
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("unitWaypointStrings", None)
+        vars(self).setdefault("basicColorFactory", None)
+        vars(self).setdefault("layerDistanceUtil", None)
+        vars(self).setdefault("pathFindingThreadPool", None)
+        vars(self).setdefault("progressTimeDelayHelper", None)
+        vars(self).setdefault("wanderPathsList", None)
+        vars(self).setdefault("waypointPathRunnable", None)
+        vars(self).setdefault("sensorRange", 0)
+        vars(self).setdefault("closeRange", 0)
+        vars(self).setdefault("nextUnvisitedPathGeographicMapCellPosition", None)
+        vars(self).setdefault("afterNextUnvisitedPathGeographicMapCellPosition", None)
+        vars(self).setdefault("waitingOnTargetPath", False)
+        vars(self).setdefault("waitingOnWaypointPath", False)
+        vars(self).setdefault("targetWithoutCachedPathLayerInterface", None)
+        vars(self).setdefault("buildingSteeringVisitor", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.game.layer.WaypointPathRunnableBase import WaypointPathRunnableBase
         from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         from org.allbinary.math.LayerDistanceUtil import LayerDistanceUtil
-        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
         from org.allbinary.thread.PathFindingThreadPool import PathFindingThreadPool
-        from org.allbinary.thread.ThreadPool import ThreadPool
-        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.unitWaypointStrings: UnitWaypointStrings = UnitWaypointStrings.getInstance()
         self.basicColorFactory: BasicColorFactory = BasicColorFactory.getInstance()
         self.layerDistanceUtil: LayerDistanceUtil = LayerDistanceUtil.getInstance()
         self.pathFindingThreadPool: ThreadPool = PathFindingThreadPool.getInstance()
-        self.progressTimeDelayHelper: TimeDelayHelper = None
-        self.wanderPathsList: BasicArrayList = None
-        self.waypointPathRunnable: WaypointPathRunnableBase = None
+        if "progressTimeDelayHelper" not in vars(self): self.progressTimeDelayHelper: TimeDelayHelper = None
+        if "wanderPathsList" not in vars(self): self.wanderPathsList: BasicArrayList = None
+        if "waypointPathRunnable" not in vars(self): self.waypointPathRunnable: WaypointPathRunnableBase = None
         self.sensorRange: int = 0
         self.closeRange: int = 0
         self.nextUnvisitedPathGeographicMapCellPosition: GeographicMapCellPosition = SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION
         self.afterNextUnvisitedPathGeographicMapCellPosition: GeographicMapCellPosition = SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION
-        self.waitingOnTargetPath: bool = False
-        self.waitingOnWaypointPath: bool = False
+        if "waitingOnTargetPath" not in vars(self): self.waitingOnTargetPath: bool = False
+        if "waitingOnWaypointPath" not in vars(self): self.waitingOnWaypointPath: bool = False
         self.targetWithoutCachedPathLayerInterface: CollidableDestroyableDamageableLayer = CollidableDestroyableDamageableLayer.getNullInstance()
-        self.buildingSteeringVisitor: BuildingSteeringVisitor = BuildingSteeringVisitor()
+        self.buildingSteeringVisitor: BuildingSteeringVisitor = java_new_inner(self, BuildingSteeringVisitor)
     
 
     def __init__(self, ownerAdvancedRTSGameLayer: UnitLayer, fakeWaypoint: AdvancedRTSGameLayer) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.J2MEUtil import J2MEUtil
         from org.allbinary.game.configuration.feature.Features import Features
         from org.allbinary.game.layer.AdvancedRTSGameLayer import AdvancedRTSGameLayer
@@ -104,15 +125,15 @@ class UnitWaypointBehavior2(UnitWaypointBehavior):
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         super().__init__(ownerAdvancedRTSGameLayer, fakeWaypoint)
-        self._init_fields()
+        __class__._init_fields(self)
         self.progressTimeDelayHelper = TimeDelayHelper(5000)
         self.wanderPathsList = BasicArrayListD()
         features: Features = Features.getInstance()
-        self.waypointPathRunnable = (MultipassWaypointPathRunnable() if J2MEUtil.isHTML() else WaypointPathRunnable())
+        self.waypointPathRunnable = (MultipassWaypointPathRunnable() if java_predicate(J2MEUtil, "isHTML") else WaypointPathRunnable())
     
 
     def initRange(self, weaponRange: int) -> None:
-        super().initRange(weaponRange)
+        java_super_call(super(), "initRange", weaponRange)
         self.closeRange = weaponRange
         self.sensorRange = weaponRange * 4
         self.associatedAdvancedRTSGameLayer.waypoint2LogHelperP.initRange(self.associatedAdvancedRTSGameLayer, self.closeRange, self.sensorRange)
@@ -124,7 +145,7 @@ class UnitWaypointBehavior2(UnitWaypointBehavior):
     
 
     def isRunning(self) -> bool:
-        if self.waypointPathRunnable.isRunning():
+        if java_predicate(self.waypointPathRunnable, "isRunning"):
             return True
         else:
             return False
@@ -134,7 +155,7 @@ class UnitWaypointBehavior2(UnitWaypointBehavior):
     def processTick(self, allBinaryLayerManager: AllBinaryLayerManager) -> None:
         from org.allbinary.game.layer.AdvancedRTSGameLayer import AdvancedRTSGameLayer
         from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-        if self.waypointPathRunnable.isRunning():
+        if java_predicate(self.waypointPathRunnable, "isRunning"):
             if self.waypointPathsListP != UnitWaypointBehavior2.runningWaypointPathList:
                 self.waypointPathRunnable.setRunning(False)
                 if self.waitingOnTargetPath:
@@ -146,15 +167,15 @@ class UnitWaypointBehavior2(UnitWaypointBehavior):
             else:
                 return
         self.processTargetList()
-        if not self.waypointPathRunnable.isRunning():
+        if not (java_predicate(self.waypointPathRunnable, "isRunning")):
             self.processWaypoint()
         else:
             return
-        if not self.waypointPathRunnable.isRunning():
+        if not (java_predicate(self.waypointPathRunnable, "isRunning")):
             self.processTargeting()
         else:
             return
-        if not self.waypointPathRunnable.isRunning():
+        if not (java_predicate(self.waypointPathRunnable, "isRunning")):
             self.teleportIfNoProgress()
         else:
             return
@@ -175,9 +196,9 @@ class UnitWaypointBehavior2(UnitWaypointBehavior):
         from org.allbinary.game.layer.AdvancedRTSGameLayer import AdvancedRTSGameLayer
         from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
         isShorterThanCurrentTargetDistance: bool = self.getCurrentTargetDistance() > anotherTargetDistance
-        isCurrentTargetDestroyed: bool = self.currentTargetLayerInterfaceP != CollidableDestroyableDamageableLayer.getNullInstance() and self.currentTargetLayerInterfaceP.isDestroyed()
+        isCurrentTargetDestroyed: bool = self.currentTargetLayerInterfaceP != CollidableDestroyableDamageableLayer.getNullInstance() and java_predicate(self.currentTargetLayerInterfaceP, "isDestroyed")
         self.associatedAdvancedRTSGameLayer.waypoint2LogHelperP.processPossibleTarget(self.associatedAdvancedRTSGameLayer, self, layerInterface, anotherTargetDistance, isShorterThanCurrentTargetDistance, isCurrentTargetDestroyed)
-        if self.isWaypointListEmptyOrOnlyTargets() and self.isInSensorRange(layerInterface, anotherTargetDistance) and (isShorterThanCurrentTargetDistance or isCurrentTargetDestroyed):
+        if java_predicate(self, "isWaypointListEmptyOrOnlyTargets") and self.isInSensorRange(layerInterface, anotherTargetDistance) and (isShorterThanCurrentTargetDistance or isCurrentTargetDestroyed):
             self.associatedAdvancedRTSGameLayer.waypoint2LogHelperP.processSetTarget(self.associatedAdvancedRTSGameLayer, self, layerInterface, anotherTargetDistance)
             self.setTarget(layerInterface, anotherTargetDistance)
         elif self.isCloseRange(layerInterface, anotherTargetDistance) and (isShorterThanCurrentTargetDistance or isCurrentTargetDestroyed):
@@ -189,10 +210,10 @@ class UnitWaypointBehavior2(UnitWaypointBehavior):
     def teleportIfNoProgress(self) -> None:
         from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
-        if self.isTrackingWaypoint() or self.associatedAdvancedRTSGameLayer.getParentLayer().isDestroyed():
-            if self.progressTimeDelayHelper.isTimeTNT() and self.nextUnvisitedPathGeographicMapCellPosition != SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION:
+        if java_predicate(self, "isTrackingWaypoint") or java_predicate(self.associatedAdvancedRTSGameLayer.getParentLayer(), "isDestroyed"):
+            if java_predicate(self.progressTimeDelayHelper, "isTimeTNT") and self.nextUnvisitedPathGeographicMapCellPosition != SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION:
                 self.associatedAdvancedRTSGameLayer.teleportTo(self.nextUnvisitedPathGeographicMapCellPosition)
-            if self.getCompleteTimeDelayHelper().isTimeTNT():
+            if java_predicate(self.getCompleteTimeDelayHelper(), "isTimeTNT"):
                 geographicMapCellPosition: GeographicMapCellPosition = self.currentGeographicMapCellHistoryP.getTracked().get(self.currentGeographicMapCellHistoryP.getSize() - 1)
                 self.associatedAdvancedRTSGameLayer.teleportTo(geographicMapCellPosition)
     
@@ -212,7 +233,7 @@ class UnitWaypointBehavior2(UnitWaypointBehavior):
         self.setCurrentTargetLayerInterface(layerInterface)
         self.setTrackingWaypoint(False)
         self.targetList.clear()
-        if not self.isCloseRange(layerInterface, anotherTargetDistance) and self.canInsertWaypoint(0, self.currentTargetLayerInterfaceP):
+        if not (self.isCloseRange(layerInterface, anotherTargetDistance)) and self.canInsertWaypoint(0, self.currentTargetLayerInterfaceP):
             geographicMapCellPosition: GeographicMapCellPosition = self.associatedAdvancedRTSGameLayer.getCurrentGeographicMapCellPosition()
             pathFindingLayerInterface: PathFindingLayerInterface = (self.currentTargetLayerInterfaceP)
             waypoint: WaypointBase = pathFindingLayerInterface.getWaypointBehavior().getWaypoint()
@@ -228,7 +249,7 @@ class UnitWaypointBehavior2(UnitWaypointBehavior):
     def setTargetPath(self) -> None:
         from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
         if self.currentTargetLayerInterfaceP != CollidableDestroyableDamageableLayer.getNullInstance():
-            if self.currentTargetLayerInterfaceP.isDestroyed():
+            if java_predicate(self.currentTargetLayerInterfaceP, "isDestroyed"):
                 self.associatedAdvancedRTSGameLayer.waypoint2LogHelperP.setTargetPath(self.associatedAdvancedRTSGameLayer)
                 self.associatedAdvancedRTSGameLayer.getCaptionAnimationHelper().update(self.unitWaypointStrings.KILL, self.basicColorFactory.ORANGE)
                 self.clearTarget()
@@ -245,7 +266,7 @@ class UnitWaypointBehavior2(UnitWaypointBehavior):
         from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
         self.setCurrentPathGeographicMapCellPosition(SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION)
         self.nextUnvisitedPathGeographicMapCellPosition = SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION
-        super().setGeographicMapCellHistoryPath(geographicMapCellPositionBasicArrayList)
+        java_super_call(super(), "setGeographicMapCellHistoryPath", geographicMapCellPositionBasicArrayList)
     
 
     # throws Exception
@@ -258,16 +279,16 @@ class UnitWaypointBehavior2(UnitWaypointBehavior):
         if size > 0:
             targetLayer: AdvancedRTSGameLayer = self.targetList.get(0)
             self.associatedAdvancedRTSGameLayer.waypoint2LogHelperP.processWaypoint(self.associatedAdvancedRTSGameLayer, self, targetLayer, size)
-            if targetLayer.isDestroyed():
+            if java_predicate(targetLayer, "isDestroyed"):
                 self.associatedAdvancedRTSGameLayer.getCaptionAnimationHelper().update(self.unitWaypointStrings.WAYPOINT_DESTROYED_SHORT, self.basicColorFactory.YELLOW)
                 self.removeWaypoint(targetLayer, self.unitWaypointStrings.WAYPOINT_DESTROYED)
             else:
                 geographicMapCellPosition: GeographicMapCellPosition = self.associatedAdvancedRTSGameLayer.getCurrentGeographicMapCellPosition()
-                if self.isTrackingWaypoint():
+                if java_predicate(self, "isTrackingWaypoint"):
                     self.associatedAdvancedRTSGameLayer.waypoint2LogHelperP.processWaypointTracked(self.associatedAdvancedRTSGameLayer, self)
                     if self.visitIfAtMidPoint(geographicMapCellPosition):
                         self.associatedAdvancedRTSGameLayer.waypoint2LogHelperP.processWaypointTrackedVisit(self.associatedAdvancedRTSGameLayer, geographicMapCellPosition)
-                    if self.currentGeographicMapCellHistoryP.isAllVisited2() and self.currentTargetLayerInterfaceP != CollidableDestroyableDamageableLayer.getNullInstance():
+                    if java_predicate(self.currentGeographicMapCellHistoryP, "isAllVisited2") and self.currentTargetLayerInterfaceP != CollidableDestroyableDamageableLayer.getNullInstance():
                         oldWaypointLayer: AdvancedRTSGameLayer = self.currentTargetLayerInterfaceP
                         oldWaypointLayer.getWaypointBehavior().getWaypoint().visit(self.associatedAdvancedRTSGameLayer)
                         self.associatedAdvancedRTSGameLayer.getCaptionAnimationHelper().update(self.unitWaypointStrings.ALL_VISITED_SHORT, self.basicColorFactory.GREEN)
@@ -285,7 +306,7 @@ class UnitWaypointBehavior2(UnitWaypointBehavior):
 
     # throws Exception
     def wander(self) -> None:
-        if self.currentGeographicMapCellHistoryP.isAllVisited2():
+        if java_predicate(self.currentGeographicMapCellHistoryP, "isAllVisited2"):
             self.associatedAdvancedRTSGameLayer.waypoint2LogHelperP.wander(self.associatedAdvancedRTSGameLayer)
             self.associatedAdvancedRTSGameLayer.getCaptionAnimationHelper().update(self.unitWaypointStrings.WANDERING, self.basicColorFactory.RED)
             self.wanderPathsList.clear()
@@ -333,7 +354,7 @@ class UnitWaypointBehavior2(UnitWaypointBehavior):
         self.targetWithoutCachedPathLayerInterface = CollidableDestroyableDamageableLayer.getNullInstance()
         for index in range(self.getPossibleTargetList().size() - 1, 0 - 1, -1):
             layerInterface: AdvancedRTSGameLayer = self.getPossibleTargetList().get(index)
-            if layerInterface.isDestroyed():
+            if java_predicate(layerInterface, "isDestroyed"):
                 self.getPossibleTargetList().remove(layerInterface)
             else:
                 self.onEnemyMovement(layerInterface)
@@ -348,15 +369,15 @@ class UnitWaypointBehavior2(UnitWaypointBehavior):
     def processTargeting(self) -> None:
         from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
         from org.allbinary.graphics.GPoint import GPoint
-        if self.currentTargetLayerInterfaceP != CollidableDestroyableDamageableLayer.getNullInstance() and (self.isInSensorRange(self.currentTargetLayerInterfaceP, self.getCurrentTargetDistance()) or self.isTrackingWaypoint()):
-            if self.currentTargetLayerInterfaceP.isDestroyed():
+        if self.currentTargetLayerInterfaceP != CollidableDestroyableDamageableLayer.getNullInstance() and (self.isInSensorRange(self.currentTargetLayerInterfaceP, self.getCurrentTargetDistance()) or java_predicate(self, "isTrackingWaypoint")):
+            if java_predicate(self.currentTargetLayerInterfaceP, "isDestroyed"):
                 self.associatedAdvancedRTSGameLayer.waypoint2LogHelperP.targetDestroyed(self.associatedAdvancedRTSGameLayer)
                 self.associatedAdvancedRTSGameLayer.getCaptionAnimationHelper().update(self.unitWaypointStrings.KILL, self.basicColorFactory.ORANGE)
                 self.clearTarget()
                 return
             dx: int = 0
             dy: int = 0
-            if self.isTrackingWaypoint():
+            if java_predicate(self, "isTrackingWaypoint"):
                 self.updateCurrentPathGeographicMapCellPosition()
                 point: GPoint = self.nextUnvisitedPathGeographicMapCellPosition.getMidPoint()
                 dx = self.associatedAdvancedRTSGameLayer.getXP() + self.associatedAdvancedRTSGameLayer.getHalfWidth() - point.getX()
@@ -368,7 +389,7 @@ class UnitWaypointBehavior2(UnitWaypointBehavior):
                 dy = (self.associatedAdvancedRTSGameLayer.getYP() + self.associatedAdvancedRTSGameLayer.getHalfHeight()) - (self.currentTargetLayerInterfaceP.getYP() + self.currentTargetLayerInterfaceP.getHalfHeight())
             self.associatedAdvancedRTSGameLayer.trackToDXY(dx, dy)
         else:
-            if self.associatedAdvancedRTSGameLayer.getParentLayer().isDestroyed():
+            if java_predicate(self.associatedAdvancedRTSGameLayer.getParentLayer(), "isDestroyed"):
                 self.wander()
             else:
                 if self.associatedAdvancedRTSGameLayer.showMoreCaptionStates:
@@ -403,7 +424,7 @@ class UnitWaypointBehavior2(UnitWaypointBehavior):
     def runWaypointPathTask(self, waypointLayer: AdvancedRTSGameLayer) -> None:
         from org.allbinary.game.layer.AdvancedRTSGameLayer import AdvancedRTSGameLayer
         self.setWaypointPathsList(UnitWaypointBehavior2.runningWaypointPathList)
-        if self.waypointPathRunnable.isRunning():
+        if java_predicate(self.waypointPathRunnable, "isRunning"):
             raise Exception("Should never be running here")
         self.waypointPathRunnable.setRunning(True)
         self.waypointPathRunnable.setUnitLayer(self.associatedAdvancedRTSGameLayer)
@@ -442,7 +463,7 @@ class UnitWaypointBehavior2(UnitWaypointBehavior):
             return True
         for index in range(list_.size() - 1, 0 - 1, -1):
             layerInterface: AdvancedRTSGameLayer = list_.get(index)
-            if layerInterface.isWaypointListEmptyOrOnlyTargets():
+            if java_predicate(layerInterface, "isWaypointListEmptyOrOnlyTargets"):
                 return False
         return True
     
@@ -475,7 +496,7 @@ class UnitWaypointBehavior2(UnitWaypointBehavior):
     # throws Exception
     def addWaypointFromUser(self, advancedRTSGameLayer: AdvancedRTSGameLayer) -> None:
         from org.allbinary.game.layer.AdvancedRTSGameLayer import AdvancedRTSGameLayer
-        if advancedRTSGameLayer.isDestroyed():
+        if java_predicate(advancedRTSGameLayer, "isDestroyed"):
             raise Exception("Trying to add a dead: " + str(advancedRTSGameLayer))
         self.associatedAdvancedRTSGameLayer.waypoint2LogHelperP.addWaypointFromUser(self.associatedAdvancedRTSGameLayer, advancedRTSGameLayer)
         self.targetList.clear()
@@ -487,10 +508,10 @@ class UnitWaypointBehavior2(UnitWaypointBehavior):
     def addBuildingChase(self, allbinaryLayer: AllBinaryLayer, cellPosition: GeographicMapCellPosition) -> None:
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
-        if not self.buildingSteeringVisitor.getList().contains(allbinaryLayer):
+        if not (self.buildingSteeringVisitor.getList().contains(allbinaryLayer)):
             self.buildingSteeringVisitor.getList().add(allbinaryLayer)
             self.buildingSteeringVisitor.getPositionList().add(cellPosition)
-        if not self.getSteeringVisitorList().contains(self.buildingSteeringVisitor):
+        if not (self.getSteeringVisitorList().contains(self.buildingSteeringVisitor)):
             self.getSteeringVisitorList().add(self.buildingSteeringVisitor)
     
 

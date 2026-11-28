@@ -15,16 +15,26 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.layer.GeographicMapCellPositionAreaBase import GeographicMapCellPositionAreaBase
 
 
+@java_inherited_overloads
 class GeographicMapCellPositionArea(GeographicMapCellPositionAreaBase):
+    def _java_defaults(self):
+        vars(self).setdefault("cellPositionsUtil", None)
+        vars(self).setdefault("layerCoveringCellPositionsUtil", None)
+        vars(self).setdefault("reusableOccupyingGeographicMapCellPositionList", None)
+        vars(self).setdefault("reusableSurroundingGeographicMapCellPositionList", None)
+        vars(self).setdefault("surroundingCircularIndexUtil", None)
+        vars(self).setdefault("layerInterface", None)
+        vars(self).setdefault("LIST", None)
+        vars(self).setdefault("occupyingGeographicMapCellPositionList", None)
+        vars(self).setdefault("surroundingGeographicMapCellPositionList", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         from org.allbinary.game.layer.geographic.map.LayerCoveringCellPositionsUtil import LayerCoveringCellPositionsUtil
-        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         from org.allbinary.media.graphics.geography.map.CellPositionsUtil import CellPositionsUtil
         from org.allbinary.util.BasicArrayListS import BasicArrayListS
         from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
@@ -33,16 +43,17 @@ class GeographicMapCellPositionArea(GeographicMapCellPositionAreaBase):
         self.reusableOccupyingGeographicMapCellPositionList: BasicArrayList = BasicArrayListS(4)
         self.reusableSurroundingGeographicMapCellPositionList: BasicArrayList = BasicArrayListS(12)
         self.surroundingCircularIndexUtil: CircularIndexUtil = CircularIndexUtil.createInstance(0)
-        self.layerInterface: AllBinaryLayer = None
+        if "layerInterface" not in vars(self): self.layerInterface: AllBinaryLayer = None
         self.LIST: BasicArrayList = BasicArrayListUtil.getInstance().getImmutableInstance()
         self.occupyingGeographicMapCellPositionList: BasicArrayList = self.LIST
         self.surroundingGeographicMapCellPositionList: BasicArrayList = self.LIST
     
 
     def __init__(self, layerInterface: AllBinaryLayer) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.layerInterface = layerInterface
     
 

@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -23,11 +25,10 @@ class BuildingPropertiesFactory:
 
     def _init_fields(self) -> None:
         from org.allbinary.graphics.paint.NullPaintable import NullPaintable
-        from org.allbinary.graphics.paint.Paintable import Paintable
         self.damageFloatersPaintableInterface: Paintable = NullPaintable.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -36,7 +37,8 @@ class BuildingPropertiesFactory:
     
 
     def getEfficiencyPerLevel(self, buildingLayer: BuildingLayer) -> int:
-        return 10000 / buildingLayer.getMaxLevel() + 10000 % buildingLayer.getMaxLevel()
+        return java_divide(10000, buildingLayer.getMaxLevel())
+             + 10000 % buildingLayer.getMaxLevel()
     
 
     def getDamageFloaters(self, buildingLayer: BuildingLayer) -> DamageFloaters:

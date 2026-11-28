@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 
 
@@ -28,7 +29,7 @@ class StatesView(DomNodeInterface):
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def toXmlNode(self, document: Document) -> Node:
@@ -45,7 +46,7 @@ class StatesView(DomNodeInterface):
             node: Node = document.createElement(StreetAddressData.STATES)
             statesFile: str = str(URLGLOBALS.getMainPath() + FREEBLISKET_PATH_GLOBALS.getInstance().LINEDATAPATH) + "states.txt"
             lineReader: LineReader = LineReader(statesFile)
-            while lineReader.hasNext():
+            while java_predicate(lineReader, "hasNext"):
                 option: str = lineReader.next()
                 node.appendChild(ModDomHelper.createNameValueNodes(document, StreetAddressData.STATE, option))
             return node

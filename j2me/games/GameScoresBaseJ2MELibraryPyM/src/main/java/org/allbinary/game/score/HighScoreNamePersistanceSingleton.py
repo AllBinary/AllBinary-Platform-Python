@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -27,7 +28,6 @@ class HighScoreNamePersistanceSingleton:
         from org.allbinary.logic.string.StringUtil import StringUtil
         from org.allbinary.persistance.PlatformRecordIdUtil import PlatformRecordIdUtil
         from org.allbinary.string.CommonStrings import CommonStrings
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.tsUtil: TsUtil = TsUtil.getInstance()
@@ -38,7 +38,7 @@ class HighScoreNamePersistanceSingleton:
         self.nameBasicArrayList: BasicArrayList = BasicArrayListD()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -94,6 +94,7 @@ class HighScoreNamePersistanceSingleton:
     
 
     def load(self, abeClientInformation: AbeClientInformationInterface, gameInfo: GameInfo) -> str:
+        from java.io.ByteArrayInputStream import ByteArrayInputStream
         from java.io.DataInputStream import DataInputStream
         from javax.microedition.rms.RecordEnumeration import RecordEnumeration
         from javax.microedition.rms.RecordStore import RecordStore
@@ -118,7 +119,7 @@ class HighScoreNamePersistanceSingleton:
                 recordAsBytes: list[int] = None
                 byteArrayInputStream: ByteArrayInputStream = None
                 inputStream: DataInputStream = None
-                while recordEnum.hasNextElement():
+                while java_predicate(recordEnum, "hasNextElement"):
                     id: int = recordEnum.nextRecordId()
                     self.logUtil.putF(str(StringMaker().append(LOADING_ID).appendint(id)), self, self.commonStrings.LOAD)
                     recordAsBytes = self.tsUtil.getRecord(recordStore, id)
@@ -141,6 +142,7 @@ class HighScoreNamePersistanceSingleton:
     
 
     def save(self, abeClientInformation: AbeClientInformationInterface, gameInfo: GameInfo, name: str) -> None:
+        from java.io.ByteArrayOutputStream import ByteArrayOutputStream
         from java.io.DataOutputStream import DataOutputStream
         from javax.microedition.rms.RecordStore import RecordStore
         from javax.microedition.rms.RecordStoreException import RecordStoreException

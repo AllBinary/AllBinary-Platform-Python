@@ -15,34 +15,46 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.game.input.PlayerGameInput import PlayerGameInput
 
 
+@java_inherited_overloads
 class SelectedRTSLayersPlayerGameInput(PlayerGameInput):
+    def _java_defaults(self):
+        vars(self).setdefault("inputProcessorArray", None)
+        vars(self).setdefault("list_", None)
+        vars(self).setdefault("isSingleKeyProcessing", False)
+        vars(self).setdefault("selectedRTSLayersList", None)
+        vars(self).setdefault("preSelectedRTSLayersList", None)
+        vars(self).setdefault("paintSelectedRTSLayersList", None)
+        vars(self).setdefault("rtsPlayerLayerInterface", None)
+        vars(self).setdefault("selectRTSLayerVisitorInterface", None)
+        vars(self).setdefault("upgradeGameNotificationEvent", None)
+        vars(self).setdefault("noMoneyGameNotificationEvent", None)
+        vars(self).setdefault("downgradeGameNotificationEvent", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         from org.allbinary.game.configuration.feature.Features import Features
         from org.allbinary.game.configuration.feature.InputFeatureFactory import InputFeatureFactory
-        from org.allbinary.game.layer.hud.event.GameNotificationEvent import GameNotificationEvent
-        from org.allbinary.logic.util.visitor.Visitor import Visitor
         self.inputProcessorArray: list[GameInputProcessor] = [None] * (InputFactory.getInstance().MAX)
-        self.list_: BasicArrayList = None
+        if "list_" not in vars(self): self.list_: BasicArrayList = None
         self.isSingleKeyProcessing: bool = Features.getInstance().isFeature(InputFeatureFactory.getInstance().SINGLE_KEY_REPEAT_PRESS) or Features.getInstance().isFeature(InputFeatureFactory.getInstance().SINGLE_KEY_PRESS)
         self.selectedRTSLayersList: BasicArrayList = BasicArrayListD()
         self.preSelectedRTSLayersList: BasicArrayList = BasicArrayListD()
         self.paintSelectedRTSLayersList: BasicArrayList = BasicArrayListUtil.getInstance().getImmutableInstance()
-        self.rtsPlayerLayerInterface: RTSPlayerLayerInterface = None
-        self.selectRTSLayerVisitorInterface: Visitor = None
-        self.upgradeGameNotificationEvent: GameNotificationEvent = None
-        self.noMoneyGameNotificationEvent: GameNotificationEvent = None
-        self.downgradeGameNotificationEvent: GameNotificationEvent = None
+        if "rtsPlayerLayerInterface" not in vars(self): self.rtsPlayerLayerInterface: RTSPlayerLayerInterface = None
+        if "selectRTSLayerVisitorInterface" not in vars(self): self.selectRTSLayerVisitorInterface: Visitor = None
+        if "upgradeGameNotificationEvent" not in vars(self): self.upgradeGameNotificationEvent: GameNotificationEvent = None
+        if "noMoneyGameNotificationEvent" not in vars(self): self.noMoneyGameNotificationEvent: GameNotificationEvent = None
+        if "downgradeGameNotificationEvent" not in vars(self): self.downgradeGameNotificationEvent: GameNotificationEvent = None
     
 
     def __init__(self, towerInfoPaintable: RTSLayerInfoPaintable, rtsPlayerLayerInterface: RTSPlayerLayerInterface, list_: BasicArrayList, playerInputId: int, selectRTSLayerVisitorFactoryInterface: SelectRTSLayerVisitorFactoryInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.layer.RTSGameStrings import RTSGameStrings
         from org.allbinary.game.layer.RTSLayerInfoPaintable import RTSLayerInfoPaintable
         from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
@@ -53,7 +65,7 @@ class SelectedRTSLayersPlayerGameInput(PlayerGameInput):
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
         super().__init__(list_, BasicArrayListD(), playerInputId)
-        self._init_fields()
+        __class__._init_fields(self)
         self.initInputProcessors()
         self.rtsPlayerLayerInterface = rtsPlayerLayerInterface
         self.list_ = list_
@@ -95,7 +107,7 @@ class SelectedRTSLayersPlayerGameInput(PlayerGameInput):
         anyChanged: bool = False
         for index in range(self.selectedRTSLayersList.size() - 1, 0 - 1, -1):
             rtsLayer: RTSLayer = self.selectedRTSLayersList.get(index)
-            if rtsLayer.isUpgradeable():
+            if java_predicate(rtsLayer, "isUpgradeable"):
                 capital: Capital = self.rtsPlayerLayerInterface.getCapital()
                 upgradeCost: int = rtsLayer.getUpgradeCost()
                 if upgradeCost <= capital.getTotalMoney():
@@ -103,11 +115,11 @@ class SelectedRTSLayersPlayerGameInput(PlayerGameInput):
                     self.rtsPlayerLayerInterface.add(UpgradeSound.getInstance())
                     rtsLayer.upgrade()
                     capital.removeMoney(upgradeCost)
-                    if not self.rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface():
+                    if not (self.rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface()):
                         GameNotificationEventHandler.getInstance().fireEvent(self.upgradeGameNotificationEvent)
                 else:
                     self.rtsPlayerLayerInterface.add(ErrorSound.getInstance())
-                    if not self.rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface():
+                    if not (self.rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface()):
                         GameNotificationEventHandler.getInstance().fireEvent(self.noMoneyGameNotificationEvent)
         if anyChanged:
             rtsPlayerGameInput: RTSPlayerGameInput = (self.rtsPlayerLayerInterface.getPlayerGameInput())
@@ -124,14 +136,14 @@ class SelectedRTSLayersPlayerGameInput(PlayerGameInput):
         index = self.selectedRTSLayersList.size()
         while (index := index - 1) >= 0:
             rtsLayer: RTSLayer = self.selectedRTSLayersList.get(index)
-            if rtsLayer.isDowngradeable():
+            if java_predicate(rtsLayer, "isDowngradeable"):
                 anyChanged = True
                 self.rtsPlayerLayerInterface.add(DowngradeSound.getInstance())
                 downgradeCost: int = rtsLayer.getDowngradeCost()
                 rtsLayer.downgrade()
                 capital: Capital = self.rtsPlayerLayerInterface.getCapital()
                 capital.addMoney(downgradeCost)
-                if not self.rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface():
+                if not (self.rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface()):
                     GameNotificationEventHandler.getInstance().fireEvent(self.downgradeGameNotificationEvent)
         if anyChanged:
             rtsPlayerGameInput: RTSPlayerGameInput = (self.rtsPlayerLayerInterface.getPlayerGameInput())
@@ -141,6 +153,7 @@ class SelectedRTSLayersPlayerGameInput(PlayerGameInput):
     def initInputProcessors(self) -> None:
         from org.allbinary.game.input.SelectedRTSLayersPlayerUpgradeGameInputProcessor import SelectedRTSLayersPlayerUpgradeGameInputProcessor
         from org.allbinary.game.input.SelectedRTSLayersPlayerDowngradeGameInputProcessor import SelectedRTSLayersPlayerDowngradeGameInputProcessor
+        from org.allbinary.game.input.GameInputProcessorUtil import GameInputProcessorUtil
         from javax.microedition.lcdui.Canvas import Canvas
         self.inputProcessorArray[Canvas.KEY_NUM1] = SelectedRTSLayersPlayerUpgradeGameInputProcessor(self)
         self.inputProcessorArray[Canvas.KEY_NUM3] = SelectedRTSLayersPlayerDowngradeGameInputProcessor(self)
@@ -188,7 +201,7 @@ class SelectedRTSLayersPlayerGameInput(PlayerGameInput):
             self.deselectAll()
             self.selectedRTSLayersList.clear()
         else:
-            if not self.selectedRTSLayersList.contains(selectedLayer):
+            if not (self.selectedRTSLayersList.contains(selectedLayer)):
                 self.selectedRTSLayersList.add(selectedLayer)
         self.paintSelectedRTSLayersList = self.selectedRTSLayersList
     
@@ -219,7 +232,7 @@ class SelectedRTSLayersPlayerGameInput(PlayerGameInput):
 
     def getLastSelectedRtsLayer(self) -> CollidableDestroyableDamageableLayer:
         from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
-        if self.isAnyRTSLayerSelected():
+        if java_predicate(self, "isAnyRTSLayerSelected"):
             return self.selectedRTSLayersList.get(self.selectedRTSLayersList.size() - 1)
         else:
             return CollidableDestroyableDamageableLayer.getNullInstance()
@@ -298,5 +311,6 @@ class SelectedRTSLayersPlayerGameInput(PlayerGameInput):
 # from org.allbinary.media.audio.ErrorSound import ErrorSound
 # from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
 # from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
+from org.allbinary.game.input.InputFactory import InputFactory
 
 

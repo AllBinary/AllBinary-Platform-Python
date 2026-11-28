@@ -15,20 +15,24 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.visual.transform.info.TransformInfoHttpComposite import TransformInfoHttpComposite
 
 
+@java_inherited_overloads
 class PaymentGatewayViewAbstract(TransformInfoHttpComposite):
+    def _java_defaults(self):
+        vars(self).setdefault("paymentGatewayPrimaryKey", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayPrimaryKey import PaymentGatewayPrimaryKey
-        self.paymentGatewayPrimaryKey: PaymentGatewayPrimaryKey = None
+        if "paymentGatewayPrimaryKey" not in vars(self): self.paymentGatewayPrimaryKey: PaymentGatewayPrimaryKey = None
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
         self.getFormData(self.getPageContext().getRequest())
     
 

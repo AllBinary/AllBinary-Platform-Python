@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.layer.special.SpecialGameInputProcessor import SpecialGameInputProcessor
 
 
+@java_inherited_overloads
 class SpecialLeftGameInputProcessor(SpecialGameInputProcessor):
     
 

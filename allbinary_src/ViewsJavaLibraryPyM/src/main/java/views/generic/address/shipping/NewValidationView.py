@@ -15,11 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.validate.ValidationComponentInterface import ValidationComponentInterface
 from views.generic.address.shipping.ShippingAddressView import ShippingAddressView
 
 
+@java_inherited_overloads
 class NewValidationView(*java_bases(ShippingAddressView, ValidationComponentInterface)):
     
 
@@ -52,7 +55,7 @@ class NewValidationView(*java_bases(ShippingAddressView, ValidationComponentInte
     # throws Exception
     def getTransformInfoInterface(self) -> TransformInfoInterface:
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-        return super().getTransformInfoInterface()
+        return java_super_call(super(), "getTransformInfoInterface")
 # from org.allbinary.business.user.address.StreetAddress import StreetAddress
 # from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
 # from org.w3c.dom.Document import Document

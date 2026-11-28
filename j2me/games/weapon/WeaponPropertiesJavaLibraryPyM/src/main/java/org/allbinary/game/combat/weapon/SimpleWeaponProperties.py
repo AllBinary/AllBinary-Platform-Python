@@ -20,12 +20,12 @@ from __future__ import annotations
 class SimpleWeaponProperties:
 
     def _init_fields(self) -> None:
-        self.damage: int = 0
-        self.dissipation: int = 0
-        self.range: int = 0
+        if "damage" not in vars(self): self.damage: int = 0
+        if "dissipation" not in vars(self): self.dissipation: int = 0
+        if "range" not in vars(self): self.range: int = 0
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def set(self, simpleWeaponProperties: SimpleWeaponProperties) -> None:

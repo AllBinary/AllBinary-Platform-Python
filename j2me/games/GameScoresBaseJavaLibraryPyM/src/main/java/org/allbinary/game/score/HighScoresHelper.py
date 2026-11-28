@@ -15,10 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.score.HighScoresHelperBase import HighScoresHelperBase
 
 
+@java_inherited_overloads
 class HighScoresHelper(HighScoresHelperBase):
+    def _java_defaults(self):
+        vars(self).setdefault("circularIndexUtil", None)
+        vars(self).setdefault("lastIndex", 0)
 
     def _init_fields(self) -> None:
         from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
@@ -26,12 +32,13 @@ class HighScoresHelper(HighScoresHelperBase):
         self.lastIndex: int = -1
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def setHighScoresArray(self, highScoresArrayP: list[HighScores]) -> None:
-        super().setHighScoresArray(highScoresArrayP)
+        java_super_call(super(), "setHighScoresArray", highScoresArrayP)
         self.circularIndexUtil.setSize(len(self.highScoresArrayP))
     
 

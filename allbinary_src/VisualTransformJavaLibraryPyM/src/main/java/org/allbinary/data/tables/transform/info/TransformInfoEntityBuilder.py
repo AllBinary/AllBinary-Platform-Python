@@ -22,6 +22,7 @@ class TransformInfoEntityBuilder:
 
     @staticmethod
     def getInstance() -> TransformInfoEntity:
+        from org.allbinary.data.tables.transform.info.TransformInfoEntityFactory import TransformInfoEntityFactory
         from org.allbinary.logic.visual.transform.info.TransformInfoHttpStoreFactory import TransformInfoHttpStoreFactory
         from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigAndManipulatorFactory import TransformInfoObjectConfigAndManipulatorFactory
         from org.allbinary.logic.visual.transform.info.objectConfig.generator.TransformInfoObjectConfigGeneratorFactory import TransformInfoObjectConfigGeneratorFactory

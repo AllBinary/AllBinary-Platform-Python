@@ -20,12 +20,12 @@ from __future__ import annotations
 class GeologicalResource:
 
     def _init_fields(self) -> None:
-        self.total: int = 0
-        self.initTotal: int = None
+        if "total" not in vars(self): self.total: int = 0
+        if "initTotal" not in vars(self): self.initTotal: int = 0
     
 
     def __init__(self, initTotal: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.initTotal = initTotal
         self.init()
     

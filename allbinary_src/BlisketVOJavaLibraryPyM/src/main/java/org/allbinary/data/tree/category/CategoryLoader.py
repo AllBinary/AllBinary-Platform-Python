@@ -15,14 +15,19 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tree.category.CategoryModifierTree import CategoryModifierTree
 from org.allbinary.data.tree.category.CategoryLoaderInterface import CategoryLoaderInterface
 
 
+@java_inherited_overloads
 class CategoryLoader(*java_bases(CategoryModifierTree, CategoryLoaderInterface)):
     _lock = threading.RLock()
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -30,18 +35,19 @@ class CategoryLoader(*java_bases(CategoryModifierTree, CategoryLoaderInterface))
     
 
     def __init__(self, categoryFactoryInterface: CategoryFactoryInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.category.CategoryFactoryInterface import CategoryFactoryInterface
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__(categoryFactoryInterface)
-        self._init_fields()
+        __class__._init_fields(self)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().CATEGORY):
             self.logUtil.putF(self.commonStrings.START, self, "CategoryLoader(CategoryFactoryInterface categoryFactoryInterface)")
     
 
     def getDoc(self, categoryInterface: CategoryInterface) -> Document:
         with self._lock:
-            return self._getDoc_unlocked(categoryInterface)
+            return __class__.__dict__["_getDoc_unlocked"].__get__(self, __class__)(categoryInterface)
 
     def _getDoc_unlocked(self, categoryInterface: CategoryInterface) -> Document:
         from org.allbinary.business.category.CategoryData import CategoryData
@@ -57,9 +63,9 @@ class CategoryLoader(*java_bases(CategoryModifierTree, CategoryLoaderInterface))
             if categoryInterface.getProperties().getPath(categoryInterface.getHierarchy()) is not None:
                 if categoryInterface.getHierarchy().getLevel() == 1:
                     rootAbFile: AbFile = AbFile.createAbFileFromAbPath(categoryInterface.getRootFilePath())
-                    if not rootAbFile.isDirectory():
+                    if not (java_predicate(rootAbFile, "isDirectory")):
                         rootAbFile.mkdirs()
-                        if not rootAbFile.isDirectory():
+                        if not (java_predicate(rootAbFile, "isDirectory")):
                             raise Exception("Could Not Create Directory")
                         self.save(categoryInterface)
                 fileAbPath: AbPath = categoryInterface.getFilePath()
@@ -81,7 +87,7 @@ class CategoryLoader(*java_bases(CategoryModifierTree, CategoryLoaderInterface))
     # Java overloaded method with the same parameter count: Python keeps the last definition
     def get_j1_1(self, categoryInterface: CategoryInterface) -> CategoryInterface:
         with self._lock:
-            return self._get_j1_1_unlocked(categoryInterface)
+            return __class__.__dict__["_get_j1_1_unlocked"].__get__(self, __class__)(categoryInterface)
 
     def _get_j1_1_unlocked(self, categoryInterface: CategoryInterface) -> CategoryInterface:
         from org.allbinary.business.category.CategoryData import CategoryData
@@ -104,7 +110,7 @@ class CategoryLoader(*java_bases(CategoryModifierTree, CategoryLoaderInterface))
     # Java overloaded method with the same parameter count: Python keeps the last definition
     def get_j1_2(self, document: Document) -> CategoryInterface:
         with self._lock:
-            return self._get_j1_2_unlocked(document)
+            return __class__.__dict__["_get_j1_2_unlocked"].__get__(self, __class__)(document)
 
     def _get_j1_2_unlocked(self, document: Document) -> CategoryInterface:
         from org.allbinary.business.category.CategoryData import CategoryData
@@ -124,17 +130,19 @@ class CategoryLoader(*java_bases(CategoryModifierTree, CategoryLoaderInterface))
             return None
 
     def get(self, *args):
-        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
-            return self.get_j1_1(*args)
+        if len(args) == 1 and True and (args[0] is None or any(base.__name__ == "CategoryInterface" for base in type(args[0]).__mro__)):
+            return __class__.__dict__["get_j1_1"].__get__(self, __class__)(*args)
         if len(args) == 1:
-            return self.get_j1_2(*args)
-        return getattr(self, "get_j" + str(len(args)))(*args)
+            return __class__.__dict__["get_j1_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("get_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().get(*args)
     
 
     # Java overloaded method with the same parameter count: Python keeps the last definition
     def getAll_j1_1(self, categoryInterface: CategoryInterface) -> CategoryInterface:
         with self._lock:
-            return self._getAll_j1_1_unlocked(categoryInterface)
+            return __class__.__dict__["_getAll_j1_1_unlocked"].__get__(self, __class__)(categoryInterface)
 
     def _getAll_j1_1_unlocked(self, categoryInterface: CategoryInterface) -> CategoryInterface:
         from org.allbinary.business.category.CategoryInterface import CategoryInterface
@@ -153,7 +161,7 @@ class CategoryLoader(*java_bases(CategoryModifierTree, CategoryLoaderInterface))
     # Java overloaded method with the same parameter count: Python keeps the last definition
     def getAll_j1_2(self, document: Document) -> CategoryInterface:
         with self._lock:
-            return self._getAll_j1_2_unlocked(document)
+            return __class__.__dict__["_getAll_j1_2_unlocked"].__get__(self, __class__)(document)
 
     def _getAll_j1_2_unlocked(self, document: Document) -> CategoryInterface:
         from org.allbinary.business.category.CategoryData import CategoryData
@@ -175,7 +183,7 @@ class CategoryLoader(*java_bases(CategoryModifierTree, CategoryLoaderInterface))
 
     def getAll_j2(self, parentCategoryInterface: CategoryInterface, categoryNodeList: NodeList) -> CategoryInterface:
         with self._lock:
-            return self._getAll_j2_unlocked(parentCategoryInterface, categoryNodeList)
+            return __class__.__dict__["_getAll_j2_unlocked"].__get__(self, __class__)(parentCategoryInterface, categoryNodeList)
 
     def _getAll_j2_unlocked(self, parentCategoryInterface: CategoryInterface, categoryNodeList: NodeList) -> CategoryInterface:
         from org.allbinary.business.category.CategoryData import CategoryData
@@ -198,16 +206,18 @@ class CategoryLoader(*java_bases(CategoryModifierTree, CategoryLoaderInterface))
             return None
 
     def getAll(self, *args):
-        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
-            return self.getAll_j1_1(*args)
+        if len(args) == 1 and True and (args[0] is None or any(base.__name__ == "CategoryInterface" for base in type(args[0]).__mro__)):
+            return __class__.__dict__["getAll_j1_1"].__get__(self, __class__)(*args)
         if len(args) == 1:
-            return self.getAll_j1_2(*args)
-        return getattr(self, "getAll_j" + str(len(args)))(*args)
+            return __class__.__dict__["getAll_j1_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("getAll_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getAll(*args)
     
 
     def addProperties(self, loadedCategoryInterface: CategoryInterface, categoryNodeList: NodeList) -> CategoryInterface:
         with self._lock:
-            return self._addProperties_unlocked(loadedCategoryInterface, categoryNodeList)
+            return __class__.__dict__["_addProperties_unlocked"].__get__(self, __class__)(loadedCategoryInterface, categoryNodeList)
 
     def _addProperties_unlocked(self, loadedCategoryInterface: CategoryInterface, categoryNodeList: NodeList) -> CategoryInterface:
         from org.allbinary.business.category.CategoryData import CategoryData

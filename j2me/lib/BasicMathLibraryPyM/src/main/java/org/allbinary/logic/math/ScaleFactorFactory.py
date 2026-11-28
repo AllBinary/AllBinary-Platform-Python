@@ -26,7 +26,7 @@ class ScaleFactorFactory:
         self.DEFAULT_SCALE_VALUE: int = 1024
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

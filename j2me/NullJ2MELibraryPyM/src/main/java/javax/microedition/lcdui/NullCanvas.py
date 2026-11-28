@@ -3,10 +3,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from javax.microedition.lcdui.Canvas import Canvas
 
 
+@java_inherited_overloads
 class NullCanvas(Canvas):
     NULL_CANVAS: NullCanvas = None
     
@@ -21,6 +23,10 @@ class NullCanvas(Canvas):
 
     def sizeChanged(self, w: int, h: int) -> None:
         pass
+    _declared_sizeChanged = sizeChanged
+    def sizeChanged(self, *args, **kwargs):
+        if len(args) + len(kwargs) == 2 and (kwargs or (True and isinstance(args[0], int) and not isinstance(args[0], bool) and isinstance(args[1], int) and not isinstance(args[1], bool))): return __class__._declared_sizeChanged(self, *args, **kwargs)
+        return super().sizeChanged(*args, **kwargs)
     
 
     def getCommandStack(self) -> Stack[object]:

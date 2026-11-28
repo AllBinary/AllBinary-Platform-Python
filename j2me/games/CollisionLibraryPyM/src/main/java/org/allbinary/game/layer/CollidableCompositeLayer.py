@@ -15,17 +15,21 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.collision.CollidableInterfaceCompositeInterface import CollidableInterfaceCompositeInterface
 from org.allbinary.game.layer.AllBinaryGameLayer import AllBinaryGameLayer
 
 
+@java_inherited_overloads
 class CollidableCompositeLayer(*java_bases(AllBinaryGameLayer, CollidableInterfaceCompositeInterface)):
     NULL_COLLIDABLE_COMPOSITE_LAYER: object = None
+    def _java_defaults(self):
+        vars(self).setdefault("collidableInferface", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.collision.CollidableBaseBehavior import CollidableBaseBehavior
         from org.allbinary.game.collision.CollidableNeverCollideBehaviorFactory import CollidableNeverCollideBehaviorFactory
         self.collidableInferface: CollidableBaseBehavior = CollidableNeverCollideBehaviorFactory.getInstance().createBehavior()
     
@@ -43,12 +47,13 @@ class CollidableCompositeLayer(*java_bases(AllBinaryGameLayer, CollidableInterfa
     
 
     def __init__(self, name: str, layerInfo: Rectangle, viewPosition: ViewPositionBase, collidableBaseBehaviorFactory: CollidableBaseBehaviorFactory) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.collision.CollidableBaseBehaviorFactory import CollidableBaseBehaviorFactory
         from org.allbinary.game.collision.CollidableNeverCollideBehaviorFactory import CollidableNeverCollideBehaviorFactory
         from org.allbinary.graphics.Rectangle import Rectangle
         from org.allbinary.view.ViewPositionBase import ViewPositionBase
         super().__init__(name, layerInfo, viewPosition)
-        self._init_fields()
+        __class__._init_fields(self)
         if collidableBaseBehaviorFactory != CollidableNeverCollideBehaviorFactory.getInstance():
             self.setCollidableInferface(collidableBaseBehaviorFactory.createBehavior())
     
@@ -79,7 +84,7 @@ class CollidableCompositeLayer(*java_bases(AllBinaryGameLayer, CollidableInterfa
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.string.CommonSeps import CommonSeps
         commonSeps: CommonSeps = CommonSeps.getInstance()
-        super().toStringAppend(stringBuffer)
+        java_super_call(super(), "toStringAppend", stringBuffer)
         stringBuffer.append(commonSeps.NEW_LINE)
         stringBuffer.append(str(self.getCollidableInferface()))
     

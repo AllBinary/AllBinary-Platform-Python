@@ -31,7 +31,7 @@ class ResourceLoadingLevelFactory:
         self.RESOURCE_LOADING_LEVEL_ARRAY: list[ResourceLoadingLevel] = [self.LOAD_ALL, self.MAX_LEVEL, self.LEVEL, self.LOAD_GAME, self.LOAD_TOUCH, self.LOAD_EARLY]
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

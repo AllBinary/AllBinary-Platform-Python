@@ -15,17 +15,23 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.layer.special.CollidableDestroyableDamageableBehavior import CollidableDestroyableDamageableBehavior
 
 
+@java_inherited_overloads
 class CollidableWeaponBehavior(CollidableDestroyableDamageableBehavior):
     NULL_COLLIDABLE_WEAPON_BEHAVIOR: object = None
+    def _java_defaults(self):
+        vars(self).setdefault("collided", False)
+        vars(self).setdefault("collisionHelper", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.collision.CollisionHelper import CollisionHelper
-        self.collided: bool = False
-        self.collisionHelper: CollisionHelper = None
+        if "collided" not in vars(self): self.collided: bool = False
+        if "collisionHelper" not in vars(self): self.collisionHelper: CollisionHelper = None
     
 
     @staticmethod
@@ -37,9 +43,10 @@ class CollidableWeaponBehavior(CollidableDestroyableDamageableBehavior):
     
 
     def __init__(self, collidable: bool) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.collision.CollidableHelperFactory import CollidableHelperFactory
         super().__init__(collidable)
-        self._init_fields()
+        __class__._init_fields(self)
         self.setCollided(False)
         self.setCollidable(True)
         self.collisionHelper = CollidableHelperFactory.getInstance()
@@ -55,14 +62,14 @@ class CollidableWeaponBehavior(CollidableDestroyableDamageableBehavior):
         from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
         if self.collisionHelper.isCollidable(collisionLayer):
             if ownerLayer.getGroupInterface()[0] != collisionLayer.getGroupInterface()[0]:
-                return super().isCollision(ownerLayer, collisionLayer)
+                return java_super_call(super(), "isCollision", ownerLayer, collisionLayer)
         return False
     
 
     # throws Exception
     def collide(self, ownerLayer: CollidableCompositeLayer, collisionLayer: CollidableCompositeLayer) -> None:
         from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
-        super().collide(ownerLayer, collisionLayer)
+        java_super_call(super(), "collide", ownerLayer, collisionLayer)
         self.collided = True
     
 

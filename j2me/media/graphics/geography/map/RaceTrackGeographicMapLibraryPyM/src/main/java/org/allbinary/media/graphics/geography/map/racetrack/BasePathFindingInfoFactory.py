@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.media.graphics.geography.map.GeographicMapCellPositionFactoryInitVisitorInterface import GeographicMapCellPositionFactoryInitVisitorInterface
 
 
@@ -25,7 +26,7 @@ class BasePathFindingInfoFactory:
         self.logUtil: LogUtil = LogUtil.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -41,21 +42,19 @@ class BasePathFindingInfoFactory:
         class RaceTrackGeographicMapCellPositionFactoryInitVisitor(GeographicMapCellPositionFactoryInitVisitorInterface):
 
             def _init_fields(self) -> None:
-                from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
-                from org.allbinary.media.graphics.geography.pathfinding.PathFindingInfo import PathFindingInfo
-                self.startLineId: int = None
-                self.finishLineId: int = None
-                self.pathFindingInfoFactory: BasePathFindingInfoFactory = None
-                self.geographicMapInterface: BasicGeographicMap = None
-                self.pathFindingInfo: PathFindingInfo = None
-                self.mapArray: list[list[int]] = None
+                if "startLineId" not in vars(self): self.startLineId: int = 0
+                if "finishLineId" not in vars(self): self.finishLineId: int = 0
+                if "pathFindingInfoFactory" not in vars(self): self.pathFindingInfoFactory: BasePathFindingInfoFactory = None
+                if "geographicMapInterface" not in vars(self): self.geographicMapInterface: BasicGeographicMap = None
+                if "pathFindingInfo" not in vars(self): self.pathFindingInfo: PathFindingInfo = None
+                if "mapArray" not in vars(self): self.mapArray: list[list[int]] = None
             
 
             def __init__(self, pathFindingInfoFactory: BasePathFindingInfoFactory, geographicMapInterface: BasicGeographicMap, pathFindingInfo: PathFindingInfo, mapArray: list[list[int]]) -> None:
                 from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
                 from org.allbinary.media.graphics.geography.map.GeographicMapCellTypeFactory import GeographicMapCellTypeFactory
                 from org.allbinary.media.graphics.geography.pathfinding.PathFindingInfo import PathFindingInfo
-                self._init_fields()
+                __class__._init_fields(self)
                 self.pathFindingInfoFactory = pathFindingInfoFactory
                 self.geographicMapInterface = geographicMapInterface
                 self.pathFindingInfo = pathFindingInfo
@@ -95,7 +94,7 @@ class BasePathFindingInfoFactory:
                     commonSeps: CommonSeps = CommonSeps.getInstance()
                     self.pathFindingInfoFactory.logUtil.put(str(StringMaker().append(commonSeps.BRACKET_OPEN).appendint(row).append(commonSeps.BRACKET_CLOSE).append(commonSeps.BRACKET_OPEN).appendint(column).append("] in [").appendint(len(self.mapArray)).append(commonSeps.BRACKET_CLOSE).append(commonSeps.BRACKET_OPEN).appendint(len(self.mapArray[0])).append(commonSeps.BRACKET_CLOSE)), self, "visit", e)
                     raise e
-        geographicMapInterface.getGeographicMapCellPositionFactory().visit(RaceTrackGeographicMapCellPositionFactoryInitVisitor(self, geographicMapInterface, pathFindingInfo, mapArray))
+        geographicMapInterface.getGeographicMapCellPositionFactory().visit(java_new_inner(self, RaceTrackGeographicMapCellPositionFactoryInitVisitor, self, geographicMapInterface, pathFindingInfo, mapArray))
     
 
     # throws Exception

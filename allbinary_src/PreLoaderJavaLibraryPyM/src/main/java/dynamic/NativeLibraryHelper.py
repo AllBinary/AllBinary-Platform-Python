@@ -20,11 +20,11 @@ from __future__ import annotations
 class NativeLibraryHelper:
 
     def _init_fields(self) -> None:
-        self.library: str = None
+        if "library" not in vars(self): self.library: str = None
     
 
     def __init__(self, library: str) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.library = library
     
 

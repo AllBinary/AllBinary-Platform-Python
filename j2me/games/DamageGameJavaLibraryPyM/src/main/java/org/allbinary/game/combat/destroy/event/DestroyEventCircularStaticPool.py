@@ -32,7 +32,7 @@ class DestroyEventCircularStaticPool:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def init(self, combatGameCanvas: AllBinaryGameCanvas) -> None:

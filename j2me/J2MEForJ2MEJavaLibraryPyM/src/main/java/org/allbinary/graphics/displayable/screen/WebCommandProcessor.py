@@ -23,14 +23,13 @@ class WebCommandProcessor:
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.aboutCommandProcessor: AboutCommandProcessor = AboutCommandProcessor.getInstance()
         self.list_: BasicArrayList = BasicArrayListD()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

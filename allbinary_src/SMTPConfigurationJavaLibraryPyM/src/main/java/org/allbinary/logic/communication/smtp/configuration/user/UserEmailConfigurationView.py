@@ -25,17 +25,17 @@ class UserEmailConfigurationView(DomNodeInterface):
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.userEmailConfigurationInterface: UserEmailConfigurationInterface = None
+        if "userEmailConfigurationInterface" not in vars(self): self.userEmailConfigurationInterface: UserEmailConfigurationInterface = None
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self.__jconstructor1(*args)
+            __class__.__jconstructor1(self, *args)
 
     def __jconstructor1(self, *args) -> None:
-        if True and not isinstance(args[0], (str, list, int, float)):
-            self._constructor1_1(*args)
+        if True and (args[0] is None or any(base.__name__ == "Node" for base in type(args[0]).__mro__)):
+            __class__._constructor1_1(self, *args)
         else:
-            self._constructor1_2(*args)
+            __class__._constructor1_2(self, *args)
     
 
     def _constructor1_1(self, node: Node) -> None:
@@ -47,7 +47,7 @@ class UserEmailConfigurationView(DomNodeInterface):
         from org.w3c.dom.NodeList import NodeList
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-        self._init_fields()
+        __class__._init_fields(self)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGING):
             self.logUtil.putF(self.commonStrings.CONSTRUCTOR, self, self.commonStrings.CONSTRUCTOR)
         self.userEmailConfigurationInterface = UserEmailConfiguration()
@@ -58,7 +58,7 @@ class UserEmailConfigurationView(DomNodeInterface):
     
 
     def _constructor1_2(self, userEmailConfigurationInterface: UserEmailConfigurationInterface) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.userEmailConfigurationInterface = userEmailConfigurationInterface
     
 
@@ -69,6 +69,7 @@ class UserEmailConfigurationView(DomNodeInterface):
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
         from org.allbinary.logic.communication.smtp.configuration.user.UserEmailConfigurationMapping import UserEmailConfigurationMapping
+        from org.allbinary.logic.communication.smtp.configuration.user.UserEmailConfigurationData import UserEmailConfigurationData
         from java.util.HashMap import HashMap
         from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
         from org.allbinary.logic.communication.smtp.configuration.user.event.UserEmailEventsConfigurationInterface import UserEmailEventsConfigurationInterface

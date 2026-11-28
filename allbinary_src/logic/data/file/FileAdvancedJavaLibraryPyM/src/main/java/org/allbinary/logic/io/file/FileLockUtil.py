@@ -32,7 +32,7 @@ class FileLockUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -114,13 +114,15 @@ class FileLockUtil:
             fileChannel.close()
 
     def getLock(self, *args):
-        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
-            return self.getLock_j1_1(*args)
-        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
-            return self.getLock_j1_2(*args)
+        if len(args) == 1 and True and (args[0] is None or any(base.__name__ == "AbFile" for base in type(args[0]).__mro__)):
+            return __class__.__dict__["getLock_j1_1"].__get__(self, __class__)(*args)
+        if len(args) == 1 and True and (args[0] is None or any(base.__name__ == "AbFileOutputStream" for base in type(args[0]).__mro__)):
+            return __class__.__dict__["getLock_j1_2"].__get__(self, __class__)(*args)
         if len(args) == 1:
-            return self.getLock_j1_3(*args)
-        return getattr(self, "getLock_j" + str(len(args)))(*args)
+            return __class__.__dict__["getLock_j1_3"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("getLock_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getLock(*args)
 # from java.nio.channels.FileChannel import FileChannel
 # from java.nio.channels.FileLock import FileLock
 # from org.allbinary.util.BasicArrayList import BasicArrayList

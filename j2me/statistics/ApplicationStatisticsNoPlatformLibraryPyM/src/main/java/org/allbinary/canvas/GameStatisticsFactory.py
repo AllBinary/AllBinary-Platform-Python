@@ -15,11 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.canvas.BaseGameStatistics import BaseGameStatistics
 
 
 #NoPlatform
+@java_inherited_overloads
 class GameStatisticsFactory(BaseGameStatistics):
     instance: GameStatisticsFactory = None
 

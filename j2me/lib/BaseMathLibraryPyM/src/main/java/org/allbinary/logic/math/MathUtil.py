@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -13,7 +14,7 @@ class MathUtil:
         self.ACCURACY: int = 100
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -32,11 +33,11 @@ class MathUtil:
     def sqrt(self, value: int) -> int:
         if value <= 1:
             return value
-        accumulated: int = value >> 1
-        result: int = (accumulated + (int(value / accumulated))) >> 1
+        accumulated: int = int(value) >> (int(1) & 31)
+        result: int = int((accumulated + (int(value / accumulated)))) >> (int(1) & 31)
         while True:
             accumulated = result
-            result = (accumulated + (int(value / accumulated))) >> 1
+            result = int((accumulated + (int(value / accumulated)))) >> (int(1) & 31)
             if not (accumulated > result):
                 break
         return accumulated

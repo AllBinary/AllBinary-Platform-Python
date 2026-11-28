@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.System import System
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -23,13 +25,12 @@ class BasicArrayListUtil:
 
     def _init_fields(self) -> None:
         from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
-        from jsinterop.annotations.JsProperty import JsProperty
         self.NULL_ARRAY_OF_ARRAY: list[list[BasicArrayList]] = [[None] * (0) for _ in range(0)]
         self.myRandomFactory: MyRandomFactory = MyRandomFactory.getInstance()
         self.immutableInstance: BasicArrayList = ImmutableBasicArrayList("Immutable", 0)
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

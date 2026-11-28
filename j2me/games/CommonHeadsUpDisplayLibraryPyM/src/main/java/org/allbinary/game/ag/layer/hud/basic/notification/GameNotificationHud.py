@@ -15,25 +15,30 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.graphics.hud.BasicHud import BasicHud
 from org.allbinary.game.layer.hud.event.GameNotificationListenerInterface import GameNotificationListenerInterface
 
 
+@java_inherited_overloads
 class GameNotificationHud(*java_bases(BasicHud, GameNotificationListenerInterface)):
     NULL_GAME_NOTIFICATION: GameNotificationHud = None
+    def _java_defaults(self):
+        vars(self).setdefault("METHOD_NAME", None)
+        vars(self).setdefault("lastGameNotificationEvent", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.layer.hud.event.GameNotificationEvent import GameNotificationEvent
         self.METHOD_NAME: str = "onGameNotificationEvent"
         self.lastGameNotificationEvent: GameNotificationEvent = GameNotification.NULL_GAME_NOTIFICATION_EVENT
     
 
     def __init__(self, location: int, direction: int, bufferZone: int, basicColor: BasicColor) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(location, direction, bufferZone, basicColor)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def onEvent(self, eventObject: AllBinaryEventObject) -> None:

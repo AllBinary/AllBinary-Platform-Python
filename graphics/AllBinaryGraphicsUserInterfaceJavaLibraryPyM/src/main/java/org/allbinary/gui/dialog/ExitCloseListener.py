@@ -27,6 +27,6 @@ class ExitCloseListener(CloseJDialogListenerInterface):
     
 
     def onClose(self) -> None:
-        sys.exit(-1)
+        __import__("java.lang.System", fromlist=["System"]).System.exit(-1)
 
 

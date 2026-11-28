@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.System import System
 
 
 #ActualPlatform
@@ -37,8 +38,8 @@ class PreLogUtil:
         from org.allbinary.logic.communication.log.LogFormatUtil import LogFormatUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         className: str = CommonStrings.getInstance().EMPTY
-        if type(anyType).__module__ + "." + type(anyType).__qualname__ is not None:
-            className = str(type(anyType).__module__ + "." + type(anyType).__qualname__)
+        if __import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(anyType)) is not None:
+            className = str(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(anyType)))
         message: str = LogFormatUtil.getInstance().get(className, functionName, specialMessage, exception)
         print(PreLogUtil.LOG_SUCCESS, end="")
         print(message)

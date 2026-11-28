@@ -24,16 +24,14 @@ class ClientInformation(AbeClientInformationInterface):
     def _init_fields(self) -> None:
         from org.allbinary.TsUtil import TsUtil
         from org.allbinary.logic.string.StringUtil import StringUtil
-        from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
         from org.allbinary.logic.system.os.NoOperatingSystem import NoOperatingSystem
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         self.operatingSystemInterface: GenericOperatingSystem = NoOperatingSystem.NO_OPERATING_SYSTEM
         self.tsUtil: TsUtil = TsUtil.getInstance()
-        self.name: str = None
-        self.shortName: str = None
-        self.version: str = None
-        self.specialName: str = None
+        if "name" not in vars(self): self.name: str = None
+        if "shortName" not in vars(self): self.shortName: str = None
+        if "version" not in vars(self): self.version: str = None
+        if "specialName" not in vars(self): self.specialName: str = None
         self.hardSale: bool = True
         self.licenseId: str = StringUtil.getInstance().EMPTY_STRING
         self.licenseServers: BasicArrayList = BasicArrayListUtil.getInstance().getImmutableInstance()
@@ -42,7 +40,7 @@ class ClientInformation(AbeClientInformationInterface):
     def __init__(self, name: str, version: str, specialName: str, shortName: str) -> None:
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.string.CommonSeps import CommonSeps
-        self._init_fields()
+        __class__._init_fields(self)
         self.name = name
         self.version = version
         self.specialName = specialName

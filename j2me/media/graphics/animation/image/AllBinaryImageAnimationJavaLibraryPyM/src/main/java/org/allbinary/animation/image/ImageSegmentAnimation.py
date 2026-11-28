@@ -15,27 +15,36 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.animation.image.ImageAnimation import ImageAnimation
 
 
+@java_inherited_overloads
 class ImageSegmentAnimation(ImageAnimation):
+    def _java_defaults(self):
+        vars(self).setdefault("startX", 0)
+        vars(self).setdefault("startY", 0)
+        vars(self).setdefault("drawWidth", 0)
+        vars(self).setdefault("drawHeight", 0)
+        vars(self).setdefault("circularIndexUtil", None)
+        vars(self).setdefault("sequenceArray", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
-        self.startX: int = None
-        self.startY: int = None
-        self.drawWidth: int = None
-        self.drawHeight: int = None
-        self.circularIndexUtil: CircularIndexUtil = None
-        self.sequenceArray: list[int] = None
+        if "startX" not in vars(self): self.startX: int = 0
+        if "startY" not in vars(self): self.startY: int = 0
+        if "drawWidth" not in vars(self): self.drawWidth: int = 0
+        if "drawHeight" not in vars(self): self.drawHeight: int = 0
+        if "circularIndexUtil" not in vars(self): self.circularIndexUtil: CircularIndexUtil = None
+        if "sequenceArray" not in vars(self): self.sequenceArray: list[int] = None
     
 
     def __init__(self, image: Image, sequenceArray: list[int], animationBehavior: AnimationBehavior) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         super().__init__(image, animationBehavior)
-        self._init_fields()
+        __class__._init_fields(self)
         self.startX = 0
         self.startY = 0
         self.drawWidth = self.getImage().getWidth()

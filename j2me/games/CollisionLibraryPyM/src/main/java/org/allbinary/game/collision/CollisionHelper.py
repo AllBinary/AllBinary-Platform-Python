@@ -20,13 +20,12 @@ from __future__ import annotations
 class CollisionHelper:
 
     def _init_fields(self) -> None:
-        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-        self.sourceLayerInterface: AllBinaryLayer = None
+        if "sourceLayerInterface" not in vars(self): self.sourceLayerInterface: AllBinaryLayer = None
     
 
     def __init__(self, sourceLayerInterface: AllBinaryLayer) -> None:
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-        self._init_fields()
+        __class__._init_fields(self)
         self.sourceLayerInterface = sourceLayerInterface
     
 

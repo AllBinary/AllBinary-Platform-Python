@@ -21,23 +21,22 @@ from org.allbinary.business.user.commerce.money.payment.gateway.transaction.Tran
 class TransactionResult(TransactionResultInterface):
 
     def _init_fields(self) -> None:
-        from java.util.HashMap import HashMap
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.keyValuePairs: HashMap = None
-        self.result: str = None
+        if "keyValuePairs" not in vars(self): self.keyValuePairs: HashMap = None
+        if "result" not in vars(self): self.result: str = None
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self.__jconstructor1(*args)
+            __class__.__jconstructor1(self, *args)
 
     def __jconstructor1(self, *args) -> None:
         if True and (args[0] is None or isinstance(args[0], str)):
-            self._constructor1_1(*args)
+            __class__._constructor1_1(self, *args)
         else:
-            self._constructor1_2(*args)
+            __class__._constructor1_2(self, *args)
     
 
     def _constructor1_1(self, result: str) -> None:
@@ -46,7 +45,7 @@ class TransactionResult(TransactionResultInterface):
         from org.allbinary.util.ABHashtable import ABHashtable
         from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
-        self._init_fields()
+        __class__._init_fields(self)
         try:
             self.result = result
             tokenizer: Tokenizer = Tokenizer(CommonSeps.getInstance().AMPERSAND)
@@ -61,7 +60,7 @@ class TransactionResult(TransactionResultInterface):
 
     def _constructor1_2(self, keyValuePairs: HashMap) -> None:
         from java.util.HashMap import HashMap
-        self._init_fields()
+        __class__._init_fields(self)
         keyValuePairs = keyValuePairs
         self.result = "Needs to have the hashmap converted to string for other constructor"
     

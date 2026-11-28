@@ -15,13 +15,32 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.logic.visual.dhtml.html.HtmlTag import HtmlTag
 
 
+@java_inherited_overloads
 class HtmlSelect(HtmlTag):
+    def _java_defaults(self):
+        vars(self).setdefault("END", None)
+        vars(self).setdefault("STARTSELECT", None)
+        vars(self).setdefault("ENDSELECT", None)
+        vars(self).setdefault("SIZE", None)
+        vars(self).setdefault("NAME", None)
+        vars(self).setdefault("STARTOPTION", None)
+        vars(self).setdefault("SELETED", None)
+        vars(self).setdefault("ENDOPTION", None)
+        vars(self).setdefault("before", None)
+        vars(self).setdefault("name", None)
+        vars(self).setdefault("after", None)
+        vars(self).setdefault("size", None)
+        vars(self).setdefault("selected", None)
+        vars(self).setdefault("options", None)
+        vars(self).setdefault("multiple", None)
+        vars(self).setdefault("isMultipleSelect", False)
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.END: str = ">"
         self.STARTSELECT: str = "<SELECT "
         self.ENDSELECT: str = "</SELECT>"
@@ -30,20 +49,21 @@ class HtmlSelect(HtmlTag):
         self.STARTOPTION: str = "<OPTION"
         self.SELETED: str = "SELECTED"
         self.ENDOPTION: str = "</OPTION>"
-        self.before: str = None
-        self.name: str = None
-        self.after: str = None
-        self.size: str = None
-        self.selected: str = None
-        self.options: BasicArrayList = None
+        if "before" not in vars(self): self.before: str = None
+        if "name" not in vars(self): self.name: str = None
+        if "after" not in vars(self): self.after: str = None
+        if "size" not in vars(self): self.size: str = None
+        if "selected" not in vars(self): self.selected: str = None
+        if "options" not in vars(self): self.options: BasicArrayList = None
         self.multiple: str = "multiple"
         self.isMultipleSelect: bool = False
     
 
     def __init__(self, before: str, size: str, name: str, after: str) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.before = before
         self.size = size
         self.name = name
@@ -59,7 +79,7 @@ class HtmlSelect(HtmlTag):
         from org.allbinary.logic.io.LineReader import LineReader
         try:
             lineReader: LineReader = LineReader(fileName)
-            while lineReader.hasNext():
+            while java_predicate(lineReader, "hasNext"):
                 option: str = lineReader.next()
                 self.addOption(option)
         except Exception as e:
@@ -116,7 +136,7 @@ class HtmlSelect(HtmlTag):
                 result += "=\""
                 result += str(value)
                 result += "\" "
-        if self.isMultiple():
+        if java_predicate(self, "isMultiple"):
             result += " " + self.multiple + " "
         result += str(self.END)
         result += str(self.getOptions())

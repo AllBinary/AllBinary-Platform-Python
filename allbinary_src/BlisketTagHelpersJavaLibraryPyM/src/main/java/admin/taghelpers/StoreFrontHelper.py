@@ -15,19 +15,25 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from admin.taghelpers.TagHelper import TagHelper
 
 
+@java_inherited_overloads
 class StoreFrontHelper(TagHelper):
+    def _java_defaults(self):
+        vars(self).setdefault("storeFrontInterface", None)
+        vars(self).setdefault("currentLocation", None)
+        vars(self).setdefault("currentHomeLocation", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-        self.storeFrontInterface: StoreFrontInterface = None
-        self.currentLocation: str = None
-        self.currentHomeLocation: str = None
+        if "storeFrontInterface" not in vars(self): self.storeFrontInterface: StoreFrontInterface = None
+        if "currentLocation" not in vars(self): self.currentLocation: str = None
+        if "currentHomeLocation" not in vars(self): self.currentHomeLocation: str = None
     
 
     def __init__(self, hashMap: HashMap, pageContext: PageContext) -> None:
+        __class__._java_defaults(self)
         from java.util.HashMap import HashMap
         from org.allbinary.business.context.modules.storefront.StoreFront import StoreFront
         from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
@@ -36,7 +42,7 @@ class StoreFrontHelper(TagHelper):
         from org.allbinary.logic.string.regex.replace.Replace import Replace
         from org.allbinary.string.CommonSeps import CommonSeps
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         storeName: str = hashMap.get(StoreFrontData.getInstance().NAME)
         if storeName is not None:
             self.storeFrontInterface = StoreFrontFactory.getInstance(storeName)

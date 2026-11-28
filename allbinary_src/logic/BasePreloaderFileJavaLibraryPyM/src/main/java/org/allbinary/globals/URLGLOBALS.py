@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -29,7 +30,7 @@ class URLGLOBALS:
 
     @staticmethod
     def isTestingMode() -> bool:
-        return URLGLOBALS.urlGlobalsInterface.isTestingMode()
+        return java_predicate(URLGLOBALS.urlGlobalsInterface, "isTestingMode")
     
 
     @staticmethod

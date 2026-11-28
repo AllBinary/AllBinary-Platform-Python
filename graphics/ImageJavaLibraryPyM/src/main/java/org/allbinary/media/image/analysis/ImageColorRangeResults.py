@@ -15,19 +15,20 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_divide
 
 
 class ImageColorRangeResults:
 
     def _init_fields(self) -> None:
-        self.colorRangeInterface: ColorRangeInterface = None
-        self.matchingPixelsChecked: int = 0
-        self.totalPixelsChecked: int = 0
+        if "colorRangeInterface" not in vars(self): self.colorRangeInterface: ColorRangeInterface = None
+        if "matchingPixelsChecked" not in vars(self): self.matchingPixelsChecked: int = 0
+        if "totalPixelsChecked" not in vars(self): self.totalPixelsChecked: int = 0
     
 
     def __init__(self) -> None:
         from org.allbinary.media.image.analysis.ColorRange import ColorRange
-        self._init_fields()
+        __class__._init_fields(self)
         self.setColorRangeInterface(ColorRange())
     
 

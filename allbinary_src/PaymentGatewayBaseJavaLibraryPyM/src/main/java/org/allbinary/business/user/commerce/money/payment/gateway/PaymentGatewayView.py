@@ -25,11 +25,11 @@ class PaymentGatewayView(DomNodeInterface):
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.paymentGatewayInterface: PaymentGatewayInterface = None
+        if "paymentGatewayInterface" not in vars(self): self.paymentGatewayInterface: PaymentGatewayInterface = None
     
 
     def __init__(self, paymentGatewayInterface: PaymentGatewayInterface) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.paymentGatewayInterface = paymentGatewayInterface
     
 
@@ -48,6 +48,7 @@ class PaymentGatewayView(DomNodeInterface):
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
         from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayMapping import PaymentGatewayMapping
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
         from java.util.HashMap import HashMap
         from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
         from org.w3c.dom.Document import Document

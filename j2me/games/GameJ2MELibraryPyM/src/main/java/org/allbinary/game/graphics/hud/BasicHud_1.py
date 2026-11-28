@@ -15,18 +15,17 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_divide
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 
 
 class BasicHud_1(UpdateMyFontInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         from org.allbinary.graphics.color.BasicColorSetUtil import BasicColorSetUtil
         from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
         from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
@@ -37,23 +36,23 @@ class BasicHud_1(UpdateMyFontInterface):
         self.displayInfo: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
         self.updateMyFontProcessor: MyFontProcessor = UpdateMyFontProcessor(self)
         self.myFontProcessor: MyFontProcessor = self.updateMyFontProcessor
-        self.location: int = 0
-        self.direction: int = 0
-        self.bufferZone: int = 0
+        if "location" not in vars(self): self.location: int = 0
+        if "direction" not in vars(self): self.direction: int = 0
+        if "bufferZone" not in vars(self): self.bufferZone: int = 0
         self.hudGraphicsPosition: HudGraphicsPosition = HudGraphicsPosition.NULL_HUD_GRAPHICS_POSITION
-        self.x: int = 0
-        self.y: int = 0
+        if "x" not in vars(self): self.x: int = 0
+        if "y" not in vars(self): self.y: int = 0
         self.basicColor: BasicColor = BasicColorFactory.getInstance().BLACK
-        self.color: int = None
-        self.updateMaxWidth: int = 0
-        self.updateMaxHeight: int = 0
-        self.offsetY: int = 0
+        if "color" not in vars(self): self.color: int = 0
+        if "updateMaxWidth" not in vars(self): self.updateMaxWidth: int = 0
+        if "updateMaxHeight" not in vars(self): self.updateMaxHeight: int = 0
+        if "offsetY" not in vars(self): self.offsetY: int = 0
     
 
     def __init__(self, location: int, direction: int, bufferZone: int, basicColor: BasicColor) -> None:
         from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-        self._init_fields()
+        __class__._init_fields(self)
         self.setLocation(location)
         self.setDirection(direction)
         self.setBufferZone(bufferZone)

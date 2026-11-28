@@ -23,12 +23,9 @@ class ShippingMethodsFactory:
     SHIPPINGMETHODSFILENAME: str = "shippingMethods.xml"
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
-        from org.allbinary.business.user.commerce.shipping.modules.ShippingInterface import ShippingInterface
-        from org.w3c.dom.Document import Document
-        self.defaultShippingMethodInterface: ShippingInterface = None
-        self.document: Document = None
-        self.shippingVector: BasicArrayList = None
+        if "defaultShippingMethodInterface" not in vars(self): self.defaultShippingMethodInterface: ShippingInterface = None
+        if "document" not in vars(self): self.document: Document = None
+        if "shippingVector" not in vars(self): self.shippingVector: BasicArrayList = None
     
 
     @staticmethod
@@ -46,6 +43,10 @@ class ShippingMethodsFactory:
     
 
     def __init__(self, abeClientInformation: AbeClientInformationInterface, storeFrontInterface: StoreFrontInterface) -> None:
+        from org.allbinary.business.user.commerce.shipping.ShippingMethodsData import ShippingMethodsData
+        from org.allbinary.business.user.commerce.shipping.ShippingMethodData import ShippingMethodData
+        from org.allbinary.business.user.commerce.shipping.ShippingMethodData import ShippingMethodData
+        from org.allbinary.business.user.commerce.shipping.ShippingMethodData import ShippingMethodData
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         from org.allbinary.business.DynamicObjectData import DynamicObjectData
         from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
@@ -66,7 +67,7 @@ class ShippingMethodsFactory:
         from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigData import TransformInfoObjectConfigData
         from org.w3c.dom.Node import Node
         from org.w3c.dom.NodeList import NodeList
-        self._init_fields()
+        __class__._init_fields(self)
         stringBuffer: StringMaker = StringMaker()
         sep: str = AbPathData.getInstance().SEPARATOR
         stringBuffer.append(URLGLOBALS.getMainPath())
@@ -74,7 +75,7 @@ class ShippingMethodsFactory:
         stringBuffer.append(storeFrontInterface.getName())
         stringBuffer.append(sep)
         stringBuffer.append(ShippingMethodsFactory.SHIPPINGMETHODSFILEPATHSTRING)
-        abPath: AbPath = AbPath(str(stringBuffer), self.SHIPPINGMETHODSFILENAME)
+        abPath: AbPath = AbPath(str(stringBuffer), ShippingMethodsFactory.SHIPPINGMETHODSFILENAME)
         data: str = CryptFileReader(TransformInfoObjectConfigData.getInstance().UNCRYPTED_EXTENSION, TransformInfoObjectConfigData.getInstance().ENCRYPTED_EXTENSION).get(abPath)
         self.document = DomDocumentHelper.create(data)
         self.shippingVector = BasicArrayListD()

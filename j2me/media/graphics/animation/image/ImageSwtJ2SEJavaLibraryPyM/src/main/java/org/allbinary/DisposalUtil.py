@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.System import System
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -26,7 +28,7 @@ class DisposalUtil:
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -40,7 +42,7 @@ class DisposalUtil:
         from org.microemu.device.swt.SwtMutableImage import SwtMutableImage
         if image is None:
             return
-        if image.isMutable():
+        if java_predicate(image, "isMutable"):
             mutableImage: SwtMutableImage = image
             self.disposeResource(mutableImage.getImage())
         else:
@@ -49,7 +51,7 @@ class DisposalUtil:
 
     def disposeResource(self, resource: Resource) -> None:
         from org.eclipse.swt.graphics.Resource import Resource
-        if not resource.isDisposed():
+        if not (java_predicate(resource, "isDisposed")):
             print(self.commonStrings.CLOSE)
             resource.dispose()
 # from javax.microedition.lcdui.Image import Image

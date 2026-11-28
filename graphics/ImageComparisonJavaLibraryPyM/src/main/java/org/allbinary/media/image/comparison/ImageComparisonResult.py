@@ -15,35 +15,35 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_divide
 
 
 class ImageComparisonResult:
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.bufferedImages: list[BufferedImage] = [None] * (2)
-        self.name: str = None
-        self.isSameHeight: bool = False
-        self.isSameWidth: bool = False
-        self.imageHeight: int = None
-        self.imageWidth: int = None
-        self.nonMatchingPixelVector: BasicArrayList = None
-        self.frameOne: int = None
-        self.frameTwo: int = None
-        self.pixelsThatMatch: int = 0
-        self.pixelsIgnored: int = 0
-        self.tolerance: int = 0
+        if "name" not in vars(self): self.name: str = None
+        if "isSameHeight" not in vars(self): self.isSameHeight: bool = False
+        if "isSameWidth" not in vars(self): self.isSameWidth: bool = False
+        if "imageHeight" not in vars(self): self.imageHeight: int = 0
+        if "imageWidth" not in vars(self): self.imageWidth: int = 0
+        if "nonMatchingPixelVector" not in vars(self): self.nonMatchingPixelVector: BasicArrayList = None
+        if "frameOne" not in vars(self): self.frameOne: int = None
+        if "frameTwo" not in vars(self): self.frameTwo: int = None
+        if "pixelsThatMatch" not in vars(self): self.pixelsThatMatch: int = 0
+        if "pixelsIgnored" not in vars(self): self.pixelsIgnored: int = 0
+        if "tolerance" not in vars(self): self.tolerance: int = 0
         self.matchingPercent: float = float(-1)
     
 
     def __init__(self, name: str, bufferedImage: BufferedImage, bufferedImage2: BufferedImage, frameOne: int, frameTwo: int, tolerance: int) -> None:
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         from org.allbinary.media.image.ImageUtil import ImageUtil
-        self._init_fields()
+        __class__._init_fields(self)
         self.name = name
         self.nonMatchingPixelVector = BasicArrayListD()
         self.bufferedImages[0] = bufferedImage
@@ -67,7 +67,7 @@ class ImageComparisonResult:
             self.isSameWidth = True
         self.imageWidth = imageWidth
         self.imageHeight = imageHeight
-        if not self.isSameWidth or not self.isSameHeight:
+        if not (self.isSameWidth) or not (self.isSameHeight):
             imageUtil: ImageUtil = ImageUtil.getInstance()
             self.logUtil.putF("Images were not the same size? Most likely a resolution change.", self, self.commonStrings.CONSTRUCTOR)
             self.logUtil.putF("1: " + imageUtil.toString(bufferedImage), self, self.commonStrings.CONSTRUCTOR)

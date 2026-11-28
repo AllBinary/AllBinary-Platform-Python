@@ -22,7 +22,6 @@ class AdminRoleFactory:
     instance: AdminRoleFactory = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.adminRoles: BasicArrayList = BasicArrayListD()
         self.storeAdminRoles: BasicArrayList = BasicArrayListD()
@@ -44,7 +43,7 @@ class AdminRoleFactory:
 
     def __init__(self) -> None:
         from org.allbinary.business.user.role.BasicUserRoleFactory import BasicUserRoleFactory
-        self._init_fields()
+        __class__._init_fields(self)
         basicUserRoleFactory: BasicUserRoleFactory = BasicUserRoleFactory.getInstance()
         self.adminRoles.add(basicUserRoleFactory.ADMINISTRATOR)
         self.storeAdminRoles.add(basicUserRoleFactory.ADMINISTRATOR)

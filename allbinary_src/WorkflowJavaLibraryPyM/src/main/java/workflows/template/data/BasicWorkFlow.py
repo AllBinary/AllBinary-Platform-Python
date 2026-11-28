@@ -15,24 +15,22 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.logic.control.workflow.WorkFlowInterface import WorkFlowInterface
 
 
 class BasicWorkFlow(WorkFlowInterface):
 
     def _init_fields(self) -> None:
-        from java.util.HashMap import HashMap
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.logic.control.validate.ValidationComponentInterface import ValidationComponentInterface
-        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.abeClientInformation: AbeClientInformationInterface = ServiceClientInformationInterfaceFactory.getInstance()
-        self.validationDomNodeInterface: ValidationComponentInterface = None
-        self.propertiesHashMap: HashMap = None
-        self.pageContext: PageContext = None
+        if "validationDomNodeInterface" not in vars(self): self.validationDomNodeInterface: ValidationComponentInterface = None
+        if "propertiesHashMap" not in vars(self): self.propertiesHashMap: HashMap = None
+        if "pageContext" not in vars(self): self.pageContext: PageContext = None
     
 
     def __init__(self, propertiesHashMap: HashMap, pageContext: PageContext) -> None:
@@ -41,7 +39,7 @@ class BasicWorkFlow(WorkFlowInterface):
         from org.allbinary.logic.visual.transform.TransformFactory import TransformFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-        self._init_fields()
+        __class__._init_fields(self)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().WORKFLOW):
             self.logUtil.putF("Properties: " + str(propertiesHashMap), self, "BasicWorkFlow()")
         self.propertiesHashMap = propertiesHashMap
@@ -70,7 +68,7 @@ class BasicWorkFlow(WorkFlowInterface):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().WORKFLOW):
             self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.PROCESS)
-        if self.validationDomNodeInterface.isValid():
+        if java_predicate(self.validationDomNodeInterface, "isValid"):
             self.pageContext.getOut().print_(self.validationDomNodeInterface.view())
             return str(TagSupport.EVAL_BODY_INCLUDE)
         else:

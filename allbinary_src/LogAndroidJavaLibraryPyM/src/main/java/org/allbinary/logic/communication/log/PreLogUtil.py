@@ -36,7 +36,7 @@ class PreLogUtil:
     def putOE(specialMessage: str, anyType: object, functionName: str, exception: object) -> None:
         from org.allbinary.logic.communication.log.LogFormatUtil import LogFormatUtil
         className: str = PreLogUtil.LABEL
-        actualClassName: str = type(anyType).__module__ + "." + type(anyType).__qualname__
+        actualClassName: str = __import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(anyType))
         if actualClassName is not None:
             className = actualClassName
         message: str = LogFormatUtil.getInstance().get(className, functionName, specialMessage, exception)

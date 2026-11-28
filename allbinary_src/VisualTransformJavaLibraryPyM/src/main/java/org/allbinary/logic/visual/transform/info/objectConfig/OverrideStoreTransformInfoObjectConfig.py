@@ -15,18 +15,21 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.visual.transform.info.objectConfig.GenericStoreTransformInfoObjectConfig import GenericStoreTransformInfoObjectConfig
 
 
+@java_inherited_overloads
 class OverrideStoreTransformInfoObjectConfig(GenericStoreTransformInfoObjectConfig):
 
     def __init__(self, *args) -> None:
         if len(args) == 2:
-            self._constructor2(*args)
+            __class__._constructor2(self, *args)
         elif len(args) == 3:
-            self._constructor3(*args)
+            __class__._constructor3(self, *args)
         elif len(args) == 4:
-            self._constructor4(*args)
+            __class__._constructor4(self, *args)
     
 
     def _constructor2(self, abeClientInformation: AbeClientInformationInterface, transformInfoInterface: TransformInfoInterface) -> None:
@@ -53,7 +56,7 @@ class OverrideStoreTransformInfoObjectConfig(GenericStoreTransformInfoObjectConf
     # throws Exception
     def generate(self, objectConfigDocument: Document) -> Document:
         from org.w3c.dom.Document import Document
-        newObjectConfigDocument: Document = super().generate(objectConfigDocument)
+        newObjectConfigDocument: Document = java_super_call(super(), "generate", objectConfigDocument)
         return newObjectConfigDocument
 # from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
 # from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface

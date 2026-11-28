@@ -100,7 +100,9 @@ class InputRobotInterface:
         raise NotImplementedError()
 
     def mouseMove(self, *args):
-        return getattr(self, "mouseMove_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("mouseMove_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().mouseMove(*args)
     
 
     # throws Exception
@@ -113,7 +115,9 @@ class InputRobotInterface:
         raise NotImplementedError()
 
     def mouseMoveToTarget(self, *args):
-        return getattr(self, "mouseMoveToTarget_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("mouseMoveToTarget_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().mouseMoveToTarget(*args)
 # from java.awt.Rectangle import Rectangle
 # from java.awt.Color import Color
 # from java.awt.Point import Point

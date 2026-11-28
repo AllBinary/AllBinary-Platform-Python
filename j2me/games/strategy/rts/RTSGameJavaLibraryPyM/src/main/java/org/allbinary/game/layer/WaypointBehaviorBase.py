@@ -22,9 +22,8 @@ class WaypointBehaviorBase(TickableInterface):
 
     def _init_fields(self) -> None:
         from org.allbinary.game.layer.waypoint.WaypointBase import WaypointBase
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
-        self.ownedWaypointList: BasicArrayList = None
+        if "ownedWaypointList" not in vars(self): self.ownedWaypointList: BasicArrayList = None
         self.waypointOverridesAttacking: bool = True
         self.waypoint: WaypointBase = WaypointBase.NULL_WAYPOINT_BASE
         self.steeringVisitorList: BasicArrayList = BasicArrayListD()
@@ -32,12 +31,12 @@ class WaypointBehaviorBase(TickableInterface):
 
     def __init__(self) -> None:
         from org.allbinary.util.BasicArrayListS import BasicArrayListS
-        self._init_fields()
+        __class__._init_fields(self)
         self.ownedWaypointList = BasicArrayListS(1)
     
 
     def getName(self) -> str:
-        return type(self).__module__ + "." + type(self).__qualname__
+        return __import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(self))
     
 
     def isRunning(self) -> bool:

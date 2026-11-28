@@ -15,22 +15,29 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_new_inner
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.thread.BaseImageLoadingProcessor import BaseImageLoadingProcessor
 from org.allbinary.thread.ABRunnable import ABRunnable
 
 
+@java_inherited_overloads
 class ConcurrentImageLoadingProcessor(BaseImageLoadingProcessor):
+    @java_inherited_overloads
     class ImageCacheRunnable(ABRunnable):
+        def _java_defaults(self):
+            vars(self).setdefault("imageCache", None)
 
         def _init_fields(self) -> None:
-            from org.allbinary.image.ImageCache import ImageCache
-            self.imageCache: ImageCache = None
+            if "imageCache" not in vars(self): self.imageCache: ImageCache = None
         
 
         def __init__(self, imageCache: ImageCache) -> None:
+            __class__._java_defaults(self)
             from org.allbinary.image.ImageCache import ImageCache
             super().__init__()
-            self._init_fields()
+            __class__._init_fields(self)
             self.imageCache = imageCache
         
 
@@ -47,29 +54,33 @@ class ConcurrentImageLoadingProcessor(BaseImageLoadingProcessor):
                 self.imageCache.loadRemainingAnimations()
                 self.setRunning(False)
                 progressCanvas: ProgressCanvas = ProgressCanvasFactory.getInstance()
-                if not progressCanvas.inProgress:
+                if not (progressCanvas.inProgress):
                     progressCanvas.endFromInitialLazyLoadingComplete()
             except Exception as e:
                 self.setRunning(False)
                 commonStrings: CommonStrings = CommonStrings.getInstance()
                 logUtil.put(commonStrings.EXCEPTION, self, commonStrings.RUN, e)
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("runnable", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.runnable: ABRunnable = None
+        if "runnable" not in vars(self): self.runnable: ABRunnable = None
     
 
     def __init__(self, imageCache: ImageCache) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.image.ImageCache import ImageCache
         super().__init__()
-        self._init_fields()
-        self.runnable = ConcurrentImageLoadingProcessor.ImageCacheRunnable(imageCache)
+        __class__._init_fields(self)
+        self.runnable = java_new_inner(self, ConcurrentImageLoadingProcessor.ImageCacheRunnable, imageCache)
     
 
     def runTask(self) -> None:
         from org.allbinary.thread.ImageThreadPool import ImageThreadPool
-        if not self.runnable.isRunning():
+        if not (java_predicate(self.runnable, "isRunning")):
             ImageThreadPool.getInstance().runTask(self.runnable)
 # from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
 # from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory

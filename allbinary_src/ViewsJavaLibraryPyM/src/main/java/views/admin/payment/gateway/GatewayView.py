@@ -15,10 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from views.admin.payment.gateway.PaymentGatewayViewAbstract import PaymentGatewayViewAbstract
 
 
+@java_inherited_overloads
 class GatewayView(PaymentGatewayViewAbstract):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -26,14 +32,15 @@ class GatewayView(PaymentGatewayViewAbstract):
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getFormData(self, request: HttpServletRequest) -> None:
         from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-        super().getFormData(request)
+        java_super_call(super(), "getFormData", request)
         if StringValidationUtil.getInstance().isEmpty(self.getPaymentGatewayPrimaryKey().getName()):
             self.getPaymentGatewayPrimaryKey().setName(self.getWeblisketSession().getPaymentMethod())
     

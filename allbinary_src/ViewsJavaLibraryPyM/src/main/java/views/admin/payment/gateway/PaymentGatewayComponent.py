@@ -15,23 +15,29 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from views.business.context.modules.storefront.HttpStoreComponentView import HttpStoreComponentView
 
 
+@java_inherited_overloads
 class PaymentGatewayComponent(HttpStoreComponentView):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("paymentGatewayInterface", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayInterface import PaymentGatewayInterface
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.paymentGatewayInterface: PaymentGatewayInterface = None
+        if "paymentGatewayInterface" not in vars(self): self.paymentGatewayInterface: PaymentGatewayInterface = None
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface, paymentGatewayInterface: PaymentGatewayInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayInterface import PaymentGatewayInterface
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
         self.paymentGatewayInterface = paymentGatewayInterface
     
 
@@ -52,7 +58,7 @@ class PaymentGatewayComponent(HttpStoreComponentView):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             self.addDomNodeInterfaces()
-            return super().view()
+            return java_super_call(super(), "view")
         except Exception as e:
             error: str = "Failed to view payment gateway"
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERERROR):

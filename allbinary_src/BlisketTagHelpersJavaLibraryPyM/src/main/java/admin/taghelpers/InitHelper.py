@@ -15,10 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from admin.taghelpers.BasicTable import BasicTable
 
 
+@java_inherited_overloads
 class InitHelper(BasicTable):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -26,9 +30,10 @@ class InitHelper(BasicTable):
     
 
     def __init__(self, hashMap: HashMap, pageContext: PageContext) -> None:
+        __class__._java_defaults(self)
         from java.util.HashMap import HashMap
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def drop(self) -> str:

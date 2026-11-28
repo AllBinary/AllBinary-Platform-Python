@@ -15,40 +15,51 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.input.media.image.capture.CapturedImageWorkerResultsListener import CapturedImageWorkerResultsListener
 from org.allbinary.logic.util.event.handler.BasicEventHandler import BasicEventHandler
 
 
+@java_inherited_overloads
 class ImageComparisonWorker(*java_bases(BasicEventHandler, CapturedImageWorkerResultsListener)):
     _lock = threading.RLock()
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("bufferedImageVector", None)
+        vars(self).setdefault("imageComparatorConstraintsInterface", None)
+        vars(self).setdefault("imageComparator", None)
+        vars(self).setdefault("running", False)
+        vars(self).setdefault("index2", 0)
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.bufferedImageVector: BasicArrayList = BasicArrayListD()
-        self.imageComparatorConstraintsInterface: ImageComparatorConstraintsInterface = None
-        self.imageComparator: ImageComparator = None
-        self.running: bool = False
-        self.index2: int = 0
+        if "imageComparatorConstraintsInterface" not in vars(self): self.imageComparatorConstraintsInterface: ImageComparatorConstraintsInterface = None
+        if "imageComparator" not in vars(self): self.imageComparator: ImageComparator = None
+        if "running" not in vars(self): self.running: bool = False
+        if "index2" not in vars(self): self.index2: int = 0
     
 
     def __init__(self, imageComparatorConstraintsInterface: ImageComparatorConstraintsInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.media.image.comparison.ImageComparator import ImageComparator
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.imageComparatorConstraintsInterface = imageComparatorConstraintsInterface
         self.imageComparator = ImageComparator(imageComparatorConstraintsInterface)
     
 
     def isRunning(self) -> bool:
         with self._lock:
-            return self._isRunning_unlocked()
+            return __class__.__dict__["_isRunning_unlocked"].__get__(self, __class__)()
 
     def _isRunning_unlocked(self) -> bool:
         return self.running
@@ -56,7 +67,7 @@ class ImageComparisonWorker(*java_bases(BasicEventHandler, CapturedImageWorkerRe
 
     def setRunning(self, running: bool) -> None:
         with self._lock:
-            return self._setRunning_unlocked(running)
+            return __class__.__dict__["_setRunning_unlocked"].__get__(self, __class__)(running)
 
     def _setRunning_unlocked(self, running: bool) -> None:
         self.running = running
@@ -64,7 +75,7 @@ class ImageComparisonWorker(*java_bases(BasicEventHandler, CapturedImageWorkerRe
 
     def onCaptureEvent(self, capturedImageWorkerResultsEvent: CapturedImageWorkerResultsEvent) -> None:
         with self._lock:
-            return self._onCaptureEvent_unlocked(capturedImageWorkerResultsEvent)
+            return __class__.__dict__["_onCaptureEvent_unlocked"].__get__(self, __class__)(capturedImageWorkerResultsEvent)
 
     def _onCaptureEvent_unlocked(self, capturedImageWorkerResultsEvent: CapturedImageWorkerResultsEvent) -> None:
         from org.allbinary.input.media.image.capture.CapturedImageWorkerResultsEvent import CapturedImageWorkerResultsEvent
@@ -75,7 +86,7 @@ class ImageComparisonWorker(*java_bases(BasicEventHandler, CapturedImageWorkerRe
 
     def onEvent(self, allBinaryEventObject: AllBinaryEventObject) -> None:
         with self._lock:
-            return self._onEvent_unlocked(allBinaryEventObject)
+            return __class__.__dict__["_onEvent_unlocked"].__get__(self, __class__)(allBinaryEventObject)
 
     def _onEvent_unlocked(self, allBinaryEventObject: AllBinaryEventObject) -> None:
         from org.allbinary.input.media.image.capture.CapturedImageWorkerResultsEvent import CapturedImageWorkerResultsEvent

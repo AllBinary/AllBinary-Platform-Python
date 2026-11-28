@@ -15,10 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.visual.transform.data.TransformHttpRequestDocument import TransformHttpRequestDocument
 
 
+@java_inherited_overloads
 class TransformStoreDocument(TransformHttpRequestDocument):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -26,19 +30,20 @@ class TransformStoreDocument(TransformHttpRequestDocument):
 
     def __init__(self, *args) -> None:
         if len(args) == 2:
-            self._constructor2(*args)
+            __class__._constructor2(self, *args)
         elif len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
     
 
     def _constructor2(self, pageContext: PageContext, weblisketSession: WeblisketSession) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.context.modules.storefront.StoreFrontViewFactory import StoreFrontViewFactory
         from org.allbinary.logic.communication.http.request.RequestParams import RequestParams
         from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__(pageContext, weblisketSession)
-        self._init_fields()
+        __class__._init_fields(self)
         try:
             storeName: str = weblisketSession.getStoreName()
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
@@ -52,12 +57,13 @@ class TransformStoreDocument(TransformHttpRequestDocument):
     
 
     def _constructor1(self, searchRequest: SearchRequest) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.context.modules.storefront.StoreFrontViewFactory import StoreFrontViewFactory
         from org.allbinary.logic.control.search.SearchRequest import SearchRequest
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__(searchRequest)
-        self._init_fields()
+        __class__._init_fields(self)
         try:
             self.getBaseNode().appendChild(StoreFrontViewFactory.getInstance(searchRequest.getStoreFront().getName()).toXmlNode(self.getDoc()))
             self.getBaseNode().appendChild(searchRequest.getParams().getParamsNode(self.getDoc()))

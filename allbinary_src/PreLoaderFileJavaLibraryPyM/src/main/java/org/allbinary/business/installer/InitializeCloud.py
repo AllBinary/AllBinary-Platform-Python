@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 
 
 class InitializeCloud:
@@ -27,7 +29,7 @@ class InitializeCloud:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def initialize(self, cloud: str, overwriteNewer: bool, overwriteAll: bool, current: int, total: int) -> bool:
@@ -72,7 +74,7 @@ class InitializeCloud:
                 nextFile: AbFile = None
                 for index in range(start, end):
                     nextFile = fileBasicArrayList.get(index)
-                    if nextFile.isDirectory():
+                    if java_predicate(nextFile, "isDirectory"):
                         pass
                     else:
                         FileUtil.getInstance().copyToCloud(nextFile, path, realPath, cloud, overwriteNewer, overwriteAll)

@@ -15,19 +15,22 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.visual.dhtml.style.css.property.CssPropertyView import CssPropertyView
 
 
+@java_inherited_overloads
 class FontFamilyView(CssPropertyView):
 
     def __init__(self, *args) -> None:
         if len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
         elif len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
     
 
     def _constructor0(self) -> None:
+        from org.allbinary.logic.visual.dhtml.style.css.property.font.FontFamilyData import FontFamilyData
         from org.allbinary.logic.visual.dhtml.style.css.property.CssProperty import CssProperty
         super().__init__(CssProperty(FontFamilyData.getInstance().VALUE))
     

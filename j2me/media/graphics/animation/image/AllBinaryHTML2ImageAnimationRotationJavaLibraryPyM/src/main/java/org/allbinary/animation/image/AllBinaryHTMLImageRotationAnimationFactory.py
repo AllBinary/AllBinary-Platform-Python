@@ -15,13 +15,17 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.animation.image.BaseImageAnimationFactory import BaseImageAnimationFactory
 
 
+@java_inherited_overloads
 class AllBinaryHTMLImageRotationAnimationFactory(BaseImageAnimationFactory):
+    def _java_defaults(self):
+        vars(self).setdefault("angleIncrement", 0)
 
     def _init_fields(self) -> None:
-        self.angleIncrement: int = None
+        if "angleIncrement" not in vars(self): self.angleIncrement: int = 0
     
 
     # throws Exception
@@ -35,11 +39,12 @@ class AllBinaryHTMLImageRotationAnimationFactory(BaseImageAnimationFactory):
     
 
     def __init__(self, image: Image, width: int, height: int, angleIncrement: int, animationBehaviorFactory: AnimationBehaviorFactory) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
         from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
         super().__init__(image, PrimitiveIntUtil.getArrayInstance(), width, height, 0, 0, animationBehaviorFactory)
-        self._init_fields()
+        __class__._init_fields(self)
         self.angleIncrement = angleIncrement
     
 

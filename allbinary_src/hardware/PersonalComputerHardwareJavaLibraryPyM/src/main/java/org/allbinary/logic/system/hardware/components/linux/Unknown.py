@@ -22,11 +22,11 @@ from org.allbinary.logic.system.hardware.components.interfaces.HardwareComponent
 class Unknown(HardwareComponentInterface):
 
     def _init_fields(self) -> None:
-        self.data: str = None
+        if "data" not in vars(self): self.data: str = None
     
 
     def __init__(self, data: str) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.data = data
     
 

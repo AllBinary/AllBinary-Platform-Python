@@ -32,7 +32,7 @@ class TransformGeneratorUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -74,11 +74,13 @@ class TransformGeneratorUtil:
         self.generate(abeClientInformation, transformInfoDomNode.getTransformInfoInterface(), ownerTransformInfoInterface)
 
     def generate(self, *args):
-        if len(args) == 3 and True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)) and not isinstance(args[2], (str, list, int, float)):
-            return self.generate_j3_1(*args)
+        if len(args) == 3 and True and (args[0] is None or any(base.__name__ == "AbeClientInformationInterface" for base in type(args[0]).__mro__)) and (args[1] is None or any(base.__name__ == "TransformInfoInterface" for base in type(args[1]).__mro__)) and (args[2] is None or any(base.__name__ == "TransformInfoInterface" for base in type(args[2]).__mro__)):
+            return __class__.__dict__["generate_j3_1"].__get__(self, __class__)(*args)
         if len(args) == 3:
-            return self.generate_j3_2(*args)
-        return getattr(self, "generate_j" + str(len(args)))(*args)
+            return __class__.__dict__["generate_j3_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("generate_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().generate(*args)
 # from org.allbinary.logic.communication.log.LogUtil import LogUtil
 # from org.allbinary.logic.io.InputOutputTypeData import InputOutputTypeData
 # from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface

@@ -35,7 +35,7 @@ class DirectionUtil:
     def __init__(self) -> None:
         from org.allbinary.direction.DirectionFactory import DirectionFactory
         from org.allbinary.math.AngleFactory import AngleFactory
-        self._init_fields()
+        __class__._init_fields(self)
         angleFactory: AngleFactory = AngleFactory.getInstance()
         directionFactory: DirectionFactory = DirectionFactory.getInstance()
         self.directionArray[directionFactory.LEFT.getValue()] = angleFactory.LEFT

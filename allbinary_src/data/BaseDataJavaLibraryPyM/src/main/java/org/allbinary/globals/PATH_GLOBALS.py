@@ -22,11 +22,11 @@ class PATH_GLOBALS:
     instance: PATH_GLOBALS = None
 
     def _init_fields(self) -> None:
-        self.DATA_PATH: str = None
-        self.INIT_PATH: str = None
-        self.VIEWS_PATH: str = None
-        self.LOG_PATH: str = None
-        self.BACKUP_PATH: str = None
+        if "DATA_PATH" not in vars(self): self.DATA_PATH: str = None
+        if "INIT_PATH" not in vars(self): self.INIT_PATH: str = None
+        if "VIEWS_PATH" not in vars(self): self.VIEWS_PATH: str = None
+        if "LOG_PATH" not in vars(self): self.LOG_PATH: str = None
+        if "BACKUP_PATH" not in vars(self): self.BACKUP_PATH: str = None
     
 
     @staticmethod
@@ -38,7 +38,7 @@ class PATH_GLOBALS:
         from org.allbinary.logic.io.path.AbPathData import AbPathData
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.string.CommonStrings import CommonStrings
-        self._init_fields()
+        __class__._init_fields(self)
         stringBuffer: StringMaker = StringMaker()
         abPathData: AbPathData = AbPathData.getInstance()
         stringBuffer.append("data")

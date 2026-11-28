@@ -15,27 +15,33 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.graphics.hud.BasicHud import BasicHud
 from org.allbinary.graphics.paint.PaintableInterface import PaintableInterface
 
 
+@java_inherited_overloads
 class LivesHudWidget(*java_bases(BasicHud, PaintableInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("lifeInterface", None)
+        vars(self).setdefault("xArray", None)
+        vars(self).setdefault("animationInterface", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.animation.Animation import Animation
-        from org.allbinary.game.ag.life.Life import Life
-        self.lifeInterface: Life = None
-        self.xArray: list[int] = None
-        self.animationInterface: Animation = None
+        if "lifeInterface" not in vars(self): self.lifeInterface: Life = None
+        if "xArray" not in vars(self): self.xArray: list[int] = None
+        if "animationInterface" not in vars(self): self.animationInterface: Animation = None
     
 
     def __init__(self, animationInterface: Animation, lifeInterface: Life, location: int, direction: int) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.animation.Animation import Animation
         from org.allbinary.game.ag.life.Life import Life
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         super().__init__(location, direction, 2, BasicColorFactory.getInstance().WHITE)
-        self._init_fields()
+        __class__._init_fields(self)
         self.lifeInterface = lifeInterface
         size: int = int(self.getLifeInterface().getMaxlives())
         self.xArray = [0] * (size)
@@ -46,7 +52,7 @@ class LivesHudWidget(*java_bases(BasicHud, PaintableInterface)):
 
     def updateMeasurement(self, graphics: Graphics) -> None:
         from javax.microedition.lcdui.Graphics import Graphics
-        super().updateMeasurement(graphics)
+        java_super_call(super(), "updateMeasurement", graphics)
         maxLives: int = int(self.getLifeInterface().getMaxlives())
         for index in range(0, maxLives):
             self.xArray[index] = self.getX() + (index * 16)
@@ -54,12 +60,12 @@ class LivesHudWidget(*java_bases(BasicHud, PaintableInterface)):
 
     def onDisplayChangeEvent(self, displayChangeEvent: DisplayChangeEvent) -> None:
         from org.allbinary.graphics.displayable.event.DisplayChangeEvent import DisplayChangeEvent
-        super().onDisplayChangeEvent(displayChangeEvent)
+        java_super_call(super(), "onDisplayChangeEvent", displayChangeEvent)
         self.myFontProcessor = self.updateMyFontProcessor
     
 
     def setX(self, x: int) -> None:
-        super().setX(x)
+        java_super_call(super(), "setX", x)
         self.myFontProcessor = self.updateMyFontProcessor
     
 

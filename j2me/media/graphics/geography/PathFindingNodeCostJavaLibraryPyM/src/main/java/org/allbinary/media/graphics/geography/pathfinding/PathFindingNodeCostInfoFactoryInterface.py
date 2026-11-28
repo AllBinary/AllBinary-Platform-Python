@@ -15,10 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.media.graphics.geography.pathfinding.PathFindingNodeCostInfoFactoryBaseInterface import PathFindingNodeCostInfoFactoryBaseInterface
 
 
 # Java interface
+@java_inherited_overloads
 class PathFindingNodeCostInfoFactoryInterface(PathFindingNodeCostInfoFactoryBaseInterface):
     
 
@@ -33,7 +35,9 @@ class PathFindingNodeCostInfoFactoryInterface(PathFindingNodeCostInfoFactoryBase
         raise NotImplementedError()
 
     def getInstance(self, *args):
-        return getattr(self, "getInstance_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("getInstance_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getInstance(*args)
     
 
     def getTotalCost(self, comingFromGeographicMapCellPosition: GeographicMapCellPosition, geographicMapCellPosition: GeographicMapCellPosition) -> int:

@@ -15,7 +15,7 @@ class OpenGLLogUtil:
         self.IMAGE: str = " Image: "
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -66,7 +66,9 @@ class OpenGLLogUtil:
             PreLogUtil.put(str(stringBuffer), self, self.LOG_ERROR)
 
     def logError(self, *args):
-        return getattr(self, "logError_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("logError_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().logError(*args)
 # from javax.microedition.khronos.opengles.GL10 import GL10
 # from javax.microedition.lcdui.Image import Image
 # from org.allbinary.image.opengles.OpenGLStrings import OpenGLStrings

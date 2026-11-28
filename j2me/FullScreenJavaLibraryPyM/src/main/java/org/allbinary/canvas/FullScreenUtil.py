@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -60,7 +61,7 @@ class FullScreenUtil:
 
     def isScreenChangeCanvas(self, fullScreenInterface: Canvas) -> bool:
         from javax.microedition.lcdui.Canvas import Canvas
-        return self.isScreenChange(fullScreenInterface.isFullScreenMode())
+        return self.isScreenChange(java_predicate(fullScreenInterface, "isFullScreenMode"))
 # from javax.microedition.lcdui.Canvas import Canvas
 # from org.allbinary.game.configuration.feature.Features import Features
 # from org.allbinary.game.configuration.feature.MainFeatureFactory import MainFeatureFactory

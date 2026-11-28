@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 
 
 class BaseGameStatistics:
@@ -23,13 +25,12 @@ class BaseGameStatistics:
         from org.allbinary.logic.math.PrimitiveLongSingleton import PrimitiveLongSingleton
         from org.allbinary.logic.math.ScaleFactorFactory import ScaleFactorFactory
         from org.allbinary.logic.string.StringUtil import StringUtil
-        from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
         from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
         from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         self.timeDelayHelper: TimeDelayHelper = TimeDelayHelper(2147483647)
         self.updateDelayHelper: TimeDelayHelper = TimeDelayHelper(2000)
-        self.totalRefreshes: int = 0
-        self.totalFrames: int = 0
+        if "totalRefreshes" not in vars(self): self.totalRefreshes: int = 0
+        if "totalFrames" not in vars(self): self.totalFrames: int = 0
         self.gameTickTimeDelayHelper: GameTickTimeDelayHelper = GameTickTimeDelayHelperFactory.getInstance()
         self.DEFAULT_SCALE_FACTOR: int = ScaleFactorFactory.getInstance().DEFAULT_SCALE_FACTOR
         self.NOT: str = "Not enough Time to Calculate"
@@ -43,7 +44,7 @@ class BaseGameStatistics:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def init(self) -> None:
@@ -71,7 +72,7 @@ class BaseGameStatistics:
     def getRefreshRate(self) -> int:
         elapsed: int = self.timeDelayHelper.getElapsed(self.gameTickTimeDelayHelper.startTime)
         if elapsed > 1:
-            time: int = ((int((int(self.totalRefreshes / (elapsed >> self.DEFAULT_SCALE_FACTOR)))) + 32768) % 65536 - 32768)
+            time: int = ((int((int(self.totalRefreshes / (int(elapsed) >> (int(self.DEFAULT_SCALE_FACTOR) & 63))))) + 32768) % 65536 - 32768)
             return time
         else:
             return 0
@@ -84,7 +85,7 @@ class BaseGameStatistics:
 
     def to2DCharArray(self) -> list[list[str]]:
         totalTime: int = self.timeDelayHelper.getElapsed(self.gameTickTimeDelayHelper.startTime)
-        totalTime = (totalTime >> self.DEFAULT_SCALE_FACTOR)
+        totalTime = (int(totalTime) >> (int(self.DEFAULT_SCALE_FACTOR) & 63))
         if totalTime > 0 and self.updateDelayHelper.isTime(self.gameTickTimeDelayHelper.startTime):
             framesPerSec: int = (int(self.totalFrames / totalTime))
             if framesPerSec < 10:

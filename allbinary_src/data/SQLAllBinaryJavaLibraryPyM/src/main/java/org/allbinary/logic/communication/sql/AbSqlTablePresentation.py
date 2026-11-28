@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.communication.sql.AbSqlBasic import AbSqlBasic
 
 
+@java_inherited_overloads
 class AbSqlTablePresentation(AbSqlBasic):
     
 

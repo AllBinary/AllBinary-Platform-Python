@@ -30,7 +30,7 @@ class GameConfigurationTextInput:
     
 
     def __init__(self, label: str, text: str) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.setText(text)
         self.setLabel(label)
         GameConfigurationTextInput.hashtable.put(self.getLabel(), self)

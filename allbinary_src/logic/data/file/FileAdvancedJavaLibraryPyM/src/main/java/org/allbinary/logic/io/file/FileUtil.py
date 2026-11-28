@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 import os
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
@@ -47,7 +49,7 @@ class FileUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -125,6 +127,7 @@ class FileUtil:
 
     # throws Exception
     def copyToCloud_j6(self, file: AbFile, path: AbPath, realPath: AbPath, cloud: str, overwriteNewer: bool, overwriteAll: bool) -> None:
+        from org.allbinary.logic.io.file.AbFile import AbFile
         from org.allbinary.logic.io.AbDataOutputStream import AbDataOutputStream
         from org.allbinary.logic.io.AbFileInputStream import AbFileInputStream
         from org.allbinary.logic.io.AbFileLocalInputStream import AbFileLocalInputStream
@@ -135,7 +138,7 @@ class FileUtil:
         try:
             outPath: AbPath = self.fixPath(file, path, realPath, cloud)
             outFile: AbFile = AbFile.createAbFileFromAbPath(outPath)
-            if not self.copyPrepare(file, outFile, overwriteNewer, overwriteAll):
+            if not (self.copyPrepare(file, outFile, overwriteNewer, overwriteAll)):
                 return
             else:
                 if LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILE):
@@ -175,7 +178,7 @@ class FileUtil:
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             stringBuffer: StringMaker = StringMaker()
-            if not self.copyPrepare(file, outFile, overwriteNewer, overwriteAll):
+            if not (self.copyPrepare(file, outFile, overwriteNewer, overwriteAll)):
                 return
             else:
                 if LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILE):
@@ -199,11 +202,13 @@ class FileUtil:
             raise e
 
     def copyToCloud(self, *args):
-        if len(args) == 4 and True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)) and not isinstance(args[2], (str, list, int, float)) and (args[3] is None or isinstance(args[3], str)):
-            return self.copyToCloud_j4_1(*args)
+        if len(args) == 4 and True and (args[0] is None or any(base.__name__ == "AbFile" for base in type(args[0]).__mro__)) and (args[1] is None or any(base.__name__ == "AbPath" for base in type(args[1]).__mro__)) and (args[2] is None or any(base.__name__ == "AbPath" for base in type(args[2]).__mro__)) and (args[3] is None or isinstance(args[3], str)):
+            return __class__.__dict__["copyToCloud_j4_1"].__get__(self, __class__)(*args)
         if len(args) == 4:
-            return self.copyToCloud_j4_2(*args)
-        return getattr(self, "copyToCloud_j" + str(len(args)))(*args)
+            return __class__.__dict__["copyToCloud_j4_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("copyToCloud_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().copyToCloud(*args)
     
 
     # throws Exception
@@ -271,7 +276,7 @@ class FileUtil:
                 stringBuffer.append(" to: ")
                 stringBuffer.append(toFile.getPath())
                 self.logUtil.putF(str(stringBuffer), FileUtil.getInstance(), "copyFile")
-            if not self.copyPrepare(fromFile, toFile, overwriteNewer, overwriteAll):
+            if not (self.copyPrepare(fromFile, toFile, overwriteNewer, overwriteAll)):
                 return
             dataOutputStream: AbDataOutputStream = DataOutputStreamFactory.getInstance().getInstanceForAbFile(toFile)
             fileInputStream: AbFileInputStream = AbFileInputStream.createFromAbFile(fromFile)
@@ -287,11 +292,14 @@ class FileUtil:
             raise e
 
     def copyFile(self, *args):
-        return getattr(self, "copyFile_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("copyFile_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().copyFile(*args)
     
 
     @staticmethod
     def getNewDirectory(fromFile: AbFile) -> str:
+        from org.allbinary.logic.io.file.FilePathData import FilePathData
         from org.allbinary.logic.io.AbIOSystem import AbIOSystem
         from org.allbinary.logic.io.path.AbPathData import AbPathData
         newDirectory: str = fromFile.getPath()
@@ -307,6 +315,8 @@ class FileUtil:
 
     # throws Exception
     def copyDirectoryPortion(self, fromDirectoryAbPath: AbPath, toDirectoryAbPath: AbPath, overwriteNewer: bool, overwriteAll: bool, current: int, total: int) -> None:
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.file.AbFile import AbFile
         from org.allbinary.globals.URLGLOBALS import URLGLOBALS
         from org.allbinary.logic.io.path.AbPath import AbPath
         from org.allbinary.logic.string.StringMaker import StringMaker
@@ -314,7 +324,7 @@ class FileUtil:
         from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         file: AbFile = AbFile.createAbFileFromAbPath(fromDirectoryAbPath)
-        if not file.isDirectory():
+        if not (java_predicate(file, "isDirectory")):
             raise Exception("Not a directory: " + str(file.getPath()))
         fileList: BasicArrayList = self.directory.search(file, True)
         size: int = fileList.size()
@@ -337,13 +347,13 @@ class FileUtil:
         nextFile: AbFile = None
         for index in range(start, end):
             nextFile = fileList.get(index)
-            if nextFile.isDirectory():
+            if java_predicate(nextFile, "isDirectory"):
                 pass
             else:
                 path: str = AbPath(nextFile.getPath(), StringUtil.getInstance().EMPTY_STRING).getPath()
-                beginIndex: int = fromDirectoryAbPath.getPath().length()
+                beginIndex: int = __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(fromDirectoryAbPath.getPath())
                 if path.indexOf(URLGLOBALS.getWebappPath()) < 0:
-                    beginIndex -= AbPath(URLGLOBALS.getWebappPath(), StringUtil.getInstance().EMPTY_STRING).getPath().length()
+                    beginIndex -= __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(AbPath(URLGLOBALS.getWebappPath(), StringUtil.getInstance().EMPTY_STRING).getPath())
                 newPath: str = str(toDirectoryAbPath.toFileSystemString()) + path.substring(beginIndex)
                 toFile: AbFile = AbFile.createAbFileFromAbPath(AbPath(newPath, StringUtil.getInstance().EMPTY_STRING))
                 self.copyFile(nextFile, toFile, overwriteNewer, overwriteAll)
@@ -351,6 +361,9 @@ class FileUtil:
 
     # throws Exception
     def copyDirectory(self, fromFile: AbFile, to: AbFile) -> None:
+        from org.allbinary.logic.io.file.FileWrapperUtil import FileWrapperUtil
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.file.AbFile import AbFile
         from org.allbinary.logic.io.path.AbPath import AbPath
         from org.allbinary.logic.io.path.AbPathData import AbPathData
         from org.allbinary.logic.string.StringMaker import StringMaker
@@ -366,7 +379,7 @@ class FileUtil:
                 self.logUtil.putF(str(stringBuffer), FileUtil.getInstance(), "copyDirectory")
             newDirectory: str = FileUtil.getNewDirectory(fromFile)
             newDirectoryAbPath: AbPath = AbPath(str(to.getPath() + AbPathData.getInstance().SEPARATOR) + newDirectory, StringUtil.getInstance().EMPTY_STRING)
-            if not self.directory.create(newDirectoryAbPath):
+            if not (self.directory.create(newDirectoryAbPath)):
                 raise Exception("Failed to create directory: " + str(newDirectoryAbPath))
             fileArray: list[AbFile] = FileWrapperUtil.wrapFiles(fromFile.listFiles())
             size: int = len(fileArray)
@@ -382,9 +395,9 @@ class FileUtil:
             file: AbFile = None
             for index in range(0, size):
                 file = fileArray[index]
-                if file.isFile():
+                if java_predicate(file, "isFile"):
                     self.copyFile(file, AbFile.createAbFilePathAndName(str(newDirectoryAbPath), file.getName()))
-                elif file.isDirectory():
+                elif java_predicate(file, "isDirectory"):
                     self.copyDirectory(file, AbFile.createAbFileFromAbPath(newDirectoryAbPath))
                 else:
                     raise Exception("File Copy Error")
@@ -403,11 +416,17 @@ class FileUtil:
     # Java overloaded method with the same parameter count: Python keeps the last definition
     def copy_j2_2(self, fromAbPath: AbPath, to: AbPath) -> bool:
         with self._lock:
-            return self._copy_j2_2_unlocked(fromAbPath, to)
+            return __class__.__dict__["_copy_j2_2_unlocked"].__get__(self, __class__)(fromAbPath, to)
 
     def _copy_j2_2_unlocked(self, fromAbPath: AbPath, to: AbPath) -> bool:
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.file.FileWrapperUtil import FileWrapperUtil
+        from org.allbinary.logic.io.file.AbFile import AbFile
+        from org.allbinary.logic.io.file.AbFile import AbFile
         from org.allbinary.logic.io.path.AbPath import AbPath
         from org.allbinary.logic.string.StringMaker import StringMaker
+        from java.io.File import File
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         COPY: str = "copy"
         try:
@@ -424,8 +443,8 @@ class FileUtil:
                 raise Exception("Cannot Copy To A Null Location")
             fromLocationFile: AbFile = AbFile.createAbFileFromAbPath(fromAbPath)
             toLocationFile: AbFile = AbFile.createAbFileFromAbPath(to)
-            if fromLocationFile.isFile():
-                if toLocationFile.isDirectory():
+            if java_predicate(fromLocationFile, "isFile"):
+                if java_predicate(toLocationFile, "isDirectory"):
                     file: AbFile = AbFile.createAbFileWithChild(toLocationFile, fromLocationFile.getName())
                     self.copyFile(fromLocationFile, file)
                     if LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILE):
@@ -447,17 +466,17 @@ class FileUtil:
                         stringBuffer.append(" to: ")
                         stringBuffer.append(toLocationFile.getPath())
                         self.logUtil.putF(str(stringBuffer), FileUtil.getInstance(), COPY)
-            elif fromLocationFile.isDirectory() and toLocationFile.isDirectory():
-                if fromAbPath.toFileSystemString().charAt(fromAbPath.toFileSystemString().length() - 1) == os.sep:
+            elif java_predicate(fromLocationFile, "isDirectory") and java_predicate(toLocationFile, "isDirectory"):
+                if fromAbPath.toFileSystemString().charAt(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(fromAbPath.toFileSystemString()) - 1) == os.sep:
                     if LogConfigTypes.LOGGING.contains(self.logConfigTypeFactory.FILE):
                         self.logUtil.putF("Copying subdirectories", FileUtil.getInstance(), COPY)
                     fileArray: list[AbFile] = FileWrapperUtil.wrapFiles(fromLocationFile.listFiles())
                     for index in range(0, len(fileArray)):
                         file: AbFile = fileArray[index]
-                        if file.isFile():
+                        if java_predicate(file, "isFile"):
                             aFile: AbFile = AbFile.createAbFileWithChild(toLocationFile, file.getName())
                             self.copyFile(file, aFile)
-                        elif file.isDirectory():
+                        elif java_predicate(file, "isDirectory"):
                             self.copyDirectory(file, toLocationFile)
                         else:
                             raise Exception("File Copy Error")
@@ -481,11 +500,13 @@ class FileUtil:
             raise e
 
     def copy(self, *args):
-        if len(args) == 2 and True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)):
-            return self.copy_j2_1(*args)
+        if len(args) == 2 and True and (args[0] is None or any(base.__name__ == "AbFileInputStream" for base in type(args[0]).__mro__)) and (args[1] is None or any(base.__name__ == "AbDataOutputStream" for base in type(args[1]).__mro__)):
+            return __class__.__dict__["copy_j2_1"].__get__(self, __class__)(*args)
         if len(args) == 2:
-            return self.copy_j2_2(*args)
-        return getattr(self, "copy_j" + str(len(args)))(*args)
+            return __class__.__dict__["copy_j2_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("copy_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().copy(*args)
     
 
     def shouldSkip(self, file: AbFile, skipFiles: list[str]) -> bool:
@@ -520,13 +541,15 @@ class FileUtil:
             StreamUtil.getInstance().close(dataOutputStream)
 
     def write(self, *args):
-        if len(args) == 2 and True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)):
-            return self.write_j2_1(*args)
-        if len(args) == 2 and True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)):
-            return self.write_j2_2(*args)
+        if len(args) == 2 and True and (args[0] is None or any(base.__name__ == "InputStream" for base in type(args[0]).__mro__)) and (args[1] is None or any(base.__name__ == "AbFile" for base in type(args[1]).__mro__)):
+            return __class__.__dict__["write_j2_1"].__get__(self, __class__)(*args)
+        if len(args) == 2 and True and (args[0] is None or any(base.__name__ == "InputStream" for base in type(args[0]).__mro__)) and (args[1] is None or any(base.__name__ == "AbDataOutputStream" for base in type(args[1]).__mro__)):
+            return __class__.__dict__["write_j2_2"].__get__(self, __class__)(*args)
         if len(args) == 2:
-            return self.write_j2_3(*args)
-        return getattr(self, "write_j" + str(len(args)))(*args)
+            return __class__.__dict__["write_j2_3"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("write_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().write(*args)
     
 
     def loadFileAsList(self, file: AbFile, max: int, byteArray1: list[int]) -> BasicArrayList:

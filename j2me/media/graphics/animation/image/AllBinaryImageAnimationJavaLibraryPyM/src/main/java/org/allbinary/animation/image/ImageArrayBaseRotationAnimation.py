@@ -15,31 +15,43 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_divide
 from org.allbinary.animation.RotationAnimation import RotationAnimation
 
 
+@java_inherited_overloads
 class ImageArrayBaseRotationAnimation(RotationAnimation):
+    def _java_defaults(self):
+        vars(self).setdefault("imageModifierUtil", None)
+        vars(self).setdefault("originalImageArray", None)
+        vars(self).setdefault("imageArray", None)
+        vars(self).setdefault("currentImage", None)
+        vars(self).setdefault("totalFrames", 0)
+        vars(self).setdefault("anchor", 0)
 
     def _init_fields(self) -> None:
-        from javax.microedition.lcdui.Image import Image
         from javax.microedition.lcdui.NullImage import NullImage
         from org.allbinary.graphics.Anchor import Anchor
         from org.allbinary.media.image.ImageModifierUtil import ImageModifierUtil
         self.imageModifierUtil: ImageModifierUtil = ImageModifierUtil.getInstanceOrCreate()
-        self.originalImageArray: list[Image] = None
+        if "originalImageArray" not in vars(self): self.originalImageArray: list[Image] = None
         self.imageArray: list[Image] = NullImage.NULL_IMAGE_ARRAY
-        self.currentImage: Image = None
-        self.totalFrames: int = 0
+        if "currentImage" not in vars(self): self.currentImage: Image = None
+        if "totalFrames" not in vars(self): self.totalFrames: int = 0
         self.anchor: int = Anchor.TOP_LEFT
     
 
     def __init__(self, originalImageArray: list[Image], angleInfo: AngleInfo, animationBehavior: AnimationBehavior) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         from org.allbinary.math.AngleInfo import AngleInfo
         from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
-        super().__init__(angleInfo, CircularIndexUtil.createInstance(360 / angleInfo.getAngleIncrementInfo().getAngleIncrement()), animationBehavior)
-        self._init_fields()
+        super().__init__(angleInfo, CircularIndexUtil.createInstance(java_divide(360, angleInfo.getAngleIncrementInfo().getAngleIncrement())
+            ), animationBehavior)
+        __class__._init_fields(self)
         self.originalImageArray = originalImageArray
         self.setImageArray(self.imageModifierUtil.getImageArray(originalImageArray))
         self.currentImage = self.imageArray[self.circularIndexUtil.getIndex()]
@@ -52,28 +64,28 @@ class ImageArrayBaseRotationAnimation(RotationAnimation):
 
     def setAlpha(self, alpha: int) -> None:
         if self.alphaP != alpha:
-            super().setAlpha(alpha)
+            java_super_call(super(), "setAlpha", alpha)
             self.imageModifierUtil.reset()
             index: int = self.circularIndexUtil.getIndex()
             self.imageModifierUtil.setAlpha(self.originalImageArray[index], self.imageArray[index], index, self.alphaP)
     
 
     def nextRotation(self) -> None:
-        super().nextRotation()
+        java_super_call(super(), "nextRotation")
         index: int = self.circularIndexUtil.getIndex()
         self.imageModifierUtil.setAlpha(self.originalImageArray[index], self.imageArray[index], index, self.alphaP)
         self.currentImage = self.imageArray[index]
     
 
     def previousRotation(self) -> None:
-        super().previousRotation()
+        java_super_call(super(), "previousRotation")
         index: int = self.circularIndexUtil.getIndex()
         self.imageModifierUtil.setAlpha(self.originalImageArray[index], self.imageArray[index], index, self.alphaP)
         self.currentImage = self.imageArray[index]
     
 
     def setFrame(self, index2: int) -> None:
-        super().setFrame(index2)
+        java_super_call(super(), "setFrame", index2)
         index: int = self.circularIndexUtil.getIndex()
         self.imageModifierUtil.setAlpha(self.originalImageArray[index], self.imageArray[index], index, self.alphaP)
         self.currentImage = self.imageArray[index]

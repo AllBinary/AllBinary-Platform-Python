@@ -15,28 +15,35 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from admin.taghelpers.Table import Table
 
 
+@java_inherited_overloads
 class PaymentHelper(Table):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("weblisketSession", None)
+        vars(self).setdefault("request", None)
+        vars(self).setdefault("value", None)
+        vars(self).setdefault("portion", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.installer.Portion import Portion
-        from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.weblisketSession: WeblisketSession = None
-        self.request: HttpServletRequest = None
-        self.value: str = None
-        self.portion: Portion = None
+        if "weblisketSession" not in vars(self): self.weblisketSession: WeblisketSession = None
+        if "request" not in vars(self): self.request: HttpServletRequest = None
+        if "value" not in vars(self): self.value: str = None
+        if "portion" not in vars(self): self.portion: Portion = None
     
 
     def __init__(self, hashMap: HashMap, pageContext: PageContext) -> None:
+        __class__._java_defaults(self)
         from java.util.HashMap import HashMap
         from org.allbinary.business.installer.Portion import Portion
         from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.request = pageContext.getRequest()
         self.weblisketSession = WeblisketSession(hashMap, pageContext)
         self.portion = Portion(hashMap)

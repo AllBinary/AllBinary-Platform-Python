@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 # from javax.swing.tree.MutableTreeNode import MutableTreeNode
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 
 
 # Java interface
+@java_inherited_overloads
 class ProfileActionScriptNodeInterface(*java_bases(DomNodeInterface, MutableTreeNode)):
     
 

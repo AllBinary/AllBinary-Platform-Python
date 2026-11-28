@@ -34,7 +34,7 @@ class AbSqlTableUtil:
         self.sqlStrings: SqlStrings = SqlStrings.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -44,7 +44,7 @@ class AbSqlTableUtil:
 
     def backupTable(self, abSqlTable: AbSqlTable) -> str:
         with self._lock:
-            return self._backupTable_unlocked(abSqlTable)
+            return __class__.__dict__["_backupTable_unlocked"].__get__(self, __class__)(abSqlTable)
 
     def _backupTable_unlocked(self, abSqlTable: AbSqlTable) -> str:
         tableName: str = abSqlTable.getTableName()
@@ -53,7 +53,7 @@ class AbSqlTableUtil:
 
     def restoreTable(self, abSqlTable: AbSqlTable, portion: Portion) -> str:
         with self._lock:
-            return self._restoreTable_unlocked(abSqlTable, portion)
+            return __class__.__dict__["_restoreTable_unlocked"].__get__(self, __class__)(abSqlTable, portion)
 
     def _restoreTable_unlocked(self, abSqlTable: AbSqlTable, portion: Portion) -> str:
         from org.allbinary.business.installer.Portion import Portion
@@ -69,6 +69,7 @@ class AbSqlTableUtil:
 # from org.allbinary.logic.string.StringUtil import StringUtil
 # from org.allbinary.string.CommonSeps import CommonSeps
 # from org.allbinary.string.CommonStrings import CommonStrings
+from org.allbinary.logic.communication.sql.SqlStrings import SqlStrings
 
 
 def _AbSqlTableUtil_instance() -> object:

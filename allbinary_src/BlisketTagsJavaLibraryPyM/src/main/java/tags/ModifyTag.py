@@ -15,10 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from tags.HelperTag import HelperTag
 
 
+@java_inherited_overloads
 class ModifyTag(HelperTag):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -26,11 +30,12 @@ class ModifyTag(HelperTag):
     
 
     def __init__(self, tagHelperFactoryInterface: TagHelperFactoryInterface) -> None:
+        __class__._java_defaults(self)
         from admin.taghelpers.TagHelperFactoryInterface import TagHelperFactoryInterface
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__(tagHelperFactoryInterface)
-        self._init_fields()
+        __class__._init_fields(self)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
             self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
     

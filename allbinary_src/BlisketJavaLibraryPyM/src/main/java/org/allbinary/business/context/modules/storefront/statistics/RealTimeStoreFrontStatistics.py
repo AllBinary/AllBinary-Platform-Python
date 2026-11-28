@@ -21,14 +21,10 @@ from org.allbinary.business.context.modules.storefront.statistics.StoreFrontStat
 class RealTimeStoreFrontStatistics(StoreFrontStatisticsInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.context.modules.storefront.statistics.advertisements.StoreFrontAdvertisementsStatisticsInterface import StoreFrontAdvertisementsStatisticsInterface
-        from org.allbinary.business.context.modules.storefront.statistics.inventory.StoreFrontInventoryStatisticsInterface import StoreFrontInventoryStatisticsInterface
-        from org.allbinary.business.context.modules.storefront.statistics.orders.history.StoreFrontOrdersHistoryStatisticsInterface import StoreFrontOrdersHistoryStatisticsInterface
-        from org.allbinary.business.context.modules.storefront.statistics.users.StoreFrontUsersStatisticsInterface import StoreFrontUsersStatisticsInterface
-        self.storeFrontAdvertisementsStatisticsInterface: StoreFrontAdvertisementsStatisticsInterface = None
-        self.storeFrontUsersStatisticsInterface: StoreFrontUsersStatisticsInterface = None
-        self.storeFrontInventoryStatisticsInterface: StoreFrontInventoryStatisticsInterface = None
-        self.storeFrontOrderHistoryStatisticsInterface: StoreFrontOrdersHistoryStatisticsInterface = None
+        if "storeFrontAdvertisementsStatisticsInterface" not in vars(self): self.storeFrontAdvertisementsStatisticsInterface: StoreFrontAdvertisementsStatisticsInterface = None
+        if "storeFrontUsersStatisticsInterface" not in vars(self): self.storeFrontUsersStatisticsInterface: StoreFrontUsersStatisticsInterface = None
+        if "storeFrontInventoryStatisticsInterface" not in vars(self): self.storeFrontInventoryStatisticsInterface: StoreFrontInventoryStatisticsInterface = None
+        if "storeFrontOrderHistoryStatisticsInterface" not in vars(self): self.storeFrontOrderHistoryStatisticsInterface: StoreFrontOrdersHistoryStatisticsInterface = None
     
 
     def __init__(self, storeFrontInterface: StoreFrontInterface) -> None:
@@ -41,7 +37,7 @@ class RealTimeStoreFrontStatistics(StoreFrontStatisticsInterface):
         from org.allbinary.business.context.modules.storefront.statistics.orders.history.StoreFrontOrdersHistoryStatisticsInterface import StoreFrontOrdersHistoryStatisticsInterface
         from org.allbinary.business.context.modules.storefront.statistics.users.StoreFrontUsersStatistics import StoreFrontUsersStatistics
         from org.allbinary.business.context.modules.storefront.statistics.users.StoreFrontUsersStatisticsInterface import StoreFrontUsersStatisticsInterface
-        self._init_fields()
+        __class__._init_fields(self)
         self.storeFrontAdvertisementsStatisticsInterface = StoreFrontAdvertisementsStatistics(storeFrontInterface)
         self.storeFrontUsersStatisticsInterface = StoreFrontUsersStatistics(storeFrontInterface)
         self.storeFrontInventoryStatisticsInterface = StoreFrontInventoryStatistics(storeFrontInterface)

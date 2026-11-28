@@ -15,15 +15,24 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import threading
 from java.lang.ClassLoader import ClassLoader
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
+@java_inherited_overloads
 class AbeClassLoader(ClassLoader):
     classes: Map = None
     PATH: str = None
     _lock = threading.RLock()
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("abCryptUtil", None)
+        vars(self).setdefault("LOAD_CLASS", None)
+        vars(self).setdefault("ENCRYPTED_EXTENSION", None)
+        vars(self).setdefault("key", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -33,13 +42,14 @@ class AbeClassLoader(ClassLoader):
         self.abCryptUtil: AbCryptUtil = AbCryptUtil.getInstance()
         self.LOAD_CLASS: str = "loadClass"
         self.ENCRYPTED_EXTENSION: str = str(AbPathData.getInstance().EXTENSION_SEP) + "abc"
-        self.key: str = None
+        if "key" not in vars(self): self.key: str = None
     
 
     def __init__(self, parent: ClassLoader, key: str) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.globals.URLGLOBALS import URLGLOBALS
         super().__init__(parent)
-        self._init_fields()
+        __class__._init_fields(self)
         self.key = key
         AbeClassLoader.PATH = str(URLGLOBALS.getWebappPath()) + "WEB-INF/classes/"
     
@@ -51,7 +61,7 @@ class AbeClassLoader(ClassLoader):
     # throws ClassNotFoundException
     def loadClass_j1(self, name: str) -> type:
         with self._lock:
-            return self._loadClass_j1_unlocked(name)
+            return __class__.__dict__["_loadClass_j1_unlocked"].__get__(self, __class__)(name)
 
     def _loadClass_j1_unlocked(self, name: str) -> type:
         return self.loadClass(name, False)
@@ -60,7 +70,7 @@ class AbeClassLoader(ClassLoader):
     # throws ClassNotFoundException
     def loadClass_j2(self, name: str, resolve: bool) -> type:
         with self._lock:
-            return self._loadClass_j2_unlocked(name, resolve)
+            return __class__.__dict__["_loadClass_j2_unlocked"].__get__(self, __class__)(name, resolve)
 
     def _loadClass_j2_unlocked(self, name: str, resolve: bool) -> type:
         from org.allbinary.logic.communication.log.LogBuffer import LogBuffer
@@ -74,7 +84,7 @@ class AbeClassLoader(ClassLoader):
             if myClass is None:
                 try:
                     loadedWith = "super.loadClass"
-                    normalClass: type = super().loadClass(name, resolve)
+                    normalClass: type = java_super_call(super(), "loadClass", name, resolve)
                     if normalClass is not None:
                         return normalClass
                 except ImportError as e:
@@ -101,7 +111,9 @@ class AbeClassLoader(ClassLoader):
             return None
 
     def loadClass(self, *args):
-        return getattr(self, "loadClass_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("loadClass_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().loadClass(*args)
     
 
     def loadClassBytesFromFile(self, name: str) -> list[int]:
@@ -136,7 +148,7 @@ class AbeClassLoader(ClassLoader):
     # throws ClassNotFoundException
     def oldLoadClass(self, name: str, resolve: bool) -> type:
         with self._lock:
-            return self._oldLoadClass_unlocked(name, resolve)
+            return __class__.__dict__["_oldLoadClass_unlocked"].__get__(self, __class__)(name, resolve)
 
     def _oldLoadClass_unlocked(self, name: str, resolve: bool) -> type:
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
@@ -147,7 +159,7 @@ class AbeClassLoader(ClassLoader):
             if myClass is None:
                 try:
                     loadedWith = "super.loadClass"
-                    normalClass: type = super().loadClass(name, resolve)
+                    normalClass: type = java_super_call(super(), "loadClass", name, resolve)
                     if normalClass is not None:
                         return normalClass
                 except ImportError as e:

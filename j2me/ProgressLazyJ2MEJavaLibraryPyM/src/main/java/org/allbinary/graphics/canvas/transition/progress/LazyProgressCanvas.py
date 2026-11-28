@@ -15,9 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
 
 
+@java_inherited_overloads
 class LazyProgressCanvas(ProgressCanvas):
     
 
@@ -27,7 +30,7 @@ class LazyProgressCanvas(ProgressCanvas):
     
 
     def start(self) -> None:
-        super().start()
+        java_super_call(super(), "start")
         self.hasPainted = False
     
 
@@ -50,7 +53,7 @@ class LazyProgressCanvas(ProgressCanvas):
 
     def endFromInitialLazyLoadingComplete(self) -> None:
         from org.allbinary.graphics.paint.NullPaintable import NullPaintable
-        super().endFromInitialLazyLoadingComplete()
+        java_super_call(super(), "endFromInitialLazyLoadingComplete")
         self.paintable = NullPaintable.getInstance()
     
 

@@ -32,7 +32,7 @@ class StoreCustomizerComponentUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -79,7 +79,9 @@ class StoreCustomizerComponentUtil:
             TransformGeneratorUtil.getInstance().generate(abeClientInformation, nextTransformInfoInterface, specifiedTransformInfoInterface)
 
     def generate(self, *args):
-        return getattr(self, "generate_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("generate_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().generate(*args)
 # from org.allbinary.util.BasicArrayList import BasicArrayList
 # from org.allbinary.util.BasicArrayListD import BasicArrayListD
 # from org.allbinary.logic.communication.log.LogUtil import LogUtil

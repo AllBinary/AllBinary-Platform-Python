@@ -15,23 +15,28 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.midlet.AllBinaryMidlet import AllBinaryMidlet
 
 
 #SWTForJ2ME
+@java_inherited_overloads
 class ProgressMidlet(AllBinaryMidlet):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("abeClientInformation", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.abeClientInformation: AbeClientInformationInterface = None
+        if "abeClientInformation" not in vars(self): self.abeClientInformation: AbeClientInformationInterface = None
     
 
     def __init__(self, clientInformationFactory: ClientInformationFactory) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.system.security.licensing.ClientInformationFactory import ClientInformationFactory
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.preInit()
         self.abeClientInformation = clientInformationFactory.getInstance()
     
@@ -42,6 +47,7 @@ class ProgressMidlet(AllBinaryMidlet):
 
     def exitProgress(self, isProgress: bool) -> None:
         from org.allbinary.midlet.MidletExitProcessorFactory import MidletExitProcessorFactory
+        from org.allbinary.midlet.ExitRunnable import ExitRunnable
         from org.allbinary.canvas.Processor import Processor
         from org.allbinary.thread.PrimaryThreadPool import PrimaryThreadPool
         from org.allbinary.thread.ThreadPool import ThreadPool

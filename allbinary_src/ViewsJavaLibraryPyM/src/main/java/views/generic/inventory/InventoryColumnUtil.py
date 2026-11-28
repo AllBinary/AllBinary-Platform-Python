@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -28,7 +29,7 @@ class InventoryColumnUtil:
         self.basicItemData: BasicItemData = BasicItemData.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -49,7 +50,7 @@ class InventoryColumnUtil:
         for index in range(0, size):
             hashMap: HashMap = vectorOfHashMaps.get(index)
             categoryName: str = hashMap.get(self.basicItemData.CATEGORY)
-            if not StringValidationUtil.getInstance().isEmpty(categoryName) and categoryName.startswith(category):
+            if not (StringValidationUtil.getInstance().isEmpty(categoryName)) and categoryName.startswith(category):
                 keywords.add(hashMap.get(column))
         return keywords
 # from java.util.HashMap import HashMap

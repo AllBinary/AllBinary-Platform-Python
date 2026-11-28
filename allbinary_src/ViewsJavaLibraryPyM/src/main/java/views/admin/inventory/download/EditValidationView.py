@@ -15,22 +15,29 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.validate.ValidationComponentInterface import ValidationComponentInterface
 from views.admin.inventory.download.DownloadableInventoryItemView import DownloadableInventoryItemView
 
 
+@java_inherited_overloads
 class EditValidationView(*java_bases(DownloadableInventoryItemView, ValidationComponentInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("downloadItemId", None)
 
     def _init_fields(self) -> None:
-        self.downloadItemId: str = None
+        if "downloadItemId" not in vars(self): self.downloadItemId: str = None
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.string.StringUtil import StringUtil
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface, StringUtil.getInstance().EMPTY_STRING)
-        self._init_fields()
+        __class__._init_fields(self)
         self.getFormData()
     
 
@@ -54,7 +61,7 @@ class EditValidationView(*java_bases(DownloadableInventoryItemView, ValidationCo
         from org.allbinary.data.tables.user.commerce.inventory.item.downloads.DownloadItemsEntity import DownloadItemsEntity
         from org.allbinary.data.tables.user.commerce.inventory.item.downloads.DownloadItemsEntityFactory import DownloadItemsEntityFactory
         from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-        if self.id is None or not StringValidationUtil.getInstance().isNumber(self.id):
+        if self.id is None or not (StringValidationUtil.getInstance().isNumber(self.id)):
             return False
         self.itemInterface = InventoryEntityFactory.getInstance().getInventoryEntityInstance().getItem(self.id)
         if self.itemInterface is None:
@@ -89,7 +96,7 @@ class EditValidationView(*java_bases(DownloadableInventoryItemView, ValidationCo
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         stringBuffer: StringMaker = StringMaker()
-        if self.id is None or not StringValidationUtil.getInstance().isNumber(self.id):
+        if self.id is None or not (StringValidationUtil.getInstance().isNumber(self.id)):
             stringBuffer.append("Id is not valid.<br />")
         if InventoryEntityFactory.getInstance().getInventoryEntityInstance().getItem(self.id) is None:
             stringBuffer.append("Item does not exist.<br />")
@@ -105,7 +112,7 @@ class EditValidationView(*java_bases(DownloadableInventoryItemView, ValidationCo
     # throws Exception
     def getTransformInfoInterface(self) -> TransformInfoInterface:
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-        return super().getTransformInfoInterface()
+        return java_super_call(super(), "getTransformInfoInterface")
 # from java.util.HashMap import HashMap
 # from org.allbinary.util.BasicArrayList import BasicArrayList
 # from org.allbinary.util.BasicArrayListD import BasicArrayListD

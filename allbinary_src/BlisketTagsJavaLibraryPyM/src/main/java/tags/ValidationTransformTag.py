@@ -15,22 +15,31 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from tags.TransformTag import TransformTag
 
 
+@java_inherited_overloads
 class ValidationTransformTag(TransformTag):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("xslFile", None)
+        vars(self).setdefault("logic", False)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.xslFile: str = None
-        self.logic: bool = None
+        if "xslFile" not in vars(self): self.xslFile: str = None
+        if "logic" not in vars(self): self.logic: bool = False
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from taghelpers.ValidatedViewHelperFactory import ValidatedViewHelperFactory
         super().__init__(ValidatedViewHelperFactory())
-        self._init_fields()
+        __class__._init_fields(self)
         self.logic = True
     
 
@@ -92,8 +101,8 @@ class ValidationTransformTag(TransformTag):
                 stringBuffer.append(request.getRequestURI())
                 self.logUtil.putF(str(stringBuffer), self, self.tagStrings.DO_START_TAG)
             self.setHelper()
-            if self.isValid():
-                super().doStartTag()
+            if java_predicate(self, "isValid"):
+                java_super_call(super(), "doStartTag")
                 if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                     stringBuffer: StringMaker = StringMaker()
                     stringBuffer.append("View File: ")
@@ -133,7 +142,7 @@ class ValidationTransformTag(TransformTag):
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
             self.logUtil.putF("Tag Ended", self, "doEndTag")
         self.logic = True
-        return super().doEndTag()
+        return java_super_call(super(), "doEndTag")
 # from java.lang.reflect.Method import Method
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
 # from javax.servlet.jsp.JspTagException import JspTagException

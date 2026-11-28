@@ -15,23 +15,27 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from admin.taghelpers.TagHelper import TagHelper
 
 
+@java_inherited_overloads
 class PaymentProcessHelper(TagHelper):
+    def _java_defaults(self):
+        vars(self).setdefault("paymentProcessorComponent", None)
 
     def _init_fields(self) -> None:
-        from views.admin.payment.PaymentProcessorComponent import PaymentProcessorComponent
-        self.paymentProcessorComponent: PaymentProcessorComponent = None
+        if "paymentProcessorComponent" not in vars(self): self.paymentProcessorComponent: PaymentProcessorComponent = None
     
 
     def __init__(self, propertiesHashMap: HashMap, pageContext: PageContext) -> None:
+        __class__._java_defaults(self)
         from java.util.HashMap import HashMap
         from org.allbinary.logic.visual.transform.info.TransformInfoHttpFactory import TransformInfoHttpFactory
         from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
         from views.admin.payment.PaymentProcessorComponent import PaymentProcessorComponent
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         transformInfoInterface: TransformInfoHttpInterface = TransformInfoHttpFactory.getInstance(propertiesHashMap, pageContext)
         self.paymentProcessorComponent = PaymentProcessorComponent(transformInfoInterface)
     

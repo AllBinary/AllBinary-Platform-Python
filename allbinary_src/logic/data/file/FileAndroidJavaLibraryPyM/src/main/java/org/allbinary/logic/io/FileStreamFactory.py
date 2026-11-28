@@ -22,7 +22,7 @@ class FileStreamFactory:
     SINGLETON: object = None
 
     def _init_fields(self) -> None:
-        self.context: object = None
+        if "context" not in vars(self): self.context: object = None
     
 
     @staticmethod
@@ -36,7 +36,7 @@ class FileStreamFactory:
 
     def __init__(self, context: Context) -> None:
         from android.content.Context import Context
-        self._init_fields()
+        __class__._init_fields(self)
         self.context = context
     
 

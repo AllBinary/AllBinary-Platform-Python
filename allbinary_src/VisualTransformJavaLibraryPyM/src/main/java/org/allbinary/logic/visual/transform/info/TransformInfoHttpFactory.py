@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 
 
 class TransformInfoHttpFactory:
@@ -41,7 +42,7 @@ class TransformInfoHttpFactory:
         logUtil: LogUtil = LogUtil.getInstance()
         try:
             weblisketSession: WeblisketSession = WeblisketSession(propertiesHashMap, pageContext)
-            if not StringValidationUtil.getInstance().isEmpty(weblisketSession.getStoreName()):
+            if not (StringValidationUtil.getInstance().isEmpty(weblisketSession.getStoreName())):
                 storeFrontInterface: StoreFrontInterface = StoreFrontFactory.getInstance(weblisketSession.getStoreName())
                 if storeFrontInterface is not None:
                     return TransformInfoHttpStore(storeFrontInterface, propertiesHashMap, pageContext)

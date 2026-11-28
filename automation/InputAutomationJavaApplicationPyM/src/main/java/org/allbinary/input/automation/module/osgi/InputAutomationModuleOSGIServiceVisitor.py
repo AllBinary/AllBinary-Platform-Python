@@ -28,7 +28,7 @@ class InputAutomationModuleOSGIServiceVisitor(OSGIServiceVisitorInterface):
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # Java overloaded method with the same parameter count: Python keeps the last definition
@@ -56,10 +56,12 @@ class InputAutomationModuleOSGIServiceVisitor(OSGIServiceVisitorInterface):
 
     def visit(self, *args):
         if len(args) == 1 and True:
-            return self.visit_j1_1(*args)
+            return __class__.__dict__["visit_j1_1"].__get__(self, __class__)(*args)
         if len(args) == 1:
-            return self.visit_j1_2(*args)
-        return getattr(self, "visit_j" + str(len(args)))(*args)
+            return __class__.__dict__["visit_j1_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("visit_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().visit(*args)
 # from bundle.input.automation.module.InputAutomationModuleService import InputAutomationModuleService
 # from org.allbinary.input.automation.InputAutomationJFrame import InputAutomationJFrame
 # from org.allbinary.input.automation.configuration.InputAutomationConfigurationUtil import InputAutomationConfigurationUtil

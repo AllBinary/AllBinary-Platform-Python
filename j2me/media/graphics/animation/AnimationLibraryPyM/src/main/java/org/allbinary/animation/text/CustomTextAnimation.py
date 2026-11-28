@@ -15,30 +15,40 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.text.TextAnimation import TextAnimation
 from org.allbinary.animation.text.TextInterface import TextInterface
 
 
+@java_inherited_overloads
 class CustomTextAnimation(*java_bases(TextAnimation, TextInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("fontDebugFactory", None)
+        vars(self).setdefault("fontSize", 0)
+        vars(self).setdefault("font", None)
+        vars(self).setdefault("lastText", None)
+        vars(self).setdefault("hasChanged", False)
+        vars(self).setdefault("textWidth", 0)
 
     def _init_fields(self) -> None:
-        from javax.microedition.lcdui.Font import Font
         from org.allbinary.graphics.font.FontDebugFactory import FontDebugFactory
         from org.allbinary.logic.string.StringUtil import StringUtil
         self.fontDebugFactory: FontDebugFactory = FontDebugFactory.getInstance()
-        self.fontSize: int = None
-        self.font: Font = None
+        if "fontSize" not in vars(self): self.fontSize: int = 0
+        if "font" not in vars(self): self.font: Font = None
         self.lastText: str = StringUtil.getInstance().INIT_STRING
         self.hasChanged: bool = True
-        self.textWidth: int = 0
+        if "textWidth" not in vars(self): self.textWidth: int = 0
     
 
     def __init__(self, text: str, fontSize: int, animationBehavior: AnimationBehavior) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.Font import Font
         from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         super().__init__(text, animationBehavior)
-        self._init_fields()
+        __class__._init_fields(self)
         self.fontSize = fontSize
         self.font = Font.getFont(Font.FACE_SYSTEM, Font.STYLE_PLAIN, fontSize)
     
@@ -49,7 +59,7 @@ class CustomTextAnimation(*java_bases(TextAnimation, TextInterface)):
         self.myFontProcessor.process(graphics)
         existingFont: Font = graphics.getFont()
         self.fontDebugFactory.setFont(self.font, graphics)
-        super().paintXYNoUpdate(graphics, x, y)
+        java_super_call(super(), "paintXYNoUpdate", graphics, x, y)
         self.fontDebugFactory.setFont(existingFont, graphics)
     
 
@@ -62,14 +72,14 @@ class CustomTextAnimation(*java_bases(TextAnimation, TextInterface)):
     
 
     def setTextWithOnMeasure(self, text: str, textChangeListener: TextChangeListener) -> None:
-        super().setTextWithOnMeasure(text, textChangeListener)
+        java_super_call(super(), "setTextWithOnMeasure", text, textChangeListener)
     
 
     def setText(self, text: str) -> None:
         if self.lastText != text:
             self.hasChanged = True
             self.lastText = text
-            super().setText(text)
+            java_super_call(super(), "setText", text)
     
 
     def getText(self) -> str:

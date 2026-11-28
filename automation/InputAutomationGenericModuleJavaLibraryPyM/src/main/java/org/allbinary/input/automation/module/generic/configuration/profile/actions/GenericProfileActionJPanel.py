@@ -15,28 +15,40 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 # from javax.swing.JPanel import JPanel
 
 
+@java_inherited_overloads
 class GenericProfileActionJPanel(JPanel):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("genericProfileAction", None)
+        vars(self).setdefault("genericProfileActionScriptJPanel", None)
+        vars(self).setdefault("blankProfileActionScriptJPanel", None)
+        vars(self).setdefault("genericProfileActionScriptJScrollPane", None)
+        vars(self).setdefault("ifJLabel", None)
+        vars(self).setdefault("newAlwaysJButton", None)
+        vars(self).setdefault("newColorAtJButton", None)
+        vars(self).setdefault("newTimeIntervalJButton", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.GenericProfileActionScriptJPanel import GenericProfileActionScriptJPanel
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.genericProfileAction: GenericProfileAction = None
-        self.genericProfileActionScriptJPanel: GenericProfileActionScriptJPanel = None
-        self.blankProfileActionScriptJPanel: JPanel = None
-        self.genericProfileActionScriptJScrollPane: JScrollPane = None
-        self.ifJLabel: JLabel = None
-        self.newAlwaysJButton: JButton = None
-        self.newColorAtJButton: JButton = None
-        self.newTimeIntervalJButton: JButton = None
+        if "genericProfileAction" not in vars(self): self.genericProfileAction: GenericProfileAction = None
+        if "genericProfileActionScriptJPanel" not in vars(self): self.genericProfileActionScriptJPanel: GenericProfileActionScriptJPanel = None
+        if "blankProfileActionScriptJPanel" not in vars(self): self.blankProfileActionScriptJPanel: JPanel = None
+        if "genericProfileActionScriptJScrollPane" not in vars(self): self.genericProfileActionScriptJScrollPane: JScrollPane = None
+        if "ifJLabel" not in vars(self): self.ifJLabel: JLabel = None
+        if "newAlwaysJButton" not in vars(self): self.newAlwaysJButton: JButton = None
+        if "newColorAtJButton" not in vars(self): self.newColorAtJButton: JButton = None
+        if "newTimeIntervalJButton" not in vars(self): self.newTimeIntervalJButton: JButton = None
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.initComponents()
     
 
@@ -91,26 +103,35 @@ class GenericProfileActionJPanel(JPanel):
         self.genericProfileActionScriptJScrollPane.setViewportView(self.blankProfileActionScriptJPanel)
         self.ifJLabel.setText("Conditions:")
         self.newColorAtJButton.setText("Color Range At")
-        self.newColorAtJButton.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.newColorAtJButtonActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN67962(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "newColorAtJButtonActionPerformed") else _java_listener_owner).newColorAtJButtonActionPerformed(evt)
+        self.newColorAtJButton.addActionListener(_JavaListenerN67962()
+            )
         self.newTimeIntervalJButton.setText("Time Interval")
-        self.newTimeIntervalJButton.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.newTimeIntervalJButtonActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN68101(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "newTimeIntervalJButtonActionPerformed") else _java_listener_owner).newTimeIntervalJButtonActionPerformed(evt)
+        self.newTimeIntervalJButton.addActionListener(_JavaListenerN68101()
+            )
         self.newAlwaysJButton.setText("Always On/Off")
-        self.newAlwaysJButton.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.newAlwaysJButtonActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN68240(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "newAlwaysJButtonActionPerformed") else _java_listener_owner).newAlwaysJButtonActionPerformed(evt)
+        self.newAlwaysJButton.addActionListener(_JavaListenerN68240()
+            )
         layout: GroupLayout = GroupLayout(self)
         self.setLayout(layout)
         layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addComponent(self.ifJLabel).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.newColorAtJButton).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.newTimeIntervalJButton).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.newAlwaysJButton).addContainerGap(61, Short.MAX_VALUE)).addComponent(self.genericProfileActionScriptJScrollPane, GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE))

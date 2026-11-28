@@ -15,16 +15,30 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.business.init.InitSql import InitSql
 
 
+@java_inherited_overloads
 class InitInfoEntity(InitSql):
+    def _java_defaults(self):
+        vars(self).setdefault("NAME", None)
+        vars(self).setdefault("NOTHING", None)
+        vars(self).setdefault("tableName", None)
+        vars(self).setdefault("tableData", None)
+        vars(self).setdefault("NOT_IN_DB", None)
+        vars(self).setdefault("METHOD_GET", None)
+        vars(self).setdefault("METHOD_IS", None)
+        vars(self).setdefault("METHOD_ADD", None)
+        vars(self).setdefault("CREATED_SUCCESS", None)
+        vars(self).setdefault("FAILED_TO_CREATE", None)
 
     def _init_fields(self) -> None:
         self.NAME: str = "InitInfoEntity"
         self.NOTHING: str = "NOTHING"
         self.tableName: str = "initdata"
-        self.tableData: str = None
+        if "tableData" not in vars(self): self.tableData: str = None
         self.NOT_IN_DB: str = "Not In DB"
         self.METHOD_GET: str = "get()"
         self.METHOD_IS: str = "is()"
@@ -34,13 +48,14 @@ class InitInfoEntity(InitSql):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.init.InitInfo import InitInfo
         from org.allbinary.business.init.InitInfo import InitInfo
         from org.allbinary.business.init.InitInfo import InitInfo
         from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
         from org.allbinary.logic.string.StringMaker import StringMaker
         super().__init__(UserDbInitInfo())
-        self._init_fields()
+        __class__._init_fields(self)
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(self.sqlStrings.CREATE_TABLE)
         stringBuffer.append(self.tableName)
@@ -135,7 +150,7 @@ class InitInfoEntity(InitSql):
     def createTable(self) -> str:
         from org.allbinary.logic.io.path.AbPathData import AbPathData
         from org.allbinary.logic.string.StringMaker import StringMaker
-        if super().createTable(self.tableData):
+        if java_super_call(super(), "createTable", self.tableData):
             return self.tableName + self.CREATED_SUCCESS
         else:
             stringBuffer: StringMaker = StringMaker()

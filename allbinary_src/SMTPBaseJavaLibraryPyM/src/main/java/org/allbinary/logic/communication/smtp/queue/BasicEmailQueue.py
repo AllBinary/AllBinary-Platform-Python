@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 from java.lang.JavaRuntimeStatic import java_bases
@@ -22,10 +23,13 @@ from org.allbinary.logic.util.queue.BasicQueue import BasicQueue
 from org.allbinary.logic.communication.smtp.queue.EmailQueueInterface import EmailQueueInterface
 
 
+@java_inherited_overloads
 class BasicEmailQueue(*java_bases(BasicQueue, EmailQueueInterface)):
     instance: BasicEmailQueue = None
     basicEmailQueue: BasicEmailQueue = None
     _lock = threading.RLock()
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -33,8 +37,9 @@ class BasicEmailQueue(*java_bases(BasicQueue, EmailQueueInterface)):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -52,7 +57,7 @@ class BasicEmailQueue(*java_bases(BasicQueue, EmailQueueInterface)):
     # throws Exception
     def offer(self, emailInterface: EmailInterface) -> bool:
         with self._lock:
-            return self._offer_unlocked(emailInterface)
+            return __class__.__dict__["_offer_unlocked"].__get__(self, __class__)(emailInterface)
 
     def _offer_unlocked(self, emailInterface: EmailInterface) -> bool:
         from org.allbinary.logic.communication.smtp.EmailInterface import EmailInterface
@@ -63,7 +68,7 @@ class BasicEmailQueue(*java_bases(BasicQueue, EmailQueueInterface)):
 
     def remove_j1(self, emailInterface: EmailInterface) -> None:
         with self._lock:
-            return self._remove_j1_unlocked(emailInterface)
+            return __class__.__dict__["_remove_j1_unlocked"].__get__(self, __class__)(emailInterface)
 
     def _remove_j1_unlocked(self, emailInterface: EmailInterface) -> None:
         from org.allbinary.logic.communication.smtp.EmailInterface import EmailInterface
@@ -72,20 +77,22 @@ class BasicEmailQueue(*java_bases(BasicQueue, EmailQueueInterface)):
 
     def remove_j0(self) -> EmailInterface:
         with self._lock:
-            return self._remove_j0_unlocked()
+            return __class__.__dict__["_remove_j0_unlocked"].__get__(self, __class__)()
 
     def _remove_j0_unlocked(self) -> EmailInterface:
         from org.allbinary.logic.communication.smtp.EmailInterface import EmailInterface
         return None
 
     def remove(self, *args):
-        return getattr(self, "remove_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("remove_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().remove(*args)
     
 
     # throws Exception
     def post(self, emailInterface: EmailInterface) -> None:
         with self._lock:
-            return self._post_unlocked(emailInterface)
+            return __class__.__dict__["_post_unlocked"].__get__(self, __class__)(emailInterface)
 
     def _post_unlocked(self, emailInterface: EmailInterface) -> None:
         from org.allbinary.logic.communication.smtp.EmailInterface import EmailInterface
@@ -97,7 +104,7 @@ class BasicEmailQueue(*java_bases(BasicQueue, EmailQueueInterface)):
     # throws Exception
     def processAllUnsent(self) -> None:
         with self._lock:
-            return self._processAllUnsent_unlocked()
+            return __class__.__dict__["_processAllUnsent_unlocked"].__get__(self, __class__)()
 
     def _processAllUnsent_unlocked(self) -> None:
         from org.allbinary.logic.communication.smtp.EmailInterface import EmailInterface
@@ -111,7 +118,7 @@ class BasicEmailQueue(*java_bases(BasicQueue, EmailQueueInterface)):
 
     def send(self, emailInterface: EmailInterface) -> bool:
         with self._lock:
-            return self._send_unlocked(emailInterface)
+            return __class__.__dict__["_send_unlocked"].__get__(self, __class__)(emailInterface)
 
     def _send_unlocked(self, emailInterface: EmailInterface) -> bool:
         from org.allbinary.logic.communication.smtp.EmailInterface import EmailInterface

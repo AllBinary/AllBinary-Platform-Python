@@ -15,29 +15,35 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.graphics.form.ItemPaintable import ItemPaintable
 
 
+@java_inherited_overloads
 class LockablePaintable(ItemPaintable):
+    def _java_defaults(self):
+        vars(self).setdefault("animation", None)
+        vars(self).setdefault("lockedIndex", 0)
 
     def _init_fields(self) -> None:
-        from org.allbinary.animation.Animation import Animation
         from org.allbinary.animation.FeaturedAnimationInterfaceFactoryInterfaceFactory import FeaturedAnimationInterfaceFactoryInterfaceFactory
         from org.allbinary.logic.system.security.licensing.LockedResources import LockedResources
         self.animation: Animation = FeaturedAnimationInterfaceFactoryInterfaceFactory.getInstance().get(LockedResources.getInstance().LOCKED_DEMO_GAME_FEATURE_RESOURCE).getInstance(0)
-        self.lockedIndex: int = None
+        if "lockedIndex" not in vars(self): self.lockedIndex: int = 0
     
 
     def __init__(self, lockedIndex: int) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.lockedIndex = lockedIndex
     
 
     def paint(self, graphics: Graphics, currentIndex: int, x: int, y: int) -> None:
         from javax.microedition.lcdui.Graphics import Graphics
         from org.allbinary.logic.system.security.licensing.LockedUtil import LockedUtil
-        if LockedUtil.getInstance().isLocked() and currentIndex >= self.getLockedIndex():
+        if java_predicate(LockedUtil.getInstance(), "isLocked") and currentIndex >= self.getLockedIndex():
             self.getAnimation().paintXY(graphics, x, y)
     
 

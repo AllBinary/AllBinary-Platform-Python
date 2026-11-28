@@ -15,12 +15,22 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.input.automation.module.game.MeteredGameObject import MeteredGameObject
 from org.allbinary.input.automation.module.game.HitPointGameObjectInterface import HitPointGameObjectInterface
 
 
+@java_inherited_overloads
 class HitPointGameObject(*java_bases(MeteredGameObject, HitPointGameObjectInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("damaged", False)
+        vars(self).setdefault("closeDeath", False)
+        vars(self).setdefault("HP_LABEL", None)
+        vars(self).setdefault("IS_DAMAGED_LABEL", None)
+        vars(self).setdefault("IS_CLOSE_DEATH_LABEL", None)
 
     def _init_fields(self) -> None:
         self.damaged: bool = False
@@ -31,8 +41,9 @@ class HitPointGameObject(*java_bases(MeteredGameObject, HitPointGameObjectInterf
     
 
     def __init__(self, bufferedImage: list[BufferedImage], minX: int, maxX: int, y: int) -> None:
+        __class__._java_defaults(self)
         super().__init__(bufferedImage, minX, maxX, y)
-        self._init_fields()
+        __class__._init_fields(self)
         if float(self.getRatios()[len(bufferedImage) - 1]) < 1.0:
             self.setDamaged(True)
         else:
@@ -72,13 +83,13 @@ class HitPointGameObject(*java_bases(MeteredGameObject, HitPointGameObjectInterf
         commonSeps: CommonSeps = CommonSeps.getInstance()
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(self.HP_LABEL)
-        stringBuffer.append(str(super()))
+        stringBuffer.append(java_super_call(super(), "toString"))
         stringBuffer.append(commonSeps.NEW_LINE)
         stringBuffer.append(self.IS_DAMAGED_LABEL)
-        stringBuffer.appendboolean(self.isDamaged())
+        stringBuffer.appendboolean(java_predicate(self, "isDamaged"))
         stringBuffer.append(commonSeps.NEW_LINE)
         stringBuffer.append(self.IS_CLOSE_DEATH_LABEL)
-        stringBuffer.appendboolean(self.isCloseDeath())
+        stringBuffer.appendboolean(java_predicate(self, "isCloseDeath"))
         return str(stringBuffer)
 
     def __str__(self) -> str:

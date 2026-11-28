@@ -15,12 +15,19 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.communication.sql.AbSqlBean import AbSqlBean
 from org.allbinary.data.tables.staticpages.StaticPagesEntityInterface import StaticPagesEntityInterface
 
 
+@java_inherited_overloads
 class StaticPagesEntity(*java_bases(AbSqlBean, StaticPagesEntityInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("basicItemData", None)
+        vars(self).setdefault("TABLENAME", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
@@ -31,9 +38,10 @@ class StaticPagesEntity(*java_bases(AbSqlBean, StaticPagesEntityInterface)):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.init.db.StaticPagesDbInitInfo import StaticPagesDbInitInfo
         super().__init__(StaticPagesDbInitInfo())
-        self._init_fields()
+        __class__._init_fields(self)
         self.setTableName(self.TABLENAME)
     
 
@@ -42,7 +50,7 @@ class StaticPagesEntity(*java_bases(AbSqlBean, StaticPagesEntityInterface)):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            super().insert(values)
+            java_super_call(super(), "insert", values)
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, self.INSERT)
         except Exception as e:
@@ -58,22 +66,22 @@ class StaticPagesEntity(*java_bases(AbSqlBean, StaticPagesEntityInterface)):
         whereHashMap: HashMap = StdUtil.getInstance().createHashMap()
         whereHashMap.put(StoreFrontData.getInstance().NAME, store)
         whereHashMap.put(self.basicItemData.KEYWORDS, keywords)
-        file: str = super().getField(whereHashMap, SearchData.PAGE)
+        file: str = java_super_call(super(), "getField", whereHashMap, SearchData.PAGE)
         return file
     
 
     def delete(self, keywords: str) -> None:
-        super().deleteWhere(self.basicItemData.KEYWORDS, keywords)
+        java_super_call(super(), "deleteWhere", self.basicItemData.KEYWORDS, keywords)
     
 
     def dropTable(self) -> str:
-        returnStr: str = super().dropTable()
+        returnStr: str = java_super_call(super(), "dropTable")
         return returnStr
     
 
     def update(self, updatedValues: HashMap) -> None:
         from java.util.HashMap import HashMap
-        super().updateWhere(self.basicItemData.KEYWORDS, updatedValues.get(self.basicItemData.KEYWORDS), updatedValues)
+        java_super_call(super(), "updateWhere", self.basicItemData.KEYWORDS, updatedValues.get(self.basicItemData.KEYWORDS), updatedValues)
     
 
     def createTableStatement(self) -> str:
@@ -87,7 +95,7 @@ class StaticPagesEntity(*java_bases(AbSqlBean, StaticPagesEntityInterface)):
     
 
     def createTable(self) -> str:
-        return super().createTable(self.createTableStatement())
+        return java_super_call(super(), "createTable", self.createTableStatement())
 # from java.util.HashMap import HashMap
 # from org.allbinary.util.BasicArrayList import BasicArrayList
 # from org.allbinary.util.BasicArrayListD import BasicArrayListD

@@ -15,30 +15,47 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 # from javax.swing.JPanel import JPanel
 
 
+@java_inherited_overloads
 class PropertiesJPanel(JPanel):
+    def _java_defaults(self):
+        vars(self).setdefault("rotateJButton", None)
+        vars(self).setdefault("copyVerticalJButton", None)
+        vars(self).setdefault("leftJButton", None)
+        vars(self).setdefault("rotateJPanel", None)
+        vars(self).setdefault("angleJTextField", None)
+        vars(self).setdefault("workAreaPropertiesJPanel", None)
+        vars(self).setdefault("modifierJPanel", None)
+        vars(self).setdefault("upJButton", None)
+        vars(self).setdefault("jPanel8", None)
+        vars(self).setdefault("downJButton", None)
+        vars(self).setdefault("jPanel7", None)
+        vars(self).setdefault("rightJButton", None)
+        vars(self).setdefault("copyHorizontalJButton", None)
 
     def _init_fields(self) -> None:
-        self.rotateJButton: JButton = None
-        self.copyVerticalJButton: JButton = None
-        self.leftJButton: JButton = None
-        self.rotateJPanel: JPanel = None
-        self.angleJTextField: JTextField = None
-        self.workAreaPropertiesJPanel: JPanel = None
-        self.modifierJPanel: JPanel = None
-        self.upJButton: JButton = None
-        self.jPanel8: JPanel = None
-        self.downJButton: JButton = None
-        self.jPanel7: JPanel = None
-        self.rightJButton: JButton = None
-        self.copyHorizontalJButton: JButton = None
+        if "rotateJButton" not in vars(self): self.rotateJButton: JButton = None
+        if "copyVerticalJButton" not in vars(self): self.copyVerticalJButton: JButton = None
+        if "leftJButton" not in vars(self): self.leftJButton: JButton = None
+        if "rotateJPanel" not in vars(self): self.rotateJPanel: JPanel = None
+        if "angleJTextField" not in vars(self): self.angleJTextField: JTextField = None
+        if "workAreaPropertiesJPanel" not in vars(self): self.workAreaPropertiesJPanel: JPanel = None
+        if "modifierJPanel" not in vars(self): self.modifierJPanel: JPanel = None
+        if "upJButton" not in vars(self): self.upJButton: JButton = None
+        if "jPanel8" not in vars(self): self.jPanel8: JPanel = None
+        if "downJButton" not in vars(self): self.downJButton: JButton = None
+        if "jPanel7" not in vars(self): self.jPanel7: JPanel = None
+        if "rightJButton" not in vars(self): self.rightJButton: JButton = None
+        if "copyHorizontalJButton" not in vars(self): self.copyHorizontalJButton: JButton = None
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.initComponents()
     
 

@@ -15,21 +15,26 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.graphics.paint.Paintable import Paintable
 
 
+@java_inherited_overloads
 class SWTBlackPaintable(Paintable):
+    def _java_defaults(self):
+        vars(self).setdefault("basicSetColorUtil", None)
+        vars(self).setdefault("BLACK", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         from org.allbinary.graphics.color.BasicColorSetUtil import BasicColorSetUtil
         self.basicSetColorUtil: BasicColorSetUtil = BasicColorSetUtil.getInstance()
         self.BLACK: BasicColor = BasicColorFactory.getInstance().BLACK
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def paint(self, graphics: Graphics) -> None:

@@ -42,7 +42,7 @@ class InventoryItemViewParentTagHelper:
                 stringBuffer: StringMaker = StringMaker()
                 stringBuffer.append("Must have ")
                 stringBuffer.append("InventoryItemView and not: ")
-                stringBuffer.append(type(inventoryTag.getHelper()).__module__ + "." + type(inventoryTag.getHelper()).__qualname__)
+                stringBuffer.append(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(inventoryTag.getHelper())))
                 raise Exception(str(stringBuffer))
             return viewObject
         else:
@@ -64,7 +64,7 @@ class InventoryItemViewParentTagHelper:
                 stringBuffer: StringMaker = StringMaker()
                 stringBuffer.append("Must have ")
                 stringBuffer.append("DownloadableInventoryItemView and not: ")
-                stringBuffer.append(type(inventoryTag.getHelper()).__module__ + "." + type(inventoryTag.getHelper()).__qualname__)
+                stringBuffer.append(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(inventoryTag.getHelper())))
                 raise Exception(str(stringBuffer))
             return viewObject
         else:
@@ -88,7 +88,7 @@ class InventoryItemViewParentTagHelper:
                 stringBuffer: StringMaker = StringMaker()
                 stringBuffer.append("Must have ")
                 stringBuffer.append("specific TYPE_ID and not: ")
-                stringBuffer.append(type(inventoryTag.getHelper()).__module__ + "." + type(inventoryTag.getHelper()).__qualname__)
+                stringBuffer.append(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(inventoryTag.getHelper())))
                 raise Exception(str(stringBuffer))
             return viewObject
         else:
@@ -99,12 +99,12 @@ class InventoryItemViewParentTagHelper:
     def checkForValidationViewHelper(self, helperObject: object) -> None:
         from org.allbinary.logic.string.StringMaker import StringMaker
         from taghelpers.ValidationViewHelper import ValidationViewHelper
-        if not isinstance(helperObject, ValidationViewHelper):
+        if not (isinstance(helperObject, ValidationViewHelper)):
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.append("Must have ")
             stringBuffer.append("ValidationViewHelper")
             stringBuffer.append("and not: ")
-            stringBuffer.append(type(helperObject).__module__ + "." + type(helperObject).__qualname__)
+            stringBuffer.append(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(helperObject)))
             raise Exception(str(stringBuffer))
 # from org.allbinary.logic.communication.http.request.RequestMapInterface import RequestMapInterface
 # from org.allbinary.logic.string.StringMaker import StringMaker

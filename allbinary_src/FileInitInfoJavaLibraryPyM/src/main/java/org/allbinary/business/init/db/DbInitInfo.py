@@ -15,10 +15,22 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
 
 
+@java_inherited_overloads
 class DbInitInfo(DbConnectionInfo):
+    def _java_defaults(self):
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("directory", None)
+        vars(self).setdefault("httpData", None)
+        vars(self).setdefault("GET_URL", None)
+        vars(self).setdefault("PACKAGE", None)
+        vars(self).setdefault("initFileName", None)
+        vars(self).setdefault("hasRead", False)
 
     def _init_fields(self) -> None:
         from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
@@ -30,13 +42,14 @@ class DbInitInfo(DbConnectionInfo):
         self.httpData: HttpData = HttpData.getInstance()
         self.GET_URL: str = "getUrl"
         self.PACKAGE: str = FREEBLISKET_PATH_GLOBALS.getInstance().DBINITPATH
-        self.initFileName: str = None
+        if "initFileName" not in vars(self): self.initFileName: str = None
         self.hasRead: bool = False
     
 
     def __init__(self, initFileName: str, read: bool) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.initFileName = initFileName
         if read:
             self.updateIfNeeded()
@@ -48,7 +61,7 @@ class DbInitInfo(DbConnectionInfo):
         from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-        url: str = super().getUrl()
+        url: str = java_super_call(super(), "getUrl")
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PRELOADER):
             PreLogUtil.put(str(self.httpData.URL_LABEL) + url, self, self.GET_URL)
         return url
@@ -115,7 +128,7 @@ class DbInitInfo(DbConnectionInfo):
         FILEABPATH: AbPath = AbPath(str(URLGLOBALS.getWebappPath()) + self.PACKAGE, self.initFileName)
         try:
             file: AbFile = AbFile.createAbFileFromAbPath(FILEABPATH)
-            if file.isFile():
+            if java_predicate(file, "isFile"):
                 iFile: AbFileInputStream = AbFileInputStream.createFromAbFile(file)
                 iData: AbDataInputStream = AbDataInputStream(iFile)
                 try:
@@ -154,7 +167,7 @@ class DbInitInfo(DbConnectionInfo):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            if not self.hasRead:
+            if not (self.hasRead):
                 self.hasRead = True
                 self.load()
         except Exception as e:
@@ -168,8 +181,8 @@ class DbInitInfo(DbConnectionInfo):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         self.updateIfNeeded()
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PRELOADER):
-            PreLogUtil.put("Name: " + super().getName(), self, "getName")
-        return super().getName()
+            PreLogUtil.put("Name: " + java_super_call(super(), "getName"), self, "getName")
+        return java_super_call(super(), "getName")
     
 
     def getUserName(self) -> str:
@@ -178,28 +191,28 @@ class DbInitInfo(DbConnectionInfo):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         self.updateIfNeeded()
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PRELOADER):
-            PreLogUtil.put("Name: " + str(super().getUserName()), self, "getUserName")
-        return super().getUserName()
+            PreLogUtil.put("Name: " + str(java_super_call(super(), "getUserName")), self, "getUserName")
+        return java_super_call(super(), "getUserName")
     
 
     def getPassword(self) -> str:
         self.updateIfNeeded()
-        return super().getPassword()
+        return java_super_call(super(), "getPassword")
     
 
     def getSchema(self) -> str:
         self.updateIfNeeded()
-        return super().getSchema()
+        return java_super_call(super(), "getSchema")
     
 
     def getServer(self) -> str:
         self.updateIfNeeded()
-        return super().getServer()
+        return java_super_call(super(), "getServer")
     
 
     def getPort(self) -> str:
         self.updateIfNeeded()
-        return super().getPort()
+        return java_super_call(super(), "getPort")
 # from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
 # from org.allbinary.globals.URLGLOBALS import URLGLOBALS
 # from org.allbinary.logic.communication.http.HttpData import HttpData

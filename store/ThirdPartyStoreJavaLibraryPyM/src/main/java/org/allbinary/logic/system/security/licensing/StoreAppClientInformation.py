@@ -15,20 +15,25 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.thirdparty.store.LongArrayIdentifierInterface import LongArrayIdentifierInterface
 from org.allbinary.logic.system.security.licensing.AbeClientInformation import AbeClientInformation
 
 
+@java_inherited_overloads
 class StoreAppClientInformation(*java_bases(AbeClientInformation, LongArrayIdentifierInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("longArrayIdentifier", None)
 
     def _init_fields(self) -> None:
-        self.longArrayIdentifier: list[int] = None
+        if "longArrayIdentifier" not in vars(self): self.longArrayIdentifier: list[int] = None
     
 
     def __init__(self, name: str, version: str, specialName: str, shortName: str, longArrayIdentifier: list[int]) -> None:
+        __class__._java_defaults(self)
         super().__init__(name, version, specialName, shortName)
-        self._init_fields()
+        __class__._init_fields(self)
         self.longArrayIdentifier = longArrayIdentifier
     
 

@@ -29,7 +29,7 @@ class PrimitiveLongSingleton:
         self.ZERO: list[str] = [self.NUMBER_CHAR_ARRAY[0]]
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

@@ -15,21 +15,27 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.thread.ABRunnable import ABRunnable
 
 
+@java_inherited_overloads
 class DemoGameStartupRunnable(ABRunnable):
     TYPE: int = 4
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("demoCanvas", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.demoCanvas: DemoCanvas = None
+        if "demoCanvas" not in vars(self): self.demoCanvas: DemoCanvas = None
     
 
     def __init__(self, demoCanvas: DemoCanvas) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.demoCanvas = demoCanvas
     
 

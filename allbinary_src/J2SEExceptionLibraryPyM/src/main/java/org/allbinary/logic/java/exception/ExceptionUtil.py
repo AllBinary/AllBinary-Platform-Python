@@ -34,15 +34,16 @@ class ExceptionUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getStackTrace(self, e: BaseException) -> str:
+        from java.io.ByteArrayOutputStream import ByteArrayOutputStream
         from java.io.PrintStream import PrintStream
         if e is not None:
             byteArrayOutputStream: ByteArrayOutputStream = ByteArrayOutputStream()
             printStream: PrintStream = PrintStream(byteArrayOutputStream)
-            e.printStackTrace(printStream)
+            printStream.print("".join(traceback.format_exception(e)))
             output: str = str(byteArrayOutputStream)
             return str(output)
         return self.NONE

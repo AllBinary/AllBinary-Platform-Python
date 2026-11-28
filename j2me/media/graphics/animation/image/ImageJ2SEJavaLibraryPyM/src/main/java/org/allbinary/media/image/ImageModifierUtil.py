@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -26,7 +27,7 @@ class ImageModifierUtil:
         self.colorArray: list[int] = [0] * (1)
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -63,7 +64,7 @@ class ImageModifierUtil:
                 gx = colorModel.getGreen(dataElements)
                 bx = colorModel.getBlue(dataElements)
                 if rx != 0 or gx != 0 or bx != 0:
-                    newBufferedImage.setRGB(index, index2, (ax << 24) | (r << 16) | (g << 8) | (b))
+                    newBufferedImage.setRGB(index, index2, (((((ax) << ((24) & 31)) + 0x80000000) % 0x100000000 - 0x80000000)) | (((((r) << ((16) & 31)) + 0x80000000) % 0x100000000 - 0x80000000)) | (((((g) << ((8) & 31)) + 0x80000000) % 0x100000000 - 0x80000000)) | (b))
     
 
     def changeColor(self, unusedOriginalImage: Image, image: Image, imageIndex: int, basicColor: BasicColor) -> None:
@@ -93,7 +94,7 @@ class ImageModifierUtil:
                 rx = int(rx * r)
                 gx = int(gx * g)
                 bx = int(bx * b)
-                newBufferedImage.setRGB(index, index2, (ax << 24) | (rx << 16) | (gx << 8) | (bx))
+                newBufferedImage.setRGB(index, index2, (((((ax) << ((24) & 31)) + 0x80000000) % 0x100000000 - 0x80000000)) | (((((rx) << ((16) & 31)) + 0x80000000) % 0x100000000 - 0x80000000)) | (((((gx) << ((8) & 31)) + 0x80000000) % 0x100000000 - 0x80000000)) | (bx))
     
 
     def setAlpha(self, unusedOriginalImage: Image, image: Image, imageIndex: int, alphaInt: int) -> None:

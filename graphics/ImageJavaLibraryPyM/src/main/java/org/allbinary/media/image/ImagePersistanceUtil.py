@@ -7,6 +7,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -20,7 +21,7 @@ class ImagePersistanceUtil:
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -46,17 +47,19 @@ class ImagePersistanceUtil:
 
     # Java overloaded method with the same parameter count: Python keeps the last definition
     def saveWithImageIO_j2_1(self, filePath: str, bufferedImage: BufferedImage) -> None:
+        from java.io.File import File
         self.saveWithImageIO(File(filePath), bufferedImage)
     
 
     # Java overloaded method with the same parameter count: Python keeps the last definition
     def saveWithImageIO_j2_2(self, file: File, bufferedImage: BufferedImage) -> None:
+        from java.io.File import File
         from java.util.Iterator import Iterator
         writer: ImageWriter = None
         ios: ImageOutputStream = None
         try:
             iter: Iterator = ImageIO.getImageWritersByFormatName("jpeg")
-            if not iter.hasNext():
+            if not (java_predicate(iter, "hasNext")):
                 self.logUtil.putF("Unable to save image to jpeg file type.", self, self.commonStrings.SAVE)
                 return
             writer = iter.next()
@@ -85,11 +88,13 @@ class ImagePersistanceUtil:
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.SAVE, e2)
 
     def saveWithImageIO(self, *args):
-        if len(args) == 2 and True and (args[0] is None or isinstance(args[0], str)) and not isinstance(args[1], (str, list, int, float)):
-            return self.saveWithImageIO_j2_1(*args)
+        if len(args) == 2 and True and (args[0] is None or isinstance(args[0], str)) and (args[1] is None or any(base.__name__ == "BufferedImage" for base in type(args[1]).__mro__)):
+            return __class__.__dict__["saveWithImageIO_j2_1"].__get__(self, __class__)(*args)
         if len(args) == 2:
-            return self.saveWithImageIO_j2_2(*args)
-        return getattr(self, "saveWithImageIO_j" + str(len(args)))(*args)
+            return __class__.__dict__["saveWithImageIO_j2_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("saveWithImageIO_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().saveWithImageIO(*args)
 # from java.awt.image.BufferedImage import BufferedImage
 # from java.io.File import File
 # from java.io.IOException import IOException

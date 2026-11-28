@@ -15,9 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.util.EventObject import EventObject
 
 
+@java_inherited_overloads
 class MyCanvasEvent(EventObject):
     
 
@@ -26,11 +29,11 @@ class MyCanvasEvent(EventObject):
     
 
     def getSource(self) -> object:
-        return super().getSource()
+        return java_super_call(super(), "getSource")
     
 
     def toString(self) -> str:
-        return str(super())
+        return java_super_call(super(), "toString")
 
     def __str__(self) -> str:
         return self.toString()

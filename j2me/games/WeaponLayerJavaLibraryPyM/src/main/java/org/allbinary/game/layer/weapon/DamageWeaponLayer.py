@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.layer.weapon.WeaponLayer import WeaponLayer
 
 
+@java_inherited_overloads
 class DamageWeaponLayer(WeaponLayer):
     
 

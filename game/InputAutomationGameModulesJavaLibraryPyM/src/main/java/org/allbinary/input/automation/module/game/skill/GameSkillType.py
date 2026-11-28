@@ -27,11 +27,11 @@ class GameSkillType:
 
     def _init_fields(self) -> None:
         self.SPELL_GAME_SKILL_TYPE: str = "SpellGameSkillType: "
-        self.name: str = None
+        if "name" not in vars(self): self.name: str = None
     
 
     def __init__(self, name: str) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.setName(name)
     
 

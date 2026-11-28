@@ -15,12 +15,31 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from org.allbinary.logic.communication.sql.AbSqlColumn import AbSqlColumn
 
 
+@java_inherited_overloads
 class AbSqlRow(AbSqlColumn):
     _lock = threading.RLock()
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("EQUAL_QUOTE", None)
+        vars(self).setdefault("ESCAPE_QUOTES", None)
+        vars(self).setdefault("GET_ROW", None)
+        vars(self).setdefault("METHOD_GET_ROW", None)
+        vars(self).setdefault("METHOD_GET_ROWS", None)
+        vars(self).setdefault("METHOD_GET_ALL_ROWS", None)
+        vars(self).setdefault("METHOD_UPDATE_WHERE", None)
+        vars(self).setdefault("METHOD_GET_ROWS_WHERE_BETWEEN", None)
+        vars(self).setdefault("METHOD_DELETE_WHERE", None)
+        vars(self).setdefault("ROW_VALUE_LABEL", None)
+        vars(self).setdefault("ROW_VALUES_LABEL", None)
+        vars(self).setdefault("NO_RESULTS_IN_RESULT_SET", None)
+        vars(self).setdefault("COLUMN_NAME_LABEL", None)
+        vars(self).setdefault("INSERT_END", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -42,14 +61,15 @@ class AbSqlRow(AbSqlColumn):
     
 
     def __init__(self, databaseConnectionInfoInterface: DbConnectionInfo) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
         super().__init__(databaseConnectionInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getValue(self, value: str) -> str:
         with self._lock:
-            return self._getValue_unlocked(value)
+            return __class__.__dict__["_getValue_unlocked"].__get__(self, __class__)(value)
 
     def _getValue_unlocked(self, value: str) -> str:
         from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
@@ -61,7 +81,7 @@ class AbSqlRow(AbSqlColumn):
 
     def updateWhere_j3(self, key: str, value: str, updatedKeyValuePairs: HashMap) -> None:
         with self._lock:
-            return self._updateWhere_j3_unlocked(key, value, updatedKeyValuePairs)
+            return __class__.__dict__["_updateWhere_j3_unlocked"].__get__(self, __class__)(key, value, updatedKeyValuePairs)
 
     def _updateWhere_j3_unlocked(self, key: str, value: str, updatedKeyValuePairs: HashMap) -> None:
         from java.util.HashMap import HashMap
@@ -107,7 +127,7 @@ class AbSqlRow(AbSqlColumn):
     # throws Exception
     def updateWhere_j2(self, whereKeyValuePairs: HashMap, updatedKeyValuePairs: HashMap) -> None:
         with self._lock:
-            return self._updateWhere_j2_unlocked(whereKeyValuePairs, updatedKeyValuePairs)
+            return __class__.__dict__["_updateWhere_j2_unlocked"].__get__(self, __class__)(whereKeyValuePairs, updatedKeyValuePairs)
 
     def _updateWhere_j2_unlocked(self, whereKeyValuePairs: HashMap, updatedKeyValuePairs: HashMap) -> None:
         from java.util.HashMap import HashMap
@@ -163,12 +183,14 @@ class AbSqlRow(AbSqlColumn):
             raise e
 
     def updateWhere(self, *args):
-        return getattr(self, "updateWhere_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("updateWhere_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().updateWhere(*args)
     
 
     def deleteWhere_j2(self, key: str, value: str) -> None:
         with self._lock:
-            return self._deleteWhere_j2_unlocked(key, value)
+            return __class__.__dict__["_deleteWhere_j2_unlocked"].__get__(self, __class__)(key, value)
 
     def _deleteWhere_j2_unlocked(self, key: str, value: str) -> None:
         from org.allbinary.logic.string.StringMaker import StringMaker
@@ -195,7 +217,7 @@ class AbSqlRow(AbSqlColumn):
 
     def deleteWhere_j1(self, keysAndValues: HashMap) -> None:
         with self._lock:
-            return self._deleteWhere_j1_unlocked(keysAndValues)
+            return __class__.__dict__["_deleteWhere_j1_unlocked"].__get__(self, __class__)(keysAndValues)
 
     def _deleteWhere_j1_unlocked(self, keysAndValues: HashMap) -> None:
         from java.util.HashMap import HashMap
@@ -230,7 +252,9 @@ class AbSqlRow(AbSqlColumn):
                 self.logUtil.put(str(self.FAILED_SQL_STATEMENT) + str(stringBuffer), self, self.METHOD_DELETE_WHERE, e)
 
     def deleteWhere(self, *args):
-        return getattr(self, "deleteWhere_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("deleteWhere_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().deleteWhere(*args)
     
 
     def insert(self, values: BasicArrayList) -> None:
@@ -367,7 +391,9 @@ class AbSqlRow(AbSqlColumn):
             return None
 
     def getRows(self, *args):
-        return getattr(self, "getRows_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("getRows_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getRows(*args)
     
 
     def getAllRows(self) -> BasicArrayList:
@@ -518,7 +544,9 @@ class AbSqlRow(AbSqlColumn):
             return None
 
     def getRowsWhereBetween(self, *args):
-        return getattr(self, "getRowsWhereBetween_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("getRowsWhereBetween_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getRowsWhereBetween(*args)
 # from java.sql.ResultSet import ResultSet
 # from java.sql.ResultSetMetaData import ResultSetMetaData
 # from java.util.HashMap import HashMap

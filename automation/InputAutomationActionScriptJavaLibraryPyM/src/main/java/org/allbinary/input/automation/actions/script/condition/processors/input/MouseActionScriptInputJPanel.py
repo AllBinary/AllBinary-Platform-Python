@@ -15,42 +15,67 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 # from javax.swing.JPanel import JPanel
 
 
+@java_inherited_overloads
 class MouseActionScriptInputJPanel(JPanel):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("mouseActionScriptInputInterface", None)
+        vars(self).setdefault("button1JCheckBox", None)
+        vars(self).setdefault("button2JCheckBox", None)
+        vars(self).setdefault("inputAutomationTypeJComboBox", None)
+        vars(self).setdefault("inputTypeJLabel", None)
+        vars(self).setdefault("jLabel1", None)
+        vars(self).setdefault("jLabel2", None)
+        vars(self).setdefault("jLabel3", None)
+        vars(self).setdefault("jLabel4", None)
+        vars(self).setdefault("jLabel5", None)
+        vars(self).setdefault("jLabel6", None)
+        vars(self).setdefault("mouseActionJButton", None)
+        vars(self).setdefault("mouseActionJDialog", None)
+        vars(self).setdefault("mouseDelayJTextField", None)
+        vars(self).setdefault("mouseXJTextField", None)
+        vars(self).setdefault("mouseYJTextField", None)
+        vars(self).setdefault("okJButton", None)
+        vars(self).setdefault("titleJLabel", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.mouseActionScriptInputInterface: MouseActionScriptInputInterface = None
-        self.button1JCheckBox: JCheckBox = None
-        self.button2JCheckBox: JCheckBox = None
-        self.inputAutomationTypeJComboBox: JComboBox = None
-        self.inputTypeJLabel: JLabel = None
-        self.jLabel1: JLabel = None
-        self.jLabel2: JLabel = None
-        self.jLabel3: JLabel = None
-        self.jLabel4: JLabel = None
-        self.jLabel5: JLabel = None
-        self.jLabel6: JLabel = None
-        self.mouseActionJButton: JButton = None
-        self.mouseActionJDialog: JDialog = None
-        self.mouseDelayJTextField: JTextField = None
-        self.mouseXJTextField: JTextField = None
-        self.mouseYJTextField: JTextField = None
-        self.okJButton: JButton = None
-        self.titleJLabel: JLabel = None
+        if "mouseActionScriptInputInterface" not in vars(self): self.mouseActionScriptInputInterface: MouseActionScriptInputInterface = None
+        if "button1JCheckBox" not in vars(self): self.button1JCheckBox: JCheckBox = None
+        if "button2JCheckBox" not in vars(self): self.button2JCheckBox: JCheckBox = None
+        if "inputAutomationTypeJComboBox" not in vars(self): self.inputAutomationTypeJComboBox: JComboBox = None
+        if "inputTypeJLabel" not in vars(self): self.inputTypeJLabel: JLabel = None
+        if "jLabel1" not in vars(self): self.jLabel1: JLabel = None
+        if "jLabel2" not in vars(self): self.jLabel2: JLabel = None
+        if "jLabel3" not in vars(self): self.jLabel3: JLabel = None
+        if "jLabel4" not in vars(self): self.jLabel4: JLabel = None
+        if "jLabel5" not in vars(self): self.jLabel5: JLabel = None
+        if "jLabel6" not in vars(self): self.jLabel6: JLabel = None
+        if "mouseActionJButton" not in vars(self): self.mouseActionJButton: JButton = None
+        if "mouseActionJDialog" not in vars(self): self.mouseActionJDialog: JDialog = None
+        if "mouseDelayJTextField" not in vars(self): self.mouseDelayJTextField: JTextField = None
+        if "mouseXJTextField" not in vars(self): self.mouseXJTextField: JTextField = None
+        if "mouseYJTextField" not in vars(self): self.mouseYJTextField: JTextField = None
+        if "okJButton" not in vars(self): self.okJButton: JButton = None
+        if "titleJLabel" not in vars(self): self.titleJLabel: JLabel = None
     
 
     def __init__(self, mouseActionScriptInputInterface: MouseActionScriptInputInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.input.automation.robot.InputRobot import InputRobot
         from org.allbinary.input.automation.robot.TempInputRobotNames import TempInputRobotNames
         from org.allbinary.string.CommonLabels import CommonLabels
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.logUtil.putF(CommonLabels.getInstance().START + mouseActionScriptInputInterface, self, self.commonStrings.CONSTRUCTOR)
         self.initComponents()
         self.mouseActionScriptInputInterface = mouseActionScriptInputInterface
@@ -85,7 +110,7 @@ class MouseActionScriptInputJPanel(JPanel):
         from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         comboBoxModel: ComboBoxModel = self.inputAutomationTypeJComboBox.getModel()
         selectedItem: str = comboBoxModel.getSelectedItem()
-        if not StringValidationUtil.getInstance().isEmpty(selectedItem):
+        if not (StringValidationUtil.getInstance().isEmpty(selectedItem)):
             self.mouseActionScriptInputInterface.setInputRobotInterface(InputRobotFactory.getInstance().get(selectedItem))
     
 
@@ -95,7 +120,7 @@ class MouseActionScriptInputJPanel(JPanel):
         self.updateInputType()
         self.mouseActionScriptInputInterface.setTime(str(self.mouseDelayJTextField.getText()))
         self.logUtil.putF("Button State: " + str(self.mouseActionScriptInputInterface.getButtonClicks()), self, "update")
-        if self.button1JCheckBox.isSelected():
+        if java_predicate(self.button1JCheckBox, "isSelected"):
             if (self.mouseActionScriptInputInterface.getButtonClicks() & InputEvent.BUTTON1_MASK) == 0:
                 self.mouseActionScriptInputInterface.setButtonClicks(self.mouseActionScriptInputInterface.getButtonClicks() | InputEvent.BUTTON1_MASK)
                 self.logUtil.putF("Button 1 Selected: " + str(self.mouseActionScriptInputInterface.getButtonClicks()), self, "update")
@@ -103,7 +128,7 @@ class MouseActionScriptInputJPanel(JPanel):
             if (self.mouseActionScriptInputInterface.getButtonClicks() & InputEvent.BUTTON1_MASK) != 0:
                 self.mouseActionScriptInputInterface.setButtonClicks(self.mouseActionScriptInputInterface.getButtonClicks() ^ InputEvent.BUTTON1_MASK)
                 self.logUtil.putF("Button 1 Deselected: " + str(self.mouseActionScriptInputInterface.getButtonClicks()), self, "update")
-        if self.button2JCheckBox.isSelected():
+        if java_predicate(self.button2JCheckBox, "isSelected"):
             if (self.mouseActionScriptInputInterface.getButtonClicks() & InputEvent.BUTTON2_MASK) == 0:
                 self.mouseActionScriptInputInterface.setButtonClicks(self.mouseActionScriptInputInterface.getButtonClicks() | InputEvent.BUTTON2_MASK)
                 self.logUtil.putF("Button 2 Selected: " + str(self.mouseActionScriptInputInterface.getButtonClicks()), self, "update")
@@ -112,10 +137,10 @@ class MouseActionScriptInputJPanel(JPanel):
                 self.mouseActionScriptInputInterface.setButtonClicks(self.mouseActionScriptInputInterface.getButtonClicks() ^ InputEvent.BUTTON2_MASK)
                 self.logUtil.putF("Button 2 Deselected: " + str(self.mouseActionScriptInputInterface.getButtonClicks()), self, "update")
         mouseXString: str = self.mouseXJTextField.getText()
-        if not StringValidationUtil.getInstance().isEmpty(mouseXString) and StringValidationUtil.getInstance().isNumber(mouseXString):
+        if not (StringValidationUtil.getInstance().isEmpty(mouseXString)) and StringValidationUtil.getInstance().isNumber(mouseXString):
             self.mouseActionScriptInputInterface.getPoint().x = int(mouseXString)
         mouseYString: str = self.mouseYJTextField.getText()
-        if not StringValidationUtil.getInstance().isEmpty(mouseYString) and StringValidationUtil.getInstance().isNumber(mouseYString):
+        if not (StringValidationUtil.getInstance().isEmpty(mouseYString)) and StringValidationUtil.getInstance().isNumber(mouseYString):
             self.mouseActionScriptInputInterface.getPoint().y = int(mouseYString)
         self.mouseActionScriptInputInterface.log()
     
@@ -150,12 +175,15 @@ class MouseActionScriptInputJPanel(JPanel):
         self.mouseActionJDialog.setMinimumSize(Dimension(275, 185))
         self.titleJLabel.setText("Mouse Input Options")
         self.okJButton.setText("OK")
-        self.okJButton.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.okJButtonActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN69875(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "okJButtonActionPerformed") else _java_listener_owner).okJButtonActionPerformed(evt)
+        self.okJButton.addActionListener(_JavaListenerN69875()
+            )
         self.jLabel2.setText("Buttons:")
         self.jLabel3.setText("Move To:")
         self.button1JCheckBox.setText(CommonPhoneStrings.getInstance().ONE)
@@ -164,12 +192,15 @@ class MouseActionScriptInputJPanel(JPanel):
         self.button2JCheckBox.setText(CommonPhoneStrings.getInstance().TWO)
         self.button2JCheckBox.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0))
         self.button2JCheckBox.setMargin(Insets(0, 0, 0, 0))
-        self.button2JCheckBox.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.button2JCheckBoxActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN70380(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "button2JCheckBoxActionPerformed") else _java_listener_owner).button2JCheckBoxActionPerformed(evt)
+        self.button2JCheckBox.addActionListener(_JavaListenerN70380()
+            )
         self.jLabel4.setText("x:")
         self.mouseXJTextField.setText(CommonPhoneStrings.getInstance().ZERO)
         self.jLabel5.setText("y:")
@@ -183,12 +214,15 @@ class MouseActionScriptInputJPanel(JPanel):
         mouseActionJDialogLayout.setVerticalGroup(mouseActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(mouseActionJDialogLayout.createSequentialGroup().addComponent(self.titleJLabel).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addGroup(mouseActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(self.inputTypeJLabel).addComponent(self.inputAutomationTypeJComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addGroup(mouseActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(self.jLabel2, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE).addGroup(mouseActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(self.button1JCheckBox).addComponent(self.button2JCheckBox))).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addGroup(mouseActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(self.jLabel6).addComponent(self.mouseDelayJTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addGroup(mouseActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(self.jLabel3).addComponent(self.jLabel4).addComponent(self.jLabel5).addComponent(self.mouseYJTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addComponent(self.mouseXJTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(self.okJButton).addContainerGap()))
         self.setMinimumSize(Dimension(100, 0))
         self.mouseActionJButton.setText("Edit")
-        self.mouseActionJButton.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.mouseActionJButtonActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN73409(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "mouseActionJButtonActionPerformed") else _java_listener_owner).mouseActionJButtonActionPerformed(evt)
+        self.mouseActionJButton.addActionListener(_JavaListenerN73409()
+            )
         self.jLabel1.setText("Mouse:")
         layout: GroupLayout = GroupLayout(self)
         self.setLayout(layout)

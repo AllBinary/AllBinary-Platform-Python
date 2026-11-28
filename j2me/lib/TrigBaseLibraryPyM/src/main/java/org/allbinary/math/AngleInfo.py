@@ -21,7 +21,7 @@ class AngleInfo:
     ANGLE: str = "Angle: "
 
     def _init_fields(self) -> None:
-        self.angleIncrementInfo: AngleIncrementInfo = None
+        if "angleIncrementInfo" not in vars(self): self.angleIncrementInfo: AngleIncrementInfo = None
         self.angle: int = 0
         self.frameUtil: FrameUtil = FrameUtil.getInstance()
     
@@ -35,7 +35,7 @@ class AngleInfo:
 
     def __init__(self, angleIncrementInfo: AngleIncrementInfo) -> None:
         from jsinterop.annotations.JsConstructor import JsConstructor
-        self._init_fields()
+        __class__._init_fields(self)
         self.angleIncrementInfo = angleIncrementInfo
     
 

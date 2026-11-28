@@ -15,21 +15,25 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.midlet.AllBinaryMidlet import AllBinaryMidlet
 
 
 #J2SEForJ2ME
+@java_inherited_overloads
 class ProgressMidlet(AllBinaryMidlet):
+    def _java_defaults(self):
+        vars(self).setdefault("abeClientInformation", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-        self.abeClientInformation: AbeClientInformationInterface = None
+        if "abeClientInformation" not in vars(self): self.abeClientInformation: AbeClientInformationInterface = None
     
 
     def __init__(self, clientInformationFactory: ClientInformationFactory) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.system.security.licensing.ClientInformationFactory import ClientInformationFactory
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.preInit()
         self.abeClientInformation = clientInformationFactory.getInstance()
     

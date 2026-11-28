@@ -15,17 +15,40 @@
 
 from __future__ import annotations
 
+from java.lang.JavaThread import JavaThread
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.media.image.ImageProcessedVisitor import ImageProcessedVisitor
 # from javax.swing.JPanel import JPanel
 
 
+@java_inherited_overloads
 class CanvasImageJPanel(*java_bases(JPanel, ImageProcessedVisitor)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("commonSeps", None)
+        vars(self).setdefault("imageStrings", None)
+        vars(self).setdefault("imageProcessorInput", None)
+        vars(self).setdefault("result", None)
+        vars(self).setdefault("generateJButton", None)
+        vars(self).setdefault("heightReductionTextField", None)
+        vars(self).setdefault("heightReductionTextField1", None)
+        vars(self).setdefault("jLabel4", None)
+        vars(self).setdefault("jLabel5", None)
+        vars(self).setdefault("jLabel6", None)
+        vars(self).setdefault("jLabel7", None)
+        vars(self).setdefault("jLabel8", None)
+        vars(self).setdefault("jPanel1", None)
+        vars(self).setdefault("jPanel2", None)
+        vars(self).setdefault("widthReductionTextField", None)
+        vars(self).setdefault("widthReductionTextField1", None)
+        vars(self).setdefault("writeOverOriginalJCheckBox", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
         from org.allbinary.media.image.ImageStrings import ImageStrings
         from org.allbinary.string.CommonSeps import CommonSeps
         from org.allbinary.string.CommonStrings import CommonStrings
@@ -33,27 +56,28 @@ class CanvasImageJPanel(*java_bases(JPanel, ImageProcessedVisitor)):
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.commonSeps: CommonSeps = CommonSeps.getInstance()
         self.imageStrings: ImageStrings = ImageStrings.getInstance()
-        self.imageProcessorInput: ImageProcessorInput = None
-        self.result: BufferedImage = None
-        self.generateJButton: JButton = None
-        self.heightReductionTextField: JTextField = None
-        self.heightReductionTextField1: JTextField = None
-        self.jLabel4: JLabel = None
-        self.jLabel5: JLabel = None
-        self.jLabel6: JLabel = None
-        self.jLabel7: JLabel = None
-        self.jLabel8: JLabel = None
-        self.jPanel1: JPanel = None
-        self.jPanel2: JPanel = None
-        self.widthReductionTextField: JTextField = None
-        self.widthReductionTextField1: JTextField = None
-        self.writeOverOriginalJCheckBox: JCheckBox = None
+        if "imageProcessorInput" not in vars(self): self.imageProcessorInput: ImageProcessorInput = None
+        if "result" not in vars(self): self.result: BufferedImage = None
+        if "generateJButton" not in vars(self): self.generateJButton: JButton = None
+        if "heightReductionTextField" not in vars(self): self.heightReductionTextField: JTextField = None
+        if "heightReductionTextField1" not in vars(self): self.heightReductionTextField1: JTextField = None
+        if "jLabel4" not in vars(self): self.jLabel4: JLabel = None
+        if "jLabel5" not in vars(self): self.jLabel5: JLabel = None
+        if "jLabel6" not in vars(self): self.jLabel6: JLabel = None
+        if "jLabel7" not in vars(self): self.jLabel7: JLabel = None
+        if "jLabel8" not in vars(self): self.jLabel8: JLabel = None
+        if "jPanel1" not in vars(self): self.jPanel1: JPanel = None
+        if "jPanel2" not in vars(self): self.jPanel2: JPanel = None
+        if "widthReductionTextField" not in vars(self): self.widthReductionTextField: JTextField = None
+        if "widthReductionTextField1" not in vars(self): self.widthReductionTextField1: JTextField = None
+        if "writeOverOriginalJCheckBox" not in vars(self): self.writeOverOriginalJCheckBox: JCheckBox = None
     
 
     def __init__(self, imageProcessorInput: ImageProcessorInput) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.initComponents()
         self.imageProcessorInput = imageProcessorInput
     
@@ -62,40 +86,46 @@ class CanvasImageJPanel(*java_bases(JPanel, ImageProcessedVisitor)):
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.media.image.CanvasExpandUtil import CanvasExpandUtil
         from org.allbinary.media.image.CanvasTrimUtil import CanvasTrimUtil
-        (threading.Thread()  # Java anonymous class body:
-#             
-# 
-#             def run(self) -> None:
-#                 from org.allbinary.logic.communication.log.LogUtil import LogUtil
-#                 from org.allbinary.media.image.CanvasExpandUtil import CanvasExpandUtil
-#                 from org.allbinary.media.image.CanvasTrimUtil import CanvasTrimUtil
-#                 logUtil: LogUtil = LogUtil.getInstance()
-#                 try:
-#                     canvasTrimUtil: CanvasTrimUtil = CanvasTrimUtil.getInstance()
-#                     canvasExpandUtil: CanvasExpandUtil = CanvasExpandUtil.getInstance()
-#                     leftReduction: int = str(self.widthReductionTextField1.getText())
-#                     topReduction: int = str(self.heightReductionTextField1.getText())
-#                     widthReduction: int = str(self.widthReductionTextField.getText())
-#                     heightReduction: int = str(self.heightReductionTextField.getText())
-#                     if leftReduction <= 0 or topReduction <= 0 or widthReduction <= 0 or heightReduction <= 0:
-#                         canvasTrimUtil.process(self.getImageProcessorInput(), -leftReduction, -topReduction, -widthReduction, -heightReduction, self)
-#                     else:
-#                         canvasExpandUtil.process(self.getImageProcessorInput(), leftReduction, topReduction, self)
-#                 except Exception as e:
-#                     logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.RUN, e)
-).start()
+        _java_listener_owner = self
+        class _JavaListenerN66627(Thread):
+            
+            
+
+            def run(self) -> None:
+                from org.allbinary.logic.communication.log.LogUtil import LogUtil
+                from org.allbinary.media.image.CanvasExpandUtil import CanvasExpandUtil
+                from org.allbinary.media.image.CanvasTrimUtil import CanvasTrimUtil
+                logUtil: LogUtil = LogUtil.getInstance()
+                try:
+                    canvasTrimUtil: CanvasTrimUtil = CanvasTrimUtil.getInstance()
+                    canvasExpandUtil: CanvasExpandUtil = CanvasExpandUtil.getInstance()
+                    leftReduction: int = str(_java_listener_owner.widthReductionTextField1.getText())
+                    topReduction: int = str(_java_listener_owner.heightReductionTextField1.getText())
+                    widthReduction: int = str(_java_listener_owner.widthReductionTextField.getText())
+                    heightReduction: int = str(_java_listener_owner.heightReductionTextField.getText())
+                    if leftReduction <= 0 or topReduction <= 0 or widthReduction <= 0 or heightReduction <= 0:
+                        canvasTrimUtil.process(_java_listener_owner.getImageProcessorInput(), -leftReduction, -topReduction, -widthReduction, -heightReduction, _java_listener_owner)
+                    else:
+                        canvasExpandUtil.process(_java_listener_owner.getImageProcessorInput(), leftReduction, topReduction, _java_listener_owner)
+                except Exception as e:
+                    logUtil.put(_java_listener_owner.commonStrings.EXCEPTION, self, _java_listener_owner.commonStrings.RUN, e)
+        _JavaListenerN66627()
+            .start()
     
 
     def initComponents(self) -> None:
         from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
         self.writeOverOriginalJCheckBox = JCheckBox()
-        self.jPanel1 = (JPanel()  # Java anonymous class body:
-#             
-# 
-#             def paint(self, graphics: Graphics) -> None:
-#                 if self.result is not None:
-#                     graphics.drawImage(self.result, 0, 0, self.result.getWidth(None), self.result.getHeight(None), None)
-)
+        _java_listener_owner = self
+        class _JavaListenerN67525(JPanel):
+            
+            
+
+            def paint(self, graphics: Graphics) -> None:
+                if _java_listener_owner.result is not None:
+                    graphics.drawImage(_java_listener_owner.result, 0, 0, _java_listener_owner.result.getWidth(None), _java_listener_owner.result.getHeight(None), None)
+        self.jPanel1 = _JavaListenerN67525()
+            
         self.generateJButton = JButton()
         self.jLabel4 = JLabel()
         self.jPanel2 = JPanel()
@@ -109,41 +139,53 @@ class CanvasImageJPanel(*java_bases(JPanel, ImageProcessedVisitor)):
         self.heightReductionTextField1 = JTextField()
         self.writeOverOriginalJCheckBox.setSelected(True)
         self.writeOverOriginalJCheckBox.setText("Write Over Original")
-        self.writeOverOriginalJCheckBox.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.writeOverOriginalJCheckBoxActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN68167(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "writeOverOriginalJCheckBoxActionPerformed") else _java_listener_owner).writeOverOriginalJCheckBoxActionPerformed(evt)
+        self.writeOverOriginalJCheckBox.addActionListener(_JavaListenerN68167()
+            )
         jPanel1Layout: GroupLayout = GroupLayout(self.jPanel1)
         self.jPanel1.setLayout(jPanel1Layout)
         jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGap(0, 0, Short.MAX_VALUE))
         jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGap(0, 196, Short.MAX_VALUE))
         self.generateJButton.setText("Generate")
-        self.generateJButton.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.generateJButtonActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN68595(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "generateJButtonActionPerformed") else _java_listener_owner).generateJButtonActionPerformed(evt)
+        self.generateJButton.addActionListener(_JavaListenerN68595()
+            )
         self.jLabel4.setText("Results:")
         self.jLabel5.setText("Right:")
         self.widthReductionTextField.setText(CommonPhoneStrings.getInstance().ZERO)
-        self.widthReductionTextField.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.widthReductionTextFieldActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN68814(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "widthReductionTextFieldActionPerformed") else _java_listener_owner).widthReductionTextFieldActionPerformed(evt)
+        self.widthReductionTextField.addActionListener(_JavaListenerN68814()
+            )
         self.jLabel6.setText("Bottom")
         self.heightReductionTextField.setText(CommonPhoneStrings.getInstance().ZERO)
         self.widthReductionTextField1.setText(CommonPhoneStrings.getInstance().ZERO)
-        self.widthReductionTextField1.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.widthReductionTextField1ActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN69053(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "widthReductionTextField1ActionPerformed") else _java_listener_owner).widthReductionTextField1ActionPerformed(evt)
+        self.widthReductionTextField1.addActionListener(_JavaListenerN69053()
+            )
         self.jLabel7.setText("Top")
         self.jLabel8.setText("Left:")
         self.heightReductionTextField1.setText(CommonPhoneStrings.getInstance().ZERO)
@@ -185,13 +227,14 @@ class CanvasImageJPanel(*java_bases(JPanel, ImageProcessedVisitor)):
 
     # throws IOException
     def visit(self, generatedBufferedImage: BufferedImage, name: str, index: int) -> None:
+        from java.io.File import File
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.logic.string.StringUtil import StringUtil
         self.logUtil.putF(self.commonStrings.VISIT, self, self.commonStrings.VISIT)
         self.result = generatedBufferedImage
         self.getParent().repaint()
         file: File = self.imageProcessorInput.getFiles()[index]
-        if not self.writeOverOriginalJCheckBox.isSelected():
+        if not (java_predicate(self.writeOverOriginalJCheckBox, "isSelected")):
             filePath: str = file.getAbsolutePath()
             extensionIndex: int = filePath.find(self.imageStrings.PNG_EXTENSION)
             filePath = str(StringMaker().append(filePath[0:extensionIndex]).append(self.commonSeps.UNDERSCORE).append(name).append(self.imageStrings.PNG_EXTENSION))

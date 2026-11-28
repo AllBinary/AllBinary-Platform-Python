@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -33,7 +34,7 @@ class StringValidationUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def containsSpaces(self, value: str) -> bool:
@@ -46,7 +47,7 @@ class StringValidationUtil:
         numberOfDecimalPoints: int = 0
         for index in range(0, len(value)):
             digit: str = value[index]
-            if not self.isNumberFromChar(digit) and digit != '.':
+            if not (self.isNumberFromChar(digit)) and digit != '.':
                 return False
             if digit == '.':
                 numberOfDecimalPoints += 1
@@ -70,7 +71,7 @@ class StringValidationUtil:
     def isValidRequiredNumber(self, value: str, min: int, max: int) -> bool:
         if self.isEmpty(value) or len(value) < min or len(value) > max:
             return False
-        if not self.isNumber(value):
+        if not (self.isNumber(value)):
             return False
         return True
     
@@ -86,7 +87,7 @@ class StringValidationUtil:
         if len(value) > 0:
             if ((value > self.stringUtil.NULL_STRING) - (value < self.stringUtil.NULL_STRING)) == 0 or len(value) < min or len(value) > max:
                 return False
-            if not self.isNumber(value):
+            if not (self.isNumber(value)):
                 return False
         return True
     

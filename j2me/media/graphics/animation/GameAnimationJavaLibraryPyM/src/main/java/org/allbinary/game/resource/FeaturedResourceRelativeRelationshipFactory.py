@@ -15,12 +15,17 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.resource.FeaturedResourceFactory import FeaturedResourceFactory
 
 
+@java_inherited_overloads
 class FeaturedResourceRelativeRelationshipFactory(FeaturedResourceFactory):
     INSTANCE: FeaturedResourceRelativeRelationshipFactory = None
+    def _java_defaults(self):
+        vars(self).setdefault("basicArrayListUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
@@ -28,8 +33,9 @@ class FeaturedResourceRelativeRelationshipFactory(FeaturedResourceFactory):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -46,7 +52,7 @@ class FeaturedResourceRelativeRelationshipFactory(FeaturedResourceFactory):
         size: int = self.getList().size()
         for index in range(0, size):
             featureInterface: ResourceRelativeRelationshipFactoryInterface = featureReleaseList.objectArray[index]
-            if featureInterface.isFeature():
+            if java_predicate(featureInterface, "isFeature"):
                 list_: BasicArrayList = featureInterface.getResourceRelativeRelationshipList(resource)
                 if list_ != self.basicArrayListUtil.getImmutableInstance():
                     return self.duplicate(list_, layer)

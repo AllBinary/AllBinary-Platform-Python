@@ -16,34 +16,43 @@
 from __future__ import annotations
 
 import math
+from java.lang.JavaRuntimeStatic import java_equals
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_divide
 import threading
 from java.lang.JavaRuntimeStatic import java_bases
 from javax.sound.sampled.LineListener import LineListener
 from org.allbinary.media.audio.BasicPlayer import BasicPlayer
 
 
+@java_inherited_overloads
 class PCClipWavPlayer(*java_bases(BasicPlayer, LineListener)):
     _lock = threading.RLock()
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("audioInputStream", None)
+        vars(self).setdefault("clip", None)
 
     def _init_fields(self) -> None:
-        from javax.sound.sampled.AudioInputStream import AudioInputStream
-        from javax.sound.sampled.Clip import Clip
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.audioInputStream: AudioInputStream = None
-        self.clip: Clip = None
+        if "audioInputStream" not in vars(self): self.audioInputStream: AudioInputStream = None
+        if "clip" not in vars(self): self.clip: Clip = None
     
 
     def __init__(self, inputStream: InputStream) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.media.audio.NullAudioFormat import NullAudioFormat
         from org.allbinary.media.audio.NullClip import NullClip
+        from java.io.ByteArrayInputStream import ByteArrayInputStream
         from java.io.InputStream import InputStream
         from javax.sound.sampled.AudioInputStream import AudioInputStream
         from javax.sound.sampled.AudioSystem import AudioSystem
         from javax.sound.sampled.Clip import Clip
         from org.allbinary.logic.NullUtil import NullUtil
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         audioInputStream: AudioInputStream = AudioInputStream(ByteArrayInputStream(NullUtil.getInstance().NULL_BYTE_ARRAY), NullAudioFormat.NULL_AUDIO_FORMAT, 0)
         clip: Clip = NullClip()
         try:
@@ -62,16 +71,19 @@ class PCClipWavPlayer(*java_bases(BasicPlayer, LineListener)):
         from org.allbinary.thread.ARunnable import ARunnable
         from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         from org.allbinary.thread.MusicThreadPool import MusicThreadPool
-        MusicThreadPool.getInstance().runTask((ARunnable()  # Java anonymous class body:
-#             
-# 
-#             def run(self) -> None:
-#                 from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-#                 try:
-#                     self.close2()
-#                 except Exception as e:
-#                     PreLogUtil.putOE(self.commonStrings.EXCEPTION, self, self.commonStrings.PROCESS, e)
-))
+        _java_listener_owner = self
+        class _JavaListenerN66744(ARunnable):
+            
+            
+
+            def run(self) -> None:
+                from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+                try:
+                    (self if hasattr(self, "close2") else _java_listener_owner).close2()
+                except Exception as e:
+                    PreLogUtil.putOE((self if hasattr(self, "commonStrings") else _java_listener_owner).commonStrings.EXCEPTION, self, (self if hasattr(self, "commonStrings") else _java_listener_owner).commonStrings.PROCESS, e)
+        MusicThreadPool.getInstance().runTask(_JavaListenerN66744()
+            )
     
 
     # throws Exception
@@ -89,23 +101,26 @@ class PCClipWavPlayer(*java_bases(BasicPlayer, LineListener)):
     # throws MediaException
     def start(self) -> None:
         with self._lock:
-            return self._start_unlocked()
+            return __class__.__dict__["_start_unlocked"].__get__(self, __class__)()
 
     def _start_unlocked(self) -> None:
         from org.allbinary.thread.ARunnable import ARunnable
         from javax.microedition.media.MediaException import MediaException
         from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         from org.allbinary.thread.MusicThreadPool import MusicThreadPool
-        MusicThreadPool.getInstance().runTask((ARunnable()  # Java anonymous class body:
-#             
-# 
-#             def run(self) -> None:
-#                 from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-#                 try:
-#                     self.start2()
-#                 except Exception as e:
-#                     PreLogUtil.putOE(self.commonStrings.EXCEPTION, self, self.commonStrings.PROCESS, e)
-))
+        _java_listener_owner = self
+        class _JavaListenerN67156(ARunnable):
+            
+            
+
+            def run(self) -> None:
+                from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+                try:
+                    (self if hasattr(self, "start2") else _java_listener_owner).start2()
+                except Exception as e:
+                    PreLogUtil.putOE((self if hasattr(self, "commonStrings") else _java_listener_owner).commonStrings.EXCEPTION, self, (self if hasattr(self, "commonStrings") else _java_listener_owner).commonStrings.PROCESS, e)
+        MusicThreadPool.getInstance().runTask(_JavaListenerN67156()
+            )
     
 
     # throws Exception
@@ -113,7 +128,7 @@ class PCClipWavPlayer(*java_bases(BasicPlayer, LineListener)):
         self.clip.setFramePosition(0)
         self.clip.loop(self.getLoopCount())
         self.clip.start()
-        super().start()
+        java_super_call(super(), "start")
     
 
     # throws Exception
@@ -130,32 +145,36 @@ class PCClipWavPlayer(*java_bases(BasicPlayer, LineListener)):
     # throws MediaException
     def stop(self) -> None:
         with self._lock:
-            return self._stop_unlocked()
+            return __class__.__dict__["_stop_unlocked"].__get__(self, __class__)()
 
     def _stop_unlocked(self) -> None:
         from org.allbinary.thread.ARunnable import ARunnable
         from javax.microedition.media.MediaException import MediaException
         from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         from org.allbinary.thread.MusicThreadPool import MusicThreadPool
-        MusicThreadPool.getInstance().runTask((ARunnable()  # Java anonymous class body:
-#             
-# 
-#             def run(self) -> None:
-#                 from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
-#                 try:
-#                     self.stop2()
-#                 except Exception as e:
-#                     PreLogUtil.putOE(self.commonStrings.EXCEPTION, self, self.commonStrings.PROCESS, e)
-))
+        _java_listener_owner = self
+        class _JavaListenerN67738(ARunnable):
+            
+            
+
+            def run(self) -> None:
+                from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+                try:
+                    (self if hasattr(self, "stop2") else _java_listener_owner).stop2()
+                except Exception as e:
+                    PreLogUtil.putOE((self if hasattr(self, "commonStrings") else _java_listener_owner).commonStrings.EXCEPTION, self, (self if hasattr(self, "commonStrings") else _java_listener_owner).commonStrings.PROCESS, e)
+        MusicThreadPool.getInstance().runTask(_JavaListenerN67738()
+            )
     
 
     # throws Exception
     def stop2(self) -> None:
         self.clip.stop()
-        super().stop()
+        java_super_call(super(), "stop")
     
 
     def getControl(self, controlType: str) -> Control:
+        from org.allbinary.media.audio.NullControl import NullControl
         from javax.microedition.media.Control import Control
         return NullControl()
     
@@ -184,13 +203,14 @@ class PCClipWavPlayer(*java_bases(BasicPlayer, LineListener)):
     
 
     def getDuration(self) -> int:
-        return self.clip.getMicrosecondLength() / 1000
+        return java_divide(self.clip.getMicrosecondLength(), 1000)
+            
     
 
     def update(self, event: LineEvent) -> None:
         from javax.microedition.media.PlayerListener import PlayerListener
         from javax.sound.sampled.LineEvent import LineEvent
-        if event.getType().equals(LineEvent.Type.STOP):
+        if java_equals(event.getType(), LineEvent.Type.STOP):
             size: int = self.listenersList.size()
             for index in range(0, size):
                 listener: PlayerListener = self.listenersList.get(size)

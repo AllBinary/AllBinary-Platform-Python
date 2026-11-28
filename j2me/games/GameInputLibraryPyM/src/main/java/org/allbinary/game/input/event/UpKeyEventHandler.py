@@ -15,13 +15,18 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.input.event.UpKeyEventHandlerBase import UpKeyEventHandlerBase
 
 
+@java_inherited_overloads
 class UpKeyEventHandler(UpKeyEventHandlerBase):
     instance: UpKeyEventHandler = None
     instanceArray: list[UpKeyEventHandlerBase] = None
+    def _java_defaults(self):
+        vars(self).setdefault("playerInputIdFactory", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.game.input.LocalPlayerInputIdFactory import LocalPlayerInputIdFactory
@@ -43,26 +48,27 @@ class UpKeyEventHandler(UpKeyEventHandlerBase):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def removeAllListeners(self) -> None:
-        super().removeAllListeners()
+        java_super_call(super(), "removeAllListeners")
         for index in range(len(UpKeyEventHandler.instanceArray) - 1, 0 - 1, -1):
             UpKeyEventHandler.instanceArray[index].removeAllListeners()
     
 
     def removeListenerSingleThreaded(self, eventListenerInterface: EventListenerInterface) -> None:
         from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
-        super().removeListenerSingleThreaded(eventListenerInterface)
+        java_super_call(super(), "removeListenerSingleThreaded", eventListenerInterface)
         for index in range(len(UpKeyEventHandler.instanceArray) - 1, 0 - 1, -1):
             UpKeyEventHandler.instanceArray[index].removeListenerSingleThreaded(eventListenerInterface)
     
 
     def removeListener(self, eventListenerInterface: EventListenerInterface) -> None:
         from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
-        super().removeListener(eventListenerInterface)
+        java_super_call(super(), "removeListener", eventListenerInterface)
         for index in range(len(UpKeyEventHandler.instanceArray) - 1, 0 - 1, -1):
             UpKeyEventHandler.instanceArray[index].removeListener(eventListenerInterface)
 # from org.allbinary.game.input.LocalPlayerInputIdFactory import LocalPlayerInputIdFactory

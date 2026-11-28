@@ -15,10 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.android.input.motion.GameInputMotionInfo import GameInputMotionInfo
 
 
+@java_inherited_overloads
 class GameInputMotionInfoAPI1(GameInputMotionInfo):
     instance: GameInputMotionInfoAPI1 = None
     

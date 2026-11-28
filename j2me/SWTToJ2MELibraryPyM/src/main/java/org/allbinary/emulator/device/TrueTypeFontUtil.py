@@ -15,21 +15,30 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.emulator.device.TrueTypeFontUtilBase import TrueTypeFontUtilBase
 
 
 #TTF
+@java_inherited_overloads
 class TrueTypeFontUtil(TrueTypeFontUtilBase):
     instance: TrueTypeFontUtil = None
+    def _java_defaults(self):
+        vars(self).setdefault("preResourceImageUtil", None)
+        vars(self).setdefault("widthFloatArray", None)
+        vars(self).setdefault("fontImage", None)
+        vars(self).setdefault("widthScale", 0.0)
 
     def _init_fields(self) -> None:
         from org.allbinary.image.PreResourceImageUtil import PreResourceImageUtil
         from org.allbinary.image.opengles.OpenGLESImage import OpenGLESImage
         self.preResourceImageUtil: PreResourceImageUtil = PreResourceImageUtil.getInstance()
-        self.widthFloatArray: list[float] = None
+        if "widthFloatArray" not in vars(self): self.widthFloatArray: list[float] = None
         self.fontImage: OpenGLESImage = OpenGLESImage.NULL_OPENGL_IMAGE
-        self.widthScale: float = None
+        if "widthScale" not in vars(self): self.widthScale: float = 0.0
     
 
     @staticmethod
@@ -38,10 +47,11 @@ class TrueTypeFontUtil(TrueTypeFontUtilBase):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.AvianUtil import AvianUtil
         super().__init__(2)
-        self._init_fields()
-        if AvianUtil.isAvian():
+        __class__._init_fields(self)
+        if java_predicate(AvianUtil, "isAvian"):
             self.widthFloatArray = [1504.0, 967.0, 527.0, 961.0, 957.0, 1087.0, 920.0, 954.0, 973.0, 961.0, 955.0, 1296.0, 1013.0, 1106.0, 1167.0, 815.0, 815.0, 1216.0, 1110.0, 170.0, 520.0, 1056.0, 815.0, 1448.0, 1142.0, 1345.0, 927.0, 1345.0, 1030.0, 920.0, 1096.0, 1119.0, 1219.0, 1841.0, 1166.0, 1147.0, 1005.0, 879.0, 965.0, 792.0, 964.0, 927.0, 753.0, 1034.0, 916.0, 196.0, 469.0, 877.0, 166.0, 1563.0, 916.0, 1007.0, 965.0, 964.0, 631.0, 777.0, 649.0, 917.0, 1026.0, 1548.0, 993.0, 1028.0, 795.0, 241.0, 798.0, 241.0, 905.0, 1477.0, 393.0, 961.0, 961.0, 961.0, 961.0, 555.0, 1029.0, 1010.0, 1378.0, 952.0, 952.0, 952.0, 952.0, 463.0, 463.0, 926.0, 961.0, 491.0, 930.0, 457.0, 457.0, 644.0, 643.0, 326.0, 186.0, 1219.0, 241.0, 1599.0, 961.0, 302.0, 711.0, 961.0, 961.0, 710.0, 141.0, 1504.0, 1504.0, 1504.0, 1504.0, 1504.0, 1504.0, 1504.0, 1504.0]
         else:
             self.widthFloatArray = [1504.0, 967.0, 527.0, 961.0, 957.0, 1087.0, 920.0, 954.0, 973.0, 961.0, 955.0, 1296.0, 1013.0, 1106.0, 1167.0, 815.0, 815.0, 1216.0, 1110.0, 170.0, 520.0, 1056.0, 815.0, 1448.0, 1142.0, 1345.0, 927.0, 1345.0, 1030.0, 920.0, 1096.0, 1119.0, 1219.0, 1841.0, 1166.0, 1147.0, 1005.0, 879.0, 965.0, 792.0, 964.0, 927.0, 753.0, 1034.0, 916.0, 196.0, 469.0, 877.0, 166.0, 1563.0, 916.0, 1007.0, 965.0, 964.0, 631.0, 777.0, 649.0, 917.0, 1026.0, 1548.0, 993.0, 1028.0, 795.0, 241.0, 798.0, 241.0, 905.0, 1477.0, 393.0, 961.0, 555.0, 1029.0, 1010.0, 1378.0, 952.0, 463.0, 463.0, 926.0, 961.0, 491.0, 930.0, 457.0, 457.0, 644.0, 643.0, 326.0, 186.0, 1219.0, 241.0, 1599.0, 961.0, 302.0, 711.0, 961.0, 961.0, 710.0, 141.0, 1504.0, 1504.0]
@@ -136,9 +146,9 @@ class TrueTypeFontUtil(TrueTypeFontUtilBase):
             if bounds.getMaxY() - bounds.getPoint().getX() > biggestHeight:
                 biggestHeight = bounds.getMaxY() - bounds.getPoint().getX()
             x = (index % self.CELLS_PER_ROW) * cellSize
-            x += (cellSize >> 1)
+            x += (int(cellSize) >> (int(1) & 31))
             x -= (self._characterWidth[index] >> 1)
-            y = -cellSize >> 1
+            y = -int(cellSize) >> (int(1) & 31)
             if index >= self.CELLS_PER_ROW:
                 y += cellSize
             if index >= cellsPerRow2:
@@ -154,7 +164,7 @@ class TrueTypeFontUtil(TrueTypeFontUtilBase):
             if index >= cellsPerRow7:
                 y += cellSize
             y += cellSize
-            y -= (cellSize >> 2)
+            y -= (int(cellSize) >> (int(2) & 31))
             graphics.drawChar(self.characterArray[0], x, y, 0)
         return image
     

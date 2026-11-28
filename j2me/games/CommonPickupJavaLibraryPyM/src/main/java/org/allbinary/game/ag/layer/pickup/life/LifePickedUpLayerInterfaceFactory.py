@@ -15,14 +15,18 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.layer.pickup.PickedUpLayerInterfaceFactory import PickedUpLayerInterfaceFactory
 from org.allbinary.game.layer.pickup.PickupProcessorInterface import PickupProcessorInterface
 
 
+@java_inherited_overloads
 class LifePickedUpLayerInterfaceFactory(*java_bases(PickedUpLayerInterfaceFactory, PickupProcessorInterface)):
     pickedUpLayerInterfaceFactoryInterface: PickedUpLayerInterfaceFactoryInterface = None
+    def _java_defaults(self):
+        vars(self).setdefault("pool", None)
 
     def _init_fields(self) -> None:
         self.pool: LifeLayerCircularStaticPool = LifeLayerCircularStaticPool(LifeLayerFactory(), 1)
@@ -35,13 +39,14 @@ class LifePickedUpLayerInterfaceFactory(*java_bases(PickedUpLayerInterfaceFactor
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.ag.layer.pickup.life.LifeResources import LifeResources
         from org.allbinary.game.ag.layer.pickup.life.LifeResources import LifeResources
         from org.allbinary.animation.FeaturedAnimationInterfaceFactoryInterfaceFactory import FeaturedAnimationInterfaceFactoryInterfaceFactory
         from org.allbinary.game.layer.pickup.IconLayerFactory import IconLayerFactory
         from org.allbinary.game.layer.pickup.PickedUpLayerTypeFactory import PickedUpLayerTypeFactory
         super().__init__(PickedUpLayerTypeFactory.getInstance().LIFE, IconLayerFactory.getInstance(FeaturedAnimationInterfaceFactoryInterfaceFactory.getInstance().get(LifeResources.getInstance().RESOURCE).getInstance(0), 10, 10), FeaturedAnimationInterfaceFactoryInterfaceFactory.getInstance().get(LifeResources.getInstance().RESOURCE).getInstance(0))
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getTotal(self) -> int:

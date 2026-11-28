@@ -15,39 +15,47 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.input.mapping.InputMappingInterface import InputMappingInterface
 from org.allbinary.game.displayable.canvas.GameCommandCanvas import GameCommandCanvas
 
 
+@java_inherited_overloads
 class GameInputMappingCanvas(*java_bases(GameCommandCanvas, InputMappingInterface)):
     NAME: str = "GameInputMappingCanvas"
     DISPLAY: Command = None
     DEFAULT: Command = None
+    def _java_defaults(self):
+        vars(self).setdefault("paintable", None)
+        vars(self).setdefault("helpPaintable", None)
+        vars(self).setdefault("colorFillPaintable", None)
+        vars(self).setdefault("inputMapping", None)
+        vars(self).setdefault("NONE", None)
+        vars(self).setdefault("abeClientInformation", None)
+        vars(self).setdefault("selectedGameKey", None)
+        vars(self).setdefault("selectedInput", None)
+        vars(self).setdefault("inputFactory", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.input.GameKey import GameKey
         from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
-        from org.allbinary.game.input.Input import Input
         from org.allbinary.game.input.InputFactory import InputFactory
-        from org.allbinary.game.input.mapping.PersistentInputMapping import PersistentInputMapping
-        from org.allbinary.game.paint.ColorFillBasePaintable import ColorFillBasePaintable
-        from org.allbinary.game.paint.help.InputMappingHelpPaintable import InputMappingHelpPaintable
-        from org.allbinary.graphics.paint.ProcessPaintable import ProcessPaintable
-        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-        self.paintable: ProcessPaintable = None
-        self.helpPaintable: InputMappingHelpPaintable = None
-        self.colorFillPaintable: ColorFillBasePaintable = None
-        self.inputMapping: PersistentInputMapping = None
+        if "paintable" not in vars(self): self.paintable: ProcessPaintable = None
+        if "helpPaintable" not in vars(self): self.helpPaintable: InputMappingHelpPaintable = None
+        if "colorFillPaintable" not in vars(self): self.colorFillPaintable: ColorFillBasePaintable = None
+        if "inputMapping" not in vars(self): self.inputMapping: PersistentInputMapping = None
         self.NONE: GameKey = GameKeyFactory.getInstance().NONE
-        self.abeClientInformation: AbeClientInformationInterface = None
+        if "abeClientInformation" not in vars(self): self.abeClientInformation: AbeClientInformationInterface = None
         self.selectedGameKey: GameKey = self.NONE
         self.selectedInput: Input = self.NONE
         self.inputFactory: InputFactory = InputFactory.getInstance()
     
 
     def __init__(self, abeClientInformation: AbeClientInformationInterface, commandListener: CommandListener, allBinaryGameLayerManager: AllBinaryGameLayerManager, helpPaintable: HelpPaintable) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.CommandListener import CommandListener
         from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
         from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
@@ -57,7 +65,7 @@ class GameInputMappingCanvas(*java_bases(GameCommandCanvas, InputMappingInterfac
         from org.allbinary.graphics.paint.ProcessPaintable import ProcessPaintable
         from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         super().__init__(commandListener, GameInputMappingCanvas.NAME, allBinaryGameLayerManager.getBackgroundBasicColor(), allBinaryGameLayerManager.getForegroundBasicColor())
-        self._init_fields()
+        __class__._init_fields(self)
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
         if helpPaintable is None:
             raise Exception("Help Paintable Exception")
@@ -70,7 +78,7 @@ class GameInputMappingCanvas(*java_bases(GameCommandCanvas, InputMappingInterfac
 
     # throws Exception
     def close(self) -> None:
-        super().close()
+        java_super_call(super(), "close")
         self.paintable.process()
         self.selectedGameKey = self.NONE
         self.selectedInput = self.NONE
@@ -102,7 +110,7 @@ class GameInputMappingCanvas(*java_bases(GameCommandCanvas, InputMappingInterfac
 
     def keyPressedByDevice(self, keyCode: int, deviceId: int) -> None:
         self.addGameKey(keyCode, False)
-        super().keyPressedByDevice(keyCode, 0)
+        java_super_call(super(), "keyPressedByDevice", keyCode, 0)
     
 
     def addGameKey(self, keyCode: int, repeated: bool) -> None:
@@ -181,7 +189,7 @@ class GameInputMappingCanvas(*java_bases(GameCommandCanvas, InputMappingInterfac
         METHOD_NAME: str = "addNewMapping"
         self.logUtil.putF(self.commonStrings.START, self, METHOD_NAME)
         isInputAlreadyMapped: bool = self.inputMapping.getInputMapping().isMapped(input)
-        if not isInputAlreadyMapped and not self.inputMapping.isSystemInput(input):
+        if not (isInputAlreadyMapped) and not (self.inputMapping.isSystemInput(input)):
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.append("Add Key Mapping : GameKey: ")
             stringBuffer.append(self.stringUtil.toString(self.selectedGameKey))
@@ -236,7 +244,7 @@ class GameInputMappingCanvas(*java_bases(GameCommandCanvas, InputMappingInterfac
         self.colorFillPaintable.paint(graphics)
         self.helpPaintable.paint(graphics)
         self.paintable.paint(graphics)
-        super().paint(graphics)
+        java_super_call(super(), "paint", graphics)
 # from javax.microedition.lcdui.Command import Command
 # from javax.microedition.lcdui.CommandListener import CommandListener
 # from javax.microedition.lcdui.Graphics import Graphics

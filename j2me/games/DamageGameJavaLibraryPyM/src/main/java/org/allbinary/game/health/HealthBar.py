@@ -15,24 +15,31 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.paint.Paintable import Paintable
 from org.allbinary.game.health.HealthListenerInterface import HealthListenerInterface
 
 
+@java_inherited_overloads
 class HealthBar(*java_bases(Paintable, HealthListenerInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("animationInterface", None)
+        vars(self).setdefault("healthInterface", None)
+        vars(self).setdefault("allbinaryLayer", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-        self.animationInterface: HealthBarAnimation = None
-        self.healthInterface: HealthInterface = None
-        self.allbinaryLayer: AllBinaryLayer = None
+        if "animationInterface" not in vars(self): self.animationInterface: HealthBarAnimation = None
+        if "healthInterface" not in vars(self): self.healthInterface: HealthInterface = None
+        if "allbinaryLayer" not in vars(self): self.allbinaryLayer: AllBinaryLayer = None
     
 
     def __init__(self, layerInterface: AllBinaryLayer, healthInterface: Health, animationInterface: HealthBarAnimation, direction: int) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.allbinaryLayer = layerInterface
         self.animationInterface = animationInterface
         self.healthInterface = healthInterface
@@ -41,7 +48,8 @@ class HealthBar(*java_bases(Paintable, HealthListenerInterface)):
     
 
     def onHealthChange(self) -> None:
-        self.animationInterface.onHealthChange(self.healthInterface.getHealth() * self.allbinaryLayer.getWidth() / self.healthInterface.getMaxHealth())
+        self.animationInterface.onHealthChange(java_divide(self.healthInterface.getHealth() * self.allbinaryLayer.getWidth(), self.healthInterface.getMaxHealth())
+            )
     
 
     def paint(self, graphics: Graphics) -> None:

@@ -15,10 +15,17 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.logic.communication.http.request.RequestParams import RequestParams
 
 
+@java_inherited_overloads
 class MultipartRequestParams(RequestParams):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("special", False)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -27,24 +34,26 @@ class MultipartRequestParams(RequestParams):
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self.__jconstructor1(*args)
+            __class__.__jconstructor1(self, *args)
 
     def __jconstructor1(self, *args) -> None:
-        if True and not isinstance(args[0], (str, list, int, float)):
-            self._constructor1_1(*args)
+        if True and (args[0] is None or any(base.__name__ == "HttpServletRequest" for base in type(args[0]).__mro__)):
+            __class__._constructor1_1(self, *args)
         else:
-            self._constructor1_2(*args)
+            __class__._constructor1_2(self, *args)
     
 
     def _constructor1_1(self, request: HttpServletRequest) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.processMultipartRequest(request)
     
 
     def _constructor1_2(self, pageContext: PageContext) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.processMultipartRequest(pageContext.getRequest())
     
 
@@ -84,11 +93,11 @@ class MultipartRequestParams(RequestParams):
         except InvalidContentTypeException as e:
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().HTTPREQUEST):
                 self.logUtil.putF("Using Normal RequestParams", self, "processMultipartRequest()")
-            super().setMap(request.getParameterMap())
+            java_super_call(super(), "setMap", request.getParameterMap())
         except Exception as e:
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().HTTPREQUESTERROR):
                 self.logUtil.putF("Should Not Occur", self, "processMultipartRequest()")
-            super().setMap(request.getParameterMap())
+            java_super_call(super(), "setMap", request.getParameterMap())
     
 
     # throws Exception
@@ -97,7 +106,7 @@ class MultipartRequestParams(RequestParams):
         if self.special:
             return self.getMap()
         else:
-            return super().toHashMap()
+            return java_super_call(super(), "toHashMap")
 # from java.util.HashMap import HashMap
 # from java.util.List import List
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest

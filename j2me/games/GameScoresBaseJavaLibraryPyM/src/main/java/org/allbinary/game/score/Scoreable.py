@@ -23,11 +23,11 @@ class Scoreable(ScoreableInterface):
     ID: int = None
 
     def _init_fields(self) -> None:
-        self.points: int = None
+        if "points" not in vars(self): self.points: int = 0
     
 
     def __init__(self, points: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.points = points
     
 

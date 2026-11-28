@@ -21,11 +21,11 @@ from org.allbinary.data.tree.dom.document.mapping.DomDocumentMappingInterface im
 class ContextConfigurationDomDocumentMapping(DomDocumentMappingInterface):
 
     def _init_fields(self) -> None:
-        self.contextConfigurationInterface: ContextConfigurationInterface = None
+        if "contextConfigurationInterface" not in vars(self): self.contextConfigurationInterface: ContextConfigurationInterface = None
     
 
     def __init__(self, contextConfigurationInterface: ContextConfigurationInterface) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.contextConfigurationInterface = contextConfigurationInterface
     
 

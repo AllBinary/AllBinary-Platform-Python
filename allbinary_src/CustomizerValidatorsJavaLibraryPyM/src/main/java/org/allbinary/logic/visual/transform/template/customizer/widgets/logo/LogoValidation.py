@@ -15,66 +15,80 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 from org.allbinary.logic.control.validate.Validation import Validation
 
 
+@java_inherited_overloads
 class LogoValidation(*java_bases(Validation, DomNodeInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("logoFileItem", None)
+        vars(self).setdefault("logoAbPath", None)
+        vars(self).setdefault("logoFile", None)
+        vars(self).setdefault("isFile", False)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.logic.io.path.AbPath import AbPath
-        from org.apache.commons.fileupload.FileItem import FileItem
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.logoFileItem: FileItem = None
-        self.logoAbPath: AbPath = None
-        self.logoFile: str = None
-        self.isFile: bool = None
+        if "logoFileItem" not in vars(self): self.logoFileItem: FileItem = None
+        if "logoAbPath" not in vars(self): self.logoAbPath: AbPath = None
+        if "logoFile" not in vars(self): self.logoFile: str = None
+        if "isFile" not in vars(self): self.isFile: bool = False
 
     def __init__(self, *args) -> None:
         if len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
         elif len(args) == 1:
-            self.__jconstructor1(*args)
+            __class__.__jconstructor1(self, *args)
 
     def __jconstructor1(self, *args) -> None:
-        if True and not isinstance(args[0], (str, list, int, float)):
-            self._constructor1_1(*args)
+        if True and (args[0] is None or any(base.__name__ == "Node" for base in type(args[0]).__mro__)):
+            __class__._constructor1_1(self, *args)
         else:
-            self._constructor1_2(*args)
+            __class__._constructor1_2(self, *args)
     
 
     def _constructor0(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.isFile = False
         self.logoAbPath = None
         self.logoFile = None
     
 
     def _constructor1_1(self, node: Node) -> None:
+        __class__._java_defaults(self)
+        from org.allbinary.logic.visual.transform.template.customizer.widgets.logo.LogoData import LogoData
+        from org.allbinary.logic.visual.transform.template.customizer.widgets.logo.LogoData import LogoData
         from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
         from org.allbinary.logic.io.path.AbPath import AbPath
         from org.allbinary.logic.string.StringUtil import StringUtil
         from org.w3c.dom.Node import Node
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.isFile = False
         self.logoAbPath = AbPath(DomSearchHelper.getNode(LogoData.getInstance().IMAGEPATH, node.getChildNodes()).getNodeValue(), StringUtil.getInstance().EMPTY_STRING)
         self.logoFile = DomSearchHelper.getNode(LogoData.getInstance().IMAGEFILENAME, node.getChildNodes()).getNodeValue()
     
 
     def _constructor1_2(self, hashMap: HashMap) -> None:
+        __class__._java_defaults(self)
         from java.util.HashMap import HashMap
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.isFile = True
         self.getFormData(hashMap)
     
 
     # throws Exception
     def getFormData(self, hashMap: HashMap) -> None:
+        from org.allbinary.logic.visual.transform.template.customizer.widgets.logo.LogoData import LogoData
+        from org.allbinary.logic.visual.transform.template.customizer.widgets.logo.LogoData import LogoData
         from java.util.HashMap import HashMap
         from org.allbinary.logic.communication.http.request.HttpRequestUtil import HttpRequestUtil
         from org.allbinary.logic.io.path.AbPath import AbPath
@@ -106,11 +120,11 @@ class LogoValidation(*java_bases(Validation, DomNodeInterface)):
             fileData: FileData = FileData.getInstance()
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 self.logUtil.putF("LogoValidation", self, self.commonStrings.IS_VALID)
-            if not StringValidationUtil.getInstance().isValidRequired(str(self.logoAbPath), 0, 512):
+            if not (StringValidationUtil.getInstance().isValidRequired(str(self.logoAbPath), 0, 512)):
                 if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     self.logUtil.putF("logoPath is invalid: " + str(self.logoAbPath), self, self.commonStrings.IS_VALID)
                 return False
-            if not StringValidationUtil.getInstance().isValidRequired(self.logoFile, fileData.MINLEN, fileData.MAXLEN):
+            if not (StringValidationUtil.getInstance().isValidRequired(self.logoFile, fileData.MINLEN, fileData.MAXLEN)):
                 if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     self.logUtil.putF("logoFile is invalid: " + self.logoFile, self, self.commonStrings.IS_VALID)
                 return False
@@ -156,6 +170,11 @@ class LogoValidation(*java_bases(Validation, DomNodeInterface)):
     
 
     def toHashMap(self) -> HashMap:
+        from org.allbinary.logic.visual.transform.template.customizer.widgets.logo.LogoData import LogoData
+        from org.allbinary.logic.visual.transform.template.customizer.widgets.logo.LogoData import LogoData
+        from org.allbinary.logic.visual.transform.template.customizer.widgets.logo.LogoData import LogoData
+        from org.allbinary.logic.visual.transform.template.customizer.widgets.logo.LogoData import LogoData
+        from org.allbinary.logic.visual.transform.template.customizer.widgets.logo.LogoData import LogoData
         from java.util.HashMap import HashMap
         from org.allbinary.logic.StdUtil import StdUtil
         from org.allbinary.logic.string.StringUtil import StringUtil
@@ -173,6 +192,7 @@ class LogoValidation(*java_bases(Validation, DomNodeInterface)):
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
+        from org.allbinary.logic.visual.transform.template.customizer.widgets.logo.LogoData import LogoData
         from java.util.HashMap import HashMap
         from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
         from org.w3c.dom.Document import Document

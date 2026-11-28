@@ -15,30 +15,39 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.layer.building.event.BuildingEventListenerInterface import BuildingEventListenerInterface
 from org.allbinary.game.layer.waypoint.WaypointBase import WaypointBase
 
 
+@java_inherited_overloads
 class Waypoint(*java_bases(WaypointBase, BuildingEventListenerInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("basicArrayListUtil", None)
+        vars(self).setdefault("ownerLayer", None)
+        vars(self).setdefault("endList", None)
+        vars(self).setdefault("paths", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.basicArrayListUtil: BasicArrayListUtil = BasicArrayListUtil.getInstance()
-        self.ownerLayer: PathFindingLayerInterface = None
+        if "ownerLayer" not in vars(self): self.ownerLayer: PathFindingLayerInterface = None
         self.endList: BasicArrayList = self.basicArrayListUtil.getImmutableInstance()
         self.paths: list[list[BasicArrayList]] = self.basicArrayListUtil.NULL_ARRAY_OF_ARRAY
     
 
     def __init__(self, ownerLayer: PathFindingLayerInterface, sound: Sound) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
         from org.allbinary.media.audio.Sound import Sound
         super().__init__(sound)
-        self._init_fields()
+        __class__._init_fields(self)
         self.ownerLayer = ownerLayer
     
 
@@ -49,7 +58,7 @@ class Waypoint(*java_bases(WaypointBase, BuildingEventListenerInterface)):
         from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
         from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
         from org.allbinary.util.BasicArrayList import BasicArrayList
-        super().setAllBinaryGameLayerManager(allBinaryGameLayerManager)
+        java_super_call(super(), "setAllBinaryGameLayerManager", allBinaryGameLayerManager)
         geographicMapCompositeInterface: GeographicMapCompositeInterface = allBinaryGameLayerManager
         geographicMapInterface: BasicGeographicMap = geographicMapCompositeInterface.getGeographicMapInterface()[0]
         tiledLayer: AllBinaryTiledLayer = geographicMapInterface.getAllBinaryTiledLayer()
@@ -177,7 +186,7 @@ class Waypoint(*java_bases(WaypointBase, BuildingEventListenerInterface)):
             unitWaypointBehavior: UnitWaypointBehavior = unitLayer.getWaypointBehavior()
             while self.getConnectedWaypointList().size() > 0:
                 rtsLayer: CollidableDestroyableDamageableLayer = self.getConnectedWaypointList().get(0)
-                if rtsLayer.isDestroyed():
+                if java_predicate(rtsLayer, "isDestroyed"):
                     self.getConnectedWaypointList().remove(rtsLayer)
                 else:
                     unitLayer.handleCost(self.ownerLayer)

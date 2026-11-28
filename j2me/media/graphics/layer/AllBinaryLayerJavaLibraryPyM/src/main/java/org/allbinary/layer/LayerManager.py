@@ -3,6 +3,8 @@
 
 from __future__ import annotations
 
+from java.lang.JavaMonitor import java_monitor, java_wait
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 
 
@@ -14,20 +16,19 @@ class LayerManager:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         from org.allbinary.thread.SynchObject import SynchObject
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         from org.allbinary.logic.ABSystemWrapper import ABSystemWrapper
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.systemWrapper: ABSystemWrapper = ABSystemWrapper.getInstance()
         self.tsUtil: TsUtil = TsUtil.getInstance()
-        self.layerManagerLogging: LayerManagerLoggingBase = None
+        if "layerManagerLogging" not in vars(self): self.layerManagerLogging: LayerManagerLoggingBase = None
         self.list_: BasicArrayList = BasicArrayListD()
         self.anyType: SynchObject = SynchObject()
     
 
     def __init__(self, layerManagerLogging: LayerManagerLoggingBase) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
         self.layerManagerLogging = layerManagerLogging
     
@@ -76,7 +77,7 @@ class LayerManager:
 
     # throws Exception
     def remove(self, layerInterface: AllBinaryLayer) -> None:
-        with self._lock:  # synchronized (self.anyType)
+        with java_monitor(self.anyType):
             self.layerManagerLogging.remove(layerInterface)
             result: bool = self.list_.remove(layerInterface)
             self.layerManagerLogging.removeResult(self, layerInterface, result)
@@ -92,7 +93,7 @@ class LayerManager:
 
     # throws Exception
     def cleanup(self) -> None:
-        with self._lock:  # synchronized (self.anyType)
+        with java_monitor(self.anyType):
             self.list_.clear()
             self.layerManagerLogging.clear()
             self.tsUtil.gc()
@@ -101,12 +102,12 @@ class LayerManager:
 
     def paint(self, g: Graphics, x: int, y: int) -> None:
         from javax.microedition.lcdui.Graphics import Graphics
-        with self._lock:  # synchronized (self.anyType)
+        with java_monitor(self.anyType):
             comp: Layer = None
             index = self.list_.size()
             while (index := index - 1) >= 0:
                 comp = self.list_.objectArray[index]
-                if comp is not None and comp.isVisible():
+                if comp is not None and java_predicate(comp, "isVisible"):
                     comp.paint(g)
 # from javax.microedition.lcdui.Graphics import Graphics
 # from org.allbinary.TsUtil import TsUtil

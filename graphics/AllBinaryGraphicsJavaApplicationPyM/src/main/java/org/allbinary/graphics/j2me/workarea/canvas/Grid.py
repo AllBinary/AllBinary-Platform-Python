@@ -20,8 +20,7 @@ from __future__ import annotations
 class Grid:
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.GPoint import GPoint
-        self.grid: GPoint = None
+        if "grid" not in vars(self): self.grid: GPoint = None
         self.isGridOn: bool = True
         self.isGridPossible: bool = False
         self.zoom: int = 3
@@ -29,17 +28,17 @@ class Grid:
 
     def __init__(self, *args) -> None:
         if len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
         elif len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
     
 
     def _constructor0(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def _constructor1(self, grid: Grid) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.grid = grid.grid
         self.showGrid(grid.isGridOn)
         self.isGridPossible = grid.isGridPossible

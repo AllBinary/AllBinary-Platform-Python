@@ -15,12 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 
 
 class OrientationToGameKeyEvent:
 
     def _init_fields(self) -> None:
-        self.allBinaryGyroSensor: AllBinaryOrientationSensor = None
+        if "allBinaryGyroSensor" not in vars(self): self.allBinaryGyroSensor: AllBinaryOrientationSensor = None
         self.MIN: int = 15
     
 
@@ -28,7 +29,7 @@ class OrientationToGameKeyEvent:
         from org.allbinary.input.gyro.NoGyroSensor import NoGyroSensor
         from org.allbinary.game.configuration.feature.Features import Features
         from org.allbinary.game.configuration.feature.SensorFeatureFactory import SensorFeatureFactory
-        self._init_fields()
+        __class__._init_fields(self)
         if Features.getInstance().isFeature(SensorFeatureFactory.getInstance().NO_ORIENTATION):
             self.allBinaryGyroSensor = NoGyroSensor()
         else:

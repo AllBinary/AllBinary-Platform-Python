@@ -23,20 +23,17 @@ class RTSFormInput:
         from org.allbinary.game.identification.GroupCommonFactory import GroupCommonFactory
         from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.game.identification.Group import Group
         from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
         from org.allbinary.logic.StdUtil import StdUtil
-        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
-        from org.allbinary.util.ABHashtable import ABHashtable
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.groupCommonFactory: GroupCommonFactory = GroupCommonFactory.getInstance()
         self.hashtable: ABHashtable[object, object] = StdUtil.getInstance().createHashtable()
         self.newUnconstructedRTSLayerInterfaceArray: list[CollidableDestroyableDamageableLayer] = [None] * (7)
-        self.groupInterfaceArray: list[Group] = None
+        if "groupInterfaceArray" not in vars(self): self.groupInterfaceArray: list[Group] = None
         self.selectedGeographicCellPosition: GeographicMapCellPosition = SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION
-        self.stickyItemSelected: bool = False
-        self.selectedStickyItemIndex: int = 0
+        if "stickyItemSelected" not in vars(self): self.stickyItemSelected: bool = False
+        if "selectedStickyItemIndex" not in vars(self): self.selectedStickyItemIndex: int = 0
         self.selectedStickyItem: ABCustomItem = ABCustomItem.getNullInstance()
     
 
@@ -44,7 +41,7 @@ class RTSFormInput:
         from org.allbinary.direction.DirectionFactory import DirectionFactory
         from org.allbinary.game.identification.Group import Group
         from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
-        self._init_fields()
+        __class__._init_fields(self)
         size: int = len(self.newUnconstructedRTSLayerInterfaceArray)
         for index in range(0, size):
             self.newUnconstructedRTSLayerInterfaceArray[index] = CollidableDestroyableDamageableLayer.getNullInstance()

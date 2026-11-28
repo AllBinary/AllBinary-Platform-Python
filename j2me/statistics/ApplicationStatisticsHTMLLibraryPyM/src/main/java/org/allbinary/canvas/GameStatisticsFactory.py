@@ -15,21 +15,27 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.canvas.BaseGameStatistics import BaseGameStatistics
 
 
 #ActualPlatform
+@java_inherited_overloads
 class GameStatisticsFactory(BaseGameStatistics):
     instance: GameStatisticsFactory = None
+    def _java_defaults(self):
+        vars(self).setdefault("stringBuffer", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.string.StringMaker import StringMaker
         self.stringBuffer: StringMaker = StringMaker()
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -46,7 +52,7 @@ class GameStatisticsFactory(BaseGameStatistics):
 
     def toString(self) -> str:
         from org.allbinary.logic.string.StringMaker import StringMaker
-        return str(StringMaker().append(str(super())).append(str(self.stringBuffer)))
+        return str(StringMaker().append(java_super_call(super(), "toString")).append(str(self.stringBuffer)))
 
     def __str__(self) -> str:
         return self.toString()

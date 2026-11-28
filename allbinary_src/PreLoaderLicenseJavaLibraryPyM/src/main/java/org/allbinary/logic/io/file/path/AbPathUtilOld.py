@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 
@@ -40,7 +41,7 @@ class AbPathUtilOld:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -71,13 +72,15 @@ class AbPathUtilOld:
         return extension
 
     def getExtension(self, *args):
-        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
-            return self.getExtension_j1_1(*args)
-        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
-            return self.getExtension_j1_2(*args)
+        if len(args) == 1 and True and (args[0] is None or any(base.__name__ == "AbFilePath" for base in type(args[0]).__mro__)):
+            return __class__.__dict__["getExtension_j1_1"].__get__(self, __class__)(*args)
+        if len(args) == 1 and True and (args[0] is None or any(base.__name__ == "AbPath" for base in type(args[0]).__mro__)):
+            return __class__.__dict__["getExtension_j1_2"].__get__(self, __class__)(*args)
         if len(args) == 1:
-            return self.getExtension_j1_3(*args)
-        return getattr(self, "getExtension_j" + str(len(args)))(*args)
+            return __class__.__dict__["getExtension_j1_3"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("getExtension_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getExtension(*args)
     
 
     # throws Exception
@@ -108,13 +111,15 @@ class AbPathUtilOld:
         return pathWithoutExtension
 
     def getWithoutExtension(self, *args):
-        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
-            return self.getWithoutExtension_j1_1(*args)
-        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
-            return self.getWithoutExtension_j1_2(*args)
+        if len(args) == 1 and True and (args[0] is None or any(base.__name__ == "AbFilePath" for base in type(args[0]).__mro__)):
+            return __class__.__dict__["getWithoutExtension_j1_1"].__get__(self, __class__)(*args)
+        if len(args) == 1 and True and (args[0] is None or any(base.__name__ == "AbPath" for base in type(args[0]).__mro__)):
+            return __class__.__dict__["getWithoutExtension_j1_2"].__get__(self, __class__)(*args)
         if len(args) == 1:
-            return self.getWithoutExtension_j1_3(*args)
-        return getattr(self, "getWithoutExtension_j" + str(len(args)))(*args)
+            return __class__.__dict__["getWithoutExtension_j1_3"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("getWithoutExtension_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getWithoutExtension(*args)
     
 
     def isValid(self, path: str) -> bool:
@@ -142,13 +147,13 @@ class AbPathUtilOld:
     
 
     def adjustStart(self, path: str) -> str:
-        if not self.isValidStart(path):
+        if not (self.isValidStart(path)):
             path = str(self.abPathData.SEPARATOR) + path
         return path
     
 
     def adjustEnd(self, path: str) -> str:
-        if not self.isValidEnd(path):
+        if not (self.isValidEnd(path)):
             path = path + str(self.abPathData.SEPARATOR)
         return path
     
@@ -164,7 +169,7 @@ class AbPathUtilOld:
 
     def getNameFromPath(self, categoryPath: str) -> str:
         with self._lock:
-            return self._getNameFromPath_unlocked(categoryPath)
+            return __class__.__dict__["_getNameFromPath_unlocked"].__get__(self, __class__)(categoryPath)
 
     def _getNameFromPath_unlocked(self, categoryPath: str) -> str:
         endIndex: int = categoryPath.rfind(self.abPathData.SEPARATOR)
@@ -183,7 +188,7 @@ class AbPathUtilOld:
     # throws Exception
     def removeNameFromPath(self, categoryPath: str) -> AbPath:
         with self._lock:
-            return self._removeNameFromPath_unlocked(categoryPath)
+            return __class__.__dict__["_removeNameFromPath_unlocked"].__get__(self, __class__)(categoryPath)
 
     def _removeNameFromPath_unlocked(self, categoryPath: str) -> AbPath:
         from org.allbinary.logic.io.path.AbPath import AbPath

@@ -3,9 +3,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.security.Provider import Provider
 
 
+@java_inherited_overloads
 class BouncyCastleProvider(Provider):
     info: str = "BouncyCastle Security Provider v1.41"
     PROVIDER_NAME: str = "BC"

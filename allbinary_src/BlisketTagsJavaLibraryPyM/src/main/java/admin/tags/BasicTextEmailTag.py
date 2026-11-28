@@ -15,21 +15,28 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from tags.CustomTagSupport import CustomTagSupport
 
 
+@java_inherited_overloads
 class BasicTextEmailTag(CustomTagSupport):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("subject", None)
+        vars(self).setdefault("body", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.subject: str = None
-        self.body: str = None
+        if "subject" not in vars(self): self.subject: str = None
+        if "body" not in vars(self): self.body: str = None
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def setSubject(self, value: str) -> None:

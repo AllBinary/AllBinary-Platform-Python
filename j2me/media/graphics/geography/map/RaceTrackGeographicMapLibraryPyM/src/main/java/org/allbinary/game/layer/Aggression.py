@@ -27,7 +27,7 @@ class Aggression:
     
 
     def __init__(self, ram: int, projectile: int, drops: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.setRam(ram)
         self.setProjectile(projectile)
         self.setDrops(drops)

@@ -15,12 +15,18 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.validate.ValidationComponentInterface import ValidationComponentInterface
 from views.business.context.modules.storefront.customizer.includes.style.theme.ThemeCustomizerView import ThemeCustomizerView
 
 
+@java_inherited_overloads
 class EditThemeValidationView(*java_bases(ThemeCustomizerView, ValidationComponentInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -28,9 +34,10 @@ class EditThemeValidationView(*java_bases(ThemeCustomizerView, ValidationCompone
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def isValid(self) -> bool:
@@ -54,7 +61,7 @@ class EditThemeValidationView(*java_bases(ThemeCustomizerView, ValidationCompone
             rootStoreThemeCategoryInterface: StoreThemeCategoryInterface = categoryFactoryInterface.getRootInstance()
             storeThemeCategoryInterface: StoreThemeCategoryInterface = categoryLoaderInterface.getAll(rootStoreThemeCategoryInterface)
             self.validationInterface = StoreThemeCategoryPathValidationView(storeThemeCategoryInterface)
-            isValid = self.validationInterface.isValid()
+            isValid = java_predicate(self.validationInterface, "isValid")
             domNodeInterface: DomNodeInterface = self.validationInterface
             document: Document = DomDocumentHelper.create()
             document.appendChild(domNodeInterface.toXmlNode(document))
@@ -97,7 +104,7 @@ class EditThemeValidationView(*java_bases(ThemeCustomizerView, ValidationCompone
     # throws Exception
     def getTransformInfoInterface(self) -> TransformInfoInterface:
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-        return super().getTransformInfoInterface()
+        return java_super_call(super(), "getTransformInfoInterface")
 # from org.allbinary.business.category.CategoryFactoryInterface import CategoryFactoryInterface
 # from org.allbinary.business.category.CategoryInterface import CategoryInterface
 # from org.allbinary.business.category.store.theme.StoreThemeCategoryFactory import StoreThemeCategoryFactory

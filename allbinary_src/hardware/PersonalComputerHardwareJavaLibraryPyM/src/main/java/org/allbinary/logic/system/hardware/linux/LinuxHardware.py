@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.logic.system.hardware.HardwareInterface import HardwareInterface
 
 
@@ -24,33 +25,32 @@ class LinuxHardware(HardwareInterface):
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.componentInterfaceVector: BasicArrayList = None
-        self.videoInterfaceVector: BasicArrayList = None
-        self.hardDriveControllerInterfaceVector: BasicArrayList = None
-        self.cpuInterfaceVector: BasicArrayList = None
-        self.usbInterfaceVector: BasicArrayList = None
-        self.ethernetInterfaceVector: BasicArrayList = None
-        self.multimediaInterfaceVector: BasicArrayList = None
-        self.fireWireInterfaceVector: BasicArrayList = None
-        self.bridgeInterfaceVector: BasicArrayList = None
-        self.hardDriveInterfaceVector: BasicArrayList = None
-        self.macInterfaceVector: BasicArrayList = None
-        self.monitorInterfaceVector: BasicArrayList = None
+        if "componentInterfaceVector" not in vars(self): self.componentInterfaceVector: BasicArrayList = None
+        if "videoInterfaceVector" not in vars(self): self.videoInterfaceVector: BasicArrayList = None
+        if "hardDriveControllerInterfaceVector" not in vars(self): self.hardDriveControllerInterfaceVector: BasicArrayList = None
+        if "cpuInterfaceVector" not in vars(self): self.cpuInterfaceVector: BasicArrayList = None
+        if "usbInterfaceVector" not in vars(self): self.usbInterfaceVector: BasicArrayList = None
+        if "ethernetInterfaceVector" not in vars(self): self.ethernetInterfaceVector: BasicArrayList = None
+        if "multimediaInterfaceVector" not in vars(self): self.multimediaInterfaceVector: BasicArrayList = None
+        if "fireWireInterfaceVector" not in vars(self): self.fireWireInterfaceVector: BasicArrayList = None
+        if "bridgeInterfaceVector" not in vars(self): self.bridgeInterfaceVector: BasicArrayList = None
+        if "hardDriveInterfaceVector" not in vars(self): self.hardDriveInterfaceVector: BasicArrayList = None
+        if "macInterfaceVector" not in vars(self): self.macInterfaceVector: BasicArrayList = None
+        if "monitorInterfaceVector" not in vars(self): self.monitorInterfaceVector: BasicArrayList = None
         self.NAME: str = "Linux Hardware Profile"
         self.MINHARDWARE: int = 5
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
         elif len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
     
 
     def _constructor1(self, path: str) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.init(path)
     
 
@@ -58,7 +58,7 @@ class LinuxHardware(HardwareInterface):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         from org.allbinary.logic.system.hardware.components.linux.Cpu import Cpu
-        self._init_fields()
+        __class__._init_fields(self)
         self.init(LinuxHardware.PCIFILE)
         if self.componentInterfaceVector.size() < self.MINHARDWARE:
             raise Exception("Not Enough Data For A Valid License On Linux")
@@ -114,7 +114,7 @@ class LinuxHardware(HardwareInterface):
             lineNumberReader = LineNumberReader(pciFile)
             if lineNumberReader is None:
                 fileVector: BasicArrayList = SubDirectory.getInstance().search(filePath, AbFile.createAbFile(FilePathData.getInstance().PATH_START))
-                if not fileVector.isEmpty():
+                if not (java_predicate(fileVector, "isEmpty")):
                     file: AbFile = fileVector.get(0)
                     lineNumberReader = LineNumberReader(FileReader(file.getPath()))
                 if lineNumberReader is None:
@@ -153,7 +153,9 @@ class LinuxHardware(HardwareInterface):
                 lineNumberReader.close()
 
     def init(self, *args):
-        return getattr(self, "init_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("init_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().init(*args)
     
 
     def getMultimedia(self, index: int) -> MediaInterface:

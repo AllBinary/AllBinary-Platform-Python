@@ -15,13 +15,20 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.animation.caption.CaptionAnimationHelperBase import CaptionAnimationHelperBase
 
 
+@java_inherited_overloads
 class CaptionAnimationHelper(CaptionAnimationHelperBase):
+    def _java_defaults(self):
+        vars(self).setdefault("timeHelper", None)
+        vars(self).setdefault("textAnimation", None)
+        vars(self).setdefault("captionAnimation", None)
+        vars(self).setdefault("animation", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.animation.Animation import Animation
         from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
         from org.allbinary.animation.text.TextAnimation import TextAnimation
@@ -29,15 +36,16 @@ class CaptionAnimationHelper(CaptionAnimationHelperBase):
         from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         self.timeHelper: TimeDelayHelper = TimeDelayHelper(620)
         self.textAnimation: TextAnimation = TextAnimation(StringUtil.getInstance().EMPTY_STRING, AnimationBehavior.getInstance())
-        self.captionAnimation: Animation = None
+        if "captionAnimation" not in vars(self): self.captionAnimation: Animation = None
         self.animation: Animation = NullAnimationFactory.getFactoryInstance().getInstance(0)
     
 
     def __init__(self, captionAnimation: Animation, captionDx: int, captionDy: int, dx: int, dy: int) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.animation.caption.CaptionAnimation import CaptionAnimation
         from org.allbinary.animation.Animation import Animation
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.captionAnimation = CaptionAnimation(captionAnimation, self.textAnimation, captionDx, captionDy, dx, dy)
     
 

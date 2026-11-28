@@ -30,7 +30,7 @@ class BasicGameResources:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def init(self, ROOT: str, SIZE: list[str]) -> None:
@@ -52,12 +52,12 @@ class BasicGameResources:
     def append(self, ROOT: str, sizeString: str) -> None:
         DESTROY: str = "_destroy"
         string: str = self.getString()
-        BasicGameResources.stringBuffer.delete(0, BasicGameResources.stringBuffer.length())
+        BasicGameResources.stringBuffer.delete(0, __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(BasicGameResources.stringBuffer))
         BasicGameResources.stringBuffer.append(ROOT)
         BasicGameResources.stringBuffer.append(string)
         BasicGameResources.stringBuffer.append(sizeString)
         self.RESOURCE = str(BasicGameResources.stringBuffer)
-        BasicGameResources.stringBuffer.delete(0, BasicGameResources.stringBuffer.length())
+        BasicGameResources.stringBuffer.delete(0, __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(BasicGameResources.stringBuffer))
         BasicGameResources.stringBuffer.append(ROOT)
         BasicGameResources.stringBuffer.append(DESTROY)
         BasicGameResources.stringBuffer.append(string)

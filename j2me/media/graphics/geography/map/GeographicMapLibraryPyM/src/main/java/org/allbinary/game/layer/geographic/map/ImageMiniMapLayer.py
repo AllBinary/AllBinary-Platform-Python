@@ -15,13 +15,17 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.layer.geographic.map.MiniMapLayer import MiniMapLayer
 
 
+@java_inherited_overloads
 class ImageMiniMapLayer(MiniMapLayer):
+    def _java_defaults(self):
+        vars(self).setdefault("image", None)
+        vars(self).setdefault("anchor", 0)
 
     def _init_fields(self) -> None:
-        from javax.microedition.lcdui.Image import Image
         from javax.microedition.lcdui.NullImage import NullImage
         from org.allbinary.graphics.Anchor import Anchor
         self.image: Image = NullImage.NULL_IMAGE
@@ -29,10 +33,11 @@ class ImageMiniMapLayer(MiniMapLayer):
     
 
     def __init__(self, geographicMapInterface: BasicGeographicMap, viewPosition: ViewPositionBase) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
         from org.allbinary.view.ViewPositionBase import ViewPositionBase
         super().__init__(geographicMapInterface, viewPosition)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception

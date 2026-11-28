@@ -15,10 +15,18 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_divide
 from org.allbinary.image.opengles.OpenGLESImage import OpenGLESImage
 
 
+@java_inherited_overloads
 class OpenGLESGL10Image(OpenGLESImage):
+    def _java_defaults(self):
+        vars(self).setdefault("textureVertexFloatBuffer", None)
+        vars(self).setdefault("realOpenGLESImageDraw", None)
+        vars(self).setdefault("openGLESImageDraw", None)
 
     def _init_fields(self) -> None:
         from javax.microedition.khronos.opengles.GL10 import GL10
@@ -28,41 +36,45 @@ class OpenGLESGL10Image(OpenGLESImage):
         self.realOpenGLESImageDraw: OpenGLESImageDraw = (OpenGLESImageDraw()  # Java anonymous class body:
 #         self.glUtil: GLUtil = GLUtil.getInstance()
 #         self.displayInfoSingleton: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
-#         self.textureVertexFloatBuffer: FloatBuffer = self.textureVertexFloatBuffer
+#         self.textureVertexFloatBuffer: FloatBuffer = _java_listener_owner.textureVertexFloatBuffer
 #         self.regionTextureRectangleFloatArray: list[float] = [0.0] * (8)
 #         self.regionTextureVertexFloatBuffer: FloatBuffer = ByteBuffer.allocateDirect(4 * 4 * 2).order(ByteOrder.nativeOrder()).asFloatBuffer()
 #         self.regionRectangleFloatArray: list[float] = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 #         self.regionRectangleVertexFloatBuffer: FloatBuffer = ByteBuffer.allocateDirect(4 * 4 * 3).order(ByteOrder.nativeOrder()).asFloatBuffer()
-#         self.openGLESImageProperties: OpenGLESImageProperties = self.openGLESImageProperties
+#         self.openGLESImageProperties: OpenGLESImageProperties = _java_listener_owner.openGLESImageProperties
 #         
 # 
 #         def drawRegion(self, gl: GL10, viewHeight: int, x_src: float, y_src: float, width: float, height: float, x: int, y: int, z: int) -> None:
 #             from javax.microedition.khronos.opengles.GL10 import GL10
-#             imageWidth: int = self.getWidth()
-#             imageHeight: int = self.getHeight()
+#             imageWidth: int = _java_listener_owner.getWidth()
+#             imageHeight: int = _java_listener_owner.getHeight()
 #             self.regionRectangleFloatArray[7] = float(viewHeight)
 #             self.regionRectangleFloatArray[1] = self.regionRectangleFloatArray[7] - height
 #             self.regionRectangleFloatArray[3] = width
 #             self.regionRectangleFloatArray[4] = self.regionRectangleFloatArray[1]
 #             self.regionRectangleFloatArray[9] = self.regionRectangleFloatArray[3]
 #             self.regionRectangleFloatArray[10] = self.regionRectangleFloatArray[7]
-#             self.regionTextureRectangleFloatArray[0] = x_src / imageWidth
-#             self.regionTextureRectangleFloatArray[1] = (y_src + height) / imageHeight
-#             self.regionTextureRectangleFloatArray[2] = (x_src + width) / imageWidth
+#             self.regionTextureRectangleFloatArray[0] = java_divide(x_src, imageWidth)
+#             
+#             self.regionTextureRectangleFloatArray[1] = java_divide((y_src + height), imageHeight)
+#             
+#             self.regionTextureRectangleFloatArray[2] = java_divide((x_src + width), imageWidth)
+#             
 #             self.regionTextureRectangleFloatArray[3] = self.regionTextureRectangleFloatArray[1]
 #             self.regionTextureRectangleFloatArray[4] = self.regionTextureRectangleFloatArray[0]
-#             self.regionTextureRectangleFloatArray[5] = y_src / imageHeight
+#             self.regionTextureRectangleFloatArray[5] = java_divide(y_src, imageHeight)
+#             
 #             self.regionTextureRectangleFloatArray[6] = self.regionTextureRectangleFloatArray[2]
 #             self.regionTextureRectangleFloatArray[7] = self.regionTextureRectangleFloatArray[5]
 #             u_center: float = (self.regionTextureRectangleFloatArray[0] + self.regionTextureRectangleFloatArray[2]) / 2.0
 #             v_center: float = (self.regionTextureRectangleFloatArray[5] + self.regionTextureRectangleFloatArray[1]) / 2.0
 #             self.glUtil.rotateUVs(self.regionTextureRectangleFloatArray, float(-self.openGLESImageProperties.angle), u_center, v_center)
 #             gl.glPushMatrix()
-#             imageProcessor: OpenGLESImageProcessor = self.imageProcessor
-#             self.openGLESImageTranslate.translate(gl, self, float(x), float(-y))
+#             imageProcessor: OpenGLESImageProcessor = _java_listener_owner.imageProcessor
+#             _java_listener_owner.openGLESImageTranslate.translate(gl, _java_listener_owner, float(x), float(-y))
 #             imageProcessor.scale(gl, self.openGLESImageProperties.scaleX, self.openGLESImageProperties.scaleY)
 #             imageProcessor.colorMask(gl, self.openGLESImageProperties.redf, self.openGLESImageProperties.greenf, self.openGLESImageProperties.bluef, self.openGLESImageProperties.alphaf)
-#             self.openGLESImageTranslate.translate2(gl, self)
+#             _java_listener_owner.openGLESImageTranslate.translate2(gl, _java_listener_owner)
 #             self.regionRectangleVertexFloatBuffer.put(self.regionRectangleFloatArray)
 #             self.glUtil.position(self.regionRectangleVertexFloatBuffer, 0)
 #             gl.glVertexPointer(3, GL10.GL_FLOAT, 0, self.regionRectangleVertexFloatBuffer)
@@ -82,8 +94,8 @@ class OpenGLESGL10Image(OpenGLESImage):
 # 
 #         def draw(self, gl: GL10, x: int, y: int, z: int) -> None:
 #             from javax.microedition.khronos.opengles.GL10 import GL10
-#             width: int = self.getWidth()
-#             height: int = self.getHeight()
+#             width: int = _java_listener_owner.getWidth()
+#             height: int = _java_listener_owner.getHeight()
 #             self.regionRectangleFloatArray[7] = float(self.displayInfoSingleton.getLastHeight())
 #             self.regionRectangleFloatArray[1] = self.regionRectangleFloatArray[7] - height
 #             self.regionRectangleFloatArray[3] = float(width)
@@ -99,11 +111,11 @@ class OpenGLESGL10Image(OpenGLESImage):
 #             self.regionTextureRectangleFloatArray[6] = 1.0
 #             self.regionTextureRectangleFloatArray[7] = 0.0
 #             gl.glPushMatrix()
-#             self.openGLESImageTranslate.translate(gl, self, float(x), float(-y))
-#             imageProcessor: OpenGLESImageProcessor = self.imageProcessor
+#             _java_listener_owner.openGLESImageTranslate.translate(gl, _java_listener_owner, float(x), float(-y))
+#             imageProcessor: OpenGLESImageProcessor = _java_listener_owner.imageProcessor
 #             imageProcessor.scale(gl, self.openGLESImageProperties.scaleX, self.openGLESImageProperties.scaleY)
 #             imageProcessor.colorMask(gl, self.openGLESImageProperties.redf, self.openGLESImageProperties.greenf, self.openGLESImageProperties.bluef, self.openGLESImageProperties.alphaf)
-#             self.openGLESImageTranslate.translate2(gl, self)
+#             _java_listener_owner.openGLESImageTranslate.translate2(gl, _java_listener_owner)
 #             self.regionRectangleVertexFloatBuffer.put(self.regionRectangleFloatArray)
 #             self.glUtil.position(self.regionRectangleVertexFloatBuffer, 0)
 #             gl.glVertexPointer(3, GL10.GL_FLOAT, 0, self.regionRectangleVertexFloatBuffer)
@@ -126,11 +138,12 @@ class OpenGLESGL10Image(OpenGLESImage):
     
 
     def __init__(self, image: Image, bitmapFactory: PlatformBitmapBaseFactory, textureFactory: PlatformTextureBaseFactory) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.platform.graphics.PlatformBitmapBaseFactory import PlatformBitmapBaseFactory
         from org.allbinary.platform.opengles.PlatformTextureBaseFactory import PlatformTextureBaseFactory
         super().__init__(image, bitmapFactory, textureFactory)
-        self._init_fields()
+        __class__._init_fields(self)
         self.initVertices()
     
 
@@ -151,7 +164,7 @@ class OpenGLESGL10Image(OpenGLESImage):
         from javax.microedition.khronos.opengles.GL10 import GL10
         from org.allbinary.graphics.opengles.OpenGLLogUtil import OpenGLLogUtil
         gl10: GL10 = gl
-        if super().initTexture(gl10):
+        if java_super_call(super(), "initTexture", gl10):
             self.textureFactory.load(gl10, GL10.GL_TEXTURE_2D, 0, self, 0, True)
             gl10.glDisable(GL10.GL_TEXTURE_2D)
             self.openGLESImageDraw = self.realOpenGLESImageDraw

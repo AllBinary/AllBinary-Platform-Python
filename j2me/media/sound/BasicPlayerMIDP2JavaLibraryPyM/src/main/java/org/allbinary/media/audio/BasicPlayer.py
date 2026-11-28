@@ -28,17 +28,15 @@ class BasicPlayer(*java_bases(Player, TimeBaseInterface, Controllable2)):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
-        from javax.microedition.media.TimeBase import TimeBase
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.listenersList: BasicArrayList = BasicArrayListD()
-        self.timeBase: TimeBase = None
-        self.stateP: int = 0
-        self.loopCountP: int = 0
+        if "timeBase" not in vars(self): self.timeBase: TimeBase = None
+        if "stateP" not in vars(self): self.stateP: int = 0
+        if "loopCountP" not in vars(self): self.loopCountP: int = 0
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.setLoopCount(0)
         self.setState(Player.UNREALIZED)
     
@@ -65,11 +63,11 @@ class BasicPlayer(*java_bases(Player, TimeBaseInterface, Controllable2)):
 
     def addPlayerListener(self, playerListener: PlayerListener) -> None:
         with self._lock:
-            return self._addPlayerListener_unlocked(playerListener)
+            return __class__.__dict__["_addPlayerListener_unlocked"].__get__(self, __class__)(playerListener)
 
     def _addPlayerListener_unlocked(self, playerListener: PlayerListener) -> None:
         from javax.microedition.media.PlayerListener import PlayerListener
-        if not self.listenersList.contains(playerListener):
+        if not (self.listenersList.contains(playerListener)):
             self.listenersList.add(playerListener)
     
 
@@ -84,7 +82,7 @@ class BasicPlayer(*java_bases(Player, TimeBaseInterface, Controllable2)):
 
     def setState(self, state: int) -> None:
         with self._lock:
-            return self._setState_unlocked(state)
+            return __class__.__dict__["_setState_unlocked"].__get__(self, __class__)(state)
 
     def _setState_unlocked(self, state: int) -> None:
         self.stateP = state
@@ -105,7 +103,7 @@ class BasicPlayer(*java_bases(Player, TimeBaseInterface, Controllable2)):
 
     def setTimeBase(self, timeBase: TimeBase) -> None:
         with self._lock:
-            return self._setTimeBase_unlocked(timeBase)
+            return __class__.__dict__["_setTimeBase_unlocked"].__get__(self, __class__)(timeBase)
 
     def _setTimeBase_unlocked(self, timeBase: TimeBase) -> None:
         from javax.microedition.media.TimeBase import TimeBase
@@ -130,7 +128,7 @@ class BasicPlayer(*java_bases(Player, TimeBaseInterface, Controllable2)):
 
     def setLoopCount(self, count: int) -> None:
         with self._lock:
-            return self._setLoopCount_unlocked(count)
+            return __class__.__dict__["_setLoopCount_unlocked"].__get__(self, __class__)(count)
 
     def _setLoopCount_unlocked(self, count: int) -> None:
         self.loopCountP = count
@@ -143,7 +141,7 @@ class BasicPlayer(*java_bases(Player, TimeBaseInterface, Controllable2)):
     # throws MediaException
     def setMediaTime(self, now: int) -> int:
         with self._lock:
-            return self._setMediaTime_unlocked(now)
+            return __class__.__dict__["_setMediaTime_unlocked"].__get__(self, __class__)(now)
 
     def _setMediaTime_unlocked(self, now: int) -> int:
         from javax.microedition.media.MediaException import MediaException
@@ -153,7 +151,7 @@ class BasicPlayer(*java_bases(Player, TimeBaseInterface, Controllable2)):
     # throws MediaException
     def start(self) -> None:
         with self._lock:
-            return self._start_unlocked()
+            return __class__.__dict__["_start_unlocked"].__get__(self, __class__)()
 
     def _start_unlocked(self) -> None:
         from javax.microedition.media.MediaException import MediaException
@@ -163,7 +161,7 @@ class BasicPlayer(*java_bases(Player, TimeBaseInterface, Controllable2)):
     # throws MediaException
     def stop(self) -> None:
         with self._lock:
-            return self._stop_unlocked()
+            return __class__.__dict__["_stop_unlocked"].__get__(self, __class__)()
 
     def _stop_unlocked(self) -> None:
         from javax.microedition.media.MediaException import MediaException

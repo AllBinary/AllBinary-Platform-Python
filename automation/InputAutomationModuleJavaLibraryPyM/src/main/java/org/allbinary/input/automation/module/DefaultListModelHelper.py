@@ -20,14 +20,13 @@ from __future__ import annotations
 class DefaultListModelHelper:
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
-        self.defaultListModel: DefaultListModel = None
-        self.vector: BasicArrayList = None
+        if "defaultListModel" not in vars(self): self.defaultListModel: DefaultListModel = None
+        if "vector" not in vars(self): self.vector: BasicArrayList = None
     
 
     def __init__(self) -> None:
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
-        self._init_fields()
+        __class__._init_fields(self)
         self.vector = BasicArrayListD()
         self.defaultListModel = DefaultListModel()
     

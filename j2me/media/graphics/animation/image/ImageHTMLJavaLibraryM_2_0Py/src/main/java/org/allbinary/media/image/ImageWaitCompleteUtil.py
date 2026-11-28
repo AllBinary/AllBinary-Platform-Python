@@ -15,10 +15,17 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.media.image.ImageCompleteUtil import ImageCompleteUtil
 
 
+@java_inherited_overloads
 class ImageWaitCompleteUtil(ImageCompleteUtil):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("timeDelayHelper", None)
+        vars(self).setdefault("allTimeDelayHelper", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -29,8 +36,9 @@ class ImageWaitCompleteUtil(ImageCompleteUtil):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -42,7 +50,7 @@ class ImageWaitCompleteUtil(ImageCompleteUtil):
 
     # throws Exception
     def handleTimeout(self, name: str) -> None:
-        if self.timeDelayHelper.isTimeTNT():
+        if java_predicate(self.timeDelayHelper, "isTimeTNT"):
             raise Exception("isReady: Timeout Waiting or GameHtmlHasLoadedResourcesProcessor does not have this Image: " + name)
     
 
@@ -54,10 +62,10 @@ class ImageWaitCompleteUtil(ImageCompleteUtil):
         from playn.core.CoreImage import CoreImage
         playnImage: PlaynImage = image
         playnCoreImage: CoreImage = playnImage.getImage()
-        while not playnCoreImage.isReady() or playnCoreImage.width() + playnCoreImage.height() <= 0:
-            if timeDelayHelper.isTimeTNT():
+        while not (java_predicate(playnCoreImage, "isReady")) or playnCoreImage.width() + playnCoreImage.height() <= 0:
+            if java_predicate(timeDelayHelper, "isTimeTNT"):
                 raise Exception("waitFor: Timeout Waiting or GameHtmlHasLoadedResourcesProcessor does not have this Image: " + name)
-        if not image.isReady():
+        if not (java_predicate(image, "isReady")):
             image.init(image.getImage())
     
 

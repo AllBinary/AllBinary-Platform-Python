@@ -21,9 +21,8 @@ from org.allbinary.business.context.modules.storefront.statistics.users.StoreFro
 class StoreFrontUsersStatistics(StoreFrontUsersStatisticsInterface):
 
     def _init_fields(self) -> None:
-        from java.util.HashMap import HashMap
-        self.totalNumberOfUsers: int = None
-        self.totalUsersByRoleHashMap: HashMap = None
+        if "totalNumberOfUsers" not in vars(self): self.totalNumberOfUsers: int = None
+        if "totalUsersByRoleHashMap" not in vars(self): self.totalUsersByRoleHashMap: HashMap = None
     
 
     def __init__(self, storeFrontInterface: StoreFrontInterface) -> None:
@@ -34,7 +33,7 @@ class StoreFrontUsersStatistics(StoreFrontUsersStatisticsInterface):
         from org.allbinary.data.tables.user.UserEntityFactory import UserEntityFactory
         from org.allbinary.data.tables.user.UserEntityInterface import UserEntityInterface
         from org.allbinary.logic.StdUtil import StdUtil
-        self._init_fields()
+        __class__._init_fields(self)
         self.totalUsersByRoleHashMap = StdUtil.getInstance().createHashMap()
         userEntityInterface: UserEntityInterface = UserEntityFactory.getInstance()
         userVector: BasicArrayList = userEntityInterface.getCustomers()
@@ -65,6 +64,7 @@ class StoreFrontUsersStatistics(StoreFrontUsersStatisticsInterface):
     
 
     def toHashMap(self) -> HashMap:
+        from org.allbinary.business.context.modules.storefront.statistics.users.StoreFrontUsersStatisticsData import StoreFrontUsersStatisticsData
         from java.util.HashMap import HashMap
         from java.util.Set import Set
         from org.allbinary.business.user.role.UserRole import UserRole

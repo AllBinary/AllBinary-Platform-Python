@@ -29,7 +29,7 @@ class AssignWaypointsUtil:
         self.WAYPOINT_EVENT: RTSLayerEvent = RTSLayerEvent(NullPathFindingLayer.NULL_PATH_FINDING_LAYER)
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

@@ -21,11 +21,11 @@ from org.allbinary.data.tables.TableMappingInterface import TableMappingInterfac
 class PaymentGatewayEncryptedMapping(TableMappingInterface):
 
     def _init_fields(self) -> None:
-        self.paymentGatewayInterface: PaymentGatewayInterface = None
+        if "paymentGatewayInterface" not in vars(self): self.paymentGatewayInterface: PaymentGatewayInterface = None
     
 
     def __init__(self, paymentGatewayInterface: PaymentGatewayInterface) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.paymentGatewayInterface = paymentGatewayInterface
     
 

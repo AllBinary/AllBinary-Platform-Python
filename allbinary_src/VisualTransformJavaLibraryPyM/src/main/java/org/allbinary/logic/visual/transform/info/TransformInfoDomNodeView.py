@@ -15,30 +15,32 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 from org.allbinary.logic.visual.transform.info.TransformInfoDomNode import TransformInfoDomNode
 
 
+@java_inherited_overloads
 class TransformInfoDomNodeView(*java_bases(TransformInfoDomNode, DomNodeInterface)):
 
     def __init__(self, *args) -> None:
         if len(args) == 2:
-            self.__jconstructor2(*args)
+            __class__.__jconstructor2(self, *args)
         elif len(args) == 1:
-            self.__jconstructor1(*args)
+            __class__.__jconstructor1(self, *args)
 
     def __jconstructor2(self, *args) -> None:
-        if True and not isinstance(args[0], (str, list, int, float)) and (args[1] is None or isinstance(args[1], str)):
-            self._constructor2_1(*args)
+        if True and (args[0] is None or any(base.__name__ == "TransformInfoInterface" for base in type(args[0]).__mro__)) and (args[1] is None or isinstance(args[1], str)):
+            __class__._constructor2_1(self, *args)
         else:
-            self._constructor2_2(*args)
+            __class__._constructor2_2(self, *args)
 
     def __jconstructor1(self, *args) -> None:
-        if True and not isinstance(args[0], (str, list, int, float)):
-            self._constructor1_1(*args)
+        if True and (args[0] is None or any(base.__name__ == "TransformInfoInterface" for base in type(args[0]).__mro__)):
+            __class__._constructor1_1(self, *args)
         else:
-            self._constructor1_2(*args)
+            __class__._constructor1_2(self, *args)
     
 
     def _constructor2_1(self, transformInfoInterface: TransformInfoInterface, mapping: str) -> None:
@@ -59,6 +61,7 @@ class TransformInfoDomNodeView(*java_bases(TransformInfoDomNode, DomNodeInterfac
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
+        from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
         from org.w3c.dom.Attr import Attr
         from org.w3c.dom.Document import Document
         from org.w3c.dom.NamedNodeMap import NamedNodeMap

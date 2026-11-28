@@ -15,23 +15,30 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.multiplayer.layer.MultiPlayerGameLayer import MultiPlayerGameLayer
 from org.allbinary.game.layer.pickup.PickedUpLayerInterface import PickedUpLayerInterface
 from org.allbinary.game.layer.pickup.PickupableInterface import PickupableInterface
 
 
+@java_inherited_overloads
 class PickupLayer(*java_bases(MultiPlayerGameLayer, PickedUpLayerInterface, PickupableInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("pickedUpLayerInterfaceFactoryInterface", None)
+        vars(self).setdefault("destroyed", False)
+        vars(self).setdefault("animationInterface", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.animation.Animation import Animation
         from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
         self.pickedUpLayerInterfaceFactoryInterface: PickedUpLayerInterfaceFactoryInterface = CountedPickedUpLayerInterfaceFactory.NULL_COUNTED_PICKUP_LAYER_FACTORY
-        self.destroyed: bool = False
+        if "destroyed" not in vars(self): self.destroyed: bool = False
         self.animationInterface: Animation = NullAnimationFactory.getFactoryInstance().getInstance(0)
     
 
     def __init__(self, name: str, remoteInfo: RemoteInfo, total: int, pickedUpLayerInterfaceFactoryInterface: PickedUpLayerInterfaceFactoryInterface, animationInterface: Animation, rectangle: Rectangle, viewPosition: ViewPositionBase) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.animation.Animation import Animation
         from org.allbinary.game.collision.CollidableAlwaysPickupNeverCollideBehaviorFactory import CollidableAlwaysPickupNeverCollideBehaviorFactory
         from org.allbinary.game.identification.BasicGroupFactory import BasicGroupFactory
@@ -39,7 +46,7 @@ class PickupLayer(*java_bases(MultiPlayerGameLayer, PickedUpLayerInterface, Pick
         from org.allbinary.graphics.Rectangle import Rectangle
         from org.allbinary.view.ViewPositionBase import ViewPositionBase
         super().__init__(remoteInfo, BasicGroupFactory.getInstance().NONE_ARRAY, name, rectangle, viewPosition)
-        self._init_fields()
+        __class__._init_fields(self)
         self.setCollidableInferface(CollidableAlwaysPickupNeverCollideBehaviorFactory.getInstance().createBehavior())
         self.setLayerWidth(10)
         self.setLayerHeight(10)
@@ -90,7 +97,7 @@ class PickupLayer(*java_bases(MultiPlayerGameLayer, PickedUpLayerInterface, Pick
     def setDestroyed(self, destroyed: bool) -> None:
         from org.allbinary.game.combat.destroy.DestroyedLayerProcessor import DestroyedLayerProcessor
         self.destroyed = destroyed
-        if self.isDestroyed():
+        if java_predicate(self, "isDestroyed"):
             DestroyedLayerProcessor.getInstance().add(self)
     
 

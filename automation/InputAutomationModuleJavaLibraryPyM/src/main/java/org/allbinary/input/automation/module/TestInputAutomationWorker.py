@@ -20,18 +20,12 @@ from __future__ import annotations
 class TestInputAutomationWorker:
 
     def _init_fields(self) -> None:
-        from org.allbinary.input.media.image.capture.ScreenCaptureImagesWorker import ScreenCaptureImagesWorker
-        from org.allbinary.media.image.comparison.ImageComparisonWorker import ImageComparisonWorker
-        from org.allbinary.media.image.comparison.SaveImageComparisonWorker import SaveImageComparisonWorker
-        from org.allbinary.media.image.comparison.motion.MotionRectanglesWorker import MotionRectanglesWorker
-        from org.allbinary.media.image.comparison.motion.SaveMotionRectanglesResultsWorker import SaveMotionRectanglesResultsWorker
-        from org.allbinary.media.image.comparison.motion.TestInputForMotionRectanglesResultsWorker import TestInputForMotionRectanglesResultsWorker
-        self.captureWorker: ScreenCaptureImagesWorker = None
-        self.imageComparisonWorker: ImageComparisonWorker = None
-        self.motionRectanglesWorker: MotionRectanglesWorker = None
-        self.changedPixelsImageComparisonResultsWorker: SaveImageComparisonWorker = None
-        self.saveMotionRectanglesAsImagesWorker: SaveMotionRectanglesResultsWorker = None
-        self.moveMouseToFirstMotionRectanglesResultsWorker: TestInputForMotionRectanglesResultsWorker = None
+        if "captureWorker" not in vars(self): self.captureWorker: ScreenCaptureImagesWorker = None
+        if "imageComparisonWorker" not in vars(self): self.imageComparisonWorker: ImageComparisonWorker = None
+        if "motionRectanglesWorker" not in vars(self): self.motionRectanglesWorker: MotionRectanglesWorker = None
+        if "changedPixelsImageComparisonResultsWorker" not in vars(self): self.changedPixelsImageComparisonResultsWorker: SaveImageComparisonWorker = None
+        if "saveMotionRectanglesAsImagesWorker" not in vars(self): self.saveMotionRectanglesAsImagesWorker: SaveMotionRectanglesResultsWorker = None
+        if "moveMouseToFirstMotionRectanglesResultsWorker" not in vars(self): self.moveMouseToFirstMotionRectanglesResultsWorker: TestInputForMotionRectanglesResultsWorker = None
     
 
     def __init__(self) -> None:
@@ -39,7 +33,7 @@ class TestInputAutomationWorker:
         from org.allbinary.media.image.comparison.SaveImageComparisonWorker import SaveImageComparisonWorker
         from org.allbinary.media.image.comparison.motion.SaveMotionRectanglesResultsWorker import SaveMotionRectanglesResultsWorker
         from org.allbinary.media.image.comparison.motion.TestInputForMotionRectanglesResultsWorker import TestInputForMotionRectanglesResultsWorker
-        self._init_fields()
+        __class__._init_fields(self)
         self.captureWorker = ScreenCaptureImagesWorker()
         self.changedPixelsImageComparisonResultsWorker = SaveImageComparisonWorker()
         self.saveMotionRectanglesAsImagesWorker = SaveMotionRectanglesResultsWorker()

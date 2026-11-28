@@ -15,9 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.apache.commons.fileupload.FileUpload import FileUpload
 
 
+@java_inherited_overloads
 class AbFileUpload(FileUpload):
     
 
@@ -31,7 +34,7 @@ class AbFileUpload(FileUpload):
         from org.apache.commons.fileupload.FileItemIterator import FileItemIterator
         from org.apache.commons.fileupload.FileUploadException import FileUploadException
         from org.apache.commons.fileupload.servlet.ServletRequestContext import ServletRequestContext
-        return super().getItemIterator(ServletRequestContext(request))
+        return java_super_call(super(), "getItemIterator", ServletRequestContext(request))
 # from java.io.IOException import IOException
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
 # from org.apache.commons.fileupload.FileItemFactory import FileItemFactory

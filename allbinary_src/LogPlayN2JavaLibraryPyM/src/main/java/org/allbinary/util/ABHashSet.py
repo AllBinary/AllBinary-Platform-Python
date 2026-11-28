@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.util.HashSet import HashSet
 
 
+@java_inherited_overloads
 class ABHashSet(HashSet):
 
     def __init__(self) -> None:

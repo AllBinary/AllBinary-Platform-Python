@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.game.IntermissionInterface import IntermissionInterface
 
 
@@ -22,13 +23,13 @@ class Intermission(IntermissionInterface):
 
     def _init_fields(self) -> None:
         from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
-        self.enabled: bool = False
+        if "enabled" not in vars(self): self.enabled: bool = False
         self.timeElapsedHelper: TimeDelayHelper = TimeDelayHelper(0)
         self.intermissionEnableListener: IntermissionEnableListenerInterface = NullIntermissionEnableListener.getInstance()
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def setListener(self, enableListener: IntermissionEnableListenerInterface) -> None:
@@ -42,7 +43,7 @@ class Intermission(IntermissionInterface):
 
     def setEnabled(self, enabled: bool) -> None:
         self.enabled = enabled
-        if self.isEnabled():
+        if java_predicate(self, "isEnabled"):
             self.getTimeDelayHelper().setStartTimeTNT()
         self.intermissionEnableListener.notifyIntermission(enabled)
     

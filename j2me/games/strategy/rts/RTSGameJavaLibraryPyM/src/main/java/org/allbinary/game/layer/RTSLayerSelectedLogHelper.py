@@ -15,12 +15,19 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.layer.RTSLayerLogHelper import RTSLayerLogHelper
 
 
+@java_inherited_overloads
 class RTSLayerSelectedLogHelper(RTSLayerLogHelper):
     instanceC: RTSLayerSelectedLogHelper = None
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("commonSeps", None)
+        vars(self).setdefault("positionStrings", None)
+        vars(self).setdefault("TRACKTO_TURNTO", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -32,8 +39,9 @@ class RTSLayerSelectedLogHelper(RTSLayerLogHelper):
         self.TRACKTO_TURNTO: str = "trackTo:turnTo"
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

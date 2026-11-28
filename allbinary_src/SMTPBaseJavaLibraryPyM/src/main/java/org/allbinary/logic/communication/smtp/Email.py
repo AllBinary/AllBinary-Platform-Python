@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.logic.communication.smtp.EmailInterface import EmailInterface
 
 
@@ -27,31 +28,30 @@ class Email(EmailInterface):
     SMTP_LOCAL_HOST: str = "mail.smtp.localhost"
 
     def _init_fields(self) -> None:
-        from java.util.Properties import Properties
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.msg: MimeMessage = None
-        self.properties: Properties = None
-        self.bs: ByteArrayOutputStream = None
-        self.isDebug: bool = None
+        if "msg" not in vars(self): self.msg: MimeMessage = None
+        if "properties" not in vars(self): self.properties: Properties = None
+        if "bs" not in vars(self): self.bs: ByteArrayOutputStream = None
+        if "isDebug" not in vars(self): self.isDebug: bool = False
 
     def __init__(self, *args) -> None:
         if len(args) == 7:
-            self._constructor7(*args)
+            __class__._constructor7(self, *args)
         elif len(args) == 8:
-            self._constructor8(*args)
+            __class__._constructor8(self, *args)
     
 
     def _constructor7(self, from_: str, to: str, subject: str, server: str, textBody: str, htmlAttachment: str, contentBase: str) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.isDebug = False
         self.init(from_, to, subject, server, textBody, htmlAttachment, contentBase)
     
 
     def _constructor8(self, from_: str, to: str, subject: str, server: str, textBody: str, htmlAttachment: str, contentBase: str, isDebug: bool) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.isDebug = isDebug
         self.init(from_, to, subject, server, textBody, htmlAttachment, contentBase)
     
@@ -64,13 +64,13 @@ class Email(EmailInterface):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             stringValidationUtil: StringValidationUtil = StringValidationUtil.getInstance()
-            mimeBodyParts: list[MimeBodyPart] = [None] * ((2 if not stringValidationUtil.isEmpty(htmlAttachment) else 1))
+            mimeBodyParts: list[MimeBodyPart] = [None] * ((2 if not (stringValidationUtil.isEmpty(htmlAttachment)) else 1))
             mimeBodyParts[0] = MimeBodyPart()
             mimeBodyParts[0].setText(textBody)
-            if not stringValidationUtil.isEmpty(htmlAttachment):
+            if not (stringValidationUtil.isEmpty(htmlAttachment)):
                 internetHeaders: InternetHeaders = InternetHeaders()
                 internetHeaders.addHeader("Content-Type", "text/html")
-                if not stringValidationUtil.isEmpty(contentBase):
+                if not (stringValidationUtil.isEmpty(contentBase)):
                     internetHeaders.addHeader("Content-Base", contentBase)
                 mimeBodyParts[1] = MimeBodyPart(internetHeaders, list(htmlAttachment.encode()))
             self.init(server, None, [InternetAddress(from_)], [InternetAddress(to)], None, None, subject, mimeBodyParts)
@@ -83,6 +83,7 @@ class Email(EmailInterface):
 
     # throws MessagingException
     def init_j8(self, server: str, authenticator: Authenticator, addresses_from: list[InternetAddress], addresses_to: list[InternetAddress], addresses_cc: list[InternetAddress], addresses_bcc: list[InternetAddress], subject: str, mimeBodyParts: list[MimeBodyPart]) -> None:
+        from java.io.ByteArrayOutputStream import ByteArrayOutputStream
         from java.io.PrintStream import PrintStream
         from java.util.Properties import Properties
         from org.allbinary.logic.string.StringUtil import StringUtil
@@ -121,7 +122,9 @@ class Email(EmailInterface):
         self.msg.setContent(mimeMultipart)
 
     def init(self, *args):
-        return getattr(self, "init_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("init_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().init(*args)
     
 
     def getMimeMessage(self) -> MimeMessage:
@@ -142,6 +145,13 @@ class Email(EmailInterface):
 
     # throws Exception
     def toHashMap(self) -> HashMap:
+        from org.allbinary.logic.communication.smtp.EmailData import EmailData
+        from org.allbinary.logic.communication.smtp.EmailData import EmailData
+        from org.allbinary.logic.communication.smtp.EmailData import EmailData
+        from org.allbinary.logic.communication.smtp.EmailData import EmailData
+        from org.allbinary.logic.communication.smtp.EmailData import EmailData
+        from org.allbinary.logic.communication.smtp.EmailData import EmailData
+        from org.allbinary.logic.communication.smtp.EmailData import EmailData
         from java.util.HashMap import HashMap
         from org.allbinary.logic.StdUtil import StdUtil
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
@@ -180,6 +190,7 @@ class Email(EmailInterface):
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
+        from org.allbinary.logic.communication.smtp.EmailData import EmailData
         from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
         from org.w3c.dom.Document import Document
         from org.w3c.dom.Node import Node

@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.input.SelectedRTSLayersPlayerGameInputProcessor import SelectedRTSLayersPlayerGameInputProcessor
 
 
+@java_inherited_overloads
 class SelectedRTSLayersPlayerUpgradeGameInputProcessor(SelectedRTSLayersPlayerGameInputProcessor):
     
 

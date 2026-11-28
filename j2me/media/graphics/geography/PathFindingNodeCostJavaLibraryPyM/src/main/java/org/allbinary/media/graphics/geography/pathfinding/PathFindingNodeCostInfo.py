@@ -21,13 +21,13 @@ class PathFindingNodeCostInfo(object):
 
     def _init_fields(self) -> None:
         self.pathFindingNodeCostInfoData: PathFindingNodeCostInfoData = PathFindingNodeCostInfoData.getInstance()
-        self.costFromStartP: int = None
-        self.costToEndP: int = None
-        self.totalCostP: int = 0
+        if "costFromStartP" not in vars(self): self.costFromStartP: int = 0
+        if "costToEndP" not in vars(self): self.costToEndP: int = 0
+        if "totalCostP" not in vars(self): self.totalCostP: int = 0
     
 
     def __init__(self, costFromStart: int, costToGoal: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.costFromStartP = costFromStart
         self.costToEndP = costToGoal
         self.setCalculatedTotalCost()
@@ -68,7 +68,7 @@ class PathFindingNodeCostInfo(object):
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.string.CommonLabels import CommonLabels
         stringBuffer: StringMaker = StringMaker()
-        stringBuffer.append(type(self).__module__ + "." + type(self).__qualname__)
+        stringBuffer.append(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(self)))
         stringBuffer.append(CommonLabels.getInstance().COLON_SEP)
         stringBuffer.append("CostFromStart: ")
         stringBuffer.appendlong(self.costFromStartP)
@@ -82,5 +82,6 @@ class PathFindingNodeCostInfo(object):
         return self.toString()
 # from org.allbinary.logic.string.StringMaker import StringMaker
 # from org.allbinary.string.CommonLabels import CommonLabels
+from org.allbinary.media.graphics.geography.pathfinding.PathFindingNodeCostInfoData import PathFindingNodeCostInfoData
 
 

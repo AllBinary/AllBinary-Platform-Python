@@ -35,7 +35,7 @@ class MouseStrings:
         self.MOUSE_MOVED_LABEL: str = "MouseMoved" + str(CommonSeps.getInstance().COLON_SEP)
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

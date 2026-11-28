@@ -15,19 +15,24 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.collision.CollidableBaseBehaviorFactory import CollidableBaseBehaviorFactory
 
 
+@java_inherited_overloads
 class CollidableNeverCollideBehaviorFactory(CollidableBaseBehaviorFactory):
     instanceC: CollidableNeverCollideBehaviorFactory = None
+    def _java_defaults(self):
+        vars(self).setdefault("instance", None)
 
     def _init_fields(self) -> None:
         self.instance: CollidableNeverCollideBehavior = CollidableNeverCollideBehavior(False)
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

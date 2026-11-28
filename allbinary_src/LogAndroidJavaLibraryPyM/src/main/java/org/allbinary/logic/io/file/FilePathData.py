@@ -23,6 +23,7 @@ class FilePathData:
     instance: FilePathData = None
 
     def _init_fields(self) -> None:
+        from java.io.File import File
         self.SEPARATORCHAR: str = os.sep
         self.PATH_START: str = os.sep
     
@@ -33,7 +34,8 @@ class FilePathData:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        from java.io.File import File
+        __class__._init_fields(self)
         if os.sep == '\\':
             self.PATH_START = os.sep + os.sep
 # from java.io.File import File

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -36,7 +37,7 @@ class ScreenRepaintProcessorFactory:
         from javax.microedition.lcdui.Displayable import Displayable
         from org.allbinary.J2MEUtil import J2MEUtil
         from org.allbinary.canvas.Processor import Processor
-        if not J2MEUtil.isJ2ME():
+        if not (java_predicate(J2MEUtil, "isJ2ME")):
             return ScreenRepaintProcessor(displayable)
         else:
             return Processor.getInstance()

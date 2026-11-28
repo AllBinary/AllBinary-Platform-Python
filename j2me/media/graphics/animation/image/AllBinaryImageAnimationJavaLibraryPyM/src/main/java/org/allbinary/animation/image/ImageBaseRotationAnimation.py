@@ -15,25 +15,32 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_divide
 from org.allbinary.animation.RotationAnimation import RotationAnimation
 
 
+@java_inherited_overloads
 class ImageBaseRotationAnimation(RotationAnimation):
+    def _java_defaults(self):
+        vars(self).setdefault("image", None)
+        vars(self).setdefault("anchor", 0)
 
     def _init_fields(self) -> None:
-        from javax.microedition.lcdui.Image import Image
         from org.allbinary.graphics.Anchor import Anchor
-        self.image: Image = None
+        if "image" not in vars(self): self.image: Image = None
         self.anchor: int = Anchor.TOP_LEFT
     
 
     def __init__(self, image: Image, angleInfo: AngleInfo, totalAngle: int, animationBehavior: AnimationBehavior) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         from org.allbinary.math.AngleInfo import AngleInfo
         from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
-        super().__init__(angleInfo, CircularIndexUtil.createInstance(totalAngle / angleInfo.getAngleIncrementInfo().getAngleIncrement()), animationBehavior)
-        self._init_fields()
+        super().__init__(angleInfo, CircularIndexUtil.createInstance(java_divide(totalAngle, angleInfo.getAngleIncrementInfo().getAngleIncrement())
+            ), animationBehavior)
+        __class__._init_fields(self)
         self.image = image
     
 

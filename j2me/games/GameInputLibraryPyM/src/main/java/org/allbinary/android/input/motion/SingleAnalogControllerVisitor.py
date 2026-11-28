@@ -15,18 +15,23 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.android.input.motion.AnalogControllerVisitor import AnalogControllerVisitor
 
 
+@java_inherited_overloads
 class SingleAnalogControllerVisitor(AnalogControllerVisitor):
+    def _java_defaults(self):
+        vars(self).setdefault("playerInputId", 0)
 
     def _init_fields(self) -> None:
-        self.playerInputId: int = None
+        if "playerInputId" not in vars(self): self.playerInputId: int = 0
     
 
     def __init__(self, playerInputId: int) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.playerInputId = playerInputId
     
 

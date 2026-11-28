@@ -15,21 +15,26 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.health.HealthListenerInterface import HealthListenerInterface
 from org.allbinary.graphics.paint.Paintable import Paintable
 
 
+@java_inherited_overloads
 class HealthIncludingLifeBar(*java_bases(Paintable, HealthListenerInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("animationInterface", None)
+        vars(self).setdefault("life", None)
+        vars(self).setdefault("healthInterface", None)
+        vars(self).setdefault("allbinaryLayer", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.health.HealthBarAnimation import HealthBarAnimation
-        from org.allbinary.game.health.HealthInterface import HealthInterface
-        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-        self.animationInterface: HealthBarAnimation = None
-        self.life: Life = None
-        self.healthInterface: HealthInterface = None
-        self.allbinaryLayer: AllBinaryLayer = None
+        if "animationInterface" not in vars(self): self.animationInterface: HealthBarAnimation = None
+        if "life" not in vars(self): self.life: Life = None
+        if "healthInterface" not in vars(self): self.healthInterface: HealthInterface = None
+        if "allbinaryLayer" not in vars(self): self.allbinaryLayer: AllBinaryLayer = None
     
 
     # throws Exception
@@ -42,11 +47,12 @@ class HealthIncludingLifeBar(*java_bases(Paintable, HealthListenerInterface)):
     
 
     def __init__(self, layerInterface: AllBinaryLayer, life: Life, healthInterface: Health, animationInterface: HealthBarAnimation, direction: int) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.health.Health import Health
         from org.allbinary.game.health.HealthBarAnimation import HealthBarAnimation
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.allbinaryLayer = layerInterface
         self.animationInterface = animationInterface
         self.life = life
@@ -56,7 +62,8 @@ class HealthIncludingLifeBar(*java_bases(Paintable, HealthListenerInterface)):
     
 
     def onHealthChange(self) -> None:
-        self.animationInterface.onHealthChange(((self.healthInterface.getHealth() + (self.healthInterface.getMaxHealth() * self.life.get())) * self.allbinaryLayer.getWidth()) / (self.healthInterface.getMaxHealth() + (self.healthInterface.getMaxHealth() * self.life.getStartLives())))
+        self.animationInterface.onHealthChange(java_divide(((self.healthInterface.getHealth() + (self.healthInterface.getMaxHealth() * self.life.get())) * self.allbinaryLayer.getWidth()), (self.healthInterface.getMaxHealth() + (self.healthInterface.getMaxHealth() * self.life.getStartLives())))
+            )
     
 
     def paint(self, graphics: Graphics) -> None:

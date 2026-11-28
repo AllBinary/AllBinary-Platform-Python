@@ -15,10 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.graphics.displayable.DisplayableInterface import DisplayableInterface
 
 
 # Java interface
+@java_inherited_overloads
 class AllBinaryGameCanvasInterface(DisplayableInterface):
     
 

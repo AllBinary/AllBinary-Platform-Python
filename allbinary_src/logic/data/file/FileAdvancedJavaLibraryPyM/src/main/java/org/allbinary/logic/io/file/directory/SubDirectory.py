@@ -31,7 +31,7 @@ class SubDirectory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # Java overloaded method with the same parameter count: Python keeps the last definition
@@ -61,13 +61,15 @@ class SubDirectory:
         return self.directory.search(level, file, True)
 
     def search(self, *args):
-        if len(args) == 2 and True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)):
-            return self.search_j2_1(*args)
-        if len(args) == 2 and True and (args[0] is None or isinstance(args[0], str)) and not isinstance(args[1], (str, list, int, float)):
-            return self.search_j2_2(*args)
+        if len(args) == 2 and True and (args[0] is None or any(base.__name__ == "FileFilter" for base in type(args[0]).__mro__)) and (args[1] is None or any(base.__name__ == "AbFile" for base in type(args[1]).__mro__)):
+            return __class__.__dict__["search_j2_1"].__get__(self, __class__)(*args)
+        if len(args) == 2 and True and (args[0] is None or isinstance(args[0], str)) and (args[1] is None or any(base.__name__ == "AbFile" for base in type(args[1]).__mro__)):
+            return __class__.__dict__["search_j2_2"].__get__(self, __class__)(*args)
         if len(args) == 2:
-            return self.search_j2_3(*args)
-        return getattr(self, "search_j" + str(len(args)))(*args)
+            return __class__.__dict__["search_j2_3"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("search_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().search(*args)
     
 
     @staticmethod

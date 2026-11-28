@@ -15,22 +15,30 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.system.security.crypt.jcehelper.BaseSecretComposite import BaseSecretComposite
 
 
+@java_inherited_overloads
 class SecretComposite(BaseSecretComposite):
+    def _java_defaults(self):
+        vars(self).setdefault("byteUtil", None)
+        vars(self).setdefault("cipher", None)
+        vars(self).setdefault("secretKey", None)
+        vars(self).setdefault("key", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.java.byteutil.ByteUtil import ByteUtil
         self.byteUtil: ByteUtil = ByteUtil.getInstance()
-        self.cipher: Cipher = None
-        self.secretKey: SecretKey = None
-        self.key: list[int] = None
+        if "cipher" not in vars(self): self.cipher: Cipher = None
+        if "secretKey" not in vars(self): self.secretKey: SecretKey = None
+        if "key" not in vars(self): self.key: list[int] = None
     
 
     def __init__(self, secretKey: SecretKey, cipher: Cipher, key: list[int]) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.secretKey = secretKey
         self.cipher = cipher
         self.key = key

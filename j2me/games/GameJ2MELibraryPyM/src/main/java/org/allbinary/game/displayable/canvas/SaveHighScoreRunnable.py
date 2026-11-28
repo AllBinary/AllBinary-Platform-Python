@@ -20,17 +20,15 @@ from __future__ import annotations
 class SaveHighScoreRunnable(object):
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.score.displayable.HighScoreTextBox import HighScoreTextBox
-        from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
         from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
         self.progressCanvas: ProgressCanvas = ProgressCanvasFactory.getInstance()
-        self.isLast: bool = None
-        self.textBox: HighScoreTextBox = None
+        if "isLast" not in vars(self): self.isLast: bool = False
+        if "textBox" not in vars(self): self.textBox: HighScoreTextBox = None
     
 
     def __init__(self, isLast: bool, textBox: HighScoreTextBox) -> None:
         from org.allbinary.game.score.displayable.HighScoreTextBox import HighScoreTextBox
-        self._init_fields()
+        __class__._init_fields(self)
         self.isLast = isLast
         self.textBox = textBox
     

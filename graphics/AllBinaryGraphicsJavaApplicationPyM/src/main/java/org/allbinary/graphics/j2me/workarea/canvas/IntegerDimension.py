@@ -20,12 +20,12 @@ from __future__ import annotations
 class IntegerDimension:
 
     def _init_fields(self) -> None:
-        self.width: int = 0
-        self.height: int = 0
+        if "width" not in vars(self): self.width: int = 0
+        if "height" not in vars(self): self.height: int = 0
     
 
     def __init__(self, width: int, height: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.setWidth(width)
         self.setHeight(height)
     

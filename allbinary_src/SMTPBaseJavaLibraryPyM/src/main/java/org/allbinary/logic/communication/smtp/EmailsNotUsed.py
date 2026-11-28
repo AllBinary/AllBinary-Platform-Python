@@ -21,22 +21,22 @@ from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 class EmailsNotUsed(DomNodeInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.emailInfoVector: BasicArrayList = None
+        if "emailInfoVector" not in vars(self): self.emailInfoVector: BasicArrayList = None
     
 
     def __init__(self) -> None:
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
-        self._init_fields()
+        __class__._init_fields(self)
         self.emailInfoVector = BasicArrayListD()
     
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
+        from org.allbinary.logic.communication.smtp.EmailData import EmailData
         from org.allbinary.data.tree.dom.BasicErrorNodeUtil import BasicErrorNodeUtil
         from org.w3c.dom.Document import Document
         from org.w3c.dom.Node import Node

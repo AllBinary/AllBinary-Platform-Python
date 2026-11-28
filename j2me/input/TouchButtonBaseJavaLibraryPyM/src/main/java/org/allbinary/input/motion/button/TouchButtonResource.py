@@ -12,12 +12,12 @@ from __future__ import annotations
 class TouchButtonResource:
 
     def _init_fields(self) -> None:
-        self.RESOURCE: str = None
-        self.HINT: str = None
+        if "RESOURCE" not in vars(self): self.RESOURCE: str = None
+        if "HINT" not in vars(self): self.HINT: str = None
     
 
     def __init__(self, resource: str, hint: str) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.RESOURCE = resource
         self.HINT = hint
 

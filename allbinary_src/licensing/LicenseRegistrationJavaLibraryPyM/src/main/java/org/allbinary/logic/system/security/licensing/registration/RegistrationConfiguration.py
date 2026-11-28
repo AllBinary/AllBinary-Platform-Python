@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -32,7 +33,7 @@ class RegistrationConfiguration:
     def __init__(self) -> None:
         from org.allbinary.logic.io.file.FileFactory import FileFactory
         from org.allbinary.string.CommonStrings import CommonStrings
-        self._init_fields()
+        __class__._init_fields(self)
         try:
             if FileFactory.getInstance().isFile(self.FILE):
                 self.read()

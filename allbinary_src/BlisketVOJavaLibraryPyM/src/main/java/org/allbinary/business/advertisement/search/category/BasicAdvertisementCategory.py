@@ -21,11 +21,11 @@ from org.allbinary.business.advertisement.search.category.AdvertisementCategoryI
 class BasicAdvertisementCategory(AdvertisementCategoryInterface):
 
     def _init_fields(self) -> None:
-        self.categoryId: str = None
+        if "categoryId" not in vars(self): self.categoryId: str = None
     
 
     def __init__(self, categoryId: str) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.categoryId = categoryId
     
 

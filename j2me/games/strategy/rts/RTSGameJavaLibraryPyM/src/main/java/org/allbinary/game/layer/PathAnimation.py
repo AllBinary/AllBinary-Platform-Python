@@ -15,18 +15,28 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.animation.Animation import Animation
 
 
+@java_inherited_overloads
 class PathAnimation(Animation):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("linePathAnimation", None)
+        vars(self).setdefault("pathFindingLayer", None)
+        vars(self).setdefault("allBinaryGameLayerManagerP", None)
+        vars(self).setdefault("startColor", None)
+        vars(self).setdefault("middleColor", None)
+        vars(self).setdefault("endColor", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.linePathAnimation: LinePathAnimation = None
-        self.pathFindingLayer: PathFindingLayerInterface = None
+        if "linePathAnimation" not in vars(self): self.linePathAnimation: LinePathAnimation = None
+        if "pathFindingLayer" not in vars(self): self.pathFindingLayer: PathFindingLayerInterface = None
         self.allBinaryGameLayerManagerP: AllBinaryGameLayerManager = AllBinaryGameLayerManager.getNullInstance()
         self.startColor: BasicColor = BasicColorFactory.getInstance().RED
         self.middleColor: BasicColor = BasicColorFactory.getInstance().BLUE
@@ -34,8 +44,9 @@ class PathAnimation(Animation):
     
 
     def __init__(self, pathFindingLayer: PathFindingLayerInterface, linePathAnimation: LinePathAnimation) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.pathFindingLayer = pathFindingLayer
         self.linePathAnimation = linePathAnimation
     
@@ -103,5 +114,6 @@ class PathAnimation(Animation):
 # from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
 # from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
 # from org.allbinary.util.BasicArrayList import BasicArrayList
+from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
 
 

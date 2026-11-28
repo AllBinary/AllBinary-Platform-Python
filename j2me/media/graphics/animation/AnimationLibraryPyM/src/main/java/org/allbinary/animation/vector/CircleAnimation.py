@@ -15,24 +15,32 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.Animation import Animation
 from org.allbinary.graphics.color.ColorCompositeInterface import ColorCompositeInterface
 
 
+@java_inherited_overloads
 class CircleAnimation(*java_bases(Animation, ColorCompositeInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("TOTAL_ANGLE", 0)
+        vars(self).setdefault("width", 0)
+        vars(self).setdefault("height", 0)
 
     def _init_fields(self) -> None:
         from org.allbinary.math.AngleFactory import AngleFactory
         self.TOTAL_ANGLE: int = int(AngleFactory.getInstance().TOTAL_ANGLE)
-        self.width: int = None
-        self.height: int = None
+        if "width" not in vars(self): self.width: int = 0
+        if "height" not in vars(self): self.height: int = 0
     
 
     def __init__(self, width: int, height: int, basicColor: BasicColor) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.width = width
         self.height = height
         self.setBasicColorP(basicColor)
@@ -50,12 +58,12 @@ class CircleAnimation(*java_bases(Animation, ColorCompositeInterface)):
 
     def getBasicColorP(self) -> BasicColor:
         from org.allbinary.graphics.color.BasicColor import BasicColor
-        return super().getBasicColorP()
+        return java_super_call(super(), "getBasicColorP")
     
 
     def setBasicColorP(self, basicColor: BasicColor) -> None:
         from org.allbinary.graphics.color.BasicColor import BasicColor
-        super().setBasicColorP(basicColor)
+        java_super_call(super(), "setBasicColorP", basicColor)
 # from javax.microedition.lcdui.Graphics import Graphics
 # from org.allbinary.graphics.color.BasicColor import BasicColor
 # from org.allbinary.math.AngleFactory import AngleFactory

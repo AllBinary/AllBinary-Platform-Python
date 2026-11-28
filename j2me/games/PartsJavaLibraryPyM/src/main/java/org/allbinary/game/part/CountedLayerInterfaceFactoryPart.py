@@ -25,27 +25,24 @@ class CountedLayerInterfaceFactoryPart(*java_bases(PartInterface, UpdateMyFontIn
     NULL_COUNTED_LAYER_INTERFACE_FACTORY: CountedLayerInterfaceFactoryPart = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.animation.Animation import Animation
         from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
         from org.allbinary.game.layer.pickup.CountedPickedUpLayerInterfaceFactory import CountedPickedUpLayerInterfaceFactory
-        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
         from org.allbinary.logic.NullUtil import NullUtil
-        from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
         self.updateMyFontProcessor: MyFontProcessor = UpdateMyFontProcessor(self)
         self.myFontProcessor: MyFontProcessor = self.updateMyFontProcessor
         self.animationInterface: Animation = NullAnimationFactory.getFactoryInstance().getInstance(0)
-        self.total: int = 0
+        if "total" not in vars(self): self.total: int = 0
         self.totalString: list[str] = NullUtil.getInstance().NULL_CHAR_ARRAY
-        self.xOffset: int = 0
+        if "xOffset" not in vars(self): self.xOffset: int = 0
         self.countedPickedUpLayerInterfaceFactory: CountedPickedUpLayerInterfaceFactory = CountedPickedUpLayerInterfaceFactory.NULL_COUNTED_PICKUP_LAYER_FACTORY
-        self.primitiveLongUtil: PrimitiveLongUtil = None
+        if "primitiveLongUtil" not in vars(self): self.primitiveLongUtil: PrimitiveLongUtil = None
     
 
     def __init__(self, total: int, countedPickedUpLayerInterfaceFactory: CountedPickedUpLayerInterfaceFactory) -> None:
         from org.allbinary.game.layer.pickup.CountedPickedUpLayerInterfaceFactory import CountedPickedUpLayerInterfaceFactory
         from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
-        self._init_fields()
+        __class__._init_fields(self)
         self.primitiveLongUtil = PrimitiveLongUtil.createPowerOfTen(1000)
         self.init(total, countedPickedUpLayerInterfaceFactory)
     

@@ -21,11 +21,11 @@ from org.allbinary.animation.transition.AnimationListenerInterface import Animat
 class RunAtEndAnimationListener(AnimationListenerInterface):
 
     def _init_fields(self) -> None:
-        self.runnable: object = None
+        if "runnable" not in vars(self): self.runnable: object = None
     
 
     def __init__(self, runnable: object) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.runnable = runnable
     
 

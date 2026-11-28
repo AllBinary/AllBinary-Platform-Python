@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.media.graphics.geography.map.racetrack.CustomMapGeneratorBaseFactory import CustomMapGeneratorBaseFactory
 
 
+@java_inherited_overloads
 class CustomMapGeneratorFactory(CustomMapGeneratorBaseFactory):
 
     def __init__(self) -> None:

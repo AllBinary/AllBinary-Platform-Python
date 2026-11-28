@@ -15,27 +15,35 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.game.displayable.canvas.BasicMenuInputProcessor import BasicMenuInputProcessor
 
 
+@java_inherited_overloads
 class PopupMenuInputProcessor(BasicMenuInputProcessor):
+    def _java_defaults(self):
+        vars(self).setdefault("rectangleCollisionUtil", None)
+        vars(self).setdefault("CLICK_DELAY", 0)
+        vars(self).setdefault("clickTimeHelper", None)
+        vars(self).setdefault("rectangle", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.Rectangle import Rectangle
         from org.allbinary.math.RectangleCollisionUtil import RectangleCollisionUtil
         from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         self.rectangleCollisionUtil: RectangleCollisionUtil = RectangleCollisionUtil.getInstance()
         self.CLICK_DELAY: int = 120
         self.clickTimeHelper: TimeDelayHelper = TimeDelayHelper(self.CLICK_DELAY)
-        self.rectangle: Rectangle = None
+        if "rectangle" not in vars(self): self.rectangle: Rectangle = None
     
 
     def __init__(self, gameKeyEventList: BasicArrayList, playerInputId: int, gameCanvas: MyCanvas, rectangle: Rectangle) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.Rectangle import Rectangle
         from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
         from org.allbinary.util.BasicArrayList import BasicArrayList
         super().__init__(gameKeyEventList, playerInputId, gameCanvas)
-        self._init_fields()
+        __class__._init_fields(self)
         self.rectangle = rectangle
     
 
@@ -107,7 +115,7 @@ class PopupMenuInputProcessor(BasicMenuInputProcessor):
             point: GPoint = motionGestureEvent.getCurrentPoint()
             rectPoint: GPoint = self.rectangle.getPoint()
             if self.rectangleCollisionUtil.isInside(rectPoint.getX(), rectPoint.getY(), self.rectangle.getMaxX() + 20, self.rectangle.getMaxY(), point.getX(), point.getY()):
-                if self.clickTimeHelper.isTimeTNT():
+                if java_predicate(self.clickTimeHelper, "isTimeTNT"):
                     gameCanvas: AllBinaryGameCanvas = self.getCanvas()
                     gameCanvas.toggleMenu()
 # from javax.microedition.lcdui.Canvas import Canvas

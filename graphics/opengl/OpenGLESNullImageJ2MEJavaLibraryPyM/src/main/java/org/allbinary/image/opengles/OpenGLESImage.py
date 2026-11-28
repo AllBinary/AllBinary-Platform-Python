@@ -26,12 +26,10 @@ class OpenGLESImage(OpenGLSurfaceChangedInterface):
     TYPE: int = 4
 
     def _init_fields(self) -> None:
-        from org.allbinary.platform.graphics.PlatformBitmapBase import PlatformBitmapBase
-        from org.allbinary.platform.opengles.PlatformTextureBaseFactory import PlatformTextureBaseFactory
         from org.allbinary.string.CommonStrings import CommonStrings
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.textureFactory: PlatformTextureBaseFactory = None
-        self.openGLBitmap: PlatformBitmapBase = None
+        if "textureFactory" not in vars(self): self.textureFactory: PlatformTextureBaseFactory = None
+        if "openGLBitmap" not in vars(self): self.openGLBitmap: PlatformBitmapBase = None
         self.openGLESImageProperties: OpenGLESImageProperties = OpenGLESImageProperties()
     
 
@@ -39,7 +37,7 @@ class OpenGLESImage(OpenGLSurfaceChangedInterface):
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.platform.graphics.PlatformBitmapBaseFactory import PlatformBitmapBaseFactory
         from org.allbinary.platform.opengles.PlatformTextureBaseFactory import PlatformTextureBaseFactory
-        self._init_fields()
+        __class__._init_fields(self)
         self.openGLBitmap = bitmapFactory.createBitmap(image)
         self.textureFactory = textureFactory
     

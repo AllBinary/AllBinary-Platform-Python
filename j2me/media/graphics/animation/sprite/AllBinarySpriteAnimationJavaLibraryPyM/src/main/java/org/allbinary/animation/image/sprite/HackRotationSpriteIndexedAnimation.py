@@ -15,26 +15,32 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_divide
 from org.allbinary.animation.RotationAnimation import RotationAnimation
 
 
+@java_inherited_overloads
 class HackRotationSpriteIndexedAnimation(RotationAnimation):
+    def _java_defaults(self):
+        vars(self).setdefault("sprite", None)
+        vars(self).setdefault("image", None)
 
     def _init_fields(self) -> None:
-        from javax.microedition.lcdui.Image import Image
-        from javax.microedition.lcdui.game.Sprite import Sprite
-        self.sprite: Sprite = None
-        self.image: Image = None
+        if "sprite" not in vars(self): self.sprite: Sprite = None
+        if "image" not in vars(self): self.image: Image = None
     
 
     def __init__(self, sprite: Sprite, image: Image, angleInfo: AngleInfo, animationBehavior: AnimationBehavior) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.Image import Image
         from javax.microedition.lcdui.game.Sprite import Sprite
         from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         from org.allbinary.math.AngleInfo import AngleInfo
         from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
-        super().__init__(angleInfo, CircularIndexUtil.createInstance(360 / angleInfo.getAngleIncrementInfo().getAngleIncrement()), animationBehavior)
-        self._init_fields()
+        super().__init__(angleInfo, CircularIndexUtil.createInstance(java_divide(360, angleInfo.getAngleIncrementInfo().getAngleIncrement())
+            ), animationBehavior)
+        __class__._init_fields(self)
         self.sprite = sprite
         self.image = image
     

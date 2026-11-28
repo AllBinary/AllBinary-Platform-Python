@@ -15,43 +15,61 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from tags.ModifyTag import ModifyTag
 
 
+@java_inherited_overloads
 class TransformInfoTag(ModifyTag):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("name", None)
+        vars(self).setdefault("storeName", None)
+        vars(self).setdefault("objectFile", None)
+        vars(self).setdefault("anyType", None)
+        vars(self).setdefault("objectConfigFile", None)
+        vars(self).setdefault("objectConfig", None)
+        vars(self).setdefault("templateFile", None)
+        vars(self).setdefault("template", None)
+        vars(self).setdefault("dataFile", None)
+        vars(self).setdefault("data", None)
+        vars(self).setdefault("type_", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.name: str = None
-        self.storeName: str = None
-        self.objectFile: str = None
-        self.anyType: str = None
-        self.objectConfigFile: str = None
-        self.objectConfig: str = None
-        self.templateFile: str = None
-        self.template: str = None
-        self.dataFile: str = None
-        self.data: str = None
-        self.type_: str = None
+        if "name" not in vars(self): self.name: str = None
+        if "storeName" not in vars(self): self.storeName: str = None
+        if "objectFile" not in vars(self): self.objectFile: str = None
+        if "anyType" not in vars(self): self.anyType: str = None
+        if "objectConfigFile" not in vars(self): self.objectConfigFile: str = None
+        if "objectConfig" not in vars(self): self.objectConfig: str = None
+        if "templateFile" not in vars(self): self.templateFile: str = None
+        if "template" not in vars(self): self.template: str = None
+        if "dataFile" not in vars(self): self.dataFile: str = None
+        if "data" not in vars(self): self.data: str = None
+        if "type_" not in vars(self): self.type_: str = None
 
     def __init__(self, *args) -> None:
         if len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
         elif len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
     
 
     def _constructor0(self) -> None:
+        __class__._java_defaults(self)
         from taghelpers.transform.info.TransformInfoRequestHelperFactory import TransformInfoRequestHelperFactory
         super().__init__(TransformInfoRequestHelperFactory())
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def _constructor1(self, tagHelperFactoryInterface: TagHelperFactoryInterface) -> None:
+        __class__._java_defaults(self)
         from admin.taghelpers.TagHelperFactoryInterface import TagHelperFactoryInterface
         super().__init__(tagHelperFactoryInterface)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def setName(self, value: str) -> None:
@@ -136,7 +154,7 @@ class TransformInfoTag(ModifyTag):
     def doStartTag(self) -> int:
         from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
         try:
-            return super().doStartTag()
+            return java_super_call(super(), "doStartTag")
         except Exception as e:
             AbResponseHandler.sendJspTagRedirect(self.pageContext, e)
             return self.SKIP_BODY

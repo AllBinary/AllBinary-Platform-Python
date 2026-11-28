@@ -15,20 +15,27 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from tags.StoreValidationTransformTag import StoreValidationTransformTag
 
 
+@java_inherited_overloads
 class OrderHistoryTag(StoreValidationTransformTag):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("status", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.status: str = None
+        if "status" not in vars(self): self.status: str = None
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def setStatus(self, value: str) -> None:
@@ -73,7 +80,7 @@ class OrderHistoryTag(StoreValidationTransformTag):
                     pass
                 else:
                     raise Exception("No Such View Command: " + str(self.getCommand()))
-                return super().doStartTag()
+                return java_super_call(super(), "doStartTag")
             raise Exception("Command Null")
         except LicensingException as e:
             AbResponseHandler.sendJspTagLicensingRedirect(self.pageContext, e)

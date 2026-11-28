@@ -15,26 +15,38 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.animation.RotationAnimation import RotationAnimation
 
 
+@java_inherited_overloads
 class LazyImageRotationAnimation(RotationAnimation):
     SET_REAL_ANIMATION: str = "setRealAnimation"
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("layoutIndex", 0)
+        vars(self).setdefault("instanceId", 0)
+        vars(self).setdefault("animationInterfaceFactoryInterface", None)
+        vars(self).setdefault("NULL_INDEX_ANIMATION", None)
+        vars(self).setdefault("animation", None)
+        vars(self).setdefault("scaleProperties", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.animation.IndexedAnimation import IndexedAnimation
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.media.ScaleProperties import ScaleProperties
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.layoutIndex: int = None
-        self.instanceId: int = None
-        self.animationInterfaceFactoryInterface: BaseImageAnimationFactory = None
-        self.NULL_INDEX_ANIMATION: IndexedAnimation = None
-        self.animation: IndexedAnimation = None
+        if "layoutIndex" not in vars(self): self.layoutIndex: int = 0
+        if "instanceId" not in vars(self): self.instanceId: int = 0
+        if "animationInterfaceFactoryInterface" not in vars(self): self.animationInterfaceFactoryInterface: BaseImageAnimationFactory = None
+        if "NULL_INDEX_ANIMATION" not in vars(self): self.NULL_INDEX_ANIMATION: IndexedAnimation = None
+        if "animation" not in vars(self): self.animation: IndexedAnimation = None
         self.scaleProperties: ScaleProperties = ScaleProperties.instance
     
 
     def __init__(self, layoutIndex: int, instanceId: int, scaleProperties: ScaleProperties, animationInterfaceFactoryInterface: BaseImageAnimationFactory, animationBehavior: AnimationBehavior) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.Graphics import Graphics
         from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         from org.allbinary.animation.IndexedAnimation import IndexedAnimation
@@ -47,7 +59,7 @@ class LazyImageRotationAnimation(RotationAnimation):
         from org.allbinary.media.ScaleProperties import ScaleProperties
         from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         super().__init__(AngleInfo.getInstance(AngleFactory.getInstance().QUARTER_TOTAL_ANGLE), CircularIndexUtil.createInstance(4), animationBehavior)
-        self._init_fields()
+        __class__._init_fields(self)
         self.layoutIndex = layoutIndex
         self.instanceId = instanceId
         self.animationInterfaceFactoryInterface = animationInterfaceFactoryInterface
@@ -55,19 +67,24 @@ class LazyImageRotationAnimation(RotationAnimation):
         imageCache.add(self)
         self.scaleProperties = scaleProperties
         self.NULL_INDEX_ANIMATION = NullRotationAnimationFactory.getFactoryInstance().getInstance(0)
+        @java_inherited_overloads
         class ActualRotationAnimation(RotationAnimation):
+            def _java_defaults(self):
+                vars(self).setdefault("lazyImageRotationAnimation", None)
+                vars(self).setdefault("index", 0)
 
             def _init_fields(self) -> None:
-                self.lazyImageRotationAnimation: LazyImageRotationAnimation = None
-                self.index: int = 0
+                if "lazyImageRotationAnimation" not in vars(self): self.lazyImageRotationAnimation: LazyImageRotationAnimation = None
+                if "index" not in vars(self): self.index: int = 0
             
 
             def __init__(self, lazyImageRotationAnimation: LazyImageRotationAnimation) -> None:
+                __class__._java_defaults(self)
                 from org.allbinary.math.AngleFactory import AngleFactory
                 from org.allbinary.math.AngleInfo import AngleInfo
                 from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
                 super().__init__(AngleInfo.getInstance(AngleFactory.getInstance().QUARTER_TOTAL_ANGLE), CircularIndexUtil.createInstance(4), self.animationBehavior)
-                self._init_fields()
+                __class__._init_fields(self)
                 self.lazyImageRotationAnimation = lazyImageRotationAnimation
             
 
@@ -101,7 +118,7 @@ class LazyImageRotationAnimation(RotationAnimation):
                 except Exception as e:
                     logUtil: LogUtil = LogUtil.getInstance()
                     logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.PROCESS, e)
-        self.animation = ActualRotationAnimation(self)
+        self.animation = java_new_inner(self, ActualRotationAnimation, self)
     
 
     def setRealAnimation(self) -> None:
@@ -208,7 +225,7 @@ class LazyImageRotationAnimation(RotationAnimation):
     
 
     def isThreed(self) -> bool:
-        return self.animation.isThreed()
+        return java_predicate(self.animation, "isThreed")
     
 
     # throws Exception
@@ -242,7 +259,7 @@ class LazyImageRotationAnimation(RotationAnimation):
     
 
     def isLastFrame(self) -> bool:
-        return self.animation.isLastFrame()
+        return java_predicate(self.animation, "isLastFrame")
     
 
     def setSequence(self, sequence: list[int]) -> None:
@@ -279,7 +296,7 @@ class LazyImageRotationAnimation(RotationAnimation):
         from org.allbinary.logic.string.StringMaker import StringMaker
         commonSeps: CommonSeps = CommonSeps.getInstance()
         image: Image = self.animationInterfaceFactoryInterface.getImage()
-        return str(StringMaker().append(str(super())).append(commonSeps.SPACE).append(image.getName()).append(commonSeps.SPACE).appendint(int(image.getWidth())).append(commonSeps.SPACE).appendint(int(image.getHeight())))
+        return str(StringMaker().append(java_super_call(super(), "toString")).append(commonSeps.SPACE).append(image.getName()).append(commonSeps.SPACE).appendint(int(image.getWidth())).append(commonSeps.SPACE).appendint(int(image.getHeight())))
 
     def __str__(self) -> str:
         return self.toString()

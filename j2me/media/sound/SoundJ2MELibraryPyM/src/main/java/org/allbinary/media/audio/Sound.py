@@ -22,13 +22,12 @@ from org.allbinary.media.audio.SoundInterface import SoundInterface
 class Sound(*java_bases(SoundInterface, object)):
 
     def _init_fields(self) -> None:
-        from javax.microedition.media.Player import Player
-        self.resource: str = None
+        if "resource" not in vars(self): self.resource: str = None
         self.player: Player = NoPlayer.NO_PLAYER
     
 
     def __init__(self, resource: str) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.resource = resource
     
 

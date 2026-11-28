@@ -15,19 +15,27 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
 
 
+@java_inherited_overloads
 class GameKeyEvent(AllBinaryEventObject):
     NONE: GameKeyEvent = None
+    def _java_defaults(self):
+        vars(self).setdefault("sourceId", 0)
+        vars(self).setdefault("repeated", False)
+        vars(self).setdefault("key", 0)
+        vars(self).setdefault("gameActionKey", 0)
+        vars(self).setdefault("originalKey", 0)
 
     def _init_fields(self) -> None:
-        self.sourceId: int = None
-        self.repeated: bool = False
-        self.key: int = None
-        self.gameActionKey: int = 0
-        self.originalKey: int = 0
+        if "sourceId" not in vars(self): self.sourceId: int = 0
+        if "repeated" not in vars(self): self.repeated: bool = False
+        if "key" not in vars(self): self.key: int = 0
+        if "gameActionKey" not in vars(self): self.gameActionKey: int = 0
+        if "originalKey" not in vars(self): self.originalKey: int = 0
     
 
     @staticmethod
@@ -36,8 +44,9 @@ class GameKeyEvent(AllBinaryEventObject):
     
 
     def __init__(self, anyType: object, sourceId: int, originalKey: int, gameActionKey: int, key: int, repeated: bool) -> None:
+        __class__._java_defaults(self)
         super().__init__(anyType)
-        self._init_fields()
+        __class__._init_fields(self)
         self.sourceId = sourceId
         self.setOriginalKey(originalKey)
         self.key = key

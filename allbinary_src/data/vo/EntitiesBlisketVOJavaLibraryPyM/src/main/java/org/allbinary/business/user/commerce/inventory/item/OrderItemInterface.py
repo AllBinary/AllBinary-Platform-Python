@@ -15,10 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
 
 
 # Java interface
+@java_inherited_overloads
 class OrderItemInterface(ItemInterface):
     
 

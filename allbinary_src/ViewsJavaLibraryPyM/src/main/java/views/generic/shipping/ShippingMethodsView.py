@@ -15,28 +15,34 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 from views.business.context.modules.storefront.HttpStoreComponentView import HttpStoreComponentView
 
 
+@java_inherited_overloads
 class ShippingMethodsView(*java_bases(HttpStoreComponentView, DomNodeInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("shippingMethods", None)
+        vars(self).setdefault("storeFrontInterface", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-        from org.allbinary.business.user.commerce.shipping.ShippingMethods import ShippingMethods
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.shippingMethods: ShippingMethods = None
-        self.storeFrontInterface: StoreFrontInterface = None
+        if "shippingMethods" not in vars(self): self.shippingMethods: ShippingMethods = None
+        if "storeFrontInterface" not in vars(self): self.storeFrontInterface: StoreFrontInterface = None
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
         from org.allbinary.business.user.commerce.shipping.ShippingMethods import ShippingMethods
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
         self.storeFrontInterface = StoreFrontFactory.getInstance(self.getTransformInfoInterface().getStoreName())
         self.shippingMethods = ShippingMethods(self.abeClientInformation, self.storeFrontInterface)
     
@@ -105,7 +111,7 @@ class ShippingMethodsView(*java_bases(HttpStoreComponentView, DomNodeInterface))
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             self.addDomNodeInterfaces()
-            return super().view()
+            return java_super_call(super(), "view")
         except Exception as e:
             error: str = "Failed to view ShippingMethods"
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERERROR):

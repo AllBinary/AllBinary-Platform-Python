@@ -20,14 +20,14 @@ from __future__ import annotations
 class GeographicMapCellPositionEventUtil:
 
     def _init_fields(self) -> None:
-        self.geographicMapCellPositionEvent: GeographicMapCellPositionEvent = None
+        if "geographicMapCellPositionEvent" not in vars(self): self.geographicMapCellPositionEvent: GeographicMapCellPositionEvent = None
         self.geographicMapCellPositionEventHandler: GeographicMapCellPositionEventHandler = GeographicMapCellPositionEventHandler.getInstance()
     
 
     def __init__(self, anyType: object) -> None:
         from org.allbinary.media.graphics.geography.map.event.GeographicMapCellPositionEvent import GeographicMapCellPositionEvent
         from org.allbinary.graphics.CellPositionFactory import CellPositionFactory
-        self._init_fields()
+        __class__._init_fields(self)
         self.geographicMapCellPositionEvent = GeographicMapCellPositionEvent(anyType, CellPositionFactory.getInstance().NONE)
     
 

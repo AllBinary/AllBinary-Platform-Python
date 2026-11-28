@@ -21,13 +21,12 @@ from org.allbinary.layer.AllBinaryLayerFactoryInterface import AllBinaryLayerFac
 class MineLayerFactory(AllBinaryLayerFactoryInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.view.ViewPositionFactoryInterface import ViewPositionFactoryInterface
-        self.viewPositionFactoryInterface: ViewPositionFactoryInterface = None
+        if "viewPositionFactoryInterface" not in vars(self): self.viewPositionFactoryInterface: ViewPositionFactoryInterface = None
     
 
     def __init__(self, viewPositionFactoryInterface: ViewPositionFactoryInterface) -> None:
         from org.allbinary.view.ViewPositionFactoryInterface import ViewPositionFactoryInterface
-        self._init_fields()
+        __class__._init_fields(self)
         self.viewPositionFactoryInterface = viewPositionFactoryInterface
     
 

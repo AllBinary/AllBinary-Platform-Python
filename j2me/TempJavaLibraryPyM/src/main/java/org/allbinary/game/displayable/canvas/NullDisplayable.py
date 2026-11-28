@@ -3,11 +3,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from javax.microedition.lcdui.Canvas import Canvas
 
 
 #Temp should not be in any build
+@java_inherited_overloads
 class NullDisplayable(Canvas):
     SINGLETON: NullDisplayable = None
     

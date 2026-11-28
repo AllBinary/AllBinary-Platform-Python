@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.System import System
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -33,7 +34,7 @@ class LogUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def putL(self, log: Log) -> None:
@@ -60,12 +61,13 @@ class LogUtil:
     def put(self, specialMessage: str, anyType: object, functionName: str, exception: object) -> None:
         from org.allbinary.string.CommonStrings import CommonStrings
         className: str = CommonStrings.getInstance().EMPTY
-        if type(anyType).__module__ + "." + type(anyType).__qualname__ is not None:
-            className = str(type(anyType).__module__ + "." + type(anyType).__qualname__)
+        if __import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(anyType)) is not None:
+            className = str(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(anyType)))
         message: str = self.logFormatUtil.get(className, functionName, specialMessage, exception)
         print(self.LOG_SUCCESS, end="")
         print(message)
 # from org.allbinary.string.CommonStrings import CommonStrings
+from org.allbinary.logic.communication.log.LogFormatUtil import LogFormatUtil
 
 
 def _LogUtil_instance() -> object:

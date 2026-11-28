@@ -15,12 +15,18 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.IndexedAnimation import IndexedAnimation
 from org.allbinary.animation.VectorAnimationInterface import VectorAnimationInterface
 
 
+@java_inherited_overloads
 class VectorAnimation(*java_bases(IndexedAnimation, VectorAnimationInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("currentPoints", None)
+        vars(self).setdefault("circularIndexUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.NullUtil import NullUtil
@@ -41,9 +47,10 @@ class VectorAnimation(*java_bases(IndexedAnimation, VectorAnimationInterface)):
     
 
     def __init__(self, currentPoints: list[list[list[int]]], basicColor: BasicColor, animationBehavior: AnimationBehavior) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(animationBehavior)
-        self._init_fields()
+        __class__._init_fields(self)
         self.setPoints(currentPoints)
         self.setBasicColorP(basicColor)
     
@@ -53,7 +60,7 @@ class VectorAnimation(*java_bases(IndexedAnimation, VectorAnimationInterface)):
         changed: bool = False
         if self.getBasicColorP() is None or int(self.getBasicColorP()) != int(basicColor):
             changed = True
-        super().setBasicColorP(basicColor)
+        java_super_call(super(), "setBasicColorP", basicColor)
         if changed:
             self.updateModifiers()
     
@@ -63,7 +70,7 @@ class VectorAnimation(*java_bases(IndexedAnimation, VectorAnimationInterface)):
         changed: bool = False
         if self.getChangeBasicColor() is None or int(self.getChangeBasicColor()) != int(basicColor):
             changed = True
-        super().changeBasicColor(basicColor)
+        java_super_call(super(), "changeBasicColor", basicColor)
         if changed:
             self.updateModifiers()
     
@@ -72,7 +79,7 @@ class VectorAnimation(*java_bases(IndexedAnimation, VectorAnimationInterface)):
         changed: bool = False
         if self.alphaP != alpha:
             changed = True
-        super().setAlpha(alpha)
+        java_super_call(super(), "setAlpha", alpha)
         if changed:
             self.updateModifiers()
     
@@ -164,7 +171,7 @@ class VectorAnimation(*java_bases(IndexedAnimation, VectorAnimationInterface)):
 
     def getBasicColorP(self) -> BasicColor:
         from org.allbinary.graphics.color.BasicColor import BasicColor
-        return super().getBasicColorP()
+        return java_super_call(super(), "getBasicColorP")
 # from javax.microedition.lcdui.Graphics import Graphics
 # from javax.microedition.lcdui.NullImage import NullImage
 # from org.allbinary.graphics.color.BasicColor import BasicColor

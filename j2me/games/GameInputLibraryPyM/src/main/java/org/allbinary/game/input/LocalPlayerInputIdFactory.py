@@ -33,7 +33,7 @@ class LocalPlayerInputIdFactory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         for index in range(len(self.deviceIdToplayerId) - 1, 0 - 1, -1):
             self.deviceIdToplayerId[index] = -1
     

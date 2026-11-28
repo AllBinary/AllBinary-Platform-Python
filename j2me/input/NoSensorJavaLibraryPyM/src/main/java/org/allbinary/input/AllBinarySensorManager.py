@@ -24,7 +24,6 @@ class AllBinarySensorManager:
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
@@ -44,7 +43,7 @@ class AllBinarySensorManager:
     def __init__(self) -> None:
         from org.allbinary.input.accelerometer.AccelerometerSensorFactory import AccelerometerSensorFactory
         from org.allbinary.input.gyro.GyroSensorFactory import GyroSensorFactory
-        self._init_fields()
+        __class__._init_fields(self)
         try:
             GyroSensorFactory.init()
             AccelerometerSensorFactory.init()

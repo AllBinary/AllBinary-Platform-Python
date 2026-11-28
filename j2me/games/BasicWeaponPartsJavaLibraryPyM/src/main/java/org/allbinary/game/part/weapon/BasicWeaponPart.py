@@ -25,11 +25,9 @@ class BasicWeaponPart(*java_bases(PartInterface, SalvoInterface)):
     NULL_BASIC_WEAPON_PART: BasicWeaponPart = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.animation.Animation import Animation
         from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
         from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
         from org.allbinary.game.score.NoScoreable import NoScoreable
-        from org.allbinary.game.score.ScoreableInterface import ScoreableInterface
         from org.allbinary.graphics.RelativeRelationship import RelativeRelationship
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         self.animationInterface: Animation = NullAnimationFactory.getFactoryInstance().getInstance(0)
@@ -55,7 +53,7 @@ class BasicWeaponPart(*java_bases(PartInterface, SalvoInterface)):
         from org.allbinary.game.score.ScoreableInterface import ScoreableInterface
         from org.allbinary.graphics.RelativeRelationship import RelativeRelationship
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
-        self._init_fields()
+        __class__._init_fields(self)
         self.init(sourceLayerInterface, weaponProperties, scoreableInterface, relativeRelationship)
         self.setAnimationInterface(animationInterface)
     

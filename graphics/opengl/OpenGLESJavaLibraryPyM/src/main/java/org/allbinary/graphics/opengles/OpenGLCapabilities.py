@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -34,7 +35,7 @@ class OpenGLCapabilities:
         self.glRenderer: str = self.stringUtil.EMPTY_STRING
         self.glVendor: str = self.stringUtil.EMPTY_STRING
         self.glExtensions: str = self.stringUtil.EMPTY_STRING
-        self.possiblyAccelerated: bool = False
+        if "possiblyAccelerated" not in vars(self): self.possiblyAccelerated: bool = False
         self.acceleratedString: str = self.stringUtil.EMPTY_STRING
         self.maxTextureSize: int = 64
         self.VERSION_1_0: str = "1.0"
@@ -49,11 +50,11 @@ class OpenGLCapabilities:
         self.GL_EXT_GPU_SHADER4: str = "GL_EXT_gpu_shader4"
         self.glVersion: str = self.glVersionString
         self.glInstanceVersion: str = self.VERSION_UNK
-        self.glExtensionDrawTexture: bool = False
-        self.glThreedDrawTexture: bool = False
-        self.glExtensionGPUShader4: bool = False
-        self.glExtensionGPUShader100: bool = False
-        self.vertexBufferObjectSupport: bool = False
+        if "glExtensionDrawTexture" not in vars(self): self.glExtensionDrawTexture: bool = False
+        if "glThreedDrawTexture" not in vars(self): self.glThreedDrawTexture: bool = False
+        if "glExtensionGPUShader4" not in vars(self): self.glExtensionGPUShader4: bool = False
+        if "glExtensionGPUShader100" not in vars(self): self.glExtensionGPUShader100: bool = False
+        if "vertexBufferObjectSupport" not in vars(self): self.vertexBufferObjectSupport: bool = False
     
 
     @staticmethod
@@ -62,7 +63,7 @@ class OpenGLCapabilities:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def isInitialized(self) -> bool:
@@ -74,6 +75,7 @@ class OpenGLCapabilities:
     
 
     def initCapabilities(self, gl: GL10) -> None:
+        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
         from javax.microedition.khronos.opengles.GL10 import GL10
         from javax.microedition.khronos.opengles.GL11 import GL11
         from org.allbinary.AndroidUtil import AndroidUtil
@@ -146,7 +148,7 @@ class OpenGLCapabilities:
             if self.possiblyAccelerated:
                 PreLogUtil.put(str(StringMaker().append("VBO:?").appendboolean((self.glInstanceVersion == self.VERSION_1_1)).append("||").appendboolean(self.isExtension(openGLFeatureFactory.OPENGL_VERTEX_BUFFER_OBJECT))), self, METHOD_NAME)
                 if (self.glInstanceVersion == self.VERSION_1_1 or self.isExtension(openGLFeatureFactory.OPENGL_VERTEX_BUFFER_OBJECT)):
-                    if AndroidUtil.isAndroid():
+                    if java_predicate(AndroidUtil, "isAndroid"):
                         PreLogUtil.put("VBO implementation was detected, but disabled by default for Android", self, METHOD_NAME)
                     else:
                         PreLogUtil.put("VBO implementation was detected, but disabled for now", self, METHOD_NAME)
@@ -256,7 +258,7 @@ class OpenGLCapabilities:
         stringBuffer.append(self.acceleratedString)
         stringBuffer.append(commonSeps.NEW_LINE)
         stringBuffer.append(" VBO Support: ")
-        stringBuffer.appendboolean(self.isVertexBufferObjectSupport())
+        stringBuffer.appendboolean(java_predicate(self, "isVertexBufferObjectSupport"))
         stringBuffer.append(commonSeps.NEW_LINE)
         stringBuffer.append(" Max Texture Size: ")
         stringBuffer.appendint(self.maxTextureSize)

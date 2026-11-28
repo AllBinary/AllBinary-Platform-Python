@@ -22,8 +22,6 @@ class SimpleFileUtil:
     instance: SimpleFileUtil = None
 
     def _init_fields(self) -> None:
-        from java.io.Reader import Reader
-        from java.io.Writer import Writer
         from org.allbinary.logic.NullUtil import NullUtil
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.logic.io.StreamUtil import StreamUtil
@@ -36,7 +34,7 @@ class SimpleFileUtil:
         self.streamUtil: StreamUtil = StreamUtil.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -72,6 +70,7 @@ class SimpleFileUtil:
     
 
     def loadFileAsListReturnLine(self, inputStream: InputStream, max: int, byteArray1: list[int], includeReturnLine: int) -> BasicArrayList:
+        from java.io.ByteArrayOutputStream import ByteArrayOutputStream
         from java.io.InputStream import InputStream
         from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD

@@ -15,16 +15,20 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.android.input.motion.BaseGameInputMotionEventProcessor import BaseGameInputMotionEventProcessor
 
 
+@java_inherited_overloads
 class GameInputMotionEventProcessorAPI1(BaseGameInputMotionEventProcessor):
     instance: object = None
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("motionRecognizer", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.input.motion.AllMotionRecognizer import AllMotionRecognizer
-        from org.allbinary.input.motion.MotionRecognizer import MotionRecognizer
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.motionRecognizer: MotionRecognizer = AllMotionRecognizer()
@@ -39,8 +43,9 @@ class GameInputMotionEventProcessorAPI1(BaseGameInputMotionEventProcessor):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def process(self, motionEvent: MotionEvent) -> None:

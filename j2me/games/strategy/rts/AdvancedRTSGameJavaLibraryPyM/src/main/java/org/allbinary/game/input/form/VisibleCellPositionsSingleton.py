@@ -33,7 +33,7 @@ class VisibleCellPositionsSingleton(*java_bases(BuildingEventListenerInterface, 
         self.ALL_VISIBLE_TILEDLAYER: SimpleTiledLayer = SimpleTiledLayer(0, 0, 0, 0)
         self.simpleTiledLayer: SimpleTiledLayer = self.ALL_VISIBLE_TILEDLAYER
         self.paintSimpleTiledLayer: SimpleTiledLayer = self.ALL_VISIBLE_TILEDLAYER
-        self.currentIndex: int = 0
+        if "currentIndex" not in vars(self): self.currentIndex: int = 0
     
 
     @staticmethod
@@ -44,7 +44,7 @@ class VisibleCellPositionsSingleton(*java_bases(BuildingEventListenerInterface, 
     def __init__(self) -> None:
         from org.allbinary.game.layer.building.event.LocalPlayerBuildingEventHandler import LocalPlayerBuildingEventHandler
         from org.allbinary.layer.event.ScrollMapEventHandler import ScrollMapEventHandler
-        self._init_fields()
+        __class__._init_fields(self)
         LocalPlayerBuildingEventHandler.getInstance().addListenerInterface(self)
         ScrollMapEventHandler.getInstance().addListenerInterface(self)
     

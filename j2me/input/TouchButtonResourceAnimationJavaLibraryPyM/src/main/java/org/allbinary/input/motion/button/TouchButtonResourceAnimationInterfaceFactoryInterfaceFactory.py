@@ -15,9 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.animation.resource.BaseResourceAnimationInterfaceFactoryInterfaceFactory import BaseResourceAnimationInterfaceFactoryInterfaceFactory
 
 
+@java_inherited_overloads
 class TouchButtonResourceAnimationInterfaceFactoryInterfaceFactory(BaseResourceAnimationInterfaceFactoryInterfaceFactory):
     
 
@@ -60,7 +64,7 @@ class TouchButtonResourceAnimationInterfaceFactoryInterfaceFactory(BaseResourceA
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.logic.system.os.OperatingSystemFactory import OperatingSystemFactory
         from org.allbinary.media.image.ImageCompleteUtil import ImageCompleteUtil
-        if self.isInitialized():
+        if java_predicate(self, "isInitialized"):
             return
         portion: int = 140
         loadingString: str = str(StringMaker().append(str(self)).append(" Loading: "))
@@ -86,7 +90,7 @@ class TouchButtonResourceAnimationInterfaceFactoryInterfaceFactory(BaseResourceA
         touchButtonStrafeLeftResourceImage: Image = imageCache.getWithKey(touchButtonStrafeLeftResource.RESOURCE)
         touchButtonStrafeRightResourceImage: Image = imageCache.getWithKey(touchButtonStrafeRightResource.RESOURCE)
         nullAnimationFactory: NullAnimationFactory = NullAnimationFactory.getFactoryInstance()
-        if OperatingSystemFactory.getInstance().getOperatingSystemInstance().isOverScan():
+        if java_predicate(OperatingSystemFactory.getInstance().getOperatingSystemInstance(), "isOverScan"):
             imageCache.getWithKey(TouchButtonStartResource.getInstance().HINT)
         progressCanvas.addPortion(portion, loadingString, ((index := index + 1) - 1))
         imageCompleteUtil: ImageCompleteUtil = ImageCompleteUtil.getInstance()
@@ -125,12 +129,12 @@ class TouchButtonResourceAnimationInterfaceFactoryInterfaceFactory(BaseResourceA
         imageCompleteUtil.waitForImage(touchButtonStrafeRightResourceImage, touchButtonStrafeRightResource.RESOURCE)
         self.add(touchButtonStrafeRightResource.RESOURCE, OneRowSpriteIndexedAnimationFactory.createFactory(touchButtonStrafeRightResourceImage, AnimationBehaviorFactory.getInstance()))
         self.add(touchButtonStrafeRightResource.HINT, nullAnimationFactory)
-        if OperatingSystemFactory.getInstance().getOperatingSystemInstance().isOverScan():
+        if java_predicate(OperatingSystemFactory.getInstance().getOperatingSystemInstance(), "isOverScan"):
             touchButtonStartHintResource: Image = imageCache.getWithKey(TouchButtonStartResource.getInstance().HINT)
             self.add(touchButtonStartResource.HINT, OneRowSpriteIndexedAnimationFactory.createFactory(touchButtonStartHintResource, AnimationBehaviorFactory.getInstance()))
         else:
             self.add(touchButtonStartResource.HINT, nullAnimationFactory)
-        super().init(level)
+        java_super_call(super(), "init", level)
     
 
     def isLoadingLevel(self, level: int) -> bool:
@@ -139,13 +143,13 @@ class TouchButtonResourceAnimationInterfaceFactoryInterfaceFactory(BaseResourceA
         if level == resourceLoadingLevelFactory.LOAD_TOUCH.getLevel():
             return True
         else:
-            return super().isLoadingLevel(level)
+            return java_super_call(super(), "isLoadingLevel", level)
     
 
     def isFeature(self) -> bool:
         from org.allbinary.game.configuration.feature.Features import Features
         from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
-        if not Features.getInstance().isDefault(OpenGLFeatureFactory.getInstance().OPENGL):
+        if not (Features.getInstance().isDefault(OpenGLFeatureFactory.getInstance().OPENGL)):
             return True
         else:
             return False

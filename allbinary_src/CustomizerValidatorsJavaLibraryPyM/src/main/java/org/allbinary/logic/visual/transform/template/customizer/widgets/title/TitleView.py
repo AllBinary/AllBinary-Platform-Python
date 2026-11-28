@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 
 
@@ -26,27 +27,28 @@ class TitleView(DomNodeInterface):
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.title: str = None
+        if "title" not in vars(self): self.title: str = None
 
     def __init__(self, *args) -> None:
         if len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
         elif len(args) == 1:
-            self.__jconstructor1(*args)
+            __class__.__jconstructor1(self, *args)
 
     def __jconstructor1(self, *args) -> None:
-        if True and not isinstance(args[0], (str, list, int, float)):
-            self._constructor1_1(*args)
+        if True and (args[0] is None or any(base.__name__ == "Node" for base in type(args[0]).__mro__)):
+            __class__._constructor1_1(self, *args)
         else:
-            self._constructor1_2(*args)
+            __class__._constructor1_2(self, *args)
     
 
     def _constructor0(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.title = TitleView.NAME
     
 
     def _constructor1_1(self, node: Node) -> None:
+        from org.allbinary.logic.visual.transform.template.customizer.widgets.title.TitleData import TitleData
         from org.allbinary.data.tree.dom.DomData import DomData
         from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
         from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
@@ -54,7 +56,7 @@ class TitleView(DomNodeInterface):
         from org.w3c.dom.Node import Node
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-        self._init_fields()
+        __class__._init_fields(self)
         titleTextNode: Node = DomSearchHelper.getNode(TitleData.getInstance().TEXT, node.getChildNodes())
         valueNode: Node = DomSearchHelper.getNode(DomData.VALUE, titleTextNode.getChildNodes())
         self.title = DomNodeHelper.getTextNodeValue(valueNode)
@@ -68,7 +70,7 @@ class TitleView(DomNodeInterface):
         from java.util.HashMap import HashMap
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-        self._init_fields()
+        __class__._init_fields(self)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF("HashMap: " + str(hashMap), self, self.commonStrings.CONSTRUCTOR)
         self.getFormData(hashMap)
@@ -79,6 +81,7 @@ class TitleView(DomNodeInterface):
     
 
     def getFormData(self, hashMap: HashMap) -> None:
+        from org.allbinary.logic.visual.transform.template.customizer.widgets.title.TitleData import TitleData
         from java.util.HashMap import HashMap
         from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         self.title = hashMap.get(TitleData.getInstance().TEXT)
@@ -87,6 +90,7 @@ class TitleView(DomNodeInterface):
     
 
     def toHashMap(self) -> HashMap:
+        from org.allbinary.logic.visual.transform.template.customizer.widgets.title.TitleData import TitleData
         from java.util.HashMap import HashMap
         from org.allbinary.logic.StdUtil import StdUtil
         hashMap: HashMap = StdUtil.getInstance().createHashMap()
@@ -96,6 +100,7 @@ class TitleView(DomNodeInterface):
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
+        from org.allbinary.logic.visual.transform.template.customizer.widgets.title.TitleData import TitleData
         from java.util.HashMap import HashMap
         from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
         from org.w3c.dom.Document import Document

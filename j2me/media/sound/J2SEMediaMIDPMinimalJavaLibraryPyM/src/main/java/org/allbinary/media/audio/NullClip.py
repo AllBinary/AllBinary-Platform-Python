@@ -126,7 +126,9 @@ class NullClip(Clip):
         pass
 
     def open(self, *args):
-        return getattr(self, "open_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("open_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().open(*args)
     
 
     def close(self) -> None:

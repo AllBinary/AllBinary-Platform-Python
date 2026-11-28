@@ -27,7 +27,7 @@ class ModifyTable(ModifyTableInterface):
         self.tagStrings: TagStrings = TagStrings.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception

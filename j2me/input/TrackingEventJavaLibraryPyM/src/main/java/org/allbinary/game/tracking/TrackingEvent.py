@@ -15,10 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
 
 
+@java_inherited_overloads
 class TrackingEvent(AllBinaryEventObject):
+    def _java_defaults(self):
+        vars(self).setdefault("layerInterface", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
@@ -26,10 +30,11 @@ class TrackingEvent(AllBinaryEventObject):
     
 
     def __init__(self, allBinaryLayerInterface: object) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.tracking.TrackingEventHandler import TrackingEventHandler
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         super().__init__(allBinaryLayerInterface)
-        self._init_fields()
+        __class__._init_fields(self)
         if allBinaryLayerInterface != TrackingEventHandler.getInstance():
             self.setLayerInterface(allBinaryLayerInterface)
     

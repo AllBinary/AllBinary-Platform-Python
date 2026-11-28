@@ -15,35 +15,42 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.communication.sql.AbSqlBean import AbSqlBean
 from org.allbinary.data.tables.transform.info.TransformInfoEntityInterface import TransformInfoEntityInterface
 
 
+@java_inherited_overloads
 class TransformInfoEntity(*java_bases(AbSqlBean, TransformInfoEntityInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("tableName", None)
+        vars(self).setdefault("abeClientInformation", None)
+        vars(self).setdefault("transformInfoFactoryInterface", None)
+        vars(self).setdefault("transformInfoObjectConfigAndManipulatorFactoryInterface", None)
+        vars(self).setdefault("transformInfoObjectConfigGeneratorFactoryInterface", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
-        from org.allbinary.logic.visual.transform.info.TransformInfoFactoryInterface import TransformInfoFactoryInterface
-        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigAndManipulatorFactoryBase import TransformInfoObjectConfigAndManipulatorFactoryBase
-        from org.allbinary.logic.visual.transform.info.objectConfig.generator.TransformInfoObjectConfigGeneratorFactoryInterface import TransformInfoObjectConfigGeneratorFactoryInterface
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.tableName: str = "transforminfo"
         self.abeClientInformation: AbeClientInformationInterface = ServiceClientInformationInterfaceFactory.getInstance()
-        self.transformInfoFactoryInterface: TransformInfoFactoryInterface = None
-        self.transformInfoObjectConfigAndManipulatorFactoryInterface: TransformInfoObjectConfigAndManipulatorFactoryBase = None
-        self.transformInfoObjectConfigGeneratorFactoryInterface: TransformInfoObjectConfigGeneratorFactoryInterface = None
+        if "transformInfoFactoryInterface" not in vars(self): self.transformInfoFactoryInterface: TransformInfoFactoryInterface = None
+        if "transformInfoObjectConfigAndManipulatorFactoryInterface" not in vars(self): self.transformInfoObjectConfigAndManipulatorFactoryInterface: TransformInfoObjectConfigAndManipulatorFactoryBase = None
+        if "transformInfoObjectConfigGeneratorFactoryInterface" not in vars(self): self.transformInfoObjectConfigGeneratorFactoryInterface: TransformInfoObjectConfigGeneratorFactoryInterface = None
     
 
     def __init__(self, transformInfoObjectConfigGeneratorFactoryInterface: TransformInfoObjectConfigGeneratorFactoryInterface, transformInfoObjectConfigAndManipulatorFactoryInterface: TransformInfoObjectConfigAndManipulatorFactoryBase, transformInfoFactoryInterface: TransformInfoFactoryInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
         from org.allbinary.logic.visual.transform.info.TransformInfoFactoryInterface import TransformInfoFactoryInterface
         from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigAndManipulatorFactoryBase import TransformInfoObjectConfigAndManipulatorFactoryBase
         from org.allbinary.logic.visual.transform.info.objectConfig.generator.TransformInfoObjectConfigGeneratorFactoryInterface import TransformInfoObjectConfigGeneratorFactoryInterface
         super().__init__(UserDbInitInfo())
-        self._init_fields()
+        __class__._init_fields(self)
         self.setTableName(self.tableName)
         self.transformInfoObjectConfigGeneratorFactoryInterface = transformInfoObjectConfigGeneratorFactoryInterface
         self.transformInfoObjectConfigAndManipulatorFactoryInterface = transformInfoObjectConfigAndManipulatorFactoryInterface
@@ -55,7 +62,7 @@ class TransformInfoEntity(*java_bases(AbSqlBean, TransformInfoEntityInterface)):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            super().insert(values)
+            java_super_call(super(), "insert", values)
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, self.INSERT)
         except Exception as e:
@@ -68,7 +75,7 @@ class TransformInfoEntity(*java_bases(AbSqlBean, TransformInfoEntityInterface)):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            super().deleteWhere(TransformInfoData.getInstance().NAME, value)
+            java_super_call(super(), "deleteWhere", TransformInfoData.getInstance().NAME, value)
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, self.commonStrings.delete)
         except Exception as e:
@@ -86,7 +93,7 @@ class TransformInfoEntity(*java_bases(AbSqlBean, TransformInfoEntityInterface)):
         transformInfoData: TransformInfoData = TransformInfoData.getInstance()
         keysAndValues: HashMap = StdUtil.getInstance().createHashMap()
         keysAndValues.put(transformInfoData.NAME, name)
-        hashMap: HashMap = super().getRow(keysAndValues)
+        hashMap: HashMap = java_super_call(super(), "getRow", keysAndValues)
         if hashMap is not None:
             anyType: object = hashMap.get(transformInfoData.OBJECTCONFIG)
             if anyType is not None:
@@ -175,17 +182,17 @@ class TransformInfoEntity(*java_bases(AbSqlBean, TransformInfoEntityInterface)):
     
 
     def createTable(self) -> str:
-        return super().createTable(self.createTableStatement())
+        return java_super_call(super(), "createTable", self.createTableStatement())
     
 
     def update(self, updatedValues: HashMap) -> None:
         from java.util.HashMap import HashMap
         from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
-        super().updateWhere(TransformInfoData.getInstance().NAME, updatedValues.get(TransformInfoData.getInstance().NAME), updatedValues)
+        java_super_call(super(), "updateWhere", TransformInfoData.getInstance().NAME, updatedValues.get(TransformInfoData.getInstance().NAME), updatedValues)
     
 
     def dropTable(self) -> str:
-        return super().dropTable()
+        return java_super_call(super(), "dropTable")
 # from java.util.HashMap import HashMap
 # from org.allbinary.util.BasicArrayList import BasicArrayList
 # from org.allbinary.util.BasicArrayListD import BasicArrayListD

@@ -10,7 +10,6 @@ class AnalogLocationInputFactory:
     instance: AnalogLocationInputFactory = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.list_: BasicArrayList = BasicArrayListD()
     
@@ -21,7 +20,7 @@ class AnalogLocationInputFactory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def addPlayer(self, playerInputId: int) -> None:

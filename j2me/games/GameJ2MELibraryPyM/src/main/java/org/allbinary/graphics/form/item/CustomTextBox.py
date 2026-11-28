@@ -15,20 +15,28 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.displayable.canvas.GameCommandCanvas import GameCommandCanvas
 from org.allbinary.game.input.event.RawKeyEventListener import RawKeyEventListener
 
 
+@java_inherited_overloads
 class CustomTextBox(*java_bases(GameCommandCanvas, RawKeyEventListener)):
+    def _java_defaults(self):
+        vars(self).setdefault("textFieldItem", None)
+        vars(self).setdefault("inputFactory", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.game.input.InputFactory import InputFactory
-        self.textFieldItem: ABTextFieldItem = None
+        if "textFieldItem" not in vars(self): self.textFieldItem: ABTextFieldItem = None
         self.inputFactory: InputFactory = InputFactory.getInstance()
     
 
     def __init__(self, cmdListener: CommandListener, label: str, text: str, maxSize: int, constraints: int, font: Font, backgroundBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.form.item.ABTextFieldItem import ABTextFieldItem
         from javax.microedition.lcdui.CommandListener import CommandListener
         from javax.microedition.lcdui.Font import Font
@@ -36,7 +44,7 @@ class CustomTextBox(*java_bases(GameCommandCanvas, RawKeyEventListener)):
         from org.allbinary.graphics.form.item.validation.TextItemVisitor import TextItemVisitor
         from org.allbinary.logic.string.StringUtil import StringUtil
         super().__init__(cmdListener, label, backgroundBasicColor, foregroundBasicColor)
-        self._init_fields()
+        __class__._init_fields(self)
         stringUtil: StringUtil = StringUtil.getInstance()
         textFieldItem: ABTextFieldItem = ABTextFieldItem(self, TextItemVisitor(), stringUtil.EMPTY_STRING, stringUtil.EMPTY_STRING, maxSize, 0, stringUtil.EMPTY_STRING, font, backgroundBasicColor, foregroundBasicColor)
         textFieldItem.setString(text)
@@ -93,10 +101,10 @@ class CustomTextBox(*java_bases(GameCommandCanvas, RawKeyEventListener)):
         graphics.setColor(self.backgroundColor)
         graphics.fillRect(0, 0, self.displayInfo.getLastWidth(), self.displayInfo.getLastHeight())
         graphics.setColor(self.foregroundColor)
-        if not J2MEUtil.isJ2ME():
+        if not (java_predicate(J2MEUtil, "isJ2ME")):
             graphics.drawString(self.getTitle(), 8, 1, 0)
         self.paintXY(graphics, 8, graphics.getFont().getHeight() + 2)
-        super().paint(graphics)
+        java_super_call(super(), "paint", graphics)
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:

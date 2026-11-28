@@ -29,7 +29,7 @@ class ImageArrayRotationUtil:
         self.TOTAL_ANGLE: str = "totalAngle: "
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -39,6 +39,7 @@ class ImageArrayRotationUtil:
 
     # throws IOException
     def process(self, imageProcessorInput: ImageProcessorInput, input: str, visitor: ImageProcessedVisitor) -> None:
+        from org.allbinary.media.image.ImageJ2SERotationUtil import ImageJ2SERotationUtil
         totalAngle: int = None
         if input == self.commonStrings.UP:
             totalAngle = str(-90)

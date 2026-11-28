@@ -15,22 +15,27 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.ai.BasicAI import BasicAI
 
 
+@java_inherited_overloads
 class FlockingAI(BasicAI):
+    def _java_defaults(self):
+        vars(self).setdefault("allowedDistance", 0)
 
     def _init_fields(self) -> None:
-        self.allowedDistance: int = None
+        if "allowedDistance" not in vars(self): self.allowedDistance: int = 0
     
 
     def __init__(self, hashtable: ABHashtable[object, object], ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.ag.ai.scroller.BasePatrolAI import BasePatrolAI
         from org.allbinary.game.input.GameInput import GameInput
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         from org.allbinary.util.ABHashtable import ABHashtable
         super().__init__(ownerLayerInterface, gameInput)
-        self._init_fields()
+        __class__._init_fields(self)
         allowedDistance: int = hashtable.get(BasePatrolAI.MAX_DISTANCE)
         self.allowedDistance = int(allowedDistance)
     

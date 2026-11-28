@@ -31,7 +31,7 @@ class CachePolicyFactory:
         self.ONE_MINUTE_ONE_HUNDRED_MAX: CachePolicy = CachePolicy(self.NAME, 1000 * 60 * 1, 100)
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

@@ -15,10 +15,19 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
 
 
+@java_inherited_overloads
 class AndroidOS(GenericOperatingSystem):
+    def _java_defaults(self):
+        vars(self).setdefault("stringBuffer", None)
+        vars(self).setdefault("DEVICE_ID", None)
+        vars(self).setdefault("DEVICE_SOFTWARE_VERSION", None)
+        vars(self).setdefault("LINE_1_NUMBER", None)
+        vars(self).setdefault("OUYA", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.string.StringMaker import StringMaker
@@ -30,11 +39,12 @@ class AndroidOS(GenericOperatingSystem):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.system.os.android.AndroidSystemProperties import AndroidSystemProperties
         from org.allbinary.android.AndroidInfoFactory import AndroidInfoFactory
         from org.allbinary.string.CommonSeps import CommonSeps
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         SDK_VERSION: int = AndroidInfoFactory.getInstance().getVersion()
         if SDK_VERSION > 10:
             self.scalable = True
@@ -122,7 +132,7 @@ class AndroidOS(GenericOperatingSystem):
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.string.CommonSeps import CommonSeps
         osBuffer: StringMaker = StringMaker()
-        osBuffer.append(str(super()))
+        osBuffer.append(java_super_call(super(), "toString"))
         osBuffer.append(CommonSeps.getInstance().SPACE)
         osBuffer.append("Other System Info: \n")
         osBuffer.append(str(self.stringBuffer))

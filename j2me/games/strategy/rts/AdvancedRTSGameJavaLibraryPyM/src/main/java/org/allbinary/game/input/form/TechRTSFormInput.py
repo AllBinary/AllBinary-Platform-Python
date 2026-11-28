@@ -15,19 +15,26 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.game.input.form.RTSFormInput import RTSFormInput
 
 
+@java_inherited_overloads
 class TechRTSFormInput(RTSFormInput):
+    def _java_defaults(self):
+        vars(self).setdefault("EVENT", None)
+        vars(self).setdefault("noMoneyGameNotificationEvent", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.layer.hud.event.GameNotificationEvent import GameNotificationEvent
         from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
         self.EVENT: AllBinaryEventObject = AllBinaryEventObject(self)
-        self.noMoneyGameNotificationEvent: GameNotificationEvent = None
+        if "noMoneyGameNotificationEvent" not in vars(self): self.noMoneyGameNotificationEvent: GameNotificationEvent = None
     
 
     def __init__(self, groupInterface: list[Group]) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.layer.RTSGameStrings import RTSGameStrings
         from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
         from org.allbinary.game.identification.Group import Group
@@ -35,7 +42,7 @@ class TechRTSFormInput(RTSFormInput):
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
         super().__init__(groupInterface)
-        self._init_fields()
+        __class__._init_fields(self)
         basicColorFactory: BasicColorFactory = BasicColorFactory.getInstance()
         self.noMoneyGameNotificationEvent = GameNotificationEvent(self, RTSGameStrings.getInstance().NO_MONEY, SmallIntegerSingletonFactory.getInstance().getAt(2), basicColorFactory.WHITE, BooleanFactory.getInstance().FALSE)
     
@@ -45,7 +52,7 @@ class TechRTSFormInput(RTSFormInput):
         from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
         from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
         from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
-        super().setAllBinaryGameLayerManager(allBinaryGameLayerManager)
+        java_super_call(super(), "setAllBinaryGameLayerManager", allBinaryGameLayerManager)
         geographicMapCompositeInterface: GeographicMapCompositeInterface = allBinaryGameLayerManager
         geographicMapInterface: BasicGeographicMap = geographicMapCompositeInterface.getGeographicMapInterface()[0]
         self.noMoneyGameNotificationEvent.setBasicColorP(geographicMapInterface.getForegroundBasicColor())
@@ -66,13 +73,13 @@ class TechRTSFormInput(RTSFormInput):
         from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.media.audio.ErrorSound import ErrorSound
-        super().process(layerManager)
+        java_super_call(super(), "process", layerManager)
         commonStrings: CommonStrings = CommonStrings.getInstance()
         stringMaker: StringMaker = StringMaker()
         technologyRTSInterfaceImageItem: TechnologyRTSInterfaceImageItem = item
         rtsInterface: RTSInterface = technologyRTSInterfaceImageItem.getRtsInterface()
-        self.logUtil.putF(str(stringMaker.append("isUpgradeable: ").appendboolean(rtsInterface.isUpgradeable())), self, commonStrings.PROCESS)
-        if rtsInterface.isUpgradeable():
+        self.logUtil.putF(str(stringMaker.append("isUpgradeable: ").appendboolean(java_predicate(rtsInterface, "isUpgradeable"))), self, commonStrings.PROCESS)
+        if java_predicate(rtsInterface, "isUpgradeable"):
             cost: int = rtsInterface.getUpgradeCost()
             capital: Capital = rtsPlayerLayerInterface.getCapital()
             stringMaker.delete(0, stringMaker.length())
@@ -85,7 +92,7 @@ class TechRTSFormInput(RTSFormInput):
                 TechEventHandler.getInstance().fireEvent(self.EVENT)
             else:
                 rtsPlayerLayerInterface.add(ErrorSound.getInstance())
-                if not rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface():
+                if not (rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface()):
                     GameNotificationEventHandler.getInstance().fireEvent(self.noMoneyGameNotificationEvent)
 # from org.allbinary.game.layer.RTSGameStrings import RTSGameStrings
 # from org.allbinary.game.layer.RTSInterface import RTSInterface

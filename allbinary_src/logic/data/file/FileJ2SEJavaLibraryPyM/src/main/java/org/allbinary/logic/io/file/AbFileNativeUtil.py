@@ -22,6 +22,7 @@ class AbFileNativeUtil:
 
     @staticmethod
     def get(file: AbFile) -> File:
+        from java.io.File import File
         return file.getFile()
 # from java.io.File import File
 

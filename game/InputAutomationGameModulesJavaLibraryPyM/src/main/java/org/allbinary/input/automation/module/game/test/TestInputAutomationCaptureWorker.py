@@ -15,16 +15,24 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.input.automation.module.AbstractInputAutomationWorker import AbstractInputAutomationWorker
 
 
+@java_inherited_overloads
 class TestInputAutomationCaptureWorker(AbstractInputAutomationWorker):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("genericProfileActions", None)
+        vars(self).setdefault("MESSAGE", None)
+        vars(self).setdefault("PROCESS_DATA_WORKER_RESULTS", None)
+        vars(self).setdefault("IMAGE_AVAILABLE_SO_PROCESSING", None)
+        vars(self).setdefault("IMAGE_NOT_AVAILABLE", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.GenericProfileActions import GenericProfileActions
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.genericProfileActions: GenericProfileActions = None
+        if "genericProfileActions" not in vars(self): self.genericProfileActions: GenericProfileActions = None
         self.MESSAGE: str = "GenericInputAutomationCaptureWorker"
         self.PROCESS_DATA_WORKER_RESULTS: str = "processDataWorkerResults"
         self.IMAGE_AVAILABLE_SO_PROCESSING: str = "Image Available so processing"
@@ -32,12 +40,13 @@ class TestInputAutomationCaptureWorker(AbstractInputAutomationWorker):
     
 
     def __init__(self, inputAutomationActionInterface: InputAutomationActionInterface, genericProfileActions: GenericProfileActions, imageComparatorConstraintsInterface: ImageComparatorConstraintsInterface, motionRectangleConstraintsInterface: MotionRectangleConstraintsInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.input.automation.module.InputAutomationActionInterface import InputAutomationActionInterface
         from org.allbinary.input.automation.module.generic.configuration.profile.actions.GenericProfileActions import GenericProfileActions
         from org.allbinary.media.image.comparison.ImageComparatorConstraintsInterface import ImageComparatorConstraintsInterface
         from org.allbinary.media.image.comparison.motion.MotionRectangleConstraintsInterface import MotionRectangleConstraintsInterface
         super().__init__(inputAutomationActionInterface)
-        self._init_fields()
+        __class__._init_fields(self)
         self.logUtil.putF(self.MESSAGE, self, self.commonStrings.CONSTRUCTOR)
         self.setGenericProfileActions(genericProfileActions)
     

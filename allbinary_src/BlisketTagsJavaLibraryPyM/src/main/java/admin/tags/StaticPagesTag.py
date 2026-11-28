@@ -15,22 +15,30 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from admin.tags.TableTag import TableTag
 
 
+@java_inherited_overloads
 class StaticPagesTag(TableTag):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("xslFile", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.xslFile: str = None
+        if "xslFile" not in vars(self): self.xslFile: str = None
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from admin.taghelpers.StaticPagesHelperFactory import StaticPagesHelperFactory
         from admin.taghelpers.StaticPagesRequestHelperFactory import StaticPagesRequestHelperFactory
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.setTagHelperFactory(StaticPagesHelperFactory())
         self.setTagRequestHelperFactory(StaticPagesRequestHelperFactory())
     
@@ -90,7 +98,7 @@ class StaticPagesTag(TableTag):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            if self.isEnabled():
+            if java_predicate(self, "isEnabled"):
                 if self.getCommand() is not None:
                     if self.getCommand().compareTo(SearchData.GENERATESTATICPAGES) == 0:
                         self.getPropertiesHashMap().put(TransformInfoData.getInstance().TEMPLATEFILENAME, self.xslFile)
@@ -102,7 +110,7 @@ class StaticPagesTag(TableTag):
                         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAGEXTRAOUTPUT):
                             self.pageContext.getOut().print_(output)
                     else:
-                        return super().doStartTag()
+                        return java_super_call(super(), "doStartTag")
             return self.SKIP_BODY
         except LicensingException as e:
             AbResponseHandler.sendJspTagLicensingRedirect(self.pageContext, e)

@@ -22,14 +22,13 @@ class ABToGBUtil:
     instance: ABToGBUtil = None
 
     def _init_fields(self) -> None:
-        from javax.microedition.lcdui.Canvas import Canvas
         from javax.microedition.lcdui.NullCanvas import NullCanvas
         from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
         self.abCanvas: Canvas = NullCanvas.NULL_CANVAS
         self.allBinaryGameLayerManager: AllBinaryGameLayerManager = AllBinaryGameLayerManager.getNullInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.layer.relationship.RelativeLayerRelationship import RelativeLayerRelationship
 
 
+@java_inherited_overloads
 class MiddleRelativeLayerRelationship(RelativeLayerRelationship):
     
 

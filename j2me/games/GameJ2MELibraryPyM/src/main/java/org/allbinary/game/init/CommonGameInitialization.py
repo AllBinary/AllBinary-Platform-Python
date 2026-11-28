@@ -15,10 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.game.init.BaseGameInitialization import BaseGameInitialization
 
 
+@java_inherited_overloads
 class CommonGameInitialization(BaseGameInitialization):
+    def _java_defaults(self):
+        vars(self).setdefault("commonStrings", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.string.CommonStrings import CommonStrings
@@ -26,9 +32,10 @@ class CommonGameInitialization(BaseGameInitialization):
     
 
     def __init__(self, resourceInitializationArray: list[ResourceInitialization], portion: int) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.resource.ResourceInitialization import ResourceInitialization
         super().__init__(resourceInitializationArray, portion)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -41,9 +48,9 @@ class CommonGameInitialization(BaseGameInitialization):
         from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
         from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         from org.allbinary.math.AngleFactory import AngleFactory
-        super().init(abeClientInformation, commandListener, level)
+        java_super_call(super(), "init", abeClientInformation, commandListener, level)
         resourceLoadingLevelFactory: ResourceLoadingLevelFactory = ResourceLoadingLevelFactory.getInstance()
-        if not self.isGameInitialized() and level == resourceLoadingLevelFactory.LOAD_ALL.getLevel():
+        if not (java_predicate(self, "isGameInitialized")) and level == resourceLoadingLevelFactory.LOAD_ALL.getLevel():
             self.setGameInitialized(True)
             progressCanvas: ProgressCanvas = ProgressCanvasFactory.getInstance()
             SmallIntegerSingletonFactory.getInstance().init()
@@ -54,7 +61,7 @@ class CommonGameInitialization(BaseGameInitialization):
             progressCanvas.addNormalPortion(50, "Angles")
             self.initGame()
             self.resourceInitializationArray[self.GAME_RESOURCES].init()
-        super().resourceInitialization(level)
+        java_super_call(super(), "resourceInitialization", level)
     
 
     # throws Exception

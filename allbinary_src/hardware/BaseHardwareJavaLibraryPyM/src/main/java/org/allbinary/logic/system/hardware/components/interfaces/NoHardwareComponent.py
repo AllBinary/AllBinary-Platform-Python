@@ -29,7 +29,7 @@ class NoHardwareComponent(HardwareComponentInterface):
     
 
     def compareTo(self, componentInterface: HardwareComponentInterface) -> bool:
-        if self == componentInterface:
+        if self is componentInterface:
             return True
         return False
     

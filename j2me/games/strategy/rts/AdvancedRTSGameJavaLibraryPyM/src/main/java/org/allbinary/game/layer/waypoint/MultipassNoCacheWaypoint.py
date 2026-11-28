@@ -15,32 +15,39 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.layer.building.event.BuildingEventListenerInterface import BuildingEventListenerInterface
 from org.allbinary.game.layer.waypoint.WaypointBase import WaypointBase
 
 
+@java_inherited_overloads
 class MultipassNoCacheWaypoint(*java_bases(WaypointBase, BuildingEventListenerInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("ownerLayer", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.ownerLayer: PathFindingLayerInterface = None
+        if "ownerLayer" not in vars(self): self.ownerLayer: PathFindingLayerInterface = None
     
 
     def __init__(self, ownerLayer: PathFindingLayerInterface, sound: Sound) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
         from org.allbinary.media.audio.Sound import Sound
         super().__init__(sound)
-        self._init_fields()
+        __class__._init_fields(self)
         self.ownerLayer = ownerLayer
     
 
     # throws Exception
     def setAllBinaryGameLayerManager(self, allBinaryGameLayerManager: AllBinaryGameLayerManager) -> None:
         from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
-        super().setAllBinaryGameLayerManager(allBinaryGameLayerManager)
+        java_super_call(super(), "setAllBinaryGameLayerManager", allBinaryGameLayerManager)
     
 
     def releaseCachedPaths(self) -> None:
@@ -152,7 +159,7 @@ class MultipassNoCacheWaypoint(*java_bases(WaypointBase, BuildingEventListenerIn
             unitWaypointBehavior: UnitWaypointBehavior = unitLayer.getWaypointBehavior()
             while self.getConnectedWaypointList().size() > 0:
                 rtsLayer: CollidableDestroyableDamageableLayer = self.getConnectedWaypointList().get(0)
-                if rtsLayer.isDestroyed():
+                if java_predicate(rtsLayer, "isDestroyed"):
                     self.getConnectedWaypointList().remove(rtsLayer)
                 else:
                     unitLayer.handleCost(self.ownerLayer)

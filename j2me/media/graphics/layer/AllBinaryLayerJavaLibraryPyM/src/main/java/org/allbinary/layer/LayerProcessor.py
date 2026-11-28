@@ -23,11 +23,11 @@ class LayerProcessor(LayerProcessorInterface):
     def _init_fields(self) -> None:
         from org.allbinary.string.CommonStrings import CommonStrings
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.layerManager: LayerManager = None
+        if "layerManager" not in vars(self): self.layerManager: LayerManager = None
     
 
     def __init__(self, layerManager: LayerManager) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.layerManager = layerManager
     
 

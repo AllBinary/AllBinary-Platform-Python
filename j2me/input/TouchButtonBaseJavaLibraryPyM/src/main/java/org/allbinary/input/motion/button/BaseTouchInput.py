@@ -27,7 +27,7 @@ class BaseTouchInput:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getList(self) -> BasicArrayList:
@@ -36,7 +36,7 @@ class BaseTouchInput:
     
 
     def toString(self) -> str:
-        return type(self).__module__ + "." + type(self).__qualname__
+        return __import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(self))
 
     def __str__(self) -> str:
         return self.toString()

@@ -15,12 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 
 
 class UniqueTokens:
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.specialCharacters: BasicArrayList = BasicArrayListD()
     
@@ -29,7 +29,7 @@ class UniqueTokens:
         from org.allbinary.logic.io.path.AbPathData import AbPathData
         from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
         from org.allbinary.string.CommonSeps import CommonSeps
-        self._init_fields()
+        __class__._init_fields(self)
         self.specialCharacters.add("!")
         self.specialCharacters.add("@")
         self.specialCharacters.add(CommonPhoneStrings.getInstance().POUND)
@@ -58,6 +58,8 @@ class UniqueTokens:
 
     # throws Exception
     def getWhithoutDashesAndSkipNumberOnlyTokens(self, stringVector: BasicArrayList) -> HashSet:
+        from org.allbinary.logic.string.tokens.Tokenizer import Tokenizer
+        from org.allbinary.logic.string.tokens.Tokenizer import Tokenizer
         from java.util.HashSet import HashSet
         from org.allbinary.logic.string.regex.replace.Replace import Replace
         from org.allbinary.string.CommonSeps import CommonSeps
@@ -82,7 +84,7 @@ class UniqueTokens:
                         subKeywordVector: BasicArrayList = spaceTokenizer.getTokensFromString(cleanString, BasicArrayListD())
                         for spaceIndex in range(0, subKeywordVector.size()):
                             subCleanString: str = subKeywordVector.get(spaceIndex)
-                            if not self.isSpecialCharacter(subCleanString) and not self.numberOnly(subCleanString):
+                            if not (self.isSpecialCharacter(subCleanString)) and not (self.numberOnly(subCleanString)):
                                 hashSet.add(subCleanString)
                 index += 1
             return hashSet

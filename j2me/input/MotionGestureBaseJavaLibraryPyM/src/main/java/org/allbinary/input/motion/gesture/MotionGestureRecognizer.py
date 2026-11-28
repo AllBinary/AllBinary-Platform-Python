@@ -16,29 +16,26 @@
 from __future__ import annotations
 
 import math
+from java.lang.JavaRuntimeStatic import java_predicate
 
 
 class MotionGestureRecognizer:
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.GPoint import GPoint
         from org.allbinary.graphics.Line import Line
         from org.allbinary.graphics.PointFactory import PointFactory
-        from org.allbinary.input.motion.gesture.observer.BasicMotionGesturesHandler import BasicMotionGesturesHandler
-        from org.allbinary.input.motion.gesture.observer.MotionEventCircularPool import MotionEventCircularPool
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.logic.math.J2SEMath import J2SEMath
-        from org.allbinary.logic.util.event.handler.BasicEventHandler import BasicEventHandler
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.j2seMath: J2SEMath = J2SEMath.getInstance()
         self.origin: GPoint = PointFactory.getInstance().ZERO_ZERO
         self.previous: GPoint = self.origin
         self.intermediate: GPoint = self.origin
         self.line: Line = Line(self.origin, self.origin)
-        self.motionGesturesHandler: BasicMotionGesturesHandler = None
-        self.movedMotionGesturesHandler: BasicEventHandler = None
-        self.scrolledMotionGesturesHandler: BasicEventHandler = None
-        self.motionEventCircularPool: MotionEventCircularPool = None
+        if "motionGesturesHandler" not in vars(self): self.motionGesturesHandler: BasicMotionGesturesHandler = None
+        if "movedMotionGesturesHandler" not in vars(self): self.movedMotionGesturesHandler: BasicEventHandler = None
+        if "scrolledMotionGesturesHandler" not in vars(self): self.scrolledMotionGesturesHandler: BasicEventHandler = None
+        if "motionEventCircularPool" not in vars(self): self.motionEventCircularPool: MotionEventCircularPool = None
     
 
     def __init__(self, id: int) -> None:
@@ -48,7 +45,7 @@ class MotionGestureRecognizer:
         from org.allbinary.input.motion.gesture.observer.ScrolledMotionGesturesHandler import ScrolledMotionGesturesHandler
         from org.allbinary.logic.util.event.handler.BasicEventHandler import BasicEventHandler
         from org.allbinary.string.CommonStrings import CommonStrings
-        self._init_fields()
+        __class__._init_fields(self)
         self.motionEventCircularPool = MotionEventCircularPool.createPool(id)
         motionGesturesHandler: BasicEventHandler = BasicEventHandler()
         movedMotionGesturesHandler: BasicEventHandler = motionGesturesHandler
@@ -115,7 +112,7 @@ class MotionGestureRecognizer:
         newMotionGesture: MotionGestureInput = touchMotionGestureFactory.NO_MOTION
         diagonalToleranceHigher: float = 12.0
         diagonalToleranceLower: float = 12.0
-        if conf.isDiagonalMotionGestureAllowed():
+        if java_predicate(conf, "isDiagonalMotionGestureAllowed"):
             diagonalToleranceHigher = float((90 - conf.getDiagonalTolerance()))
             diagonalToleranceLower = float(conf.getDiagonalTolerance())
         if absGradient > math.tan(math.radians(diagonalToleranceHigher)):

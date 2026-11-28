@@ -21,14 +21,13 @@ from org.allbinary.animation.AnimationInterfaceFactoryInterface import Animation
 class SimultaneousCompoundIndexAnimationInterfaceFactory(AnimationInterfaceFactoryInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
-        self.basicAnimationInterfaceFactoryInterfaceArray: list[AnimationInterfaceFactoryInterface] = None
-        self.animationBehaviorFactory: AnimationBehaviorFactory = None
+        if "basicAnimationInterfaceFactoryInterfaceArray" not in vars(self): self.basicAnimationInterfaceFactoryInterfaceArray: list[AnimationInterfaceFactoryInterface] = None
+        if "animationBehaviorFactory" not in vars(self): self.animationBehaviorFactory: AnimationBehaviorFactory = None
     
 
     def __init__(self, basicAnimationInterfaceFactoryInterfaceArray: list[AnimationInterfaceFactoryInterface], animationBehaviorFactory: AnimationBehaviorFactory) -> None:
         from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
-        self._init_fields()
+        __class__._init_fields(self)
         self.basicAnimationInterfaceFactoryInterfaceArray = basicAnimationInterfaceFactoryInterfaceArray
         self.animationBehaviorFactory = animationBehaviorFactory
     

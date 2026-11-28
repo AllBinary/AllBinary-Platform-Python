@@ -14,18 +14,23 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
 
 
+@java_inherited_overloads
 class RTSLayerEvent(AllBinaryEventObject):
+    def _java_defaults(self):
+        vars(self).setdefault("rtsLayer", None)
 
     def _init_fields(self) -> None:
         self.rtsLayer: PathFindingLayerInterface = NullPathFindingLayer.NULL_PATH_FINDING_LAYER
     
 
     def __init__(self, rtsLayer: PathFindingLayerInterface) -> None:
+        __class__._java_defaults(self)
         super().__init__(rtsLayer)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def toString(self) -> str:
@@ -47,5 +52,6 @@ class RTSLayerEvent(AllBinaryEventObject):
     def setRtsLayer(self, rtsLayer: PathFindingLayerInterface) -> None:
         self.rtsLayer = rtsLayer
 # from org.allbinary.logic.string.StringMaker import StringMaker
+from org.allbinary.game.layer.NullPathFindingLayer import NullPathFindingLayer
 
 

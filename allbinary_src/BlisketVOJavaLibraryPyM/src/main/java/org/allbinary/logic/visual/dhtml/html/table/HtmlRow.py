@@ -15,26 +15,36 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.visual.dhtml.html.HtmlTag import HtmlTag
 
 
+@java_inherited_overloads
 class HtmlRow(HtmlTag):
+    def _java_defaults(self):
+        vars(self).setdefault("END", None)
+        vars(self).setdefault("START", None)
+        vars(self).setdefault("ENDTAG", None)
+        vars(self).setdefault("numberOfColumns", 0)
+        vars(self).setdefault("before", None)
+        vars(self).setdefault("after", None)
+        vars(self).setdefault("htmlCellsVector", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.END: str = ">"
         self.START: str = "<tr "
         self.ENDTAG: str = "</tr>"
         self.numberOfColumns: int = 0
-        self.before: str = None
-        self.after: str = None
-        self.htmlCellsVector: BasicArrayList = None
+        if "before" not in vars(self): self.before: str = None
+        if "after" not in vars(self): self.after: str = None
+        if "htmlCellsVector" not in vars(self): self.htmlCellsVector: BasicArrayList = None
     
 
     def __init__(self, before: str, after: str) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.before = str(before)
         self.after = str(after)
         self.htmlCellsVector = BasicArrayListD()

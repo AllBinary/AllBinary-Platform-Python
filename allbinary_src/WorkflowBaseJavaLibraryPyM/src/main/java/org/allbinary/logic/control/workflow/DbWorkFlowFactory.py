@@ -32,11 +32,12 @@ class DbWorkFlowFactory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception, LicensingException
     def getInstance_j2(self, abeClientInformation: AbeClientInformationInterface, hashMap: HashMap) -> WorkFlowInterface:
+        from org.allbinary.logic.control.workflow.WorkFlowWrapper import WorkFlowWrapper
         from java.util.HashMap import HashMap
         from org.allbinary.business.DynamicObjectData import DynamicObjectData
         from org.allbinary.logic.system.loader.AbeFactory import AbeFactory
@@ -64,8 +65,11 @@ class DbWorkFlowFactory:
                 self.logUtil.put(commonStrings.EXCEPTION, self, "getInstance(HashMap)", e)
             raise e
 
-    def getInstance(self, *args):
-        return getattr(self, "getInstance_j" + str(len(args)))(*args)
+    def getInstance(self=None, *args):
+        if self is None and not args: return __class__.getInstance_j0()
+        implementation = __class__.__dict__.get("getInstance_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getInstance(*args)
 # from java.util.HashMap import HashMap
 # from org.allbinary.business.DynamicObjectData import DynamicObjectData
 # from org.allbinary.logic.communication.log.LogUtil import LogUtil

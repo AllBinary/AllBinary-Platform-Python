@@ -23,19 +23,18 @@ from org.allbinary.animation.AnimationInterface import AnimationInterface
 class Animation(*java_bases(AnimationInterface, OpenGLSurfaceChangedInterface)):
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         from org.allbinary.graphics.color.BasicColorSetUtil import BasicColorSetUtil
         self.basicSetColorUtil: BasicColorSetUtil = BasicColorSetUtil.getInstance()
         self.basicColor: BasicColor = BasicColorFactory.getInstance().WHITE
-        self.colorP: int = 0
+        if "colorP" not in vars(self): self.colorP: int = 0
         self.changeBasicColorP: BasicColor = BasicColorFactory.getInstance().NULL_COLOR
-        self.changeColorP: int = 0
-        self.alphaP: int = 0
+        if "changeColorP" not in vars(self): self.changeColorP: int = 0
+        if "alphaP" not in vars(self): self.alphaP: int = 0
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def setAlpha(self, alpha: int) -> None:

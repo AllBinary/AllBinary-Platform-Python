@@ -15,24 +15,30 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.media.graphics.geography.map.GeographicMapCellPositionBaseFactory import GeographicMapCellPositionBaseFactory
 
 
+@java_inherited_overloads
 class GeographicMapCellPositionFactory(GeographicMapCellPositionBaseFactory):
     hashtable: ABHashtable[object, object] = None
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
     def getInstance(self, geographicMapInterface: BasicGeographicMap) -> BasicGeographicMapCellPositionFactory:
+        from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
         from org.allbinary.string.CommonStrings import CommonStrings
         from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
         from org.allbinary.logic.string.StringMaker import StringMaker

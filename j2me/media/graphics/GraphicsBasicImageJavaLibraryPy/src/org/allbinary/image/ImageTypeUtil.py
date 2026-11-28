@@ -22,7 +22,6 @@ class ImageTypeUtil:
     SINGLETON: ImageTypeUtil = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.PNG: str = "png"
         self.JPG: str = "jpg"
         self.GIF: str = "gif"
@@ -30,7 +29,7 @@ class ImageTypeUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.list_.add(self.JPG)
         self.list_.add(self.GIF)
         self.list_.add(self.PNG)

@@ -26,7 +26,6 @@ class BasicTouchInputFactory:
     def _init_fields(self) -> None:
         from org.allbinary.game.input.InputFactory import InputFactory
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.SPECIAL_BUTTON_SIX: TouchButtonInput = TouchButtonInput(InputFactory.getInstance().MAX - 30, "Button 6")
@@ -44,7 +43,7 @@ class BasicTouchInputFactory:
         self.list_: BasicArrayList = BasicArrayListD()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -57,11 +56,11 @@ class BasicTouchInputFactory:
 
     def init(self, inputToGameKeyMapping: InputToGameKeyMapping) -> None:
         with self._lock:
-            return self._init_unlocked(inputToGameKeyMapping)
+            return __class__.__dict__["_init_unlocked"].__get__(self, __class__)(inputToGameKeyMapping)
 
     def _init_unlocked(self, inputToGameKeyMapping: InputToGameKeyMapping) -> None:
         from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
-        if not self.initialized:
+        if not (self.initialized):
             self.initialized = True
             self.list_.add(self.UP)
             self.list_.add(self.LEFT)

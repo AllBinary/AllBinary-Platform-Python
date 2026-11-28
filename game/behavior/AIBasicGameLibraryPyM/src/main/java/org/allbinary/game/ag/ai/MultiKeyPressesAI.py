@@ -15,13 +15,19 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.game.ag.ai.KeyPressesAI import KeyPressesAI
 
 
+@java_inherited_overloads
 class MultiKeyPressesAI(KeyPressesAI):
+    def _java_defaults(self):
+        vars(self).setdefault("toggleTimeHelper", None)
+        vars(self).setdefault("gameTickTimeDelayHelper", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
         from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
         from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         self.toggleTimeHelper: TimeDelayHelper = TimeDelayHelper(600)
@@ -29,11 +35,12 @@ class MultiKeyPressesAI(KeyPressesAI):
     
 
     def __init__(self, hashtable: ABHashtable[object, object], ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.input.GameInput import GameInput
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         from org.allbinary.util.ABHashtable import ABHashtable
         super().__init__(hashtable, ownerLayerInterface, gameInput)
-        self._init_fields()
+        __class__._init_fields(self)
         self.update()
     
 
@@ -49,7 +56,7 @@ class MultiKeyPressesAI(KeyPressesAI):
         gameInput: GameInput = self.getGameInput()
         keys: list[int] = self.keys
         size: int = len(keys)
-        if self.isOn():
+        if java_predicate(self, "isOn"):
             for index in range(0, size):
                 key: int = int(keys[index])
                 if key != -1:
@@ -64,21 +71,21 @@ class MultiKeyPressesAI(KeyPressesAI):
     # throws Exception
     def toggle(self) -> None:
         if self.toggleTimeHelper.isTime(self.gameTickTimeDelayHelper.startTime):
-            super().toggle()
+            java_super_call(super(), "toggle")
             self.update()
     
 
     # throws Exception
     def disable(self) -> None:
         if self.toggleTimeHelper.isTime(self.gameTickTimeDelayHelper.startTime):
-            super().disable()
+            java_super_call(super(), "disable")
             self.update()
     
 
     # throws Exception
     def enable(self) -> None:
         if self.toggleTimeHelper.isTime(self.gameTickTimeDelayHelper.startTime):
-            super().enable()
+            java_super_call(super(), "enable")
             self.update()
 # from org.allbinary.game.input.GameInput import GameInput
 # from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer

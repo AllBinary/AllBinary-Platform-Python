@@ -21,13 +21,12 @@ from org.allbinary.graphics.j2me.workarea.tools.PointsInterface import PointsInt
 class Points(PointsInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
-        self.pointVector: BasicArrayList = None
+        if "pointVector" not in vars(self): self.pointVector: BasicArrayList = None
     
 
     def __init__(self) -> None:
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
-        self._init_fields()
+        __class__._init_fields(self)
         self.pointVector = BasicArrayListD()
     
 

@@ -15,10 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.graphics.RelativeRelationship import RelativeRelationship
 
 
+@java_inherited_overloads
 class RelativeLayerRelationship(RelativeRelationship):
+    def _java_defaults(self):
+        vars(self).setdefault("layer", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
@@ -26,24 +31,25 @@ class RelativeLayerRelationship(RelativeRelationship):
     
 
     def __init__(self, layer: AllBinaryLayer, point: GPoint, typesAllowedList: BasicArrayList) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.GPoint import GPoint
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         from org.allbinary.util.BasicArrayList import BasicArrayList
         super().__init__(point, typesAllowedList)
-        self._init_fields()
+        __class__._init_fields(self)
         self.layer = layer
     
 
     def getX(self) -> int:
-        return self.layer.getXP() + super().getX()
+        return self.layer.getXP() + java_super_call(super(), "getX")
     
 
     def getY(self) -> int:
-        return self.layer.getYP() + super().getY()
+        return self.layer.getYP() + java_super_call(super(), "getY")
     
 
     def getZ(self) -> int:
-        return self.layer.getZP() + super().getZ()
+        return self.layer.getZP() + java_super_call(super(), "getZ")
 # from org.allbinary.graphics.GPoint import GPoint
 # from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
 # from org.allbinary.util.BasicArrayList import BasicArrayList

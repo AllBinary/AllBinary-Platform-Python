@@ -15,10 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import threading
 from org.allbinary.game.midlet.GameMidlet import GameMidlet
 
 
+@java_inherited_overloads
 class DemoGameMidlet(GameMidlet):
     _lock = threading.RLock()
     
@@ -74,7 +76,7 @@ class DemoGameMidlet(GameMidlet):
     # throws Exception
     def setDemo(self) -> None:
         with self._lock:
-            return self._setDemo_unlocked()
+            return __class__.__dict__["_setDemo_unlocked"].__get__(self, __class__)()
 
     def _setDemo_unlocked(self) -> None:
         from org.allbinary.game.midlet.DemoRunnable import DemoRunnable
@@ -90,7 +92,7 @@ class DemoGameMidlet(GameMidlet):
     # throws Exception
     def createGame(self) -> None:
         with self._lock:
-            return self._createGame_unlocked()
+            return __class__.__dict__["_createGame_unlocked"].__get__(self, __class__)()
 
     def _createGame_unlocked(self) -> None:
         from org.allbinary.game.midlet.CreateGameRunnable import CreateGameRunnable

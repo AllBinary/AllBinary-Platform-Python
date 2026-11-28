@@ -15,30 +15,37 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.combat.damage.DamageFloaters import DamageFloaters
 
 
+@java_inherited_overloads
 class AnimationDamageFloaters(DamageFloaters):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("layerInterface", None)
+        vars(self).setdefault("animationInterfaceArray", None)
+        vars(self).setdefault("circularIndexUtil", None)
+        vars(self).setdefault("dx", 0)
+        vars(self).setdefault("dy", 0)
 
     def _init_fields(self) -> None:
-        from org.allbinary.animation.IndexedAnimation import IndexedAnimation
-        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.layerInterface: AllBinaryLayer = None
-        self.animationInterfaceArray: list[IndexedAnimation] = None
-        self.circularIndexUtil: CircularIndexUtil = None
-        self.dx: int = None
-        self.dy: int = None
+        if "layerInterface" not in vars(self): self.layerInterface: AllBinaryLayer = None
+        if "animationInterfaceArray" not in vars(self): self.animationInterfaceArray: list[IndexedAnimation] = None
+        if "circularIndexUtil" not in vars(self): self.circularIndexUtil: CircularIndexUtil = None
+        if "dx" not in vars(self): self.dx: int = 0
+        if "dy" not in vars(self): self.dy: int = 0
     
 
     def __init__(self, layerInterface: AllBinaryLayer, animationInterfaceArray: list[IndexedAnimation], dx: int, dy: int) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.animation.IndexedAnimation import IndexedAnimation
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.animationInterfaceArray = animationInterfaceArray
         for index in range(len(self.animationInterfaceArray) - 1, 0 - 1, -1):
             self.animationInterfaceArray[index].setFrame(self.animationInterfaceArray[index].getSize() - 1)

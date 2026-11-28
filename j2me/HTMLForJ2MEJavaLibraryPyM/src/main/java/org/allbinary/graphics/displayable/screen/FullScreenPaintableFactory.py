@@ -23,11 +23,10 @@ class FullScreenPaintableFactory:
 
     def _init_fields(self) -> None:
         from org.allbinary.graphics.paint.NullPaintable import NullPaintable
-        from org.allbinary.graphics.paint.Paintable import Paintable
         self.paintable: Paintable = NullPaintable.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

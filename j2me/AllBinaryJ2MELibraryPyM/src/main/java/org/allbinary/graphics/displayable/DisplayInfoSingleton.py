@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -27,7 +29,6 @@ class DisplayInfoSingleton:
         from org.allbinary.string.CommonLabels import CommonLabels
         from org.allbinary.string.CommonSeps import CommonSeps
         from org.allbinary.string.CommonStrings import CommonStrings
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonLabels: CommonLabels = CommonLabels.getInstance()
@@ -39,17 +40,17 @@ class DisplayInfoSingleton:
         self.last: list[int] = [0] * (4)
         self.lastHalf: list[int] = [0] * (4)
         self.full: list[int] = [0] * (4)
-        self.top: int = 0
-        self.left: int = 0
-        self.xOffset: int = 0
-        self.yOffset: int = 0
-        self.scaleLargestTo: float = 0.0
+        if "top" not in vars(self): self.top: int = 0
+        if "left" not in vars(self): self.left: int = 0
+        if "xOffset" not in vars(self): self.xOffset: int = 0
+        if "yOffset" not in vars(self): self.yOffset: int = 0
+        if "scaleLargestTo" not in vars(self): self.scaleLargestTo: float = 0.0
         self.WIDTH: int = 0
         self.HEIGHT: int = 1
         self.CUSTOM_WIDTH: int = 2
         self.CUSTOM_HEIGHT: int = 3
         self.scalableListener: BaseScalable = BaseScalable()
-        self.displayRatio: float = 0.0
+        if "displayRatio" not in vars(self): self.displayRatio: float = 0.0
         self.ratio: float = 1.0
         self.SET_LAST_SIZE_METHOD_NAME: str = "setLastSize"
         self.FULL_WIDTH: str = " FullWidth: "
@@ -76,13 +77,13 @@ class DisplayInfoSingleton:
 
     def __init__(self) -> None:
         from org.allbinary.AndroidUtil import AndroidUtil
-        self._init_fields()
+        __class__._init_fields(self)
         size: int = len(self.last)
         for index in range(0, size):
             self.last[index] = 0
             self.lastHalf[index] = 0
             self.full[index] = 0
-        if AndroidUtil.isAndroid():
+        if java_predicate(AndroidUtil, "isAndroid"):
             self.scaleLargestTo = 640.0
         else:
             self.scaleLargestTo = 1080.0
@@ -126,10 +127,12 @@ class DisplayInfoSingleton:
         stringMaker.delete(0, stringMaker.length())
         self.logUtil.putF(str(stringMaker.append(self.FULL_WIDTH).appendint(aFullWidth).append(self.FULL_HEIGHT).appendint(aFullHeight).append(str(self))), self, self.SET_LAST_SIZE_METHOD_NAME)
         operatingSystemInterface: GenericOperatingSystem = OperatingSystemFactory.getInstance().getOperatingSystemInstance()
-        if operatingSystemInterface.isOverScan():
-            aLastWidth = aLastWidth * operatingSystemInterface.getOverScanXPercent() / 100
-            aLastHeight = aLastHeight * operatingSystemInterface.getOverScanYPercent() / 100
-        if operatingSystemInterface.isScalable():
+        if java_predicate(operatingSystemInterface, "isOverScan"):
+            aLastWidth = java_divide(aLastWidth * operatingSystemInterface.getOverScanXPercent(), 100)
+            
+            aLastHeight = java_divide(aLastHeight * operatingSystemInterface.getOverScanYPercent(), 100)
+            
+        if java_predicate(operatingSystemInterface, "isScalable"):
             if self.isPortraitWH(aLastWidth, aLastHeight):
                 if float(aLastHeight) > self.scaleLargestTo:
                     self.displayRatio = self.scaleLargestTo / float(aLastHeight)
@@ -163,9 +166,9 @@ class DisplayInfoSingleton:
         self.full[self.WIDTH] = aFullWidth
         self.full[self.HEIGHT] = aFullHeight
         self.last[self.WIDTH] = aLastWidth
-        self.lastHalf[self.WIDTH] = (self.last[self.WIDTH] >> 1)
+        self.lastHalf[self.WIDTH] = (int(self.last[self.WIDTH]) >> (int(1) & 31))
         self.last[self.HEIGHT] = aLastHeight
-        self.lastHalf[self.HEIGHT] = (self.last[self.HEIGHT] >> 1)
+        self.lastHalf[self.HEIGHT] = (int(self.last[self.HEIGHT]) >> (int(1) & 31))
         SWTJOGLProcessor.getInstance().setCustom(aLastWidth, aLastHeight, self.ratio)
         self.add(self.SET_LAST_SIZE_METHOD_NAME)
     
@@ -233,14 +236,16 @@ class DisplayInfoSingleton:
         if aLastWidth > 0 and aLastHeight > 0:
             features: Features = Features.getInstance()
             openGLFeatureFactory: OpenGLFeatureFactory = OpenGLFeatureFactory.getInstance()
-            if not features.isDefault(openGLFeatureFactory.OPENGL) or self.last[self.WIDTH] != aLastWidth or self.last[self.HEIGHT] != aLastHeight:
+            if not (features.isDefault(openGLFeatureFactory.OPENGL)) or self.last[self.WIDTH] != aLastWidth or self.last[self.HEIGHT] != aLastHeight:
                 stringMaker.delete(0, stringMaker.length())
                 self.logUtil.putF(str(stringMaker.append(self.UPDATE_FROM_ORIENTATION_CHANGE)), self, self.commonStrings.UPDATE)
                 operatingSystemInterface: GenericOperatingSystem = OperatingSystemFactory.getInstance().getOperatingSystemInstance()
-                if operatingSystemInterface.isOverScan():
-                    aLastWidth = aLastWidth * operatingSystemInterface.getOverScanXPercent() / 100
-                    aLastHeight = aLastHeight * operatingSystemInterface.getOverScanYPercent() / 100
-                if operatingSystemInterface.isScalable():
+                if java_predicate(operatingSystemInterface, "isOverScan"):
+                    aLastWidth = java_divide(aLastWidth * operatingSystemInterface.getOverScanXPercent(), 100)
+            
+                    aLastHeight = java_divide(aLastHeight * operatingSystemInterface.getOverScanYPercent(), 100)
+            
+                if java_predicate(operatingSystemInterface, "isScalable"):
                     if self.isPortraitWH(aLastWidth, aLastHeight):
                         if float(aLastHeight) > self.scaleLargestTo:
                             self.displayRatio = self.scaleLargestTo / float(aLastHeight)
@@ -274,9 +279,9 @@ class DisplayInfoSingleton:
                 self.full[self.WIDTH] = aFullWidth
                 self.full[self.HEIGHT] = aFullHeight
                 self.last[self.WIDTH] = aLastWidth
-                self.lastHalf[self.WIDTH] = (self.last[self.WIDTH] >> 1)
+                self.lastHalf[self.WIDTH] = (int(self.last[self.WIDTH]) >> (int(1) & 31))
                 self.last[self.HEIGHT] = aLastHeight
-                self.lastHalf[self.HEIGHT] = (self.last[self.HEIGHT] >> 1)
+                self.lastHalf[self.HEIGHT] = (int(self.last[self.HEIGHT]) >> (int(1) & 31))
                 SWTJOGLProcessor.getInstance().setCustom(aLastWidth, aLastHeight, self.ratio)
                 self.add(self.commonStrings.UPDATE)
     
@@ -317,7 +322,7 @@ class DisplayInfoSingleton:
         stringBuffer.append(self.commonLabels.HEIGHT_LABEL)
         stringBuffer.appendint(self.lastHalf[self.HEIGHT])
         stringBuffer.append(self.commonSeps.SPACE)
-        stringBuffer.append((self.PORTRAIT if self.isPortrait() else self.LANDSCAPE))
+        stringBuffer.append((self.PORTRAIT if java_predicate(self, "isPortrait") else self.LANDSCAPE))
         return str(stringBuffer)
     
 
@@ -363,9 +368,9 @@ class DisplayInfoSingleton:
 
     def setCustom(self, width: int, height: int) -> None:
         self.last[self.CUSTOM_WIDTH] = width
-        self.lastHalf[self.CUSTOM_WIDTH] = (self.last[self.CUSTOM_WIDTH] >> 1)
+        self.lastHalf[self.CUSTOM_WIDTH] = (int(self.last[self.CUSTOM_WIDTH]) >> (int(1) & 31))
         self.last[self.CUSTOM_HEIGHT] = height
-        self.lastHalf[self.CUSTOM_HEIGHT] = (self.last[self.CUSTOM_HEIGHT] >> 1)
+        self.lastHalf[self.CUSTOM_HEIGHT] = (int(self.last[self.CUSTOM_HEIGHT]) >> (int(1) & 31))
     
 
     def setScalableListener(self, scalableListener: BaseScalable) -> None:

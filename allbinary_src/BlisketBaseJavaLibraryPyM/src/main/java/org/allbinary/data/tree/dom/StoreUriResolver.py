@@ -22,16 +22,15 @@ class StoreUriResolver(URIResolver):
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.uriResolverStrings: URIResolverStrings = URIResolverStrings.getInstance()
-        self.basicURIResolver: BasicUriResolver = None
-        self.parentTransformInfoInterface: TransformInfoInterface = None
+        if "basicURIResolver" not in vars(self): self.basicURIResolver: BasicUriResolver = None
+        if "parentTransformInfoInterface" not in vars(self): self.parentTransformInfoInterface: TransformInfoInterface = None
     
 
     def __init__(self, parentTransformInfoInterface: TransformInfoInterface, basicURIResolver: BasicUriResolver) -> None:
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-        self._init_fields()
+        __class__._init_fields(self)
         self.parentTransformInfoInterface = parentTransformInfoInterface
         self.basicURIResolver = basicURIResolver
     

@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.JavaThread import JavaThread
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 
@@ -28,7 +30,7 @@ class ThreadUtil:
         self.JOIN: str = "join"
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -36,15 +38,15 @@ class ThreadUtil:
         return ThreadUtil.instance
     
 
-    def isRunning(self, thread: threading.Thread) -> bool:
-        if thread is not None and thread.isAlive():
+    def isRunning(self, thread: JavaThread) -> bool:
+        if thread is not None and thread.is_alive():
             return True
         else:
             return False
     
 
     # throws Exception
-    def join(self, thread: threading.Thread) -> None:
+    def join(self, thread: JavaThread) -> None:
         if ThreadUtil.getInstance().isRunning(thread):
             self.logUtil.putF("Waiting for Thread To Join/End", self, self.JOIN)
             thread.join()

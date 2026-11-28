@@ -22,11 +22,11 @@ class UnitTechnologySingletonFactory:
     instance: UnitTechnologySingletonFactory = None
 
     def _init_fields(self) -> None:
-        self.damage: int = 0
-        self.health: int = 0
-        self.reload: int = 0
-        self.repair: int = 0
-        self.speed: int = 0
+        if "damage" not in vars(self): self.damage: int = 0
+        if "health" not in vars(self): self.health: int = 0
+        if "reload" not in vars(self): self.reload: int = 0
+        if "repair" not in vars(self): self.repair: int = 0
+        if "speed" not in vars(self): self.speed: int = 0
     
 
     @staticmethod
@@ -35,7 +35,7 @@ class UnitTechnologySingletonFactory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def init(self) -> None:

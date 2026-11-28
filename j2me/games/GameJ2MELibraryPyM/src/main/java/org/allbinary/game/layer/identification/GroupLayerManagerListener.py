@@ -15,16 +15,21 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.layer.event.LayerManagerEventListener import LayerManagerEventListener
 
 
+@java_inherited_overloads
 class GroupLayerManagerListener(LayerManagerEventListener):
     SINGLETON: GroupLayerManagerListener = None
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("list_", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.list_: BasicArrayList = BasicArrayListD()
@@ -36,9 +41,10 @@ class GroupLayerManagerListener(LayerManagerEventListener):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.layer.event.LayerManagerEventHandler import LayerManagerEventHandler
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         LayerManagerEventHandler.getInstance().addListener(self)
     
 
@@ -120,7 +126,7 @@ class GroupLayerManagerListener(LayerManagerEventListener):
         from org.allbinary.util.BasicArrayList import BasicArrayList
         size: int = self.list_.size()
         for index in range(size - 1, 0 - 1, -1):
-            if not self.isIdInList(index, excludeGroupList):
+            if not (self.isIdInList(index, excludeGroupList)):
                 groupSize: int = self.getGroupSizeById(index)
                 if groupSize >= maxSize:
                     return False
@@ -157,7 +163,7 @@ class GroupLayerManagerListener(LayerManagerEventListener):
             groupList = self.list_.objectArray[id]
             if groupList is None:
                 self.logUtil.putF(str(StringMaker().append("id: ").appendint(id)), self, "onCreateLayerManagerEvent")
-            if not groupList.contains(layerInterface):
+            if not (groupList.contains(layerInterface)):
                 groupList.add(layerInterface)
             else:
                 pass

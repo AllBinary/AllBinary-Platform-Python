@@ -93,6 +93,7 @@ class AbFileInterface:
     
 
     def listWithFilter(self, filter: FilenameFilter) -> list[str]:
+        from java.io.FilenameFilter import FilenameFilter
         raise NotImplementedError()
     
 

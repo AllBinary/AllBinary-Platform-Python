@@ -15,14 +15,22 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.graphics.paint.ProcessPaintable import ProcessPaintable
 
 
+@java_inherited_overloads
 class BufferedGameCanvasPaintHelper(ProcessPaintable):
     MAX_IMAGES: int = 4
+    def _java_defaults(self):
+        vars(self).setdefault("gameCanvas", None)
+        vars(self).setdefault("offScreenImage", None)
+        vars(self).setdefault("previousImage", None)
+        vars(self).setdefault("circularIndexUtil", None)
+        vars(self).setdefault("drawCircularIndexUtil", None)
+        vars(self).setdefault("anchor", 0)
 
     def _init_fields(self) -> None:
-        from javax.microedition.lcdui.Canvas import Canvas
         from javax.microedition.lcdui.Image import Image
         from javax.microedition.lcdui.NullCanvas import NullCanvas
         from javax.microedition.lcdui.NullImage import NullImage
@@ -37,8 +45,9 @@ class BufferedGameCanvasPaintHelper(ProcessPaintable):
     
 
     def __init__(self, gameCanvas: AllBinaryGameCanvas) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         raise Exception("No Longer Used")
     
 

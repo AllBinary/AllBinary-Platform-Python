@@ -36,7 +36,7 @@ class ResourceUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def setLoadingPaths(self, path: str, ext: str) -> None:
@@ -46,7 +46,7 @@ class ResourceUtil:
 
     def setClassLoader(self, classLoader: ClassLoader) -> None:
         from org.allbinary.logic.string.StringMaker import StringMaker
-        self.logUtil.putF(str(StringMaker().append("Resource Loader: ").append(type(classLoader).__module__ + "." + type(classLoader).__qualname__)), self, "setClassLoader")
+        self.logUtil.putF(str(StringMaker().append("Resource Loader: ").append(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(classLoader)))), self, "setClassLoader")
         ResourceUtil.classLoader = classLoader
     
 
@@ -69,7 +69,7 @@ class ResourceUtil:
         commonSeps: CommonSeps = CommonSeps.getInstance()
         index: int = resource.find(commonSeps.COLON)
         resourcePath: str = resource[index + startIndex:]
-        inputStream: InputStream = type(resource).getResourceAsStream(resourcePath)
+        inputStream: InputStream = __import__("java.lang.ClassLoader", fromlist=["ClassLoader"]).ClassLoader.classResource(type(resource), resourcePath, True)
         if inputStream is not None:
             return inputStream
         classLoader: ClassLoader = ResourceUtil.classLoader

@@ -15,15 +15,20 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.thread.ThreadPool import ThreadPool
 
 
 #This is mainly for network communications.
+@java_inherited_overloads
 class ImageThreadPool(ThreadPool):
     instance: ThreadPool = None
     _lock = threading.RLock()
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -36,16 +41,17 @@ class ImageThreadPool(ThreadPool):
     
 
     def __init__(self, poolName: str, numThreads: int, priority: int) -> None:
+        __class__._java_defaults(self)
         super().__init__(poolName, numThreads, priority)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def runTask(self, task: object) -> None:
         with self._lock:
-            return self._runTask_unlocked(task)
+            return __class__.__dict__["_runTask_unlocked"].__get__(self, __class__)(task)
 
     def _runTask_unlocked(self, task: object) -> None:
-        super().runTask(task)
+        java_super_call(super(), "runTask", task)
     
 
     def startTask(self, task: object) -> None:
@@ -61,6 +67,7 @@ class ImageThreadPool(ThreadPool):
 
 
 def _ImageThreadPool_instance() -> object:
+    from org.allbinary.thread.ThreadPool import ThreadPool
     return ImageThreadPool("ImageLoader", 1, ThreadPool.NORMAL_PRIORITY)
 
 lazy_static(ImageThreadPool, "instance", _ImageThreadPool_instance)

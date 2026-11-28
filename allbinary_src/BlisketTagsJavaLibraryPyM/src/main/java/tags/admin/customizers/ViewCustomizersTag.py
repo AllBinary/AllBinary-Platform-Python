@@ -15,9 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from tags.StoreValidationTransformTag import StoreValidationTransformTag
 
 
+@java_inherited_overloads
 class ViewCustomizersTag(StoreValidationTransformTag):
     
 
@@ -31,7 +34,7 @@ class ViewCustomizersTag(StoreValidationTransformTag):
         try:
             self.setName("Add Validation Customizers View")
             self.setObjectFile("views.admin.customizers.CustomizersValidationView")
-            return super().doStartTag()
+            return java_super_call(super(), "doStartTag")
         except Exception as e:
             AbResponseHandler.sendJspTagRedirect(self.pageContext, e)
             return self.SKIP_BODY

@@ -20,18 +20,14 @@ from __future__ import annotations
 class OrderStatusEmail:
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-        from org.allbinary.business.user.UserInterface import UserInterface
-        from org.allbinary.business.user.commerce.inventory.order.OrderHistory import OrderHistory
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.abeClientInformation: AbeClientInformationInterface = None
-        self.orderHistory: OrderHistory = None
-        self.storeFrontInterface: StoreFrontInterface = None
-        self.user: UserInterface = None
+        if "abeClientInformation" not in vars(self): self.abeClientInformation: AbeClientInformationInterface = None
+        if "orderHistory" not in vars(self): self.orderHistory: OrderHistory = None
+        if "storeFrontInterface" not in vars(self): self.storeFrontInterface: StoreFrontInterface = None
+        if "user" not in vars(self): self.user: UserInterface = None
     
 
     def __init__(self, abeClientInformation: AbeClientInformationInterface, orderHistory: OrderHistory) -> None:
@@ -39,7 +35,7 @@ class OrderStatusEmail:
         from org.allbinary.business.user.commerce.inventory.order.OrderHistory import OrderHistory
         from org.allbinary.data.tables.user.UserEntityFactory import UserEntityFactory
         from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-        self._init_fields()
+        __class__._init_fields(self)
         self.abeClientInformation = abeClientInformation
         self.orderHistory = orderHistory
         storeName: str = orderHistory.getStoreName()

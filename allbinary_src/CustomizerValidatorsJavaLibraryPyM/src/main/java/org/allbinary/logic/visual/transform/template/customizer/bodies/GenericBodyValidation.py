@@ -15,39 +15,48 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 from org.allbinary.logic.control.validate.Validation import Validation
 
 
+@java_inherited_overloads
 class GenericBodyValidation(*java_bases(Validation, DomNodeInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("body", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.body: str = None
+        if "body" not in vars(self): self.body: str = None
 
     def __init__(self, *args) -> None:
         if len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
         elif len(args) == 1:
-            self.__jconstructor1(*args)
+            __class__.__jconstructor1(self, *args)
 
     def __jconstructor1(self, *args) -> None:
-        if True and not isinstance(args[0], (str, list, int, float)):
-            self._constructor1_1(*args)
+        if True and (args[0] is None or any(base.__name__ == "Document" for base in type(args[0]).__mro__)):
+            __class__._constructor1_1(self, *args)
         else:
-            self._constructor1_2(*args)
+            __class__._constructor1_2(self, *args)
     
 
     def _constructor0(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.string.StringUtil import StringUtil
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.body = StringUtil.getInstance().EMPTY_STRING
     
 
     def _constructor1_1(self, document: Document) -> None:
+        __class__._java_defaults(self)
+        from org.allbinary.logic.visual.transform.template.customizer.bodies.BodyData import BodyData
         from org.allbinary.data.tree.dom.DomData import DomData
         from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
         from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
@@ -55,7 +64,7 @@ class GenericBodyValidation(*java_bases(Validation, DomNodeInterface)):
         from org.w3c.dom.Node import Node
         from org.w3c.dom.NodeList import NodeList
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         nodeList: NodeList = document.getElementsByTagName(BodyData.getInstance().NAME)
         for index in range(0, nodeList.getLength()):
             aBodyNode: Node = nodeList.item(index)
@@ -64,19 +73,22 @@ class GenericBodyValidation(*java_bases(Validation, DomNodeInterface)):
     
 
     def _constructor1_2(self, hashMap: HashMap) -> None:
+        __class__._java_defaults(self)
         from java.util.HashMap import HashMap
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.getFormData(hashMap)
     
 
     # throws Exception
     def getFormData(self, hashMap: HashMap) -> None:
+        from org.allbinary.logic.visual.transform.template.customizer.bodies.BodyData import BodyData
         from java.util.HashMap import HashMap
         self.body = hashMap.get(BodyData.getInstance().NAME)
     
 
     def isValid(self) -> bool:
+        from org.allbinary.logic.visual.transform.template.customizer.bodies.BodyData import BodyData
         from org.allbinary.logic.communication.sql.AbSqlData import AbSqlData
         from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
@@ -85,7 +97,7 @@ class GenericBodyValidation(*java_bases(Validation, DomNodeInterface)):
             isValid: bool = True
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.IS_VALID)
-            if not StringValidationUtil.getInstance().isValidNotRequired(self.body, BodyData.getInstance().MIN, AbSqlData.MAXBLOB):
+            if not (StringValidationUtil.getInstance().isValidNotRequired(self.body, BodyData.getInstance().MIN, AbSqlData.MAXBLOB)):
                 isValid = False
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 self.logUtil.putF("BodyValidation: " + str(isValid), self, self.commonStrings.IS_VALID)
@@ -97,6 +109,7 @@ class GenericBodyValidation(*java_bases(Validation, DomNodeInterface)):
     
 
     def validationInfo(self) -> str:
+        from org.allbinary.logic.visual.transform.template.customizer.bodies.BodyData import BodyData
         from org.allbinary.logic.communication.sql.AbSqlData import AbSqlData
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
@@ -128,6 +141,7 @@ class GenericBodyValidation(*java_bases(Validation, DomNodeInterface)):
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
+        from org.allbinary.logic.visual.transform.template.customizer.bodies.BodyData import BodyData
         from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
         from org.w3c.dom.Document import Document
         from org.w3c.dom.Node import Node

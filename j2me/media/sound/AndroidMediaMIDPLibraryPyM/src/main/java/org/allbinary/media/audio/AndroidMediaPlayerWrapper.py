@@ -15,17 +15,24 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.media.audio.BasicPlayer import BasicPlayer
 
 
+@java_inherited_overloads
 class AndroidMediaPlayerWrapper(BasicPlayer):
     NULL_ANDROID_MEDIA_PLAYER_WRAPPER: AndroidMediaPlayerWrapper = None
     _lock = threading.RLock()
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("mediaPlayer", None)
 
     def _init_fields(self) -> None:
-        from android.media.MediaPlayer import MediaPlayer
         from org.allbinary.android.NullAndroidCanvas import NullAndroidCanvas
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
@@ -42,12 +49,13 @@ class AndroidMediaPlayerWrapper(BasicPlayer):
     
 
     def __init__(self, resource: str) -> None:
+        __class__._java_defaults(self)
         from android.media.MediaPlayer import MediaPlayer
         from org.allbinary.data.resource.ResourceUtil import ResourceUtil
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.logic.string.StringUtil import StringUtil
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         try:
             if resource == StringUtil.getInstance().EMPTY_STRING:
                 pass
@@ -65,7 +73,7 @@ class AndroidMediaPlayerWrapper(BasicPlayer):
 
     def setLoopCount(self, count: int) -> None:
         from org.allbinary.android.NullAndroidCanvas import NullAndroidCanvas
-        super().setLoopCount(count)
+        java_super_call(super(), "setLoopCount", count)
         if self.mediaPlayer != NullAndroidCanvas.NULL_MEDIA_PLAYER and self.mediaPlayer is not None:
             if count == 0:
                 self.mediaPlayer.setLooping(False)
@@ -75,21 +83,21 @@ class AndroidMediaPlayerWrapper(BasicPlayer):
 
     def addPlayerListener(self, playerListener: PlayerListener) -> None:
         with self._lock:
-            return self._addPlayerListener_unlocked(playerListener)
+            return __class__.__dict__["_addPlayerListener_unlocked"].__get__(self, __class__)(playerListener)
 
     def _addPlayerListener_unlocked(self, playerListener: PlayerListener) -> None:
         from javax.microedition.media.PlayerListener import PlayerListener
-        super().addPlayerListener(playerListener)
+        java_super_call(super(), "addPlayerListener", playerListener)
     
 
     def removePlayerListener(self, playerListener: PlayerListener) -> None:
         from javax.microedition.media.PlayerListener import PlayerListener
-        super().removePlayerListener(playerListener)
+        java_super_call(super(), "removePlayerListener", playerListener)
     
 
     def getState(self) -> int:
         from javax.microedition.media.Player import Player
-        if self.mediaPlayer.isPlaying():
+        if java_predicate(self.mediaPlayer, "isPlaying"):
             return Player.STARTED
         else:
             return Player.PREFETCHED
@@ -107,16 +115,16 @@ class AndroidMediaPlayerWrapper(BasicPlayer):
     # throws MediaException
     def start(self) -> None:
         with self._lock:
-            return self._start_unlocked()
+            return __class__.__dict__["_start_unlocked"].__get__(self, __class__)()
 
     def _start_unlocked(self) -> None:
         from javax.microedition.media.MediaException import MediaException
         try:
-            if self.mediaPlayer.isPlaying():
+            if java_predicate(self.mediaPlayer, "isPlaying"):
                 self.mediaPlayer.pause()
                 self.mediaPlayer.seekTo(0)
             self.mediaPlayer.start()
-            super().start()
+            java_super_call(super(), "start")
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.START_METHOD_NAME, e)
     
@@ -124,14 +132,14 @@ class AndroidMediaPlayerWrapper(BasicPlayer):
     # throws MediaException
     def stop(self) -> None:
         with self._lock:
-            return self._stop_unlocked()
+            return __class__.__dict__["_stop_unlocked"].__get__(self, __class__)()
 
     def _stop_unlocked(self) -> None:
         from javax.microedition.media.MediaException import MediaException
         try:
             self.mediaPlayer.stop()
             self.mediaPlayer.prepare()
-            super().stop()
+            java_super_call(super(), "stop")
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, "stop", e)
     

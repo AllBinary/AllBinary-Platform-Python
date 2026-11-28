@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.System import System
 
 
 class RaceTracksPathPrinter:

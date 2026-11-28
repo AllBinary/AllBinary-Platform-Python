@@ -15,19 +15,29 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.graphics.hud.BasicHud import BasicHud
 
 
+@java_inherited_overloads
 class TimeHudWidget(BasicHud):
+    def _java_defaults(self):
+        vars(self).setdefault("TIME_STRING", None)
+        vars(self).setdefault("TIME_CHAR_ARRAY", None)
+        vars(self).setdefault("offset", 0)
+        vars(self).setdefault("string", None)
+        vars(self).setdefault("totalDigits", 0)
+        vars(self).setdefault("timer", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.math.PrimitiveLongSingleton import PrimitiveLongSingleton
         self.TIME_STRING: str = "Time "
         self.TIME_CHAR_ARRAY: list[str] = ['T', 'i', 'm', 'e', ' ']
-        self.offset: int = 0
+        if "offset" not in vars(self): self.offset: int = 0
         self.string: list[str] = PrimitiveLongSingleton.getInstance().ZERO
         self.totalDigits: int = 1
-        self.timer: HudTimer = None
+        if "timer" not in vars(self): self.timer: HudTimer = None
     
 
     # throws Exception
@@ -38,9 +48,10 @@ class TimeHudWidget(BasicHud):
     
 
     def __init__(self, location: int, direction: int, bufferZone: int, basicColor: BasicColor, timer: HudTimer) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(location, direction, bufferZone, basicColor)
-        self._init_fields()
+        __class__._init_fields(self)
         self.timer = timer
         self.set()
         self.updateMaxHeight = 14
@@ -53,7 +64,7 @@ class TimeHudWidget(BasicHud):
         font: Font = graphics.getFont()
         self.updateMaxWidth = font.getSize() * 5
         self.offset = font.stringWidth(self.TIME_STRING) + MyFontProcessor.defaultStringWidth(font, 3)
-        super().updateMeasurement(graphics)
+        java_super_call(super(), "updateMeasurement", graphics)
     
 
     def update(self) -> None:
@@ -72,7 +83,7 @@ class TimeHudWidget(BasicHud):
 
     def paint(self, graphics: Graphics) -> None:
         from javax.microedition.lcdui.Graphics import Graphics
-        super().paintDX(graphics, self.TIME_CHAR_ARRAY, 0, len(self.TIME_CHAR_ARRAY), self.string, 0, self.totalDigits, self.offset)
+        java_super_call(super(), "paintDX", graphics, self.TIME_CHAR_ARRAY, 0, len(self.TIME_CHAR_ARRAY), self.string, 0, self.totalDigits, self.offset)
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
 # from org.allbinary.graphics.color.BasicColor import BasicColor

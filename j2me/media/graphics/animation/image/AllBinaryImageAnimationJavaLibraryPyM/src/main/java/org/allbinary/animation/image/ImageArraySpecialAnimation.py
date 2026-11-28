@@ -15,12 +15,20 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.special.SpecialAnimationInterface import SpecialAnimationInterface
 from org.allbinary.animation.image.ImageArrayAnimation import ImageArrayAnimation
 
 
+@java_inherited_overloads
 class ImageArraySpecialAnimation(*java_bases(ImageArrayAnimation, SpecialAnimationInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("timeDelayHelper", None)
+        vars(self).setdefault("loopCount", 0)
+        vars(self).setdefault("loopCountTotal", 0)
 
     def _init_fields(self) -> None:
         from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
@@ -30,10 +38,11 @@ class ImageArraySpecialAnimation(*java_bases(ImageArrayAnimation, SpecialAnimati
     
 
     def __init__(self, imageArray: list[Image], animationBehavior: AnimationBehavior) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         super().__init__(imageArray, animationBehavior)
-        self._init_fields()
+        __class__._init_fields(self)
         self.reset()
     
 
@@ -71,7 +80,7 @@ class ImageArraySpecialAnimation(*java_bases(ImageArrayAnimation, SpecialAnimati
         from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
         x = DisplayInfoSingleton.getInstance().getLastHalfWidth() - (self.getImage(self.circularIndexUtil.getIndex()).getWidth() >> 1)
         y = 5
-        super().paintXY(graphics, x, y)
+        java_super_call(super(), "paintXY", graphics, x, y)
 # from javax.microedition.lcdui.Graphics import Graphics
 # from javax.microedition.lcdui.Image import Image
 # from org.allbinary.animation.AnimationBehavior import AnimationBehavior

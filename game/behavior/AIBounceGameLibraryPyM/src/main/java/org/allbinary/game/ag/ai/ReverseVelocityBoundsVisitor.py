@@ -21,19 +21,17 @@ from org.allbinary.bounds.BoundsVisitorInterface import BoundsVisitorInterface
 class ReverseVelocityBoundsVisitor(BoundsVisitorInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.physics.velocity.VelocityInterface import VelocityInterface
-        from org.allbinary.layer.LayerInterface import LayerInterface
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.velocityInterface: VelocityInterface = None
-        self.layerInterface: LayerInterface = None
+        if "velocityInterface" not in vars(self): self.velocityInterface: VelocityInterface = None
+        if "layerInterface" not in vars(self): self.layerInterface: LayerInterface = None
     
 
     def __init__(self, layerInterface: LayerInterface) -> None:
         from org.allbinary.game.physics.velocity.VelocityInterface import VelocityInterface
         from org.allbinary.game.physics.velocity.VelocityInterfaceCompositeInterface import VelocityInterfaceCompositeInterface
         from org.allbinary.layer.LayerInterface import LayerInterface
-        self._init_fields()
+        __class__._init_fields(self)
         self.layerInterface = layerInterface
         velocityInterfaceCompositeInterface: VelocityInterfaceCompositeInterface = layerInterface
         self.velocityInterface = velocityInterfaceCompositeInterface.getVelocityProperties()

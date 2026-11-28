@@ -15,10 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.graphics.displayable.screen.CommandForm import CommandForm
 
 
+@java_inherited_overloads
 class GameOptionsForm(CommandForm):
+    def _java_defaults(self):
+        vars(self).setdefault("meUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.MIDPUtil import MIDPUtil
@@ -26,6 +31,7 @@ class GameOptionsForm(CommandForm):
     
 
     def __init__(self, commandListener: CommandListener, title: str, backgrounBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.Choice import Choice
         from javax.microedition.lcdui.CommandListener import CommandListener
         from org.allbinary.game.configuration.feature.GameFeatureChoiceGroups import GameFeatureChoiceGroups
@@ -33,7 +39,7 @@ class GameOptionsForm(CommandForm):
         from org.allbinary.game.configuration.feature.GameFeatureItemStateListener import GameFeatureItemStateListener
         from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(commandListener, title, backgrounBasicColor, foregroundBasicColor)
-        self._init_fields()
+        __class__._init_fields(self)
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
         self.addConfiguration()
         gameFeatureFormUtil: GameFeatureFormUtil = GameFeatureFormUtil.getInstance()
@@ -47,7 +53,7 @@ class GameOptionsForm(CommandForm):
     # throws Exception
     def closeClientInformation(self, abeClientInformation: AbeClientInformationInterface) -> None:
         from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-        super().close()
+        java_super_call(super(), "close")
         self.save(abeClientInformation)
     
 
@@ -121,6 +127,7 @@ class GameOptionsForm(CommandForm):
 
     # throws Exception
     def save(self, abeClientInformation: AbeClientInformationInterface) -> None:
+        from org.allbinary.game.configuration.GameConfigurationGauge import GameConfigurationGauge
         from org.allbinary.game.configuration.GameConfigurationTextInput import GameConfigurationTextInput
         from org.allbinary.game.configuration.GameConfigurationUtil import GameConfigurationUtil
         from org.allbinary.game.configuration.GameConfigurationUtil import GameConfigurationUtil

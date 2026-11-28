@@ -20,16 +20,19 @@ from __future__ import annotations
 class NameSpaceRequestParam:
 
     def _init_fields(self) -> None:
-        from java.util.HashMap import HashMap
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.nameSpaceVector: BasicArrayList = None
-        self.nameSpacePropertiesHashMap: HashMap = None
-        self.value: str = None
+        if "nameSpaceVector" not in vars(self): self.nameSpaceVector: BasicArrayList = None
+        if "nameSpacePropertiesHashMap" not in vars(self): self.nameSpacePropertiesHashMap: HashMap = None
+        if "value" not in vars(self): self.value: str = None
     
 
     def __init__(self, nameSpace: str, value: str) -> None:
+        from org.allbinary.logic.communication.http.request.NameSpaceRequestParamData import NameSpaceRequestParamData
+        from org.allbinary.logic.communication.http.request.NameSpaceRequestParamData import NameSpaceRequestParamData
+        from org.allbinary.logic.communication.http.request.NameSpaceRequestParamData import NameSpaceRequestParamData
+        from org.allbinary.logic.communication.http.request.NameSpaceRequestParamData import NameSpaceRequestParamData
+        from org.allbinary.logic.communication.http.request.NameSpaceRequestParamData import NameSpaceRequestParamData
         from java.util.HashMap import HashMap
         from org.allbinary.logic.StdUtil import StdUtil
         from org.allbinary.logic.string.tokens.Tokenizer import Tokenizer
@@ -37,14 +40,14 @@ class NameSpaceRequestParam:
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-        self._init_fields()
+        __class__._init_fields(self)
         self.nameSpaceVector = BasicArrayListD()
         self.nameSpacePropertiesHashMap = StdUtil.getInstance().createHashMap()
         self.value = value
         beginIndex: int = nameSpace.find(NameSpaceRequestParamData.NAME)
         if beginIndex < 0:
             raise Exception("Not a NameSpaceRequest")
-        packages: str = nameSpace[beginIndex + NameSpaceRequestParamData.NAME.length() + NameSpaceRequestParamData.SEP.length():]
+        packages: str = nameSpace[beginIndex + __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(NameSpaceRequestParamData.NAME) + __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(NameSpaceRequestParamData.SEP):]
         sepTokenizer: Tokenizer = Tokenizer(NameSpaceRequestParamData.SEP)
         nameSpaceWithPropertiesVector: BasicArrayList = sepTokenizer.getTokensFromString(packages, BasicArrayListD())
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().HTTPREQUEST):
@@ -106,6 +109,7 @@ class NameSpaceRequestParam:
 
     # throws Exception
     def generatePackagePropertiesHashMap(self, properties: str) -> HashMap:
+        from org.allbinary.logic.communication.http.request.NameSpaceRequestParamData import NameSpaceRequestParamData
         from java.util.HashMap import HashMap
         from org.allbinary.logic.StdUtil import StdUtil
         from org.allbinary.logic.string.StringUtil import StringUtil

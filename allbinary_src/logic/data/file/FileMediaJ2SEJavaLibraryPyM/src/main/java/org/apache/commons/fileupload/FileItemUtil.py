@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -15,7 +16,7 @@ class FileItemUtil:
         self.DEFAULT_CHARSET: str = "ISO-8859-1"
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -36,14 +37,17 @@ class FileItemUtil:
 
     def getString(self, *args):
         if len(args) == 1 and True and (args[0] is None or isinstance(args[0], list)):
-            return self.getString_j1_1(*args)
+            return __class__.__dict__["getString_j1_1"].__get__(self, __class__)(*args)
         if len(args) == 1:
-            return self.getString_j1_2(*args)
-        return getattr(self, "getString_j" + str(len(args)))(*args)
+            return __class__.__dict__["getString_j1_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("getString_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getString(*args)
     
 
     # throws Exception
     def getBytes(self, fileItem: FileItemStream) -> list[int]:
+        from java.io.ByteArrayOutputStream import ByteArrayOutputStream
         from java.io.InputStream import InputStream
         from org.allbinary.logic.io.StreamUtil import StreamUtil
         from org.allbinary.logic.string.StringMaker import StringMaker
@@ -53,7 +57,7 @@ class FileItemUtil:
         try:
             inputStream = fileItem.openStream()
             outputStream = ByteArrayOutputStream()
-            if fileItem.isFormField():
+            if java_predicate(fileItem, "isFormField"):
                 self.logUtil.putF("FileItemStream FieldName: " + str(fileItem.getFieldName()), self, "write()")
             else:
                 stringBuffer: StringMaker = StringMaker()

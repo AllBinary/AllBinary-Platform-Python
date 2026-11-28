@@ -15,21 +15,27 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.ag.ai.sequence.SequenceAI import SequenceAI
 
 
+@java_inherited_overloads
 class NumberOnOwnGroupSequenceAI(SequenceAI):
+    def _java_defaults(self):
+        vars(self).setdefault("numberOnSameTeam", None)
 
     def _init_fields(self) -> None:
-        self.numberOnSameTeam: list[int] = None
+        if "numberOnSameTeam" not in vars(self): self.numberOnSameTeam: list[int] = None
     
 
     def __init__(self, numberOnSameTeam: list[int], artificialIntelligenceInterface: list[ArtificialIntelligenceInterface], ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
         from org.allbinary.game.input.GameInput import GameInput
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         super().__init__(artificialIntelligenceInterface, ownerLayerInterface, gameInput)
-        self._init_fields()
+        __class__._init_fields(self)
         self.numberOnSameTeam = numberOnSameTeam
     
 
@@ -44,7 +50,7 @@ class NumberOnOwnGroupSequenceAI(SequenceAI):
             size: int = GroupLayerManagerListener.getInstance().getGroupSizeFromInterface(layerInterface)
             if int(self.numberOnSameTeam[index]) > size:
                 self.next()
-        super().processAI(allBinaryLayerManager)
+        java_super_call(super(), "processAI", allBinaryLayerManager)
 # from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
 # from org.allbinary.game.input.GameInput import GameInput
 # from org.allbinary.game.layer.identification.GroupLayerManagerListener import GroupLayerManagerListener

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 
 
 class RectangleCollisionPointUtil:
@@ -34,7 +35,7 @@ class RectangleCollisionPointUtil:
         index = list_.size()
         while (index := index - 1) >= 0:
             point = list_.objectArray[index]
-            if not rectangleCollisionUtil.isInside(rectX1, rectY1, rectX2, rectY2, point.getX(), point.getY()):
+            if not (rectangleCollisionUtil.isInside(rectX1, rectY1, rectX2, rectY2, point.getX(), point.getY())):
                 return False
         return True
     
@@ -49,7 +50,7 @@ class RectangleCollisionPointUtil:
         index = list_.size()
         while (index := index - 1) >= 0:
             point = list_.objectArray[index]
-            if not rectangleCollisionUtil.isInside(rectX1, rectY1, rectX2, rectY2, point.getX() * xCellSize, point.getY() * yCellSize):
+            if not (rectangleCollisionUtil.isInside(rectX1, rectY1, rectX2, rectY2, point.getX() * xCellSize, point.getY() * yCellSize)):
                 return False
         return True
 # from org.allbinary.graphics.GPoint import GPoint

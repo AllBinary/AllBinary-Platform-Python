@@ -23,12 +23,12 @@ class Group(GroupInterface):
     def _init_fields(self) -> None:
         from org.allbinary.logic.string.StringUtil import StringUtil
         self.name: str = StringUtil.getInstance().EMPTY_STRING
-        self.teamId: int = None
+        if "teamId" not in vars(self): self.teamId: int = 0
         self.string: str = StringUtil.getInstance().EMPTY_STRING
     
 
     def __init__(self, teamName: str, teamId: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.teamId = teamId
         self.setName(teamName)
     

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from android.app.Activity import Activity
 from org.allbinary.android.GenericMotionEventVerifyInterface import GenericMotionEventVerifyInterface
@@ -24,6 +25,7 @@ from org.allbinary.android.activity.SimpleProgressActivityInterface import Simpl
 from org.allbinary.android.activity.KeyInputViewCompositeInterface import KeyInputViewCompositeInterface
 
 
+@java_inherited_overloads
 class MidletActivityBase(*java_bases(Activity, GameFeatureListenerInterface, GameInitializedListenerInterface, SimpleProgressActivityInterface, KeyInputViewCompositeInterface, GenericMotionEventVerifyInterface)):
 
     def __init__(self) -> None:

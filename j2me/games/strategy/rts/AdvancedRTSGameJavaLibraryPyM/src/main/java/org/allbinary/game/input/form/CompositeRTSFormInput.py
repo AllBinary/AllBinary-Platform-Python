@@ -15,23 +15,32 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.game.input.form.RTSFormInput import RTSFormInput
 
 
+@java_inherited_overloads
 class CompositeRTSFormInput(RTSFormInput):
+    def _java_defaults(self):
+        vars(self).setdefault("rtsFormInputArray", None)
+        vars(self).setdefault("itemIndex", None)
+        vars(self).setdefault("isPrimaryWaypointCreator", False)
 
     def _init_fields(self) -> None:
-        self.rtsFormInputArray: list[RTSFormInput] = None
-        self.itemIndex: list[int] = None
-        self.isPrimaryWaypointCreator: bool = None
+        if "rtsFormInputArray" not in vars(self): self.rtsFormInputArray: list[RTSFormInput] = None
+        if "itemIndex" not in vars(self): self.itemIndex: list[int] = None
+        if "isPrimaryWaypointCreator" not in vars(self): self.isPrimaryWaypointCreator: bool = False
     
 
     def __init__(self, groupInterface: list[Group], isPrimaryWaypointCreator: bool, itemIndex: list[int]) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.input.form.WaypointRTSFormInput import WaypointRTSFormInput
         from org.allbinary.game.input.form.UnitRTSFormInput import UnitRTSFormInput
         from org.allbinary.game.identification.Group import Group
         super().__init__(groupInterface)
-        self._init_fields()
+        __class__._init_fields(self)
         self.itemIndex = itemIndex
         self.isPrimaryWaypointCreator = isPrimaryWaypointCreator
         self.rtsFormInputArray = [None] * (2)
@@ -44,7 +53,7 @@ class CompositeRTSFormInput(RTSFormInput):
         from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
         from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
         from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
-        super().setAllBinaryGameLayerManager(allBinaryGameLayerManager)
+        java_super_call(super(), "setAllBinaryGameLayerManager", allBinaryGameLayerManager)
         geographicMapCompositeInterface: GeographicMapCompositeInterface = allBinaryGameLayerManager
         geographicMapInterface: BasicGeographicMap = geographicMapCompositeInterface.getGeographicMapInterface()[0]
         size: int = len(self.rtsFormInputArray)
@@ -61,7 +70,7 @@ class CompositeRTSFormInput(RTSFormInput):
         from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         scrollSelectionForm: ScrollSelectionForm = rtsPlayerLayerInterface.getCurrentScrollSelectionForm()
         index: int = scrollSelectionForm.getSelectedIndexForPoint(point)
-        if self.isStickyItemSelected() and associatedRtsLayer == CollidableDestroyableDamageableLayer.getNullInstance():
+        if java_predicate(self, "isStickyItemSelected") and associatedRtsLayer == CollidableDestroyableDamageableLayer.getNullInstance():
             if self.getSelectedStickyItemIndex() <= self.itemIndex[0]:
                 self.rtsFormInputArray[0].processAtPoint(associatedRtsLayer, rtsPlayerLayerInterface, layerManager, point)
         elif index > self.itemIndex[0]:
@@ -78,7 +87,7 @@ class CompositeRTSFormInput(RTSFormInput):
         from org.allbinary.string.CommonLabels import CommonLabels
         commonStrings: CommonStrings = CommonStrings.getInstance()
         self.logUtil.putF(str(CommonLabels.getInstance().INDEX_LABEL + index) + " > " + str(self.itemIndex[0]), self, commonStrings.PROCESS)
-        if self.isStickyItemSelected() and associatedRtsLayer == CollidableDestroyableDamageableLayer.getNullInstance():
+        if java_predicate(self, "isStickyItemSelected") and associatedRtsLayer == CollidableDestroyableDamageableLayer.getNullInstance():
             if self.getSelectedStickyItemIndex() <= self.itemIndex[0]:
                 self.rtsFormInputArray[0].processGameSpecific(associatedRtsLayer, rtsPlayerLayerInterface, layerManager, item, index)
         elif index > self.itemIndex[0]:
@@ -108,7 +117,7 @@ class CompositeRTSFormInput(RTSFormInput):
     
 
     def isStickyItemSelected(self) -> bool:
-        return self.rtsFormInputArray[0].isStickyItemSelected()
+        return java_predicate(self.rtsFormInputArray[0], "isStickyItemSelected")
     
 
     def setStickyItemSelected(self, stickyItemSelected: bool) -> None:

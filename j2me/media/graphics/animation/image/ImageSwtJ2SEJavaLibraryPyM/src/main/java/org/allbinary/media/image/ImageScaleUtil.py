@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -40,7 +42,7 @@ class ImageScaleUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -54,7 +56,7 @@ class ImageScaleUtil:
     def createImage3(self, imageCache: ImageCache, originalImage: Image, scaleNominatorX: float, scaleDenominatorX: float, scaleNominatorY: float, scaleDenominatorY: float, cached: bool, mutable: bool) -> Image:
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.image.ImageCache import ImageCache
-        if not self.features.isFeature(self.gameFeatureFactory.POST_IMAGE_LOADING_MODIFICATION):
+        if not (self.features.isFeature(self.gameFeatureFactory.POST_IMAGE_LOADING_MODIFICATION)):
             self.logUtil.putF(self.NO_COPY, self, self.commonStrings.CONSTRUCTOR)
             return originalImage
         width: int = originalImage.getWidth()

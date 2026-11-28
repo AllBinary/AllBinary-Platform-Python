@@ -15,10 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from views.business.context.modules.storefront.generator.GeneratorStoreFrontContextView import GeneratorStoreFrontContextView
 
 
+@java_inherited_overloads
 class PreviewGeneratorStoreFrontContextView(GeneratorStoreFrontContextView):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -26,9 +30,10 @@ class PreviewGeneratorStoreFrontContextView(GeneratorStoreFrontContextView):
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -47,6 +52,10 @@ class PreviewGeneratorStoreFrontContextView(GeneratorStoreFrontContextView):
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "view()", e)
             raise e
+    _declared_view = view
+    def view(self, *args, **kwargs):
+        if len(args) + len(kwargs) == 0 and (kwargs or (True)): return __class__._declared_view(self, *args, **kwargs)
+        return super().view(*args, **kwargs)
 # from org.allbinary.logic.communication.log.LogUtil import LogUtil
 # from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
 # from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface

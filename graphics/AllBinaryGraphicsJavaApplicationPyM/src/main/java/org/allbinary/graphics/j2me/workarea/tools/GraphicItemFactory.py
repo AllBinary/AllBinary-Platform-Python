@@ -22,8 +22,7 @@ class GraphicItemFactory:
     instance: GraphicItemFactory = None
 
     def _init_fields(self) -> None:
-        from java.util.HashMap import HashMap
-        self.graphicItems: HashMap = None
+        if "graphicItems" not in vars(self): self.graphicItems: HashMap = None
         self.DEFAULT: GraphicsItemInterfaceFactoryInterface = SelectionToolFactory()
     
 
@@ -36,7 +35,7 @@ class GraphicItemFactory:
         from org.allbinary.graphics.j2me.workarea.tools.LinesGraphicItem import LinesGraphicItem
         from org.allbinary.graphics.j2me.workarea.tools.LinesGraphicItemFactory import LinesGraphicItemFactory
         from org.allbinary.logic.StdUtil import StdUtil
-        self._init_fields()
+        __class__._init_fields(self)
         self.graphicItems = StdUtil.getInstance().createHashMap()
         self.graphicItems.put(LinesGraphicItem.getStaticName(), LinesGraphicItemFactory())
     
@@ -67,12 +66,15 @@ class GraphicItemFactory:
             graphicItemHashMap.put(graphicItem.getTreeNode(), graphicItem)
         return graphicItemHashMap
 
-    def getInstance(self, *args):
+    def getInstance(self=None, *args):
+        if self is None and not args: return __class__.getInstance_j0()
         if len(args) == 1 and True and (args[0] is None or isinstance(args[0], str)):
-            return self.getInstance_j1_1(*args)
+            return __class__.__dict__["getInstance_j1_1"].__get__(self, __class__)(*args)
         if len(args) == 1:
-            return self.getInstance_j1_2(*args)
-        return getattr(self, "getInstance_j" + str(len(args)))(*args)
+            return __class__.__dict__["getInstance_j1_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("getInstance_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getInstance(*args)
 # from java.util.HashMap import HashMap
 # from org.allbinary.log.LOGGING import LOGGING
 # from org.allbinary.logic.StdUtil import StdUtil

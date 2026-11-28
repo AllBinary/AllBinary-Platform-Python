@@ -35,7 +35,7 @@ class GameKeyMappingFactory:
 
     def __init__(self) -> None:
         from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
-        self._init_fields()
+        __class__._init_fields(self)
         gameKeyFactory: GameKeyFactory = GameKeyFactory.getInstance()
         self.setGameKey(gameKeyFactory.NONE)
         self.setGameKey(gameKeyFactory.UP)

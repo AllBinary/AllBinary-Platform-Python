@@ -15,23 +15,29 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.graphics.paint.InitUpdatePaintable import InitUpdatePaintable
 
 
+@java_inherited_overloads
 class PreGameSelectorPaintable(InitUpdatePaintable):
+    def _java_defaults(self):
+        vars(self).setdefault("title", None)
+        vars(self).setdefault("canvasDrawLineString", None)
+        vars(self).setdefault("preGameScrollSelectionForm", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.draw.CanvasDrawLineString import CanvasDrawLineString
-        self.title: str = None
-        self.canvasDrawLineString: CanvasDrawLineString = None
-        self.preGameScrollSelectionForm: PreGameScrollSelectionForm = None
+        if "title" not in vars(self): self.title: str = None
+        if "canvasDrawLineString" not in vars(self): self.canvasDrawLineString: CanvasDrawLineString = None
+        if "preGameScrollSelectionForm" not in vars(self): self.preGameScrollSelectionForm: PreGameScrollSelectionForm = None
     
 
     def __init__(self, title: str, preGameScrollSelectionForm: PreGameScrollSelectionForm) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
         from org.allbinary.graphics.draw.CanvasDrawLineString import CanvasDrawLineString
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.title = title
         displayInfo: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
         self.canvasDrawLineString = CanvasDrawLineString(displayInfo.getLastHalfWidth(), 0)

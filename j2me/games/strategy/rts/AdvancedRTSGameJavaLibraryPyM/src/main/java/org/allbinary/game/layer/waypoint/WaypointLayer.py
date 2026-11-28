@@ -15,9 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.game.layer.AdvancedRTSGameLayer import AdvancedRTSGameLayer
 
 
+@java_inherited_overloads
 class WaypointLayer(AdvancedRTSGameLayer):
     
 
@@ -49,8 +53,8 @@ class WaypointLayer(AdvancedRTSGameLayer):
 
     def paint(self, graphics: Graphics) -> None:
         from javax.microedition.lcdui.Graphics import Graphics
-        if self.isVisible():
-            super().paint(graphics)
+        if java_predicate(self, "isVisible"):
+            java_super_call(super(), "paint", graphics)
     
 
     def processTick(self, allBinaryLayerManager: AllBinaryLayerManager) -> None:
@@ -73,8 +77,8 @@ class WaypointLayer(AdvancedRTSGameLayer):
     # throws Exception
     def setDestroyed(self, destroyed: bool) -> None:
         from org.allbinary.game.layer.waypoint.WaypointCellPositionHistory import WaypointCellPositionHistory
-        super().setDestroyed(destroyed)
-        if self.isDestroyed():
+        java_super_call(super(), "setDestroyed", destroyed)
+        if java_predicate(self, "isDestroyed"):
             WaypointCellPositionHistory.getInstance().removeLayer(self)
     
 

@@ -3,20 +3,28 @@
 
 from __future__ import annotations
 
+from java.lang.System import System
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.logic.util.visitor.Visitor import Visitor
 
 
+@java_inherited_overloads
 class ObjectPermutationVisitor(Visitor):
+    def _java_defaults(self):
+        vars(self).setdefault("data", None)
+        vars(self).setdefault("stringBuilder", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.string.StringMaker import StringMaker
-        self.data: list[object] = None
+        if "data" not in vars(self): self.data: list[object] = None
         self.stringBuilder: StringMaker = StringMaker()
     
 
     def __init__(self, data: list[object]) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.data = data
     
 
@@ -45,7 +53,9 @@ class ObjectPermutationVisitor(Visitor):
         print(str(stringBuilder))
 
     def print_(self, *args):
-        return getattr(self, "print__j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("print__j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().print_(*args)
 # from org.allbinary.TsUtil import TsUtil
 # from org.allbinary.logic.NullUtil import NullUtil
 # from org.allbinary.logic.string.StringMaker import StringMaker

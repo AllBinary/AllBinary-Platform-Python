@@ -15,11 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.util.cache.CacheableInterface import CacheableInterface
 from org.allbinary.animation.image.AdjustedImageArrayRotationAnimation import AdjustedImageArrayRotationAnimation
 
 
+@java_inherited_overloads
 class ImageArrayRotationAnimationCacheable(*java_bases(AdjustedImageArrayRotationAnimation, CacheableInterface)):
     
 

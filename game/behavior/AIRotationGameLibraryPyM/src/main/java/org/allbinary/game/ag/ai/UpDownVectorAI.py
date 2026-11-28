@@ -15,23 +15,28 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.ai.BasicAI import BasicAI
 
 
+@java_inherited_overloads
 class UpDownVectorAI(BasicAI):
+    def _java_defaults(self):
+        vars(self).setdefault("velocityInterface", None)
+        vars(self).setdefault("index", 0)
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
-        self.velocityInterface: BasicVelocityProperties = None
+        if "velocityInterface" not in vars(self): self.velocityInterface: BasicVelocityProperties = None
         self.index: int = 0
     
 
     def __init__(self, ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.input.GameInput import GameInput
         from org.allbinary.game.physics.velocity.VelocityInterfaceCompositeInterface import VelocityInterfaceCompositeInterface
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         super().__init__(ownerLayerInterface, gameInput)
-        self._init_fields()
+        __class__._init_fields(self)
         velocityInterfaceCompositeInterface: VelocityInterfaceCompositeInterface = self.getOwnerLayerInterface()
         self.velocityInterface = velocityInterfaceCompositeInterface.getVelocityProperties()
         self.velocityInterface.getVelocityYBasicDecimalP().setint(0)

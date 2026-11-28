@@ -15,28 +15,35 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.input.automation.actions.script.condition.processors.BasicProfileActionScriptProcessor import BasicProfileActionScriptProcessor
 from org.allbinary.input.automation.actions.script.condition.processors.input.ProfileActionScriptInputInterface import ProfileActionScriptInputInterface
 
 
+@java_inherited_overloads
 class BasicProfileActionScriptInput(*java_bases(BasicProfileActionScriptProcessor, ProfileActionScriptInputInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("inputRobotInterface", None)
+        vars(self).setdefault("time", 0)
 
     def _init_fields(self) -> None:
-        from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.inputRobotInterface: InputRobotInterface = None
-        self.time: int = 0
+        if "inputRobotInterface" not in vars(self): self.inputRobotInterface: InputRobotInterface = None
+        if "time" not in vars(self): self.time: int = 0
 
     def __init__(self, *args) -> None:
         if len(args) == 2:
-            self._constructor2(*args)
+            __class__._constructor2(self, *args)
         elif len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
     
 
     def _constructor2(self, label: str, node: Node) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.input.automation.actions.script.condition.processors.input.GenericProfileActionScriptInputData import GenericProfileActionScriptInputData
         from org.allbinary.input.automation.actions.script.condition.processors.input.GenericProfileActionScriptInputData import GenericProfileActionScriptInputData
         from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
@@ -44,7 +51,7 @@ class BasicProfileActionScriptInput(*java_bases(BasicProfileActionScriptProcesso
         from org.allbinary.input.automation.robot.InputRobotFactory import InputRobotFactory
         from org.w3c.dom.Node import Node
         super().__init__(label, node)
-        self._init_fields()
+        __class__._init_fields(self)
         self.logUtil.putF(str(self.commonStrings.START) + label, self, self.commonStrings.CONSTRUCTOR)
         actionNode: Node = DomSearchHelper.getNode(GenericProfileActionScriptInputData.TYPE, node.getChildNodes())
         inputTypeString: str = DomNodeHelper.getTextNodeValue(actionNode)
@@ -58,12 +65,13 @@ class BasicProfileActionScriptInput(*java_bases(BasicProfileActionScriptProcesso
     
 
     def _constructor1(self, label: str) -> None:
+        __class__._java_defaults(self)
         from java.util.Iterator import Iterator
         from java.util.Set import Set
         from org.allbinary.input.automation.robot.InputRobotFactory import InputRobotFactory
         from org.allbinary.util.ABHashtable import ABHashtable
         super().__init__(label)
-        self._init_fields()
+        __class__._init_fields(self)
         self.logUtil.putF(str(self.commonStrings.START) + label, self, self.commonStrings.CONSTRUCTOR)
         inputRobotFactory: InputRobotFactory = InputRobotFactory.getInstance()
         hashtable: ABHashtable[object, object] = inputRobotFactory.get()
@@ -117,7 +125,7 @@ class BasicProfileActionScriptInput(*java_bases(BasicProfileActionScriptProcesso
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.logic.string.StringUtil import StringUtil
         stringBuffer: StringMaker = StringMaker()
-        stringBuffer.append(str(super()))
+        stringBuffer.append(java_super_call(super(), "toString"))
         stringBuffer.append(" Input Type: ")
         if self.getInputRobotInterface() is not None:
             stringBuffer.append(self.getInputRobotInterface().getName())

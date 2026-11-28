@@ -15,13 +15,19 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_divide
 from org.allbinary.animation.image.ImageArrayBaseRotationAnimation import ImageArrayBaseRotationAnimation
 
 
+@java_inherited_overloads
 class ImageArrayRotationAnimation(ImageArrayBaseRotationAnimation):
+    def _java_defaults(self):
+        vars(self).setdefault("expectedTotalFrames", 0)
 
     def _init_fields(self) -> None:
-        self.expectedTotalFrames: int = 0
+        if "expectedTotalFrames" not in vars(self): self.expectedTotalFrames: int = 0
     
 
     # throws Exception
@@ -33,11 +39,12 @@ class ImageArrayRotationAnimation(ImageArrayBaseRotationAnimation):
     
 
     def __init__(self, imageArray: list[Image], angleInfo: AngleInfo, totalAngle: int, animationBehavior: AnimationBehavior) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         from org.allbinary.math.AngleInfo import AngleInfo
         super().__init__(imageArray, angleInfo, animationBehavior)
-        self._init_fields()
+        __class__._init_fields(self)
         self.initImageArray(imageArray, angleInfo, totalAngle)
     
 
@@ -45,7 +52,8 @@ class ImageArrayRotationAnimation(ImageArrayBaseRotationAnimation):
     def initImageArray(self, imageArray: list[Image], angleInfo: AngleInfo, totalAngle: int) -> None:
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.math.AngleInfo import AngleInfo
-        self.expectedTotalFrames = totalAngle / self.angleInfo.getAngleIncrementInfo().getAngleIncrement()
+        self.expectedTotalFrames = java_divide(totalAngle, self.angleInfo.getAngleIncrementInfo().getAngleIncrement())
+            
         self.angleInfo.adjustAngle(0)
         if self.expectedTotalFrames != self.getSize():
             raise Exception("Wrong Number of Frames")
@@ -53,7 +61,7 @@ class ImageArrayRotationAnimation(ImageArrayBaseRotationAnimation):
 
     def setImageArray(self, imageArray: list[Image]) -> None:
         from javax.microedition.lcdui.Image import Image
-        super().setImageArray(imageArray)
+        java_super_call(super(), "setImageArray", imageArray)
         self.angleInfo.adjustAngle(0)
 # from javax.microedition.lcdui.Image import Image
 # from org.allbinary.animation.AnimationBehavior import AnimationBehavior

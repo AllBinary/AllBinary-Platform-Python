@@ -15,9 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.util.HashMap import HashMap
 
 
+@java_inherited_overloads
 class ABHashMap(HashMap):
 
     def __init__(self) -> None:
@@ -25,63 +29,63 @@ class ABHashMap(HashMap):
     
 
     def size(self) -> int:
-        return super().size()
+        return java_super_call(super(), "size")
     
 
     def isEmpty(self) -> bool:
-        return super().isEmpty()
+        return java_super_call(super(), "isEmpty")
     
 
     def get(self, key: object) -> V:
-        return super().get(key)
+        return java_super_call(super(), "get", key)
     
 
     def containsKey(self, key: object) -> bool:
-        return super().containsKey(key)
+        return java_super_call(super(), "containsKey", key)
     
 
     def put(self, key: K, value: V) -> V:
-        return super().put(key, value)
+        return java_super_call(super(), "put", key, value)
     
 
     def putAll(self, map: Map[object, object]) -> None:
         from java.util.Map import Map
-        super().putAll(map)
+        java_super_call(super(), "putAll", map)
     
 
     def remove(self, key: object) -> V:
-        return super().remove(key)
+        return java_super_call(super(), "remove", key)
     
 
     def clear(self) -> None:
-        super().clear()
+        java_super_call(super(), "clear")
     
 
     def containsValue(self, value: object) -> bool:
-        return super().containsValue(value)
+        return java_super_call(super(), "containsValue", value)
     
 
     def keySet(self) -> Set[K]:
         from java.util.Set import Set
-        return super().keySet()
+        return java_super_call(super(), "keySet")
     
 
     def entrySet(self) -> Set[Entry[K, V]]:
         from java.util.Map import Map
         from java.util.Set import Set
-        return super().entrySet()
+        return java_super_call(super(), "entrySet")
     
 
     def getOrDefault(self, key: object, defaultValue: V) -> V:
-        return super().getOrDefault(key, defaultValue)
+        return java_super_call(super(), "getOrDefault", key, defaultValue)
     
 
     def putIfAbsent(self, key: K, value: V) -> V:
-        return super().putIfAbsent(key, value)
+        return java_super_call(super(), "putIfAbsent", key, value)
     
 
     def clone(self) -> object:
-        return super().clone()
+        return java_super_call(super(), "clone")
 # from java.util.Map import Map
 # from java.util.Set import Set
 # from jsinterop.annotations.JsType import JsType

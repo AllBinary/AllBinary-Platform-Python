@@ -15,10 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.input.automation.module.actions.script.condition.processors.output.ProfileActionScriptOutputInterface import ProfileActionScriptOutputInterface
 
 
 # Java interface
+@java_inherited_overloads
 class ImageActionScriptOutputInterface(ProfileActionScriptOutputInterface):
     
 

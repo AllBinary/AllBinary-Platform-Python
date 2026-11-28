@@ -15,12 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.System import System
 
 
 class Replace:
 
     def _init_fields(self) -> None:
-        from java.util.HashMap import HashMap
         from org.allbinary.J2SEUtil import J2SEUtil
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
@@ -28,38 +28,38 @@ class Replace:
         self.REPLACERS_: str = "Replacers: "
         self.ALL: str = "all"
         self.FOUND_KEY: str = "found key total: "
-        self.hashMap: HashMap = None
+        if "hashMap" not in vars(self): self.hashMap: HashMap = None
 
     def __init__(self, *args) -> None:
         if len(args) == 2:
-            self.__jconstructor2(*args)
+            __class__.__jconstructor2(self, *args)
         elif len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
 
     def __jconstructor2(self, *args) -> None:
         if True and (args[0] is None or isinstance(args[0], str)) and (args[1] is None or isinstance(args[1], str)):
-            self._constructor2_1(*args)
+            __class__._constructor2_1(self, *args)
         else:
-            self._constructor2_2(*args)
+            __class__._constructor2_2(self, *args)
     
 
     def _constructor2_1(self, key: str, value: str) -> None:
         from org.allbinary.logic.StdUtil import StdUtil
-        self._init_fields()
+        __class__._init_fields(self)
         self.hashMap = StdUtil.getInstance().createHashMap()
         self.hashMap.put([key], [value])
     
 
     def _constructor2_2(self, keys: list[str], values: list[str]) -> None:
         from org.allbinary.logic.StdUtil import StdUtil
-        self._init_fields()
+        __class__._init_fields(self)
         self.hashMap = StdUtil.getInstance().createHashMap()
         self.hashMap.put(keys, values)
     
 
     def _constructor1(self, hashMap: HashMap) -> None:
         from java.util.HashMap import HashMap
-        self._init_fields()
+        __class__._init_fields(self)
         self.hashMap = hashMap
     
 

@@ -16,18 +16,26 @@
 from __future__ import annotations
 
 import time
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.canvas.AndroidGameStatistics import AndroidGameStatistics
 
 
+@java_inherited_overloads
 class ProfilingRefreshHelper(AndroidGameStatistics):
     instance: ProfilingRefreshHelper = None
+    def _java_defaults(self):
+        vars(self).setdefault("firstTime", False)
+        vars(self).setdefault("bestFrameProcessingTime", 0)
+        vars(self).setdefault("worstFrameProcessingTime", 0)
+        vars(self).setdefault("frameProcessingTimeElapsed", 0)
 
     def _init_fields(self) -> None:
         self.firstTime: bool = True
-        self.bestFrameProcessingTime: int = 0
-        self.worstFrameProcessingTime: int = 0
-        self.frameProcessingTimeElapsed: int = 0
+        if "bestFrameProcessingTime" not in vars(self): self.bestFrameProcessingTime: int = 0
+        if "worstFrameProcessingTime" not in vars(self): self.worstFrameProcessingTime: int = 0
+        if "frameProcessingTimeElapsed" not in vars(self): self.frameProcessingTimeElapsed: int = 0
     
 
     @staticmethod
@@ -36,13 +44,14 @@ class ProfilingRefreshHelper(AndroidGameStatistics):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def initView(self, view: View) -> None:
         from android.view.View import View
-        super().initView(view)
+        java_super_call(super(), "initView", view)
         self.frameProcessingTimeElapsed = self.getTimeDelayHelper().getStartTime()
         self.bestFrameProcessingTime = 2147483647
         self.worstFrameProcessingTime = 0
@@ -57,12 +66,12 @@ class ProfilingRefreshHelper(AndroidGameStatistics):
                 self.bestFrameProcessingTime = self.frameProcessingTimeElapsed
         else:
             self.firstTime = False
-        super().nextFrame()
+        java_super_call(super(), "nextFrame")
     
 
     def toString(self) -> str:
         from org.allbinary.logic.string.StringMaker import StringMaker
-        return str(StringMaker().append(str(super())).append(" Worst: ").appendint(self.worstFrameProcessingTime).append(" Best: ").appendint(self.bestFrameProcessingTime))
+        return str(StringMaker().append(java_super_call(super(), "toString")).append(" Worst: ").appendint(self.worstFrameProcessingTime).append(" Best: ").appendint(self.bestFrameProcessingTime))
 
     def __str__(self) -> str:
         return self.toString()

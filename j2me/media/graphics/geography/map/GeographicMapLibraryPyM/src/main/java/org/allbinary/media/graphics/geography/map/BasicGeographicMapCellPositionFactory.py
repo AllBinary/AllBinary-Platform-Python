@@ -21,18 +21,17 @@ class BasicGeographicMapCellPositionFactory:
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.geographicMapCellPositionArray: list[list[GeographicMapCellPosition]] = None
-        self.geographicMapInterface: BasicGeographicMap = None
-        self.geographicMapCellPositionFactoryInterface: GeographicMapCellPositionFactoryInterface = None
-        self.columns: int = None
-        self.rows: int = None
-        self.tiledLayer: AllBinaryTiledLayer = None
+        if "geographicMapCellPositionArray" not in vars(self): self.geographicMapCellPositionArray: list[list[GeographicMapCellPosition]] = None
+        if "geographicMapInterface" not in vars(self): self.geographicMapInterface: BasicGeographicMap = None
+        if "geographicMapCellPositionFactoryInterface" not in vars(self): self.geographicMapCellPositionFactoryInterface: GeographicMapCellPositionFactoryInterface = None
+        if "columns" not in vars(self): self.columns: int = 0
+        if "rows" not in vars(self): self.rows: int = 0
+        if "tiledLayer" not in vars(self): self.tiledLayer: AllBinaryTiledLayer = None
     
 
     def __init__(self, geographicMapInterface: BasicGeographicMap) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.geographicMapInterface = geographicMapInterface
         self.geographicMapCellPositionFactoryInterface = self.geographicMapInterface.getGeographicMapCellPositionFactoryInterface()
         self.tiledLayer = self.geographicMapInterface.getAllBinaryTiledLayer()

@@ -20,13 +20,12 @@ from __future__ import annotations
 class InputAutomationConfigurationModuleChangeEvent:
 
     def _init_fields(self) -> None:
-        from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfiguration import InputAutomationModuleConfiguration
-        self.inputAutomationModuleConfiguration: InputAutomationModuleConfiguration = None
+        if "inputAutomationModuleConfiguration" not in vars(self): self.inputAutomationModuleConfiguration: InputAutomationModuleConfiguration = None
     
 
     def __init__(self, inputAutomationModuleConfiguration: InputAutomationModuleConfiguration) -> None:
         from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfiguration import InputAutomationModuleConfiguration
-        self._init_fields()
+        __class__._init_fields(self)
         self.setInputAutomationModuleConfiguration(inputAutomationModuleConfiguration)
     
 

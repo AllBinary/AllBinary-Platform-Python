@@ -22,18 +22,17 @@ class StoreThemeCategoryFactory(CategoryFactoryInterface):
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.transformInfoInterface: TransformInfoInterface = None
+        if "transformInfoInterface" not in vars(self): self.transformInfoInterface: TransformInfoInterface = None
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-        self._init_fields()
+        __class__._init_fields(self)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().CATEGORY):
             self.logUtil.putF(self.commonStrings.START, self, "StoreCategoryFactory(TransformInfoInterface transformInfoInterface)")
         self.transformInfoInterface = transformInfoInterface
@@ -74,7 +73,9 @@ class StoreThemeCategoryFactory(CategoryFactoryInterface):
             return None
 
     def getRootInstance(self, *args):
-        return getattr(self, "getRootInstance_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("getRootInstance_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getRootInstance(*args)
     
 
     def getRootInstanceFromNode(self, node: Node) -> CategoryInterface:
@@ -206,18 +207,20 @@ class StoreThemeCategoryFactory(CategoryFactoryInterface):
 
     def getInstance(self, *args):
         if len(args) == 2 and True and (args[0] is None or isinstance(args[0], str)) and isinstance(args[1], int) and not isinstance(args[1], bool):
-            return self.getInstance_j2_1(*args)
-        if len(args) == 3 and True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)) and (args[2] is None or isinstance(args[2], str)):
-            return self.getInstance_j3_1(*args)
-        if len(args) == 2 and True and not isinstance(args[0], (str, list, int, float)) and isinstance(args[1], int) and not isinstance(args[1], bool):
-            return self.getInstance_j2_2(*args)
-        if len(args) == 3 and True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)) and not isinstance(args[2], (str, list, int, float)):
-            return self.getInstance_j3_2(*args)
+            return __class__.__dict__["getInstance_j2_1"].__get__(self, __class__)(*args)
+        if len(args) == 3 and True and (args[0] is None or any(base.__name__ == "CategoryInterface" for base in type(args[0]).__mro__)) and (args[1] is None or any(base.__name__ == "CategoryInterface" for base in type(args[1]).__mro__)) and (args[2] is None or isinstance(args[2], str)):
+            return __class__.__dict__["getInstance_j3_1"].__get__(self, __class__)(*args)
+        if len(args) == 2 and True and (args[0] is None or any(base.__name__ == "Node" for base in type(args[0]).__mro__)) and isinstance(args[1], int) and not isinstance(args[1], bool):
+            return __class__.__dict__["getInstance_j2_2"].__get__(self, __class__)(*args)
+        if len(args) == 3 and True and (args[0] is None or any(base.__name__ == "CategoryInterface" for base in type(args[0]).__mro__)) and (args[1] is None or any(base.__name__ == "CategoryInterface" for base in type(args[1]).__mro__)) and (args[2] is None or any(base.__name__ == "Node" for base in type(args[2]).__mro__)):
+            return __class__.__dict__["getInstance_j3_2"].__get__(self, __class__)(*args)
         if len(args) == 2:
-            return self.getInstance_j2_3(*args)
+            return __class__.__dict__["getInstance_j2_3"].__get__(self, __class__)(*args)
         if len(args) == 3:
-            return self.getInstance_j3_3(*args)
-        return getattr(self, "getInstance_j" + str(len(args)))(*args)
+            return __class__.__dict__["getInstance_j3_3"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("getInstance_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getInstance(*args)
 # from java.util.HashMap import HashMap
 # from org.allbinary.business.category.CategoryInterface import CategoryInterface
 # from org.allbinary.business.category.CategoryUtil import CategoryUtil

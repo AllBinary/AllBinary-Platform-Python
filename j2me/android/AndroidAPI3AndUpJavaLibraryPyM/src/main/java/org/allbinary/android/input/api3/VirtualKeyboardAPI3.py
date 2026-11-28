@@ -15,30 +15,37 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.android.input.VirtualKeyboard import VirtualKeyboard
 from org.allbinary.input.event.VirtualKeyboardEventListenerInterface import VirtualKeyboardEventListenerInterface
 
 
+@java_inherited_overloads
 class VirtualKeyboardAPI3(*java_bases(VirtualKeyboard, VirtualKeyboardEventListenerInterface)):
     MAX_API: int = 2147483647
     MIN_API: int = 3
+    def _java_defaults(self):
+        vars(self).setdefault("virtualKeyboard", False)
+        vars(self).setdefault("activity", None)
+        vars(self).setdefault("showVirtualKeyboardRunnable", None)
+        vars(self).setdefault("hideVirtualKeyboardRunnable", None)
 
     def _init_fields(self) -> None:
-        from android.app.Activity import Activity
-        self.virtualKeyboard: bool = False
-        self.activity: Activity = None
-        self.showVirtualKeyboardRunnable: object = None
-        self.hideVirtualKeyboardRunnable: object = None
+        if "virtualKeyboard" not in vars(self): self.virtualKeyboard: bool = False
+        if "activity" not in vars(self): self.activity: Activity = None
+        if "showVirtualKeyboardRunnable" not in vars(self): self.showVirtualKeyboardRunnable: object = None
+        if "hideVirtualKeyboardRunnable" not in vars(self): self.hideVirtualKeyboardRunnable: object = None
     
 
     def __init__(self, activity: Activity) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.android.input.api3.ShowVirtualKeyboardRunnable import ShowVirtualKeyboardRunnable
         from org.allbinary.android.input.api3.HideVirtualKeyboardRunnable import HideVirtualKeyboardRunnable
         from android.app.Activity import Activity
         from org.allbinary.input.event.VirtualKeyboardEventHandler import VirtualKeyboardEventHandler
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.activity = activity
         self.showVirtualKeyboardRunnable = ShowVirtualKeyboardRunnable(self.activity)
         self.hideVirtualKeyboardRunnable = HideVirtualKeyboardRunnable(self.activity)

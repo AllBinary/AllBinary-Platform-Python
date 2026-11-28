@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 
 
 class Initializer:
@@ -26,51 +27,51 @@ class Initializer:
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.userJdbcDriver: str = None
-        self.userName: str = None
-        self.userUserName: str = None
-        self.userPassword: str = None
-        self.userSchema: str = None
-        self.userServer: str = None
-        self.userPort: str = None
-        self.historyJdbcDriver: str = None
-        self.historyName: str = None
-        self.historyUserName: str = None
-        self.historyPassword: str = None
-        self.historySchema: str = None
-        self.historyServer: str = None
-        self.historyPort: str = None
-        self.logJdbcDriver: str = None
-        self.logName: str = None
-        self.logUserName: str = None
-        self.logPassword: str = None
-        self.logSchema: str = None
-        self.logServer: str = None
-        self.logPort: str = None
-        self.inventoryJdbcDriver: str = None
-        self.inventoryName: str = None
-        self.inventoryUserName: str = None
-        self.inventoryPassword: str = None
-        self.inventorySchema: str = None
-        self.inventoryServer: str = None
-        self.inventoryPort: str = None
-        self.staticPagesJdbcDriver: str = None
-        self.staticPagesName: str = None
-        self.staticPagesUserName: str = None
-        self.staticPagesPassword: str = None
-        self.staticPagesSchema: str = None
-        self.staticPagesServer: str = None
-        self.staticPagesPort: str = None
+        if "userJdbcDriver" not in vars(self): self.userJdbcDriver: str = None
+        if "userName" not in vars(self): self.userName: str = None
+        if "userUserName" not in vars(self): self.userUserName: str = None
+        if "userPassword" not in vars(self): self.userPassword: str = None
+        if "userSchema" not in vars(self): self.userSchema: str = None
+        if "userServer" not in vars(self): self.userServer: str = None
+        if "userPort" not in vars(self): self.userPort: str = None
+        if "historyJdbcDriver" not in vars(self): self.historyJdbcDriver: str = None
+        if "historyName" not in vars(self): self.historyName: str = None
+        if "historyUserName" not in vars(self): self.historyUserName: str = None
+        if "historyPassword" not in vars(self): self.historyPassword: str = None
+        if "historySchema" not in vars(self): self.historySchema: str = None
+        if "historyServer" not in vars(self): self.historyServer: str = None
+        if "historyPort" not in vars(self): self.historyPort: str = None
+        if "logJdbcDriver" not in vars(self): self.logJdbcDriver: str = None
+        if "logName" not in vars(self): self.logName: str = None
+        if "logUserName" not in vars(self): self.logUserName: str = None
+        if "logPassword" not in vars(self): self.logPassword: str = None
+        if "logSchema" not in vars(self): self.logSchema: str = None
+        if "logServer" not in vars(self): self.logServer: str = None
+        if "logPort" not in vars(self): self.logPort: str = None
+        if "inventoryJdbcDriver" not in vars(self): self.inventoryJdbcDriver: str = None
+        if "inventoryName" not in vars(self): self.inventoryName: str = None
+        if "inventoryUserName" not in vars(self): self.inventoryUserName: str = None
+        if "inventoryPassword" not in vars(self): self.inventoryPassword: str = None
+        if "inventorySchema" not in vars(self): self.inventorySchema: str = None
+        if "inventoryServer" not in vars(self): self.inventoryServer: str = None
+        if "inventoryPort" not in vars(self): self.inventoryPort: str = None
+        if "staticPagesJdbcDriver" not in vars(self): self.staticPagesJdbcDriver: str = None
+        if "staticPagesName" not in vars(self): self.staticPagesName: str = None
+        if "staticPagesUserName" not in vars(self): self.staticPagesUserName: str = None
+        if "staticPagesPassword" not in vars(self): self.staticPagesPassword: str = None
+        if "staticPagesSchema" not in vars(self): self.staticPagesSchema: str = None
+        if "staticPagesServer" not in vars(self): self.staticPagesServer: str = None
+        if "staticPagesPort" not in vars(self): self.staticPagesPort: str = None
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self.__jconstructor1(*args)
+            __class__.__jconstructor1(self, *args)
 
     def __jconstructor1(self, *args) -> None:
-        if True and not isinstance(args[0], (str, list, int, float)):
-            self._constructor1_1(*args)
+        if True and (args[0] is None or any(base.__name__ == "Map" for base in type(args[0]).__mro__)):
+            __class__._constructor1_1(self, *args)
         else:
-            self._constructor1_2(*args)
+            __class__._constructor1_2(self, *args)
     
 
     def _constructor1_1(self, map: Map) -> None:
@@ -79,7 +80,7 @@ class Initializer:
         from java.util.Set import Set
         from org.allbinary.logic.StdUtil import StdUtil
         from org.allbinary.logic.string.StringMaker import StringMaker
-        self._init_fields()
+        __class__._init_fields(self)
         stringBuffer: StringMaker = StringMaker()
         hashMap: HashMap = StdUtil.getInstance().createHashMap()
         keys: Set = map.keySet()
@@ -100,7 +101,7 @@ class Initializer:
 
     def _constructor1_2(self, initHashMap: HashMap) -> None:
         from java.util.HashMap import HashMap
-        self._init_fields()
+        __class__._init_fields(self)
         self.getFormData(initHashMap)
     
 
@@ -165,46 +166,46 @@ class Initializer:
     def isValid(self) -> bool:
         from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         isValid: bool = True
-        if not self.isJdbcDriverValid(self.userJdbcDriver):
+        if not (self.isJdbcDriverValid(self.userJdbcDriver)):
             isValid = False
         stringValidationUtil: StringValidationUtil = StringValidationUtil.getInstance()
-        if not stringValidationUtil.isValidRequired(self.userName, Initializer.MIN, Initializer.MAXDB):
+        if not (stringValidationUtil.isValidRequired(self.userName, Initializer.MIN, Initializer.MAXDB)):
             isValid = False
-        if not stringValidationUtil.isValidRequired(self.userUserName, Initializer.MIN, Initializer.MAX):
+        if not (stringValidationUtil.isValidRequired(self.userUserName, Initializer.MIN, Initializer.MAX)):
             isValid = False
-        if not stringValidationUtil.isValidNotRequired(self.userPassword, Initializer.MINPASSWORD, Initializer.MAX):
+        if not (stringValidationUtil.isValidNotRequired(self.userPassword, Initializer.MINPASSWORD, Initializer.MAX)):
             isValid = False
-        if not self.isJdbcDriverValid(self.historyJdbcDriver):
+        if not (self.isJdbcDriverValid(self.historyJdbcDriver)):
             isValid = False
-        if not stringValidationUtil.isValidRequired(self.historyName, Initializer.MIN, Initializer.MAXDB):
+        if not (stringValidationUtil.isValidRequired(self.historyName, Initializer.MIN, Initializer.MAXDB)):
             isValid = False
-        if not stringValidationUtil.isValidRequired(self.historyUserName, Initializer.MIN, Initializer.MAX):
+        if not (stringValidationUtil.isValidRequired(self.historyUserName, Initializer.MIN, Initializer.MAX)):
             isValid = False
-        if not stringValidationUtil.isValidNotRequired(self.historyPassword, Initializer.MINPASSWORD, Initializer.MAX):
+        if not (stringValidationUtil.isValidNotRequired(self.historyPassword, Initializer.MINPASSWORD, Initializer.MAX)):
             isValid = False
-        if not self.isJdbcDriverValid(self.logJdbcDriver):
+        if not (self.isJdbcDriverValid(self.logJdbcDriver)):
             isValid = False
-        if not stringValidationUtil.isValidRequired(self.logName, Initializer.MIN, Initializer.MAXDB):
+        if not (stringValidationUtil.isValidRequired(self.logName, Initializer.MIN, Initializer.MAXDB)):
             isValid = False
-        if not stringValidationUtil.isValidRequired(self.logUserName, Initializer.MIN, Initializer.MAX):
+        if not (stringValidationUtil.isValidRequired(self.logUserName, Initializer.MIN, Initializer.MAX)):
             isValid = False
-        if not stringValidationUtil.isValidNotRequired(self.logPassword, Initializer.MINPASSWORD, Initializer.MAX):
+        if not (stringValidationUtil.isValidNotRequired(self.logPassword, Initializer.MINPASSWORD, Initializer.MAX)):
             isValid = False
-        if not self.isJdbcDriverValid(self.inventoryJdbcDriver):
+        if not (self.isJdbcDriverValid(self.inventoryJdbcDriver)):
             isValid = False
-        if not stringValidationUtil.isValidRequired(self.inventoryName, Initializer.MIN, Initializer.MAXDB):
+        if not (stringValidationUtil.isValidRequired(self.inventoryName, Initializer.MIN, Initializer.MAXDB)):
             isValid = False
-        if not stringValidationUtil.isValidRequired(self.inventoryUserName, Initializer.MIN, Initializer.MAX):
+        if not (stringValidationUtil.isValidRequired(self.inventoryUserName, Initializer.MIN, Initializer.MAX)):
             isValid = False
-        if not stringValidationUtil.isValidNotRequired(self.inventoryPassword, Initializer.MINPASSWORD, Initializer.MAX):
+        if not (stringValidationUtil.isValidNotRequired(self.inventoryPassword, Initializer.MINPASSWORD, Initializer.MAX)):
             isValid = False
-        if not self.isJdbcDriverValid(self.staticPagesJdbcDriver):
+        if not (self.isJdbcDriverValid(self.staticPagesJdbcDriver)):
             isValid = False
-        if not stringValidationUtil.isValidRequired(self.staticPagesName, Initializer.MIN, Initializer.MAXDB):
+        if not (stringValidationUtil.isValidRequired(self.staticPagesName, Initializer.MIN, Initializer.MAXDB)):
             isValid = False
-        if not stringValidationUtil.isValidRequired(self.staticPagesUserName, Initializer.MIN, Initializer.MAX):
+        if not (stringValidationUtil.isValidRequired(self.staticPagesUserName, Initializer.MIN, Initializer.MAX)):
             isValid = False
-        if not stringValidationUtil.isValidNotRequired(self.staticPagesPassword, Initializer.MINPASSWORD, Initializer.MAX):
+        if not (stringValidationUtil.isValidNotRequired(self.staticPagesPassword, Initializer.MINPASSWORD, Initializer.MAX)):
             isValid = False
         return isValid
     
@@ -238,53 +239,53 @@ class Initializer:
         from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         isJdbcDriversValid: bool = True
         stringBuffer: StringMaker = StringMaker()
-        if not self.isJdbcDriverValid(self.userJdbcDriver):
+        if not (self.isJdbcDriverValid(self.userJdbcDriver)):
             isJdbcDriversValid = False
             stringBuffer.append(self.getJdbcDriverValidationInfo(self.userJdbcDriver))
         stringValidationUtil: StringValidationUtil = StringValidationUtil.getInstance()
-        if not stringValidationUtil.isValidRequired(self.userName, Initializer.MIN, Initializer.MAXDB):
+        if not (stringValidationUtil.isValidRequired(self.userName, Initializer.MIN, Initializer.MAXDB)):
             stringBuffer.append("User db name should be < " + str(Initializer.MAXDB) + " and > " + str(Initializer.MIN) + " characters in length.<br />")
-        if not stringValidationUtil.isValidRequired(self.userUserName, Initializer.MIN, Initializer.MAX):
+        if not (stringValidationUtil.isValidRequired(self.userUserName, Initializer.MIN, Initializer.MAX)):
             stringBuffer.append("User db username should be < " + str(Initializer.MAX) + " and > " + str(Initializer.MIN) + " characters in length.<br />")
-        if not stringValidationUtil.isValidNotRequired(self.userPassword, Initializer.MINPASSWORD, Initializer.MAX):
+        if not (stringValidationUtil.isValidNotRequired(self.userPassword, Initializer.MINPASSWORD, Initializer.MAX)):
             stringBuffer.append("User DB password should be < " + str(Initializer.MAX) + " and > " + str(Initializer.MINPASSWORD) + " characters in length.<br />")
-        if not self.isJdbcDriverValid(self.historyJdbcDriver):
+        if not (self.isJdbcDriverValid(self.historyJdbcDriver)):
             isJdbcDriversValid = False
             stringBuffer.append(self.getJdbcDriverValidationInfo(self.historyJdbcDriver))
-        if not stringValidationUtil.isValidRequired(self.historyName, Initializer.MIN, Initializer.MAXDB):
+        if not (stringValidationUtil.isValidRequired(self.historyName, Initializer.MIN, Initializer.MAXDB)):
             stringBuffer.append("History db should be < " + str(Initializer.MAXDB) + " and > " + str(Initializer.MIN) + " characters in length.<br />")
-        if not stringValidationUtil.isValidRequired(self.historyUserName, Initializer.MIN, Initializer.MAX):
+        if not (stringValidationUtil.isValidRequired(self.historyUserName, Initializer.MIN, Initializer.MAX)):
             stringBuffer.append("History db username should be < " + str(Initializer.MAX) + " and > " + str(Initializer.MIN) + " characters in length.<br />")
-        if not stringValidationUtil.isValidNotRequired(self.historyPassword, Initializer.MINPASSWORD, Initializer.MAX):
+        if not (stringValidationUtil.isValidNotRequired(self.historyPassword, Initializer.MINPASSWORD, Initializer.MAX)):
             stringBuffer.append("History db password should be < " + str(Initializer.MAX) + " and > " + str(Initializer.MINPASSWORD) + " characters in length.<br />")
-        if not self.isJdbcDriverValid(self.logJdbcDriver):
+        if not (self.isJdbcDriverValid(self.logJdbcDriver)):
             isJdbcDriversValid = False
             stringBuffer.append(self.getJdbcDriverValidationInfo(self.logJdbcDriver))
-        if not stringValidationUtil.isValidRequired(self.logName, Initializer.MIN, Initializer.MAXDB):
+        if not (stringValidationUtil.isValidRequired(self.logName, Initializer.MIN, Initializer.MAXDB)):
             stringBuffer.append("Log db should be < " + str(Initializer.MAXDB) + " and > " + str(Initializer.MIN) + " characters in length.<br />")
-        if not stringValidationUtil.isValidRequired(self.logUserName, Initializer.MIN, Initializer.MAX):
+        if not (stringValidationUtil.isValidRequired(self.logUserName, Initializer.MIN, Initializer.MAX)):
             stringBuffer.append("Log db username should be < " + str(Initializer.MAX) + " and > " + str(Initializer.MIN) + " characters in length.<br />")
-        if not stringValidationUtil.isValidNotRequired(self.logPassword, Initializer.MINPASSWORD, Initializer.MAX):
+        if not (stringValidationUtil.isValidNotRequired(self.logPassword, Initializer.MINPASSWORD, Initializer.MAX)):
             stringBuffer.append("Log db password should be < " + str(Initializer.MAX) + " and > " + str(Initializer.MINPASSWORD) + " characters in length.<br />")
-        if not self.isJdbcDriverValid(self.inventoryJdbcDriver):
+        if not (self.isJdbcDriverValid(self.inventoryJdbcDriver)):
             isJdbcDriversValid = False
             stringBuffer.append(self.getJdbcDriverValidationInfo(self.inventoryJdbcDriver))
-        if not stringValidationUtil.isValidRequired(self.inventoryName, Initializer.MIN, Initializer.MAXDB):
+        if not (stringValidationUtil.isValidRequired(self.inventoryName, Initializer.MIN, Initializer.MAXDB)):
             stringBuffer.append("Inventory db should be < " + str(Initializer.MAXDB) + " and > " + str(Initializer.MIN) + " characters in length.<br />")
-        if not stringValidationUtil.isValidRequired(self.inventoryUserName, Initializer.MIN, Initializer.MAX):
+        if not (stringValidationUtil.isValidRequired(self.inventoryUserName, Initializer.MIN, Initializer.MAX)):
             stringBuffer.append("Inventory db username should be < " + str(Initializer.MAX) + " and > " + str(Initializer.MIN) + " characters in length.<br />")
-        if not stringValidationUtil.isValidNotRequired(self.inventoryPassword, Initializer.MINPASSWORD, Initializer.MAX):
+        if not (stringValidationUtil.isValidNotRequired(self.inventoryPassword, Initializer.MINPASSWORD, Initializer.MAX)):
             stringBuffer.append("Inventory DB password should be < " + str(Initializer.MAX) + " and > " + str(Initializer.MINPASSWORD) + " characters in length.<br />")
-        if not self.isJdbcDriverValid(self.staticPagesJdbcDriver):
+        if not (self.isJdbcDriverValid(self.staticPagesJdbcDriver)):
             isJdbcDriversValid = False
             stringBuffer.append(self.getJdbcDriverValidationInfo(self.staticPagesJdbcDriver))
-        if not stringValidationUtil.isValidRequired(self.staticPagesName, Initializer.MIN, Initializer.MAXDB):
+        if not (stringValidationUtil.isValidRequired(self.staticPagesName, Initializer.MIN, Initializer.MAXDB)):
             stringBuffer.append("Static Pages db should be < " + str(Initializer.MAXDB) + " and > " + str(Initializer.MIN) + " characters in length.<br />")
-        if not stringValidationUtil.isValidRequired(self.staticPagesUserName, Initializer.MIN, Initializer.MAX):
+        if not (stringValidationUtil.isValidRequired(self.staticPagesUserName, Initializer.MIN, Initializer.MAX)):
             stringBuffer.append("Static Pages db username should be < " + str(Initializer.MAX) + " and > " + str(Initializer.MIN) + " characters in length.<br />")
-        if not stringValidationUtil.isValidNotRequired(self.staticPagesPassword, Initializer.MINPASSWORD, Initializer.MAX):
+        if not (stringValidationUtil.isValidNotRequired(self.staticPagesPassword, Initializer.MINPASSWORD, Initializer.MAX)):
             stringBuffer.append("Static Pages DB password should be < " + str(Initializer.MAX) + " and > " + str(Initializer.MINPASSWORD) + " characters in length.<br />")
-        if not isJdbcDriversValid:
+        if not (isJdbcDriversValid):
             stringBuffer.append(self.getJdbcDriverSolutionInfo())
         return str(stringBuffer)
     

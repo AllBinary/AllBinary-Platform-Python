@@ -15,12 +15,18 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.validate.ValidationComponentInterface import ValidationComponentInterface
 from views.generic.order.OrderView import OrderView
 
 
+@java_inherited_overloads
 class ValidationView(*java_bases(OrderView, ValidationComponentInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -28,9 +34,10 @@ class ValidationView(*java_bases(OrderView, ValidationComponentInterface)):
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def isValid(self) -> bool:
@@ -40,15 +47,15 @@ class ValidationView(*java_bases(OrderView, ValidationComponentInterface)):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             valid: bool = True
-            if self.order.isIdValid() == False:
+            if java_predicate(self.order, "isIdValid") == False:
                 return False
             else:
                 self.orderHistory = OrderHistoryFactory.getInstance(self.order.getId())
-                if self.orderHistory is None or self.orderHistory.isValid() == False:
+                if self.orderHistory is None or java_predicate(self.orderHistory, "isValid") == False:
                     return False
                 orderItems: OrderItemsEntity = OrderItemsEntity()
                 self.basketReview = orderItems.getBasketReview(self.order.getId())
-                if self.basketReview is None or self.basketReview.isValid() == False:
+                if self.basketReview is None or java_predicate(self.basketReview, "isValid") == False:
                     return False
             return valid
         except Exception as e:
@@ -65,11 +72,11 @@ class ValidationView(*java_bases(OrderView, ValidationComponentInterface)):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             stringBuffer: StringMaker = StringMaker()
-            if self.order.isIdValid() == False:
+            if java_predicate(self.order, "isIdValid") == False:
                 stringBuffer.append(self.order.getIdValidationInfo())
             else:
                 self.orderHistory = OrderHistoryFactory.getInstance(self.order.getId())
-                if self.orderHistory is None or self.orderHistory.isValid() == False:
+                if self.orderHistory is None or java_predicate(self.orderHistory, "isValid") == False:
                     stringBuffer.append("Order History data error for: ")
                     stringBuffer.append(self.order.getId())
                     stringBuffer.append("<br />")
@@ -79,7 +86,7 @@ class ValidationView(*java_bases(OrderView, ValidationComponentInterface)):
                     stringBuffer.append("Order Items data error - does not exist for: ")
                     stringBuffer.append(self.order.getId())
                     stringBuffer.append("<br />")
-                elif self.basketReview.isValid() == False:
+                elif java_predicate(self.basketReview, "isValid") == False:
                     stringBuffer.append("Order Items data error - not valid for: ")
                     stringBuffer.append(self.order.getId())
                     stringBuffer.append("<br />")
@@ -104,7 +111,7 @@ class ValidationView(*java_bases(OrderView, ValidationComponentInterface)):
     # throws Exception
     def getTransformInfoInterface(self) -> TransformInfoInterface:
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-        return super().getTransformInfoInterface()
+        return java_super_call(super(), "getTransformInfoInterface")
 # from org.allbinary.business.user.commerce.inventory.order.OrderHistoryFactory import OrderHistoryFactory
 # from org.allbinary.data.tables.user.commerce.inventory.order.OrderItemsEntity import OrderItemsEntity
 # from org.allbinary.logic.communication.log.LogUtil import LogUtil

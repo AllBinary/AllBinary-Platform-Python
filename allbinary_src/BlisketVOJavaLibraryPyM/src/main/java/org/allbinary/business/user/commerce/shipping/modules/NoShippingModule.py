@@ -28,7 +28,7 @@ class NoShippingModule(ShippingInterface):
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getCost(self, order: OrderInterface) -> Money:

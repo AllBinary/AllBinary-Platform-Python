@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 # from java.io.FileFilter import FileFilter
 from org.allbinary.logic.util.visitor.VisitorInterface import VisitorInterface
@@ -28,16 +29,18 @@ class DirectoryFileVisitor(*java_bases(VisitorInterface, FileFilter)):
     
 
     def accept(self, arg0: File) -> bool:
+        from java.io.File import File
         return (self.visit(arg0))
     
 
     def visit(self, anyType: object) -> object:
+        from java.io.File import File
         file: File = anyType
         index: int = 1
         aFile: File = file.getParentFile()
         while ((aFile := aFile.getParentFile())) is not None:
             index += 1
-        if file.isDirectory() and index < 5:
+        if java_predicate(file, "isDirectory") and index < 5:
             return True
         return False
 # from java.io.File import File

@@ -22,15 +22,14 @@ class CustomTextBoxIndexedAnimationFactory(AnimationInterfaceFactoryInterface):
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.media.ScaleProperties import ScaleProperties
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.scaleProperties: ScaleProperties = None
-        self.maxLength: int = None
+        if "scaleProperties" not in vars(self): self.scaleProperties: ScaleProperties = None
+        if "maxLength" not in vars(self): self.maxLength: int = 0
     
 
     def __init__(self, fontSize: int, maxLength: int) -> None:
         from org.allbinary.media.ScaleProperties import ScaleProperties
-        self._init_fields()
+        __class__._init_fields(self)
         self.scaleProperties = ScaleProperties()
         self.scaleProperties.scaleHeight = fontSize
         self.maxLength = maxLength

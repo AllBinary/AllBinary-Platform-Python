@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -26,7 +27,7 @@ class AxisMathVectorUtil:
         self.noDecimalTrigTable: NoDecimalTrigTable = NoDecimalTrigTable.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -35,15 +36,18 @@ class AxisMathVectorUtil:
     
 
     def calculateX(self, magnitude: int, angle: int) -> int:
-        return magnitude * self.noDecimalTrigTable.cos(angle) / 10
+        return java_divide(magnitude * self.noDecimalTrigTable.cos(angle), 10)
+            
     
 
     def calculateY(self, magnitude: int, angle: int) -> int:
-        return magnitude * self.noDecimalTrigTable.sin(angle) / 10
+        return java_divide(magnitude * self.noDecimalTrigTable.sin(angle), 10)
+            
     
 
     def calculateZ(self, magnitude: int, otherAngle: int) -> int:
-        return magnitude * self.noDecimalTrigTable.sin(otherAngle) / 10
+        return java_divide(magnitude * self.noDecimalTrigTable.sin(otherAngle), 10)
+            
 # from org.allbinary.math.NoDecimalTrigTable import NoDecimalTrigTable
 
 

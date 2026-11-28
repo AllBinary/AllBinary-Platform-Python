@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 
 
@@ -24,19 +25,18 @@ class GameInput:
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.gameKeyEventList: BasicArrayList = None
-        self.removalGameKeyEventList: BasicArrayList = None
-        self.isRemoveDuplicateKeyPresses: bool = None
+        if "gameKeyEventList" not in vars(self): self.gameKeyEventList: BasicArrayList = None
+        if "removalGameKeyEventList" not in vars(self): self.removalGameKeyEventList: BasicArrayList = None
+        if "isRemoveDuplicateKeyPresses" not in vars(self): self.isRemoveDuplicateKeyPresses: bool = False
     
 
     def __init__(self, gameKeyEventList: BasicArrayList, removalGameKeyEventList: BasicArrayList) -> None:
         from org.allbinary.game.configuration.feature.Features import Features
         from org.allbinary.game.configuration.feature.InputFeatureFactory import InputFeatureFactory
         from org.allbinary.util.BasicArrayList import BasicArrayList
-        self._init_fields()
+        __class__._init_fields(self)
         self.gameKeyEventList = gameKeyEventList
         self.removalGameKeyEventList = removalGameKeyEventList
         self.isRemoveDuplicateKeyPresses = Features.getInstance().isFeature(InputFeatureFactory.getInstance().REMOVE_DUPLICATE_KEY_PRESSES)
@@ -44,7 +44,7 @@ class GameInput:
 
     def add(self, gameKeyEvent: GameKeyEvent) -> None:
         with self._lock:
-            return self._add_unlocked(gameKeyEvent)
+            return __class__.__dict__["_add_unlocked"].__get__(self, __class__)(gameKeyEvent)
 
     def _add_unlocked(self, gameKeyEvent: GameKeyEvent) -> None:
         from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
@@ -58,7 +58,7 @@ class GameInput:
 
     def addForRemoval(self, gameKeyEvent: GameKeyEvent) -> None:
         with self._lock:
-            return self._addForRemoval_unlocked(gameKeyEvent)
+            return __class__.__dict__["_addForRemoval_unlocked"].__get__(self, __class__)(gameKeyEvent)
 
     def _addForRemoval_unlocked(self, gameKeyEvent: GameKeyEvent) -> None:
         from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
@@ -67,7 +67,7 @@ class GameInput:
 
     def isForRemoval(self, gameKeyEvent: GameKeyEvent) -> bool:
         with self._lock:
-            return self._isForRemoval_unlocked(gameKeyEvent)
+            return __class__.__dict__["_isForRemoval_unlocked"].__get__(self, __class__)(gameKeyEvent)
 
     def _isForRemoval_unlocked(self, gameKeyEvent: GameKeyEvent) -> bool:
         from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
@@ -76,7 +76,7 @@ class GameInput:
 
     def clear(self) -> None:
         with self._lock:
-            return self._clear_unlocked()
+            return __class__.__dict__["_clear_unlocked"].__get__(self, __class__)()
 
     def _clear_unlocked(self) -> None:
         self.gameKeyEventList.clear()
@@ -84,7 +84,7 @@ class GameInput:
 
     def removeNonAIInputGameKeyEvents(self) -> None:
         with self._lock:
-            return self._removeNonAIInputGameKeyEvents_unlocked()
+            return __class__.__dict__["_removeNonAIInputGameKeyEvents_unlocked"].__get__(self, __class__)()
 
     def _removeNonAIInputGameKeyEvents_unlocked(self) -> None:
         from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
@@ -100,7 +100,7 @@ class GameInput:
 
     def update(self) -> None:
         with self._lock:
-            return self._update_unlocked()
+            return __class__.__dict__["_update_unlocked"].__get__(self, __class__)()
 
     def _update_unlocked(self) -> None:
         from org.allbinary.util.BasicArrayList import BasicArrayList

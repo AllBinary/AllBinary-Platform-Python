@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -24,13 +25,13 @@ class UserName:
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.userName: str = None
+        if "userName" not in vars(self): self.userName: str = None
 
     def __init__(self, *args) -> None:
         if len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
         elif len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
     
 
     @staticmethod
@@ -39,13 +40,13 @@ class UserName:
     
 
     def _constructor0(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def _constructor1(self, hashMap: HashMap) -> None:
         from java.util.HashMap import HashMap
         from org.allbinary.business.user.UserData import UserData
-        self._init_fields()
+        __class__._init_fields(self)
         self.userName = hashMap.get(UserData.USERNAME)
     
 
@@ -77,7 +78,7 @@ class UserName:
             valid: bool = booleanFactory.TRUE
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VALIDATION):
                 self.logUtil.putF("UserName: " + aUserName, self, commonStrings.IS_VALID)
-            if not StringValidationUtil.getInstance().isValidRequired(aUserName, 5, UserData.MAXLEN):
+            if not (StringValidationUtil.getInstance().isValidRequired(aUserName, 5, UserData.MAXLEN)):
                 if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VALIDATION):
                     self.logUtil.putF("UserName is invalid", self, commonStrings.IS_VALID)
                 valid = booleanFactory.FALSE
@@ -88,7 +89,9 @@ class UserName:
             return False
 
     def isValid(self, *args):
-        return getattr(self, "isValid_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("isValid_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().isValid(*args)
     
 
     @staticmethod
@@ -96,7 +99,7 @@ class UserName:
         from org.allbinary.business.user.UserData import UserData
         from org.allbinary.logic.string.StringUtil import StringUtil
         from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-        if not StringValidationUtil.getInstance().isValidRequired(aUserName, 5, UserData.MAXLEN):
+        if not (StringValidationUtil.getInstance().isValidRequired(aUserName, 5, UserData.MAXLEN)):
             return "Please enter a User Name with more than 5 characters.<br/>"
         return StringUtil.getInstance().EMPTY_STRING
 # from java.util.HashMap import HashMap

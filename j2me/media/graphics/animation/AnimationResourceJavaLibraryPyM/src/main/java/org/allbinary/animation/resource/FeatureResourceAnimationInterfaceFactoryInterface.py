@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.configuration.feature.GameFeatureControlledInterface import GameFeatureControlledInterface
 from org.allbinary.game.resource.RectangleResourceFactoryInterface import RectangleResourceFactoryInterface
@@ -22,6 +23,7 @@ from org.allbinary.animation.resource.ResourceAnimationInterfaceFactoryInterface
 
 
 # Java interface
+@java_inherited_overloads
 class FeatureResourceAnimationInterfaceFactoryInterface(*java_bases(ResourceAnimationInterfaceFactoryInterface, RectangleResourceFactoryInterface, GameFeatureControlledInterface)):
     
 

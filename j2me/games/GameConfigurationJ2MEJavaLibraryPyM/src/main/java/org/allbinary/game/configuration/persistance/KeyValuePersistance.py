@@ -15,10 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.game.configuration.persistance.BasicPersitance import BasicPersitance
 
 
+@java_inherited_overloads
 class KeyValuePersistance(BasicPersitance):
+    def _java_defaults(self):
+        vars(self).setdefault("tsUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.TsUtil import TsUtil
@@ -26,8 +31,9 @@ class KeyValuePersistance(BasicPersitance):
     
 
     def __init__(self, recordId: str) -> None:
+        __class__._java_defaults(self)
         super().__init__(recordId)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -41,6 +47,7 @@ class KeyValuePersistance(BasicPersitance):
         from org.allbinary.game.configuration.persistance.NullRecordStore import NullRecordStore
         from org.allbinary.game.configuration.persistance.NullRecordFilter import NullRecordFilter
         from org.allbinary.game.configuration.persistance.NullRecordComparator import NullRecordComparator
+        from java.io.ByteArrayInputStream import ByteArrayInputStream
         from java.io.DataInputStream import DataInputStream
         from javax.microedition.rms.RecordEnumeration import RecordEnumeration
         from javax.microedition.rms.RecordStore import RecordStore
@@ -61,7 +68,7 @@ class KeyValuePersistance(BasicPersitance):
             recordAsBytes: list[int] = None
             byteArrayInputStream: ByteArrayInputStream = None
             inputStream: DataInputStream = None
-            while recordEnum.hasNextElement():
+            while java_predicate(recordEnum, "hasNextElement"):
                 id: int = recordEnum.nextRecordId()
                 stringBuffer.delete(0, stringBuffer.length())
                 self.logUtil.putF(str(stringBuffer.append(self.persistanceStrings.LOADING_ID).appendint(id)), self, self.persistanceStrings.LOAD_ALL)
@@ -88,6 +95,7 @@ class KeyValuePersistance(BasicPersitance):
     # throws Exception
     def save(self, abeClientInformation: AbeClientInformationInterface, hashtable: ABHashtable[object, object]) -> None:
         from org.allbinary.game.configuration.persistance.NullRecordStore import NullRecordStore
+        from java.io.ByteArrayOutputStream import ByteArrayOutputStream
         from java.io.DataOutputStream import DataOutputStream
         from javax.microedition.rms.RecordStore import RecordStore
         from org.allbinary.TsUtil import TsUtil

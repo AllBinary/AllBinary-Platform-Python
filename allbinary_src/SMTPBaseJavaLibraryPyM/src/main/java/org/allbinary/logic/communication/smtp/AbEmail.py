@@ -21,7 +21,7 @@ from org.allbinary.logic.communication.smtp.EmailInterface import EmailInterface
 class AbEmail(EmailInterface):
 
     def _init_fields(self) -> None:
-        self.email: Email = None
+        if "email" not in vars(self): self.email: Email = None
     
 
     def __init__(self, server: str, from_: str, to: str, subject: str, textBody: str, htmlAttachment: str, contentBase: str) -> None:
@@ -29,7 +29,7 @@ class AbEmail(EmailInterface):
         from org.allbinary.logic.communication.smtp.Email import Email
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-        self._init_fields()
+        __class__._init_fields(self)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGINGERROR):
             self.email = Email(from_, to, subject, server, textBody, htmlAttachment, contentBase, True)
         else:

@@ -15,39 +15,51 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.rts.technology.event.TechEventListenerInterface import TechEventListenerInterface
 from org.allbinary.animation.Animation import Animation
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 
 
+@java_inherited_overloads
 class RTSLayerCostAnimation(*java_bases(Animation, TechEventListenerInterface, UpdateMyFontInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("primitiveLongUtil", None)
+        vars(self).setdefault("DOLLAR", None)
+        vars(self).setdefault("image", None)
+        vars(self).setdefault("layerInterfaceFactoryInterface", None)
+        vars(self).setdefault("myFontProcessor", None)
+        vars(self).setdefault("costString", None)
+        vars(self).setdefault("len_", 0)
+        vars(self).setdefault("adjustedCostX", 0)
+        vars(self).setdefault("fontHeight", 0)
 
     def _init_fields(self) -> None:
-        from javax.microedition.lcdui.Image import Image
-        from org.allbinary.game.layer.CostLayerInterfaceFactoryInterface import CostLayerInterfaceFactoryInterface
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
         from org.allbinary.logic.NullUtil import NullUtil
         from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.primitiveLongUtil: PrimitiveLongUtil = PrimitiveLongUtil.createPowerOfTen(10000)
         self.DOLLAR: str = "$"
-        self.image: Image = None
-        self.layerInterfaceFactoryInterface: CostLayerInterfaceFactoryInterface = None
+        if "image" not in vars(self): self.image: Image = None
+        if "layerInterfaceFactoryInterface" not in vars(self): self.layerInterfaceFactoryInterface: CostLayerInterfaceFactoryInterface = None
         self.myFontProcessor: MyFontProcessor = UpdateMyFontProcessor(self)
         self.costString: list[str] = NullUtil.getInstance().NULL_CHAR_ARRAY
-        self.len_: int = 0
-        self.adjustedCostX: int = 0
+        if "len_" not in vars(self): self.len_: int = 0
+        if "adjustedCostX" not in vars(self): self.adjustedCostX: int = 0
         self.fontHeight: int = 0
     
 
     def __init__(self, image: Image, layerInterfaceFactoryInterface: CostLayerInterfaceFactoryInterface) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.game.layer.CostLayerInterfaceFactoryInterface import CostLayerInterfaceFactoryInterface
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.image = image
         self.layerInterfaceFactoryInterface = layerInterfaceFactoryInterface
         self.update()
@@ -90,7 +102,7 @@ class RTSLayerCostAnimation(*java_bases(Animation, TechEventListenerInterface, U
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
         from javax.microedition.lcdui.Graphics import Graphics
         self.myFontProcessor.process(graphics)
-        super().paintXY(graphics, x, y)
+        java_super_call(super(), "paintXY", graphics, x, y)
         adjustedCostY: int = self.image.getHeight() - self.fontHeight
         xa: int = x + 2
         graphics.drawString(self.DOLLAR, xa, y + adjustedCostY, 0)

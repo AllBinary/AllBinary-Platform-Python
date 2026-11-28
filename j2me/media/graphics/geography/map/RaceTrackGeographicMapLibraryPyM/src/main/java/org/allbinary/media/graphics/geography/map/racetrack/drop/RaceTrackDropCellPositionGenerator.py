@@ -15,21 +15,28 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.media.graphics.geography.map.drop.BaseDropCellPositionGenerator import BaseDropCellPositionGenerator
 
 
+@java_inherited_overloads
 class RaceTrackDropCellPositionGenerator(BaseDropCellPositionGenerator):
+    def _java_defaults(self):
+        vars(self).setdefault("list_", None)
+        vars(self).setdefault("timeDelayHelper", None)
+        vars(self).setdefault("STRAIGHTAWAY", 0)
+        vars(self).setdefault("raceTrackGeographicMap", None)
+        vars(self).setdefault("raceTrackGeographicMapCellTypeFactory", None)
+        vars(self).setdefault("basicArrayListUtil", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         from org.allbinary.media.graphics.geography.map.GeographicMapCellTypeFactory import GeographicMapCellTypeFactory
         from org.allbinary.media.graphics.geography.map.racetrack.NullRaceTrackGeographicMap import NullRaceTrackGeographicMap
-        from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapInterface import RaceTrackGeographicMapInterface
-        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         self.list_: BasicArrayList = BasicArrayListD()
-        self.timeDelayHelper: TimeDelayHelper = None
+        if "timeDelayHelper" not in vars(self): self.timeDelayHelper: TimeDelayHelper = None
         self.STRAIGHTAWAY: int = 4
         self.raceTrackGeographicMap: RaceTrackGeographicMapInterface = NullRaceTrackGeographicMap.NULL_RACE_TRACK_GEOGRAPHIC_MAP
         self.raceTrackGeographicMapCellTypeFactory: GeographicMapCellTypeFactory = GeographicMapCellTypeFactory.getInstance()
@@ -37,9 +44,10 @@ class RaceTrackDropCellPositionGenerator(BaseDropCellPositionGenerator):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.timeDelayHelper = TimeDelayHelper(10000)
     
 

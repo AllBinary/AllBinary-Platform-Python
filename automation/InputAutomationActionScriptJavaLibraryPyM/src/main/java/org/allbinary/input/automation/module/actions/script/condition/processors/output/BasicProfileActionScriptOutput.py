@@ -15,18 +15,20 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.input.automation.actions.script.condition.processors.BasicProfileActionScriptProcessor import BasicProfileActionScriptProcessor
 from org.allbinary.input.automation.module.actions.script.condition.processors.output.ProfileActionScriptOutputInterface import ProfileActionScriptOutputInterface
 
 
+@java_inherited_overloads
 class BasicProfileActionScriptOutput(*java_bases(BasicProfileActionScriptProcessor, ProfileActionScriptOutputInterface)):
 
     def __init__(self, *args) -> None:
         if len(args) == 2:
-            self._constructor2(*args)
+            __class__._constructor2(self, *args)
         elif len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
     
 
     def _constructor2(self, label: str, node: Node) -> None:

@@ -15,21 +15,28 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.image.opengles.OpenGLSurfaceChangedInterface import OpenGLSurfaceChangedInterface
 from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
 from org.allbinary.view.event.ViewPositionEventListenerInterface import ViewPositionEventListenerInterface
 
 
+@java_inherited_overloads
 class AllBinaryGameLayer(*java_bases(AllBinaryLayer, ViewPositionEventListenerInterface, OpenGLSurfaceChangedInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("basicSetColorUtil", None)
+        vars(self).setdefault("RED", None)
+        vars(self).setdefault("paintable", None)
+        vars(self).setdefault("gameKeyEventList", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         from org.allbinary.graphics.color.BasicColorSetUtil import BasicColorSetUtil
-        from org.allbinary.graphics.paint.Paintable import Paintable
         from org.allbinary.string.CommonStrings import CommonStrings
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.basicSetColorUtil: BasicColorSetUtil = BasicColorSetUtil.getInstance()
@@ -50,10 +57,11 @@ class AllBinaryGameLayer(*java_bases(AllBinaryLayer, ViewPositionEventListenerIn
     
 
     def __init__(self, name: str, layerInfo: Rectangle, viewPosition: ViewPositionBase) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.Rectangle import Rectangle
         from org.allbinary.view.ViewPositionBase import ViewPositionBase
         super().__init__(name, layerInfo, viewPosition)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -121,13 +129,13 @@ class AllBinaryGameLayer(*java_bases(AllBinaryLayer, ViewPositionEventListenerIn
     
 
     def setWidth(self, width: int) -> None:
-        super().setLayerWidth(width)
-        self.setHalfWidth(width >> 1)
+        java_super_call(super(), "setLayerWidth", width)
+        self.setHalfWidth(int(width) >> (int(1) & 31))
     
 
     def setHeight(self, height: int) -> None:
-        super().setLayerHeight(height)
-        self.setHalfHeight(height >> 1)
+        java_super_call(super(), "setLayerHeight", height)
+        self.setHalfHeight(int(height) >> (int(1) & 31))
 # from javax.microedition.khronos.opengles.GL import GL
 # from javax.microedition.lcdui.Graphics import Graphics
 # from org.allbinary.graphics.Rectangle import Rectangle

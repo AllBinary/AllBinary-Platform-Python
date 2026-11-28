@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 
 
 class CryptService:
@@ -31,12 +32,13 @@ class CryptService:
     def __init__(self) -> None:
         from org.allbinary.globals.Globals import Globals
         from org.allbinary.globals.URLGLOBALS import URLGLOBALS
-        self._init_fields()
-        Globals.getInstance().init(type(self).getClassLoader(), "./")
+        __class__._init_fields(self)
+        Globals.getInstance().init(__import__("java.lang.ClassLoader", fromlist=["ClassLoader"]).ClassLoader.getSystemClassLoader(), "./")
         self.logUtil.putF("Set Globals: " + str(URLGLOBALS.getWebappPath()), self, self.commonStrings.CONSTRUCTOR)
     
 
     def getDecryptedInputStream(self, abeClientInformation: AbeClientInformationInterface, name: str, inputStream: InputStream) -> InputStream:
+        from java.io.ByteArrayInputStream import ByteArrayInputStream
         from java.io.InputStream import InputStream
         from org.allbinary.logic.system.security.AbKeys import AbKeys
         from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
@@ -66,7 +68,7 @@ class CryptService:
             try:
                 abeLicenseInterface: AbeLicenseInterface = AbeLicenseInterfaceFactory.getInstance().getLicenseInstance(abeClientInformation)
                 if abeLicenseInterface != AbeNoLicense.getInstance():
-                    if abeLicenseInterface.isValid():
+                    if java_predicate(abeLicenseInterface, "isValid"):
                         basicTextJDialog.setText("Subscription Invalid")
             except LicensingException as e2:
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.INIT, e2)

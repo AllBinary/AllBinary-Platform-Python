@@ -15,28 +15,28 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_divide
 
 
 class BasicColor:
 
     def _init_fields(self) -> None:
-        from jsinterop.annotations.JsProperty import JsProperty
-        self.name: str = None
-        self.value: int = None
-        self.redComponent: float = None
-        self.greenComponent: float = None
-        self.blueComponent: float = None
-        self.alphaComponent: float = None
-        self.red: int = None
-        self.green: int = None
-        self.blue: int = None
-        self.alpha: int = None
+        if "name" not in vars(self): self.name: str = None
+        if "value" not in vars(self): self.value: int = 0
+        if "redComponent" not in vars(self): self.redComponent: float = 0.0
+        if "greenComponent" not in vars(self): self.greenComponent: float = 0.0
+        if "blueComponent" not in vars(self): self.blueComponent: float = 0.0
+        if "alphaComponent" not in vars(self): self.alphaComponent: float = 0.0
+        if "red" not in vars(self): self.red: int = 0
+        if "green" not in vars(self): self.green: int = 0
+        if "blue" not in vars(self): self.blue: int = 0
+        if "alpha" not in vars(self): self.alpha: int = 0
     
 
     def __init__(self, alphaValue: int, value: int, name: str) -> None:
         from org.allbinary.graphics.color.BasicColorUtil import BasicColorUtil
         from jsinterop.annotations.JsConstructor import JsConstructor
-        self._init_fields()
+        __class__._init_fields(self)
         self.name = name
         tempValue: int = 0
         basicColorUtil: BasicColorUtil = BasicColorUtil.getInstance()
@@ -47,13 +47,13 @@ class BasicColor:
                 tempValue = 0x00000000 | value
         else:
             tempValue = value
-        alphaInt: int = ((tempValue >> 24) & 255)
+        alphaInt: int = ((int(tempValue) >> (int(24) & 31)) & 255)
         self.alpha = ((int(alphaInt) + 32768) % 65536 - 32768)
         self.alphaComponent = (float(alphaInt)) / 255.0
-        redInt: int = ((tempValue >> 16) & 255)
+        redInt: int = ((int(tempValue) >> (int(16) & 31)) & 255)
         self.red = ((int(redInt) + 32768) % 65536 - 32768)
         self.redComponent = (float(redInt)) / 255.0
-        greenInt: int = ((tempValue >> 8) & 255)
+        greenInt: int = ((int(tempValue) >> (int(8) & 31)) & 255)
         self.green = ((int(greenInt) + 32768) % 65536 - 32768)
         self.greenComponent = (float(greenInt)) / 255.0
         blueInt: int = ((tempValue) & 255)
@@ -65,6 +65,7 @@ class BasicColor:
     def intValue(self) -> int:
         from jsinterop.annotations.JsMethod import JsMethod
         return self.value
+    __int__ = intValue
     
 
     def toInt(self) -> int:

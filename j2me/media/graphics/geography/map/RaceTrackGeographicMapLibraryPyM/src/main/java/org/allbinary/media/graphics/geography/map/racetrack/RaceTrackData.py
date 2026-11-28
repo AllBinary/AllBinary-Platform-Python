@@ -20,7 +20,6 @@ from __future__ import annotations
 class RaceTrackData:
 
     def _init_fields(self) -> None:
-        from javax.microedition.lcdui.Image import Image
         from javax.microedition.lcdui.NullImage import NullImage
         from org.allbinary.graphics.CellPosition import CellPosition
         from org.allbinary.logic.NullUtil import NullUtil
@@ -34,11 +33,11 @@ class RaceTrackData:
         self.cellTypeIdToGeographicMapCellTypeArray: list[int] = NullUtil.getInstance().NULL_INT_ARRAY
         self.NO_OVER_PASSES_ARRAY: list[CellPosition] = [None] * (0)
         self.overPassGeographicMapCellPositionArray: list[CellPosition] = self.NO_OVER_PASSES_ARRAY
-        self.id: int = None
+        if "id" not in vars(self): self.id: int = None
     
 
     def __init__(self, id: int, cellWidth: int, cellHeight: int, miniCellWidth: int, miniCellHeight: int, cellTypeIdToGeographicMapCellTypeArray: list[int], mapArray: list[list[int]]) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.id = id
         self.cellWidth = cellWidth
         self.cellHeight = cellHeight

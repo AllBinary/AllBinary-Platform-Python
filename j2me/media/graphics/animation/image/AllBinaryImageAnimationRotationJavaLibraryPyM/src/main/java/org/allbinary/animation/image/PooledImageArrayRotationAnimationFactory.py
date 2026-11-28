@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_divide
 from org.allbinary.animation.AnimationInterfaceFactoryInterface import AnimationInterfaceFactoryInterface
 
 
@@ -22,10 +23,9 @@ from org.allbinary.animation.AnimationInterfaceFactoryInterface import Animation
 class PooledImageArrayRotationAnimationFactory(AnimationInterfaceFactoryInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
         from org.allbinary.logic.NullUtil import NullUtil
         self.allBinaryImageRotationAnimationInfo: object = NullUtil.getInstance().NULL_OBJECT
-        self.animationBehaviorFactory: AnimationBehaviorFactory = None
+        if "animationBehaviorFactory" not in vars(self): self.animationBehaviorFactory: AnimationBehaviorFactory = None
     
 
     # throws Exception
@@ -36,7 +36,8 @@ class PooledImageArrayRotationAnimationFactory(AnimationInterfaceFactoryInterfac
         from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
         from org.allbinary.math.AngleFactory import AngleFactory
         totalAngle: int = int(AngleFactory.getInstance().TOTAL_ANGLE)
-        angleIncrement: int = (totalAngle / GameConfigurationCentral.getInstance().getGameControlFidelity())
+        angleIncrement: int = (java_divide(totalAngle, GameConfigurationCentral.getInstance().getGameControlFidelity())
+            )
         return PooledImageArrayRotationAnimationFactory(image, image.getWidth(), image.getHeight(), -image.getWidth() >> 2, -image.getHeight() >> 2, angleIncrement, animationBehaviorFactory)
     
 
@@ -48,7 +49,8 @@ class PooledImageArrayRotationAnimationFactory(AnimationInterfaceFactoryInterfac
         from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
         from org.allbinary.math.AngleFactory import AngleFactory
         totalAngle: int = int(AngleFactory.getInstance().TOTAL_ANGLE)
-        angleIncrement: int = (totalAngle / GameConfigurationCentral.getInstance().getGameControlFidelity())
+        angleIncrement: int = (java_divide(totalAngle, GameConfigurationCentral.getInstance().getGameControlFidelity())
+            )
         return PooledImageArrayRotationAnimationFactory(image, image.getWidth(), image.getHeight(), dx, dy, angleIncrement, animationBehaviorFactory)
     
 
@@ -58,7 +60,7 @@ class PooledImageArrayRotationAnimationFactory(AnimationInterfaceFactoryInterfac
         from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
         from org.allbinary.math.AngleFactory import AngleFactory
         from org.allbinary.media.image.ImageToRotationImageArrayUtil import ImageToRotationImageArrayUtil
-        self._init_fields()
+        __class__._init_fields(self)
         self.animationBehaviorFactory = animationBehaviorFactory
         totalAngle: int = int(AngleFactory.getInstance().TOTAL_ANGLE)
         imageArray: list[Image] = ImageToRotationImageArrayUtil.getInstance().generate(image, angleIncrement, totalAngle)

@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.StringBuffer import StringBuffer
 
 
@@ -105,7 +106,7 @@ class PathParser:
                 outX[count[0]] = curX
                 outY[count[0]] = curY
                 count[0] += 1
-            while idx < len(tokens) and not PathParser.isCommand(tokens[idx]):
+            while idx < len(tokens) and not (PathParser.isCommand(tokens[idx])):
                 if cmd == 'M' or cmd == 'm' or cmd == 'L' or cmd == 'l':
                     x: int = fixedPoint.toFixed(float(tokens[((idx := idx + 1) - 1)]))
                     y: int = fixedPoint.toFixed(float(tokens[((idx := idx + 1) - 1)]))

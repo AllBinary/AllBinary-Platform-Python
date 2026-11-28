@@ -25,7 +25,7 @@ class ImageCacheable:
     
 
     def __init__(self, name: str, anyType: object) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getKey(self) -> object:

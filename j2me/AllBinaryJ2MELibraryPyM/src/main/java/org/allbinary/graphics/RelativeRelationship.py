@@ -22,16 +22,15 @@ class RelativeRelationship:
     NULL_RELATIVE_RELATIONSHIP: RelativeRelationship = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
-        self.typesAllowedList: BasicArrayList = None
-        self.x: int = None
-        self.y: int = None
-        self.z: int = None
+        if "typesAllowedList" not in vars(self): self.typesAllowedList: BasicArrayList = None
+        if "x" not in vars(self): self.x: int = 0
+        if "y" not in vars(self): self.y: int = 0
+        if "z" not in vars(self): self.z: int = 0
     
 
     def __init__(self, point: GPoint, typesAllowedList: BasicArrayList) -> None:
         from org.allbinary.util.BasicArrayList import BasicArrayList
-        self._init_fields()
+        __class__._init_fields(self)
         self.x = point.getX()
         self.y = point.getY()
         self.z = point.getZ()

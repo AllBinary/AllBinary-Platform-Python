@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -42,7 +43,7 @@ class OpenGLConfiguration:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def write(self) -> None:
@@ -51,14 +52,17 @@ class OpenGLConfiguration:
 
     # throws Exception
     def init(self) -> None:
+        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
+        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
         from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         from org.allbinary.game.configuration.event.ChangedGameFeatureListener import ChangedGameFeatureListener
         from org.allbinary.game.configuration.feature.Features import Features
         from org.allbinary.game.configuration.feature.MainFeatureFactory import MainFeatureFactory
         features: Features = Features.getInstance()
         if ChangedGameFeatureListener.getInstance().isChangedFeature(MainFeatureFactory.getInstance().STATIC):
-            if self.isOpenGL():
-                if not features.isDefault(OpenGLFeatureFactory.getInstance().OPENGL):
+            if java_predicate(self, "isOpenGL"):
+                if not (features.isDefault(OpenGLFeatureFactory.getInstance().OPENGL)):
                     self.logUtil.putF("Turning on OpenGL", self, self.commonStrings.INIT)
                     features.addDefault(OpenGLFeatureFactory.getInstance().OPENGL)
                     self.logUtil.putF("Using OpenGL Type Feature: " + str(self.getType()), self, self.commonStrings.INIT)
@@ -72,13 +76,14 @@ class OpenGLConfiguration:
             else:
                 self.logUtil.putF("OpenGL is Off", self, self.commonStrings.INIT)
         else:
-            if self.isOpenGL() and not features.isDefault(OpenGLFeatureFactory.getInstance().OPENGL):
+            if java_predicate(self, "isOpenGL") and not (features.isDefault(OpenGLFeatureFactory.getInstance().OPENGL)):
                 PreLogUtil.put("OpenGL is set but not Enabled since Statics where not cleared (Reboot or Complete exit is Required)", self, self.commonStrings.INIT)
         PreLogUtil.put(str(self), self, self.commonStrings.INIT)
     
 
     # throws Exception
     def update(self, gameFeature: Feature, colorLocked: bool) -> None:
+        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
         from org.allbinary.game.configuration.feature.Feature import Feature
         from org.allbinary.game.configuration.feature.Features import Features
         features: Features = Features.getInstance()
@@ -86,11 +91,11 @@ class OpenGLConfiguration:
         modified: bool = False
         if gameFeature == openGLFeatureFactory.OPENGL:
             if features.isFeature(gameFeature):
-                if not self.isOpenGL():
+                if not (java_predicate(self, "isOpenGL")):
                     self.setOpenGL(True)
                     modified = True
             else:
-                if self.isOpenGL():
+                if java_predicate(self, "isOpenGL"):
                     self.setOpenGL(False)
                     modified = True
         if gameFeature == openGLFeatureFactory.OPENGL_AND_GAME_HAVE_DIFFERENT_THREADS or gameFeature == openGLFeatureFactory.OPENGL_AS_GAME_THREAD:
@@ -167,7 +172,7 @@ class OpenGLConfiguration:
         stringBuffer: StringMaker = StringMaker()
         stringUtil: StringUtil = StringUtil.getInstance()
         stringBuffer.append(" isOpenGL: ")
-        stringBuffer.appendboolean(self.isOpenGL())
+        stringBuffer.appendboolean(java_predicate(self, "isOpenGL"))
         stringBuffer.append(" VersionSelector: ")
         stringBuffer.append(stringUtil.toString(self.getVersionSelector()))
         stringBuffer.append(" Type: ")
@@ -190,6 +195,7 @@ class OpenGLConfiguration:
 # from org.allbinary.game.configuration.feature.MainFeatureFactory import MainFeatureFactory
 # from org.allbinary.logic.NullUtil import NullUtil
 # from org.allbinary.logic.string.StringUtil import StringUtil
+from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
 
 
 def _OpenGLConfiguration_instance() -> object:

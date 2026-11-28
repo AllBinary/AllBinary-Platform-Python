@@ -15,10 +15,19 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.communication.sql.AbSqlTable import AbSqlTable
 
 
+@java_inherited_overloads
 class AbSqlColumn(AbSqlTable):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("LARGEST_INT_VALUE_IN_COLUMN", None)
+        vars(self).setdefault("METHOD_GET_LARGETS_INTEGER_IN_COLUMN", None)
+        vars(self).setdefault("METHOD_GET_COLUMN", None)
+        vars(self).setdefault("METHOD_GET_COLUMN_WHERE", None)
+        vars(self).setdefault("INVALID_RESULT", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -31,9 +40,10 @@ class AbSqlColumn(AbSqlTable):
     
 
     def __init__(self, databaseConnectionInfoInterface: DbConnectionInfo) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
         super().__init__(databaseConnectionInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getLargestIntegerInColumnWhere(self, columnName: str, key: str, value: str) -> str:

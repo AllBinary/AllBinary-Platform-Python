@@ -23,7 +23,6 @@ class LicenseClientAndServerTest:
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.vector: BasicArrayList = BasicArrayListD()
     
@@ -31,9 +30,10 @@ class LicenseClientAndServerTest:
     def __init__(self, options: list[str]) -> None:
         from org.allbinary.logic.system.security.licensing.PrintLicenseInitInfo import PrintLicenseInitInfo
         from org.allbinary.logic.system.security.licensing.PrintLicenseInitInfo import PrintLicenseInitInfo
+        from java.io.File import File
         from org.allbinary.business.init.LicenseInitInfoUtil import LicenseInitInfoUtil
         from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
-        self._init_fields()
+        __class__._init_fields(self)
         LicenseInitInfoUtil.getInstance().setFilePath(PrintLicenseInitInfo.PATH + PATH_GLOBALS.getInstance().INIT_PATH)
         for index in range(1, len(options)):
             self.vector.add(options[index])
@@ -47,7 +47,7 @@ class LicenseClientAndServerTest:
 
     def test(self) -> None:
         with self._lock:
-            return self._test_unlocked()
+            return __class__.__dict__["_test_unlocked"].__get__(self, __class__)()
 
     def _test_unlocked(self) -> None:
         from org.allbinary.logic.string.StringMaker import StringMaker

@@ -15,14 +15,21 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.validate.ValidationComponentInterface import ValidationComponentInterface
 from views.admin.inventory.download.DownloadableInventoryItemView import DownloadableInventoryItemView
 
 
+@java_inherited_overloads
 class AddFileValidationView(*java_bases(DownloadableInventoryItemView, ValidationComponentInterface)):
     ADDPRODUCT: str = "Finish"
     ADDANOTHERDOWNLOADABLE: str = "Add Another"
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("basicItemData", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
@@ -32,9 +39,10 @@ class AddFileValidationView(*java_bases(DownloadableInventoryItemView, Validatio
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def isValid_j0(self) -> bool:
@@ -74,14 +82,14 @@ class AddFileValidationView(*java_bases(DownloadableInventoryItemView, Validatio
                 if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     self.logUtil.putF("Item Does Not Exist", self, self.commonStrings.IS_VALID)
                 return False
-            if BasicItemValidation(self.itemInterface).isValid() == False:
+            if java_predicate(BasicItemValidation(self.itemInterface), "isValid") == False:
                 if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     self.logUtil.putF("BasicItem is not valid", self, self.commonStrings.IS_VALID)
                 return False
             storeFrontInterface: StoreFrontInterface = StoreFrontFactory.getInstance(self.getWeblisketSession().getStoreName())
             fullCategory: str = str(StringMaker().append(URLGLOBALS.getWebappPath()).append(storeFrontInterface.getCurrentHostNamePath()).append(self.itemInterface.getCategory()))
             categoryFile: AbFile = AbFile.createAbFile(fullCategory)
-            if not categoryFile.isDirectory():
+            if not (java_predicate(categoryFile, "isDirectory")):
                 if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     self.logUtil.putF("Category Does Not Exist: " + fullCategory, self, self.commonStrings.IS_VALID)
                 return False
@@ -137,7 +145,7 @@ class AddFileValidationView(*java_bases(DownloadableInventoryItemView, Validatio
                 hashMap.put(DownloadItemData.FILE, StringUtil.getInstance().EMPTY_STRING)
             self.downloadableItem = DownloadableItem(hashMap)
             downloadableItemValidation: DownloadableItemValidation = DownloadableItemValidation(self.downloadableItem)
-            if downloadableItemValidation.isValid() == False:
+            if java_predicate(downloadableItemValidation, "isValid") == False:
                 if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                     self.logUtil.putF("DownloadableItem is not valid", self, self.commonStrings.IS_VALID)
                 return False
@@ -186,7 +194,7 @@ class AddFileValidationView(*java_bases(DownloadableInventoryItemView, Validatio
                     self.logUtil.putF(ITEM_NOT_FOUND, self, "validationInfo()")
                 return ITEM_NOT_FOUND
             basicItemValidation: BasicItemValidation = BasicItemValidation(self.itemInterface)
-            if basicItemValidation.isValid() == False:
+            if java_predicate(basicItemValidation, "isValid") == False:
                 stringBuffer.append(basicItemValidation.validationInfo())
                 stringBuffer.append("<br/>")
             storeFrontInterface: StoreFrontInterface = StoreFrontFactory.getInstance(self.getWeblisketSession().getStoreName())
@@ -194,7 +202,7 @@ class AddFileValidationView(*java_bases(DownloadableInventoryItemView, Validatio
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 self.logUtil.putF("Category: " + fullCategory, self, "validationInfo()")
             categoryFile: AbFile = AbFile.createAbFile(fullCategory)
-            if not categoryFile.isDirectory():
+            if not (java_predicate(categoryFile, "isDirectory")):
                 stringBuffer.append("Category ")
                 stringBuffer.append(self.itemInterface.getCategory())
                 stringBuffer.append(" does not exist.")
@@ -226,7 +234,7 @@ class AddFileValidationView(*java_bases(DownloadableInventoryItemView, Validatio
                 pass
             if self.downloadableItem is not None:
                 downloadableItemValidation: DownloadableItemValidation = DownloadableItemValidation(self.downloadableItem)
-                if downloadableItemValidation.isValid() == False:
+                if java_predicate(downloadableItemValidation, "isValid") == False:
                     log: str = downloadableItemValidation.validationInfo()
                     if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                         self.logUtil.putF(log, self, self.commonStrings.IS_VALID)
@@ -249,7 +257,7 @@ class AddFileValidationView(*java_bases(DownloadableInventoryItemView, Validatio
         fileData: FileData = FileData.getInstance()
         if size > fileData.MINDOWNLOADABLEFILESIZE:
             if size < fileData.MAXDOWNLOADABLEFILESIZE:
-                if not StringValidationUtil.getInstance().isValidRequired(fileName, fileData.MINLEN, fileData.MAXLEN):
+                if not (StringValidationUtil.getInstance().isValidRequired(fileName, fileData.MINLEN, fileData.MAXLEN)):
                     if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                         stringBuffer: StringMaker = StringMaker()
                         stringBuffer.append("File name is not valid: ")
@@ -279,7 +287,9 @@ class AddFileValidationView(*java_bases(DownloadableInventoryItemView, Validatio
         return True
 
     def isValid(self, *args):
-        return getattr(self, "isValid_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("isValid_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().isValid(*args)
     
 
     def validationInfo_j3(self, stringBuffer: StringMaker, fileName: str, size: int) -> None:
@@ -289,7 +299,7 @@ class AddFileValidationView(*java_bases(DownloadableInventoryItemView, Validatio
         fileData: FileData = FileData.getInstance()
         if size > fileData.MINDOWNLOADABLEFILESIZE:
             if size < fileData.MAXDOWNLOADABLEFILESIZE:
-                if not StringValidationUtil.getInstance().isValidRequired(fileName, fileData.MINLEN, fileData.MAXLEN):
+                if not (StringValidationUtil.getInstance().isValidRequired(fileName, fileData.MINLEN, fileData.MAXLEN)):
                     stringBuffer.append("File Name must be more than ")
                     stringBuffer.appendint(int(fileData.MINLEN))
                     stringBuffer.append(" and less than ")
@@ -307,13 +317,15 @@ class AddFileValidationView(*java_bases(DownloadableInventoryItemView, Validatio
                 stringBuffer.append("<br/>")
 
     def validationInfo(self, *args):
-        return getattr(self, "validationInfo_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("validationInfo_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().validationInfo(*args)
     
 
     # throws Exception
     def getTransformInfoInterface(self) -> TransformInfoInterface:
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-        return super().getTransformInfoInterface()
+        return java_super_call(super(), "getTransformInfoInterface")
 # from java.util.HashMap import HashMap
 # from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
 # from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface

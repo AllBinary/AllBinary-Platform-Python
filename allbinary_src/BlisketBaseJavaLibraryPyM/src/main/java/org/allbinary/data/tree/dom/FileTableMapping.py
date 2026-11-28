@@ -15,19 +15,19 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.data.tables.TableMappingInterface import TableMappingInterface
 
 
 class FileTableMapping(TableMappingInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.logic.io.file.AbFile import AbFile
-        self.file: AbFile = None
+        if "file" not in vars(self): self.file: AbFile = None
     
 
     def __init__(self, file: AbFile) -> None:
         from org.allbinary.logic.io.file.AbFile import AbFile
-        self._init_fields()
+        __class__._init_fields(self)
         self.file = file
     
 
@@ -62,10 +62,10 @@ class FileTableMapping(TableMappingInterface):
         rootFileName: str = pathData.getNameFromPath(pathUtil.getWithoutExtension(self.file.getPath()))
         fileData: FileData = FileData.getInstance()
         filePropertyHashMap.put(fileData.ROOT_NAME, rootFileName)
-        filePropertyHashMap.put(fileData.ISFILE, str(str(self.file.isFile())))
-        filePropertyHashMap.put(fileData.ISDIRECTORY, str(str(self.file.isDirectory())))
-        filePropertyHashMap.put(fileData.ISHIDDEN, str(str(self.file.isHidden())))
-        filePropertyHashMap.put(fileData.ISABSOLUTE, str(str(self.file.isAbsolute())))
+        filePropertyHashMap.put(fileData.ISFILE, str(str(java_predicate(self.file, "isFile"))))
+        filePropertyHashMap.put(fileData.ISDIRECTORY, str(str(java_predicate(self.file, "isDirectory"))))
+        filePropertyHashMap.put(fileData.ISHIDDEN, str(str(java_predicate(self.file, "isHidden"))))
+        filePropertyHashMap.put(fileData.ISABSOLUTE, str(str(java_predicate(self.file, "isAbsolute"))))
         filePropertyHashMap.put(fileData.ABSOLUTE_PATH, self.file.getAbsolutePath())
         filePropertyHashMap.put(fileData.CANONICAL_PATH, self.file.getCanonicalPath())
         filePropertyHashMap.put(fileData.NAME, self.file.getName())

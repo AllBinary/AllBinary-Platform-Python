@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.System import System
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 
@@ -35,12 +36,12 @@ class GuiLog:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def showDialog(self, msg: str) -> None:
         with self._lock:
-            return self._showDialog_unlocked(msg)
+            return __class__.__dict__["_showDialog_unlocked"].__get__(self, __class__)(msg)
 
     def _showDialog_unlocked(self, msg: str) -> None:
         error: JDialog = JDialog()
@@ -63,7 +64,7 @@ class GuiLog:
     # Java overloaded method with the same parameter count: Python keeps the last definition
     def put_j3_1(self, specialMessage: str, anyType: object, functionName: str) -> str:
         with self._lock:
-            return self._put_j3_1_unlocked(specialMessage, anyType, functionName)
+            return __class__.__dict__["_put_j3_1_unlocked"].__get__(self, __class__)(specialMessage, anyType, functionName)
 
     def _put_j3_1_unlocked(self, specialMessage: str, anyType: object, functionName: str) -> str:
         return self.put(specialMessage, anyType, functionName, None)
@@ -72,11 +73,12 @@ class GuiLog:
     # Java overloaded method with the same parameter count: Python keeps the last definition
     def put_j4_1(self, specialMessage: str, anyType: object, functionName: str, exception: Exception) -> str:
         with self._lock:
-            return self._put_j4_1_unlocked(specialMessage, anyType, functionName, exception)
+            return __class__.__dict__["_put_j4_1_unlocked"].__get__(self, __class__)(specialMessage, anyType, functionName, exception)
 
     def _put_j4_1_unlocked(self, specialMessage: str, anyType: object, functionName: str, exception: Exception) -> str:
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         try:
-            data: str = self.logFormatUtil.get(specialMessage, type(anyType).__module__ + "." + type(anyType).__qualname__, functionName, exception)
+            data: str = self.logFormatUtil.get(specialMessage, __import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(anyType)), functionName, exception)
             self.showDialog(data)
             print(data)
             return data
@@ -88,7 +90,7 @@ class GuiLog:
     # Java overloaded method with the same parameter count: Python keeps the last definition
     def put_j3_2(self, specialMessage: str, className: str, functionName: str) -> str:
         with self._lock:
-            return self._put_j3_2_unlocked(specialMessage, className, functionName)
+            return __class__.__dict__["_put_j3_2_unlocked"].__get__(self, __class__)(specialMessage, className, functionName)
 
     def _put_j3_2_unlocked(self, specialMessage: str, className: str, functionName: str) -> str:
         return self.put(specialMessage, className, functionName, None)
@@ -97,9 +99,10 @@ class GuiLog:
     # Java overloaded method with the same parameter count: Python keeps the last definition
     def put_j4_2(self, specialMessage: str, className: str, functionName: str, exception: Exception) -> str:
         with self._lock:
-            return self._put_j4_2_unlocked(specialMessage, className, functionName, exception)
+            return __class__.__dict__["_put_j4_2_unlocked"].__get__(self, __class__)(specialMessage, className, functionName, exception)
 
     def _put_j4_2_unlocked(self, specialMessage: str, className: str, functionName: str, exception: Exception) -> str:
+        from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         try:
             data: str = self.logFormatUtil.get(specialMessage, className, functionName, exception)
             self.showDialog(data)
@@ -111,20 +114,23 @@ class GuiLog:
 
     def put(self, *args):
         if len(args) == 3 and True and (args[0] is None or isinstance(args[0], str)) and (args[2] is None or isinstance(args[2], str)):
-            return self.put_j3_1(*args)
+            return __class__.__dict__["put_j3_1"].__get__(self, __class__)(*args)
         if len(args) == 4 and True and (args[0] is None or isinstance(args[0], str)) and (args[2] is None or isinstance(args[2], str)) and not isinstance(args[3], (str, list, int, float)):
-            return self.put_j4_1(*args)
+            return __class__.__dict__["put_j4_1"].__get__(self, __class__)(*args)
         if len(args) == 3:
-            return self.put_j3_2(*args)
+            return __class__.__dict__["put_j3_2"].__get__(self, __class__)(*args)
         if len(args) == 4:
-            return self.put_j4_2(*args)
-        return getattr(self, "put_j" + str(len(args)))(*args)
+            return __class__.__dict__["put_j4_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("put_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().put(*args)
 # from java.awt.GridLayout import GridLayout
 # from javax.swing.JDialog import JDialog
 # from org.allbinary.string.CommonStrings import CommonStrings
 # from javax.swing.JLabel import JLabel
 # from javax.swing.JScrollPane import JScrollPane
 # from javax.swing.JTextArea import JTextArea
+from org.allbinary.logic.communication.log.LogFormatUtil import LogFormatUtil
 
 
 def _GuiLog_instance() -> object:

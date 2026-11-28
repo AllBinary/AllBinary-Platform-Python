@@ -23,11 +23,11 @@ from org.allbinary.animation.ProceduralAnimationInterfaceFactoryInterface import
 class SingletonAnimationInterfaceFactory(*java_bases(AnimationInterfaceFactoryInterface, ProceduralAnimationInterfaceFactoryInterface)):
 
     def _init_fields(self) -> None:
-        self.animationInterface: Animation = None
+        if "animationInterface" not in vars(self): self.animationInterface: Animation = None
     
 
     def __init__(self, animationInterface: Animation) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.animationInterface = animationInterface
     
 

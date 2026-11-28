@@ -15,32 +15,46 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 # from javax.swing.JPanel import JPanel
 
 
+@java_inherited_overloads
 class WorkAreaJTreeJPanel(JPanel):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("rootTreeNode", None)
+        vars(self).setdefault("workAreaJTree", None)
+        vars(self).setdefault("highlightedBasicArrayList", None)
+        vars(self).setdefault("copyJMenuItem", None)
+        vars(self).setdefault("deleteJMenuItem", None)
+        vars(self).setdefault("itemJPopupMenu", None)
+        vars(self).setdefault("itemJScrollPane1", None)
+        vars(self).setdefault("rotateJMenuItem", None)
+        vars(self).setdefault("workAreaPropertiesJPanel", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.rootTreeNode: DefaultMutableTreeNode = None
-        self.workAreaJTree: JTree = None
-        self.highlightedBasicArrayList: BasicArrayList = None
-        self.copyJMenuItem: JMenuItem = None
-        self.deleteJMenuItem: JMenuItem = None
-        self.itemJPopupMenu: JPopupMenu = None
-        self.itemJScrollPane1: JScrollPane = None
-        self.rotateJMenuItem: JMenuItem = None
-        self.workAreaPropertiesJPanel: JPanel = None
+        if "rootTreeNode" not in vars(self): self.rootTreeNode: DefaultMutableTreeNode = None
+        if "workAreaJTree" not in vars(self): self.workAreaJTree: JTree = None
+        if "highlightedBasicArrayList" not in vars(self): self.highlightedBasicArrayList: BasicArrayList = None
+        if "copyJMenuItem" not in vars(self): self.copyJMenuItem: JMenuItem = None
+        if "deleteJMenuItem" not in vars(self): self.deleteJMenuItem: JMenuItem = None
+        if "itemJPopupMenu" not in vars(self): self.itemJPopupMenu: JPopupMenu = None
+        if "itemJScrollPane1" not in vars(self): self.itemJScrollPane1: JScrollPane = None
+        if "rotateJMenuItem" not in vars(self): self.rotateJMenuItem: JMenuItem = None
+        if "workAreaPropertiesJPanel" not in vars(self): self.workAreaPropertiesJPanel: JPanel = None
     
 
     def __init__(self, workAreaName: str) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.initComponents()
         self.rootTreeNode = DefaultMutableTreeNode(workAreaName)
         self.workAreaPropertiesJPanel.removeAll()
@@ -54,12 +68,15 @@ class WorkAreaJTreeJPanel(JPanel):
 
     def updateTree(self) -> None:
         self.workAreaJTree = JTree(self.rootTreeNode)
-        self.workAreaJTree.addMouseListener((MouseAdapter()  # Java anonymous class body:
-#             
-# 
-#             def mousePressed(self, evt: MouseEvent) -> None:
-#                 self.workAreaJTreeMousePressed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN66826(MouseAdapter):
+            
+            
+
+            def mousePressed(self, evt: MouseEvent) -> None:
+                (self if hasattr(self, "workAreaJTreeMousePressed") else _java_listener_owner).workAreaJTreeMousePressed(evt)
+        self.workAreaJTree.addMouseListener(_JavaListenerN66826()
+            )
         self.workAreaPropertiesJPanel.removeAll()
         self.workAreaPropertiesJPanel.add(self.workAreaJTree)
     
@@ -86,10 +103,12 @@ class WorkAreaJTreeJPanel(JPanel):
 
     def getNode(self, *args):
         if len(args) == 1 and True and (args[0] is None or isinstance(args[0], list)):
-            return self.getNode_j1_1(*args)
+            return __class__.__dict__["getNode_j1_1"].__get__(self, __class__)(*args)
         if len(args) == 1:
-            return self.getNode_j1_2(*args)
-        return getattr(self, "getNode_j" + str(len(args)))(*args)
+            return __class__.__dict__["getNode_j1_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("getNode_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getNode(*args)
     
 
     # throws Exception
@@ -169,7 +188,9 @@ class WorkAreaJTreeJPanel(JPanel):
                 MyGraphicItemEventService.fire(MyGraphicItemEvent(MyGraphicItemEventSource(MyGraphicItemEventService.DUPLICATE, node)))
 
     def copy(self, *args):
-        return getattr(self, "copy_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("copy_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().copy(*args)
     
 
     # throws Exception
@@ -202,7 +223,9 @@ class WorkAreaJTreeJPanel(JPanel):
         self.workAreaJTree.expandPath(treePath)
 
     def expand(self, *args):
-        return getattr(self, "expand_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("expand_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().expand(*args)
     
 
     def initComponents(self) -> None:
@@ -212,51 +235,66 @@ class WorkAreaJTreeJPanel(JPanel):
         self.rotateJMenuItem = JMenuItem()
         self.itemJScrollPane1 = JScrollPane()
         self.workAreaPropertiesJPanel = JPanel()
-        self.itemJPopupMenu.addPopupMenuListener((PopupMenuListener()  # Java anonymous class body:
-#             
-# 
-#             def popupMenuCanceled(self, evt: PopupMenuEvent) -> None:
-#                 pass
-#             
-# 
-#             def popupMenuWillBecomeInvisible(self, evt: PopupMenuEvent) -> None:
-#                 self.itemJPopupMenuPopupMenuWillBecomeInvisible(evt)
-#             
-# 
-#             def popupMenuWillBecomeVisible(self, evt: PopupMenuEvent) -> None:
-#                 self.itemJPopupMenuPopupMenuWillBecomeVisible(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN69996(PopupMenuListener):
+            
+            
+
+            def popupMenuCanceled(self, evt: PopupMenuEvent) -> None:
+                pass
+            
+
+            def popupMenuWillBecomeInvisible(self, evt: PopupMenuEvent) -> None:
+                (self if hasattr(self, "itemJPopupMenuPopupMenuWillBecomeInvisible") else _java_listener_owner).itemJPopupMenuPopupMenuWillBecomeInvisible(evt)
+            
+
+            def popupMenuWillBecomeVisible(self, evt: PopupMenuEvent) -> None:
+                (self if hasattr(self, "itemJPopupMenuPopupMenuWillBecomeVisible") else _java_listener_owner).itemJPopupMenuPopupMenuWillBecomeVisible(evt)
+        self.itemJPopupMenu.addPopupMenuListener(_JavaListenerN69996()
+            )
         self.deleteJMenuItem.setText("Delete")
-        self.deleteJMenuItem.addMouseListener((MouseAdapter()  # Java anonymous class body:
-#             
-# 
-#             def mousePressed(self, evt: MouseEvent) -> None:
-#                 self.deleteJMenuItemMousePressed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN70244(MouseAdapter):
+            
+            
+
+            def mousePressed(self, evt: MouseEvent) -> None:
+                (self if hasattr(self, "deleteJMenuItemMousePressed") else _java_listener_owner).deleteJMenuItemMousePressed(evt)
+        self.deleteJMenuItem.addMouseListener(_JavaListenerN70244()
+            )
         self.itemJPopupMenu.add(self.deleteJMenuItem)
         self.copyJMenuItem.setText("Copy")
-        self.copyJMenuItem.addMouseListener((MouseAdapter()  # Java anonymous class body:
-#             
-# 
-#             def mousePressed(self, evt: MouseEvent) -> None:
-#                 self.copyJMenuItemMousePressed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN70420(MouseAdapter):
+            
+            
+
+            def mousePressed(self, evt: MouseEvent) -> None:
+                (self if hasattr(self, "copyJMenuItemMousePressed") else _java_listener_owner).copyJMenuItemMousePressed(evt)
+        self.copyJMenuItem.addMouseListener(_JavaListenerN70420()
+            )
         self.itemJPopupMenu.add(self.copyJMenuItem)
         self.rotateJMenuItem.setText("Rotate 45*")
-        self.rotateJMenuItem.addMouseListener((MouseAdapter()  # Java anonymous class body:
-#             
-# 
-#             def mousePressed(self, evt: MouseEvent) -> None:
-#                 self.rotateJMenuItemMousePressed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN70596(MouseAdapter):
+            
+            
+
+            def mousePressed(self, evt: MouseEvent) -> None:
+                (self if hasattr(self, "rotateJMenuItemMousePressed") else _java_listener_owner).rotateJMenuItemMousePressed(evt)
+        self.rotateJMenuItem.addMouseListener(_JavaListenerN70596()
+            )
         self.itemJPopupMenu.add(self.rotateJMenuItem)
         self.setLayout(GridLayout(1, 1))
-        self.workAreaPropertiesJPanel.addMouseListener((MouseAdapter()  # Java anonymous class body:
-#             
-# 
-#             def mousePressed(self, evt: MouseEvent) -> None:
-#                 self.workAreaPropertiesJPanelMousePressed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN70780(MouseAdapter):
+            
+            
+
+            def mousePressed(self, evt: MouseEvent) -> None:
+                (self if hasattr(self, "workAreaPropertiesJPanelMousePressed") else _java_listener_owner).workAreaPropertiesJPanelMousePressed(evt)
+        self.workAreaPropertiesJPanel.addMouseListener(_JavaListenerN70780()
+            )
         self.workAreaPropertiesJPanel.setLayout(GridLayout(1, 0))
         self.itemJScrollPane1.setViewportView(self.workAreaPropertiesJPanel)
         self.add(self.itemJScrollPane1)

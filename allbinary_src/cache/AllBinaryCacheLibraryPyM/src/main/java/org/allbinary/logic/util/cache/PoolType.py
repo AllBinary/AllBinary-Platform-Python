@@ -20,11 +20,11 @@ from __future__ import annotations
 class PoolType:
 
     def _init_fields(self) -> None:
-        self.cacheType: CacheType = None
+        if "cacheType" not in vars(self): self.cacheType: CacheType = None
     
 
     def __init__(self, cacheType: CacheType) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.cacheType = cacheType
     
 

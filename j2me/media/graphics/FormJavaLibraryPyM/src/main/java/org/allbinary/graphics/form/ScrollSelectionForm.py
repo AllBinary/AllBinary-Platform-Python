@@ -15,28 +15,40 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.graphics.form.PaintableForm import PaintableForm
 
 
+@java_inherited_overloads
 class ScrollSelectionForm(PaintableForm):
     NULL_SCROLL_SELECTION_FORM: object = None
     NULL_SCROLL_SELECTION_HORIZONTAL_FORM: object = None
     INSIDE_FORM: str = " inside form"
     IS_IN_FORM: str = "isInForm"
     GET_SELECTED_INDEX: str = "getSelectedIndexForPoint"
+    def _java_defaults(self):
+        vars(self).setdefault("rectangleCollisionUtil", None)
+        vars(self).setdefault("border", 0)
+        vars(self).setdefault("halfBorder", 0)
+        vars(self).setdefault("buttonBasicColor", None)
+        vars(self).setdefault("scrollSelectionFormFormTypeItemIndexPaintable", None)
+        vars(self).setdefault("formTypeItemIndexDx", None)
+        vars(self).setdefault("paintable", None)
+        vars(self).setdefault("adjustedExtraBorder", 0)
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.math.RectangleCollisionUtil import RectangleCollisionUtil
         self.rectangleCollisionUtil: RectangleCollisionUtil = RectangleCollisionUtil.getInstance()
-        self.border: int = None
-        self.halfBorder: int = None
-        self.buttonBasicColor: BasicColor = None
+        if "border" not in vars(self): self.border: int = 0
+        if "halfBorder" not in vars(self): self.halfBorder: int = 0
+        if "buttonBasicColor" not in vars(self): self.buttonBasicColor: BasicColor = None
         self.scrollSelectionFormFormTypeItemIndexPaintable: ItemIndexPaintable = ItemIndexPaintable.getInstance()
         self.formTypeItemIndexDx: ItemIndexDx = ItemIndexDx.getInstance()
         self.paintable: ItemPaintable = ItemPaintableFactory.getInstance()
-        self.adjustedExtraBorder: int = None
+        if "adjustedExtraBorder" not in vars(self): self.adjustedExtraBorder: int = 0
     
 
     @staticmethod
@@ -88,14 +100,15 @@ class ScrollSelectionForm(PaintableForm):
     
 
     def __init__(self, title: str, items: list[ABCustomItem], formPaintableFactory: ItemPaintableFactory, border: int, adjustedExtraBorder: int, backgroundBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
         super().__init__(title, items, backgroundBasicColor, foregroundBasicColor)
-        self._init_fields()
+        __class__._init_fields(self)
         self.adjustedExtraBorder = adjustedExtraBorder
         self.buttonBasicColor = foregroundBasicColor
         self.border = border
-        self.halfBorder = (border >> 1)
+        self.halfBorder = (int(border) >> (int(1) & 31))
         self.paintable = formPaintableFactory.getInstanceItemPaintable(self)
     
 
@@ -109,7 +122,7 @@ class ScrollSelectionForm(PaintableForm):
         from org.allbinary.graphics.form.ScrollSelectionFormHorizontalPaintable import ScrollSelectionFormHorizontalPaintable
         from org.allbinary.graphics.form.ScrollSelectionFormHorizontalDx import ScrollSelectionFormHorizontalDx
         from org.allbinary.graphics.Rectangle import Rectangle
-        super().init(rectangle, formType)
+        java_super_call(super(), "init", rectangle, formType)
         formTypeFactory: FormTypeFactory = FormTypeFactory.getInstance()
         if formType == formTypeFactory.HORIZONTAL_FORM:
             self.scrollSelectionFormFormTypeItemIndexPaintable = ScrollSelectionFormHorizontalPaintable(self)
@@ -163,7 +176,7 @@ class ScrollSelectionForm(PaintableForm):
 
     def append(self, item: ABCustomItem) -> int:
         from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
-        return super().append(item)
+        return java_super_call(super(), "append", item)
     
 
     # throws Exception

@@ -15,18 +15,23 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.input.GameInputProcessor import GameInputProcessor
 
 
+@java_inherited_overloads
 class UnitGameInputProcessor(GameInputProcessor):
+    def _java_defaults(self):
+        vars(self).setdefault("unitLayer", None)
 
     def _init_fields(self) -> None:
-        self.unitLayer: UnitLayer = None
+        if "unitLayer" not in vars(self): self.unitLayer: UnitLayer = None
     
 
     def __init__(self, unitLayer: UnitLayer) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.unitLayer = unitLayer
 
 

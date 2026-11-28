@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.combat.destroy.DestroyableInterface import DestroyableInterface
 from org.allbinary.game.identification.GroupInterfaceCompositeInterface import GroupInterfaceCompositeInterface
@@ -23,6 +24,7 @@ from org.allbinary.game.layer.waypoint.WaypointLayerInterface import WaypointLay
 
 
 # Java interface
+@java_inherited_overloads
 class PathFindingLayerInterface(*java_bases(WaypointLayerInterface, GameKeyEventSourceInterface, GroupInterfaceCompositeInterface, DestroyableInterface)):
     
 

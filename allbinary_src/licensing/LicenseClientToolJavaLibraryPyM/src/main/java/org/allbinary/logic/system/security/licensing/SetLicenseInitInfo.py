@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.System import System
+from java.lang.JavaRuntimeStatic import java_predicate
 import traceback
 from java.lang.JavaRuntimeStatic import lazy_static
 
@@ -23,7 +25,6 @@ class SetLicenseInitInfo:
     stdinput: BufferedReader = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.vector: BasicArrayList = BasicArrayListD()
     
 
@@ -31,7 +32,7 @@ class SetLicenseInitInfo:
         from org.allbinary.logic.system.security.licensing.PrintLicenseInitInfo import PrintLicenseInitInfo
         from org.allbinary.business.init.LicenseInitInfoUtil import LicenseInitInfoUtil
         from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
-        self._init_fields()
+        __class__._init_fields(self)
         LicenseInitInfoUtil.getInstance().setFilePath(PrintLicenseInitInfo.PATH + PATH_GLOBALS.getInstance().INIT_PATH)
         for index in range(1, len(options)):
             self.vector.add(options[index])
@@ -53,6 +54,7 @@ class SetLicenseInitInfo:
         from org.allbinary.logic.system.security.licensing.PrintLicenseInitInfo import PrintLicenseInitInfo
         from org.allbinary.business.init.LicenseInitInfo import LicenseInitInfo
         from org.allbinary.business.init.LicenseInitInfoUtil import LicenseInitInfoUtil
+        from java.io.File import File
         from org.allbinary.util.BasicArrayList import BasicArrayList
         try:
             if licenceServerVector is None:
@@ -90,6 +92,8 @@ class SetLicenseInitInfo:
 
 
 def _SetLicenseInitInfo_stdinput() -> object:
+    from java.io.BufferedReader import BufferedReader
+    from java.io.InputStreamReader import InputStreamReader
     return BufferedReader(InputStreamReader(System.in_))
 
 lazy_static(SetLicenseInitInfo, "stdinput", _SetLicenseInitInfo_stdinput)

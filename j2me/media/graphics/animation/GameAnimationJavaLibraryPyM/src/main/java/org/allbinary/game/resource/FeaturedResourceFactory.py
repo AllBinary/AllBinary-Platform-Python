@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 
 
 class FeaturedResourceFactory:
@@ -22,7 +23,6 @@ class FeaturedResourceFactory:
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.list_: BasicArrayList = BasicArrayListD()
@@ -39,7 +39,7 @@ class FeaturedResourceFactory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -54,7 +54,7 @@ class FeaturedResourceFactory:
         for index in range(0, size):
             featureInterface: GameFeatureControlledInterface = self.list_.objectArray[index]
             isLoadingLevel: bool = featureInterface.isLoadingLevel(level)
-            isFeature: bool = featureInterface.isFeature()
+            isFeature: bool = java_predicate(featureInterface, "isFeature")
             self.logUtil.putF(str(StringMaker().append(self.GAME_FEATURE_CONTROLLED).append(str(featureInterface)).append(self.IS_LOADING_LEVEL_LABEL).append(ResourceLoadingLevelFactory.getInstance().getLevelString(level)).append(CommonSeps.getInstance().COLON_SEP).appendboolean(isLoadingLevel).append(self.IS_FEATURE).appendboolean(isFeature)), self, self.commonStrings.INIT)
             if isLoadingLevel and isFeature:
                 featureInterface.init(level)

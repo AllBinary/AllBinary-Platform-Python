@@ -15,25 +15,29 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 from org.allbinary.logic.control.validate.ValidationInterface import ValidationInterface
 from org.allbinary.logic.visual.transform.template.customizer.includes.style.css.template.retail.CssStyleValidation import CssStyleValidation
 
 
+@java_inherited_overloads
 class EditCssStyleValidation(*java_bases(CssStyleValidation, ValidationInterface, DomNodeInterface)):
 
     def __init__(self, *args) -> None:
         if len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
         elif len(args) == 1:
-            self.__jconstructor1(*args)
+            __class__.__jconstructor1(self, *args)
 
     def __jconstructor1(self, *args) -> None:
-        if True and not isinstance(args[0], (str, list, int, float)):
-            self._constructor1_1(*args)
+        if True and (args[0] is None or any(base.__name__ == "Document" for base in type(args[0]).__mro__)):
+            __class__._constructor1_1(self, *args)
         else:
-            self._constructor1_2(*args)
+            __class__._constructor1_2(self, *args)
     
 
     def _constructor0(self) -> None:
@@ -51,11 +55,11 @@ class EditCssStyleValidation(*java_bases(CssStyleValidation, ValidationInterface
     
 
     def isValid(self) -> bool:
-        return super().isValid()
+        return java_super_call(super(), "isValid")
     
 
     def validationInfo(self) -> str:
-        return super().validationInfo()
+        return java_super_call(super(), "validationInfo")
     
 
     def toValidationInfoDoc(self) -> Document:

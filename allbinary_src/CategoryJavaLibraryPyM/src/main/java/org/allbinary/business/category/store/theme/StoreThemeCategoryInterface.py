@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.business.category.CategoryInterface import CategoryInterface
 from org.allbinary.data.tables.TableMappingInterface import TableMappingInterface
@@ -23,6 +24,7 @@ from org.allbinary.logic.visual.transform.info.CompositeTransformInfoInterface i
 
 
 # Java interface
+@java_inherited_overloads
 class StoreThemeCategoryInterface(*java_bases(CategoryInterface, TableMappingInterface, ValidationInterface, CompositeTransformInfoInterface)):
     
 

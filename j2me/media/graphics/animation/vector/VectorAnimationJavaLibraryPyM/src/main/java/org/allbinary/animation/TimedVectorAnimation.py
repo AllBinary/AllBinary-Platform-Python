@@ -15,10 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.animation.VectorAnimation import VectorAnimation
 
 
+@java_inherited_overloads
 class TimedVectorAnimation(VectorAnimation):
+    def _java_defaults(self):
+        vars(self).setdefault("timeElapsedHelper", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
@@ -26,15 +32,16 @@ class TimedVectorAnimation(VectorAnimation):
     
 
     def __init__(self, currentPoints: list[list[list[int]]], basicColor: BasicColor, animationBehavior: AnimationBehavior) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(currentPoints, basicColor, animationBehavior)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def nextFrame(self) -> None:
         from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
         if self.timeElapsedHelper.isTime(GameTickTimeDelayHelperFactory.getInstance().startTime):
-            super().nextFrame()
+            java_super_call(super(), "nextFrame")
 # from org.allbinary.graphics.color.BasicColor import BasicColor
 # from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
 # from org.allbinary.time.TimeDelayHelper import TimeDelayHelper

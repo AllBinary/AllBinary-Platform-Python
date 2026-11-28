@@ -15,23 +15,30 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
 
 
+@java_inherited_overloads
 class AllBinaryJ2METiledLayer(AllBinaryTiledLayer):
+    def _java_defaults(self):
+        vars(self).setdefault("tiledLayerP", None)
+        vars(self).setdefault("debugColor", 0)
+        vars(self).setdefault("font2", None)
 
     def _init_fields(self) -> None:
         from javax.microedition.lcdui.Font import Font
-        from javax.microedition.lcdui.game.TiledLayer import TiledLayer
-        self.tiledLayerP: TiledLayer = None
-        self.debugColor: int = None
+        if "tiledLayerP" not in vars(self): self.tiledLayerP: TiledLayer = None
+        if "debugColor" not in vars(self): self.debugColor: int = 0
         self.font2: Font = Font.getFont(Font.FACE_SYSTEM, Font.STYLE_PLAIN, 4)
     
 
     def __init__(self, dataId: int, tiledLayer: TiledLayer, mapTwoDArray: list[list[int]], debugColor: int) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.game.TiledLayer import TiledLayer
         super().__init__(dataId, tiledLayer.getWidth(), tiledLayer.getHeight(), tiledLayer.getCellWidth(), tiledLayer.getCellHeight())
-        self._init_fields()
+        __class__._init_fields(self)
         self.tiledLayerP = tiledLayer
         self.debugColor = debugColor
         self.setCells(mapTwoDArray)
@@ -86,12 +93,12 @@ class AllBinaryJ2METiledLayer(AllBinaryTiledLayer):
 
     def moveDXY(self, dx: int, dy: int) -> None:
         self.tiledLayerP.move(dx, dy)
-        super().moveDXY(-dx, -dy)
+        java_super_call(super(), "moveDXY", -dx, -dy)
     
 
     def setPosition(self, x: int, y: int, z: int) -> None:
         self.tiledLayerP.setPosition(x, y)
-        super().setPosition(-x, -y, z)
+        java_super_call(super(), "setPosition", -x, -y, z)
     
 
     def getTiledLayer(self) -> TiledLayer:

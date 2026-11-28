@@ -15,7 +15,7 @@
 
 from __future__ import annotations
 
-# from java.util.Comparator import Comparator
+from java.util.Comparator import Comparator
 
 
 class ThemeComparator(Comparator):

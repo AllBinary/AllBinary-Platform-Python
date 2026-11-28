@@ -27,7 +27,7 @@ class PartnerIdentifierFileUtil:
         self.FILE_NAME: str = "partner.txt"
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -37,6 +37,7 @@ class PartnerIdentifierFileUtil:
 
     def get(self) -> str:
         from java.io.InputStream import InputStream
+        from java.io.InputStreamReader import InputStreamReader
         from org.allbinary.data.resource.ResourceUtil import ResourceUtil
         from org.allbinary.logic.string.StringUtil import StringUtil
         from org.allbinary.string.CommonStrings import CommonStrings

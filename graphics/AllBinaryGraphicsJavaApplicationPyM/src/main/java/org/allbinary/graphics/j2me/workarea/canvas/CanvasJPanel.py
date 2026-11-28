@@ -15,6 +15,10 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.j2me.workarea.tools.event.MyGraphicItemEventListener import MyGraphicItemEventListener
@@ -24,43 +28,54 @@ from org.allbinary.graphics.j2me.workarea.tools.event.MyGraphicItemEventListener
 # from javax.swing.JPanel import JPanel
 
 
+@java_inherited_overloads
 class CanvasJPanel(*java_bases(JPanel, MouseListener, MouseMotionListener, KeyListener, MyGraphicItemEventListener)):
     frame: int = 0
     gridColor: Color = None
     backgroundColor: Color = None
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("guiLog", None)
+        vars(self).setdefault("gameInputStrings", None)
+        vars(self).setdefault("selectedTool", None)
+        vars(self).setdefault("graphicItemHashMap", None)
+        vars(self).setdefault("canvasDimension", None)
+        vars(self).setdefault("angle", 0.0)
+        vars(self).setdefault("canvasTreeNode", None)
+        vars(self).setdefault("frameLabel", None)
+        vars(self).setdefault("workAreaJTreeJPanel", None)
+        vars(self).setdefault("grid", None)
 
     def _init_fields(self) -> None:
-        from java.util.HashMap import HashMap
         from org.allbinary.game.input.GameInputStrings import GameInputStrings
-        from org.allbinary.graphics.j2me.workarea.WorkAreaJTreeJPanel import WorkAreaJTreeJPanel
-        from org.allbinary.graphics.j2me.workarea.tools.GraphicItemInterface import GraphicItemInterface
         from org.allbinary.logic.communication.log.GuiLog import GuiLog
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.guiLog: GuiLog = GuiLog.getInstance()
         self.gameInputStrings: GameInputStrings = GameInputStrings.getInstance()
         self.selectedTool: GraphicItemInterface = None
-        self.graphicItemHashMap: HashMap = None
-        self.canvasDimension: IntegerDimension = None
+        if "graphicItemHashMap" not in vars(self): self.graphicItemHashMap: HashMap = None
+        if "canvasDimension" not in vars(self): self.canvasDimension: IntegerDimension = None
         self.angle: float = 0.0
-        self.canvasTreeNode: DefaultMutableTreeNode = None
-        self.frameLabel: CanvasTreeLabel = None
-        self.workAreaJTreeJPanel: WorkAreaJTreeJPanel = None
-        self.grid: Grid = None
+        if "canvasTreeNode" not in vars(self): self.canvasTreeNode: DefaultMutableTreeNode = None
+        if "frameLabel" not in vars(self): self.frameLabel: CanvasTreeLabel = None
+        if "workAreaJTreeJPanel" not in vars(self): self.workAreaJTreeJPanel: WorkAreaJTreeJPanel = None
+        if "grid" not in vars(self): self.grid: Grid = None
 
     def __init__(self, *args) -> None:
         if len(args) == 4:
-            self._constructor4(*args)
+            __class__._constructor4(self, *args)
         elif len(args) == 3:
-            self._constructor3(*args)
+            __class__._constructor3(self, *args)
     
 
     def _constructor4(self, workAreaJTreeJPanel: WorkAreaJTreeJPanel, dimension: Dimension, x: int, y: int) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.j2me.workarea.canvas.Grid import Grid
         from org.allbinary.graphics.j2me.workarea.WorkAreaJTreeJPanel import WorkAreaJTreeJPanel
         from org.allbinary.log.LOGGING import LOGGING
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.grid = Grid()
         try:
             self.workAreaJTreeJPanel = workAreaJTreeJPanel
@@ -74,11 +89,12 @@ class CanvasJPanel(*java_bases(JPanel, MouseListener, MouseMotionListener, KeyLi
     
 
     def _constructor3(self, workAreaJTreeJPanel: WorkAreaJTreeJPanel, dimension: Dimension, canvasDom: CanvasDom) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.j2me.workarea.canvas.Grid import Grid
         from org.allbinary.graphics.j2me.workarea.WorkAreaJTreeJPanel import WorkAreaJTreeJPanel
         from org.allbinary.log.LOGGING import LOGGING
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.grid = Grid(canvasDom.getGrid())
         try:
             self.workAreaJTreeJPanel = workAreaJTreeJPanel
@@ -159,9 +175,11 @@ class CanvasJPanel(*java_bases(JPanel, MouseListener, MouseMotionListener, KeyLi
         from org.allbinary.graphics.PointFactory import PointFactory
         from org.allbinary.graphics.j2me.GraphicsException import GraphicsException
         try:
-            if xSize >= self.getCanvasDimension().getWidth() / 2 or xSize < 1:
+            if xSize >= java_divide(self.getCanvasDimension().getWidth(), 2)
+             or xSize < 1:
                 raise GraphicsException("X Size Error: " + str(xSize) + " WorkArea X: " + str(self.getCanvasDimension().getWidth()), self, "setGrid")
-            if ySize >= self.getCanvasDimension().getHeight() / 2 or ySize < 1:
+            if ySize >= java_divide(self.getCanvasDimension().getHeight(), 2)
+             or ySize < 1:
                 raise GraphicsException("Y Size Error" + str(ySize) + " WorkArea Y: " + str(self.getCanvasDimension().getHeight()), self, "setGrid")
             self.grid.grid = PointFactory.getInstance().createXY(xSize, ySize)
             self.grid.isChanged = True
@@ -169,13 +187,17 @@ class CanvasJPanel(*java_bases(JPanel, MouseListener, MouseMotionListener, KeyLi
             pass
 
     def setGrid(self, *args):
-        return getattr(self, "setGrid_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("setGrid_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().setGrid(*args)
     
 
     # throws Exception
     def setDefaultGrid(self) -> None:
-        xPixelsPerWorkAreaPixel: int = self.getWidth() / self.getCanvasDimension().getWidth()
-        yPixelsPerWorkAreaPixel: int = self.getHeight() / self.getCanvasDimension().getHeight()
+        xPixelsPerWorkAreaPixel: int = java_divide(self.getWidth(), self.getCanvasDimension().getWidth())
+            
+        yPixelsPerWorkAreaPixel: int = java_divide(self.getHeight(), self.getCanvasDimension().getHeight())
+            
         self.setGrid(1, 1)
         self.grid.isChanged = True
     
@@ -311,7 +333,8 @@ class CanvasJPanel(*java_bases(JPanel, MouseListener, MouseMotionListener, KeyLi
     
 
     def getXPixelsPerWorkAreaPixel(self) -> int:
-        x: int = self.getGrid().grid.getX() * (self.getWidth() - 10) / self.getCanvasDimension().getWidth()
+        x: int = java_divide(self.getGrid().grid.getX() * (self.getWidth() - 10), self.getCanvasDimension().getWidth())
+            
         if self.getGrid().getZoom() == 1:
             return 1
         else:
@@ -319,7 +342,8 @@ class CanvasJPanel(*java_bases(JPanel, MouseListener, MouseMotionListener, KeyLi
     
 
     def getYPixelsPerWorkAreaPixel(self) -> int:
-        y: int = self.getGrid().grid.getY() * (self.getHeight() - 10) / self.getCanvasDimension().getHeight()
+        y: int = java_divide(self.getGrid().grid.getY() * (self.getHeight() - 10), self.getCanvasDimension().getHeight())
+            
         if self.getGrid().getZoom() == 1:
             return 1
         else:
@@ -342,8 +366,10 @@ class CanvasJPanel(*java_bases(JPanel, MouseListener, MouseMotionListener, KeyLi
     
 
     def drawGrid(self, graphics: Graphics) -> None:
-        xAdjust: int = (self.getWidth() % self.getXPixelsPerWorkAreaPixel()) / 2
-        yAdjust: int = (self.getHeight() % self.getYPixelsPerWorkAreaPixel()) / 2
+        xAdjust: int = java_divide((self.getWidth() % self.getXPixelsPerWorkAreaPixel()), 2)
+            
+        yAdjust: int = java_divide((self.getHeight() % self.getYPixelsPerWorkAreaPixel()), 2)
+            
         xLeft: int = xAdjust
         yUpper: int = yAdjust
         xRight: int = self.getWidth() - xAdjust
@@ -373,7 +399,7 @@ class CanvasJPanel(*java_bases(JPanel, MouseListener, MouseMotionListener, KeyLi
     def repaint(self) -> None:
         if self.grid is not None:
             self.grid.isChanged = True
-        super().repaint()
+        java_super_call(super(), "repaint")
     
 
     # throws Exception
@@ -392,7 +418,7 @@ class CanvasJPanel(*java_bases(JPanel, MouseListener, MouseMotionListener, KeyLi
         from org.allbinary.graphics.j2me.workarea.tools.GraphicItemInterface import GraphicItemInterface
         from org.allbinary.graphics.j2me.workarea.tools.MouseStrings import MouseStrings
         StatusFactory.getInstance().setStatusNoLog(MouseStrings.getInstance().MOUSE_CLICKED_LABEL + self.logMouseEvent(mouseEvent))
-        if self.getSelectedTool() is not None and self.getSelectedTool().isActive():
+        if self.getSelectedTool() is not None and java_predicate(self.getSelectedTool(), "isActive"):
             graphicItem: GraphicItemInterface = self.getSelectedTool()
             graphicItem.mouseClicked(mouseEvent, self.getXPixelsPerWorkAreaPixel(), self.getYPixelsPerWorkAreaPixel())
         else:
@@ -461,7 +487,7 @@ class CanvasJPanel(*java_bases(JPanel, MouseListener, MouseMotionListener, KeyLi
         from org.allbinary.graphics.j2me.workarea.tools.GraphicItemInterface import GraphicItemInterface
         from org.allbinary.graphics.j2me.workarea.tools.MouseStrings import MouseStrings
         StatusFactory.getInstance().setStatusNoLog(MouseStrings.getInstance().MOUSE_MOVED_LABEL + self.logMouseEvent(mouseEvent))
-        if self.getSelectedTool() is not None and self.getSelectedTool().isActive():
+        if self.getSelectedTool() is not None and java_predicate(self.getSelectedTool(), "isActive"):
             graphicItem: GraphicItemInterface = self.getSelectedTool()
             graphicItem.mouseMoved(mouseEvent, self.getXPixelsPerWorkAreaPixel(), self.getYPixelsPerWorkAreaPixel())
         self.requestFocus()
@@ -475,10 +501,12 @@ class CanvasJPanel(*java_bases(JPanel, MouseListener, MouseMotionListener, KeyLi
         from org.allbinary.string.CommonSeps import CommonSeps
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(PositionStrings.getInstance().X_LABEL)
-        stringBuffer.appendint(int(mouseEvent.getX() / self.getXPixelsPerWorkAreaPixel()))
+        stringBuffer.appendint(int(java_divide(mouseEvent.getX(), self.getXPixelsPerWorkAreaPixel())
+            ))
         stringBuffer.append(CommonSeps.getInstance().SPACE)
         stringBuffer.append(PositionStrings.getInstance().Y_LABEL)
-        stringBuffer.appendint(int(mouseEvent.getY() / self.getYPixelsPerWorkAreaPixel()))
+        stringBuffer.appendint(int(java_divide(mouseEvent.getY(), self.getYPixelsPerWorkAreaPixel())
+            ))
         return str(stringBuffer)
     
 
@@ -493,7 +521,7 @@ class CanvasJPanel(*java_bases(JPanel, MouseListener, MouseMotionListener, KeyLi
             for index in range(0, size):
                 graphicItemInterface: GraphicItemInterface = self.graphicItemHashMap.get(graphicItemArray[index])
                 keyCode: int = keyEvent.getKeyCode()
-                if graphicItemInterface.isActive():
+                if java_predicate(graphicItemInterface, "isActive"):
                     if keyCode == keyEvent.VK_UP:
                         graphicItemInterface.translate(0, -1)
                     elif keyCode == keyEvent.VK_DOWN:
@@ -505,7 +533,7 @@ class CanvasJPanel(*java_bases(JPanel, MouseListener, MouseMotionListener, KeyLi
         except Exception as e:
             commonStrings: CommonStrings = CommonStrings.getInstance()
             self.logUtil.put(commonStrings.EXCEPTION, self, self.gameInputStrings.KEY_PRESSED, e)
-        if self.getSelectedTool() is not None and self.getSelectedTool().isActive():
+        if self.getSelectedTool() is not None and java_predicate(self.getSelectedTool(), "isActive"):
             StatusFactory.getInstance().setStatus("Key Pressed for Tool")
             graphicItem: GraphicItemInterface = self.getSelectedTool()
             graphicItem.keyPressed(keyEvent)
@@ -576,7 +604,9 @@ class CanvasJPanel(*java_bases(JPanel, MouseListener, MouseMotionListener, KeyLi
             self.workAreaJTreeJPanel.repaint()
 
     def duplicate(self, *args):
-        return getattr(self, "duplicate_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("duplicate_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().duplicate(*args)
     
 
     def rotate(self, event: MyGraphicItemEvent) -> None:

@@ -20,40 +20,39 @@ from __future__ import annotations
 class InputAutomationModuleConfiguration:
 
     def _init_fields(self) -> None:
-        from org.allbinary.input.automation.module.InputAutomationModuleFactoryInterface import InputAutomationModuleFactoryInterface
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.className: str = None
-        self.name: str = None
-        self.inputAutomationModuleInterface: InputAutomationModuleFactoryInterface = None
+        if "className" not in vars(self): self.className: str = None
+        if "name" not in vars(self): self.name: str = None
+        if "inputAutomationModuleInterface" not in vars(self): self.inputAutomationModuleInterface: InputAutomationModuleFactoryInterface = None
 
     def __init__(self, *args) -> None:
         if len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
         elif len(args) == 2:
-            self._constructor2(*args)
+            __class__._constructor2(self, *args)
         elif len(args) == 3:
-            self._constructor3(*args)
+            __class__._constructor3(self, *args)
         elif len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
     
 
     def _constructor0(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def _constructor2(self, abeClientInformation: AbeClientInformationInterface, node: Node) -> None:
         from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         from org.w3c.dom.Node import Node
-        self._init_fields()
+        __class__._init_fields(self)
         self.init(abeClientInformation, node)
     
 
     def _constructor3(self, abeClientInformation: AbeClientInformationInterface, name: str, className: str) -> None:
         from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-        self._init_fields()
+        __class__._init_fields(self)
         self.setName(name)
         self.setClassName(className)
         self.init(abeClientInformation)
@@ -61,9 +60,9 @@ class InputAutomationModuleConfiguration:
 
     def _constructor1(self, inputAutomationModuleInterface: InputAutomationModuleFactoryInterface) -> None:
         from org.allbinary.input.automation.module.InputAutomationModuleFactoryInterface import InputAutomationModuleFactoryInterface
-        self._init_fields()
+        __class__._init_fields(self)
         self.setInputAutomationModuleInterface(inputAutomationModuleInterface)
-        self.setClassName(type(self.inputAutomationModuleInterface).__module__ + "." + type(self.inputAutomationModuleInterface).__qualname__)
+        self.setClassName(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(self.inputAutomationModuleInterface)))
     
 
     # throws Exception
@@ -100,7 +99,9 @@ class InputAutomationModuleConfiguration:
             raise RuntimeError()
 
     def init(self, *args):
-        return getattr(self, "init_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("init_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().init(*args)
     
 
     # throws Exception

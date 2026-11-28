@@ -26,7 +26,7 @@ class PaymentGatewayInterfaceFactory(PaymentGatewayInterfaceFactoryInterface):
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -50,6 +50,7 @@ class PaymentGatewayInterfaceFactory(PaymentGatewayInterfaceFactoryInterface):
     # throws Exception
     # Java overloaded method with the same parameter count: Python keeps the last definition
     def getInstance_j1_2(self, paymentType: BasicPaymentType) -> PaymentGatewayInterface:
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
         from java.util.HashMap import HashMap
         from org.allbinary.business.user.commerce.money.payment.types.BasicPaymentType import BasicPaymentType
         from org.allbinary.logic.StdUtil import StdUtil
@@ -61,6 +62,7 @@ class PaymentGatewayInterfaceFactory(PaymentGatewayInterfaceFactoryInterface):
     # throws Exception
     # Java overloaded method with the same parameter count: Python keeps the last definition
     def getInstance_j1_3(self, hashMap: HashMap) -> PaymentGatewayInterface:
+        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayData import PaymentGatewayData
         from java.util.HashMap import HashMap
         from org.allbinary.business.user.commerce.money.payment.types.BasicPaymentType import BasicPaymentType
         from org.allbinary.business.user.commerce.money.payment.types.BasicPaymentTypeUtil import BasicPaymentTypeUtil
@@ -81,13 +83,15 @@ class PaymentGatewayInterfaceFactory(PaymentGatewayInterfaceFactoryInterface):
             raise e
 
     def getInstance(self, *args):
-        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
-            return self.getInstance_j1_1(*args)
-        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
-            return self.getInstance_j1_2(*args)
+        if len(args) == 1 and True and (args[0] is None or any(base.__name__ == "HttpServletRequest" for base in type(args[0]).__mro__)):
+            return __class__.__dict__["getInstance_j1_1"].__get__(self, __class__)(*args)
+        if len(args) == 1 and True and (args[0] is None or any(base.__name__ == "BasicPaymentType" for base in type(args[0]).__mro__)):
+            return __class__.__dict__["getInstance_j1_2"].__get__(self, __class__)(*args)
         if len(args) == 1:
-            return self.getInstance_j1_3(*args)
-        return getattr(self, "getInstance_j" + str(len(args)))(*args)
+            return __class__.__dict__["getInstance_j1_3"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("getInstance_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getInstance(*args)
 # from java.util.HashMap import HashMap
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
 # from org.allbinary.business.user.commerce.money.payment.types.BasicPaymentType import BasicPaymentType

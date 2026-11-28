@@ -15,19 +15,20 @@
 
 from __future__ import annotations
 
+from java.lang.JavaThread import JavaThread
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
 class NullThread:
-    NULL_THREAD: threading.Thread = None
+    NULL_THREAD: JavaThread = None
 # from org.allbinary.logic.string.StringUtil import StringUtil
 
 
 def _NullThread_NULL_THREAD() -> object:
     from org.allbinary.thread.NullRunnable import NullRunnable
     from org.allbinary.logic.string.StringUtil import StringUtil
-    return threading.Thread(target=NullRunnable.getInstance().run, name=StringUtil.getInstance().EMPTY_STRING)
+    return JavaThread(target=NullRunnable.getInstance().run, name=StringUtil.getInstance().EMPTY_STRING)
 
 lazy_static(NullThread, "NULL_THREAD", _NullThread_NULL_THREAD)
 

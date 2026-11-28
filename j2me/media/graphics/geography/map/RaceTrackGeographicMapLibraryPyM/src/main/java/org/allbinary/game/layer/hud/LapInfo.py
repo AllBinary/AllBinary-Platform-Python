@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -22,12 +23,12 @@ class LapInfo:
     NULL_LAP_INFO: LapInfo = None
 
     def _init_fields(self) -> None:
-        self.numberOfLaps: int = None
-        self.totalLaps: int = None
+        if "numberOfLaps" not in vars(self): self.numberOfLaps: int = 0
+        if "totalLaps" not in vars(self): self.totalLaps: int = 0
     
 
     def __init__(self, totalLaps: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.totalLaps = totalLaps
         self.numberOfLaps = 1
     
@@ -54,7 +55,7 @@ class LapInfo:
         from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("isDone: ")
-        stringBuffer.appendboolean(self.isDone())
+        stringBuffer.appendboolean(java_predicate(self, "isDone"))
         stringBuffer.append(" CurrentLap: ")
         stringBuffer.appendint(self.getCurrentLap())
         stringBuffer.append(" Total Laps: ")

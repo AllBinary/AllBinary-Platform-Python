@@ -25,12 +25,12 @@ class GeographicMapCellType:
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.type_: int = None
+        if "type_" not in vars(self): self.type_: int = 0
     
 
     def __init__(self, type_: int, reset: int) -> None:
         from org.allbinary.media.graphics.geography.map.GeographicMapCellTypeFactory import GeographicMapCellTypeFactory
-        self._init_fields()
+        __class__._init_fields(self)
         self.type_ = type_
         if type_ != -2147483648:
             geographicMapCellTypeFactory: GeographicMapCellTypeFactory = GeographicMapCellTypeFactory.getInstance()

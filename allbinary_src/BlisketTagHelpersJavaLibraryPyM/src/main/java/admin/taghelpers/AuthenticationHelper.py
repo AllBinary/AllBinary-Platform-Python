@@ -15,47 +15,59 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_equals
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 import datetime
 from admin.taghelpers.TagHelper import TagHelper
 
 
+@java_inherited_overloads
 class AuthenticationHelper(TagHelper):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("weblisketSession", None)
+        vars(self).setdefault("authenticated", None)
+        vars(self).setdefault("sessionUserName", None)
+        vars(self).setdefault("role", None)
+        vars(self).setdefault("timeout", None)
+        vars(self).setdefault("attemptsInteger", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.user.role.UserRole import UserRole
-        from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.weblisketSession: WeblisketSession = None
-        self.authenticated: str = None
-        self.sessionUserName: str = None
-        self.role: UserRole = None
-        self.timeout: str = None
-        self.attemptsInteger: int = None
+        if "weblisketSession" not in vars(self): self.weblisketSession: WeblisketSession = None
+        if "authenticated" not in vars(self): self.authenticated: str = None
+        if "sessionUserName" not in vars(self): self.sessionUserName: str = None
+        if "role" not in vars(self): self.role: UserRole = None
+        if "timeout" not in vars(self): self.timeout: str = None
+        if "attemptsInteger" not in vars(self): self.attemptsInteger: int = None
 
     def __init__(self, *args) -> None:
         if len(args) == 2:
-            self.__jconstructor2(*args)
+            __class__.__jconstructor2(self, *args)
 
     def __jconstructor2(self, *args) -> None:
-        if True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)):
-            self._constructor2_1(*args)
+        if True and not isinstance(args[0], (str, list, int, float)) and (args[1] is None or any(base.__name__ == "PageContext" for base in type(args[1]).__mro__)):
+            __class__._constructor2_1(self, *args)
         else:
-            self._constructor2_2(*args)
+            __class__._constructor2_2(self, *args)
     
 
     def _constructor2_1(self, hashMap: HashMap, pageContext: PageContext) -> None:
+        __class__._java_defaults(self)
         from java.util.HashMap import HashMap
-        self.__jconstructor2(hashMap, pageContext.getRequest())
+        __class__.__jconstructor2(self, hashMap, pageContext.getRequest())
     
 
     def _constructor2_2(self, hashMap: HashMap, httpServletRequest: HttpServletRequest) -> None:
+        __class__._java_defaults(self)
         from java.util.HashMap import HashMap
         from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.weblisketSession = WeblisketSession(hashMap, httpServletRequest)
         self.getFormData()
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().AUTHENTICATION):
@@ -107,7 +119,7 @@ class AuthenticationHelper(TagHelper):
         else:
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().AUTHENTICATION):
                 self.logUtil.putF("Role Is Not In Session", self, "isSessionOld()")
-        return self.isRarelyUsedSession()
+        return java_predicate(self, "isRarelyUsedSession")
     
 
     def isRarelyUsedSession(self) -> bool:
@@ -187,18 +199,18 @@ class AuthenticationHelper(TagHelper):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             if self.role is not None:
-                if self.isAuthenticated():
+                if java_predicate(self, "isAuthenticated"):
                     if self.sessionUserName is not None:
                         basicUserRole: BasicUserRole = self.role.getBasicUserRole()
                         basicUserRoleArray: list[object] = roles.toArray()
                         size: int = len(basicUserRoleArray)
                         for index in range(0, size):
                             mustBeOfRole: BasicUserRole = basicUserRoleArray[index]
-                            if basicUserRole.equals(mustBeOfRole):
-                                if basicUserRole.equals(UserRoleFactory.getInstance().CUSTOMER):
+                            if java_equals(basicUserRole, mustBeOfRole):
+                                if java_equals(basicUserRole, UserRoleFactory.getInstance().CUSTOMER):
                                     userEntityInterface: UserEntityInterface = UserEntityFactory.getInstance()
                                     userInterface: UserInterface = userEntityInterface.getUser(self.sessionUserName)
-                                    if not userInterface.isSessionValid():
+                                    if not (java_predicate(userInterface, "isSessionValid")):
                                         return False
                                 return True
                     return False
@@ -236,7 +248,7 @@ class AuthenticationHelper(TagHelper):
                 login = userEntityInterface.login(userName, password)
                 if ((login > GLOBALS2.LOGINSUCCESS) - (login < GLOBALS2.LOGINSUCCESS)) == 0:
                     userInterface: UserInterface = userEntityInterface.getUser(userName)
-                    if userInterface.isSessionValid():
+                    if java_predicate(userInterface, "isSessionValid"):
                         self.weblisketSession.setAttempts(int(0))
                         return True
                 self.nextAttempt()

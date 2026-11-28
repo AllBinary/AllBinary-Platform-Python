@@ -15,11 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.util.event.handler.BasicEventHandler import BasicEventHandler
 
 
+@java_inherited_overloads
 class AnimationEventHandler(BasicEventHandler):
     eventHandler: AnimationEventHandler = None
     _lock = threading.RLock()

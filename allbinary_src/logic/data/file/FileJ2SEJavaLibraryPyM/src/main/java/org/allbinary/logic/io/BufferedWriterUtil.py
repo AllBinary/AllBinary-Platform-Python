@@ -31,7 +31,7 @@ class BufferedWriterUtil:
         self.REMOVING_OLD: str = "Remove old for overwriting: "
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -87,14 +87,17 @@ class BufferedWriterUtil:
 
     def overwrite(self, *args):
         if len(args) == 2 and True and (args[0] is None or isinstance(args[0], str)) and (args[1] is None or isinstance(args[1], str)):
-            return self.overwrite_j2_1(*args)
+            return __class__.__dict__["overwrite_j2_1"].__get__(self, __class__)(*args)
         if len(args) == 2:
-            return self.overwrite_j2_2(*args)
-        return getattr(self, "overwrite_j" + str(len(args)))(*args)
+            return __class__.__dict__["overwrite_j2_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("overwrite_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().overwrite(*args)
     
 
     # throws Exception
     def write(self, abFile: AbFile, data: str) -> None:
+        from java.io.FileWriter import FileWriter
         from org.allbinary.logic.io.file.AbFile import AbFile
         from org.allbinary.logic.io.file.AbFileNativeUtil import AbFileNativeUtil
         fileOut: BufferedWriter = BufferedWriter(FileWriter(AbFileNativeUtil.get(abFile)))

@@ -29,6 +29,7 @@ class UserConfigurationInterfaceFactory:
     # Java overloaded method with the same parameter count: Python keeps the last definition
     @staticmethod
     def getInstance_j1_1(document: Document) -> UserConfigurationInterface:
+        from org.allbinary.business.user.modules.configuration.UserConfigurationData import UserConfigurationData
         from org.allbinary.business.user.modules.configuration.UserConfigurationView import UserConfigurationView
         from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
         from org.w3c.dom.Document import Document
@@ -41,6 +42,9 @@ class UserConfigurationInterfaceFactory:
     # Java overloaded method with the same parameter count: Python keeps the last definition
     @staticmethod
     def getInstance_j1_2(userRole: UserRole) -> UserConfigurationInterface:
+        from org.allbinary.business.user.modules.configuration.UserConfigurationData import UserConfigurationData
+        from org.allbinary.business.user.modules.configuration.UserConfigurationData import UserConfigurationData
+        from org.allbinary.business.user.modules.configuration.UserConfigurationData import UserConfigurationData
         from org.allbinary.business.user.role.UserRole import UserRole
         from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
         from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
@@ -63,7 +67,7 @@ class UserConfigurationInterfaceFactory:
 
     @staticmethod
     def getInstance(*args):
-        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
+        if len(args) == 1 and True and (args[0] is None or any(base.__name__ == "Document" for base in type(args[0]).__mro__)):
             return UserConfigurationInterfaceFactory.getInstance_j1_1(*args)
         if len(args) == 1:
             return UserConfigurationInterfaceFactory.getInstance_j1_2(*args)

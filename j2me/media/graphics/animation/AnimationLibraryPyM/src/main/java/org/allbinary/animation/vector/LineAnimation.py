@@ -15,13 +15,20 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.Animation import Animation
 from org.allbinary.graphics.color.ColorCompositeInterface import ColorCompositeInterface
 from org.allbinary.layer.PositionInterface import PositionInterface
 
 
+@java_inherited_overloads
 class LineAnimation(*java_bases(Animation, ColorCompositeInterface, PositionInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("newLine", None)
+        vars(self).setdefault("tempLine", None)
+        vars(self).setdefault("line", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.NullUtil import NullUtil
@@ -31,9 +38,10 @@ class LineAnimation(*java_bases(Animation, ColorCompositeInterface, PositionInte
     
 
     def __init__(self, basicColor: BasicColor) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.setBasicColorP(basicColor)
     
 
@@ -70,12 +78,12 @@ class LineAnimation(*java_bases(Animation, ColorCompositeInterface, PositionInte
 
     def getBasicColorP(self) -> BasicColor:
         from org.allbinary.graphics.color.BasicColor import BasicColor
-        return super().getBasicColorP()
+        return java_super_call(super(), "getBasicColorP")
     
 
     def setBasicColorP(self, basicColor: BasicColor) -> None:
         from org.allbinary.graphics.color.BasicColor import BasicColor
-        super().setBasicColorP(basicColor)
+        java_super_call(super(), "setBasicColorP", basicColor)
 # from javax.microedition.lcdui.Graphics import Graphics
 # from org.allbinary.graphics.color.BasicColor import BasicColor
 # from org.allbinary.logic.NullUtil import NullUtil

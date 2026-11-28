@@ -24,18 +24,17 @@ class BaseCircularPool:
     def _init_fields(self) -> None:
         from org.allbinary.logic.NullUtil import NullUtil
         from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
-        from jsinterop.annotations.JsProperty import JsProperty
         self.circularIndexUtil: CircularIndexUtil = CircularIndexUtil.NULL_CIRCULAR_INDEX_UTIL
         self.OBJECT_ARRAY: list[object] = NullUtil.getInstance().NULL_OBJECT_ARRAY
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
     def getNextInstance(self) -> object:
         with self._lock:
-            return self._getNextInstance_unlocked()
+            return __class__.__dict__["_getNextInstance_unlocked"].__get__(self, __class__)()
 
     def _getNextInstance_unlocked(self) -> object:
         from jsinterop.annotations.JsMethod import JsMethod

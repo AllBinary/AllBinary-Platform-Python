@@ -39,7 +39,7 @@ class ChoiceGroupImageFactory:
         self.imageArray: list[Image] = [self.imgMultiOff, self.imgMultiOn, self.imgRadioOff, self.imgRadioOn]
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

@@ -21,11 +21,11 @@ from org.allbinary.data.tables.TableMappingInterface import TableMappingInterfac
 class ContextConfigurationTableMapping(TableMappingInterface):
 
     def _init_fields(self) -> None:
-        self.contextConfigurationInterface: ContextConfigurationInterface = None
+        if "contextConfigurationInterface" not in vars(self): self.contextConfigurationInterface: ContextConfigurationInterface = None
     
 
     def __init__(self, contextConfigurationInterface: ContextConfigurationInterface) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.contextConfigurationInterface = contextConfigurationInterface
     
 
@@ -38,6 +38,7 @@ class ContextConfigurationTableMapping(TableMappingInterface):
 
     # throws Exception
     def getKey(self) -> object:
+        from org.allbinary.business.context.configuration.ContextConfigurationData import ContextConfigurationData
         return ContextConfigurationData.getInstance().NAME
     
 

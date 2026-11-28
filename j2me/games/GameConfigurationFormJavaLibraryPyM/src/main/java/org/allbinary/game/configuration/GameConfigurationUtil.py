@@ -32,7 +32,7 @@ class GameConfigurationUtil:
         self.COMPETITION_VALUE: int = 1
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -89,6 +89,7 @@ class GameConfigurationUtil:
     def updateChallange(self, gameOptionsForm: GameOptionsForm, gameConfiguration: GameConfiguration) -> None:
         from org.allbinary.game.configuration.GameConfigurationSingleton import GameConfigurationSingleton
         from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
+        from org.allbinary.game.configuration.GameConfigurationGauge import GameConfigurationGauge
         from javax.microedition.lcdui.Item import Item
         gameConfigurationSingleton: GameConfigurationSingleton = GameConfigurationSingleton.getInstance()
         gameConfigurationCentral: GameConfigurationCentral = GameConfigurationCentral.getInstance()
@@ -120,7 +121,7 @@ class GameConfigurationUtil:
         self.logUtil.putF(self.commonStrings.START, self, "updateCompetitionValue")
         gameConfigurationCentral: GameConfigurationCentral = GameConfigurationCentral.getInstance()
         self.COMPETITION_VALUE = int(gameConfigurationCentral.COLLIDE_DAMAGE.getValue()) + int(gameConfigurationCentral.ATTACK_CHALLENGE_LEVEL.getValue()) + int(gameConfigurationCentral.DURABILITY_CHALLENGE_LEVEL.getValue()) + int(gameConfigurationCentral.SPEED_CHALLENGE_LEVEL.getValue())
-        self.COMPETITION_VALUE = (self.COMPETITION_VALUE >> 2)
+        self.COMPETITION_VALUE = (int(self.COMPETITION_VALUE) >> (int(2) & 31))
     
 
     def getCompetitionValue(self) -> int:

@@ -15,17 +15,19 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.business.installer.InitDb import InitDb
 
 
 #Warning you must have sql root access
+@java_inherited_overloads
 class DynamicInitDb(InitDb):
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
         elif len(args) == 2:
-            self._constructor2(*args)
+            __class__._constructor2(self, *args)
     
 
     def _constructor1(self, abeClientInformation: AbeClientInformationInterface) -> None:

@@ -15,10 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.animation.transition.shake.ShakeAnimationListener import ShakeAnimationListener
 
 
+@java_inherited_overloads
 class NoShakeAnimationListener(ShakeAnimationListener):
     NO_SHAKE_ANIMATION_LISTENER: ShakeAnimationListener = None
 

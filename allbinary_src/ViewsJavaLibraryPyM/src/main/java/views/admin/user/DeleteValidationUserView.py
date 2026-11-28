@@ -15,20 +15,28 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.validate.ValidationComponentInterface import ValidationComponentInterface
 from views.admin.user.UserView import UserView
 
 
+@java_inherited_overloads
 class DeleteValidationUserView(*java_bases(UserView, ValidationComponentInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("userName", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.userName: str = None
+        if "userName" not in vars(self): self.userName: str = None
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        __class__._java_defaults(self)
         from java.util.HashMap import HashMap
         from org.allbinary.business.user.username.UserName import UserName
         from org.allbinary.logic.communication.http.request.RequestParams import RequestParams
@@ -36,7 +44,7 @@ class DeleteValidationUserView(*java_bases(UserView, ValidationComponentInterfac
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__(transformInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
         httpServletRequest: HttpServletRequest = self.getPageContext().getRequest()
         hashMap: HashMap = RequestParams(httpServletRequest).toHashMap()
         self.userName = UserName(hashMap).get()
@@ -98,7 +106,7 @@ class DeleteValidationUserView(*java_bases(UserView, ValidationComponentInterfac
     # throws Exception
     def getTransformInfoInterface(self) -> TransformInfoInterface:
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-        return super().getTransformInfoInterface()
+        return java_super_call(super(), "getTransformInfoInterface")
 # from java.util.HashMap import HashMap
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
 # from org.allbinary.business.user.username.UserName import UserName

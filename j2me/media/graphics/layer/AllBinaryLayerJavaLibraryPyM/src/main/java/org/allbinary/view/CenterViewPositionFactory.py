@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.view.CenterStaticViewPositionFactory import CenterStaticViewPositionFactory
 
 
+@java_inherited_overloads
 class CenterViewPositionFactory(CenterStaticViewPositionFactory):
 
     def __init__(self) -> None:

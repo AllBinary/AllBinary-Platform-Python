@@ -22,22 +22,21 @@ class PlayerQueue:
 
     def _init_fields(self) -> None:
         from org.allbinary.string.CommonStrings import CommonStrings
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.list_: BasicArrayList = BasicArrayListD()
-        self.max: int = None
+        if "max" not in vars(self): self.max: int = 0
     
 
     def __init__(self, max: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.max = max
     
 
     def add(self, sound: Sound) -> None:
         from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         try:
-            if not self.list_.contains(sound):
+            if not (self.list_.contains(sound)):
                 self.list_.add(sound)
         except Exception as e:
             PreLogUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.ADD)

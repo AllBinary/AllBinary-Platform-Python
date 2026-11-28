@@ -23,11 +23,10 @@ class KeyValueFactory:
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.StdUtil import StdUtil
-        from org.allbinary.util.ABHashtable import ABHashtable
         self.MAP: ABHashtable[object, object] = StdUtil.getInstance().createHashtable()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -36,7 +35,7 @@ class KeyValueFactory:
     
 
     def get(self, key: str) -> str:
-        if not self.MAP.containsKey(key):
+        if not (self.MAP.containsKey(key)):
             return key
         return self.MAP.get(key)
 # from org.allbinary.logic.StdUtil import StdUtil

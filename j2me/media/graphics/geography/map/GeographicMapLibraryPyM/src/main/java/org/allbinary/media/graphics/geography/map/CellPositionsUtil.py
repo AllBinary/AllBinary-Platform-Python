@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -22,13 +23,12 @@ class CellPositionsUtil:
     instance: CellPositionsUtil = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListS import BasicArrayListS
         self.reusableSingleThreadedSurroundingList: BasicArrayList = BasicArrayListS(8)
         self.surroundArray: list[list[int]] = [[-1, -1], [0, -1], [1, -1], [-1, 1], [0, 1], [1, 1], [1, 0], [-1, 0]]
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -61,7 +61,7 @@ class CellPositionsUtil:
             surroundingGeographicMapCellPositionList: BasicArrayList = self.getAllSurroundingAt(geographicMapInterface, layerGeographicMapCellPosition, self.reusableSingleThreadedSurroundingList)
             for index2 in range(surroundingGeographicMapCellPositionList.size() - 1, 0 - 1, -1):
                 geographicMapCellPosition: GeographicMapCellPosition = surroundingGeographicMapCellPositionList.get(index2)
-                if not reusableList.contains(geographicMapCellPosition) and not occupyList.contains(geographicMapCellPosition):
+                if not (reusableList.contains(geographicMapCellPosition)) and not (occupyList.contains(geographicMapCellPosition)):
                     reusableList.add(geographicMapCellPosition)
         return reusableList
     

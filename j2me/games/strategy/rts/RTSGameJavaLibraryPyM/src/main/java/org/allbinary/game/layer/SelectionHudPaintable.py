@@ -15,43 +15,57 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 from org.allbinary.graphics.paint.InitUpdatePaintable import InitUpdatePaintable
 
 
+@java_inherited_overloads
 class SelectionHudPaintable(*java_bases(InitUpdatePaintable, UpdateMyFontInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("y", 0)
+        vars(self).setdefault("primitiveLongUtil", None)
+        vars(self).setdefault("updateMyFontProcessor", None)
+        vars(self).setdefault("myFontProcessor", None)
+        vars(self).setdefault("x", 0)
+        vars(self).setdefault("textX", 0)
+        vars(self).setdefault("imageX", 0)
+        vars(self).setdefault("basicColor", None)
+        vars(self).setdefault("color", 0)
+        vars(self).setdefault("width", 0)
+        vars(self).setdefault("height", 0)
+        vars(self).setdefault("name", None)
+        vars(self).setdefault("animationInterface", None)
+        vars(self).setdefault("backgroundColor", 0)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.string.StringUtil import StringUtil
-        from org.allbinary.animation.Animation import Animation
         from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
-        from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
         from org.allbinary.input.motion.button.CommonButtons import CommonButtons
-        from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
         self.y: int = CommonButtons.getInstance().STANDARD_BUTTON_SIZE + 17
-        self.primitiveLongUtil: PrimitiveLongUtil = None
+        if "primitiveLongUtil" not in vars(self): self.primitiveLongUtil: PrimitiveLongUtil = None
         self.updateMyFontProcessor: MyFontProcessor = UpdateMyFontProcessor(self)
         self.myFontProcessor: MyFontProcessor = self.updateMyFontProcessor
-        self.x: int = 0
-        self.textX: int = 0
-        self.imageX: int = 0
+        if "x" not in vars(self): self.x: int = 0
+        if "textX" not in vars(self): self.textX: int = 0
+        if "imageX" not in vars(self): self.imageX: int = 0
         self.basicColor: BasicColor = BasicColorFactory.getInstance().BLACK
-        self.color: int = 0
-        self.width: int = 0
-        self.height: int = 0
+        if "color" not in vars(self): self.color: int = 0
+        if "width" not in vars(self): self.width: int = 0
+        if "height" not in vars(self): self.height: int = 0
         self.name: str = StringUtil.getInstance().EMPTY_STRING
         self.animationInterface: Animation = NullAnimationFactory.getFactoryInstance().getInstance(0)
         self.backgroundColor: int = int(BasicColorFactory.getInstance().GREY)
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.update()
         self.primitiveLongUtil = PrimitiveLongUtil.createPowerOfTen(10000)
     

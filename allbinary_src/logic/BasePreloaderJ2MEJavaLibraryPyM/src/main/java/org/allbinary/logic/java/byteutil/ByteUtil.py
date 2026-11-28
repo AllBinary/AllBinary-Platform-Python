@@ -48,7 +48,7 @@ class ByteUtil:
         size: int = len(array)
         index: int = 0
         while index < size:
-            bytes[index] = ((int(~array[index]) + 128) % 256 - 128)
+            bytes[index] = ((int(~(array[index])) + 128) % 256 - 128)
             index += 1
         return bytes
     

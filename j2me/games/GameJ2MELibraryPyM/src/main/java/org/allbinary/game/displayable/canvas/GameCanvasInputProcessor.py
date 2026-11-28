@@ -15,24 +15,34 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.input.InputProcessor import InputProcessor
 
 
+@java_inherited_overloads
 class GameCanvasInputProcessor(InputProcessor):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("allBinaryGameCanvas", None)
+        vars(self).setdefault("downGameKeyEventHandler", None)
+        vars(self).setdefault("upGameKeyEventHandler", None)
+        vars(self).setdefault("downKeyEventHandler", None)
+        vars(self).setdefault("smallIntegerSingletonFactory", None)
+        vars(self).setdefault("inputToGameKeyMapping", None)
+        vars(self).setdefault("NONE", None)
+        vars(self).setdefault("gameKeyEventFactory", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.input.GameKey import GameKey
         from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
         from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
         from org.allbinary.game.input.event.DownGameKeyEventHandler import DownGameKeyEventHandler
         from org.allbinary.game.input.event.DownKeyEventHandler import DownKeyEventHandler
         from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
         from org.allbinary.game.input.event.UpGameKeyEventHandler import UpGameKeyEventHandler
-        from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.allBinaryGameCanvas: AllBinaryGameCanvas = None
+        if "allBinaryGameCanvas" not in vars(self): self.allBinaryGameCanvas: AllBinaryGameCanvas = None
         self.downGameKeyEventHandler: DownGameKeyEventHandler = DownGameKeyEventHandler.getInstance()
         self.upGameKeyEventHandler: UpGameKeyEventHandler = UpGameKeyEventHandler.getInstance()
         self.downKeyEventHandler: DownKeyEventHandler = DownKeyEventHandler.getInstance()
@@ -43,8 +53,9 @@ class GameCanvasInputProcessor(InputProcessor):
     
 
     def __init__(self, allBinaryGameCanvas: AllBinaryGameCanvas) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.allBinaryGameCanvas = allBinaryGameCanvas
         self.inputToGameKeyMapping.init(self.allBinaryGameCanvas)
     

@@ -15,27 +15,33 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.util.event.handler.BasicEventHandler import BasicEventHandler
 
 
+@java_inherited_overloads
 class GameNotificationEventHandler(BasicEventHandler):
     instance: GameNotificationEventHandler = None
     _lock = threading.RLock()
+    def _java_defaults(self):
+        vars(self).setdefault("enabled", False)
 
     def _init_fields(self) -> None:
         self.enabled: bool = True
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def removeAllListeners(self) -> None:
         with self._lock:
-            return self._removeAllListeners_unlocked()
+            return __class__.__dict__["_removeAllListeners_unlocked"].__get__(self, __class__)()
 
     def _removeAllListeners_unlocked(self) -> None:
         from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
@@ -45,7 +51,7 @@ class GameNotificationEventHandler(BasicEventHandler):
         list_: BasicArrayList = self.eventListenerInterfaceList
         if list_.size() > 0:
             eventListenerInterface = list_.objectArray[0]
-        super().removeAllListeners()
+        java_super_call(super(), "removeAllListeners")
         if eventListenerInterface != NullEventListener.NULL_EVENT_LISTENER:
             self.addListenerInterface(eventListenerInterface)
     
@@ -59,7 +65,7 @@ class GameNotificationEventHandler(BasicEventHandler):
     def process(self, eventObject: AllBinaryEventObject, eventListenerInterface: EventListenerInterface) -> None:
         from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
         from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
-        if not self.enabled:
+        if not (self.enabled):
             return
         gameNotificationListenerInterface: GameNotificationListenerInterface = eventListenerInterface
         gameNotificationListenerInterface.onGameNotificationEvent(eventObject)

@@ -20,15 +20,14 @@ from __future__ import annotations
 class BasicColorArrayIndexer:
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
-        self.basicColorArray: list[BasicColor] = None
-        self.circularIndexUtil: CircularIndexUtil = None
+        if "basicColorArray" not in vars(self): self.basicColorArray: list[BasicColor] = None
+        if "circularIndexUtil" not in vars(self): self.circularIndexUtil: CircularIndexUtil = None
     
 
     def __init__(self, basicColorArray: list[BasicColor]) -> None:
         from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         from jsinterop.annotations.JsConstructor import JsConstructor
-        self._init_fields()
+        __class__._init_fields(self)
         self.basicColorArray = basicColorArray
         self.circularIndexUtil = CircularIndexUtil.createInstance(len(self.basicColorArray))
     

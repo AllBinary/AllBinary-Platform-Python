@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.input.ScrollMapGameInputProcessor import ScrollMapGameInputProcessor
 
 
+@java_inherited_overloads
 class ScrollMapDownGameInputProcessor(ScrollMapGameInputProcessor):
     
 

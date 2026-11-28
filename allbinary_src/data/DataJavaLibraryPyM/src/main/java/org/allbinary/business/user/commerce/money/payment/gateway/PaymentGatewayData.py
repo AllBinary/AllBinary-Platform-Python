@@ -53,11 +53,11 @@ class PaymentGatewayData:
     SPECIAL9: PaymentGatewayData = None
 
     def _init_fields(self) -> None:
-        self.key: str = None
+        if "key" not in vars(self): self.key: str = None
     
 
     def __init__(self, value: str) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.key = value
     
 

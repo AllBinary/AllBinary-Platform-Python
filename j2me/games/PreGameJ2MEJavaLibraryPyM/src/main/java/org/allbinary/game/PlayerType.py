@@ -21,12 +21,12 @@ class PlayerType:
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.string.StringUtil import StringUtil
-        self.id: int = None
+        if "id" not in vars(self): self.id: int = 0
         self.name: str = StringUtil.getInstance().EMPTY_STRING
     
 
     def __init__(self, name: str, value: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.name = name
         self.id = value
     

@@ -25,7 +25,7 @@ class LastFetchHighScoresFactory:
         self.highScoresArray: list[HighScores] = NoHighScoresFactory.getInstance().NO_HIGH_SCORES
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

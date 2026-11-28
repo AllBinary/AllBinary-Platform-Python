@@ -15,10 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_equals
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 # from javax.swing.filechooser.FileFilter import FileFilter
 
 
 #TWB - replace with file visitor version
+@java_inherited_overloads
 class ImageFileFilter(FileFilter):
 
     def __init__(self) -> None:
@@ -26,13 +30,14 @@ class ImageFileFilter(FileFilter):
     
 
     def accept(self, f: File) -> bool:
-        if f.isDirectory():
+        from java.io.File import File
+        if java_predicate(f, "isDirectory"):
             return True
         s: str = f.getName()
         i: int = s.rfind('.')
         if i > 0 and i < len(s) - 1:
             ext: str = s[i + 1:].lower()
-            if (ext == "jpg") or (ext == "jpeg"):
+            if java_equals(ext, "jpg") or java_equals(ext, "jpeg"):
                 return True
         return False
     

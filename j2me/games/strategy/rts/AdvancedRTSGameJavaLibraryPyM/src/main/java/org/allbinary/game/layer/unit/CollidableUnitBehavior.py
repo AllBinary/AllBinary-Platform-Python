@@ -15,11 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_new_inner
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.layer.SteeringVisitor import SteeringVisitor
 from org.allbinary.game.layer.CollidableRTSBehavior import CollidableRTSBehavior
 
 
+@java_inherited_overloads
 class CollidableUnitBehavior(CollidableRTSBehavior):
+    @java_inherited_overloads
     class SimpleSteeringVisitor(SteeringVisitor):
 
         def __init__(self) -> None:
@@ -37,7 +41,7 @@ class CollidableUnitBehavior(CollidableRTSBehavior):
                 ownerLayer: CollidableCompositeLayer = anyType
                 if self.getList().size() > 0:
                     allbinaryLayer: CollidableCompositeLayer = self.getList().get(0)
-                    clear: bool = self.steer(ownerLayer, allbinaryLayer)
+                    clear: bool = self._java_outer.steer(ownerLayer, allbinaryLayer)
                     if clear:
                         self.getList().clear()
                         return NullUtil.getInstance().NULL_OBJECT
@@ -47,16 +51,20 @@ class CollidableUnitBehavior(CollidableRTSBehavior):
                 commonStrings: CommonStrings = CommonStrings.getInstance()
                 logUtil.put(commonStrings.EXCEPTION, self, "visit", e)
                 return NullUtil.getInstance().NULL_OBJECT
+    def _java_defaults(self):
+        vars(self).setdefault("layerPartialCellPositionsUtil", None)
+        vars(self).setdefault("simpleSteeringVisitor", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.game.layer.geographic.map.LayerPartialCellPositionsUtil import LayerPartialCellPositionsUtil
         self.layerPartialCellPositionsUtil: LayerPartialCellPositionsUtil = LayerPartialCellPositionsUtil.getInstance()
-        self.simpleSteeringVisitor: SimpleSteeringVisitor = SimpleSteeringVisitor()
+        self.simpleSteeringVisitor: SimpleSteeringVisitor = java_new_inner(self, SimpleSteeringVisitor)
     
 
     def __init__(self, collidable: bool) -> None:
+        __class__._java_defaults(self)
         super().__init__(collidable)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -97,11 +105,11 @@ class CollidableUnitBehavior(CollidableRTSBehavior):
         from org.allbinary.util.BasicArrayList import BasicArrayList
         rtsLayer: AdvancedRTSGameLayer = collidableInterfaceCompositeInterface
         if rtsLayer.getType() == UnitLayer.getStaticType():
-            if not self.simpleSteeringVisitor.getList().contains(collidableInterfaceCompositeInterface):
+            if not (self.simpleSteeringVisitor.getList().contains(collidableInterfaceCompositeInterface)):
                 self.simpleSteeringVisitor.getList().add(collidableInterfaceCompositeInterface)
             ownerUnitLayer: UnitLayer = ownerLayer
             list_: BasicArrayList = ownerUnitLayer.getUnitWaypointBehavior().getSteeringVisitorList()
-            if not list_.contains(self.simpleSteeringVisitor):
+            if not (list_.contains(self.simpleSteeringVisitor)):
                 list_.add(self.simpleSteeringVisitor)
     
 
@@ -126,14 +134,14 @@ class CollidableUnitBehavior(CollidableRTSBehavior):
         if ownerLayer.getXP() < unitLayer.getXP() and ownerLayer.getX2() > unitLayer.getXP():
             diff: int = ownerLayer.getWidth() + 1
             self.layerPartialCellPositionsUtil.getAllDXY(basicGeographicMap, ownerLayer, -diff, 0, partialPositionList)
-            if not dropCellPositionHistory.anyCellPositionWithDrop(partialPositionList):
+            if not (dropCellPositionHistory.anyCellPositionWithDrop(partialPositionList)):
                 x: int = unitLayer.getXP() - diff
                 y: int = ownerLayer.getYP()
                 x = tiledLayerUtil.keepOnMapX(tiledLayer, x, ownerLayer.getWidth())
                 y = tiledLayerUtil.keepOnMapY(tiledLayer, y, ownerLayer.getHeight())
                 ownerLayer.setPosition(x, y, ownerLayer.getZP())
             self.layerPartialCellPositionsUtil.getAllDXY(basicGeographicMap, unitLayer, diff, 0, partialPositionList)
-            if not dropCellPositionHistory.anyCellPositionWithDrop(partialPositionList):
+            if not (dropCellPositionHistory.anyCellPositionWithDrop(partialPositionList)):
                 x: int = unitLayer.getXP() + diff
                 y: int = unitLayer.getYP()
                 x = tiledLayerUtil.keepOnMapX(tiledLayer, x, unitLayer.getWidth())
@@ -142,14 +150,14 @@ class CollidableUnitBehavior(CollidableRTSBehavior):
         if ownerLayer.getYP() < unitLayer.getYP() and ownerLayer.getY2() > unitLayer.getYP():
             diff: int = ownerLayer.getHeight() + 1
             self.layerPartialCellPositionsUtil.getAllDXY(basicGeographicMap, ownerLayer, 0, -diff, partialPositionList)
-            if not dropCellPositionHistory.anyCellPositionWithDrop(partialPositionList):
+            if not (dropCellPositionHistory.anyCellPositionWithDrop(partialPositionList)):
                 x: int = ownerLayer.getXP()
                 y: int = unitLayer.getYP() - diff
                 x = tiledLayerUtil.keepOnMapX(tiledLayer, x, ownerLayer.getWidth())
                 y = tiledLayerUtil.keepOnMapY(tiledLayer, y, ownerLayer.getHeight())
                 ownerLayer.setPosition(x, y, ownerLayer.getZP())
             self.layerPartialCellPositionsUtil.getAllDXY(basicGeographicMap, unitLayer, 0, diff, partialPositionList)
-            if not dropCellPositionHistory.anyCellPositionWithDrop(partialPositionList):
+            if not (dropCellPositionHistory.anyCellPositionWithDrop(partialPositionList)):
                 x: int = unitLayer.getXP()
                 y: int = unitLayer.getYP() + diff
                 x = tiledLayerUtil.keepOnMapX(tiledLayer, x, unitLayer.getWidth())

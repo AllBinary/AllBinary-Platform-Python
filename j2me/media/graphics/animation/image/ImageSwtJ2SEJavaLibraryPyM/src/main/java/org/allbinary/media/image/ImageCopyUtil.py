@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -48,11 +50,12 @@ class ImageCopyUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
     def createImageForRotation(self, originalImage: Image) -> Image:
+        from org.allbinary.media.image.SwtOpenGLESImageBridge import SwtOpenGLESImageBridge
         from javax.microedition.lcdui.Image import Image
         if self.features.isFeature(self.openGLFeatureFactory.OPENGL):
             image: Image = originalImage
@@ -64,12 +67,15 @@ class ImageCopyUtil:
 
     # throws Exception
     def createImage(self, originalImage: Image) -> Image:
+        from org.allbinary.media.image.SwtOpenGLESImageBridge import SwtOpenGLESImageBridge
+        from org.allbinary.media.image.SwtOpenGLESImageBridge import SwtOpenGLESImageBridge
+        from org.allbinary.media.image.SwtOpenGLESImageBridge import SwtOpenGLESImageBridge
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.image.opengles.OpenGLESImage import OpenGLESImage
         from org.microemu.app.ui.swt.SwtDeviceComponent import SwtDeviceComponent
         from org.microemu.device.swt.SwtImmutableImage import SwtImmutableImage
         from org.microemu.device.swt.SwtMutableImage import SwtMutableImage
-        if not self.features.isFeature(self.gameFeatureFactory.POST_IMAGE_LOADING_MODIFICATION):
+        if not (self.features.isFeature(self.gameFeatureFactory.POST_IMAGE_LOADING_MODIFICATION)):
             self.logUtil.putF(self.NO_COPY, self, self.commonStrings.CONSTRUCTOR)
             return originalImage
         originalImage2: Image = originalImage
@@ -78,7 +84,7 @@ class ImageCopyUtil:
                 openGLESImage: OpenGLESImage = SwtOpenGLESImageBridge.getOpenGLESImage(originalImage)
                 originalImage2 = SwtOpenGLESImageBridge.getBitmapImage(openGLESImage)
         image: Image = None
-        if originalImage2.isMutable():
+        if java_predicate(originalImage2, "isMutable"):
             originalMutableImage: SwtMutableImage = originalImage2
             image = SwtMutableImage(SwtDeviceComponent.createImage(originalMutableImage.image.getImageData()))
         else:
@@ -90,6 +96,10 @@ class ImageCopyUtil:
 
     # throws Exception
     def createImageWH(self, originalImage: Image, width: int, height: int, mutable: bool) -> Image:
+        from org.allbinary.media.image.SwtOpenGLESImageBridge import SwtOpenGLESImageBridge
+        from org.allbinary.media.image.SwtOpenGLESImageBridge import SwtOpenGLESImageBridge
+        from org.allbinary.media.image.SwtOpenGLESImageBridge import SwtOpenGLESImageBridge
+        from org.allbinary.media.image.SwtOpenGLESImageBridge import SwtOpenGLESImageBridge
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.image.opengles.OpenGLESImage import OpenGLESImage
         from org.eclipse.swt.graphics.ImageData import ImageData
@@ -99,7 +109,7 @@ class ImageCopyUtil:
         from org.microemu.device.swt.SwtImmutableImage import SwtImmutableImage
         from org.microemu.device.swt.SwtMutableImage import SwtMutableImage
         originalImage2: Image = originalImage
-        if not self.features.isFeature(self.gameFeatureFactory.POST_IMAGE_LOADING_MODIFICATION):
+        if not (self.features.isFeature(self.gameFeatureFactory.POST_IMAGE_LOADING_MODIFICATION)):
             self.logUtil.putF(self.NO_COPY, self, self.commonStrings.CONSTRUCTOR)
             return originalImage
         if self.features.isFeature(self.openGLFeatureFactory.OPENGL):
@@ -109,7 +119,7 @@ class ImageCopyUtil:
                 openGLESImage: OpenGLESImage = SwtOpenGLESImageBridge.getOpenGLESImage(originalImage)
                 originalImage2 = SwtOpenGLESImageBridge.getBitmapImage(openGLESImage)
         image: Image = None
-        if originalImage2.isMutable() and mutable:
+        if java_predicate(originalImage2, "isMutable") and mutable:
             originalMutableImage: SwtMutableImage = originalImage2
             if originalMutableImage.getImage() is not None:
                 imageData2: ImageData = originalMutableImage.image.getImageData()
@@ -135,6 +145,12 @@ class ImageCopyUtil:
 
     # throws Exception
     def createImage2(self, originalImage: Image, width: int, height: int, mutable: bool) -> Image:
+        from org.allbinary.media.image.SwtOpenGLESImageBridge import SwtOpenGLESImageBridge
+        from org.allbinary.media.image.SwtOpenGLESImageBridge import SwtOpenGLESImageBridge
+        from org.allbinary.media.image.SwtOpenGLESImageBridge import SwtOpenGLESImageBridge
+        from org.allbinary.media.image.SwtOpenGLESImageBridge import SwtOpenGLESImageBridge
+        from org.allbinary.media.image.SwtOpenGLESImageBridge import SwtOpenGLESImageBridge
+        from org.allbinary.media.image.SwtOpenGLESImageBridge import SwtOpenGLESImageBridge
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
         from org.allbinary.image.opengles.OpenGLESDeviceImageTranslate import OpenGLESDeviceImageTranslate
@@ -147,7 +163,7 @@ class ImageCopyUtil:
         from org.microemu.device.swt.SwtImmutableImage import SwtImmutableImage
         from org.microemu.device.swt.SwtMutableImage import SwtMutableImage
         originalImage2: Image = originalImage
-        if not self.features.isFeature(self.gameFeatureFactory.POST_IMAGE_LOADING_MODIFICATION):
+        if not (self.features.isFeature(self.gameFeatureFactory.POST_IMAGE_LOADING_MODIFICATION)):
             self.logUtil.putF(self.NO_COPY, self, self.commonStrings.CONSTRUCTOR)
             return originalImage
         image: Image = None
@@ -179,8 +195,11 @@ class ImageCopyUtil:
                 if image.getName().startsWith(self.INFORMATION):
                     openGLESImage.openGLESImageTranslate = OpenGLESDeviceImageTranslate()
                     openGLESDeviceImageTranslate: OpenGLESDeviceImageTranslate = openGLESImage.openGLESImageTranslate
-                    openGLESDeviceImageTranslate.translateX = displayInfoSingleton.getLastWidth() / 1.4 / openGLESImageProperties.scaleX
-                    openGLESDeviceImageTranslate.translateY = displayInfoSingleton.getLastHeight() / 4 / openGLESImageProperties.scaleY
+                    openGLESDeviceImageTranslate.translateX = java_divide(displayInfoSingleton.getLastWidth() / 1.4, openGLESImageProperties.scaleX)
+            
+                    openGLESDeviceImageTranslate.translateY = java_divide(java_divide(displayInfoSingleton.getLastHeight(), 4)
+            , openGLESImageProperties.scaleY)
+            
                     openGLESImageProperties.scaleX = openGLESImageProperties.scaleX * 0.25
                     openGLESImageProperties.scaleY = openGLESImageProperties.scaleY * 0.25
                 else:
@@ -189,7 +208,9 @@ class ImageCopyUtil:
                     if image.getName().startsWith(self.LEADERBOARD):
                         openGLESImage.openGLESImageTranslate = OpenGLESDeviceImageTranslate()
                         openGLESDeviceImageTranslate: OpenGLESDeviceImageTranslate = openGLESImage.openGLESImageTranslate
-                        openGLESDeviceImageTranslate.translateX = -displayInfoSingleton.getLastWidth() / 40 / openGLESImageProperties.scaleX
+                        openGLESDeviceImageTranslate.translateX = java_divide(java_divide(-displayInfoSingleton.getLastWidth(), 40)
+            , openGLESImageProperties.scaleX)
+            
                     if image.getName().startsWith(self.LEADERBOARD):
                         pass
                     else:
@@ -197,7 +218,7 @@ class ImageCopyUtil:
                         openGLESImageProperties.scaleY = 1.0
                 image = SwtOpenGLESImageBridge.asImage(openGLESImage)
         else:
-            if originalImage2.isMutable() and mutable:
+            if java_predicate(originalImage2, "isMutable") and mutable:
                 originalMutableImage: SwtMutableImage = originalImage2
                 if originalMutableImage.getImage() is not None:
                     imageData2: ImageData = originalMutableImage.image.getImageData()
@@ -223,7 +244,7 @@ class ImageCopyUtil:
         from org.eclipse.swt.graphics.ImageData import ImageData
         from org.microemu.device.swt.SwtImmutableImage import SwtImmutableImage
         from org.microemu.device.swt.SwtMutableImage import SwtMutableImage
-        if not self.features.isFeature(self.gameFeatureFactory.POST_IMAGE_LOADING_MODIFICATION):
+        if not (self.features.isFeature(self.gameFeatureFactory.POST_IMAGE_LOADING_MODIFICATION)):
             self.logUtil.putF(self.NO_COPY, self, self.commonStrings.CONSTRUCTOR)
             return originalImage
         newWidth: int = int((originalImage.getWidth() * canvasScale))
@@ -234,11 +255,13 @@ class ImageCopyUtil:
             if newHeight < newWidth:
                 newHeight = newWidth
         image: Image = self.createImageWH(originalImage, newWidth, newHeight, True)
-        if image.isMutable():
+        if java_predicate(image, "isMutable"):
             originalImageData: ImageData = (originalImage.getImage()).getImageData()
             mutableImage2: SwtMutableImage = image
-            halfWidthDelta: int = (newWidth - originalImage.getWidth()) / 2
-            halfHeightDelta: int = (newHeight - originalImage.getHeight()) / 2
+            halfWidthDelta: int = java_divide((newWidth - originalImage.getWidth()), 2)
+            
+            halfHeightDelta: int = java_divide((newHeight - originalImage.getHeight()), 2)
+            
             originalPixelArray: list[int] = [0] * (originalImage.getWidth() * originalImage.getHeight())
             newPixelArray: list[int] = [0] * (image.getWidth() * image.getHeight())
             width: int = originalImage.getWidth()
@@ -253,8 +276,10 @@ class ImageCopyUtil:
         else:
             originalImmutableImage: SwtImmutableImage = image
             originalImageData: ImageData = (originalImage.getImage()).getImageData()
-            halfWidthDelta: int = (newWidth - originalImage.getWidth()) / 2
-            halfHeightDelta: int = (newHeight - originalImage.getHeight()) / 2
+            halfWidthDelta: int = java_divide((newWidth - originalImage.getWidth()), 2)
+            
+            halfHeightDelta: int = java_divide((newHeight - originalImage.getHeight()), 2)
+            
             originalPixelArray: list[int] = [0] * (originalImage.getWidth() * originalImage.getHeight())
             newPixelArray: list[int] = [0] * (image.getWidth() * image.getHeight())
             width: int = originalImage.getWidth()

@@ -21,17 +21,16 @@ from org.allbinary.animation.AnimationInterfaceFactoryInterface import Animation
 class VectorRotationAnimationInterfaceFactory(AnimationInterfaceFactoryInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         from org.allbinary.logic.NullUtil import NullUtil
         self.currentPoints: list[list[list[int]]] = NullUtil.getInstance().NULL_INT_ARRAY_ARRAY_ARRAY
         self.basicColor: BasicColor = BasicColorFactory.getInstance().WHITE
-        self.animationBehaviorFactory: AnimationBehaviorFactory = None
+        if "animationBehaviorFactory" not in vars(self): self.animationBehaviorFactory: AnimationBehaviorFactory = None
     
 
     def __init__(self, currentPoints: list[list[list[int]]], basicColor: BasicColor, animationBehaviorFactory: AnimationBehaviorFactory) -> None:
         from org.allbinary.graphics.color.BasicColor import BasicColor
-        self._init_fields()
+        __class__._init_fields(self)
         self.currentPoints = currentPoints
         self.setBasicColorP(basicColor)
         self.animationBehaviorFactory = animationBehaviorFactory

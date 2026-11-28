@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 
@@ -74,6 +75,8 @@ class LoggingInitInfo:
 
     @staticmethod
     def _read_unlocked() -> None:
+        from org.allbinary.logic.communication.log.config.LogConfigsData import LogConfigsData
+        from org.allbinary.logic.communication.log.config.LogConfigData import LogConfigData
         from org.allbinary.logic.communication.log.config.LogConfig import LogConfig
         from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
         from org.allbinary.util.BasicArrayList import BasicArrayList
@@ -114,7 +117,7 @@ class LoggingInitInfo:
 
     @staticmethod
     def _updateIfNeeded_unlocked() -> None:
-        if not LoggingInitInfo.hasRead:
+        if not (LoggingInitInfo.hasRead):
             LoggingInitInfo.read()
             LoggingInitInfo.hasRead = True
             if LoggingInitInfo.logConfigInfoList is None:
@@ -158,7 +161,7 @@ class LoggingInitInfo:
         for index in range(0, size):
             logConfigInfo: LogConfig = LoggingInitInfo.logConfigInfoList.objectArray[index]
             logTypeVector: BasicArrayList = logConfigInfo.getTypeVector()
-            if logConfigInfo.isEnabled():
+            if java_predicate(logConfigInfo, "isEnabled"):
                 allLogTypeVector.addAllList(logTypeVector)
         return allLogTypeVector
     
@@ -174,7 +177,7 @@ class LoggingInitInfo:
         for index in range(0, size):
             logConfigInfo: LogConfig = LoggingInitInfo.logConfigInfoList.objectArray[index]
             logTypeVector: BasicArrayList = logConfigInfo.getTypeVector()
-            if logConfigInfo.isEnabled():
+            if java_predicate(logConfigInfo, "isEnabled"):
                 allLogTypeVector.addAllList(logTypeVector)
         return allLogTypeVector
     

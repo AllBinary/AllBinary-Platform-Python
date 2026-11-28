@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaMonitor import java_monitor, java_wait
 
 
 # Java interface

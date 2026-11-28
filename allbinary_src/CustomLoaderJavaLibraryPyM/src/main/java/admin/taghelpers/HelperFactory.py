@@ -25,7 +25,7 @@ class HelperFactory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws LicensingException
@@ -160,7 +160,7 @@ class HelperFactory:
 
     @staticmethod
     def getInstance(*args):
-        if len(args) == 5 and True and not isinstance(args[0], (str, list, int, float)) and (args[1] is None or isinstance(args[1], str)) and (args[2] is None or isinstance(args[2], str)) and not isinstance(args[3], (str, list, int, float)) and not isinstance(args[4], (str, list, int, float)):
+        if len(args) == 5 and True and (args[0] is None or any(base.__name__ == "AbeClientInformationInterface" for base in type(args[0]).__mro__)) and (args[1] is None or isinstance(args[1], str)) and (args[2] is None or isinstance(args[2], str)) and not isinstance(args[3], (str, list, int, float)) and (args[4] is None or any(base.__name__ == "HttpServletRequest" for base in type(args[4]).__mro__)):
             return HelperFactory.getInstance_j5_1(*args)
         if len(args) == 5:
             return HelperFactory.getInstance_j5_2(*args)

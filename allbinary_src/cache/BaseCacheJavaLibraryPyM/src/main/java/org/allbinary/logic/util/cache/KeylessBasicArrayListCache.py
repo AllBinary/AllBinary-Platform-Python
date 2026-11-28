@@ -15,10 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.util.cache.IndexedBasicArrayListCache import IndexedBasicArrayListCache
 
 
+@java_inherited_overloads
 class KeylessBasicArrayListCache(IndexedBasicArrayListCache):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("basicArrayListUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -28,8 +34,9 @@ class KeylessBasicArrayListCache(IndexedBasicArrayListCache):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def get(self) -> BasicArrayList:
@@ -46,7 +53,7 @@ class KeylessBasicArrayListCache(IndexedBasicArrayListCache):
 
     def clear(self) -> None:
         from org.allbinary.util.BasicArrayList import BasicArrayList
-        super().clear()
+        java_super_call(super(), "clear")
         basicArrayList: BasicArrayList = None
         for index in range(self.list_.size() - 1, 0 - 1, -1):
             basicArrayList = (self.list_.objectArray[index])

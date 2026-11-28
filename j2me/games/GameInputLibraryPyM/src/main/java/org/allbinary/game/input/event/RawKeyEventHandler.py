@@ -25,9 +25,8 @@ class RawKeyEventHandler:
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.eventListenerInterfaceList: BasicArrayList = None
+        if "eventListenerInterfaceList" not in vars(self): self.eventListenerInterfaceList: BasicArrayList = None
     
 
     @staticmethod
@@ -37,7 +36,7 @@ class RawKeyEventHandler:
 
     def __init__(self) -> None:
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
-        self._init_fields()
+        __class__._init_fields(self)
         self.eventListenerInterfaceList = BasicArrayListD()
     
 
@@ -56,12 +55,12 @@ class RawKeyEventHandler:
     
 
     def addListenerSingleThreaded(self, eventListenerInterface: RawKeyEventListener) -> None:
-        if not self.eventListenerInterfaceList.contains(eventListenerInterface):
+        if not (self.eventListenerInterfaceList.contains(eventListenerInterface)):
             self.eventListenerInterfaceList.add(eventListenerInterface)
     
 
     def addListener(self, eventListenerInterface: RawKeyEventListener) -> None:
-        if not self.eventListenerInterfaceList.contains(eventListenerInterface):
+        if not (self.eventListenerInterfaceList.contains(eventListenerInterface)):
             self.eventListenerInterfaceList.add(eventListenerInterface)
     
 

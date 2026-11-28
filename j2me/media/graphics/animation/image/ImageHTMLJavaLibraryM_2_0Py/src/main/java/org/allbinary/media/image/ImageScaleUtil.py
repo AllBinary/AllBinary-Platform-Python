@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -32,7 +34,7 @@ class ImageScaleUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -68,9 +70,9 @@ class ImageScaleUtil:
         from playn.core.CoreImage import CoreImage
         from playn.core.ImageImpl import ImageImpl
         image: Image = ImageCreationUtil.getInstance().createImageWH(int((originalImage.getWidth() * scaleX)), int((originalImage.getHeight() * scaleY)))
-        if image.isMutable():
+        if java_predicate(image, "isMutable"):
             originalPlayNImage: CoreImage = None
-            if originalImage.isMutable():
+            if java_predicate(originalImage, "isMutable"):
                 originalHTMLImage: PlaynMutableImage = originalImage
                 originalPlayNImage = originalHTMLImage.getImage()
             else:

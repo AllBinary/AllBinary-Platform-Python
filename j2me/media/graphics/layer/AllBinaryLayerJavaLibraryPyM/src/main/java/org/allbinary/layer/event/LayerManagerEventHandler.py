@@ -15,17 +15,23 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.util.event.handler.BasicEventHandler import BasicEventHandler
 
 
+@java_inherited_overloads
 class LayerManagerEventHandler(BasicEventHandler):
     instance: LayerManagerEventHandler = None
     _lock = threading.RLock()
+    def _java_defaults(self):
+        vars(self).setdefault("list_", None)
+        vars(self).setdefault("CREATE", None)
+        vars(self).setdefault("DELETE", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.list_: BasicArrayList = BasicArrayListD()
         self.CREATE: str = "Create"
@@ -38,24 +44,25 @@ class LayerManagerEventHandler(BasicEventHandler):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def addListener(self, layerManagerEventListener: LayerManagerEventListener) -> None:
-        if not self.list_.contains(layerManagerEventListener):
+        if not (self.list_.contains(layerManagerEventListener)):
             self.list_.add(layerManagerEventListener)
     
 
     def removeAllListeners(self) -> None:
         self.list_.clear()
-        super().removeAllListeners()
+        java_super_call(super(), "removeAllListeners")
     
 
     def removeListener(self, eventListenerInterface: EventListenerInterface) -> None:
         from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         self.list_.remove(eventListenerInterface)
-        super().removeListener(eventListenerInterface)
+        java_super_call(super(), "removeListener", eventListenerInterface)
     
 
     # throws Exception
@@ -69,13 +76,13 @@ class LayerManagerEventHandler(BasicEventHandler):
                 layerManagerEventListener.onCreateLayerManagerEvent(eventObject)
             except Exception as e:
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, EventStrings.getInstance().FIRE_EVENT, e)
-        super().fireEvent(eventObject)
+        java_super_call(super(), "fireEvent", eventObject)
     
 
     # throws Exception
     def fireDeleteEvent(self, eventObject: AllBinaryEventObject) -> None:
         with self._lock:
-            return self._fireDeleteEvent_unlocked(eventObject)
+            return __class__.__dict__["_fireDeleteEvent_unlocked"].__get__(self, __class__)(eventObject)
 
     def _fireDeleteEvent_unlocked(self, eventObject: AllBinaryEventObject) -> None:
         from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject

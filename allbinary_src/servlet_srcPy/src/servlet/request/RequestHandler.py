@@ -15,23 +15,29 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from servlet.request.HttpServlet import HttpServlet
 
 
+@java_inherited_overloads
 class RequestHandler(HttpServlet):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws ServletException
     def init(self, config: ServletConfig) -> None:
-        super().init(config)
+        java_super_call(super(), "init", config)
     
 
     def destroy(self) -> None:

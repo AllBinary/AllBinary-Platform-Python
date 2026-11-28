@@ -35,7 +35,7 @@ class SystemHardwareFactory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getInstance_j1(self, operatingSystemInterface: GenericOperatingSystem) -> HardwareInterface:
@@ -50,15 +50,19 @@ class SystemHardwareFactory:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.CONSTRUCTOR, e)
         return self.hardwareInterface
 
-    def getInstance(self, *args):
-        return getattr(self, "getInstance_j" + str(len(args)))(*args)
+    def getInstance(self=None, *args):
+        if self is None and not args: return __class__.getInstance_j0()
+        implementation = __class__.__dict__.get("getInstance_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getInstance(*args)
     
 
     @staticmethod
     def static_toString() -> str:
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.logic.string.StringUtil import StringUtil
-        systemHardwareFactory: SystemHardwareFactory = SystemHardwareFactory.getInstance()
+        systemHardwareFactory: SystemHardwareFactory = SystemHardwareFactory.getInstance_j0()
+            
         osBuffer: StringMaker = StringMaker()
         osBuffer.append("Hardware Info: \n")
         if systemHardwareFactory.hardwareInterface is not None:

@@ -23,11 +23,11 @@ class TimeDelayHelper:
     def _init_fields(self) -> None:
         self.startTime: int = -1
         self.elapsedTimeAtPause: int = -9223372036854775808
-        self.delay: int = None
+        if "delay" not in vars(self): self.delay: int = 0
     
 
     def __init__(self, delay: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.delay = delay
         self.setStartTimeTNT()
     

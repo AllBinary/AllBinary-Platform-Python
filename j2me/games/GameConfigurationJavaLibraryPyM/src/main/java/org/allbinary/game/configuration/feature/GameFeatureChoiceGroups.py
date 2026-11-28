@@ -24,12 +24,11 @@ class GameFeatureChoiceGroups:
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.StdUtil import StdUtil
-        from org.allbinary.util.ABHashtable import ABHashtable
         self.hashtable: ABHashtable[object, object] = StdUtil.getInstance().createHashtable()
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

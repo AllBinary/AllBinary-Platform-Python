@@ -15,23 +15,27 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.IndexedAnimation import IndexedAnimation
 from org.allbinary.graphics.color.ColorCompositeInterface import ColorCompositeInterface
 
 
+@java_inherited_overloads
 class SpriteIndexedAnimation(*java_bases(IndexedAnimation, ColorCompositeInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("sprite", None)
+        vars(self).setdefault("image", None)
+        vars(self).setdefault("basicColorArray", None)
 
     def _init_fields(self) -> None:
-        from javax.microedition.lcdui.Image import Image
-        from javax.microedition.lcdui.game.Sprite import Sprite
-        from org.allbinary.graphics.color.BasicColor import BasicColor
-        self.sprite: Sprite = None
-        self.image: Image = None
-        self.basicColorArray: list[BasicColor] = None
+        if "sprite" not in vars(self): self.sprite: Sprite = None
+        if "image" not in vars(self): self.image: Image = None
+        if "basicColorArray" not in vars(self): self.basicColorArray: list[BasicColor] = None
     
 
     def __init__(self, sprite: Sprite, image: Image, basicColorArray: list[BasicColor], animationBehavior: AnimationBehavior) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.Image import Image
         from javax.microedition.lcdui.game.Sprite import Sprite
         from org.allbinary.animation.AnimationBehavior import AnimationBehavior
@@ -39,7 +43,7 @@ class SpriteIndexedAnimation(*java_bases(IndexedAnimation, ColorCompositeInterfa
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.string.CommonLabels import CommonLabels
         super().__init__(animationBehavior)
-        self._init_fields()
+        __class__._init_fields(self)
         self.sprite = sprite
         self.image = image
         self.basicColorArray = basicColorArray

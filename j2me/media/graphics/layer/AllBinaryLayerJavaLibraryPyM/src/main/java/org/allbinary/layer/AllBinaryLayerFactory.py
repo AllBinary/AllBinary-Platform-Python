@@ -21,13 +21,12 @@ from org.allbinary.layer.AllBinaryLayerFactoryInterface import AllBinaryLayerFac
 class AllBinaryLayerFactory(AllBinaryLayerFactoryInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.Rectangle import Rectangle
-        self.rectangle: Rectangle = None
+        if "rectangle" not in vars(self): self.rectangle: Rectangle = None
     
 
     def __init__(self, rectangle: Rectangle) -> None:
         from org.allbinary.graphics.Rectangle import Rectangle
-        self._init_fields()
+        __class__._init_fields(self)
         self.rectangle = rectangle
     
 

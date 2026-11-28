@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 import datetime
 from java.lang.JavaRuntimeStatic import lazy_static
 
@@ -15,7 +16,7 @@ class TimeTypeUtil:
         self.DAY: str = "Day"
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -34,7 +35,7 @@ class TimeTypeUtil:
     
 
     def getNightOrDay_j0(self) -> str:
-        return (self.NIGHT if self.isNight() else self.DAY)
+        return (self.NIGHT if java_predicate(self, "isNight") else self.DAY)
     
 
     def getHourOfDay_j1(self, timeInMillis: int) -> int:
@@ -43,7 +44,9 @@ class TimeTypeUtil:
         return calendar.get(Calendar.HOUR_OF_DAY)
 
     def getHourOfDay(self, *args):
-        return getattr(self, "getHourOfDay_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("getHourOfDay_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getHourOfDay(*args)
     
 
     def isNight_j1(self, timeInMillis: int) -> bool:
@@ -51,14 +54,18 @@ class TimeTypeUtil:
         return hoursOfDay < 6 or hoursOfDay > 18
 
     def isNight(self, *args):
-        return getattr(self, "isNight_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("isNight_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().isNight(*args)
     
 
     def getNightOrDay_j1(self, timeInMillis: int) -> str:
         return (self.NIGHT if self.isNight(timeInMillis) else self.DAY)
 
     def getNightOrDay(self, *args):
-        return getattr(self, "getNightOrDay_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("getNightOrDay_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getNightOrDay(*args)
 # from java.util.Calendar import Calendar
 # from java.util.TimeZone import TimeZone
 

@@ -15,27 +15,37 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from admin.taghelpers.TagHelper import TagHelper
 
 
+@java_inherited_overloads
 class OrderHistoryRequestHelper(TagHelper):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("abeClientInformation", None)
+        vars(self).setdefault("request", None)
+        vars(self).setdefault("id", None)
+        vars(self).setdefault("groupId", None)
+        vars(self).setdefault("status", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.abeClientInformation: AbeClientInformationInterface = ServiceClientInformationInterfaceFactory.getInstance()
-        self.request: HttpServletRequest = None
-        self.id: str = None
-        self.groupId: str = None
-        self.status: str = None
+        if "request" not in vars(self): self.request: HttpServletRequest = None
+        if "id" not in vars(self): self.id: str = None
+        if "groupId" not in vars(self): self.groupId: str = None
+        if "status" not in vars(self): self.status: str = None
     
 
     def __init__(self, hashMap: HashMap, pageContext: PageContext) -> None:
+        __class__._java_defaults(self)
         from java.util.HashMap import HashMap
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.request = pageContext.getRequest()
         self.getFormData()
     
@@ -97,7 +107,9 @@ class OrderHistoryRequestHelper(TagHelper):
             return error
 
     def setOrderStatus(self, *args):
-        return getattr(self, "setOrderStatus_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("setOrderStatus_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().setOrderStatus(*args)
 # from java.util.HashMap import HashMap
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
 # from javax.servlet.jsp.PageContext import PageContext

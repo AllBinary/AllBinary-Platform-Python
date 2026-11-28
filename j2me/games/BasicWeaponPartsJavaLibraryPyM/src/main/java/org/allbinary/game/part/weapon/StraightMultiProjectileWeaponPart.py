@@ -15,16 +15,22 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_divide
 from org.allbinary.game.part.weapon.BasicWeaponPart import BasicWeaponPart
 
 
+@java_inherited_overloads
 class StraightMultiProjectileWeaponPart(BasicWeaponPart):
+    def _java_defaults(self):
+        vars(self).setdefault("weaponLayerCircularStaticPool", None)
+        vars(self).setdefault("total", 0)
+        vars(self).setdefault("noDecimalTrigTable", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.layer.weapon.WeaponLayerCircularPool import WeaponLayerCircularPool
         from org.allbinary.math.NoDecimalTrigTable import NoDecimalTrigTable
-        self.weaponLayerCircularStaticPool: WeaponLayerCircularPool = None
-        self.total: int = None
+        if "weaponLayerCircularStaticPool" not in vars(self): self.weaponLayerCircularStaticPool: WeaponLayerCircularPool = None
+        if "total" not in vars(self): self.total: int = 0
         self.noDecimalTrigTable: NoDecimalTrigTable = NoDecimalTrigTable.getInstance()
     
 
@@ -40,6 +46,7 @@ class StraightMultiProjectileWeaponPart(BasicWeaponPart):
     
 
     def __init__(self, animationInterface: Animation, sourceLayerInterface: AllBinaryLayer, weaponLayerCircularStaticPool: WeaponLayerCircularPool, total: int, weaponProperties: WeaponProperties, scoreableInterface: ScoreableInterface, relativeRelationship: RelativeRelationship) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.animation.Animation import Animation
         from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
         from org.allbinary.game.layer.weapon.WeaponLayerCircularPool import WeaponLayerCircularPool
@@ -47,7 +54,7 @@ class StraightMultiProjectileWeaponPart(BasicWeaponPart):
         from org.allbinary.graphics.RelativeRelationship import RelativeRelationship
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         super().__init__(animationInterface, sourceLayerInterface, weaponProperties, scoreableInterface, relativeRelationship)
-        self._init_fields()
+        __class__._init_fields(self)
         self.total = total
         self.weaponLayerCircularStaticPool = weaponLayerCircularStaticPool
     
@@ -60,8 +67,9 @@ class StraightMultiProjectileWeaponPart(BasicWeaponPart):
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         sourceLayerInterface: AllBinaryLayer = self.getOwnerLayerInterface()
-        reducedWidth: int = (sourceLayerInterface.getWidth() * 8 / 10)
-        halfWidth: int = (reducedWidth >> 1)
+        reducedWidth: int = (java_divide(sourceLayerInterface.getWidth() * 8, 10)
+            )
+        halfWidth: int = (int(reducedWidth) >> (int(1) & 31))
         x: int = self.relativeRelationship.getX()
         y: int = self.relativeRelationship.getY()
         sine: int = 0
@@ -73,9 +81,11 @@ class StraightMultiProjectileWeaponPart(BasicWeaponPart):
         next: int = -halfWidth
         for index in range(0, self.total):
             sine = int((next * self.noDecimalTrigTable.sin(angle)))
-            beamX = int((sine / self.noDecimalTrigTable.SCALE))
+            beamX = int((java_divide(sine, self.noDecimalTrigTable.SCALE)
+            ))
             cosine = int((next * self.noDecimalTrigTable.cos(angle)))
-            beamY = -int((cosine / self.noDecimalTrigTable.SCALE))
+            beamY = -int((java_divide(cosine, self.noDecimalTrigTable.SCALE)
+            ))
             weaponLayer = self.weaponLayerCircularStaticPool.getInstanceWeaponLayer(sourceLayerInterface, x + beamX, y + beamY, 0, angle, otherAngle, weaponProperties, scoreableInterface)
             allbinaryLayerManager.append(weaponLayer)
             next += increment

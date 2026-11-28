@@ -25,7 +25,7 @@ class PlatformRecordIdUtil:
         self.PLATFORM_SHORT_NAME: str = "AND"
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

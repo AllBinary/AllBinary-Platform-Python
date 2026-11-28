@@ -35,7 +35,7 @@ class VectorExplosionGenerator:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -60,8 +60,11 @@ class VectorExplosionGenerator:
         newPoints: list[list[list[int]]] = self.vectorAnimationUtil.toAnimationArrayFromListOfPointListWithPointsPerFrame(pointsBasicArrayList, tempBasicArrayList.size())
         return newPoints
 
-    def getInstance(self, *args):
-        return getattr(self, "getInstance_j" + str(len(args)))(*args)
+    def getInstance(self=None, *args):
+        if self is None and not args: return __class__.getInstance_j0()
+        implementation = __class__.__dict__.get("getInstance_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getInstance(*args)
     
 
     # throws Exception
@@ -79,7 +82,7 @@ class VectorExplosionGenerator:
                 pointBasicArrayList = self.createListFromPoints(tempBasicArrayList, points, howMuch, type_)
                 pointsBasicArrayList.add(pointBasicArrayList)
                 frameIndex += 1
-            if not startFrame:
+            if not (startFrame):
                 pointsBasicArrayList.removeAt(0)
             return pointsBasicArrayList
         except Exception as e:

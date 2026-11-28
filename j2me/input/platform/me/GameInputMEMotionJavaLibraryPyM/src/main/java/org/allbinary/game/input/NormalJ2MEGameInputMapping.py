@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.input.J2MEGameInputMapping import J2MEGameInputMapping
 
 
+@java_inherited_overloads
 class NormalJ2MEGameInputMapping(J2MEGameInputMapping):
 
     def __init__(self) -> None:

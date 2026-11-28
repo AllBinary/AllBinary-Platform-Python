@@ -21,11 +21,11 @@ from org.allbinary.data.tables.TableMappingInterface import TableMappingInterfac
 class UserEmailEventsConfigurationMapping(TableMappingInterface):
 
     def _init_fields(self) -> None:
-        self.userEmailEventsConfigurationInterface: UserEmailEventsConfigurationInterface = None
+        if "userEmailEventsConfigurationInterface" not in vars(self): self.userEmailEventsConfigurationInterface: UserEmailEventsConfigurationInterface = None
     
 
     def __init__(self, userEmailEventsConfigurationInterface: UserEmailEventsConfigurationInterface) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.userEmailEventsConfigurationInterface = userEmailEventsConfigurationInterface
     
 
@@ -38,6 +38,7 @@ class UserEmailEventsConfigurationMapping(TableMappingInterface):
 
     # throws Exception
     def getKey(self) -> object:
+        from org.allbinary.logic.communication.smtp.configuration.user.event.UserEmailEventsConfigurationData import UserEmailEventsConfigurationData
         return UserEmailEventsConfigurationData.NAME
     
 

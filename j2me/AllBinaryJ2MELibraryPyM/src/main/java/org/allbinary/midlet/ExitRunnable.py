@@ -20,19 +20,18 @@ from __future__ import annotations
 class ExitRunnable(object):
 
     def _init_fields(self) -> None:
-        from org.allbinary.canvas.Processor import Processor
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.midlet: AllBinaryMidlet = None
-        self.processor: Processor = None
-        self.isProgress: bool = None
+        if "midlet" not in vars(self): self.midlet: AllBinaryMidlet = None
+        if "processor" not in vars(self): self.processor: Processor = None
+        if "isProgress" not in vars(self): self.isProgress: bool = False
     
 
     def __init__(self, midlet: AllBinaryMidlet, processor: Processor, isProgress: bool) -> None:
         from org.allbinary.canvas.Processor import Processor
-        self._init_fields()
+        __class__._init_fields(self)
         self.midlet = midlet
         self.isProgress = isProgress
         self.processor = processor

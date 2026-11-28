@@ -26,7 +26,7 @@ class HighScoresHelperBase(HighScoresHelperBaseInterface):
         self.highScoresArrayP: list[HighScores] = LastFetchHighScoresFactory.getInstance().highScoresArray
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def setHighScoresArray(self, highScoresArrayP: list[HighScores]) -> None:

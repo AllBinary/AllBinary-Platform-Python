@@ -15,26 +15,32 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 # from java.awt.Panel import Panel
 
 
+@java_inherited_overloads
 class RemoveActionScriptItemJPanel(Panel):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("genericProfileActionJPanel", None)
+        vars(self).setdefault("profileActionScriptConditionInterface", None)
+        vars(self).setdefault("removeJButton", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.input.automation.actions.script.condition.ProfileActionScriptConditionInterface import ProfileActionScriptConditionInterface
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.GenericProfileActionJPanel import GenericProfileActionJPanel
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.genericProfileActionJPanel: GenericProfileActionJPanel = None
-        self.profileActionScriptConditionInterface: ProfileActionScriptConditionInterface = None
-        self.removeJButton: JButton = None
+        if "genericProfileActionJPanel" not in vars(self): self.genericProfileActionJPanel: GenericProfileActionJPanel = None
+        if "profileActionScriptConditionInterface" not in vars(self): self.profileActionScriptConditionInterface: ProfileActionScriptConditionInterface = None
+        if "removeJButton" not in vars(self): self.removeJButton: JButton = None
     
 
     def __init__(self, genericProfileActionJPanel: GenericProfileActionJPanel, profileActionScriptConditionInterface: ProfileActionScriptConditionInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.input.automation.actions.script.condition.ProfileActionScriptConditionInterface import ProfileActionScriptConditionInterface
         from org.allbinary.input.automation.module.generic.configuration.profile.actions.GenericProfileActionJPanel import GenericProfileActionJPanel
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.initComponents()
         self.genericProfileActionJPanel = genericProfileActionJPanel
         self.profileActionScriptConditionInterface = profileActionScriptConditionInterface
@@ -44,12 +50,15 @@ class RemoveActionScriptItemJPanel(Panel):
         self.removeJButton = JButton()
         self.setLayout(GridLayout())
         self.removeJButton.setText("Remove")
-        self.removeJButton.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.removeJButtonActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN66292(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "removeJButtonActionPerformed") else _java_listener_owner).removeJButtonActionPerformed(evt)
+        self.removeJButton.addActionListener(_JavaListenerN66292()
+            )
         self.add(self.removeJButton)
     
 

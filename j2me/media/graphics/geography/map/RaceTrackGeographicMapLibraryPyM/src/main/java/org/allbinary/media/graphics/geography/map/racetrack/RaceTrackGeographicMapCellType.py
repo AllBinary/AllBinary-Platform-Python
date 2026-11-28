@@ -15,19 +15,25 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
 
 
+@java_inherited_overloads
 class RaceTrackGeographicMapCellType(GeographicMapCellType):
+    def _java_defaults(self):
+        vars(self).setdefault("name", None)
+        vars(self).setdefault("travelCost", 0)
 
     def _init_fields(self) -> None:
-        self.name: str = None
-        self.travelCost: int = None
+        if "name" not in vars(self): self.name: str = None
+        if "travelCost" not in vars(self): self.travelCost: int = 0
     
 
     def __init__(self, name: str, type_: int, travelCost: int, reset: int) -> None:
+        __class__._java_defaults(self)
         super().__init__(type_, reset)
-        self._init_fields()
+        __class__._init_fields(self)
         self.name = name
         self.travelCost = travelCost
     

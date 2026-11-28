@@ -15,10 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.android.input.motion.MotionEventProcessor import MotionEventProcessor
 
 
+@java_inherited_overloads
 class NoMotionEventProcessor(MotionEventProcessor):
     SINGLETON: MotionEventProcessor = None
 

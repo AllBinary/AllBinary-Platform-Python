@@ -15,22 +15,29 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.graphics.displayable.screen.CommandForm import CommandForm
 
 
+@java_inherited_overloads
 class LoadGameForm(CommandForm):
+    def _java_defaults(self):
+        vars(self).setdefault("meUtil", None)
+        vars(self).setdefault("areChoices", False)
 
     def _init_fields(self) -> None:
         from org.allbinary.MIDPUtil import MIDPUtil
         self.meUtil: MIDPUtil = MIDPUtil.getInstance()
-        self.areChoices: bool = False
+        if "areChoices" not in vars(self): self.areChoices: bool = False
     
 
     def __init__(self, commandListener: CommandListener, title: str, backgrounBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.CommandListener import CommandListener
         from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(commandListener, title, backgrounBasicColor, foregroundBasicColor)
-        self._init_fields()
+        __class__._init_fields(self)
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
         self.update()
         self.initCommands(commandListener)
@@ -63,7 +70,7 @@ class LoadGameForm(CommandForm):
         else:
             self.meUtil.appendItem(self, StringItem("No Saved Games", StringUtil.getInstance().EMPTY_STRING, Item.PLAIN))
             self.areChoices = False
-        super().update()
+        java_super_call(super(), "update")
     
 
     def add(self, list_: BasicArrayList, name: str, option: int) -> None:

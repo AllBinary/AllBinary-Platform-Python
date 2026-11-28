@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -26,7 +27,7 @@ class ImageCompleteUtil:
         self.COMPLETE: str = "Image loading complete for: "
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -49,12 +50,12 @@ class ImageCompleteUtil:
         from org.microemu.device.playn.PlaynImage import PlaynImage
         playnImage: PlaynImage = image
         playnCoreImage: Image = playnImage.getImage()
-        if not playnCoreImage.isReady() or playnCoreImage.width() + playnCoreImage.height() <= 0:
+        if not (java_predicate(playnCoreImage, "isReady")) or playnCoreImage.width() + playnCoreImage.height() <= 0:
             self.handleTimeout(name)
             return False
-        if not image.isReady():
+        if not (java_predicate(image, "isReady")):
             image.init(image.getImage())
-            if not image.isReady():
+            if not (java_predicate(image, "isReady")):
                 PreLogUtil.put("Waiting for Not Ready Image: " + image.getName(), self, self.ISREADY)
         commonStrings: CommonStrings = CommonStrings.getInstance()
         PreLogUtil.put(self.COMPLETE + image.getName(), self, commonStrings.SUCCESS)

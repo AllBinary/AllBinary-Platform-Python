@@ -20,20 +20,20 @@ from __future__ import annotations
 class ItemView:
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
-        self.itemInterface: OrderItemInterface = None
-        self.vector: BasicArrayList = None
+        if "itemInterface" not in vars(self): self.itemInterface: OrderItemInterface = None
+        if "vector" not in vars(self): self.vector: BasicArrayList = None
     
 
     def __init__(self, itemInterface: OrderItemInterface, vector: BasicArrayList) -> None:
         from org.allbinary.util.BasicArrayList import BasicArrayList
-        self._init_fields()
+        __class__._init_fields(self)
         self.itemInterface = itemInterface
         self.vector = vector
     
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
+        from org.allbinary.business.user.commerce.inventory.item.ItemData import ItemData
         from org.allbinary.business.user.commerce.inventory.item.BasicItemView import BasicItemView
         from java.util.HashMap import HashMap
         from java.util.Set import Set

@@ -15,21 +15,25 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from admin.tags.TableTag import TableTag
 
 
+@java_inherited_overloads
 class BasicGroupItemsTag(TableTag):
+    def _java_defaults(self):
+        vars(self).setdefault("propertiesHashMap", None)
 
     def _init_fields(self) -> None:
-        from java.util.HashMap import HashMap
-        self.propertiesHashMap: HashMap = None
+        if "propertiesHashMap" not in vars(self): self.propertiesHashMap: HashMap = None
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from admin.taghelpers.BasicGroupItemsHelperFactory import BasicGroupItemsHelperFactory
         from admin.taghelpers.BasicGroupItemsRequestHelperFactory import BasicGroupItemsRequestHelperFactory
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.setTagHelperFactory(BasicGroupItemsHelperFactory())
         self.setTagRequestHelperFactory(BasicGroupItemsRequestHelperFactory())
 # from java.util.HashMap import HashMap

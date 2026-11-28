@@ -21,14 +21,14 @@ from org.allbinary.logic.communication.smtp.EmailInterface import EmailInterface
 class BasicEmail(EmailInterface):
 
     def _init_fields(self) -> None:
-        self.email: AbEmail = None
+        if "email" not in vars(self): self.email: AbEmail = None
     
 
     def __init__(self, emailInfo: EmailInfo, to: str) -> None:
         from org.allbinary.logic.communication.smtp.AbEmail import AbEmail
         from org.allbinary.logic.communication.smtp.info.BasicEmailInfo import BasicEmailInfo
         from org.allbinary.logic.communication.smtp.info.EmailInfo import EmailInfo
-        self._init_fields()
+        __class__._init_fields(self)
         basicEmailInfo: BasicEmailInfo = emailInfo.getBasicEmailInfo()
         self.email = AbEmail(basicEmailInfo.getEmailServerConfigurationInterface().getSmtpServer(), basicEmailInfo.getEmailServerConfigurationInterface().getAccountName(), to, basicEmailInfo.getSubject(), basicEmailInfo.getTextBody(), emailInfo.getHtmlAttachment(), emailInfo.getContentBase())
     

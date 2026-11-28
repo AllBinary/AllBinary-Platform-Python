@@ -22,15 +22,14 @@ class HudGraphicsPosition:
     NULL_HUD_GRAPHICS_POSITION: HudGraphicsPosition = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.GPoint import GPoint
         from org.allbinary.graphics.PointFactory import PointFactory
-        self.anchor: int = 0
+        if "anchor" not in vars(self): self.anchor: int = 0
         self.point: GPoint = PointFactory.getInstance().ZERO_ZERO
     
 
     def __init__(self, point: GPoint, anchor: int) -> None:
         from org.allbinary.graphics.GPoint import GPoint
-        self._init_fields()
+        __class__._init_fields(self)
         self.setAnchor(anchor)
         self.setPoint(point)
     

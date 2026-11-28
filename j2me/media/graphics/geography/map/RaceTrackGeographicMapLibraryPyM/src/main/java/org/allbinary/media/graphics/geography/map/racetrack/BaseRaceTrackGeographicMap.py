@@ -15,22 +15,31 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
 from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapInterface import RaceTrackGeographicMapInterface
 
 
+@java_inherited_overloads
 class BaseRaceTrackGeographicMap(*java_bases(BasicGeographicMap, RaceTrackGeographicMapInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("raceTrackInfo", None)
+        vars(self).setdefault("raceTrackData", None)
+        vars(self).setdefault("miniGeographicMap", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.raceTrackInfo: RaceTrackInfo = None
-        self.raceTrackData: RaceTrackData = None
-        self.miniGeographicMap: BasicGeographicMap = None
+        if "raceTrackInfo" not in vars(self): self.raceTrackInfo: RaceTrackInfo = None
+        if "raceTrackData" not in vars(self): self.raceTrackData: RaceTrackData = None
+        if "miniGeographicMap" not in vars(self): self.miniGeographicMap: BasicGeographicMap = None
     
 
     def __init__(self, raceTrackInfo: RaceTrackInfo, raceTrackData: RaceTrackData, tiledLayer: AllBinaryTiledLayer, miniGeographicMap: BasicGeographicMap, geographicMapCellPositionFactoryInterface: GeographicMapCellPositionFactoryInterface, geographicMapCellPositionBaseFactory: GeographicMapCellPositionBaseFactory, geographicMapCellTypeFactory: GeographicMapCellTypeFactory) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.string.CommonStrings import CommonStrings
         from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
         from org.allbinary.logic.string.StringMaker import StringMaker
@@ -38,7 +47,7 @@ class BaseRaceTrackGeographicMap(*java_bases(BasicGeographicMap, RaceTrackGeogra
         from org.allbinary.media.graphics.geography.map.GeographicMapCellPositionFactoryInterface import GeographicMapCellPositionFactoryInterface
         from org.allbinary.media.graphics.geography.map.GeographicMapCellTypeFactory import GeographicMapCellTypeFactory
         super().__init__(raceTrackInfo.getId(), raceTrackInfo.getName(), raceTrackData.getCellTypeIdToGeographicMapCellTypeArray(), tiledLayer, raceTrackInfo.getForegroundBasicColor(), raceTrackInfo.getBackgroundBasicColor(), geographicMapCellPositionFactoryInterface, geographicMapCellPositionBaseFactory, geographicMapCellTypeFactory)
-        self._init_fields()
+        __class__._init_fields(self)
         self.raceTrackInfo = raceTrackInfo
         self.raceTrackData = raceTrackData
         self.miniGeographicMap = miniGeographicMap
@@ -80,41 +89,41 @@ class BaseRaceTrackGeographicMap(*java_bases(BasicGeographicMap, RaceTrackGeogra
     
 
     def getId(self) -> int:
-        return super().getId()
+        return java_super_call(super(), "getId")
     
 
     def getName(self) -> str:
-        return super().getName()
+        return java_super_call(super(), "getName")
     
 
     def reset(self) -> None:
-        super().reset()
+        java_super_call(super(), "reset")
     
 
     def getAllBinaryTiledLayer(self) -> AllBinaryTiledLayer:
         from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
-        return super().getAllBinaryTiledLayer()
+        return java_super_call(super(), "getAllBinaryTiledLayer")
     
 
     def getCellTypeFromMapCellTypeInt(self, cellTypeId: int) -> int:
-        return super().getCellTypeFromMapCellTypeInt(cellTypeId)
+        return java_super_call(super(), "getCellTypeFromMapCellTypeInt", cellTypeId)
     
 
     # throws Exception
     def getCellTypeAt(self, cellPosition: GeographicMapCellPosition) -> GeographicMapCellType:
         from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         from org.allbinary.media.graphics.geography.map.GeographicMapCellType import GeographicMapCellType
-        return super().getCellTypeAt(cellPosition)
+        return java_super_call(super(), "getCellTypeAt", cellPosition)
     
 
     def getForegroundBasicColor(self) -> BasicColor:
         from org.allbinary.graphics.color.BasicColor import BasicColor
-        return super().getForegroundBasicColor()
+        return java_super_call(super(), "getForegroundBasicColor")
     
 
     def getBackgroundBasicColor(self) -> BasicColor:
         from org.allbinary.graphics.color.BasicColor import BasicColor
-        return super().getBackgroundBasicColor()
+        return java_super_call(super(), "getBackgroundBasicColor")
 # from org.allbinary.string.CommonStrings import CommonStrings
 # from org.allbinary.logic.communication.log.LogUtil import LogUtil
 # from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer

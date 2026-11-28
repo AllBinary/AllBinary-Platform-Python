@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 
 
@@ -22,7 +23,6 @@ class InitSql:
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
         from org.allbinary.logic.StdUtil import StdUtil
         from org.allbinary.logic.communication.sql.SqlStrings import SqlStrings
         from org.allbinary.logic.communication.sql.SqlTypeStrings import SqlTypeStrings
@@ -36,12 +36,12 @@ class InitSql:
         self.stdUtil: StdUtil = StdUtil.getInstance()
         self.INSERT: str = "insert"
         self.UPDATE: str = "update"
-        self.databaseConnectionInfoInterface: DbConnectionInfo = None
-        self.userid: str = None
-        self.password: str = None
-        self.tableName: str = None
-        self.conn: Connection = None
-        self.useridAndPassword: bool = False
+        if "databaseConnectionInfoInterface" not in vars(self): self.databaseConnectionInfoInterface: DbConnectionInfo = None
+        if "userid" not in vars(self): self.userid: str = None
+        if "password" not in vars(self): self.password: str = None
+        if "tableName" not in vars(self): self.tableName: str = None
+        if "conn" not in vars(self): self.conn: Connection = None
+        if "useridAndPassword" not in vars(self): self.useridAndPassword: bool = False
         self.SUCCESS_SQL_STATEMENT: str = "Success\nSQL Statement: "
         self.FAILED_SQL_STATEMENT: str = "Failed\nSQL Statement: "
         self.INIT_SQL: str = "InitSql"
@@ -56,7 +56,7 @@ class InitSql:
 
     def __init__(self, databaseConnectionInfoInterface: DbConnectionInfo) -> None:
         from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
-        self._init_fields()
+        __class__._init_fields(self)
         self.setDatabaseConnectionInfoInterface(databaseConnectionInfoInterface)
     
 
@@ -152,7 +152,7 @@ class InitSql:
 
     def updateWhere(self, key: str, value: str, updatedKeyValuePairs: HashMap) -> None:
         with self._lock:
-            return self._updateWhere_unlocked(key, value, updatedKeyValuePairs)
+            return __class__.__dict__["_updateWhere_unlocked"].__get__(self, __class__)(key, value, updatedKeyValuePairs)
 
     def _updateWhere_unlocked(self, key: str, value: str, updatedKeyValuePairs: HashMap) -> None:
         from java.util.HashMap import HashMap
@@ -225,7 +225,7 @@ class InitSql:
 
     def getValue(self, value: str) -> str:
         with self._lock:
-            return self._getValue_unlocked(value)
+            return __class__.__dict__["_getValue_unlocked"].__get__(self, __class__)(value)
 
     def _getValue_unlocked(self, value: str) -> str:
         from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
@@ -280,7 +280,7 @@ class InitSql:
         try:
             try:
                 jdbcDriver: str = self.databaseConnectionInfoInterface.getJdbcDriver()
-                PreLogUtil.put(str(StringMaker().append("Loading DbConnnectionInfo: ").append(type(self.databaseConnectionInfoInterface).__module__ + "." + type(self.databaseConnectionInfoInterface).__qualname__).append(" Driver: ").append(jdbcDriver)), self.INIT_SQL, "initialize()")
+                PreLogUtil.put(str(StringMaker().append("Loading DbConnnectionInfo: ").append(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(self.databaseConnectionInfoInterface))).append(" Driver: ").append(jdbcDriver)), self.INIT_SQL, "initialize()")
                 (lambda jname: getattr(__import__(jname, fromlist=["*"]), jname.rsplit(".", 1)[-1]))(jdbcDriver).newInstance()
             except Exception as e:
                 if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGINGERROR):

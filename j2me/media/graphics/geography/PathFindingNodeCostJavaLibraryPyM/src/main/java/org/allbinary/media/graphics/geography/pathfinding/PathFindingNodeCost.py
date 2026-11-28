@@ -15,23 +15,29 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.media.graphics.geography.pathfinding.PathFindingNode import PathFindingNode
 
 
+@java_inherited_overloads
 class PathFindingNodeCost(*java_bases(PathFindingNode, object)):
     NULL_PATH_FINDING_NODE_COST_ARRAY_ARRAY: list[list[PathFindingNodeCost]] = [[None] * (0) for _ in range(0)]
+    def _java_defaults(self):
+        vars(self).setdefault("commonSeps", None)
+        vars(self).setdefault("pathFindingNodeCostInfoP", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.string.CommonSeps import CommonSeps
         self.commonSeps: CommonSeps = CommonSeps.getInstance()
-        self.pathFindingNodeCostInfoP: PathFindingNodeCostInfo = None
+        if "pathFindingNodeCostInfoP" not in vars(self): self.pathFindingNodeCostInfoP: PathFindingNodeCostInfo = None
     
 
     def __init__(self, parent: object, geographicMapCellPosition: GeographicMapCellPosition, pathFindingNodeCostInfo: PathFindingNodeCostInfo) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         super().__init__(parent, geographicMapCellPosition)
-        self._init_fields()
+        __class__._init_fields(self)
         self.pathFindingNodeCostInfoP = pathFindingNodeCostInfo
         if self.geographicMapCellPosition is None:
             raise Exception("No GeographicMapCellPosition")
@@ -55,7 +61,7 @@ class PathFindingNodeCost(*java_bases(PathFindingNode, object)):
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.string.CommonLabels import CommonLabels
         stringBuffer: StringMaker = StringMaker()
-        stringBuffer.append(type(self).__module__ + "." + type(self).__qualname__)
+        stringBuffer.append(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(self)))
         stringBuffer.append(CommonLabels.getInstance().COLON_SEP)
         stringBuffer.append(str(self.getPathFindingNodeCostInfo()))
         stringBuffer.append(" Path: ")

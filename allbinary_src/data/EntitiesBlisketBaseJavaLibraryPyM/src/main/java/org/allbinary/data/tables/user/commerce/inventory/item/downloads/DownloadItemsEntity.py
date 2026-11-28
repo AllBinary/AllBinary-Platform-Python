@@ -15,12 +15,19 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.communication.sql.AbSqlBean import AbSqlBean
 from org.allbinary.data.tables.user.commerce.inventory.item.downloads.DownloadItemsEntityInterface import DownloadItemsEntityInterface
 
 
+@java_inherited_overloads
 class DownloadItemsEntity(*java_bases(AbSqlBean, DownloadItemsEntityInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("basicItemData", None)
+        vars(self).setdefault("tableName", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
@@ -31,9 +38,10 @@ class DownloadItemsEntity(*java_bases(AbSqlBean, DownloadItemsEntityInterface)):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.init.db.InventoryDbInitInfo import InventoryDbInitInfo
         super().__init__(InventoryDbInitInfo())
-        self._init_fields()
+        __class__._init_fields(self)
         self.setTableName(self.tableName)
     
 
@@ -42,7 +50,7 @@ class DownloadItemsEntity(*java_bases(AbSqlBean, DownloadItemsEntityInterface)):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            super().insert(values)
+            java_super_call(super(), "insert", values)
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, self.INSERT)
         except Exception as e:
@@ -55,7 +63,7 @@ class DownloadItemsEntity(*java_bases(AbSqlBean, DownloadItemsEntityInterface)):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            super().deleteWhere(DownloadItemData.ID, value)
+            java_super_call(super(), "deleteWhere", DownloadItemData.ID, value)
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, self.commonStrings.delete)
         except Exception as e:
@@ -66,7 +74,7 @@ class DownloadItemsEntity(*java_bases(AbSqlBean, DownloadItemsEntityInterface)):
     def update(self, updatedValues: HashMap) -> None:
         from java.util.HashMap import HashMap
         from org.allbinary.business.user.commerce.inventory.item.download.DownloadItemData import DownloadItemData
-        super().updateWhere(DownloadItemData.ID, updatedValues.get(DownloadItemData.ID), updatedValues)
+        java_super_call(super(), "updateWhere", DownloadItemData.ID, updatedValues.get(DownloadItemData.ID), updatedValues)
     
 
     def getForItem_j1(self, id: str) -> BasicArrayList:
@@ -80,7 +88,7 @@ class DownloadItemsEntity(*java_bases(AbSqlBean, DownloadItemsEntityInterface)):
         returnVector: BasicArrayList = BasicArrayListD()
         keysAndValues: HashMap = StdUtil.getInstance().createHashMap()
         keysAndValues.put(self.basicItemData.ID, id)
-        vector: BasicArrayList = super().getRows(keysAndValues)
+        vector: BasicArrayList = java_super_call(super(), "getRows", keysAndValues)
         size: int = vector.size()
         for index in range(0, size):
             hashMap: HashMap = vector.get(index)
@@ -103,7 +111,7 @@ class DownloadItemsEntity(*java_bases(AbSqlBean, DownloadItemsEntityInterface)):
         keysAndValues: HashMap = StdUtil.getInstance().createHashMap()
         keysAndValues.put(self.basicItemData.ID, id)
         keysAndValues.put(DownloadItemData.ID, downloadItemId)
-        vector: BasicArrayList = super().getRows(keysAndValues)
+        vector: BasicArrayList = java_super_call(super(), "getRows", keysAndValues)
         size: int = vector.size()
         for index in range(0, size):
             hashMap: HashMap = vector.get(index)
@@ -113,7 +121,9 @@ class DownloadItemsEntity(*java_bases(AbSqlBean, DownloadItemsEntityInterface)):
         return returnVector
 
     def getForItem(self, *args):
-        return getattr(self, "getForItem_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("getForItem_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getForItem(*args)
     
 
     def createTableStatement(self) -> str:
@@ -127,11 +137,11 @@ class DownloadItemsEntity(*java_bases(AbSqlBean, DownloadItemsEntityInterface)):
     
 
     def createTable(self) -> str:
-        return super().createTable(self.createTableStatement())
+        return java_super_call(super(), "createTable", self.createTableStatement())
     
 
     def dropTable(self) -> str:
-        return super().dropTable()
+        return java_super_call(super(), "dropTable")
 # from java.util.HashMap import HashMap
 # from org.allbinary.util.BasicArrayList import BasicArrayList
 # from org.allbinary.util.BasicArrayListD import BasicArrayListD

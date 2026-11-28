@@ -15,14 +15,19 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.input.automation.AbstractInputRobot import AbstractInputRobot
 from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
 
 
+@java_inherited_overloads
 class NullInputRobot(*java_bases(AbstractInputRobot, InputRobotInterface)):
     LIBRARY_NAME: str = "null"
     NAME: str = "NULL"
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -30,8 +35,9 @@ class NullInputRobot(*java_bases(AbstractInputRobot, InputRobotInterface)):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__(None)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getName(self) -> str:
@@ -111,23 +117,27 @@ class NullInputRobot(*java_bases(AbstractInputRobot, InputRobotInterface)):
     
 
     def mouseMove_j1(self, point: Point) -> None:
-        super().mouseMove(point)
+        java_super_call(super(), "mouseMove", point)
 
     def mouseMove(self, *args):
-        return getattr(self, "mouseMove_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("mouseMove_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().mouseMove(*args)
     
 
     # throws Exception
     def mouseMoveToTarget_j1(self, rectangle: Rectangle) -> None:
-        super().mouseMoveToTarget(rectangle)
+        java_super_call(super(), "mouseMoveToTarget", rectangle)
     
 
     # throws Exception
     def mouseMoveToTarget_j3(self, rectangle: Rectangle, x: int, y: int) -> None:
-        super().mouseMoveToTarget(rectangle, x, y)
+        java_super_call(super(), "mouseMoveToTarget", rectangle, x, y)
 
     def mouseMoveToTarget(self, *args):
-        return getattr(self, "mouseMoveToTarget_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("mouseMoveToTarget_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().mouseMoveToTarget(*args)
 # from java.awt.Point import Point
 # from java.awt.Rectangle import Rectangle
 # from java.awt.Color import Color

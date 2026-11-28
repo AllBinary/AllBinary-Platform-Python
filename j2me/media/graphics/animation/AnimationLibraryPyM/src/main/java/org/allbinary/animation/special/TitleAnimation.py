@@ -16,29 +16,45 @@
 from __future__ import annotations
 
 import time
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_divide
 from org.allbinary.animation.special.SpecialAnimation import SpecialAnimation
 
 
+@java_inherited_overloads
 class TitleAnimation(SpecialAnimation):
+    def _java_defaults(self):
+        vars(self).setdefault("systemWrapper", None)
+        vars(self).setdefault("deltaX", 0.0)
+        vars(self).setdefault("deltaY", 0.0)
+        vars(self).setdefault("deltaZ", 0.0)
+        vars(self).setdefault("basicColorArray", None)
+        vars(self).setdefault("dxArray", None)
+        vars(self).setdefault("dyArray", None)
+        vars(self).setdefault("widthP", 0)
+        vars(self).setdefault("animationInterfaceArray", None)
+        vars(self).setdefault("sizeP", 0)
+        vars(self).setdefault("y", 0)
+        vars(self).setdefault("lastFrameStartTime", 0)
+        vars(self).setdefault("displayInfoSingleton", None)
+        vars(self).setdefault("CLEAR_COLOR", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.animation.IndexedAnimation import IndexedAnimation
-        from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
         from org.allbinary.logic.ABSystemWrapper import ABSystemWrapper
         self.systemWrapper: ABSystemWrapper = ABSystemWrapper.getInstance()
-        self.deltaX: float = 0.0
-        self.deltaY: float = 0.0
-        self.deltaZ: float = 0.0
-        self.basicColorArray: list[BasicColor] = None
-        self.dxArray: list[int] = None
-        self.dyArray: list[int] = None
-        self.widthP: int = None
-        self.animationInterfaceArray: list[IndexedAnimation] = None
-        self.sizeP: int = None
-        self.y: int = None
-        self.lastFrameStartTime: int = None
+        if "deltaX" not in vars(self): self.deltaX: float = 0.0
+        if "deltaY" not in vars(self): self.deltaY: float = 0.0
+        if "deltaZ" not in vars(self): self.deltaZ: float = 0.0
+        if "basicColorArray" not in vars(self): self.basicColorArray: list[BasicColor] = None
+        if "dxArray" not in vars(self): self.dxArray: list[int] = None
+        if "dyArray" not in vars(self): self.dyArray: list[int] = None
+        if "widthP" not in vars(self): self.widthP: int = 0
+        if "animationInterfaceArray" not in vars(self): self.animationInterfaceArray: list[IndexedAnimation] = None
+        if "sizeP" not in vars(self): self.sizeP: int = 0
+        if "y" not in vars(self): self.y: int = 0
+        if "lastFrameStartTime" not in vars(self): self.lastFrameStartTime: int = 0
         self.displayInfoSingleton: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
         self.CLEAR_COLOR: BasicColor = BasicColorFactory.getInstance().CLEAR_COLOR
     
@@ -52,11 +68,12 @@ class TitleAnimation(SpecialAnimation):
     
 
     def __init__(self, animationInterfaceArray: list[IndexedAnimation], basicColorArray: list[BasicColor], dxArray: list[int], dyArray: list[int], y: int, width: int, animationBehavior: AnimationBehavior) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         from org.allbinary.animation.IndexedAnimation import IndexedAnimation
         from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(animationBehavior)
-        self._init_fields()
+        __class__._init_fields(self)
         self.lastFrameStartTime = self.systemWrapper.currentTimeMillis()
         self.animationInterfaceArray = animationInterfaceArray
         self.sizeP = len(self.animationInterfaceArray)
@@ -137,7 +154,8 @@ class TitleAnimation(SpecialAnimation):
         from javax.microedition.lcdui.Graphics import Graphics
         x: int = 0
         if self.widthP != -2147483648:
-            x = ((self.displayInfoSingleton.getLastWidth() - self.widthP) / 2)
+            x = (java_divide((self.displayInfoSingleton.getLastWidth() - self.widthP), 2)
+            )
         deltaX: int = 0
         deltaY: int = 0
         for index in range(0, self.sizeP):

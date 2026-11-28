@@ -24,11 +24,11 @@ class BasicUriResolver(URIResolver):
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.uriResolverStrings: URIResolverStrings = URIResolverStrings.getInstance()
-        self.extension: str = None
+        if "extension" not in vars(self): self.extension: str = None
     
 
     def __init__(self, extension: str) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.extension = extension
     
 

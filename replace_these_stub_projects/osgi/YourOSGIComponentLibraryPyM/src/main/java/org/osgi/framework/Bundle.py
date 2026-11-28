@@ -23,6 +23,8 @@ class Bundle:
         raise NotImplementedError()
 
     def start(self, *args):
-        return getattr(self, "start_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("start_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().start(*args)
 
 

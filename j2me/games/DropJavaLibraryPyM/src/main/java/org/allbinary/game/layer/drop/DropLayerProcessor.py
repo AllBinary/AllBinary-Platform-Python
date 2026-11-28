@@ -15,10 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.layer.BasicLayerProcessor import BasicLayerProcessor
 
 
+@java_inherited_overloads
 class DropLayerProcessor(BasicLayerProcessor):
     LAYER_PROCESSOR: BasicLayerProcessor = None
     

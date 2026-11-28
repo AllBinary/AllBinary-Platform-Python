@@ -77,7 +77,9 @@ class OpenGLESStrings:
         raise RuntimeError()
 
     def stringWidth(self, *args):
-        return getattr(self, "stringWidth_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("stringWidth_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().stringWidth(*args)
 # from javax.microedition.khronos.opengles.GL10 import GL10
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics

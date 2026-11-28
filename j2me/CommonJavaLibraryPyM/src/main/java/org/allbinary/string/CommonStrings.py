@@ -22,7 +22,6 @@ class CommonStrings:
     instance: CommonStrings = None
 
     def _init_fields(self) -> None:
-        from jsinterop.annotations.JsProperty import JsProperty
         self.EMPTY: str = "Empty"
         self.CREATE_IMAGE: str = "createImage"
         self.PLEASE_WAIT: str = "Please Wait"
@@ -77,7 +76,7 @@ class CommonStrings:
         self.SIZE: str = "size"
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

@@ -15,29 +15,28 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_divide
 
 
 class HudTimer:
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.math.PrimitiveLongSingleton import PrimitiveLongSingleton
-        from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
-        from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
         from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
         self.startTime: int = -1
-        self.hundredthTime: int = 0
-        self.maxTime: int = None
-        self.modifier: int = 0
+        if "hundredthTime" not in vars(self): self.hundredthTime: int = 0
+        if "maxTime" not in vars(self): self.maxTime: int = 0
+        if "modifier" not in vars(self): self.modifier: int = 0
         self.hundrethsString: list[str] = PrimitiveLongSingleton.getInstance().ZERO
         self.totalDigits: int = 1
-        self.primitiveLongUtil: PrimitiveLongUtil = None
+        if "primitiveLongUtil" not in vars(self): self.primitiveLongUtil: PrimitiveLongUtil = None
         self.MAX: list[str] = ['L', 'O', 'L']
         self.gameTickTimeDelayHelper: GameTickTimeDelayHelper = GameTickTimeDelayHelperFactory.getInstance()
     
 
     def __init__(self, maxTime: int) -> None:
         from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
-        self._init_fields()
+        __class__._init_fields(self)
         self.primitiveLongUtil = PrimitiveLongUtil.createPowerOfTen(maxTime)
         self.maxTime = maxTime
     

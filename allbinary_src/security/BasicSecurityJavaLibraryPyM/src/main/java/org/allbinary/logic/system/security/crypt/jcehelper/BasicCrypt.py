@@ -23,7 +23,7 @@ class BasicCrypt(CryptInterface):
     def _init_fields(self) -> None:
         from org.allbinary.logic.java.byteutil.ByteUtil import ByteUtil
         self.byteUtil: ByteUtil = ByteUtil.getInstance()
-        self.key: list[int] = None
+        if "key" not in vars(self): self.key: list[int] = None
     
 
     def __init__(self, keyAsString: str) -> None:
@@ -31,7 +31,7 @@ class BasicCrypt(CryptInterface):
         from org.allbinary.logic.NullUtil import NullUtil
         from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
-        self._init_fields()
+        __class__._init_fields(self)
         key: list[int] = NullUtil.getInstance().NULL_BYTE_ARRAY
         try:
             key = TsUtil.getInstance().getByteArray(keyAsString)

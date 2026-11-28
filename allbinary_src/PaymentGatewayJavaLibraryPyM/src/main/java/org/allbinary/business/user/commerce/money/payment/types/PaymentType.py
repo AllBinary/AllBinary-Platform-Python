@@ -20,22 +20,20 @@ from __future__ import annotations
 class PaymentType:
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.user.commerce.money.payment.gateway.processor.PaymentProcessorInterfaceFactoryInterface import PaymentProcessorInterfaceFactoryInterface
-        from org.allbinary.business.user.commerce.money.payment.gateway.transaction.PaymentTransactionInterfaceFactoryInterface import PaymentTransactionInterfaceFactoryInterface
-        self.basicPaymentType: BasicPaymentType = None
-        self.paymentTransactionInterfaceFactoryInterface: PaymentTransactionInterfaceFactoryInterface = None
-        self.paymentProcessorInterfaceFactoryInterface: PaymentProcessorInterfaceFactoryInterface = None
+        if "basicPaymentType" not in vars(self): self.basicPaymentType: BasicPaymentType = None
+        if "paymentTransactionInterfaceFactoryInterface" not in vars(self): self.paymentTransactionInterfaceFactoryInterface: PaymentTransactionInterfaceFactoryInterface = None
+        if "paymentProcessorInterfaceFactoryInterface" not in vars(self): self.paymentProcessorInterfaceFactoryInterface: PaymentProcessorInterfaceFactoryInterface = None
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
         elif len(args) == 3:
-            self._constructor3(*args)
+            __class__._constructor3(self, *args)
     
 
     def _constructor1(self, basicPaymentType: BasicPaymentType) -> None:
         from org.allbinary.business.user.commerce.money.payment.types.PaymentTypeUtil import PaymentTypeUtil
-        self._init_fields()
+        __class__._init_fields(self)
         self.basicPaymentType = basicPaymentType
         self.paymentTransactionInterfaceFactoryInterface = None
         self.paymentProcessorInterfaceFactoryInterface = None
@@ -46,7 +44,7 @@ class PaymentType:
         from org.allbinary.business.user.commerce.money.payment.types.PaymentTypeUtil import PaymentTypeUtil
         from org.allbinary.business.user.commerce.money.payment.gateway.processor.PaymentProcessorInterfaceFactoryInterface import PaymentProcessorInterfaceFactoryInterface
         from org.allbinary.business.user.commerce.money.payment.gateway.transaction.PaymentTransactionInterfaceFactoryInterface import PaymentTransactionInterfaceFactoryInterface
-        self._init_fields()
+        __class__._init_fields(self)
         self.basicPaymentType = basicPaymentType
         self.paymentTransactionInterfaceFactoryInterface = paymentTransactionInterfaceFactoryInterface
         self.paymentProcessorInterfaceFactoryInterface = paymentProcessorInterfaceFactoryInterface
@@ -75,9 +73,9 @@ class PaymentType:
         vector: BasicArrayList = BasicArrayListD()
         vector.addAllList(self.getBasicPaymentType().toVector())
         if self.paymentTransactionInterfaceFactoryInterface is not None:
-            vector.add(type(self.paymentTransactionInterfaceFactoryInterface).__module__ + "." + type(self.paymentTransactionInterfaceFactoryInterface).__qualname__)
+            vector.add(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(self.paymentTransactionInterfaceFactoryInterface)))
         if self.paymentProcessorInterfaceFactoryInterface is not None:
-            vector.add(type(self.paymentProcessorInterfaceFactoryInterface).__module__ + "." + type(self.paymentProcessorInterfaceFactoryInterface).__qualname__)
+            vector.add(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(self.paymentProcessorInterfaceFactoryInterface)))
         return vector
     
 
@@ -88,9 +86,9 @@ class PaymentType:
         hashMap: HashMap = StdUtil.getInstance().createHashMap()
         hashMap.putAll(self.getBasicPaymentType().toHashMap())
         if self.paymentTransactionInterfaceFactoryInterface is not None:
-            hashMap.put(str(PaymentGatewayData.PAYMENTTRANSACTIONINTERFACEFACTORYINTERFACE), type(self.paymentTransactionInterfaceFactoryInterface).__module__ + "." + type(self.paymentTransactionInterfaceFactoryInterface).__qualname__)
+            hashMap.put(str(PaymentGatewayData.PAYMENTTRANSACTIONINTERFACEFACTORYINTERFACE), __import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(self.paymentTransactionInterfaceFactoryInterface)))
         if self.paymentProcessorInterfaceFactoryInterface is not None:
-            hashMap.put(str(PaymentGatewayData.PAYMENTPROCESSORINTERFACEFACTORYINTERFACE), type(self.paymentProcessorInterfaceFactoryInterface).__module__ + "." + type(self.paymentProcessorInterfaceFactoryInterface).__qualname__)
+            hashMap.put(str(PaymentGatewayData.PAYMENTPROCESSORINTERFACEFACTORYINTERFACE), __import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(self.paymentProcessorInterfaceFactoryInterface)))
         return hashMap
     
 

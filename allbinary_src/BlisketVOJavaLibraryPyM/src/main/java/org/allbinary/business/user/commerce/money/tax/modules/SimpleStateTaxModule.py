@@ -15,30 +15,28 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.business.user.commerce.money.tax.modules.TaxModuleInterface import TaxModuleInterface
 
 
 class SimpleStateTaxModule(TaxModuleInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-        from org.allbinary.business.user.address.StreetAddress import StreetAddress
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
         from org.allbinary.string.CommonStrings import CommonStrings
-        from org.w3c.dom.Document import Document
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.streetAddress: StreetAddress = None
-        self.storeFrontInterface: StoreFrontInterface = None
+        if "streetAddress" not in vars(self): self.streetAddress: StreetAddress = None
+        if "storeFrontInterface" not in vars(self): self.storeFrontInterface: StoreFrontInterface = None
         self.ALL: str = CommonPhoneStrings.getInstance().STAR
         self.STATETAXPATH: str = "/generic/taxes/"
         self.STATETAXFILE: str = "stateTaxation.xml"
-        self.document: Document = None
+        if "document" not in vars(self): self.document: Document = None
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -78,7 +76,7 @@ class SimpleStateTaxModule(TaxModuleInterface):
             streetAddressNode: Node = DomSearchHelper.getNode(StreetAddressData.NAME, taxNodeChildren)
             taxableStreetAddress: StreetAddress = StreetAddress(streetAddressNode)
             stringValidationUtil: StringValidationUtil = StringValidationUtil.getInstance()
-            if not stringValidationUtil.isEmpty(country) and not stringValidationUtil.isEmpty(taxableStreetAddress.getCountry()) and ((country > taxableStreetAddress.getCountry()) - (country < taxableStreetAddress.getCountry())) == 0:
+            if not (stringValidationUtil.isEmpty(country)) and not (stringValidationUtil.isEmpty(taxableStreetAddress.getCountry())) and ((country > taxableStreetAddress.getCountry()) - (country < taxableStreetAddress.getCountry())) == 0:
                 if state is not None and taxableStreetAddress.getState() is not None and ((state > taxableStreetAddress.getState()) - (state < taxableStreetAddress.getState())) == 0:
                     rateNode: Node = DomSearchHelper.getNode(TaxData.RATE, taxNodeChildren)
                     taxRate: str = DomNodeHelper.getTextNodeValue(rateNode)
@@ -132,9 +130,9 @@ class SimpleStateTaxModule(TaxModuleInterface):
                     self.logUtil.putF(str(stringBuffer), self, self.commonStrings.IS_VALID)
                 taxableStreetAddress: StreetAddress = StreetAddress(streetAddressNode)
                 stringValidationUtil: StringValidationUtil = StringValidationUtil.getInstance()
-                if not stringValidationUtil.isEmpty(country) and not stringValidationUtil.isEmpty(taxableStreetAddress.getCountry()) and taxableStreetAddress.getCountry().compareTo(self.ALL) == 0:
+                if not (stringValidationUtil.isEmpty(country)) and not (stringValidationUtil.isEmpty(taxableStreetAddress.getCountry())) and taxableStreetAddress.getCountry().compareTo(self.ALL) == 0:
                     return True
-                if not stringValidationUtil.isEmpty(country) and not stringValidationUtil.isEmpty(taxableStreetAddress.getCountry()) and ((country > taxableStreetAddress.getCountry()) - (country < taxableStreetAddress.getCountry())) == 0:
+                if not (stringValidationUtil.isEmpty(country)) and not (stringValidationUtil.isEmpty(taxableStreetAddress.getCountry())) and ((country > taxableStreetAddress.getCountry()) - (country < taxableStreetAddress.getCountry())) == 0:
                     state: str = self.streetAddress.getState()
                     if state is not None:
                         return True

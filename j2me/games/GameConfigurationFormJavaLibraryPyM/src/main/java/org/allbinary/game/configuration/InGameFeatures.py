@@ -15,9 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.init.Init import Init
 
 
+@java_inherited_overloads
 class InGameFeatures(Init):
 
     def __init__(self) -> None:

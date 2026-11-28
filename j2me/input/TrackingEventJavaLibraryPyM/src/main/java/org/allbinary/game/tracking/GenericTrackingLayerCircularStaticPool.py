@@ -15,10 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.layer.AllBinaryLayerCircularPool import AllBinaryLayerCircularPool
 
 
+@java_inherited_overloads
 class GenericTrackingLayerCircularStaticPool(AllBinaryLayerCircularPool):
     SINGLETON: GenericTrackingLayerCircularStaticPool = None
     

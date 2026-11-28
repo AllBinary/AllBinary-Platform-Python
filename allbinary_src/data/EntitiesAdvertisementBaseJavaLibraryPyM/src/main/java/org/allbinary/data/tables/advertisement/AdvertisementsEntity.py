@@ -15,12 +15,19 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.communication.sql.AbSqlBean import AbSqlBean
 from org.allbinary.data.tables.advertisement.AdvertisementsEntityInterface import AdvertisementsEntityInterface
 
 
+@java_inherited_overloads
 class AdvertisementsEntity(*java_bases(AbSqlBean, AdvertisementsEntityInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("tableName", None)
+        vars(self).setdefault("_INDEX", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -30,9 +37,10 @@ class AdvertisementsEntity(*java_bases(AbSqlBean, AdvertisementsEntityInterface)
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
         super().__init__(UserDbInitInfo())
-        self._init_fields()
+        __class__._init_fields(self)
         self.setTableName(self.tableName)
     
 
@@ -41,7 +49,7 @@ class AdvertisementsEntity(*java_bases(AbSqlBean, AdvertisementsEntityInterface)
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            super().deleteWhere(EntryData.getInstance().ID, value)
+            java_super_call(super(), "deleteWhere", EntryData.getInstance().ID, value)
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, self.commonStrings.delete)
         except Exception as e:
@@ -57,7 +65,7 @@ class AdvertisementsEntity(*java_bases(AbSqlBean, AdvertisementsEntityInterface)
         from org.allbinary.logic.StdUtil import StdUtil
         keysAndValues: HashMap = StdUtil.getInstance().createHashMap()
         keysAndValues.put(StoreFrontData.getInstance().NAME, storeName)
-        hashMapVector: BasicArrayList = super().getRows(keysAndValues)
+        hashMapVector: BasicArrayList = java_super_call(super(), "getRows", keysAndValues)
         vector: BasicArrayList = BasicArrayListD()
         size: int = hashMapVector.size()
         for index in range(0, size):
@@ -74,11 +82,13 @@ class AdvertisementsEntity(*java_bases(AbSqlBean, AdvertisementsEntityInterface)
         keysAndValues: HashMap = StdUtil.getInstance().createHashMap()
         keysAndValues.put(StoreFrontData.getInstance().NAME, storeName)
         keysAndValues.put(AdvertisementData.getInstance().NAME, advertismentName)
-        hashMap: HashMap = super().getRow(keysAndValues)
+        hashMap: HashMap = java_super_call(super(), "getRow", keysAndValues)
         return None
 
     def get(self, *args):
-        return getattr(self, "get_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("get_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().get(*args)
     
 
     def createTableStatement(self) -> str:
@@ -96,23 +106,23 @@ class AdvertisementsEntity(*java_bases(AbSqlBean, AdvertisementsEntityInterface)
     
 
     def createTable(self) -> str:
-        returnStr: str = super().createTable(self.createTableStatement())
+        returnStr: str = java_super_call(super(), "createTable", self.createTableStatement())
         return returnStr
     
 
     def update(self, updatedValues: HashMap) -> None:
         from java.util.HashMap import HashMap
         from org.allbinary.business.entry.EntryData import EntryData
-        super().updateWhere(EntryData.getInstance().ID, updatedValues.get(EntryData.getInstance().ID), updatedValues)
+        java_super_call(super(), "updateWhere", EntryData.getInstance().ID, updatedValues.get(EntryData.getInstance().ID), updatedValues)
     
 
     def dropTable(self) -> str:
-        return super().dropTable()
+        return java_super_call(super(), "dropTable")
     
 
     def insert(self, values: BasicArrayList) -> None:
         from org.allbinary.util.BasicArrayList import BasicArrayList
-        super().insert(values)
+        java_super_call(super(), "insert", values)
 # from java.util.HashMap import HashMap
 # from org.allbinary.util.BasicArrayList import BasicArrayList
 # from org.allbinary.util.BasicArrayListD import BasicArrayListD

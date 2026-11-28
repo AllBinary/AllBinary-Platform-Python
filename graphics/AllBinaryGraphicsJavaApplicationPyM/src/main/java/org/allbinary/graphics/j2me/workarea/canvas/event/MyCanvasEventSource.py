@@ -20,25 +20,25 @@ from __future__ import annotations
 class MyCanvasEventSource:
 
     def _init_fields(self) -> None:
-        self.command: str = None
-        self.treeNode: MutableTreeNode = None
+        if "command" not in vars(self): self.command: str = None
+        if "treeNode" not in vars(self): self.treeNode: MutableTreeNode = None
         self.angle: float = 0.0
 
     def __init__(self, *args) -> None:
         if len(args) == 2:
-            self._constructor2(*args)
+            __class__._constructor2(self, *args)
         elif len(args) == 3:
-            self._constructor3(*args)
+            __class__._constructor3(self, *args)
     
 
     def _constructor2(self, command: str, treeNode: MutableTreeNode) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.command = command
         self.treeNode = treeNode
     
 
     def _constructor3(self, command: str, angle: float, treeNode: MutableTreeNode) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.command = command
         self.treeNode = treeNode
         self.setAngle(angle)

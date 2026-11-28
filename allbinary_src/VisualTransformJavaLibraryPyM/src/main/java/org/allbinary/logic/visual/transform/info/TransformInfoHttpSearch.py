@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.visual.transform.info.TransformInfoHttp import TransformInfoHttp
 
 
+@java_inherited_overloads
 class TransformInfoHttpSearch(TransformInfoHttp):
     
 

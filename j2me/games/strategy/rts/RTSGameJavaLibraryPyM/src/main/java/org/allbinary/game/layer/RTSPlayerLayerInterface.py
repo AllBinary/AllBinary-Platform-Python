@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.ag.layer.hud.basic.notification.GameNotificationHudCompositeInterface import GameNotificationHudCompositeInterface
 from org.allbinary.game.input.BuildMenuCompositeInterface import BuildMenuCompositeInterface
@@ -25,6 +26,7 @@ from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerI
 
 
 # Java interface
+@java_inherited_overloads
 class RTSPlayerLayerInterface(*java_bases(GameNotificationHudCompositeInterface, BuildMenuCompositeInterface, PlayerGameInputCompositeInterface, DestroyedEventListenerInterface, TickableInterface, PathFindingLayerInterface)):
     
 

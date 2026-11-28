@@ -21,12 +21,11 @@ from org.allbinary.business.context.modules.storefront.statistics.orders.history
 class StoreFrontOrdersHistoryStatistics(StoreFrontOrdersHistoryStatisticsInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.user.commerce.money.Money import Money
-        self.numberOfOrdersLong: int = None
-        self.subTotalMoney: Money = None
-        self.shippingCostMoney: Money = None
-        self.taxesMoney: Money = None
-        self.totalMoney: Money = None
+        if "numberOfOrdersLong" not in vars(self): self.numberOfOrdersLong: int = None
+        if "subTotalMoney" not in vars(self): self.subTotalMoney: Money = None
+        if "shippingCostMoney" not in vars(self): self.shippingCostMoney: Money = None
+        if "taxesMoney" not in vars(self): self.taxesMoney: Money = None
+        if "totalMoney" not in vars(self): self.totalMoney: Money = None
     
 
     def __init__(self, storeFrontInterface: StoreFrontInterface) -> None:
@@ -36,7 +35,7 @@ class StoreFrontOrdersHistoryStatistics(StoreFrontOrdersHistoryStatisticsInterfa
         from org.allbinary.business.user.commerce.money.Money import Money
         from org.allbinary.data.tables.user.commerce.inventory.order.OrderHistoryEntityFactory import OrderHistoryEntityFactory
         from org.allbinary.data.tables.user.commerce.inventory.order.OrderHistoryEntityInterface import OrderHistoryEntityInterface
-        self._init_fields()
+        __class__._init_fields(self)
         self.subTotalMoney = Money()
         self.shippingCostMoney = Money()
         self.taxesMoney = Money()
@@ -81,6 +80,7 @@ class StoreFrontOrdersHistoryStatistics(StoreFrontOrdersHistoryStatisticsInterfa
     
 
     def toHashMap(self) -> HashMap:
+        from org.allbinary.business.context.modules.storefront.statistics.orders.history.StoreFrontOrdersHistoryStatisticsData import StoreFrontOrdersHistoryStatisticsData
         from java.util.HashMap import HashMap
         from org.allbinary.logic.StdUtil import StdUtil
         hashMap: HashMap = StdUtil.getInstance().createHashMap()

@@ -15,40 +15,59 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.form.item.ABCustomImageItem import ABCustomImageItem
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 
 
+@java_inherited_overloads
 class TechnologyRTSInterfaceImageItem(*java_bases(ABCustomImageItem, UpdateMyFontInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("rtsInterface", None)
+        vars(self).setdefault("primitiveLongUtil", None)
+        vars(self).setdefault("LEVEL", None)
+        vars(self).setdefault("COST", None)
+        vars(self).setdefault("DOLLAR", None)
+        vars(self).setdefault("myFontProcessor", None)
+        vars(self).setdefault("costString", None)
+        vars(self).setdefault("costLength", 0)
+        vars(self).setdefault("levelString", None)
+        vars(self).setdefault("levelLength", 0)
+        vars(self).setdefault("adjustedCostLabelY", 0)
+        vars(self).setdefault("adjustedCostX", 0)
+        vars(self).setdefault("adjustedCostY", 0)
+        vars(self).setdefault("adjustedLevelX", 0)
+        vars(self).setdefault("adjustedLevelY", 0)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.java.character.CharArrayFactory import CharArrayFactory
-        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
         from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
-        self.rtsInterface: RTSInterface = None
+        if "rtsInterface" not in vars(self): self.rtsInterface: RTSInterface = None
         self.primitiveLongUtil: PrimitiveLongUtil = PrimitiveLongUtil.createPowerOfTen(10000)
         self.LEVEL: str = "Level"
         self.COST: str = "Cost"
         self.DOLLAR: str = "$"
         self.myFontProcessor: MyFontProcessor = UpdateMyFontProcessor(self)
         self.costString: list[str] = CharArrayFactory.getInstance().getZeroCharArray()
-        self.costLength: int = 0
+        if "costLength" not in vars(self): self.costLength: int = 0
         self.levelString: list[str] = CharArrayFactory.getInstance().getZeroCharArray()
-        self.levelLength: int = 0
-        self.adjustedCostLabelY: int = 0
-        self.adjustedCostX: int = 0
-        self.adjustedCostY: int = 0
-        self.adjustedLevelX: int = 0
-        self.adjustedLevelY: int = 0
+        if "levelLength" not in vars(self): self.levelLength: int = 0
+        if "adjustedCostLabelY" not in vars(self): self.adjustedCostLabelY: int = 0
+        if "adjustedCostX" not in vars(self): self.adjustedCostX: int = 0
+        if "adjustedCostY" not in vars(self): self.adjustedCostY: int = 0
+        if "adjustedLevelX" not in vars(self): self.adjustedLevelX: int = 0
+        if "adjustedLevelY" not in vars(self): self.adjustedLevelY: int = 0
     
 
     def __init__(self, label: str, img: Image, layout: int, altText: str, basicColor: BasicColor, rtsInterface: RTSInterface) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(label, img, layout, altText, basicColor, 0)
-        self._init_fields()
+        __class__._init_fields(self)
         self.rtsInterface = rtsInterface
         self.update()
     
@@ -85,7 +104,7 @@ class TechnologyRTSInterfaceImageItem(*java_bases(ABCustomImageItem, UpdateMyFon
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
         from javax.microedition.lcdui.Graphics import Graphics
         self.myFontProcessor.process(graphics)
-        super().paintXY(graphics, x, y)
+        java_super_call(super(), "paintXY", graphics, x, y)
         xa: int = x + 2
         graphics.drawString(self.COST, xa, y + self.adjustedCostLabelY, 0)
         graphics.drawString(self.DOLLAR, xa, y + self.adjustedCostY, 0)

@@ -23,7 +23,6 @@ class GroupFactory:
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.NULL_GROUP_ARRAY: list[Group] = [None] * (0)
@@ -31,7 +30,7 @@ class GroupFactory:
         self.index: int = 0
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

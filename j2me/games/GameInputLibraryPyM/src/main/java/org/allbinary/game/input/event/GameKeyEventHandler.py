@@ -33,7 +33,7 @@ class GameKeyEventHandler:
         self.downGameKeyEventHandler: DownGameKeyEventHandler = DownGameKeyEventHandler.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -43,7 +43,7 @@ class GameKeyEventHandler:
 
     def removeAllListeners(self) -> None:
         with self._lock:
-            return self._removeAllListeners_unlocked()
+            return __class__.__dict__["_removeAllListeners_unlocked"].__get__(self, __class__)()
 
     def _removeAllListeners_unlocked(self) -> None:
         self.pressGameKeyEventHandler.removeAllListeners()

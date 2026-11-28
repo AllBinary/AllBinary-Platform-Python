@@ -15,11 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tables.TableMappingInterface import TableMappingInterface
 from org.allbinary.logic.communication.java.vm.stats.JvmStatistics import JvmStatistics
 
 
+@java_inherited_overloads
 class JvmStatisticsMapping(*java_bases(JvmStatistics, TableMappingInterface)):
     
 
@@ -28,6 +30,16 @@ class JvmStatisticsMapping(*java_bases(JvmStatistics, TableMappingInterface)):
     
 
     def toHashMap(self) -> HashMap:
+        from org.allbinary.logic.communication.java.vm.stats.JvmStatisticsData import JvmStatisticsData
+        from org.allbinary.logic.communication.java.vm.stats.JvmStatisticsData import JvmStatisticsData
+        from org.allbinary.logic.communication.java.vm.stats.JvmStatisticsData import JvmStatisticsData
+        from org.allbinary.logic.communication.java.vm.stats.JvmStatisticsData import JvmStatisticsData
+        from org.allbinary.logic.communication.java.vm.stats.JvmStatisticsData import JvmStatisticsData
+        from org.allbinary.logic.communication.java.vm.stats.JvmStatisticsData import JvmStatisticsData
+        from org.allbinary.logic.communication.java.vm.stats.JvmStatisticsData import JvmStatisticsData
+        from org.allbinary.logic.communication.java.vm.stats.JvmStatisticsData import JvmStatisticsData
+        from org.allbinary.logic.communication.java.vm.stats.JvmStatisticsData import JvmStatisticsData
+        from org.allbinary.logic.communication.java.vm.stats.JvmStatisticsData import JvmStatisticsData
         from java.util.HashMap import HashMap
         from org.allbinary.logic.StdUtil import StdUtil
         hashMap: HashMap = StdUtil.getInstance().createHashMap()
@@ -46,6 +58,7 @@ class JvmStatisticsMapping(*java_bases(JvmStatistics, TableMappingInterface)):
 
     # throws Exception
     def getKey(self) -> object:
+        from org.allbinary.logic.communication.java.vm.stats.JvmStatisticsData import JvmStatisticsData
         return JvmStatisticsData.NAME
     
 

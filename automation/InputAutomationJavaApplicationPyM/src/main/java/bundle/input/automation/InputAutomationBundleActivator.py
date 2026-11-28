@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaThread import JavaThread
 import threading
 from java.lang.JavaRuntimeStatic import java_bases
 from org.osgi.framework.BundleActivator import BundleActivator
@@ -22,7 +23,7 @@ from bundle.input.automation.InputAutomationBundleActivatorListenerInterface imp
 
 
 class InputAutomationBundleActivator(*java_bases(BundleActivator, InputAutomationBundleActivatorListenerInterface)):
-    moduleManagementThread: threading.Thread = None
+    moduleManagementThread: JavaThread = None
     bundleContext: BundleContext = None
 
     def _init_fields(self) -> None:
@@ -32,7 +33,7 @@ class InputAutomationBundleActivator(*java_bases(BundleActivator, InputAutomatio
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -48,8 +49,8 @@ class InputAutomationBundleActivator(*java_bases(BundleActivator, InputAutomatio
         from org.allbinary.input.automation.module.osgi.InputAutomationNewBundleRunnable import InputAutomationNewBundleRunnable
         try:
             self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.START)
-            self.bundleContext = bundleContext
-            InputAutomationBundleActivator.moduleManagementThread = threading.Thread(target=InputAutomationNewBundleRunnable(self).run)
+            InputAutomationBundleActivator.bundleContext = bundleContext
+            InputAutomationBundleActivator.moduleManagementThread = JavaThread(target=InputAutomationNewBundleRunnable(self).run)
             InputAutomationBundleActivator.moduleManagementThread.start()
             InputAutomationJFrame.create(self)
         except Exception as e:
@@ -63,8 +64,8 @@ class InputAutomationBundleActivator(*java_bases(BundleActivator, InputAutomatio
         from bundle.input.automation.robot.InputAutomationRobotChangeListener import InputAutomationRobotChangeListener
         from org.allbinary.input.automation.osgi.InputAutomationServiceFactory import InputAutomationServiceFactory
         from org.allbinary.osgi.OSGIActivatorUtil import OSGIActivatorUtil
-        OSGIActivatorUtil.registerAsService(self.getBundleContext(), InputAutomationServiceFactory.getInstance(), InputAutomationConfigurationModuleChangeListener.__module__ + "." + InputAutomationConfigurationModuleChangeListener.__qualname__)
-        OSGIActivatorUtil.registerAsService(self.getBundleContext(), InputAutomationServiceFactory.getInstance(), InputAutomationRobotChangeListener.__module__ + "." + InputAutomationRobotChangeListener.__qualname__)
+        OSGIActivatorUtil.registerAsService(self.getBundleContext(), InputAutomationServiceFactory.getInstance(), __import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(InputAutomationConfigurationModuleChangeListener))
+        OSGIActivatorUtil.registerAsService(self.getBundleContext(), InputAutomationServiceFactory.getInstance(), __import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(InputAutomationRobotChangeListener))
     
 
     # throws Exception

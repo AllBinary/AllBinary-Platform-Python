@@ -15,9 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.init.Init import Init
 
 
+@java_inherited_overloads
 class TouchButtonAndroidResources(Init):
 
     def __init__(self) -> None:
@@ -53,7 +56,7 @@ class TouchButtonAndroidResources(Init):
             RESOURCE_ARRAY[6] = androidResources.raw.touch_button_turn_right_arrow_128_by_128
             RESOURCE_ARRAY[7] = androidResources.raw.touch_button_strafe_left_arrow_128_by_128
             RESOURCE_ARRAY[8] = androidResources.raw.touch_button_strafe_right_arrow_128_by_128
-            if OperatingSystemFactory.getInstance().getOperatingSystemInstance().isOverScan():
+            if java_predicate(OperatingSystemFactory.getInstance().getOperatingSystemInstance(), "isOverScan"):
                 resourceUtil.addResource(RESOURCE_STRING_ARRAY[2].HINT, str(androidResources.raw.ouya_o))
         else:
             RESOURCE_ARRAY[0] = androidResources.raw.touch_button_64_by_64

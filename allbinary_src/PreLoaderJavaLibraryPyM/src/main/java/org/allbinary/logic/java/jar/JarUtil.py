@@ -15,19 +15,20 @@
 
 from __future__ import annotations
 
+from java.lang.System import System
+from java.lang.JavaRuntimeStatic import java_predicate
 import traceback
 
 
 class JarUtil:
 
     def _init_fields(self) -> None:
-        from java.net.URL import URL
-        self.jarURL: URL = None
+        if "jarURL" not in vars(self): self.jarURL: URL = None
     
 
     def __init__(self, jarURL: URL) -> None:
         from java.net.URL import URL
-        self._init_fields()
+        __class__._init_fields(self)
         self.jarURL = jarURL
     
 
@@ -40,17 +41,17 @@ class JarUtil:
             while True:
                 entry: JarEntry = jis.getNextJarEntry()
                 if entry is not None:
-                    if not entry.isDirectory():
+                    if not (java_predicate(entry, "isDirectory")):
                         offset: int = 0
                         i: int = 0
                         while ((i := jis.read(cache, offset, len(cache) - offset))) != -1:
                             offset += i
                             if offset >= len(cache):
                                 newcache: list[int] = [0] * (len(cache) + 1024)
-                                newcache[0:0 + len(cache)] = cache[0:0 + len(cache)]
+                                __import__("java.lang.System", fromlist=["System"]).System.arraycopy(cache, 0, newcache, 0, len(cache))
                                 cache = newcache
                         tmp: list[int] = [0] * (offset)
-                        tmp[0:0 + offset] = cache[0:0 + offset]
+                        __import__("java.lang.System", fromlist=["System"]).System.arraycopy(cache, 0, tmp, 0, offset)
                         print(entry.getName())
                 else:
                     break

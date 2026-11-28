@@ -15,18 +15,23 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
 
 
+@java_inherited_overloads
 class ColorChangeEvent(AllBinaryEventObject):
+    def _java_defaults(self):
+        vars(self).setdefault("basicColor", None)
 
     def _init_fields(self) -> None:
         self.basicColor: BasicColor = BasicColorFactory.getInstance().WHITE
     
 
     def __init__(self, anyType: object) -> None:
+        __class__._java_defaults(self)
         super().__init__(anyType)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def setBasicColorP(self, basicColor: BasicColor) -> None:

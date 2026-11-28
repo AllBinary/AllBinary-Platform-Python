@@ -15,11 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.layer.pickup.PickupLayer import PickupLayer
 from org.allbinary.game.tick.TickableInterface import TickableInterface
 
 
+@java_inherited_overloads
 class FallingPickupLayer(*java_bases(PickupLayer, TickableInterface)):
     NAME: str = "FallingPickupLayer"
     

@@ -15,12 +15,17 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.validate.ValidationComponentInterface import ValidationComponentInterface
 from views.business.context.modules.storefront.customizer.hedges.header.TopBarView import TopBarView
 
 
+@java_inherited_overloads
 class NewHeaderValidationView(*java_bases(TopBarView, ValidationComponentInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -28,10 +33,11 @@ class NewHeaderValidationView(*java_bases(TopBarView, ValidationComponentInterfa
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         from org.allbinary.logic.visual.transform.template.customizer.hedges.heading.HeadingValidation import HeadingValidation
         super().__init__(transformInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
         self.heading = HeadingValidation()
     
 
@@ -83,7 +89,7 @@ class NewHeaderValidationView(*java_bases(TopBarView, ValidationComponentInterfa
     # throws Exception
     def getTransformInfoInterface(self) -> TransformInfoInterface:
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-        return super().getTransformInfoInterface()
+        return java_super_call(super(), "getTransformInfoInterface")
 # from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 # from org.allbinary.logic.communication.log.LogUtil import LogUtil
 # from org.allbinary.logic.string.StringMaker import StringMaker

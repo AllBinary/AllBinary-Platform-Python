@@ -15,9 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.displayable.canvas.CommandFormInputProcessor import CommandFormInputProcessor
 
 
+@java_inherited_overloads
 class PopupCommandFormInputProcessor(CommandFormInputProcessor):
     
 
@@ -30,13 +33,13 @@ class PopupCommandFormInputProcessor(CommandFormInputProcessor):
 
     # throws Exception
     def processInput(self, key: int) -> int:
-        return super().processInput(key)
+        return java_super_call(super(), "processInput", key)
     
 
     # throws Exception
     def processMotionInput(self, motionGestureEvent: MotionGestureEvent) -> None:
         from org.allbinary.input.motion.gesture.observer.MotionGestureEvent import MotionGestureEvent
-        super().processMotionInput(motionGestureEvent)
+        java_super_call(super(), "processMotionInput", motionGestureEvent)
 # from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
 # from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
 # from org.allbinary.input.motion.gesture.observer.MotionGestureEvent import MotionGestureEvent

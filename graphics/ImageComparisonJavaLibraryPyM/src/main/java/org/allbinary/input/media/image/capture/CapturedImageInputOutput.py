@@ -25,7 +25,7 @@ class CapturedImageInputOutput(ImageIOInterface):
         self.logUtil: LogUtil = LogUtil.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -60,7 +60,9 @@ class CapturedImageInputOutput(ImageIOInterface):
         imagePersistanceUtil.saveWithImageIO(filePath, bufferedImage)
 
     def save(self, *args):
-        return getattr(self, "save_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("save_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().save(*args)
 # from java.awt.image.BufferedImage import BufferedImage
 # from org.allbinary.input.automation.ImageOutputData import ImageOutputData
 # from org.allbinary.logic.communication.log.LogUtil import LogUtil

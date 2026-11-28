@@ -15,10 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from java.io.Reader import Reader
 
 
+@java_inherited_overloads
 class NullReader(Reader):
     NULL_READER: NullReader = None
 
@@ -36,7 +38,9 @@ class NullReader(Reader):
         return -1
 
     def read(self, *args):
-        return getattr(self, "read_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("read_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().read(*args)
     
 
     # throws IOException

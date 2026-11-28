@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -40,7 +41,7 @@ class GameGraphicsResourceUtil:
 
     def __init__(self) -> None:
         from org.allbinary.string.CommonStrings import CommonStrings
-        self._init_fields()
+        __class__._init_fields(self)
         try:
             self.name = self.getString()
         except Exception as e:
@@ -91,7 +92,7 @@ class GameGraphicsResourceUtil:
                 stringBuffer.append(self.SPRITE)
             else:
                 raise Exception("None/Unknown Sub Image Resource Type Specified")
-        elif OpenGLFeatureUtil.getInstance().isAnyThreed():
+        elif java_predicate(OpenGLFeatureUtil.getInstance(), "isAnyThreed"):
             stringBuffer.append(CanvasStrings.getInstance().OBJ_MODEL)
         else:
             raise Exception("None/Unknown Main Image Resource Type Specified")

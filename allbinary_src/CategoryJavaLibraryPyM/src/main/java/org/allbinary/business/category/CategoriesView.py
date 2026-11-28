@@ -21,16 +21,17 @@ from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 class CategoriesView(DomNodeInterface):
 
     def _init_fields(self) -> None:
-        self.categoryInterface: CategoryInterface = None
+        if "categoryInterface" not in vars(self): self.categoryInterface: CategoryInterface = None
     
 
     def __init__(self, categoryInterface: CategoryInterface) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.categoryInterface = categoryInterface
     
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
+        from org.allbinary.business.category.CategoryView import CategoryView
         from org.w3c.dom.Document import Document
         from org.w3c.dom.Node import Node
         node: Node = CategoryView(self.categoryInterface).toXmlNode(document)

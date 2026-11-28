@@ -15,37 +15,49 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.paint.PaintableInterface import PaintableInterface
 from org.allbinary.layer.Layer import Layer
 from org.allbinary.layer.NamedInterface import NamedInterface
 
 
+@java_inherited_overloads
 class AllBinaryTiledLayer(*java_bases(Layer, NamedInterface, PaintableInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("cellWidth", 0)
+        vars(self).setdefault("cellHeight", 0)
+        vars(self).setdefault("halfWidth", 0)
+        vars(self).setdefault("halfHeight", 0)
+        vars(self).setdefault("halfCellWidth", 0)
+        vars(self).setdefault("halfCellHeight", 0)
+        vars(self).setdefault("dataId", None)
 
     def _init_fields(self) -> None:
-        self.cellWidth: int = None
-        self.cellHeight: int = None
-        self.halfWidth: int = None
-        self.halfHeight: int = None
-        self.halfCellWidth: int = None
-        self.halfCellHeight: int = None
-        self.dataId: int = None
+        if "cellWidth" not in vars(self): self.cellWidth: int = 0
+        if "cellHeight" not in vars(self): self.cellHeight: int = 0
+        if "halfWidth" not in vars(self): self.halfWidth: int = 0
+        if "halfHeight" not in vars(self): self.halfHeight: int = 0
+        if "halfCellWidth" not in vars(self): self.halfCellWidth: int = 0
+        if "halfCellHeight" not in vars(self): self.halfCellHeight: int = 0
+        if "dataId" not in vars(self): self.dataId: int = None
     
 
     def __init__(self, dataId: int, width: int, height: int, cellWidth: int, cellHeight: int) -> None:
+        __class__._java_defaults(self)
         super().__init__(0, 0)
-        self._init_fields()
+        __class__._init_fields(self)
         self.dataId = dataId
         self.setLayerWidth(width)
         self.setLayerHeight(height)
-        super().setPosition(0, 0, 0)
+        java_super_call(super(), "setPosition", 0, 0, 0)
         self.cellWidth = cellWidth
         self.cellHeight = cellHeight
         self.halfWidth = (self.getWidth() >> 1)
         self.halfHeight = (self.getHeight() >> 1)
-        self.halfCellWidth = (cellWidth >> 1)
-        self.halfCellHeight = (cellHeight >> 1)
+        self.halfCellWidth = (int(cellWidth) >> (int(1) & 31))
+        self.halfCellHeight = (int(cellHeight) >> (int(1) & 31))
     
 
     def setCells(self, mapTwoDArray: list[list[int]]) -> None:
@@ -78,7 +90,7 @@ class AllBinaryTiledLayer(*java_bases(Layer, NamedInterface, PaintableInterface)
     
 
     def getName(self) -> str:
-        return type(self).__module__ + "." + type(self).__qualname__
+        return __import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(self))
     
 
     def paint(self, graphics: Graphics) -> None:

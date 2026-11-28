@@ -15,31 +15,42 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.animation.image.ImageBaseRotationAnimation import ImageBaseRotationAnimation
 
 
+@java_inherited_overloads
 class AllBinaryFlickerAndroidImageRotationAnimation(ImageBaseRotationAnimation):
+    def _java_defaults(self):
+        vars(self).setdefault("imageModifierUtil", None)
+        vars(self).setdefault("androidImageUtil", None)
+        vars(self).setdefault("matrix", None)
+        vars(self).setdefault("halfWidth", 0)
+        vars(self).setdefault("halfHeight", 0)
+        vars(self).setdefault("increment", 0)
+        vars(self).setdefault("originalImage", None)
 
     def _init_fields(self) -> None:
         from android.graphics.Matrix import Matrix
-        from javax.microedition.lcdui.Image import Image
         from org.allbinary.media.image.AndroidImageUtil import AndroidImageUtil
         from org.allbinary.media.image.ImageModifierUtil import ImageModifierUtil
         self.imageModifierUtil: ImageModifierUtil = ImageModifierUtil.getInstanceOrCreate()
         self.androidImageUtil: AndroidImageUtil = AndroidImageUtil.getInstance()
         self.matrix: Matrix = Matrix()
-        self.halfWidth: int = None
-        self.halfHeight: int = None
-        self.increment: int = None
-        self.originalImage: Image = None
+        if "halfWidth" not in vars(self): self.halfWidth: int = 0
+        if "halfHeight" not in vars(self): self.halfHeight: int = 0
+        if "increment" not in vars(self): self.increment: int = 0
+        if "originalImage" not in vars(self): self.originalImage: Image = None
     
 
     def __init__(self, originalImage: Image, image: Image, angleInfo: AngleInfo, totalAngle: int, animationBehavior: AnimationBehavior) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         from org.allbinary.math.AngleInfo import AngleInfo
         super().__init__(image, angleInfo, totalAngle, animationBehavior)
-        self._init_fields()
+        __class__._init_fields(self)
         self.originalImage = originalImage
         self.halfWidth = (image.getWidth() >> 1)
         self.halfHeight = (image.getHeight() >> 1)
@@ -52,7 +63,7 @@ class AllBinaryFlickerAndroidImageRotationAnimation(ImageBaseRotationAnimation):
         if self.getBasicColorP() is None or int(self.getBasicColorP()) != int(basicColor):
             self.imageModifierUtil.setColor(self.originalImage, self.getImage(), 0, basicColor)
             changed = True
-        super().setBasicColorP(basicColor)
+        java_super_call(super(), "setBasicColorP", basicColor)
         if changed:
             self.matrix.setRotate(0.0, float(self.halfWidth), float(self.halfHeight))
             self.updateImage()
@@ -67,7 +78,7 @@ class AllBinaryFlickerAndroidImageRotationAnimation(ImageBaseRotationAnimation):
         changed: bool = False
         if self.alphaP != alpha:
             changed = True
-        super().setAlpha(alpha)
+        java_super_call(super(), "setAlpha", alpha)
         self.imageModifierUtil.setAlpha(self.originalImage, self.getImage(), 0, self.alphaP)
         if changed:
             self.matrix.setRotate(0.0, float(self.halfWidth), float(self.halfHeight))
@@ -75,13 +86,13 @@ class AllBinaryFlickerAndroidImageRotationAnimation(ImageBaseRotationAnimation):
     
 
     def nextRotation(self) -> None:
-        super().nextRotation()
+        java_super_call(super(), "nextRotation")
         self.matrix.setRotate(float(self.increment), float(self.halfWidth), float(self.halfHeight))
         self.updateImage()
     
 
     def previousRotation(self) -> None:
-        super().previousRotation()
+        java_super_call(super(), "previousRotation")
         self.matrix.setRotate(float(-self.increment), float(self.halfWidth), float(self.halfHeight))
         self.updateImage()
     

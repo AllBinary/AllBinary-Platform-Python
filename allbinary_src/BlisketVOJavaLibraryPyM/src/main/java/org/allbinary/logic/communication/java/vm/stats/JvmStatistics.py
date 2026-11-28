@@ -15,17 +15,19 @@
 
 from __future__ import annotations
 
+from java.lang.Runtime import Runtime
+from java.lang.JavaRuntimeStatic import java_divide
 import threading
 
 
 class JvmStatistics:
 
     def _init_fields(self) -> None:
-        self.runtime: Runtime = None
+        if "runtime" not in vars(self): self.runtime: Runtime = None
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.runtime = Runtime.getRuntime()
     
 

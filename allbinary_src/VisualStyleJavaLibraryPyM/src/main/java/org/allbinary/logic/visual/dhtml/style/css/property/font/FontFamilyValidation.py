@@ -15,12 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.validate.ValidationInterface import ValidationInterface
 from org.allbinary.logic.visual.dhtml.style.css.property.font.FontFamilyView import FontFamilyView
 
 
+@java_inherited_overloads
 class FontFamilyValidation(*java_bases(FontFamilyView, ValidationInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -28,20 +32,22 @@ class FontFamilyValidation(*java_bases(FontFamilyView, ValidationInterface)):
 
     def __init__(self, *args) -> None:
         if len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
         elif len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
     
 
     def _constructor0(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def _constructor1(self, node: Node) -> None:
+        __class__._java_defaults(self)
         from org.w3c.dom.Node import Node
         super().__init__(node)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception

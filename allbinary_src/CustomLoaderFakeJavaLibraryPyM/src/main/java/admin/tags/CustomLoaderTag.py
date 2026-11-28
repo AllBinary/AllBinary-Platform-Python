@@ -15,21 +15,28 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from tags.CustomTagSupport import CustomTagSupport
 
 
+@java_inherited_overloads
 class CustomLoaderTag(CustomTagSupport):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("command", None)
+        vars(self).setdefault("webappPath", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.command: str = None
-        self.webappPath: str = None
+        if "command" not in vars(self): self.command: str = None
+        if "webappPath" not in vars(self): self.webappPath: str = None
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def setCommand(self, command: str) -> None:

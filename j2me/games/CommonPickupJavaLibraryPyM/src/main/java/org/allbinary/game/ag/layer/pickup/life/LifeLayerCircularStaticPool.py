@@ -15,16 +15,19 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.layer.AllBinaryLayerCircularPool import AllBinaryLayerCircularPool
 
 
+@java_inherited_overloads
 class LifeLayerCircularStaticPool(AllBinaryLayerCircularPool):
     
 
     def __init__(self, allbinaryLayerFactoryInterface: AllBinaryLayerFactoryInterface, total: int) -> None:
         from org.allbinary.layer.AllBinaryLayerFactoryInterface import AllBinaryLayerFactoryInterface
         super().__init__()
-        super().initAllBinaryLayerCircularPool(allbinaryLayerFactoryInterface, total)
+        java_super_call(super(), "initAllBinaryLayerCircularPool", allbinaryLayerFactoryInterface, total)
     
 
     # throws Exception

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.init.GameInitializationInterface import GameInitializationInterface
 
@@ -23,21 +24,20 @@ class BaseGameInitialization(GameInitializationInterface):
     NULL_BASE_GAME_INITIALIZATION: BaseGameInitialization = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.resource.ResourceInitialization import ResourceInitialization
-        self.resourceInitializationArray: list[ResourceInitialization] = None
-        self.portion: int = None
-        self.initialized: bool = False
+        if "resourceInitializationArray" not in vars(self): self.resourceInitializationArray: list[ResourceInitialization] = None
+        if "portion" not in vars(self): self.portion: int = 0
+        if "initialized" not in vars(self): self.initialized: bool = False
         self.EARLY_RESOURCES: int = 0
         self.GAME_RESOURCES: int = 1
         self.EARLY_CHANGABLE_RESOURCES: int = 2
         self.GAME_CHANGABLE_RESOURCES: int = 3
-        self.gameInitialized: bool = False
-        self.allLoaded: bool = False
+        if "gameInitialized" not in vars(self): self.gameInitialized: bool = False
+        if "allLoaded" not in vars(self): self.allLoaded: bool = False
     
 
     def __init__(self, resourceInitializationArray: list[ResourceInitialization], portion: int) -> None:
         from org.allbinary.game.resource.ResourceInitialization import ResourceInitialization
-        self._init_fields()
+        __class__._init_fields(self)
         self.resourceInitializationArray = resourceInitializationArray
         self.portion = portion
     
@@ -74,7 +74,7 @@ class BaseGameInitialization(GameInitializationInterface):
         from org.allbinary.input.motion.button.CancelTouchButtonInputFactory import CancelTouchButtonInputFactory
         from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         resourceLoadingLevelFactory: ResourceLoadingLevelFactory = ResourceLoadingLevelFactory.getInstance()
-        if not self.isInitialized() and (level == resourceLoadingLevelFactory.LOAD_ALL.getLevel() or level == resourceLoadingLevelFactory.LOAD_EARLY.getLevel()):
+        if not (java_predicate(self, "isInitialized")) and (level == resourceLoadingLevelFactory.LOAD_ALL.getLevel() or level == resourceLoadingLevelFactory.LOAD_EARLY.getLevel()):
             localPortion: int = 40
             if level == resourceLoadingLevelFactory.LOAD_EARLY.getLevel():
                 localPortion = 8

@@ -15,25 +15,30 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.displayable.canvas.GameCommandCanvas import GameCommandCanvas
 
 
+@java_inherited_overloads
 class BasicPaintablesCanvas(GameCommandCanvas):
+    def _java_defaults(self):
+        vars(self).setdefault("paintableArray", None)
+        vars(self).setdefault("colorFillPaintable", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.paint.ColorFillBasePaintable import ColorFillBasePaintable
-        from org.allbinary.graphics.paint.Paintable import Paintable
-        self.paintableArray: list[Paintable] = None
-        self.colorFillPaintable: ColorFillBasePaintable = None
+        if "paintableArray" not in vars(self): self.paintableArray: list[Paintable] = None
+        if "colorFillPaintable" not in vars(self): self.colorFillPaintable: ColorFillBasePaintable = None
     
 
     def __init__(self, cmdListener: CommandListener, name: str, allBinaryGameLayerManager: AllBinaryGameLayerManager, paintableArray: list[Paintable]) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.CommandListener import CommandListener
         from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
         from org.allbinary.game.paint.ColorFillPaintableFactory import ColorFillPaintableFactory
         from org.allbinary.graphics.paint.Paintable import Paintable
         super().__init__(cmdListener, name, allBinaryGameLayerManager.getBackgroundBasicColor(), allBinaryGameLayerManager.getForegroundBasicColor())
-        self._init_fields()
+        __class__._init_fields(self)
         self.paintableArray = paintableArray
         self.colorFillPaintable = ColorFillPaintableFactory.getInstance().getInstance(allBinaryGameLayerManager.getBackgroundBasicColor(), False)
     
@@ -44,7 +49,7 @@ class BasicPaintablesCanvas(GameCommandCanvas):
         graphics.setColor(self.foregroundColor)
         for index in range(len(self.paintableArray) - 1, 0 - 1, -1):
             self.paintableArray[index].paint(graphics)
-        super().paint(graphics)
+        java_super_call(super(), "paint", graphics)
 # from javax.microedition.lcdui.CommandListener import CommandListener
 # from javax.microedition.lcdui.Graphics import Graphics
 # from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager

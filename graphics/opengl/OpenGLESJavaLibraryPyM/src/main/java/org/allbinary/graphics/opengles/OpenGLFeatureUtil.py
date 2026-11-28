@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -22,7 +23,7 @@ class OpenGLFeatureUtil:
     instance: OpenGLFeatureUtil = None
 
     def _init_fields(self) -> None:
-        self.anyThreed: bool = None
+        if "anyThreed" not in vars(self): self.anyThreed: bool = False
     
 
     @staticmethod
@@ -31,12 +32,14 @@ class OpenGLFeatureUtil:
     
 
     def __init__(self) -> None:
+        from org.allbinary.graphics.opengles.OpenGLConfiguration import OpenGLConfiguration
+        from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
         from org.allbinary.game.configuration.feature.Features import Features
-        self._init_fields()
+        __class__._init_fields(self)
         openGLConfiguration: OpenGLConfiguration = OpenGLConfiguration.getInstance()
         features: Features = Features.getInstance()
         openGLFeatureFactory: OpenGLFeatureFactory = OpenGLFeatureFactory.getInstance()
-        self.anyThreed = openGLConfiguration.isOpenGL() and (features.isFeature(openGLFeatureFactory.OPENGL_2D_AND_3D) or features.isFeature(openGLFeatureFactory.OPENGL_3D))
+        self.anyThreed = java_predicate(openGLConfiguration, "isOpenGL") and (features.isFeature(openGLFeatureFactory.OPENGL_2D_AND_3D) or features.isFeature(openGLFeatureFactory.OPENGL_3D))
     
 
     def isAnyThreed(self) -> bool:

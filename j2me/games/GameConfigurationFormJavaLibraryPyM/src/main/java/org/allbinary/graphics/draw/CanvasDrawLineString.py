@@ -23,17 +23,16 @@ class CanvasDrawLineString(UpdateMyFontInterface):
     NULL_CANVAS_DRAW_LINE_STRING: CanvasDrawLineString = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
         self.drawStringUtil: DrawStringUtil = DrawStringUtil.getInstance()
         self.myFontProcessor: MyFontProcessor = UpdateMyFontProcessor(self)
-        self.x: int = None
-        self.y: int = None
+        if "x" not in vars(self): self.x: int = 0
+        if "y" not in vars(self): self.y: int = 0
         self.fontHeight: int = 0
     
 
     def __init__(self, x: int, y: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.x = x
         self.y = y
     

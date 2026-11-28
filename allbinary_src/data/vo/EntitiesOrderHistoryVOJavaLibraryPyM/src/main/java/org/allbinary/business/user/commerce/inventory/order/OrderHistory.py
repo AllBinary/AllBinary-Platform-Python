@@ -15,55 +15,71 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import datetime
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.business.user.commerce.inventory.order.Order import Order
 from org.allbinary.business.user.commerce.inventory.order.OrderHistoryInterface import OrderHistoryInterface
 
 
+@java_inherited_overloads
 class OrderHistory(*java_bases(Order, OrderHistoryInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("userName", None)
+        vars(self).setdefault("shippingAddress", None)
+        vars(self).setdefault("billingAddress", None)
+        vars(self).setdefault("payment", None)
+        vars(self).setdefault("shipDate", None)
+        vars(self).setdefault("orderDate", None)
+        vars(self).setdefault("transDate", None)
+        vars(self).setdefault("cancelDate", None)
+        vars(self).setdefault("status", None)
+        vars(self).setdefault("subTotal", None)
+        vars(self).setdefault("shippingCost", None)
+        vars(self).setdefault("taxes", None)
+        vars(self).setdefault("total", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.user.address.StreetAddress import StreetAddress
-        from org.allbinary.business.user.commerce.money.Money import Money
-        from org.allbinary.business.user.commerce.money.payment.Payment import Payment
-        self.userName: str = None
-        self.shippingAddress: StreetAddress = None
-        self.billingAddress: StreetAddress = None
-        self.payment: Payment = None
-        self.shipDate: str = None
-        self.orderDate: str = None
-        self.transDate: str = None
-        self.cancelDate: str = None
-        self.status: str = None
-        self.subTotal: Money = None
-        self.shippingCost: Money = None
-        self.taxes: Money = None
-        self.total: Money = None
+        if "userName" not in vars(self): self.userName: str = None
+        if "shippingAddress" not in vars(self): self.shippingAddress: StreetAddress = None
+        if "billingAddress" not in vars(self): self.billingAddress: StreetAddress = None
+        if "payment" not in vars(self): self.payment: Payment = None
+        if "shipDate" not in vars(self): self.shipDate: str = None
+        if "orderDate" not in vars(self): self.orderDate: str = None
+        if "transDate" not in vars(self): self.transDate: str = None
+        if "cancelDate" not in vars(self): self.cancelDate: str = None
+        if "status" not in vars(self): self.status: str = None
+        if "subTotal" not in vars(self): self.subTotal: Money = None
+        if "shippingCost" not in vars(self): self.shippingCost: Money = None
+        if "taxes" not in vars(self): self.taxes: Money = None
+        if "total" not in vars(self): self.total: Money = None
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
         elif len(args) == 2:
-            self.__jconstructor2(*args)
+            __class__.__jconstructor2(self, *args)
 
     def __jconstructor2(self, *args) -> None:
-        if True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)):
-            self._constructor2_1(*args)
+        if True and (args[0] is None or any(base.__name__ == "BasketInterface" for base in type(args[0]).__mro__)) and (args[1] is None or any(base.__name__ == "OrderHistory" for base in type(args[1]).__mro__)):
+            __class__._constructor2_1(self, *args)
         else:
-            self._constructor2_2(*args)
+            __class__._constructor2_2(self, *args)
     
 
     def _constructor1(self, basketInterface: BasketInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.user.commerce.inventory.basket.BasketInterface import BasketInterface
         super().__init__(basketInterface)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def _constructor2_1(self, basketInterface: BasketInterface, orderHistory: OrderHistory) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.user.commerce.inventory.basket.BasketInterface import BasketInterface
         super().__init__(orderHistory.getStoreName(), basketInterface, orderHistory.getId(), orderHistory.getShippingMethod(), orderHistory.getSpecial(), orderHistory.getPaymentMethod())
-        self._init_fields()
+        __class__._init_fields(self)
         self.userName = orderHistory.getUserName()
         self.shippingAddress = orderHistory.getShippingAddress()
         self.billingAddress = orderHistory.getBillingAddress()
@@ -77,13 +93,28 @@ class OrderHistory(*java_bases(Order, OrderHistoryInterface)):
         self.shippingCost = orderHistory.getShippingCost()
         self.taxes = orderHistory.getTaxes()
         self.total = orderHistory.getTotal()
-        super().setUserComments(orderHistory.getUserComments())
-        super().setUserCancelComments(orderHistory.getUserCancelComments())
-        super().setStoreComments(orderHistory.getStoreComments())
-        super().setStoreCancelComments(orderHistory.getStoreCancelComments())
+        java_super_call(super(), "setUserComments", orderHistory.getUserComments())
+        java_super_call(super(), "setUserCancelComments", orderHistory.getUserCancelComments())
+        java_super_call(super(), "setStoreComments", orderHistory.getStoreComments())
+        java_super_call(super(), "setStoreCancelComments", orderHistory.getStoreCancelComments())
     
 
     def _constructor2_2(self, basketInterface: BasketInterface, orderHistoryHashMap: HashMap) -> None:
+        __class__._java_defaults(self)
+        from org.allbinary.business.user.commerce.inventory.order.OrderData import OrderData
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.business.user.commerce.inventory.order.OrderData import OrderData
+        from org.allbinary.business.user.commerce.inventory.order.OrderData import OrderData
+        from org.allbinary.business.user.commerce.inventory.order.OrderData import OrderData
+        from org.allbinary.business.user.commerce.inventory.order.OrderData import OrderData
         from java.util.HashMap import HashMap
         from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
         from org.allbinary.business.entry.EntryData import EntryData
@@ -98,7 +129,7 @@ class OrderHistory(*java_bases(Order, OrderHistoryInterface)):
         from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
         from org.allbinary.business.user.commerce.shipping.ShippingMethodData import ShippingMethodData
         super().__init__(orderHistoryHashMap.get(StoreFrontData.getInstance().NAME), basketInterface, orderHistoryHashMap.get(OrderData.ID), orderHistoryHashMap.get(ShippingMethodData.NAME), orderHistoryHashMap.get(EntryData.getInstance().SPECIAL), orderHistoryHashMap.get(PaymentData.METHOD))
-        self._init_fields()
+        __class__._init_fields(self)
         self.shippingAddress = StreetAddress(orderHistoryHashMap.get(ShippingAddressData.NAME), orderHistoryHashMap.get(ShippingAddressData.STREET), orderHistoryHashMap.get(ShippingAddressData.CITY), orderHistoryHashMap.get(ShippingAddressData.STATE), orderHistoryHashMap.get(ShippingAddressData.CODE), orderHistoryHashMap.get(ShippingAddressData.COUNTRY))
         self.billingAddress = StreetAddress(orderHistoryHashMap.get(BillingAddressData.NAME), orderHistoryHashMap.get(BillingAddressData.STREET), orderHistoryHashMap.get(BillingAddressData.CITY), orderHistoryHashMap.get(BillingAddressData.STATE), orderHistoryHashMap.get(BillingAddressData.CODE), orderHistoryHashMap.get(BillingAddressData.COUNTRY))
         self.payment = Payment(orderHistoryHashMap)
@@ -112,10 +143,10 @@ class OrderHistory(*java_bases(Order, OrderHistoryInterface)):
         self.total = Money(orderHistoryHashMap.get(OrderHistoryData.TOTAL))
         self.shippingCost = Money(orderHistoryHashMap.get(OrderHistoryData.SHIPPINGCOST))
         self.taxes = Money(orderHistoryHashMap.get(OrderHistoryData.TAX))
-        super().setUserComments(orderHistoryHashMap.get(OrderData.CUSTOMERCOMMENT))
-        super().setUserCancelComments(orderHistoryHashMap.get(OrderData.CUSTOMERCANCELCOMMENT))
-        super().setStoreComments(orderHistoryHashMap.get(OrderData.STORECOMMENT))
-        super().setStoreCancelComments(orderHistoryHashMap.get(OrderData.STORECANCELCOMMENT))
+        java_super_call(super(), "setUserComments", orderHistoryHashMap.get(OrderData.CUSTOMERCOMMENT))
+        java_super_call(super(), "setUserCancelComments", orderHistoryHashMap.get(OrderData.CUSTOMERCANCELCOMMENT))
+        java_super_call(super(), "setStoreComments", orderHistoryHashMap.get(OrderData.STORECOMMENT))
+        java_super_call(super(), "setStoreCancelComments", orderHistoryHashMap.get(OrderData.STORECANCELCOMMENT))
     
 
     def setUserName(self, value: str) -> None:
@@ -237,6 +268,19 @@ class OrderHistory(*java_bases(Order, OrderHistoryInterface)):
     
 
     def toHashMap(self) -> HashMap:
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
         from java.util.HashMap import HashMap
         from org.allbinary.business.user.UserData import UserData
         from org.allbinary.logic.StdUtil import StdUtil
@@ -260,6 +304,7 @@ class OrderHistory(*java_bases(Order, OrderHistoryInterface)):
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
+        from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
         from java.util.HashMap import HashMap
         from java.util.Set import Set
         from org.allbinary.business.user.address.BillingAddressData import BillingAddressData
@@ -273,7 +318,7 @@ class OrderHistory(*java_bases(Order, OrderHistoryInterface)):
         keyArray: list[object] = keySet.toArray()
         size: int = len(keyArray)
         node: Node = document.createElement(OrderHistoryData.ORDERHISTORY)
-        node.appendChild(super().toXmlNode(document))
+        node.appendChild(java_super_call(super(), "toXmlNode", document))
         billingAddressNode: Node = document.createElement(BillingAddressData.BILLINGADDRESS)
         billingAddressNode.appendChild(self.billingAddress.toXmlNode(document))
         shippingAddressNode: Node = document.createElement(ShippingAddressData.SHIPPINGADDRESS)
@@ -290,7 +335,7 @@ class OrderHistory(*java_bases(Order, OrderHistoryInterface)):
     
 
     def getPaymentMethod(self) -> str:
-        return super().getPaymentMethod()
+        return java_super_call(super(), "getPaymentMethod")
 # from java.util.Date import Date
 # from java.util.HashMap import HashMap
 # from java.util.Set import Set

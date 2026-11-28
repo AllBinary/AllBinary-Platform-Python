@@ -15,10 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.game.media.graphics.geography.map.racetrack.BasePathFinderGraphVisitor import BasePathFinderGraphVisitor
 
 
+@java_inherited_overloads
 class PathFinderGraphHackVisitor(BasePathFinderGraphVisitor):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -26,9 +31,10 @@ class PathFinderGraphHackVisitor(BasePathFinderGraphVisitor):
     
 
     def __init__(self, geographicMapInterface: BasicGeographicMap, edgeMinimum: int, minPathWeight: int, maxPathWeight: int) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
         super().__init__(geographicMapInterface, edgeMinimum, minPathWeight, maxPathWeight)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception

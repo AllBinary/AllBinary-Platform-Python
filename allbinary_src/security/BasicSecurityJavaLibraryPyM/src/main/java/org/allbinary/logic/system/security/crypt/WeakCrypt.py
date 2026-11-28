@@ -33,7 +33,7 @@ class WeakCrypt:
     def __init__(self, key: int) -> None:
         from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
-        self._init_fields()
+        __class__._init_fields(self)
         try:
             self.abCrypt.init(WeakCrypt.keys[key])
         except Exception as e:

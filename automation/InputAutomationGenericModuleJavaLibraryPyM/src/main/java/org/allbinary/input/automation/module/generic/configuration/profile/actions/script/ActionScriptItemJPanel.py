@@ -15,22 +15,31 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 # from javax.swing.JPanel import JPanel
 
 
+@java_inherited_overloads
 class ActionScriptItemJPanel(JPanel):
+    def _java_defaults(self):
+        vars(self).setdefault("childActionScriptConditionJPanel", None)
+        vars(self).setdefault("newActionScriptConditionJPanel", None)
+        vars(self).setdefault("newActionScriptInputJPanel", None)
+        vars(self).setdefault("removeJPanel", None)
+        vars(self).setdefault("scriptItemJPanel", None)
 
     def _init_fields(self) -> None:
-        self.childActionScriptConditionJPanel: JPanel = None
-        self.newActionScriptConditionJPanel: JPanel = None
-        self.newActionScriptInputJPanel: JPanel = None
-        self.removeJPanel: JPanel = None
-        self.scriptItemJPanel: JPanel = None
+        if "childActionScriptConditionJPanel" not in vars(self): self.childActionScriptConditionJPanel: JPanel = None
+        if "newActionScriptConditionJPanel" not in vars(self): self.newActionScriptConditionJPanel: JPanel = None
+        if "newActionScriptInputJPanel" not in vars(self): self.newActionScriptInputJPanel: JPanel = None
+        if "removeJPanel" not in vars(self): self.removeJPanel: JPanel = None
+        if "scriptItemJPanel" not in vars(self): self.scriptItemJPanel: JPanel = None
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.initComponents()
     
 

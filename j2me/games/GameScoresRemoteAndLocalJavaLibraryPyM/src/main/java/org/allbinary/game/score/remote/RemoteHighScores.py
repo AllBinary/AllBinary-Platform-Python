@@ -15,35 +15,44 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.score.HighScores import HighScores
 
 
+@java_inherited_overloads
 class RemoteHighScores(HighScores):
     hashTable: ABHashtable[object, object] = None
     _lock = threading.RLock()
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("enumerationUtil", None)
+        vars(self).setdefault("abeClientInformation", None)
+        vars(self).setdefault("softwareInformation", None)
+        vars(self).setdefault("ascending", None)
+        vars(self).setdefault("ASCENDING", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.logic.system.SoftwareInformation import SoftwareInformation
-        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         from org.allbinary.util.EnumerationUtil import EnumerationUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.enumerationUtil: EnumerationUtil = EnumerationUtil.getInstance()
-        self.abeClientInformation: AbeClientInformationInterface = None
-        self.softwareInformation: SoftwareInformation = None
-        self.ascending: bool = None
+        if "abeClientInformation" not in vars(self): self.abeClientInformation: AbeClientInformationInterface = None
+        if "softwareInformation" not in vars(self): self.softwareInformation: SoftwareInformation = None
+        if "ascending" not in vars(self): self.ascending: bool = None
         self.ASCENDING: str = "ASCENDING"
     
 
     def __init__(self, abeClientInformation: AbeClientInformationInterface, softwareInformation: SoftwareInformation, gameInfo: GameInfo, heading: str, columnTwoHeading: str, ascending: bool, preload: bool) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.score.remote.RemoteHighScoresProcessorFactory import RemoteHighScoresProcessorFactory
         from org.allbinary.game.GameInfo import GameInfo
         from org.allbinary.logic.system.SoftwareInformation import SoftwareInformation
         from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         super().__init__(str(gameInfo), heading, columnTwoHeading)
-        self._init_fields()
+        __class__._init_fields(self)
         self.abeClientInformation = abeClientInformation
         self.softwareInformation = softwareInformation
         self.setAscending(ascending)

@@ -15,41 +15,51 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.displayable.canvas.GameCommandCanvas import GameCommandCanvas
 from org.allbinary.game.score.HighScoresResultsListener import HighScoresResultsListener
 
 
+@java_inherited_overloads
 class HighScoresCanvas(*java_bases(GameCommandCanvas, HighScoresResultsListener)):
     NAME: str = "HighScoresCanvas"
+    def _java_defaults(self):
+        vars(self).setdefault("paintable", None)
+        vars(self).setdefault("highScoreCommandsFactory", None)
+        vars(self).setdefault("waitPaintable", None)
+        vars(self).setdefault("highScoresPaintable", None)
+        vars(self).setdefault("highScoresFactoryInterface", None)
+        vars(self).setdefault("colorFillPaintable", None)
+        vars(self).setdefault("highScoresHelper", None)
+        vars(self).setdefault("gameInfo", None)
+        vars(self).setdefault("highScoresCanvasInputProcessor", None)
+        vars(self).setdefault("currentCommand", None)
+        vars(self).setdefault("hasPainted", False)
 
     def _init_fields(self) -> None:
-        from javax.microedition.lcdui.Command import Command
-        from org.allbinary.game.GameInfo import GameInfo
-        from org.allbinary.game.paint.ColorFillBasePaintable import ColorFillBasePaintable
         from org.allbinary.game.score.HighScoreCommandsFactory import HighScoreCommandsFactory
-        from org.allbinary.game.score.HighScoresCanvasInputProcessor import HighScoresCanvasInputProcessor
-        from org.allbinary.game.score.HighScoresFactoryInterface import HighScoresFactoryInterface
         from org.allbinary.game.score.HighScoresHelperBase import HighScoresHelperBase
-        from org.allbinary.game.score.HighScoresPaintable import HighScoresPaintable
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         from org.allbinary.graphics.paint.NullPaintable import NullPaintable
-        from org.allbinary.graphics.paint.Paintable import Paintable
         from org.allbinary.graphics.paint.SimpleTextPaintable import SimpleTextPaintable
         self.paintable: Paintable = NullPaintable.getInstance()
         self.highScoreCommandsFactory: HighScoreCommandsFactory = HighScoreCommandsFactory.getInstance()
         self.waitPaintable: SimpleTextPaintable = SimpleTextPaintable(self.commonStrings.PLEASE_WAIT_FOR_SERVER, BasicColorFactory.getInstance().WHITE)
-        self.highScoresPaintable: HighScoresPaintable = None
-        self.highScoresFactoryInterface: HighScoresFactoryInterface = None
-        self.colorFillPaintable: ColorFillBasePaintable = None
+        if "highScoresPaintable" not in vars(self): self.highScoresPaintable: HighScoresPaintable = None
+        if "highScoresFactoryInterface" not in vars(self): self.highScoresFactoryInterface: HighScoresFactoryInterface = None
+        if "colorFillPaintable" not in vars(self): self.colorFillPaintable: ColorFillBasePaintable = None
         self.highScoresHelper: HighScoresHelperBase = HighScoresHelperBase()
-        self.gameInfo: GameInfo = None
-        self.highScoresCanvasInputProcessor: HighScoresCanvasInputProcessor = None
+        if "gameInfo" not in vars(self): self.gameInfo: GameInfo = None
+        if "highScoresCanvasInputProcessor" not in vars(self): self.highScoresCanvasInputProcessor: HighScoresCanvasInputProcessor = None
         self.currentCommand: Command = self.highScoreCommandsFactory.HIGH_SCORE_COMMANDS[0]
         self.hasPainted: bool = False
     
 
     def __init__(self, commandListener: CommandListener, allBinaryGameLayerManager: AllBinaryGameLayerManager, gameInfo: GameInfo, paintable: HighScoresPaintable, highScoresFactoryInterface: HighScoresFactoryInterface, highScoresCanvasInputProcessorFactoryInterface: HighScoresCanvasInputProcessorFactoryInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.score.displayable.HighScoreRunnable import HighScoreRunnable
         from javax.microedition.lcdui.CommandListener import CommandListener
         from org.allbinary.game.GameInfo import GameInfo
@@ -61,7 +71,7 @@ class HighScoresCanvas(*java_bases(GameCommandCanvas, HighScoresResultsListener)
         from org.allbinary.game.score.NoHighScoresFactory import NoHighScoresFactory
         from org.allbinary.thread.SecondaryThreadPool import SecondaryThreadPool
         super().__init__(commandListener, HighScoresCanvas.NAME, allBinaryGameLayerManager.getBackgroundBasicColor(), allBinaryGameLayerManager.getForegroundBasicColor())
-        self._init_fields()
+        __class__._init_fields(self)
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
         self.highScoresPaintable = paintable
         self.highScoresFactoryInterface = highScoresFactoryInterface
@@ -88,13 +98,13 @@ class HighScoresCanvas(*java_bases(GameCommandCanvas, HighScoresResultsListener)
     
 
     def open(self) -> None:
-        super().open()
+        java_super_call(super(), "open")
         self.highScoresCanvasInputProcessor.open()
     
 
     # throws Exception
     def close(self) -> None:
-        super().close()
+        java_super_call(super(), "close")
         self.highScoresCanvasInputProcessor.close()
     
 
@@ -104,7 +114,7 @@ class HighScoresCanvas(*java_bases(GameCommandCanvas, HighScoresResultsListener)
         self.paintable.paint(graphics)
         if self.waitPaintable != self.paintable:
             self.highScoresCanvasInputProcessor.paint(graphics)
-        super().paint(graphics)
+        java_super_call(super(), "paint", graphics)
         self.hasPainted = True
     
 
@@ -160,7 +170,7 @@ class HighScoresCanvas(*java_bases(GameCommandCanvas, HighScoresResultsListener)
                 self.addCommand(self.highScoreCommandsFactory.HIGH_SCORE_COMMANDS[nextIndex])
         self.currentCommand = command
         self.close()
-        super().initMenu()
+        java_super_call(super(), "initMenu")
         self.open()
         self.repaintBehavior.onChangeRepaint(self)
     

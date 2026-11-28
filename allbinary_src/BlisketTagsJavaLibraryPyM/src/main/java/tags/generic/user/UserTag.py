@@ -15,18 +15,24 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from tags.StoreValidationTransformTag import StoreValidationTransformTag
 
 
+@java_inherited_overloads
 class UserTag(StoreValidationTransformTag):
+    def _java_defaults(self):
+        vars(self).setdefault("role", None)
 
     def _init_fields(self) -> None:
-        self.role: str = None
+        if "role" not in vars(self): self.role: str = None
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def setRole(self, value: str) -> None:
@@ -72,7 +78,7 @@ class UserTag(StoreValidationTransformTag):
                     raise Exception("View not implemented")
                 else:
                     raise Exception("No Such View Command: " + str(self.getCommand()))
-                return super().doStartTag()
+                return java_super_call(super(), "doStartTag")
             raise Exception("Command Null")
         except Exception as e:
             AbResponseHandler.sendJspTagRedirect(self.pageContext, e)

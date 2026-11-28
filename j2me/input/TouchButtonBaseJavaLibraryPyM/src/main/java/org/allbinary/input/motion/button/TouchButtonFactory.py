@@ -24,7 +24,6 @@ class TouchButtonFactory:
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         self.LIST: BasicArrayList = BasicArrayListUtil.getInstance().getImmutableInstance()
         self.list_: BasicArrayList = self.LIST
@@ -38,7 +37,7 @@ class TouchButtonFactory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def defaultList(self) -> None:
@@ -48,18 +47,18 @@ class TouchButtonFactory:
 
     def toggle(self, save: bool, list_: BasicArrayList) -> None:
         with self._lock:
-            return self._toggle_unlocked(save, list_)
+            return __class__.__dict__["_toggle_unlocked"].__get__(self, __class__)(save, list_)
 
     def _toggle_unlocked(self, save: bool, list_: BasicArrayList) -> None:
         from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         if list_ != BasicArrayListUtil.getInstance().getImmutableInstance():
             self.savedList = list_
-            if not self.saved:
+            if not (self.saved):
                 self.list_ = self.savedList
         else:
             if save:
-                if not self.saved:
+                if not (self.saved):
                     self.saved = True
                     self.savedList = self.list_
                     self.list_ = self.LIST

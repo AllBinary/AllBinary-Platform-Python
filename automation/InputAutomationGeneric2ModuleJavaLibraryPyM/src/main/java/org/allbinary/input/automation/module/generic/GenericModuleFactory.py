@@ -15,11 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.input.automation.module.AbstractInputAutomationFactory import AbstractInputAutomationFactory
 
 
+@java_inherited_overloads
 class GenericModuleFactory(AbstractInputAutomationFactory):
     NAME: str = None
     _lock = threading.RLock()
@@ -33,9 +35,11 @@ class GenericModuleFactory(AbstractInputAutomationFactory):
     # throws Exception
     def getInstance(self) -> RunnableInterface:
         with self._lock:
-            return self._getInstance_unlocked()
+            return __class__.__dict__["_getInstance_unlocked"].__get__(self, __class__)()
 
     def _getInstance_unlocked(self) -> RunnableInterface:
+        from org.allbinary.input.automation.module.generic.GenericInputAutomationAction import GenericInputAutomationAction
+        from org.allbinary.input.automation.module.generic.GenericInputAutomationWorker import GenericInputAutomationWorker
         from org.allbinary.input.automation.module.InputAutomationActionInterface import InputAutomationActionInterface
         from org.allbinary.input.automation.module.generic.configuration.GenericModuleConfigurationJPanel import GenericModuleConfigurationJPanel
         from org.allbinary.input.automation.module.generic.configuration.profile.GenericProfile import GenericProfile

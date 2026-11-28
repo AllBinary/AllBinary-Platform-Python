@@ -20,13 +20,14 @@ from __future__ import annotations
 class ImageProcessorInput:
 
     def _init_fields(self) -> None:
-        self.bufferedImageArray: list[BufferedImage] = None
-        self.files: list[File] = None
+        if "bufferedImageArray" not in vars(self): self.bufferedImageArray: list[BufferedImage] = None
+        if "files" not in vars(self): self.files: list[File] = None
     
 
     def __init__(self, files: list[File], bufferedImageArray: list[BufferedImage]) -> None:
+        from java.io.File import File
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.bufferedImageArray = bufferedImageArray
         self.files = files
     
@@ -36,6 +37,7 @@ class ImageProcessorInput:
     
 
     def getFiles(self) -> list[File]:
+        from java.io.File import File
         return self.files
 # from java.awt.image.BufferedImage import BufferedImage
 # from java.io.File import File

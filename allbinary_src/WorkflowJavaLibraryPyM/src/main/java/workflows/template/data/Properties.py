@@ -20,19 +20,18 @@ from __future__ import annotations
 class Properties:
 
     def _init_fields(self) -> None:
-        from java.util.HashMap import HashMap
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.propertiesHashMap: HashMap = None
+        if "propertiesHashMap" not in vars(self): self.propertiesHashMap: HashMap = None
     
 
     def __init__(self) -> None:
         from org.allbinary.logic.StdUtil import StdUtil
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-        self._init_fields()
+        __class__._init_fields(self)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
             self.logUtil.putF("Start/Tag", self, self.commonStrings.CONSTRUCTOR)
         self.propertiesHashMap = StdUtil.getInstance().createHashMap()

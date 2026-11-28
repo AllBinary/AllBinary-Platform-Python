@@ -15,22 +15,28 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.layer.pickup.PickedUpLayerInterfaceFactoryBase import PickedUpLayerInterfaceFactoryBase
 
 
+@java_inherited_overloads
 class PickedUpLayerInterfaceFactory(PickedUpLayerInterfaceFactoryBase):
+    def _java_defaults(self):
+        vars(self).setdefault("pickedUpLayerType", None)
+        vars(self).setdefault("iconLayer", None)
+        vars(self).setdefault("animationInterface", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.animation.Animation import Animation
-        self.pickedUpLayerType: PickedUpLayerType = None
-        self.iconLayer: IconLayer = None
-        self.animationInterface: Animation = None
+        if "pickedUpLayerType" not in vars(self): self.pickedUpLayerType: PickedUpLayerType = None
+        if "iconLayer" not in vars(self): self.iconLayer: IconLayer = None
+        if "animationInterface" not in vars(self): self.animationInterface: Animation = None
     
 
     def __init__(self, pickeUpLayerType: PickedUpLayerType, iconLayer: IconLayer, animationInterface: Animation) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.animation.Animation import Animation
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.pickedUpLayerType = pickeUpLayerType
         self.animationInterface = animationInterface
         self.iconLayer = iconLayer

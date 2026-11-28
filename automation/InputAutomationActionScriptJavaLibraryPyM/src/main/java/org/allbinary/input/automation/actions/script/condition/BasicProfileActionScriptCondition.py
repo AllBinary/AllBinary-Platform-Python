@@ -15,28 +15,35 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.input.automation.actions.script.ProfileActionScriptItem import ProfileActionScriptItem
 from org.allbinary.input.automation.actions.script.condition.ProfileActionScriptConditionInterface import ProfileActionScriptConditionInterface
 
 
+@java_inherited_overloads
 class BasicProfileActionScriptCondition(*java_bases(ProfileActionScriptItem, ProfileActionScriptConditionInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("profileActionProcessorInterfaceVector", None)
+        vars(self).setdefault("profileActionConditionInterfaceVector", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.profileActionProcessorInterfaceVector: BasicArrayList = None
-        self.profileActionConditionInterfaceVector: BasicArrayList = None
+        if "profileActionProcessorInterfaceVector" not in vars(self): self.profileActionProcessorInterfaceVector: BasicArrayList = None
+        if "profileActionConditionInterfaceVector" not in vars(self): self.profileActionConditionInterfaceVector: BasicArrayList = None
 
     def __init__(self, *args) -> None:
         if len(args) == 2:
-            self._constructor2(*args)
+            __class__._constructor2(self, *args)
         elif len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
     
 
     def _constructor2(self, label: str, node: Node) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.input.automation.actions.script.condition.GenericProfileActionScriptConditionData import GenericProfileActionScriptConditionData
         from org.allbinary.input.automation.actions.script.condition.ProfileActionScriptConditionFactory import ProfileActionScriptConditionFactory
         from org.allbinary.input.automation.actions.script.condition.processors.input.GenericProfileActionScriptInputData import GenericProfileActionScriptInputData
@@ -46,7 +53,7 @@ class BasicProfileActionScriptCondition(*java_bases(ProfileActionScriptItem, Pro
         from org.w3c.dom.Node import Node
         from org.w3c.dom.NodeList import NodeList
         super().__init__(label, node)
-        self._init_fields()
+        __class__._init_fields(self)
         self.init()
         nodeList: NodeList = node.getChildNodes()
         for index in range(0, nodeList.getLength()):
@@ -78,8 +85,9 @@ class BasicProfileActionScriptCondition(*java_bases(ProfileActionScriptItem, Pro
     
 
     def _constructor1(self, label: str) -> None:
+        __class__._java_defaults(self)
         super().__init__(label)
-        self._init_fields()
+        __class__._init_fields(self)
         self.init()
     
 
@@ -197,7 +205,7 @@ class BasicProfileActionScriptCondition(*java_bases(ProfileActionScriptItem, Pro
         from org.allbinary.input.automation.actions.script.condition.processors.input.MouseActionScriptInput import MouseActionScriptInput
         from org.allbinary.input.automation.module.actions.script.condition.processors.output.ImageActionScriptOutput import ImageActionScriptOutput
         try:
-            super().actionPerformed(actionEvent)
+            java_super_call(super(), "actionPerformed", actionEvent)
             if actionEvent.getActionCommand().compareTo(self.DELETE) == 0:
                 if isinstance(self.getParent(), ProfileActionScriptNodeInterface):
                     profileActionScriptNodeInterface: ProfileActionScriptNodeInterface = self.getParent()
@@ -249,7 +257,7 @@ class BasicProfileActionScriptCondition(*java_bases(ProfileActionScriptItem, Pro
         size: int = profileActionConditionInterfaceVector.size()
         for index in range(0, size):
             profileActionScriptConditionInterface: ProfileActionScriptConditionInterface = profileActionConditionInterfaceVector.get(index)
-            if not profileActionScriptConditionInterface.shouldProcess(frame):
+            if not (profileActionScriptConditionInterface.shouldProcess(frame)):
                 return False
         return True
     

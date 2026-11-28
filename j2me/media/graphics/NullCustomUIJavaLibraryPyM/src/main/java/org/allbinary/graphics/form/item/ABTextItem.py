@@ -3,11 +3,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.form.item.CustomCustomItem import CustomCustomItem
 from org.allbinary.graphics.form.item.ABCustomItemInterface import ABCustomItemInterface
 
 
+@java_inherited_overloads
 class ABTextItem(*java_bases(CustomCustomItem, ABCustomItemInterface)):
     
 
@@ -31,20 +34,20 @@ class ABTextItem(*java_bases(CustomCustomItem, ABCustomItemInterface)):
     
 
     def getMinimumWidth(self) -> int:
-        return super().getMinimumWidth()
+        return java_super_call(super(), "getMinimumWidth")
     
 
     def getMinimumHeight(self) -> int:
-        return super().getMinimumHeight()
+        return java_super_call(super(), "getMinimumHeight")
     
 
     def getLabel(self) -> str:
-        return super().getLabel()
+        return java_super_call(super(), "getLabel")
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
         from javax.microedition.lcdui.Graphics import Graphics
-        super().paintXY(graphics, x, y)
+        java_super_call(super(), "paintXY", graphics, x, y)
 # from javax.microedition.lcdui.Graphics import Graphics
 # from org.allbinary.graphics.color.BasicColor import BasicColor
 

@@ -20,17 +20,16 @@ from __future__ import annotations
 class ImageArrayRotationAnimationInfo:
 
     def _init_fields(self) -> None:
-        from javax.microedition.lcdui.Image import Image
-        self.imageArray: list[Image] = None
-        self.angleIncrement: int = None
-        self.totalAngle: int = None
-        self.dx: int = None
-        self.dy: int = None
+        if "imageArray" not in vars(self): self.imageArray: list[Image] = None
+        if "angleIncrement" not in vars(self): self.angleIncrement: int = 0
+        if "totalAngle" not in vars(self): self.totalAngle: int = 0
+        if "dx" not in vars(self): self.dx: int = 0
+        if "dy" not in vars(self): self.dy: int = 0
     
 
     def __init__(self, imageArray: list[Image], angleIncrement: int, totalAngle: int, dx: int, dy: int) -> None:
         from javax.microedition.lcdui.Image import Image
-        self._init_fields()
+        __class__._init_fields(self)
         self.imageArray = imageArray
         self.angleIncrement = angleIncrement
         self.totalAngle = totalAngle

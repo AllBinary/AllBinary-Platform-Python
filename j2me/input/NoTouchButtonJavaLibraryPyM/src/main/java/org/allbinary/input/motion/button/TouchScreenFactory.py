@@ -22,13 +22,13 @@ class TouchScreenFactory:
     SINGLETON: TouchScreenFactory = None
 
     def _init_fields(self) -> None:
-        self.multiTouch: bool = False
-        self.touch: bool = False
+        if "multiTouch" not in vars(self): self.multiTouch: bool = False
+        if "touch" not in vars(self): self.touch: bool = False
         self.touchScreenType: TouchScreenType = TouchScreenTypesFactory.getInstance().NOTOUCH
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

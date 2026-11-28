@@ -23,18 +23,16 @@ class UnitItemArrayFactory(ItemArraySingletonFactoryInterface):
     ITEMS: list[ABCustomItem] = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.layer.resources.BasicGameResources import BasicGameResources
         from org.allbinary.string.CommonSeps import CommonSeps
-        from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         self.commonSeps: CommonSeps = CommonSeps.getInstance()
         self.basicColor: BasicColor = BasicColorFactory.getInstance().WHITE
-        self.resources: list[BasicGameResources] = None
+        if "resources" not in vars(self): self.resources: list[BasicGameResources] = None
     
 
     def __init__(self, resources: list[BasicGameResources]) -> None:
         from org.allbinary.game.layer.resources.BasicGameResources import BasicGameResources
-        self._init_fields()
+        __class__._init_fields(self)
         self.resources = resources
     
 

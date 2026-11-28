@@ -21,12 +21,12 @@ class Input:
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.string.StringUtil import StringUtil
-        self.id: int = 0
+        if "id" not in vars(self): self.id: int = 0
         self.name: str = StringUtil.getInstance().EMPTY_STRING
     
 
     def __init__(self, id: int, name: str) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.setId(id)
         self.setName(name)
     

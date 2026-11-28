@@ -21,13 +21,12 @@ from java.util.Map import Map
 class ServiceReferenceMap(Map):
 
     def _init_fields(self) -> None:
-        from org.osgi.framework.ServiceReference import ServiceReference
-        self.serviceReference: ServiceReference = None
+        if "serviceReference" not in vars(self): self.serviceReference: ServiceReference = None
     
 
     def __init__(self, serviceReference: ServiceReference) -> None:
         from org.osgi.framework.ServiceReference import ServiceReference
-        self._init_fields()
+        __class__._init_fields(self)
         self.serviceReference = serviceReference
     
 

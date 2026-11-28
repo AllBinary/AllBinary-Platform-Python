@@ -15,25 +15,35 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.graphics.form.item.CustomTextBox import CustomTextBox
 
 
+@java_inherited_overloads
 class HighScoreTextBox(CustomTextBox):
+    def _java_defaults(self):
+        vars(self).setdefault("virtualKeyboardEventHandler", None)
+        vars(self).setdefault("highScoreUtil", None)
+        vars(self).setdefault("pleaseWait", None)
+        vars(self).setdefault("paintable", None)
+        vars(self).setdefault("submitted", False)
 
     def _init_fields(self) -> None:
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         from org.allbinary.graphics.paint.NullPaintable import NullPaintable
-        from org.allbinary.graphics.paint.Paintable import Paintable
         from org.allbinary.graphics.paint.SimpleTextPaintable import SimpleTextPaintable
         from org.allbinary.input.event.VirtualKeyboardEventHandler import VirtualKeyboardEventHandler
         self.virtualKeyboardEventHandler: VirtualKeyboardEventHandler = VirtualKeyboardEventHandler.getInstance()
-        self.highScoreUtil: HighScoreUtil = None
+        if "highScoreUtil" not in vars(self): self.highScoreUtil: HighScoreUtil = None
         self.pleaseWait: Paintable = SimpleTextPaintable(self.commonStrings.PLEASE_WAIT, BasicColorFactory.getInstance().WHITE)
         self.paintable: Paintable = NullPaintable.getInstance()
         self.submitted: bool = False
     
 
     def __init__(self, highScoresFactoryInterface: HighScoresFactoryInterface, highScoresHelper: HighScoresHelperBaseInterface, abeClientInformation: AbeClientInformationInterface, gameInfo: GameInfo, cmdListener: CommandListener, name: str, highScore: HighScore, backgrounBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.score.displayable.HighScoreUtil import HighScoreUtil
         from javax.microedition.lcdui.CommandListener import CommandListener
         from javax.microedition.lcdui.Font import Font
@@ -48,10 +58,10 @@ class HighScoreTextBox(CustomTextBox):
         from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         from org.allbinary.logic.system.security.licensing.InApplicationPurchaseFactory import InApplicationPurchaseFactory
         super().__init__(cmdListener, "New High Score Enter Name:", name, 12, TextField.ANY, Font.getDefaultFont(), backgrounBasicColor, foregroundBasicColor)
-        self._init_fields()
+        __class__._init_fields(self)
         self.highScoreUtil = HighScoreUtil(highScoresFactoryInterface, highScoresHelper, abeClientInformation, gameInfo, cmdListener, name, highScore)
         operatingSystemInterface: GenericOperatingSystem = OperatingSystemFactory.getInstance().getOperatingSystemInstance()
-        if operatingSystemInterface.isOverScan():
+        if java_predicate(operatingSystemInterface, "isOverScan"):
             username: str = InApplicationPurchaseFactory.getInstance().getUserName()
             self.getTextFieldItem().setString(username)
     
@@ -70,7 +80,7 @@ class HighScoreTextBox(CustomTextBox):
         from org.allbinary.graphics.paint.NullPaintable import NullPaintable
         self.virtualKeyboardEventHandler.open()
         self.paintable = NullPaintable.getInstance()
-        super().open()
+        java_super_call(super(), "open")
     
 
     # throws Exception
@@ -80,7 +90,7 @@ class HighScoreTextBox(CustomTextBox):
         self.virtualKeyboardEventHandler.close()
         self.paintable = self.pleaseWait
         self.repaintBehavior.onChangeRepaint(self)
-        super().close()
+        java_super_call(super(), "close")
         self.removeCommand(HighScoreUtil.SUBMIT_TEXTBOX_COMMAND)
         self.update()
         if self.submitted:
@@ -95,12 +105,12 @@ class HighScoreTextBox(CustomTextBox):
     def update(self) -> None:
         name: str = self.getTextFieldItem().getString()
         self.highScoreUtil.update(name)
-        super().update()
+        java_super_call(super(), "update")
     
 
     def paint(self, graphics: Graphics) -> None:
         from javax.microedition.lcdui.Graphics import Graphics
-        super().paint(graphics)
+        java_super_call(super(), "paint", graphics)
         self.paintable.paint(graphics)
     
 

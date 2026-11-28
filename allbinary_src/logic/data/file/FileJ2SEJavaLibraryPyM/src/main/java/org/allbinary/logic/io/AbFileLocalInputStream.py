@@ -15,13 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.io.AbFileInputStream import AbFileInputStream
 
 
+@java_inherited_overloads
 class AbFileLocalInputStream(AbFileInputStream):
     
 
     def __init__(self, file: AbFile) -> None:
+        from java.io.FileNotFoundException import FileNotFoundException
         from org.allbinary.logic.io.file.AbFile import AbFile
         from org.allbinary.logic.io.file.AbFileNativeUtil import AbFileNativeUtil
         super().__init__(AbFileNativeUtil.get(file).getPath())

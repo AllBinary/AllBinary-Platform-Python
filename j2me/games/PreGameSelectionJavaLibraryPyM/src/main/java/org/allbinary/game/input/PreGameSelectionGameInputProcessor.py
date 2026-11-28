@@ -15,6 +15,9 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_new_inner
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.canvas.Processor import Processor
 from org.allbinary.thread.ABRunnable import ABRunnable
@@ -22,16 +25,21 @@ from org.allbinary.game.input.GameInputProcessorInterface import GameInputProces
 from org.allbinary.game.input.PlayerGameInputCompositeInterface import PlayerGameInputCompositeInterface
 
 
+@java_inherited_overloads
 class PreGameSelectionGameInputProcessor(*java_bases(Processor, GameInputProcessorInterface, PlayerGameInputCompositeInterface)):
+    @java_inherited_overloads
     class PreGameSelectionRunnable(ABRunnable):
+        def _java_defaults(self):
+            vars(self).setdefault("inputProcessor", None)
 
         def _init_fields(self) -> None:
-            self.inputProcessor: PreGameSelectionGameInputProcessor = None
+            if "inputProcessor" not in vars(self): self.inputProcessor: PreGameSelectionGameInputProcessor = None
         
 
         def __init__(self, inputProcessor: PreGameSelectionGameInputProcessor) -> None:
+            __class__._java_defaults(self)
             super().__init__()
-            self._init_fields()
+            __class__._init_fields(self)
             self.inputProcessor = inputProcessor
         
 
@@ -52,29 +60,37 @@ class PreGameSelectionGameInputProcessor(*java_bases(Processor, GameInputProcess
                 logUtil: LogUtil = LogUtil.getInstance()
                 commonStrings: CommonStrings = CommonStrings.getInstance()
                 logUtil.put(commonStrings.EXCEPTION, self, commonStrings.RUN, e)
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("gameCanvas", None)
+        vars(self).setdefault("preGameSelectorPaintable", None)
+        vars(self).setdefault("inputTimeHelper", None)
+        vars(self).setdefault("nextGameState", None)
+        vars(self).setdefault("playerGameInput", None)
+        vars(self).setdefault("lockedIndex", 0)
+        vars(self).setdefault("abRunnable", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
-        from org.allbinary.game.displayable.canvas.PreGameSelectorPaintable import PreGameSelectorPaintable
-        from org.allbinary.game.state.GameState import GameState
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.gameCanvas: AllBinaryGameCanvas = None
-        self.preGameSelectorPaintable: PreGameSelectorPaintable = None
+        if "gameCanvas" not in vars(self): self.gameCanvas: AllBinaryGameCanvas = None
+        if "preGameSelectorPaintable" not in vars(self): self.preGameSelectorPaintable: PreGameSelectorPaintable = None
         self.inputTimeHelper: TimeDelayHelper = TimeDelayHelper(650)
-        self.nextGameState: GameState = None
-        self.playerGameInput: PlayerGameInput = None
-        self.lockedIndex: int = None
-        self.abRunnable: ABRunnable = PreGameSelectionRunnable(self)
+        if "nextGameState" not in vars(self): self.nextGameState: GameState = None
+        if "playerGameInput" not in vars(self): self.playerGameInput: PlayerGameInput = None
+        if "lockedIndex" not in vars(self): self.lockedIndex: int = 0
+        self.abRunnable: ABRunnable = java_new_inner(self, PreGameSelectionRunnable, self)
     
 
     def __init__(self, gameCanvas: AllBinaryGameCanvas, preGameSelectorPaintable: PreGameSelectorPaintable, nextGameState: GameState, lockedIndex: int) -> None:
+        __class__._java_defaults(self)
+        from org.allbinary.game.input.GameInputProcessorComposite import GameInputProcessorComposite
         from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
         from org.allbinary.game.displayable.canvas.PreGameSelectorPaintable import PreGameSelectorPaintable
         from org.allbinary.game.state.GameState import GameState
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.gameCanvas = gameCanvas
         self.preGameSelectorPaintable = preGameSelectorPaintable
         self.nextGameState = nextGameState
@@ -102,14 +118,14 @@ class PreGameSelectionGameInputProcessor(*java_bases(Processor, GameInputProcess
             anyType: object = list_.get(index)
             key: int = GameKeyEventUtil.getKey(anyType)
             if key == Canvas.LEFT or key == Canvas.RIGHT or key == Canvas.UP or key == Canvas.DOWN:
-                if self.inputTimeHelper.isTimeTNT():
+                if java_predicate(self.inputTimeHelper, "isTimeTNT"):
                     SecondaryPlayerQueueFactory.getInstance().add(SelectSound.getInstance())
                     self.getPreGameSelectorPaintable().getPreGameSelectionForm().processInputKey(key)
                     break
             elif key == Canvas.KEY_NUM0:
                 selectedIndex: int = self.preGameSelectorPaintable.getPreGameSelectionForm().getSelectedIndex()
-                if selectedIndex < self.lockedIndex or not LockedUtil.getInstance().isLocked():
-                    if not self.abRunnable.isRunning():
+                if selectedIndex < self.lockedIndex or not (java_predicate(LockedUtil.getInstance(), "isLocked")):
+                    if not (java_predicate(self.abRunnable, "isRunning")):
                         self.abRunnable.setRunning(True)
                         ThreadObjectUtil.getInstance().processThread(self.abRunnable)
                     break

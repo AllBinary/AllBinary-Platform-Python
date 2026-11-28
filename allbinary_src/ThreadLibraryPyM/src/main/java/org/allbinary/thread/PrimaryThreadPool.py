@@ -16,10 +16,13 @@
 from __future__ import annotations
 
 import time
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.thread.ThreadPool import ThreadPool
 
 
+@java_inherited_overloads
 class PrimaryThreadPool(ThreadPool):
     THREAD_POOL: ThreadPool = None
     
@@ -37,7 +40,7 @@ class PrimaryThreadPool(ThreadPool):
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.logic.string.StringUtil import StringUtil
         self.logUtil.putF(str(StringMaker().append(StringUtil.getInstance().toString(task)).appendlong(int(int(time.time() * 1000)))), self, self.threadPoolStrings.ADD_TASK)
-        super().runTask(task)
+        java_super_call(super(), "runTask", task)
     
 
     def startTask(self, task: object) -> None:

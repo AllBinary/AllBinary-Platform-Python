@@ -15,11 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.ag.life.LifeVisitorInterface import LifeVisitorInterface
 from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
 
 
+@java_inherited_overloads
 class LifeLayer(*java_bases(AllBinaryLayer, LifeVisitorInterface)):
     
 

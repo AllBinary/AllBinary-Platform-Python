@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_divide
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 
 
@@ -29,11 +30,12 @@ class ColorsView(DomNodeInterface):
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
     def getColorNode(self, document: Document, redIndex: int, greenIndex: int, blueIndex: int) -> Node:
+        from org.allbinary.logic.visual.dhtml.style.color.ColorData import ColorData
         from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.w3c.dom.Document import Document
@@ -54,6 +56,10 @@ class ColorsView(DomNodeInterface):
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
+        from org.allbinary.logic.visual.dhtml.style.color.ColorsData import ColorsData
+        from org.allbinary.logic.visual.dhtml.style.color.ColorData import ColorData
+        from org.allbinary.logic.visual.dhtml.style.color.ColorData import ColorData
+        from org.allbinary.logic.visual.dhtml.style.color.ColorData import ColorData
         from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.w3c.dom.Document import Document

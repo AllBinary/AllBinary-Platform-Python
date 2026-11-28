@@ -15,10 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.input.CompleteMotionGestureInputEventListener import CompleteMotionGestureInputEventListener
 
 
+@java_inherited_overloads
 class NoCompleteMotionGestureInputEventListener(CompleteMotionGestureInputEventListener):
     instance: NoCompleteMotionGestureInputEventListener = None
     

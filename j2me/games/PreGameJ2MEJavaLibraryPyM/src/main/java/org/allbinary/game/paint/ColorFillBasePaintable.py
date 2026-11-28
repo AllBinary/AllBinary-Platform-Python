@@ -15,24 +15,29 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.color.ColorCompositeInterface import ColorCompositeInterface
 from org.allbinary.graphics.paint.Paintable import Paintable
 
 
+@java_inherited_overloads
 class ColorFillBasePaintable(*java_bases(Paintable, ColorCompositeInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("basicColor", None)
+        vars(self).setdefault("colorP", 0)
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         self.basicColor: BasicColor = BasicColorFactory.getInstance().WHITE
-        self.colorP: int = 0
+        if "colorP" not in vars(self): self.colorP: int = 0
     
 
     def __init__(self, basicColor: BasicColor) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.setBasicColorP(basicColor)
     
 

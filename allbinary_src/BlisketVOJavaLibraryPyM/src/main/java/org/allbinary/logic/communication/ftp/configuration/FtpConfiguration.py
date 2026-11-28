@@ -21,25 +21,29 @@ from org.allbinary.logic.communication.ftp.configuration.FtpConfigurationInterfa
 class FtpConfiguration(FtpConfigurationInterface):
 
     def _init_fields(self) -> None:
-        self.ftpServer: str = None
-        self.ftpPath: str = None
-        self.ftpUserName: str = None
-        self.ftpPassword: str = None
+        if "ftpServer" not in vars(self): self.ftpServer: str = None
+        if "ftpPath" not in vars(self): self.ftpPath: str = None
+        if "ftpUserName" not in vars(self): self.ftpUserName: str = None
+        if "ftpPassword" not in vars(self): self.ftpPassword: str = None
 
     def __init__(self, *args) -> None:
         if len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
         elif len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
     
 
     def _constructor0(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def _constructor1(self, hashMap: HashMap) -> None:
+        from org.allbinary.logic.communication.ftp.configuration.FtpConfigurationData import FtpConfigurationData
+        from org.allbinary.logic.communication.ftp.configuration.FtpConfigurationData import FtpConfigurationData
+        from org.allbinary.logic.communication.ftp.configuration.FtpConfigurationData import FtpConfigurationData
+        from org.allbinary.logic.communication.ftp.configuration.FtpConfigurationData import FtpConfigurationData
         from java.util.HashMap import HashMap
-        self._init_fields()
+        __class__._init_fields(self)
         self.ftpServer = hashMap.get(FtpConfigurationData.SERVER)
         self.ftpPath = hashMap.get(FtpConfigurationData.PATH)
         self.ftpUserName = hashMap.get(FtpConfigurationData.USERNAME)

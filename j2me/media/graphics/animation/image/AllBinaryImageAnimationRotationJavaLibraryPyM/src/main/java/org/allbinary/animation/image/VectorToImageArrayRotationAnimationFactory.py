@@ -15,19 +15,25 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_divide
 from org.allbinary.animation.image.BaseImageAnimationFactory import BaseImageAnimationFactory
 
 
+@java_inherited_overloads
 class VectorToImageArrayRotationAnimationFactory(BaseImageAnimationFactory):
+    def _java_defaults(self):
+        vars(self).setdefault("imageArray", None)
+        vars(self).setdefault("angleIncrement", 0)
 
     def _init_fields(self) -> None:
-        from javax.microedition.lcdui.Image import Image
         from javax.microedition.lcdui.NullImage import NullImage
         self.imageArray: list[Image] = NullImage.NULL_IMAGE_ARRAY
-        self.angleIncrement: int = 0
+        if "angleIncrement" not in vars(self): self.angleIncrement: int = 0
     
 
     def __init__(self, vectorInfo: VectorInfo, basicColor: BasicColor, animationBehaviorFactory: AnimationBehaviorFactory) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
         from org.allbinary.animation.VectorAnimation import VectorAnimation
         from org.allbinary.graphics.color.BasicColor import BasicColor
@@ -35,7 +41,7 @@ class VectorToImageArrayRotationAnimationFactory(BaseImageAnimationFactory):
         from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
         from org.allbinary.vector.VectorInfo import VectorInfo
         super().__init__(AnimationFrameToImageUtil.getInstance().getInstanceTranslate(vectorInfo.getWidth(), vectorInfo.getHeight(), VectorAnimation.createVectorAnimation(vectorInfo.getPoints(), basicColor, animationBehaviorFactory.getOrCreateInstance())), PrimitiveIntUtil.getArrayInstance(), 0, 0, 0, 0, animationBehaviorFactory)
-        self._init_fields()
+        __class__._init_fields(self)
         self.init()
     
 
@@ -45,7 +51,8 @@ class VectorToImageArrayRotationAnimationFactory(BaseImageAnimationFactory):
         from org.allbinary.math.AngleFactory import AngleFactory
         from org.allbinary.media.image.ImageToRotationImageArrayUtil import ImageToRotationImageArrayUtil
         angleFactory: AngleFactory = AngleFactory.getInstance()
-        self.angleIncrement = angleFactory.TOTAL_ANGLE / GameConfigurationCentral.getInstance().getGameControlFidelity()
+        self.angleIncrement = java_divide(angleFactory.TOTAL_ANGLE, GameConfigurationCentral.getInstance().getGameControlFidelity())
+            
         self.imageArray = ImageToRotationImageArrayUtil.getInstance().generate(self.getImage(), self.getAngleIncrement(), int(angleFactory.TOTAL_ANGLE))
     
 

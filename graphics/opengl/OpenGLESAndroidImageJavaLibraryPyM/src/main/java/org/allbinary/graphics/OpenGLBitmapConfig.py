@@ -20,13 +20,12 @@ from __future__ import annotations
 class OpenGLBitmapConfig:
 
     def _init_fields(self) -> None:
-        from android.graphics.Bitmap import Bitmap
-        self.bitmapConfig: Config = None
+        if "bitmapConfig" not in vars(self): self.bitmapConfig: Config = None
     
 
     def __init__(self, bitmapConfig: Config) -> None:
         from android.graphics.Bitmap import Bitmap
-        self._init_fields()
+        __class__._init_fields(self)
         self.bitmapConfig = bitmapConfig
 # from android.graphics.Bitmap import Bitmap
 

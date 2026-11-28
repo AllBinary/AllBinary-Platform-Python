@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -56,10 +57,10 @@ class ImageJ2MEScaleUtil:
         dy: int = 0
         index = height
         while (index := index - 1) >= 0:
-            dy = (index * heightRatioFactor) >> 3
+            dy = int((index * heightRatioFactor)) >> (int(3) & 31)
             index2 = width
             while (index2 := index2 - 1) >= 0:
-                dx = (index2 * widthRatioFactor) >> 3
+                dx = int((index2 * widthRatioFactor)) >> (int(3) & 31)
                 scaledData[((scaledIndex := scaledIndex - 1) + 1)] = originalData[(sourceWidth * dy) + dx]
         scaledImage: Image = Image.createRGBImage(scaledData, width, height, True)
         return scaledImage

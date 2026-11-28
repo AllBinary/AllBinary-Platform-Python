@@ -58,7 +58,7 @@ class UserRoleFactory:
         self.VIEWEDITOR: UserRole = UserRoleB(self.basicUserRoleFactory.VIEWEDITOR, ViewEditorWebStoreAdminUserFactory())
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -80,6 +80,7 @@ class UserRoleFactory:
 # from org.allbinary.business.user.modules.admin.store.web.workflow.editor.WorkflowEditorWebStoreAdminUserFactory import WorkflowEditorWebStoreAdminUserFactory
 # from org.allbinary.business.user.modules.customer.subscriber.SubscriberUserFactory import SubscriberUserFactory
 # from org.allbinary.business.user.modules.customer.wholesale.WholesaleUserFactory import WholesaleUserFactory
+from org.allbinary.business.user.role.BasicUserRoleFactory import BasicUserRoleFactory
 from org.allbinary.business.user.role.UserRoleB import UserRoleB
 
 

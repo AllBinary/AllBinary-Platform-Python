@@ -15,24 +15,29 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.input.motion.MotionRecognizer import MotionRecognizer
 
 
+@java_inherited_overloads
 class GestureOnlyMotionRecognizer(MotionRecognizer):
     index: int = 0
     pointCircularPool: GPointCircularPool = None
+    def _java_defaults(self):
+        vars(self).setdefault("motionGestureRecognizer", None)
+        vars(self).setdefault("id", 0)
 
     def _init_fields(self) -> None:
-        from org.allbinary.input.motion.gesture.MotionGestureRecognizer import MotionGestureRecognizer
-        self.motionGestureRecognizer: MotionGestureRecognizer = None
-        self.id: int = None
+        if "motionGestureRecognizer" not in vars(self): self.motionGestureRecognizer: MotionGestureRecognizer = None
+        if "id" not in vars(self): self.id: int = 0
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.input.motion.gesture.MotionGestureRecognizer import MotionGestureRecognizer
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.id = ((setattr(GestureOnlyMotionRecognizer, "index", GestureOnlyMotionRecognizer.index + 1) or GestureOnlyMotionRecognizer.index) - 1)
         self.motionGestureRecognizer = MotionGestureRecognizer(self.id)
     

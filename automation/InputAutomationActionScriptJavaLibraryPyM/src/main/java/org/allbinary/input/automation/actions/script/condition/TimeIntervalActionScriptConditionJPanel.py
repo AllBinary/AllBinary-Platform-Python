@@ -15,29 +15,43 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 # from javax.swing.JPanel import JPanel
 
 
+@java_inherited_overloads
 class TimeIntervalActionScriptConditionJPanel(JPanel):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("timeIntervalActionScriptConditionInterface", None)
+        vars(self).setdefault("jLabel1", None)
+        vars(self).setdefault("jLabel2", None)
+        vars(self).setdefault("okJButton", None)
+        vars(self).setdefault("timeIntervalActionJButton", None)
+        vars(self).setdefault("timeIntervalActionJDialog", None)
+        vars(self).setdefault("timeIntervalJTextField", None)
+        vars(self).setdefault("titleJLabel", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.timeIntervalActionScriptConditionInterface: TimeIntervalActionScriptConditionInterface = None
-        self.jLabel1: JLabel = None
-        self.jLabel2: JLabel = None
-        self.okJButton: JButton = None
-        self.timeIntervalActionJButton: JButton = None
-        self.timeIntervalActionJDialog: JDialog = None
-        self.timeIntervalJTextField: JTextField = None
-        self.titleJLabel: JLabel = None
+        if "timeIntervalActionScriptConditionInterface" not in vars(self): self.timeIntervalActionScriptConditionInterface: TimeIntervalActionScriptConditionInterface = None
+        if "jLabel1" not in vars(self): self.jLabel1: JLabel = None
+        if "jLabel2" not in vars(self): self.jLabel2: JLabel = None
+        if "okJButton" not in vars(self): self.okJButton: JButton = None
+        if "timeIntervalActionJButton" not in vars(self): self.timeIntervalActionJButton: JButton = None
+        if "timeIntervalActionJDialog" not in vars(self): self.timeIntervalActionJDialog: JDialog = None
+        if "timeIntervalJTextField" not in vars(self): self.timeIntervalJTextField: JTextField = None
+        if "titleJLabel" not in vars(self): self.titleJLabel: JLabel = None
     
 
     def __init__(self, timeIntervalActionScriptConditionInterface: TimeIntervalActionScriptConditionInterface) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
         self.initComponents()
         self.timeIntervalActionScriptConditionInterface = timeIntervalActionScriptConditionInterface
@@ -81,12 +95,15 @@ class TimeIntervalActionScriptConditionJPanel(JPanel):
         self.timeIntervalActionJDialog.setMinimumSize(Dimension(250, 150))
         self.titleJLabel.setText("Time Interval Condition Options")
         self.okJButton.setText("OK")
-        self.okJButton.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.okJButtonActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN67026(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "okJButtonActionPerformed") else _java_listener_owner).okJButtonActionPerformed(evt)
+        self.okJButton.addActionListener(_JavaListenerN67026()
+            )
         self.jLabel2.setText("Time (ms):")
         timeIntervalActionJDialogLayout: GroupLayout = GroupLayout(self.timeIntervalActionJDialog.getContentPane())
         self.timeIntervalActionJDialog.getContentPane().setLayout(timeIntervalActionJDialogLayout)
@@ -94,12 +111,15 @@ class TimeIntervalActionScriptConditionJPanel(JPanel):
         timeIntervalActionJDialogLayout.setVerticalGroup(timeIntervalActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(timeIntervalActionJDialogLayout.createSequentialGroup().addContainerGap().addComponent(self.titleJLabel).addGap(20, 20, 20).addGroup(timeIntervalActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(self.jLabel2).addComponent(self.timeIntervalJTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)).addGap(15, 15, 15).addComponent(self.okJButton).addContainerGap()))
         self.setMinimumSize(Dimension(100, 0))
         self.timeIntervalActionJButton.setText("Edit")
-        self.timeIntervalActionJButton.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.timeIntervalActionJButtonActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN68211(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "timeIntervalActionJButtonActionPerformed") else _java_listener_owner).timeIntervalActionJButtonActionPerformed(evt)
+        self.timeIntervalActionJButton.addActionListener(_JavaListenerN68211()
+            )
         self.jLabel1.setText("Time Interval:")
         layout: GroupLayout = GroupLayout(self)
         self.setLayout(layout)

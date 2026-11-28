@@ -25,7 +25,7 @@ class ImageTool:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -34,21 +34,23 @@ class ImageTool:
         from org.allbinary.image.gui.ImageToolJFrame import ImageToolJFrame
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
-        EventQueue.invokeLater((ARunnable()  # Java anonymous class body:
-#             
-# 
-#             def run(self) -> None:
-#                 from org.allbinary.image.gui.ImageToolJFrame import ImageToolJFrame
-#                 from org.allbinary.logic.communication.log.LogUtil import LogUtil
-#                 from org.allbinary.string.CommonStrings import CommonStrings
-#                 logUtil: LogUtil = LogUtil.getInstance()
-#                 commonStrings: CommonStrings = CommonStrings.getInstance()
-#                 try:
-#                     logUtil.putF(commonStrings.START, self, commonStrings.RUN)
-#                     ImageToolJFrame().setVisible(True)
-#                 except Exception as e:
-#                     logUtil.put(commonStrings.EXCEPTION, self, commonStrings.RUN, e)
-))
+        class _JavaListenerN65809(ARunnable):
+            
+            
+
+            def run(self) -> None:
+                from org.allbinary.image.gui.ImageToolJFrame import ImageToolJFrame
+                from org.allbinary.logic.communication.log.LogUtil import LogUtil
+                from org.allbinary.string.CommonStrings import CommonStrings
+                logUtil: LogUtil = LogUtil.getInstance()
+                commonStrings: CommonStrings = CommonStrings.getInstance()
+                try:
+                    logUtil.putF(commonStrings.START, self, commonStrings.RUN)
+                    ImageToolJFrame().setVisible(True)
+                except Exception as e:
+                    logUtil.put(commonStrings.EXCEPTION, self, commonStrings.RUN, e)
+        EventQueue.invokeLater(_JavaListenerN65809()
+            )
 # from org.allbinary.thread.ARunnable import ARunnable
 # from org.allbinary.image.gui.ImageToolJFrame import ImageToolJFrame
 # from org.allbinary.logic.communication.log.LogUtil import LogUtil

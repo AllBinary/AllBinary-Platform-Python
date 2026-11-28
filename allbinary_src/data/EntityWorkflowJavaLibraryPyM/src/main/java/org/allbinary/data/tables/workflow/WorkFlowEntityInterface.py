@@ -15,10 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.data.tables.BasicDataTableInterface import BasicDataTableInterface
 
 
 # Java interface
+@java_inherited_overloads
 class WorkFlowEntityInterface(BasicDataTableInterface):
     
 
@@ -34,7 +36,9 @@ class WorkFlowEntityInterface(BasicDataTableInterface):
         raise NotImplementedError()
 
     def get(self, *args):
-        return getattr(self, "get_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("get_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().get(*args)
     
 
     def delete(self, name: str, storeName: str) -> None:

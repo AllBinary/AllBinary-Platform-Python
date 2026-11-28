@@ -3,24 +3,29 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from javax.microedition.lcdui.Graphics import Graphics
 from org.allbinary.image.opengles.OpenGLSurfaceChangedInterface import OpenGLSurfaceChangedInterface
 from org.allbinary.device.GraphicsInterface import GraphicsInterface
 
 
+@java_inherited_overloads
 class OpenGLESGraphics(*java_bases(Graphics, OpenGLSurfaceChangedInterface, GraphicsInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("gl", None)
 
     def _init_fields(self) -> None:
-        from javax.microedition.khronos.opengles.GL10 import GL10
         from org.allbinary.string.CommonStrings import CommonStrings
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.gl: GL10 = NullGL10.NULL_GL10
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def updateGL(self, gl: GL) -> None:

@@ -20,18 +20,17 @@ from __future__ import annotations
 class CommandRunnable(object):
 
     def _init_fields(self) -> None:
-        from javax.microedition.lcdui.Command import Command
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.commandFormInputProcessor: CommandFormInputProcessor = None
-        self.command: Command = None
+        if "commandFormInputProcessor" not in vars(self): self.commandFormInputProcessor: CommandFormInputProcessor = None
+        if "command" not in vars(self): self.command: Command = None
     
 
     def __init__(self, commandFormInputProcessor: CommandFormInputProcessor, command: Command) -> None:
         from javax.microedition.lcdui.Command import Command
-        self._init_fields()
+        __class__._init_fields(self)
         self.commandFormInputProcessor = commandFormInputProcessor
         self.command = command
     

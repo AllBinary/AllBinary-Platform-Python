@@ -16,6 +16,8 @@
 from __future__ import annotations
 
 import math
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 import threading
 from org.allbinary.graphics.j2me.workarea.tools.GraphicItemInterface import GraphicItemInterface
 
@@ -31,35 +33,32 @@ class LinesGraphicItem(GraphicItemInterface):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.game.input.GameInputStrings import GameInputStrings
-        from org.allbinary.graphics.GPoint import GPoint
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.gameInputStrings: GameInputStrings = GameInputStrings.getInstance()
-        self.treeNode: DefaultMutableTreeNode = None
-        self.pointTreeNodeVector: BasicArrayList = None
-        self.currentMousePoint: GPoint = None
-        self.fulcrumPoint: GPoint = None
+        if "treeNode" not in vars(self): self.treeNode: DefaultMutableTreeNode = None
+        if "pointTreeNodeVector" not in vars(self): self.pointTreeNodeVector: BasicArrayList = None
+        if "currentMousePoint" not in vars(self): self.currentMousePoint: GPoint = None
+        if "fulcrumPoint" not in vars(self): self.fulcrumPoint: GPoint = None
         self.active: bool = False
         self.theta: float = 0.0
         self.color: Color = Color(int(BasicColorFactory.getInstance().WHITE))
-        self.points: Points = None
+        if "points" not in vars(self): self.points: Points = None
 
     def __init__(self, *args) -> None:
         if len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
         elif len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
     
 
     def _constructor0(self) -> None:
         from org.allbinary.graphics.j2me.workarea.tools.Points import Points
-        self._init_fields()
+        __class__._init_fields(self)
         self.points = Points()
         try:
             self.init()
@@ -76,7 +75,7 @@ class LinesGraphicItem(GraphicItemInterface):
         from org.allbinary.dom.DomHelper import DomHelper
         from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.w3c.dom.Node import Node
-        self._init_fields()
+        __class__._init_fields(self)
         self.points = Points()
         self.init()
         self.active = False
@@ -155,7 +154,7 @@ class LinesGraphicItem(GraphicItemInterface):
     # Java overloaded method with the same parameter count: Python keeps the last definition
     def addPoint_j1_1(self, pointNodes: NodeList) -> None:
         with self._lock:
-            return self._addPoint_j1_1_unlocked(pointNodes)
+            return __class__.__dict__["_addPoint_j1_1_unlocked"].__get__(self, __class__)(pointNodes)
 
     def _addPoint_j1_1_unlocked(self, pointNodes: NodeList) -> None:
         from org.allbinary.util.BasicArrayList import BasicArrayList
@@ -180,7 +179,7 @@ class LinesGraphicItem(GraphicItemInterface):
     # Java overloaded method with the same parameter count: Python keeps the last definition
     def addPoint_j1_2(self, point: GPoint) -> None:
         with self._lock:
-            return self._addPoint_j1_2_unlocked(point)
+            return __class__.__dict__["_addPoint_j1_2_unlocked"].__get__(self, __class__)(point)
 
     def _addPoint_j1_2_unlocked(self, point: GPoint) -> None:
         from org.allbinary.graphics.GPoint import GPoint
@@ -190,16 +189,18 @@ class LinesGraphicItem(GraphicItemInterface):
         self.treeNode.add(self.pointTreeNodeVector.get(self.pointTreeNodeVector.size() - 1))
 
     def addPoint(self, *args):
-        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
-            return self.addPoint_j1_1(*args)
+        if len(args) == 1 and True and (args[0] is None or any(base.__name__ == "NodeList" for base in type(args[0]).__mro__)):
+            return __class__.__dict__["addPoint_j1_1"].__get__(self, __class__)(*args)
         if len(args) == 1:
-            return self.addPoint_j1_2(*args)
-        return getattr(self, "addPoint_j" + str(len(args)))(*args)
+            return __class__.__dict__["addPoint_j1_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("addPoint_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().addPoint(*args)
     
 
     def removePoint(self) -> GPoint:
         with self._lock:
-            return self._removePoint_unlocked()
+            return __class__.__dict__["_removePoint_unlocked"].__get__(self, __class__)()
 
     def _removePoint_unlocked(self) -> GPoint:
         from org.allbinary.graphics.GPoint import GPoint
@@ -269,10 +270,10 @@ class LinesGraphicItem(GraphicItemInterface):
             graphics: Graphics2D = g
             graphics.setColor(self.getColor())
             graphics.setStroke(BasicStroke(x))
-            if self.isActive() and self.currentMousePoint is not None:
+            if java_predicate(self, "isActive") and self.currentMousePoint is not None:
                 self.points.getPoints().add(self.currentMousePoint)
             tempPointVector: BasicArrayList = PointsUtil.getInstance().doTransforms(self.points.getPoints(), canvasAngle, PointFactory.getInstance().createXY(dimension.getWidth(), dimension.getHeight()))
-            if self.isActive() and self.currentMousePoint is not None:
+            if java_predicate(self, "isActive") and self.currentMousePoint is not None:
                 self.currentMousePoint = self.points.getPoints().removeAt(self.points.getSize() - 1)
             size: int = tempPointVector.size()
             firstPoint: GPoint = None
@@ -295,7 +296,7 @@ class LinesGraphicItem(GraphicItemInterface):
     
 
     def isValid(self) -> bool:
-        return self.points.isValid()
+        return java_predicate(self.points, "isValid")
     
 
     def getPointsInterface(self) -> Points:
@@ -321,7 +322,9 @@ class LinesGraphicItem(GraphicItemInterface):
         try:
             mousePoint: GPoint = PointFactory.getInstance().createXY(mouseEvent.getPoint().x, mouseEvent.getPoint().y)
             if (mouseEvent.getModifiers() & mouseEvent.BUTTON1_MASK) == mouseEvent.BUTTON1_MASK:
-                point: GPoint = PointFactory.getInstance().createXY(mousePoint.getX() / x, mousePoint.getY() / y)
+                point: GPoint = PointFactory.getInstance().createXY(java_divide(mousePoint.getX(), x)
+            , java_divide(mousePoint.getY(), y)
+            )
                 StatusFactory.getInstance().setStatus("Line Point Added: " + str(point))
                 self.addPoint(point)
             elif (mouseEvent.getModifiers() & mouseEvent.BUTTON3_MASK) == mouseEvent.BUTTON3_MASK:
@@ -357,7 +360,9 @@ class LinesGraphicItem(GraphicItemInterface):
         from org.allbinary.graphics.PointFactory import PointFactory
         try:
             mousePoint: GPoint = PointFactory.getInstance().createXY(mouseEvent.getPoint().x, mouseEvent.getPoint().y)
-            point: GPoint = PointFactory.getInstance().createXY(mousePoint.getX() / x, mousePoint.getY() / y)
+            point: GPoint = PointFactory.getInstance().createXY(java_divide(mousePoint.getX(), x)
+            , java_divide(mousePoint.getY(), y)
+            )
             self.currentMousePoint = point
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, "mouseMoved", e)

@@ -20,15 +20,12 @@ from __future__ import annotations
 class BasicAIProcessor:
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
-        from org.allbinary.media.graphics.geography.map.GeographicMapCellHistory import GeographicMapCellHistory
         from org.allbinary.media.graphics.geography.map.GeographicMapDirectionUtil import GeographicMapDirectionUtil
-        from org.allbinary.media.graphics.geography.pathfinding.GeographicMapCellPathHistoryInfo import GeographicMapCellPathHistoryInfo
-        self.name: str = None
-        self.geographicMapCellHistory: GeographicMapCellHistory = None
-        self.geographicMapCellPositionBasicArrayList: BasicArrayList = None
-        self.geographicMapCellPathHistoryInfo: GeographicMapCellPathHistoryInfo = None
-        self.basicAI: BasicDirectionAIHelper = None
+        if "name" not in vars(self): self.name: str = None
+        if "geographicMapCellHistory" not in vars(self): self.geographicMapCellHistory: GeographicMapCellHistory = None
+        if "geographicMapCellPositionBasicArrayList" not in vars(self): self.geographicMapCellPositionBasicArrayList: BasicArrayList = None
+        if "geographicMapCellPathHistoryInfo" not in vars(self): self.geographicMapCellPathHistoryInfo: GeographicMapCellPathHistoryInfo = None
+        if "basicAI" not in vars(self): self.basicAI: BasicDirectionAIHelper = None
         self.geographicMapDirectionUtil: GeographicMapDirectionUtil = GeographicMapDirectionUtil.getInstance()
     
 
@@ -38,7 +35,7 @@ class BasicAIProcessor:
         from org.allbinary.math.AngleInfo import AngleInfo
         from org.allbinary.media.graphics.geography.map.GeographicMapCellHistory import GeographicMapCellHistory
         from org.allbinary.media.graphics.geography.pathfinding.GeographicMapCellPathHistoryInfo import GeographicMapCellPathHistoryInfo
-        self._init_fields()
+        __class__._init_fields(self)
         self.name = name
         self.geographicMapCellHistory = geographicMapCellHistory
         self.geographicMapCellPositionBasicArrayList = chosenPathList

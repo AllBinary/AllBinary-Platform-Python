@@ -108,7 +108,7 @@ class PCKeyFactory:
         self.BACK_SPACE: PCGameKey = PCGameKey(self.keyEventWrapper.VK_BACK_SPACE, "Backspace")
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

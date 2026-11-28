@@ -15,14 +15,21 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 from org.allbinary.animation.image.BaseImageAnimationFactory import BaseImageAnimationFactory
 
 
+@java_inherited_overloads
 class AllBinaryAndroidImageRotationAnimationFactory(BaseImageAnimationFactory):
+    def _java_defaults(self):
+        vars(self).setdefault("angleIncrement", 0)
+        vars(self).setdefault("resizeCanvasForRotation", False)
 
     def _init_fields(self) -> None:
-        self.angleIncrement: int = None
-        self.resizeCanvasForRotation: bool = None
+        if "angleIncrement" not in vars(self): self.angleIncrement: int = 0
+        if "resizeCanvasForRotation" not in vars(self): self.resizeCanvasForRotation: bool = False
     
 
     # throws Exception
@@ -32,7 +39,8 @@ class AllBinaryAndroidImageRotationAnimationFactory(BaseImageAnimationFactory):
         from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
         from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
         from org.allbinary.math.AngleFactory import AngleFactory
-        return AllBinaryAndroidImageRotationAnimationFactory(image, width, height, ((int((AngleFactory.getInstance().TOTAL_ANGLE / GameConfigurationCentral.getInstance().getGameControlFidelity())) + 32768) % 65536 - 32768), animationBehaviorFactory, False)
+        return AllBinaryAndroidImageRotationAnimationFactory(image, width, height, ((int((java_divide(AngleFactory.getInstance().TOTAL_ANGLE, GameConfigurationCentral.getInstance().getGameControlFidelity())
+            )) + 32768) % 65536 - 32768), animationBehaviorFactory, False)
     
 
     # throws Exception
@@ -50,7 +58,8 @@ class AllBinaryAndroidImageRotationAnimationFactory(BaseImageAnimationFactory):
         from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
         from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
         from org.allbinary.math.AngleFactory import AngleFactory
-        androidImageRotationAnimationFactory: AllBinaryAndroidImageRotationAnimationFactory = AllBinaryAndroidImageRotationAnimationFactory(image, image.getWidth(), image.getHeight(), ((int((AngleFactory.getInstance().TOTAL_ANGLE / GameConfigurationCentral.getInstance().getGameControlFidelity())) + 32768) % 65536 - 32768), animationBehaviorFactory, False)
+        androidImageRotationAnimationFactory: AllBinaryAndroidImageRotationAnimationFactory = AllBinaryAndroidImageRotationAnimationFactory(image, image.getWidth(), image.getHeight(), ((int((java_divide(AngleFactory.getInstance().TOTAL_ANGLE, GameConfigurationCentral.getInstance().getGameControlFidelity())
+            )) + 32768) % 65536 - 32768), animationBehaviorFactory, False)
         androidImageRotationAnimationFactory.init(-image.getWidth() >> 2, -image.getHeight() >> 2)
         return androidImageRotationAnimationFactory
     
@@ -62,7 +71,8 @@ class AllBinaryAndroidImageRotationAnimationFactory(BaseImageAnimationFactory):
         from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
         from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
         from org.allbinary.math.AngleFactory import AngleFactory
-        androidImageRotationAnimationFactory: AllBinaryAndroidImageRotationAnimationFactory = AllBinaryAndroidImageRotationAnimationFactory(image, image.getWidth(), image.getHeight(), ((int((AngleFactory.getInstance().TOTAL_ANGLE / GameConfigurationCentral.getInstance().getGameControlFidelity())) + 32768) % 65536 - 32768), animationBehaviorFactory, False)
+        androidImageRotationAnimationFactory: AllBinaryAndroidImageRotationAnimationFactory = AllBinaryAndroidImageRotationAnimationFactory(image, image.getWidth(), image.getHeight(), ((int((java_divide(AngleFactory.getInstance().TOTAL_ANGLE, GameConfigurationCentral.getInstance().getGameControlFidelity())
+            )) + 32768) % 65536 - 32768), animationBehaviorFactory, False)
         androidImageRotationAnimationFactory.init(dx, dy)
         return androidImageRotationAnimationFactory
     
@@ -85,11 +95,12 @@ class AllBinaryAndroidImageRotationAnimationFactory(BaseImageAnimationFactory):
     
 
     def __init__(self, image: Image, width: int, height: int, angleIncrement: int, animationBehaviorFactory: AnimationBehaviorFactory, resizeCanvasForRotation: bool) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
         from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
         super().__init__(image, PrimitiveIntUtil.getArrayInstance(), width, height, 0, 0, animationBehaviorFactory)
-        self._init_fields()
+        __class__._init_fields(self)
         self.angleIncrement = angleIncrement
         self.resizeCanvasForRotation = resizeCanvasForRotation
     
@@ -101,7 +112,7 @@ class AllBinaryAndroidImageRotationAnimationFactory(BaseImageAnimationFactory):
         from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
         from org.allbinary.media.image.ImageCopyUtil import ImageCopyUtil
         features: Features = Features.getInstance()
-        if self.resizeCanvasForRotation and not features.isDefault(OpenGLFeatureFactory.getInstance().OPENGL):
+        if self.resizeCanvasForRotation and not (features.isDefault(OpenGLFeatureFactory.getInstance().OPENGL)):
             return ImageCopyUtil.getInstance().createImageScale(self.getImage(), 1.44, False)
         else:
             return self.getImage()

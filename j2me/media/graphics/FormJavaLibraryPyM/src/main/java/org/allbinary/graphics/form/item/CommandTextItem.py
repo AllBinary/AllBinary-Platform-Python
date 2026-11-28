@@ -15,21 +15,25 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.graphics.form.item.ABTextItem import ABTextItem
 
 
+@java_inherited_overloads
 class CommandTextItem(ABTextItem):
+    def _java_defaults(self):
+        vars(self).setdefault("command", None)
 
     def _init_fields(self) -> None:
-        from javax.microedition.lcdui.Command import Command
-        self.command: Command = None
+        if "command" not in vars(self): self.command: Command = None
     
 
     def __init__(self, command: Command, layout: int, altText: str, backgroundBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.Command import Command
         from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(command.getLabel(), layout, altText, backgroundBasicColor, foregroundBasicColor)
-        self._init_fields()
+        __class__._init_fields(self)
         self.command = command
     
 

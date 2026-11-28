@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -35,7 +36,7 @@ class PostGameCommandFactory:
         from org.allbinary.logic.system.os.OperatingSystemFactory import OperatingSystemFactory
         operatingSystemInterface: GenericOperatingSystem = OperatingSystemFactory.getInstance().getOperatingSystemInstance()
         gameCommandsFactory: GameCommandsFactory = GameCommandsFactory.getInstance()
-        if not operatingSystemInterface.isOverScan():
+        if not (java_predicate(operatingSystemInterface, "isOverScan")):
             canvas.addCommand(gameCommandsFactory.TOGGLE_KEYBOARD)
         MultiPlayerGameFeatureFactory.getInstance().addCommands(canvas)
 # from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory

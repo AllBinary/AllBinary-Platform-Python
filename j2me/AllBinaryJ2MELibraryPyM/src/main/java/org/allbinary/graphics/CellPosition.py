@@ -15,20 +15,27 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.graph.V import V
 
 
+@java_inherited_overloads
 class CellPosition(V):
+    def _java_defaults(self):
+        vars(self).setdefault("id", 0)
+        vars(self).setdefault("column", 0)
+        vars(self).setdefault("row", 0)
 
     def _init_fields(self) -> None:
-        self.id: int = None
-        self.column: int = None
-        self.row: int = None
+        if "id" not in vars(self): self.id: int = 0
+        if "column" not in vars(self): self.column: int = 0
+        if "row" not in vars(self): self.row: int = 0
     
 
     def __init__(self, column: int, row: int, columns: int, rows: int) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.column = column
         self.row = row
         self.id = (row * columns) + column

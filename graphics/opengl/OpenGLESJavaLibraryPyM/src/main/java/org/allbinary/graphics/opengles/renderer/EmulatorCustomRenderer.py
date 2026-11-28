@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import time
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 
 
@@ -29,7 +30,7 @@ class EmulatorCustomRenderer:
         self.renderStrings: RendererStrings = RendererStrings.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def onSurfaceCreated(self, gl: GL10, eglConfig: EGLConfig) -> None:
@@ -39,10 +40,10 @@ class EmulatorCustomRenderer:
         from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         self.logUtil.putF(self.commonStrings.START, self, self.renderStrings.ON_SURFACE_CREATED)
         initEmulatorFactory: InitEmulatorFactory = InitEmulatorFactory.getInstance()
-        if not initEmulatorFactory.isInitEmulator():
+        if not (java_predicate(initEmulatorFactory, "isInitEmulator")):
             try:
                 WAIT_FOR_EMULATOR: str = "Waiting on Emulator Initialization"
-                while not initEmulatorFactory.isInitEmulator():
+                while not (java_predicate(initEmulatorFactory, "isInitEmulator")):
                     PreLogUtil.put(WAIT_FOR_EMULATOR, self, self.renderStrings.ON_SURFACE_CREATED)
                     time.sleep((180) / 1000)
             except Exception as e:
@@ -53,5 +54,6 @@ class EmulatorCustomRenderer:
 # from org.allbinary.string.CommonStrings import CommonStrings
 # from org.allbinary.logic.communication.log.LogUtil import LogUtil
 # from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
+from org.allbinary.graphics.opengles.renderer.RendererStrings import RendererStrings
 
 

@@ -45,7 +45,7 @@ class SqlTypeStrings:
         self.BLOB_NOT_NULL: str = " BLOB NOT NULL, "
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

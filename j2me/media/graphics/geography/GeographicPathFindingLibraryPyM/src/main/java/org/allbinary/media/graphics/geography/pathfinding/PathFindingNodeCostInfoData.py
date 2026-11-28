@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -23,7 +24,8 @@ class PathFindingNodeCostInfoData:
 
     def _init_fields(self) -> None:
         self.MAX_TOTAL_COST: int = 2147483647
-        self.MAX_NODE_COST: int = 2147483647 / 10000
+        self.MAX_NODE_COST: int = java_divide(2147483647, 10000)
+            
     
 
     @staticmethod
@@ -32,7 +34,7 @@ class PathFindingNodeCostInfoData:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
 
 
 def _PathFindingNodeCostInfoData_instance() -> object:

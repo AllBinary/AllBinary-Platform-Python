@@ -15,10 +15,31 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.animation.image.ImageBaseRotationAnimation import ImageBaseRotationAnimation
 
 
+@java_inherited_overloads
 class AllBinaryJ2SEImageRotationAnimation(ImageBaseRotationAnimation):
+    def _java_defaults(self):
+        vars(self).setdefault("imageRotationUtil", None)
+        vars(self).setdefault("imageModifierUtil", None)
+        vars(self).setdefault("realOriginalImage", None)
+        vars(self).setdefault("originalImageArray", None)
+        vars(self).setdefault("twoImages", None)
+        vars(self).setdefault("imageToShow", None)
+        vars(self).setdefault("bufferedImageIndex", 0)
+        vars(self).setdefault("lastScaleX", 0.0)
+        vars(self).setdefault("lastScaleY", 0.0)
+        vars(self).setdefault("scaleX", 0.0)
+        vars(self).setdefault("scaleY", 0.0)
+        vars(self).setdefault("maxScaleX", 0.0)
+        vars(self).setdefault("maxScaleY", 0.0)
+        vars(self).setdefault("alphaProcessor", None)
+        vars(self).setdefault("setColorProcessor", None)
+        vars(self).setdefault("changeColorProcessor", None)
+        vars(self).setdefault("scaleProcessor", None)
 
     def _init_fields(self) -> None:
         from javax.microedition.lcdui.Image import Image
@@ -26,17 +47,17 @@ class AllBinaryJ2SEImageRotationAnimation(ImageBaseRotationAnimation):
         from org.allbinary.media.image.ImageRotationUtil import ImageRotationUtil
         self.imageRotationUtil: ImageRotationUtil = ImageRotationUtil.getInstance()
         self.imageModifierUtil: ImageModifierUtil = ImageModifierUtil.getInstanceOrCreate()
-        self.realOriginalImage: Image = None
+        if "realOriginalImage" not in vars(self): self.realOriginalImage: Image = None
         self.originalImageArray: list[Image] = [None] * (1)
         self.twoImages: list[Image] = [None] * (2)
-        self.imageToShow: Image = None
-        self.bufferedImageIndex: int = 0
+        if "imageToShow" not in vars(self): self.imageToShow: Image = None
+        if "bufferedImageIndex" not in vars(self): self.bufferedImageIndex: int = 0
         self.lastScaleX: float = 1.0
         self.lastScaleY: float = 1.0
         self.scaleX: float = 1.0
         self.scaleY: float = 1.0
-        self.maxScaleX: float = 0.0
-        self.maxScaleY: float = 0.0
+        if "maxScaleX" not in vars(self): self.maxScaleX: float = 0.0
+        if "maxScaleY" not in vars(self): self.maxScaleY: float = 0.0
         self.alphaProcessor: ModifierBaseProcessor = ModifierBaseProcessor.getInstance()
         self.setColorProcessor: ModifierBaseProcessor = ModifierBaseProcessor.getInstance()
         self.changeColorProcessor: ModifierBaseProcessor = ModifierBaseProcessor.getInstance()
@@ -44,12 +65,13 @@ class AllBinaryJ2SEImageRotationAnimation(ImageBaseRotationAnimation):
     
 
     def __init__(self, originalImage: Image, image: Image, angleInfo: AngleInfo, totalAngle: int, animationBehavior: AnimationBehavior) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         from org.allbinary.math.AngleInfo import AngleInfo
         from org.allbinary.media.image.ImageCopyUtil import ImageCopyUtil
         super().__init__(image, angleInfo, totalAngle, animationBehavior)
-        self._init_fields()
+        __class__._init_fields(self)
         self.realOriginalImage = originalImage
         self.originalImageArray[0] = originalImage
         self.imageToShow = image
@@ -63,7 +85,7 @@ class AllBinaryJ2SEImageRotationAnimation(ImageBaseRotationAnimation):
         changed: bool = False
         if self.getBasicColorP() is None or int(self.getBasicColorP()) != int(basicColor):
             changed = True
-        super().setBasicColorP(basicColor)
+        java_super_call(super(), "setBasicColorP", basicColor)
         if changed:
             self.setColorProcessor = SetColorProcessor.getInstance()
             self.updateImage()
@@ -75,7 +97,7 @@ class AllBinaryJ2SEImageRotationAnimation(ImageBaseRotationAnimation):
         changed: bool = False
         if self.getChangeBasicColor() is None or int(self.getChangeBasicColor()) != int(basicColor):
             changed = True
-        super().changeBasicColor(basicColor)
+        java_super_call(super(), "changeBasicColor", basicColor)
         if changed:
             self.changeColorProcessor = ChangeColorProcessor.getInstance()
             self.updateImage()
@@ -86,7 +108,7 @@ class AllBinaryJ2SEImageRotationAnimation(ImageBaseRotationAnimation):
         changed: bool = False
         if self.alphaP != alpha:
             changed = True
-        super().setAlpha(alpha)
+        java_super_call(super(), "setAlpha", alpha)
         if changed:
             self.alphaProcessor = AlphaProcessor.getInstance()
             self.updateImage()
@@ -110,12 +132,12 @@ class AllBinaryJ2SEImageRotationAnimation(ImageBaseRotationAnimation):
     
 
     def nextRotation(self) -> None:
-        super().nextRotation()
+        java_super_call(super(), "nextRotation")
         self.updateImage()
     
 
     def previousRotation(self) -> None:
-        super().previousRotation()
+        java_super_call(super(), "previousRotation")
         self.updateImage()
     
 
@@ -129,7 +151,7 @@ class AllBinaryJ2SEImageRotationAnimation(ImageBaseRotationAnimation):
     
 
     def setFrame(self, index: int) -> None:
-        super().setFrame(index)
+        java_super_call(super(), "setFrame", index)
         self.updateImage()
     
 
@@ -149,7 +171,7 @@ class AllBinaryJ2SEImageRotationAnimation(ImageBaseRotationAnimation):
     # throws Exception
     def close(self) -> None:
         from org.allbinary.DisposalUtil import DisposalUtil
-        super().close()
+        java_super_call(super(), "close")
         disposalUtil: DisposalUtil = DisposalUtil.getInstance()
         size2: int = len(self.twoImages)
         for index in range(0, size2):
@@ -164,7 +186,7 @@ class AllBinaryJ2SEImageRotationAnimation(ImageBaseRotationAnimation):
     # throws Throwable
     def finalize(self) -> None:
         from org.allbinary.DisposalUtil import DisposalUtil
-        super().finalize()
+        java_super_call(super(), "finalize")
         disposalUtil: DisposalUtil = DisposalUtil.getInstance()
         size2: int = len(self.twoImages)
         for index in range(0, size2):

@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -14,7 +15,7 @@ class ArrayUtil:
         self.mathUtil: MathUtil = MathUtil.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -31,63 +32,63 @@ class ArrayUtil:
     def copyOfType(self, original: list[object], newLength: int, newType: type) -> list[object]:
         from jsinterop.annotations.JsMethod import JsMethod
         copy: list[object] = [None] * (newLength)
-        copy[0:0 + self.mathUtil.min(len(original), newLength)] = original[0:0 + self.mathUtil.min(len(original), newLength)]
+        __import__("java.lang.System", fromlist=["System"]).System.arraycopy(original, 0, copy, 0, self.mathUtil.min(len(original), newLength))
         return copy
     
 
     def copyOfbyte(self, original: list[int], newLength: int) -> list[int]:
         from jsinterop.annotations.JsMethod import JsMethod
         copy: list[int] = [0] * (newLength)
-        copy[0:0 + self.mathUtil.min(len(original), newLength)] = original[0:0 + self.mathUtil.min(len(original), newLength)]
+        __import__("java.lang.System", fromlist=["System"]).System.arraycopy(original, 0, copy, 0, self.mathUtil.min(len(original), newLength))
         return copy
     
 
     def copyOfshort(self, original: list[int], newLength: int) -> list[int]:
         from jsinterop.annotations.JsMethod import JsMethod
         copy: list[int] = [0] * (newLength)
-        copy[0:0 + self.mathUtil.min(len(original), newLength)] = original[0:0 + self.mathUtil.min(len(original), newLength)]
+        __import__("java.lang.System", fromlist=["System"]).System.arraycopy(original, 0, copy, 0, self.mathUtil.min(len(original), newLength))
         return copy
     
 
     def copyOfint(self, original: list[int], newLength: int) -> list[int]:
         from jsinterop.annotations.JsMethod import JsMethod
         copy: list[int] = [0] * (newLength)
-        copy[0:0 + self.mathUtil.min(len(original), newLength)] = original[0:0 + self.mathUtil.min(len(original), newLength)]
+        __import__("java.lang.System", fromlist=["System"]).System.arraycopy(original, 0, copy, 0, self.mathUtil.min(len(original), newLength))
         return copy
     
 
     def copyOflong(self, original: list[int], newLength: int) -> list[int]:
         from jsinterop.annotations.JsMethod import JsMethod
         copy: list[int] = [0] * (newLength)
-        copy[0:0 + self.mathUtil.min(len(original), newLength)] = original[0:0 + self.mathUtil.min(len(original), newLength)]
+        __import__("java.lang.System", fromlist=["System"]).System.arraycopy(original, 0, copy, 0, self.mathUtil.min(len(original), newLength))
         return copy
     
 
     def copyOfchar(self, original: list[str], newLength: int) -> list[str]:
         from jsinterop.annotations.JsMethod import JsMethod
         copy: list[str] = ['\0'] * (newLength)
-        copy[0:0 + self.mathUtil.min(len(original), newLength)] = original[0:0 + self.mathUtil.min(len(original), newLength)]
+        __import__("java.lang.System", fromlist=["System"]).System.arraycopy(original, 0, copy, 0, self.mathUtil.min(len(original), newLength))
         return copy
     
 
     def copyOffloat(self, original: list[float], newLength: int) -> list[float]:
         from jsinterop.annotations.JsMethod import JsMethod
         copy: list[float] = [0.0] * (newLength)
-        copy[0:0 + self.mathUtil.min(len(original), newLength)] = original[0:0 + self.mathUtil.min(len(original), newLength)]
+        __import__("java.lang.System", fromlist=["System"]).System.arraycopy(original, 0, copy, 0, self.mathUtil.min(len(original), newLength))
         return copy
     
 
     def copyOfdouble(self, original: list[float], newLength: int) -> list[float]:
         from jsinterop.annotations.JsMethod import JsMethod
         copy: list[float] = [0.0] * (newLength)
-        copy[0:0 + self.mathUtil.min(len(original), newLength)] = original[0:0 + self.mathUtil.min(len(original), newLength)]
+        __import__("java.lang.System", fromlist=["System"]).System.arraycopy(original, 0, copy, 0, self.mathUtil.min(len(original), newLength))
         return copy
     
 
     def copyOfboolean(self, original: list[bool], newLength: int) -> list[bool]:
         from jsinterop.annotations.JsMethod import JsMethod
         copy: list[bool] = [False] * (newLength)
-        copy[0:0 + self.mathUtil.min(len(original), newLength)] = original[0:0 + self.mathUtil.min(len(original), newLength)]
+        __import__("java.lang.System", fromlist=["System"]).System.arraycopy(original, 0, copy, 0, self.mathUtil.min(len(original), newLength))
         return copy
     
 

@@ -15,10 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from admin.tags.TableTag import TableTag
 
 
+@java_inherited_overloads
 class PaymentGatewayTag(TableTag):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -26,9 +32,10 @@ class PaymentGatewayTag(TableTag):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from admin.taghelpers.PaymentGatewayHelperFactory import PaymentGatewayHelperFactory
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.setTagHelperFactory(PaymentGatewayHelperFactory())
         self.setTagRequestHelperFactory(PaymentGatewayHelperFactory())
     
@@ -59,7 +66,7 @@ class PaymentGatewayTag(TableTag):
         from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
         from org.allbinary.globals.GLOBALS2 import GLOBALS2
         try:
-            if self.isEnabled():
+            if java_predicate(self, "isEnabled"):
                 if self.getCommand().compareTo(GLOBALS2.AUTHORIZEORDEREVALBODYONERROR) == 0 or self.getCommand().compareTo(GLOBALS2.AUTHORIZEORDERANDEVALBODY) == 0 or self.getCommand().compareTo(GLOBALS2.AUTHORIZEFORMEVALBODYONERROR) == 0:
                     output: str = self.process()
                     if True:
@@ -69,7 +76,7 @@ class PaymentGatewayTag(TableTag):
                     else:
                         return self.EVAL_BODY_INCLUDE
                 else:
-                    return super().doStartTag()
+                    return java_super_call(super(), "doStartTag")
             return self.SKIP_BODY
         except Exception as e:
             AbResponseHandler.sendJspTagRedirect(self.pageContext, e)

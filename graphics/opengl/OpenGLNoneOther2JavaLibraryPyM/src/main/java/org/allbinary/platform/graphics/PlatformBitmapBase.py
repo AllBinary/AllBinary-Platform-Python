@@ -22,13 +22,12 @@ class PlatformBitmapBase:
     NULL_PLATFORM_BITMAP_BASE: PlatformBitmapBase = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         self.alpha: int = 255
         self.basicColor: BasicColor = BasicColorFactory.getInstance().NULL_COLOR
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getWidth(self) -> int:

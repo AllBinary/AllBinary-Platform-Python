@@ -28,7 +28,7 @@ class GameInputMapping:
 
     def __init__(self, name: str, gameKey: GameKey) -> None:
         from org.allbinary.game.input.GameKey import GameKey
-        self._init_fields()
+        __class__._init_fields(self)
         self.setName(name)
         self.setGameKey(gameKey)
     

@@ -15,14 +15,21 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 from org.allbinary.animation.vector.CircleAnimation import CircleAnimation
 
 
+@java_inherited_overloads
 class AdjustedCircleAnimation(CircleAnimation):
+    def _java_defaults(self):
+        vars(self).setdefault("xAdjustment", 0)
+        vars(self).setdefault("yAdjustment", 0)
 
     def _init_fields(self) -> None:
-        self.xAdjustment: int = 0
-        self.yAdjustment: int = 0
+        if "xAdjustment" not in vars(self): self.xAdjustment: int = 0
+        if "yAdjustment" not in vars(self): self.yAdjustment: int = 0
     
 
     @staticmethod
@@ -42,9 +49,10 @@ class AdjustedCircleAnimation(CircleAnimation):
     
 
     def __init__(self, width: int, height: int, basicColor: BasicColor) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(width, height, basicColor)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def initXY(self, xAdjustment: int, yAdjustment: int) -> None:
@@ -54,7 +62,7 @@ class AdjustedCircleAnimation(CircleAnimation):
 
     def init(self, innerWidth: int) -> None:
         from org.allbinary.AndroidUtil import AndroidUtil
-        if AndroidUtil.isAndroid():
+        if java_predicate(AndroidUtil, "isAndroid"):
             widthPortion: int = (int(((int(innerWidth / 3)) * 10) / 7))
             self.xAdjustment = -(self.width >> 1) - widthPortion
             self.yAdjustment = self.xAdjustment

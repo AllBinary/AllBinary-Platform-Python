@@ -25,11 +25,11 @@ class Sounds:
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.soundStrings: SoundStrings = SoundStrings.getInstance()
-        self.soundsFactoryInterface: SoundsFactoryInterface = None
+        if "soundsFactoryInterface" not in vars(self): self.soundsFactoryInterface: SoundsFactoryInterface = None
     
 
     def __init__(self, soundsFactoryInterface: SoundsFactoryInterface) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.soundsFactoryInterface = soundsFactoryInterface
     
 
@@ -58,7 +58,7 @@ class Sounds:
                 stringBuffer.append(commonLabels.INDEX_LABEL)
                 stringBuffer.append(indexString)
                 stringBuffer.append(self.soundStrings.SOUND)
-                stringBuffer.append(type(soundInterface).__module__ + "." + type(soundInterface).__qualname__)
+                stringBuffer.append(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(soundInterface)))
                 self.logUtil.putF(str(stringBuffer), self, self.commonStrings.INIT)
                 soundInterface.init()
                 progressCanvas.addNormalPortion(100, str(StringMaker().append(self.soundStrings.INIT_SOUND).append(indexString)))

@@ -26,12 +26,12 @@ class InputImageType:
     MOTION: InputImageType = None
 
     def _init_fields(self) -> None:
-        self.name: str = None
-        self.index: int = None
+        if "name" not in vars(self): self.name: str = None
+        if "index" not in vars(self): self.index: int = 0
     
 
     def __init__(self, name: str, index: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.name = name
         self.index = index
         InputImageType.TYPE_VECTOR.add(self)

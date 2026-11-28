@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from javax.sound.sampled.Control import Control
 
 
+@java_inherited_overloads
 class NullJ2SEControl(Control):
     
 

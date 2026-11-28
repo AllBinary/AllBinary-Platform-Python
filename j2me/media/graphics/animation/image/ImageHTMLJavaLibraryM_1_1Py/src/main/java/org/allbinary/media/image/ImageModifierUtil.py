@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 
 
 class ImageModifierUtil:
@@ -26,10 +28,10 @@ class ImageModifierUtil:
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.resourceCallbackStrings: ResourceCallbackStrings = ResourceCallbackStrings.getInstance()
-        self.alphaArray: list[bool] = None
+        if "alphaArray" not in vars(self): self.alphaArray: list[bool] = None
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -109,28 +111,31 @@ class ImageModifierUtil:
         from playn.core.util.Callback import Callback
         image3: Image = (image).getImage()
         if image3 is not None:
-            if image3.isReady() or image3.width() + image3.height() <= 0 or image.getName() == self.resourceCallbackStrings.FROM_DATA:
+            if java_predicate(image3, "isReady") or image3.width() + image3.height() <= 0 or image.getName() == self.resourceCallbackStrings.FROM_DATA:
                 self.copy(imageArray, index, image, image3)
             else:
-                callback: Callback = (Callback()  # Java anonymous class body:
-#                     
-# 
-#                     def onSuccess(self, resource: object) -> None:
-#                         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-#                         logUtil: LogUtil = LogUtil.getInstance()
-#                         logUtil.putF(str(self.resourceCallbackStrings.DONE) + image.getName(), self, self.resourceCallbackStrings.HANDLE_IMAGE)
-#                         self.copy(imageArray, index, image, image3)
-#                     
-# 
-#                     def onFailure(self, e: BaseException) -> None:
-#                         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-#                         from org.allbinary.logic.string.StringMaker import StringMaker
-#                         logUtil: LogUtil = LogUtil.getInstance()
-#                         logUtil.putF(str(StringMaker().append(self.commonStrings.EXCEPTION_LABEL).append(self.resourceCallbackStrings.ERROR).append(image.getName())), self, self.resourceCallbackStrings.HANDLE_IMAGE)
-)
+                _java_listener_owner = self
+                class _JavaListenerN68494(Callback):
+            
+                    
+
+                    def onSuccess(self, resource: object) -> None:
+                        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+                        logUtil: LogUtil = LogUtil.getInstance()
+                        logUtil.putF(str(_java_listener_owner.resourceCallbackStrings.DONE) + image.getName(), self, _java_listener_owner.resourceCallbackStrings.HANDLE_IMAGE)
+                        (self if hasattr(self, "copy") else _java_listener_owner).copy(imageArray, index, image, image3)
+                    
+
+                    def onFailure(self, e: BaseException) -> None:
+                        from org.allbinary.logic.communication.log.LogUtil import LogUtil
+                        from org.allbinary.logic.string.StringMaker import StringMaker
+                        logUtil: LogUtil = LogUtil.getInstance()
+                        logUtil.putF(str(StringMaker().append(_java_listener_owner.commonStrings.EXCEPTION_LABEL).append(_java_listener_owner.resourceCallbackStrings.ERROR).append(image.getName())), self, _java_listener_owner.resourceCallbackStrings.HANDLE_IMAGE)
+                callback: Callback = _JavaListenerN68494()
+            
                 image3.addCallback(callback)
         else:
-            self.logUtil.putF(self.resourceCallbackStrings.NULL + image.isMutable(), self, self.resourceCallbackStrings.HANDLE_IMAGE)
+            self.logUtil.putF(self.resourceCallbackStrings.NULL + java_predicate(image, "isMutable"), self, self.resourceCallbackStrings.HANDLE_IMAGE)
     
 
     def copy(self, imageArray: list[Image], index: int, image: Image, image3: Image) -> None:

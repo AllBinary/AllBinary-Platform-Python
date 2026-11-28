@@ -21,22 +21,22 @@ from org.allbinary.business.init.db.DatabaseConnectionInfoInterface import Datab
 class DbConnectionInfo(DatabaseConnectionInfoInterface):
 
     def _init_fields(self) -> None:
-        self.jdbcDriver: str = None
-        self.name: str = None
-        self.userName: str = None
-        self.password: str = None
-        self.schema: str = None
-        self.server: str = None
-        self.port: str = None
-        self.url: str = None
-        self.host: str = None
+        if "jdbcDriver" not in vars(self): self.jdbcDriver: str = None
+        if "name" not in vars(self): self.name: str = None
+        if "userName" not in vars(self): self.userName: str = None
+        if "password" not in vars(self): self.password: str = None
+        if "schema" not in vars(self): self.schema: str = None
+        if "server" not in vars(self): self.server: str = None
+        if "port" not in vars(self): self.port: str = None
+        if "url" not in vars(self): self.url: str = None
+        if "host" not in vars(self): self.host: str = None
         self.SCHEMA_SEP: str = "://"
         self.USER_NAME_KEY: str = "?user="
         self.PASSWORD_KEY: str = "&password="
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def updateUrl(self) -> None:
@@ -80,7 +80,7 @@ class DbConnectionInfo(DatabaseConnectionInfoInterface):
         stringBuffer.append(self.getSchema())
         stringBuffer.append(self.SCHEMA_SEP)
         stringBuffer.append(self.getServer())
-        if self.getPort() is not None and self.getPort().length() > 1:
+        if self.getPort() is not None and __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(self.getPort()) > 1:
             stringBuffer.append(CommonSeps.getInstance().COLON)
             stringBuffer.append(self.getPort())
         stringBuffer.append(AbPathData.getInstance().SEPARATOR)

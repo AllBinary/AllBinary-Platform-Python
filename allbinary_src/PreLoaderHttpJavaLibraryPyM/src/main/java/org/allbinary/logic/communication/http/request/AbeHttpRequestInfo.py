@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 
 
 class AbeHttpRequestInfo:
@@ -24,28 +25,28 @@ class AbeHttpRequestInfo:
         self.NAME: str = "AbeHttpRequestInfo"
         self.abeHttpRequestInfoData: AbeHttpRequestInfoData = AbeHttpRequestInfoData.getInstance()
         self.commonSeps: CommonSeps = CommonSeps.getInstance()
-        self.httpUserAgent: str = None
-        self.remoteAddress: str = None
-        self.remoteHost: str = None
-        self.remoteHostByAddr: str = None
-        self.remotePort: str = None
-        self.requestedFilePath: str = None
+        if "httpUserAgent" not in vars(self): self.httpUserAgent: str = None
+        if "remoteAddress" not in vars(self): self.remoteAddress: str = None
+        if "remoteHost" not in vars(self): self.remoteHost: str = None
+        if "remoteHostByAddr" not in vars(self): self.remoteHostByAddr: str = None
+        if "remotePort" not in vars(self): self.remotePort: str = None
+        if "requestedFilePath" not in vars(self): self.requestedFilePath: str = None
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self.__jconstructor1(*args)
+            __class__.__jconstructor1(self, *args)
 
     def __jconstructor1(self, *args) -> None:
         if True and not isinstance(args[0], (str, list, int, float)):
-            self._constructor1_1(*args)
+            __class__._constructor1_1(self, *args)
         else:
-            self._constructor1_2(*args)
+            __class__._constructor1_2(self, *args)
     
 
     def _constructor1_1(self, hashMap: HashMap) -> None:
         from java.util.HashMap import HashMap
         from org.allbinary.logic.string.StringUtil import StringUtil
-        self._init_fields()
+        __class__._init_fields(self)
         stringUtil: StringUtil = StringUtil.getInstance()
         self.httpUserAgent = stringUtil.getNonNull(hashMap.get(self.abeHttpRequestInfoData.HTTP_USER_AGENT))
         self.remoteAddress = stringUtil.getNonNull(hashMap.get(self.abeHttpRequestInfoData.REMOTE_ADDRESS))
@@ -58,11 +59,11 @@ class AbeHttpRequestInfo:
     def _constructor1_2(self, httpServletRequest: HttpServletRequest) -> None:
         from java.util.Enumeration import Enumeration
         from org.allbinary.logic.string.StringUtil import StringUtil
-        self._init_fields()
+        __class__._init_fields(self)
         stringUtil: StringUtil = StringUtil.getInstance()
         self.httpUserAgent = stringUtil.EMPTY_STRING
         enumuration: Enumeration = httpServletRequest.getHeaderNames()
-        while enumuration.hasMoreElements():
+        while java_predicate(enumuration, "hasMoreElements"):
             key: str = enumuration.nextElement()
             value: str = httpServletRequest.getHeader(key)
             if key.find("user") >= 0:
@@ -115,5 +116,6 @@ class AbeHttpRequestInfo:
 # from org.allbinary.logic.string.StringMaker import StringMaker
 # from org.allbinary.logic.string.StringUtil import StringUtil
 # from org.allbinary.string.CommonSeps import CommonSeps
+from org.allbinary.logic.communication.http.request.AbeHttpRequestInfoData import AbeHttpRequestInfoData
 
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.system.hardware.components.interfaces.CpuInterface import CpuInterface
 from org.allbinary.logic.system.hardware.components.interfaces.HardwareComponentInterface import HardwareComponentInterface
@@ -23,28 +24,27 @@ from org.allbinary.logic.system.hardware.components.interfaces.HardwareComponent
 class Cpu(*java_bases(CpuInterface, HardwareComponentInterface)):
 
     def _init_fields(self) -> None:
-        from java.util.HashMap import HashMap
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.CPUFILE: str = "/proc/cpuinfo"
-        self.cpuHashMap: HashMap = None
+        if "cpuHashMap" not in vars(self): self.cpuHashMap: HashMap = None
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
         elif len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
     
 
     def _constructor1(self, filePath: str) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.init(filePath)
     
 
     def _constructor0(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.init(self.CPUFILE)
     
 
@@ -96,7 +96,7 @@ class Cpu(*java_bases(CpuInterface, HardwareComponentInterface)):
                 fileVector: BasicArrayList = SubDirectory.getInstance().search(filePath, AbFile.createAbFile(FilePathData.getInstance().PATH_START))
                 if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().OS):
                     self.logUtil.putF(str(StringMaker().append("Cpu File BasicArrayList Size: ").appendint(fileVector.size())), self, self.commonStrings.CONSTRUCTOR)
-                if not fileVector.isEmpty():
+                if not (java_predicate(fileVector, "isEmpty")):
                     file: AbFile = fileVector.get(0)
                     lineNumberReader = LineNumberReader(FileReader(file.getPath()))
             if lineNumberReader is not None:
@@ -129,7 +129,9 @@ class Cpu(*java_bases(CpuInterface, HardwareComponentInterface)):
                 lineNumberReader.close()
 
     def init(self, *args):
-        return getattr(self, "init_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("init_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().init(*args)
     
 
     def getProcessor(self) -> str:
@@ -182,11 +184,13 @@ class Cpu(*java_bases(CpuInterface, HardwareComponentInterface)):
         return True
 
     def compareTo(self, *args):
-        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
-            return self.compareTo_j1_1(*args)
+        if len(args) == 1 and True and (args[0] is None or any(base.__name__ == "CpuInterface" for base in type(args[0]).__mro__)):
+            return __class__.__dict__["compareTo_j1_1"].__get__(self, __class__)(*args)
         if len(args) == 1:
-            return self.compareTo_j1_2(*args)
-        return getattr(self, "compareTo_j" + str(len(args)))(*args)
+            return __class__.__dict__["compareTo_j1_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("compareTo_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().compareTo(*args)
     
 
     def toString(self) -> str:

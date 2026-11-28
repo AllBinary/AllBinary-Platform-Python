@@ -20,11 +20,11 @@ from __future__ import annotations
 class OpenGLBitmapConfig:
 
     def _init_fields(self) -> None:
-        self.bitmapConfig: object = None
+        if "bitmapConfig" not in vars(self): self.bitmapConfig: object = None
     
 
     def __init__(self, bitmapConfig: object) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.bitmapConfig = bitmapConfig
 
 

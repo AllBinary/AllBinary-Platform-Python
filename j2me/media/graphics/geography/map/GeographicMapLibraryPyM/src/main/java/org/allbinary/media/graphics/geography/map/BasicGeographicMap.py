@@ -15,27 +15,37 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.media.graphics.geography.map.SimpleGeographicMap import SimpleGeographicMap
 from org.allbinary.media.graphics.geography.map.GeographicMapInterface import GeographicMapInterface
 
 
+@java_inherited_overloads
 class BasicGeographicMap(*java_bases(SimpleGeographicMap, GeographicMapInterface)):
     NULL_BASIC_GEOGRAPHIC_MAP_ARRAY: list[BasicGeographicMap] = [None] * (0)
+    def _java_defaults(self):
+        vars(self).setdefault("mathUtil", None)
+        vars(self).setdefault("geographicMapCellPositionFactory", None)
+        vars(self).setdefault("geographicMapCellPositionFactoryInterface", None)
+        vars(self).setdefault("geographicMapCellTypeFactory", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.math.MathUtil import MathUtil
         self.mathUtil: MathUtil = MathUtil.getInstance()
-        self.geographicMapCellPositionFactory: BasicGeographicMapCellPositionFactory = None
-        self.geographicMapCellPositionFactoryInterface: GeographicMapCellPositionFactoryInterface = None
-        self.geographicMapCellTypeFactory: GeographicMapCellTypeFactory = None
+        if "geographicMapCellPositionFactory" not in vars(self): self.geographicMapCellPositionFactory: BasicGeographicMapCellPositionFactory = None
+        if "geographicMapCellPositionFactoryInterface" not in vars(self): self.geographicMapCellPositionFactoryInterface: GeographicMapCellPositionFactoryInterface = None
+        if "geographicMapCellTypeFactory" not in vars(self): self.geographicMapCellTypeFactory: GeographicMapCellTypeFactory = None
     
 
     def __init__(self, id: int, name: str, cellTypeIdToGeographicMapCellType: list[int], tiledLayer: AllBinaryTiledLayer, foregroundBasicColor: BasicColor, backgroundBasicColor: BasicColor, geographicMapCellPositionFactoryInterface: GeographicMapCellPositionFactoryInterface, geographicMapCellPositionBaseFactory: GeographicMapCellPositionBaseFactory, geographicMapCellTypeFactory: GeographicMapCellTypeFactory) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
         from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(id, name, cellTypeIdToGeographicMapCellType, tiledLayer, foregroundBasicColor, backgroundBasicColor)
-        self._init_fields()
+        __class__._init_fields(self)
         self.geographicMapCellPositionFactoryInterface = geographicMapCellPositionFactoryInterface
         self.geographicMapCellPositionFactory = geographicMapCellPositionBaseFactory.getInstance(self)
         self.geographicMapCellTypeFactory = geographicMapCellTypeFactory
@@ -128,8 +138,10 @@ class BasicGeographicMap(*java_bases(SimpleGeographicMap, GeographicMapInterface
     def getCellPositionAtXY(self, x: int, y: int) -> GeographicMapCellPosition:
         from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
         allBinaryTiledLayer: AllBinaryTiledLayer = self.getAllBinaryTiledLayer()
-        i_column: int = self.mathUtil.abs(x / allBinaryTiledLayer.getCellHeight())
-        i_row: int = self.mathUtil.abs(y / allBinaryTiledLayer.getCellWidth())
+        i_column: int = self.mathUtil.abs(java_divide(x, allBinaryTiledLayer.getCellHeight())
+            )
+        i_row: int = self.mathUtil.abs(java_divide(y, allBinaryTiledLayer.getCellWidth())
+            )
         return self.geographicMapCellPositionFactory.getAt(i_column, i_row)
     
 
@@ -138,8 +150,10 @@ class BasicGeographicMap(*java_bases(SimpleGeographicMap, GeographicMapInterface
         from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
         from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
         allBinaryTiledLayer: AllBinaryTiledLayer = self.getAllBinaryTiledLayer()
-        i_column: int = self.mathUtil.abs(x / allBinaryTiledLayer.getCellHeight())
-        i_row: int = self.mathUtil.abs(y / allBinaryTiledLayer.getCellWidth())
+        i_column: int = self.mathUtil.abs(java_divide(x, allBinaryTiledLayer.getCellHeight())
+            )
+        i_row: int = self.mathUtil.abs(java_divide(y, allBinaryTiledLayer.getCellWidth())
+            )
         if allBinaryTiledLayer.getColumns() > i_column and allBinaryTiledLayer.getRows() > i_row:
             try:
                 return self.geographicMapCellPositionFactory.getAt(i_column, i_row)
@@ -167,10 +181,14 @@ class BasicGeographicMap(*java_bases(SimpleGeographicMap, GeographicMapInterface
         from org.allbinary.util.BasicArrayList import BasicArrayList
         geographicMapCellPositionList.clear()
         allBinaryTiledLayer: AllBinaryTiledLayer = self.getAllBinaryTiledLayer()
-        i_columnMin: int = self.mathUtil.abs(x / allBinaryTiledLayer.getCellHeight())
-        i_rowMin: int = self.mathUtil.abs(y / allBinaryTiledLayer.getCellWidth())
-        i_columnMax: int = self.mathUtil.abs(x2 / allBinaryTiledLayer.getCellHeight()) + 1
-        i_rowMax: int = self.mathUtil.abs(y2 / allBinaryTiledLayer.getCellWidth()) + 1
+        i_columnMin: int = self.mathUtil.abs(java_divide(x, allBinaryTiledLayer.getCellHeight())
+            )
+        i_rowMin: int = self.mathUtil.abs(java_divide(y, allBinaryTiledLayer.getCellWidth())
+            )
+        i_columnMax: int = self.mathUtil.abs(java_divide(x2, allBinaryTiledLayer.getCellHeight())
+            ) + 1
+        i_rowMax: int = self.mathUtil.abs(java_divide(y2, allBinaryTiledLayer.getCellWidth())
+            ) + 1
         for columnIndex in range(i_columnMin, i_columnMax):
             for rowIndex in range(i_rowMin, i_rowMax):
                 if allBinaryTiledLayer.getColumns() > columnIndex and allBinaryTiledLayer.getRows() > rowIndex:
@@ -184,8 +202,10 @@ class BasicGeographicMap(*java_bases(SimpleGeographicMap, GeographicMapInterface
         hasChanged: bool = False
         size: int = len(cellPositionArray)
         size2: int = len(cellPositionArray[0])
-        xPortion: int = layer.getXP() / (size - 1)
-        yPortion: int = layer.getYP() / (size - 1)
+        xPortion: int = java_divide(layer.getXP(), (size - 1))
+            
+        yPortion: int = java_divide(layer.getYP(), (size - 1))
+            
         for index in range(0, size):
             for index2 in range(0, size2):
                 x: int = xPortion * index
@@ -215,39 +235,39 @@ class BasicGeographicMap(*java_bases(SimpleGeographicMap, GeographicMapInterface
     
 
     def getId(self) -> int:
-        return super().getId()
+        return java_super_call(super(), "getId")
     
 
     def getName(self) -> str:
-        return super().getName()
+        return java_super_call(super(), "getName")
     
 
     def reset(self) -> None:
-        super().reset()
+        java_super_call(super(), "reset")
     
 
     def getAllBinaryTiledLayer(self) -> AllBinaryTiledLayer:
         from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
-        return super().getAllBinaryTiledLayer()
+        return java_super_call(super(), "getAllBinaryTiledLayer")
     
 
     def getCellTypeFromMapCellTypeInt(self, cellTypeId: int) -> int:
-        return super().getCellTypeFromMapCellTypeInt(cellTypeId)
+        return java_super_call(super(), "getCellTypeFromMapCellTypeInt", cellTypeId)
     
 
     # throws Exception
     def getCellTypeAt(self, cellPosition: GeographicMapCellPosition) -> GeographicMapCellType:
-        return super().getCellTypeAt(cellPosition)
+        return java_super_call(super(), "getCellTypeAt", cellPosition)
     
 
     def getForegroundBasicColor(self) -> BasicColor:
         from org.allbinary.graphics.color.BasicColor import BasicColor
-        return super().getForegroundBasicColor()
+        return java_super_call(super(), "getForegroundBasicColor")
     
 
     def getBackgroundBasicColor(self) -> BasicColor:
         from org.allbinary.graphics.color.BasicColor import BasicColor
-        return super().getBackgroundBasicColor()
+        return java_super_call(super(), "getBackgroundBasicColor")
 # from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
 # from org.allbinary.graphics.color.BasicColor import BasicColor
 # from org.allbinary.layer.Layer import Layer

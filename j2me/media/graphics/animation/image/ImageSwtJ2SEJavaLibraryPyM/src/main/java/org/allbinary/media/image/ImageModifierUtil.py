@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -29,7 +31,7 @@ class ImageModifierUtil:
         self.features: Features = Features.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -49,7 +51,7 @@ class ImageModifierUtil:
         from org.microemu.device.swt.SwtImmutableImage import SwtImmutableImage
         from org.microemu.device.swt.SwtMutableImage import SwtMutableImage
         newBufferedImage: Image = None
-        if image.isMutable():
+        if java_predicate(image, "isMutable"):
             swtImage: SwtMutableImage = image
             newBufferedImage = swtImage.getImage()
         else:
@@ -79,6 +81,7 @@ class ImageModifierUtil:
     
 
     def changeColor(self, unusedOriginalImage: Image, image: Image, imageIndex: int, basicColor: BasicColor) -> None:
+        from org.allbinary.media.image.SwtOpenGLESImageBridge import SwtOpenGLESImageBridge
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
@@ -96,7 +99,7 @@ class ImageModifierUtil:
                 openGLESImage.openGLESImageProperties.bluef = basicColor.getBlueComponent()
                 return
         newBufferedImage: Image = None
-        if image.isMutable():
+        if java_predicate(image, "isMutable"):
             swtImage: SwtMutableImage = image
             newBufferedImage = swtImage.getImage()
         else:
@@ -125,6 +128,7 @@ class ImageModifierUtil:
     
 
     def setAlpha(self, unusedOriginalImage: Image, image: Image, imageIndex: int, alphaInt: int) -> None:
+        from org.allbinary.media.image.SwtOpenGLESImageBridge import SwtOpenGLESImageBridge
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
         from org.allbinary.image.opengles.ModifierOpenGLESImageProcessor import ModifierOpenGLESImageProcessor
@@ -144,7 +148,7 @@ class ImageModifierUtil:
         from org.microemu.device.swt.SwtMutableImage import SwtMutableImage
         alpha: int = ((int(alphaInt) + 128) % 256 - 128)
         newBufferedImage: Image = None
-        if image.isMutable():
+        if java_predicate(image, "isMutable"):
             swtImage: SwtMutableImage = image
             newBufferedImage = swtImage.getImage()
         else:

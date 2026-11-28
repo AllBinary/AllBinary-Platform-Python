@@ -15,28 +15,44 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.game.input.form.RTSFormInput import RTSFormInput
 
 
+@java_inherited_overloads
 class BuildingRTSFormInput(RTSFormInput):
+    def _java_defaults(self):
+        vars(self).setdefault("isUnitProducer", False)
+        vars(self).setdefault("buildOnPathGameNotificationEvent", None)
+        vars(self).setdefault("spotTakenGameNotificationEvent", None)
+        vars(self).setdefault("selectBuildSpotGameNotificationEvent", None)
+        vars(self).setdefault("roadCollisionGameNotificationEvent", None)
+        vars(self).setdefault("noMoneyGameNotificationEvent", None)
+        vars(self).setdefault("buildingCollisionGameNotificationEvent", None)
+        vars(self).setdefault("structureToCloseCollisionGameNotificationEvent", None)
+        vars(self).setdefault("buildingGameNotificationEvent", None)
+        vars(self).setdefault("mapEdgeGameNotificationEvent", None)
+        vars(self).setdefault("dropCellPositionHistory", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.layer.hud.event.GameNotificationEvent import GameNotificationEvent
         from org.allbinary.media.graphics.geography.map.drop.DropCellPositionHistory import DropCellPositionHistory
-        self.isUnitProducer: bool = None
-        self.buildOnPathGameNotificationEvent: GameNotificationEvent = None
-        self.spotTakenGameNotificationEvent: GameNotificationEvent = None
-        self.selectBuildSpotGameNotificationEvent: GameNotificationEvent = None
-        self.roadCollisionGameNotificationEvent: GameNotificationEvent = None
-        self.noMoneyGameNotificationEvent: GameNotificationEvent = None
-        self.buildingCollisionGameNotificationEvent: GameNotificationEvent = None
-        self.structureToCloseCollisionGameNotificationEvent: GameNotificationEvent = None
-        self.buildingGameNotificationEvent: GameNotificationEvent = None
-        self.mapEdgeGameNotificationEvent: GameNotificationEvent = None
+        if "isUnitProducer" not in vars(self): self.isUnitProducer: bool = False
+        if "buildOnPathGameNotificationEvent" not in vars(self): self.buildOnPathGameNotificationEvent: GameNotificationEvent = None
+        if "spotTakenGameNotificationEvent" not in vars(self): self.spotTakenGameNotificationEvent: GameNotificationEvent = None
+        if "selectBuildSpotGameNotificationEvent" not in vars(self): self.selectBuildSpotGameNotificationEvent: GameNotificationEvent = None
+        if "roadCollisionGameNotificationEvent" not in vars(self): self.roadCollisionGameNotificationEvent: GameNotificationEvent = None
+        if "noMoneyGameNotificationEvent" not in vars(self): self.noMoneyGameNotificationEvent: GameNotificationEvent = None
+        if "buildingCollisionGameNotificationEvent" not in vars(self): self.buildingCollisionGameNotificationEvent: GameNotificationEvent = None
+        if "structureToCloseCollisionGameNotificationEvent" not in vars(self): self.structureToCloseCollisionGameNotificationEvent: GameNotificationEvent = None
+        if "buildingGameNotificationEvent" not in vars(self): self.buildingGameNotificationEvent: GameNotificationEvent = None
+        if "mapEdgeGameNotificationEvent" not in vars(self): self.mapEdgeGameNotificationEvent: GameNotificationEvent = None
         self.dropCellPositionHistory: DropCellPositionHistory = DropCellPositionHistory.getInstance()
     
 
     def __init__(self, groupInterface: list[Group], isUnitProducer: bool) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.layer.RTSGameStrings import RTSGameStrings
         from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
         from org.allbinary.game.identification.Group import Group
@@ -44,7 +60,7 @@ class BuildingRTSFormInput(RTSFormInput):
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
         super().__init__(groupInterface)
-        self._init_fields()
+        __class__._init_fields(self)
         self.isUnitProducer = isUnitProducer
         smallIntegerSingletonFactory: SmallIntegerSingletonFactory = SmallIntegerSingletonFactory.getInstance()
         basicColorFactory: BasicColorFactory = BasicColorFactory.getInstance()
@@ -64,7 +80,7 @@ class BuildingRTSFormInput(RTSFormInput):
         from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
         from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
         from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
-        super().setAllBinaryGameLayerManager(allBinaryGameLayerManager)
+        java_super_call(super(), "setAllBinaryGameLayerManager", allBinaryGameLayerManager)
         geographicMapCompositeInterface: GeographicMapCompositeInterface = allBinaryGameLayerManager
         geographicMapInterface: BasicGeographicMap = geographicMapCompositeInterface.getGeographicMapInterface()[0]
         self.buildOnPathGameNotificationEvent.setBasicColorP(geographicMapInterface.getForegroundBasicColor())
@@ -84,7 +100,7 @@ class BuildingRTSFormInput(RTSFormInput):
         from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
         from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
         from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-        super().process(layerManager)
+        java_super_call(super(), "process", layerManager)
         self.buildFromMotionInput(rtsPlayerLayerInterface, layerManager, item, itemIndex)
     
 
@@ -99,7 +115,7 @@ class BuildingRTSFormInput(RTSFormInput):
         from org.allbinary.logic.system.security.licensing.LockedUtil import LockedUtil
         factoryItem: LayerInterfaceFactoryImageItem = item
         layerInterfaceFactoryInterface: DemoLockedWithCostLayerInterfaceFactoryInterface = factoryItem.getLayerInterfaceFactoryInterface()
-        if LockedUtil.getInstance().isLocked() and layerInterfaceFactoryInterface.isDemoLocked():
+        if java_predicate(LockedUtil.getInstance(), "isLocked") and java_predicate(layerInterfaceFactoryInterface, "isDemoLocked"):
             return True
         else:
             return False
@@ -135,10 +151,10 @@ class BuildingRTSFormInput(RTSFormInput):
             return
         geographicMapCellPosition: GeographicMapCellPosition = self.getSelectedGeographicCellPosition()
         if geographicMapCellPosition != SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION:
-            if not self.isPositionBlocked():
+            if not (java_predicate(self, "isPositionBlocked")):
                 geographicMapCellType: GeographicMapCellType = geographicMapInterface.getCellTypeAt(geographicMapCellPosition)
                 raceTrackGeographicMapCellTypeFactory: RaceTrackGeographicMapCellTypeFactory = geographicMapInterface.getGeographicMapCellTypeFactory()
-                if not raceTrackGeographicMapCellTypeFactory.isPath(geographicMapCellType):
+                if not (raceTrackGeographicMapCellTypeFactory.isPath(geographicMapCellType)):
                     if self.newUnconstructedRTSLayerInterfaceArray[itemIndex] == CollidableDestroyableDamageableLayer.getNullInstance():
                         self.newUnconstructedRTSLayerInterfaceArray[itemIndex] = self.getInstance(layerManager, item, geographicMapCellPosition)
                     else:
@@ -150,15 +166,15 @@ class BuildingRTSFormInput(RTSFormInput):
                     self.attemptBuild(rtsPlayerLayerInterface, layerManager, rtsLayer, itemIndex)
                 else:
                     rtsPlayerLayerInterface.add(ErrorSound.getInstance())
-                    if not rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface():
+                    if not (rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface()):
                         GameNotificationEventHandler.getInstance().fireEvent(self.buildOnPathGameNotificationEvent)
             else:
                 rtsPlayerLayerInterface.add(ErrorSound.getInstance())
-                if not rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface():
+                if not (rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface()):
                     GameNotificationEventHandler.getInstance().fireEvent(self.spotTakenGameNotificationEvent)
         else:
             rtsPlayerLayerInterface.add(ErrorSound.getInstance())
-            if not rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface():
+            if not (rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface()):
                 GameNotificationEventHandler.getInstance().fireEvent(self.selectBuildSpotGameNotificationEvent)
     
 
@@ -183,7 +199,7 @@ class BuildingRTSFormInput(RTSFormInput):
         self.logUtil.putF(str(StringMaker().append("Layer: ").append(StringUtil.getInstance().toString(layerInterface))), self, "attemptBuild")
         geographicMapCellPositionArea: GeographicMapCellPositionAreaBase = layerInterface.geographicMapCellPositionAreaBase
         occupyList: BasicArrayList = geographicMapCellPositionArea.getOccupyingGeographicMapCellPositionList()
-        if not self.isBuildAttemptValid(rtsPlayerLayerInterface, layerInterface):
+        if not (self.isBuildAttemptValid(rtsPlayerLayerInterface, layerInterface)):
             return False
         geographicMapCellType: GeographicMapCellType = None
         for index in range(occupyList.size() - 1, 0 - 1, -1):
@@ -193,7 +209,7 @@ class BuildingRTSFormInput(RTSFormInput):
             raceTrackGeographicMapCellTypeFactory: RaceTrackGeographicMapCellTypeFactory = geographicMapInterface.getGeographicMapCellTypeFactory()
             if raceTrackGeographicMapCellTypeFactory.isPath(geographicMapCellType):
                 rtsPlayerLayerInterface.add(ErrorSound.getInstance())
-                if not rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface():
+                if not (rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface()):
                     GameNotificationEventHandler.getInstance().fireEvent(self.roadCollisionGameNotificationEvent)
                 return False
         cost: int = layerInterface.getCost()
@@ -214,7 +230,7 @@ class BuildingRTSFormInput(RTSFormInput):
             return True
         else:
             rtsPlayerLayerInterface.add(ErrorSound.getInstance())
-            if not rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface():
+            if not (rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface()):
                 GameNotificationEventHandler.getInstance().fireEvent(self.noMoneyGameNotificationEvent)
             return False
     
@@ -231,18 +247,18 @@ class BuildingRTSFormInput(RTSFormInput):
         occupyList: BasicArrayList = geographicMapCellPositionArea.getOccupyingGeographicMapCellPositionList()
         if self.dropCellPositionHistory.anyCellPositionWithDrop(occupyList):
             rtsPlayerLayerInterface.add(ErrorSound.getInstance())
-            if not rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface():
+            if not (rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface()):
                 GameNotificationEventHandler.getInstance().fireEvent(self.buildingCollisionGameNotificationEvent)
             return False
         if self.isUnitProducer and self.dropCellPositionHistory.anyCellPositionWithDrop(geographicMapCellPositionArea.getSurroundingGeographicMapCellPositionList()):
             rtsPlayerLayerInterface.add(ErrorSound.getInstance())
-            if not rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface():
+            if not (rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface()):
                 GameNotificationEventHandler.getInstance().fireEvent(self.structureToCloseCollisionGameNotificationEvent)
             return False
         else:
             if self.isSurroundingCellsOffMap(layerInterface):
                 rtsPlayerLayerInterface.add(ErrorSound.getInstance())
-                if not rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface():
+                if not (rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface()):
                     GameNotificationEventHandler.getInstance().fireEvent(self.mapEdgeGameNotificationEvent)
                 return False
         return True
@@ -265,7 +281,7 @@ class BuildingRTSFormInput(RTSFormInput):
         rtsPlayerGameInput.setSelectedRTSLayer(layerInterface, self.getSelectedGeographicCellPosition())
         layerManager.append(layerInterface)
         rtsPlayerLayerInterface.add(BuildingSound.getInstance())
-        if not rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface():
+        if not (rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface()):
             GameNotificationEventHandler.getInstance().fireEvent(self.buildingGameNotificationEvent)
     
 

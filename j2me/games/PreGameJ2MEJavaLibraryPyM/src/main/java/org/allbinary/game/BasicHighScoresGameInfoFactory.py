@@ -26,7 +26,7 @@ class BasicHighScoresGameInfoFactory:
         self.SINGLE_PLAYER_SERVER: GameInfo = GameInfo(GameTypeFactory.getInstance().SINGLE_PLAYER, GameMode.SERVER, PlayerTypesFactory.getInstance().PLAYER_TYPE_ONE, 0, 0)
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

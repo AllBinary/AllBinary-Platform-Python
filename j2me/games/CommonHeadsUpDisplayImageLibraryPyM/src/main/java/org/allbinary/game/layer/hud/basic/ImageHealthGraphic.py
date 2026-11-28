@@ -15,23 +15,27 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.layer.hud.basic.HealthGraphic import HealthGraphic
 
 
+@java_inherited_overloads
 class ImageHealthGraphic(HealthGraphic):
+    def _java_defaults(self):
+        vars(self).setdefault("image", None)
 
     def _init_fields(self) -> None:
-        from javax.microedition.lcdui.Image import Image
-        self.image: list[Image] = None
+        if "image" not in vars(self): self.image: list[Image] = None
     
 
     def __init__(self, animationInterface: AnimationInterface, healthInterface: HealthInterface, location: int, direction: int) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.animation.AnimationInterface import AnimationInterface
         from org.allbinary.game.health.HealthInterface import HealthInterface
         from org.allbinary.image.ImageCacheFactory import ImageCacheFactory
         super().__init__(animationInterface, healthInterface, location, direction)
-        self._init_fields()
+        __class__._init_fields(self)
         self.image = [None] * (self.healthInterface.getMaxHealth())
         imageCacheFactory: ImageCacheFactory = ImageCacheFactory.getInstance()
         for numOfHealth in range(0, self.max + 1):

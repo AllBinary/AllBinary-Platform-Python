@@ -15,22 +15,27 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import threading
 from java.io.InputStream import InputStream
 
 
+@java_inherited_overloads
 class AbFileInputStream(InputStream):
     _lock = threading.RLock()
+    def _java_defaults(self):
+        vars(self).setdefault("fileInputStream", None)
 
     def _init_fields(self) -> None:
-        from java.io.FileInputStream import FileInputStream
-        self.fileInputStream: FileInputStream = None
+        if "fileInputStream" not in vars(self): self.fileInputStream: FileInputStream = None
     
 
     def __init__(self, fileInputStream: FileInputStream) -> None:
+        __class__._java_defaults(self)
         from java.io.FileInputStream import FileInputStream
+        from java.io.FileNotFoundException import FileNotFoundException
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.fileInputStream = fileInputStream
     
 
@@ -45,7 +50,7 @@ class AbFileInputStream(InputStream):
     # throws IOException
     def reset(self) -> None:
         with self._lock:
-            return self._reset_unlocked()
+            return __class__.__dict__["_reset_unlocked"].__get__(self, __class__)()
 
     def _reset_unlocked(self) -> None:
         self.fileInputStream.reset()
@@ -80,7 +85,9 @@ class AbFileInputStream(InputStream):
         return self.fileInputStream.read(buffer, offset, count)
 
     def read(self, *args):
-        return getattr(self, "read_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("read_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().read(*args)
     
 
     # throws IOException

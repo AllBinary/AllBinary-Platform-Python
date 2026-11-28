@@ -15,10 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.System import System
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.communication.xmlrpc.XmlRpcAbeClient import XmlRpcAbeClient
 
 
+@java_inherited_overloads
 class XmlRpcRemoteLogClient(XmlRpcAbeClient):
+    def _java_defaults(self):
+        vars(self).setdefault("noCrypt", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.system.security.crypt.jcehelper.NoCrypt import NoCrypt
@@ -26,9 +31,10 @@ class XmlRpcRemoteLogClient(XmlRpcAbeClient):
     
 
     def __init__(self, clientInfo: AbeClientInformationInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         super().__init__(clientInfo, "SSLLogServ.logUtil")
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -56,7 +62,7 @@ class XmlRpcRemoteLogClient(XmlRpcAbeClient):
             return result
         except OSError as e:
             print("IOException Trying Other Servers")
-            if not str(e).startsWith(self.HOST_NOT_RESOLVED):
+            if not (str(e).startsWith(self.HOST_NOT_RESOLVED)):
                 return self.tryAnother(anyType)
             else:
                 raise Exception(self.HOST_NOT_RESOLVED_MSG)

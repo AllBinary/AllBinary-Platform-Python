@@ -22,7 +22,6 @@ class OpenGLESImageExclusionUtil:
     instance: OpenGLESImageExclusionUtil = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.EXCLUSION: str = "font"
         self.list_: BasicArrayList = BasicArrayListD()
@@ -34,7 +33,7 @@ class OpenGLESImageExclusionUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def isCustomScaling(self, image: Image) -> bool:

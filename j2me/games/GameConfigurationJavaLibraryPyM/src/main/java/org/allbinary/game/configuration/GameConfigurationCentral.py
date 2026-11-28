@@ -24,21 +24,21 @@ class GameConfigurationCentral:
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.SCALE: GameConfiguration = None
-        self.ORIENTATION: GameConfiguration = None
-        self.SENSOR_UPDATE_RATE: GameConfiguration = None
-        self.VIBRATION: GameConfiguration = None
-        self.CHALLENGE_LEVEL: GameConfiguration = None
-        self.COLLIDE_DAMAGE: GameConfiguration = None
-        self.DURABILITY_CHALLENGE_LEVEL: GameConfiguration = None
-        self.SPEED_CHALLENGE_LEVEL: GameConfiguration = None
-        self.ATTACK_CHALLENGE_LEVEL: GameConfiguration = None
-        self.CONTROL_LEVEL: GameConfiguration = None
-        self.PLAYER_INPUT_WAIT: GameConfiguration = None
-        self.SPEED: GameConfiguration = None
-        self.SOUND_VOLUME: GameConfiguration = None
-        self.MAX_GAME_OBJECTS: GameConfiguration = None
-        self.MAX_LAYERS: GameConfiguration = None
+        if "SCALE" not in vars(self): self.SCALE: GameConfiguration = None
+        if "ORIENTATION" not in vars(self): self.ORIENTATION: GameConfiguration = None
+        if "SENSOR_UPDATE_RATE" not in vars(self): self.SENSOR_UPDATE_RATE: GameConfiguration = None
+        if "VIBRATION" not in vars(self): self.VIBRATION: GameConfiguration = None
+        if "CHALLENGE_LEVEL" not in vars(self): self.CHALLENGE_LEVEL: GameConfiguration = None
+        if "COLLIDE_DAMAGE" not in vars(self): self.COLLIDE_DAMAGE: GameConfiguration = None
+        if "DURABILITY_CHALLENGE_LEVEL" not in vars(self): self.DURABILITY_CHALLENGE_LEVEL: GameConfiguration = None
+        if "SPEED_CHALLENGE_LEVEL" not in vars(self): self.SPEED_CHALLENGE_LEVEL: GameConfiguration = None
+        if "ATTACK_CHALLENGE_LEVEL" not in vars(self): self.ATTACK_CHALLENGE_LEVEL: GameConfiguration = None
+        if "CONTROL_LEVEL" not in vars(self): self.CONTROL_LEVEL: GameConfiguration = None
+        if "PLAYER_INPUT_WAIT" not in vars(self): self.PLAYER_INPUT_WAIT: GameConfiguration = None
+        if "SPEED" not in vars(self): self.SPEED: GameConfiguration = None
+        if "SOUND_VOLUME" not in vars(self): self.SOUND_VOLUME: GameConfiguration = None
+        if "MAX_GAME_OBJECTS" not in vars(self): self.MAX_GAME_OBJECTS: GameConfiguration = None
+        if "MAX_LAYERS" not in vars(self): self.MAX_LAYERS: GameConfiguration = None
         self.gameControlFidelity: int = 36
     
 
@@ -67,7 +67,7 @@ class GameConfigurationCentral:
         from org.allbinary.game.configuration.GameConfiguration import GameConfiguration
         from org.allbinary.game.configuration.GameConfiguration import GameConfiguration
         from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
-        self._init_fields()
+        __class__._init_fields(self)
         smallIntegerSingletonFactory: SmallIntegerSingletonFactory = SmallIntegerSingletonFactory.getInstance()
         self.SCALE = GameConfiguration("Scale", smallIntegerSingletonFactory.getAt(2), smallIntegerSingletonFactory.getAt(2), smallIntegerSingletonFactory.getAt(3))
         self.ORIENTATION = GameConfiguration("Orientation", smallIntegerSingletonFactory.getAt(0), smallIntegerSingletonFactory.getAt(0), smallIntegerSingletonFactory.getAt(8))

@@ -20,12 +20,12 @@ from __future__ import annotations
 class BasicAccelerationProperties:
 
     def _init_fields(self) -> None:
-        self.forward: int = 0
-        self.reverse: int = 0
+        if "forward" not in vars(self): self.forward: int = 0
+        if "reverse" not in vars(self): self.reverse: int = 0
     
 
     def __init__(self, forward: int, reverse: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.setForward(forward)
         self.setReverse(reverse)
     

@@ -25,8 +25,8 @@ class ShaderManager:
         from org.allbinary.string.CommonStrings import CommonStrings
         self.LOAD_SHADER: str = "loadShader"
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.GL_VERTEX_SHADER: int = None
-        self.GL_FRAGMENT_SHADER: int = None
+        if "GL_VERTEX_SHADER" not in vars(self): self.GL_VERTEX_SHADER: int = 0
+        if "GL_FRAGMENT_SHADER" not in vars(self): self.GL_FRAGMENT_SHADER: int = 0
     
 
     @staticmethod
@@ -35,7 +35,7 @@ class ShaderManager:
     
 
     def __init__(self, GL_VERTEX_SHADER: int, GL_FRAGMENT_SHADER: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.GL_VERTEX_SHADER = GL_VERTEX_SHADER
         self.GL_FRAGMENT_SHADER = GL_FRAGMENT_SHADER
     

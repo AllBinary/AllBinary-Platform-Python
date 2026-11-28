@@ -15,22 +15,28 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.logic.util.visitor.Visitor import Visitor
 
 
+@java_inherited_overloads
 class LimitCommandsVisitor(Visitor):
+    def _java_defaults(self):
+        vars(self).setdefault("isNotSmallDisplay", False)
 
     def _init_fields(self) -> None:
-        self.isNotSmallDisplay: bool = None
+        if "isNotSmallDisplay" not in vars(self): self.isNotSmallDisplay: bool = False
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
         from org.allbinary.graphics.form.ScreenInfo import ScreenInfo
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         displayInfo: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
-        self.isNotSmallDisplay = (displayInfo.isPortrait() and displayInfo.getLastHeight() > ScreenInfo.getInstance().SMALL_WIDTH) or (not displayInfo.isPortrait() and displayInfo.getLastHeight() > ScreenInfo.getInstance().SMALL_HEIGHT)
+        self.isNotSmallDisplay = (java_predicate(displayInfo, "isPortrait") and displayInfo.getLastHeight() > ScreenInfo.getInstance().SMALL_WIDTH) or (not (java_predicate(displayInfo, "isPortrait")) and displayInfo.getLastHeight() > ScreenInfo.getInstance().SMALL_HEIGHT)
     
 
     def visit(self, anyType: object) -> object:

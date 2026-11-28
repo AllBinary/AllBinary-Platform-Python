@@ -15,14 +15,17 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.part.weapon.BasicWeaponPart import BasicWeaponPart
 
 
+@java_inherited_overloads
 class BasicProjectileWeaponPart(BasicWeaponPart):
+    def _java_defaults(self):
+        vars(self).setdefault("weaponLayerCircularStaticPool", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.layer.weapon.WeaponLayerCircularPool import WeaponLayerCircularPool
-        self.weaponLayerCircularStaticPool: WeaponLayerCircularPool = None
+        if "weaponLayerCircularStaticPool" not in vars(self): self.weaponLayerCircularStaticPool: WeaponLayerCircularPool = None
     
 
     @staticmethod
@@ -37,6 +40,7 @@ class BasicProjectileWeaponPart(BasicWeaponPart):
     
 
     def __init__(self, animationInterface: Animation, sourceLayerInterface: AllBinaryLayer, weaponLayerCircularStaticPool: WeaponLayerCircularPool, weaponProperties: WeaponProperties, scoreableInterface: ScoreableInterface, relativeRelationship: RelativeRelationship) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.animation.Animation import Animation
         from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
         from org.allbinary.game.layer.weapon.WeaponLayerCircularPool import WeaponLayerCircularPool
@@ -44,7 +48,7 @@ class BasicProjectileWeaponPart(BasicWeaponPart):
         from org.allbinary.graphics.RelativeRelationship import RelativeRelationship
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         super().__init__(animationInterface, sourceLayerInterface, weaponProperties, scoreableInterface, relativeRelationship)
-        self._init_fields()
+        __class__._init_fields(self)
         self.weaponLayerCircularStaticPool = weaponLayerCircularStaticPool
     
 

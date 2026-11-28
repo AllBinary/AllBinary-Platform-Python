@@ -15,23 +15,31 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 # from javax.servlet.http.HttpServlet import HttpServlet
 
 
+@java_inherited_overloads
 class UploadFileServlet(HttpServlet):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("requestHashMap", None)
+        vars(self).setdefault("fileName", None)
 
     def _init_fields(self) -> None:
-        from java.util.HashMap import HashMap
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.requestHashMap: HashMap = None
-        self.fileName: str = None
+        if "requestHashMap" not in vars(self): self.requestHashMap: HashMap = None
+        if "fileName" not in vars(self): self.fileName: str = None
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws ServletException, IOException
@@ -60,7 +68,7 @@ class UploadFileServlet(HttpServlet):
                 return
             hashMap: HashMap = StdUtil.getInstance().createHashMap()
             authenticationHelper: AuthenticationHelper = AuthenticationHelperFactory().getInstance(hashMap, request)
-            if authenticationHelper.isAuthenticated():
+            if java_predicate(authenticationHelper, "isAuthenticated"):
                 if AuthenticationHelperUtil.getInstance().isAuthorized(authenticationHelper, filePath):
                     self.saveFile(filePath)
                     response.setContentType("text/plain")
@@ -77,9 +85,9 @@ class UploadFileServlet(HttpServlet):
             isError = True
             response.sendError(HttpServletResponse.SC_NOT_FOUND)
         finally:
-            if not isError:
+            if not (isError):
                 StreamUtil.getInstance().close(response.getOutputStream())
-            if not StreamUtil.getInstance().close(inputStream):
+            if not (StreamUtil.getInstance().close(inputStream)):
                 pass
     
 
@@ -112,7 +120,7 @@ class UploadFileServlet(HttpServlet):
                     self.logUtil.putF(str(stringBuffer), self, "saveFile()")
                 HttpFileUploadUtil.log(fileItem)
                 byteArray: list[int] = fileItem.get()
-                if file.isFile():
+                if java_predicate(file, "isFile"):
                     file.delete()
                     file.createNewFile()
                 fileOutputStream = AbFileOutputStream.createFromAbFile(file)

@@ -15,10 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 # from java.io.Serializable import Serializable
 
 
 # Java interface
+@java_inherited_overloads
 class UserFactoryInterface(object):
     
 

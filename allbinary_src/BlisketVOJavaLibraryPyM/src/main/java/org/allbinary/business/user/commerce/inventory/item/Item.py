@@ -15,43 +15,55 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.business.user.commerce.inventory.item.BasicItem import BasicItem
 from org.allbinary.business.user.commerce.inventory.item.OrderItemInterface import OrderItemInterface
 
 
+@java_inherited_overloads
 class Item(*java_bases(BasicItem, OrderItemInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("group", None)
+        vars(self).setdefault("tax", None)
+        vars(self).setdefault("shippingType", None)
+        vars(self).setdefault("shippingCost", None)
+        vars(self).setdefault("shippedDate", None)
+        vars(self).setdefault("shippingAddress", None)
+        vars(self).setdefault("special", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.user.address.StreetAddress import StreetAddress
-        self.group: str = None
-        self.tax: str = None
-        self.shippingType: str = None
-        self.shippingCost: str = None
-        self.shippedDate: str = None
-        self.shippingAddress: StreetAddress = None
-        self.special: str = None
+        if "group" not in vars(self): self.group: str = None
+        if "tax" not in vars(self): self.tax: str = None
+        if "shippingType" not in vars(self): self.shippingType: str = None
+        if "shippingCost" not in vars(self): self.shippingCost: str = None
+        if "shippedDate" not in vars(self): self.shippedDate: str = None
+        if "shippingAddress" not in vars(self): self.shippingAddress: StreetAddress = None
+        if "special" not in vars(self): self.special: str = None
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
         elif len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
     
 
     def _constructor1(self, itemHashMap: HashMap) -> None:
+        __class__._java_defaults(self)
         from java.util.HashMap import HashMap
         from org.allbinary.business.user.commerce.money.MoneyException import MoneyException
         super().__init__(itemHashMap)
-        self._init_fields()
+        __class__._init_fields(self)
         self.setData(itemHashMap)
     
 
     def _constructor0(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.user.address.StreetAddress import StreetAddress
         from org.allbinary.logic.string.StringUtil import StringUtil
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         EMPTY: str = StringUtil.getInstance().EMPTY_STRING
         self.group = EMPTY
         self.tax = EMPTY
@@ -136,7 +148,7 @@ class Item(*java_bases(BasicItem, OrderItemInterface)):
         from org.allbinary.business.entry.EntryData import EntryData
         from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
         from org.allbinary.business.user.commerce.shipping.ShippingMethodData import ShippingMethodData
-        hashMap: HashMap = super().toHashMap()
+        hashMap: HashMap = java_super_call(super(), "toHashMap")
         hashMap.put(ShippingMethodData.GROUP, self.group)
         hashMap.put(OrderHistoryData.TAX, self.tax)
         hashMap.put(ShippingMethodData.NAME, self.shippingType)

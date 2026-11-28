@@ -15,12 +15,19 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.communication.sql.AbSqlBean import AbSqlBean
 from org.allbinary.data.tables.user.commerce.inventory.order.OrderItemsEntityInterface import OrderItemsEntityInterface
 
 
+@java_inherited_overloads
 class OrderItemsEntity(*java_bases(AbSqlBean, OrderItemsEntityInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("basicItemData", None)
+        vars(self).setdefault("tableName", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
@@ -31,9 +38,10 @@ class OrderItemsEntity(*java_bases(AbSqlBean, OrderItemsEntityInterface)):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.init.db.HistoryDbInitInfo import HistoryDbInitInfo
         super().__init__(HistoryDbInitInfo())
-        self._init_fields()
+        __class__._init_fields(self)
         self.setTableName(self.tableName)
     
 
@@ -129,7 +137,7 @@ class OrderItemsEntity(*java_bases(AbSqlBean, OrderItemsEntityInterface)):
             whereHashMap.put(OrderData.ID, orderId)
             whereHashMap.put(ShippingMethodData.GROUP, groupId)
             updateHashMap.put(OrderHistoryData.STATUS, status)
-            super().updateWhere(whereHashMap, updateHashMap)
+            java_super_call(super(), "updateWhere", whereHashMap, updateHashMap)
         except Exception as e:
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.put(self.commonStrings.FAILURE, self, "setStatus", e)
@@ -142,7 +150,7 @@ class OrderItemsEntity(*java_bases(AbSqlBean, OrderItemsEntityInterface)):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            itemStatusVector: BasicArrayList = super().getColumnWhere(OrderHistoryData.STATUS, OrderData.ID, orderId)
+            itemStatusVector: BasicArrayList = java_super_call(super(), "getColumnWhere", OrderHistoryData.STATUS, OrderData.ID, orderId)
             size: int = itemStatusVector.size()
             for index in range(0, size):
                 status: str = itemStatusVector.get(index)
@@ -170,7 +178,7 @@ class OrderItemsEntity(*java_bases(AbSqlBean, OrderItemsEntityInterface)):
             basketReview: BasketReview = BasketReview()
             keyValues: HashMap = StdUtil.getInstance().createHashMap()
             keyValues.put(OrderData.ID, orderId)
-            items: BasicArrayList = super().getRows(keyValues)
+            items: BasicArrayList = java_super_call(super(), "getRows", keyValues)
             entryData: EntryData = EntryData.getInstance()
             if items is not None and items.size() > 0:
                 EMPTY_STRING: str = StringUtil.getInstance().EMPTY_STRING
@@ -304,19 +312,21 @@ class OrderItemsEntity(*java_bases(AbSqlBean, OrderItemsEntityInterface)):
     
 
     def createTable(self) -> str:
-        return super().createTable(self.createTableStatement())
+        return java_super_call(super(), "createTable", self.createTableStatement())
     
 
     def dropTable(self) -> str:
-        return super().dropTable()
+        return java_super_call(super(), "dropTable")
     
 
     def insert_j1(self, values: BasicArrayList) -> None:
         from org.allbinary.util.BasicArrayList import BasicArrayList
-        super().insert(values)
+        java_super_call(super(), "insert", values)
 
     def insert(self, *args):
-        return getattr(self, "insert_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("insert_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().insert(*args)
 # from java.util.HashMap import HashMap
 # from java.util.ListIterator import ListIterator
 # from java.util.Set import Set

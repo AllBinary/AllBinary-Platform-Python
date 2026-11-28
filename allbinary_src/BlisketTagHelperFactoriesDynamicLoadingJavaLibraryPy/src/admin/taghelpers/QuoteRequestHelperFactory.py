@@ -29,6 +29,7 @@ class QuoteRequestHelperFactory(TagHelperFactoryInterface):
 
     # throws LicensingException
     def getInstance(self, hashMap: HashMap, pageContext: PageContext) -> object:
+        from admin.taghelpers.HelperFactory import HelperFactory
         from java.util.HashMap import HashMap
         from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
         return HelperFactory.getInstance(QuoteRequestHelperFactory.FACTORYNAME, QuoteRequestHelperFactory.CLASSNAME, hashMap, pageContext)

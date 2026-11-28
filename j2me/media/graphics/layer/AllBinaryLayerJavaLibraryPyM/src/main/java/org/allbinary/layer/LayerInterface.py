@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.identification.GroupInterfaceCompositeInterface import GroupInterfaceCompositeInterface
 from org.allbinary.graphics.paint.PaintableInterface import PaintableInterface
@@ -23,6 +24,7 @@ from org.allbinary.layer.PositionInterface import PositionInterface
 
 
 # Java interface
+@java_inherited_overloads
 class LayerInterface(*java_bases(NamedInterface, PaintableInterface, GroupInterfaceCompositeInterface, PositionInterface)):
     
 

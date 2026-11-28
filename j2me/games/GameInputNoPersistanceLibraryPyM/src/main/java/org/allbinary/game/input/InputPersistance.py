@@ -15,11 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.game.configuration.persistance.BasicPersitance import BasicPersitance
 
 
 #GameInputNoPersistanceLibrary
+@java_inherited_overloads
 class InputPersistance(BasicPersitance):
+    def _java_defaults(self):
+        vars(self).setdefault("hashtableUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.util.HashtableUtil import HashtableUtil
@@ -27,8 +32,9 @@ class InputPersistance(BasicPersitance):
     
 
     def __init__(self, name: str) -> None:
+        __class__._java_defaults(self)
         super().__init__(name)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -48,7 +54,7 @@ class InputPersistance(BasicPersitance):
         stringBuffer: StringMaker = StringMaker()
         smallIntegerSingletonFactory: SmallIntegerSingletonFactory = SmallIntegerSingletonFactory.getInstance()
         id: int = 0
-        while recordEnum.hasNextElement():
+        while java_predicate(recordEnum, "hasNextElement"):
             id = recordEnum.nextRecordId()
             stringBuffer.delete(0, stringBuffer.length())
             self.logUtil.putF(str(stringBuffer.append(self.persistanceStrings.LOADING_ID).appendint(id)), self, self.persistanceStrings.LOAD_ALL)

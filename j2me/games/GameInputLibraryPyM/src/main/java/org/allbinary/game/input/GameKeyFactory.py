@@ -50,7 +50,7 @@ class GameKeyFactory:
         self.LEVEL_UP: GameKey = GameKey(Canvas.KEY_NUM9 + 2, "Cheat Level Down")
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

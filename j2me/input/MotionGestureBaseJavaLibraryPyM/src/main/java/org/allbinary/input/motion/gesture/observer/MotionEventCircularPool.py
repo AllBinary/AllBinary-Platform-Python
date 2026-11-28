@@ -36,14 +36,14 @@ class MotionEventCircularPool:
 
     def __init__(self, id: int) -> None:
         from org.allbinary.input.motion.gesture.observer.MotionEventFactory import MotionEventFactory
-        self._init_fields()
+        __class__._init_fields(self)
         self.eventPool.initAllBinaryEventCircularPool(MotionEventFactory(self.eventPool, id))
     
 
     # throws Exception
     def getInstance(self, motionGestureInput: MotionGestureInput) -> MotionGestureEvent:
         with self._lock:
-            return self._getInstance_unlocked(motionGestureInput)
+            return __class__.__dict__["_getInstance_unlocked"].__get__(self, __class__)(motionGestureInput)
 
     def _getInstance_unlocked(self, motionGestureInput: MotionGestureInput) -> MotionGestureEvent:
         from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput

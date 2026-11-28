@@ -22,10 +22,8 @@ class GameConfigurationSingleton:
     SINGLETON: GameConfigurationSingleton = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.ABHashtable import ABHashtable
-        from org.allbinary.util.BasicArrayList import BasicArrayList
-        self.list_: BasicArrayList = None
-        self.hashtable: ABHashtable[object, object] = None
+        if "list_" not in vars(self): self.list_: BasicArrayList = None
+        if "hashtable" not in vars(self): self.hashtable: ABHashtable[object, object] = None
     
 
     @staticmethod
@@ -36,7 +34,7 @@ class GameConfigurationSingleton:
     def __init__(self) -> None:
         from org.allbinary.logic.StdUtil import StdUtil
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
-        self._init_fields()
+        __class__._init_fields(self)
         self.list_ = BasicArrayListD()
         self.hashtable = StdUtil.getInstance().createHashtable()
     

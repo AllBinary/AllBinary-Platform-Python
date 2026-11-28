@@ -15,11 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.media.image.comparison.motion.MotionRectangles import MotionRectangles
 
 
+@java_inherited_overloads
 class ConsolidateMotionRectangles(MotionRectangles):
     NAME: str = "consolidatedMotionRectangles_"
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -27,9 +31,10 @@ class ConsolidateMotionRectangles(MotionRectangles):
     
 
     def __init__(self, motionRectangles: MotionRectangles) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.util.BasicArrayList import BasicArrayList
         super().__init__(ConsolidateMotionRectangles.NAME, motionRectangles.getImageComparisonResult())
-        self._init_fields()
+        __class__._init_fields(self)
         vector: BasicArrayList = motionRectangles.getVector()
         size: int = vector.size()
         for index in range(0, size):

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -23,11 +24,10 @@ class NoDecimalTrigTable:
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.math.MathUtil import MathUtil
-        from jsinterop.annotations.JsProperty import JsProperty
         self.mathUtil: MathUtil = MathUtil.getInstance()
-        self.noDecimalSin: list[int] = None
-        self.noDecimalCos: list[int] = None
-        self.noDecimalTan: list[int] = None
+        if "noDecimalSin" not in vars(self): self.noDecimalSin: list[int] = None
+        if "noDecimalCos" not in vars(self): self.noDecimalCos: list[int] = None
+        if "noDecimalTan" not in vars(self): self.noDecimalTan: list[int] = None
         self.SCALE: int = 10000
     
 
@@ -40,7 +40,7 @@ class NoDecimalTrigTable:
     def __init__(self) -> None:
         from org.allbinary.math.AngleFactory import AngleFactory
         from jsinterop.annotations.JsConstructor import JsConstructor
-        self._init_fields()
+        __class__._init_fields(self)
         TOTAL_ANGLE: int = int(AngleFactory.getInstance().TOTAL_ANGLE)
         MAX_VALUE: int = (int(2147483647))
         self.noDecimalSin = [0] * (TOTAL_ANGLE)

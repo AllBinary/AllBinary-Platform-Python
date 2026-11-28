@@ -10,17 +10,16 @@ class AnalogLocationInput:
     NULL_ANALOG_LOCATION_INPUT: AnalogLocationInput = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.CustomGPoint import CustomGPoint
-        self.playerId: int = None
-        self.customGPoint: CustomGPoint = None
-        self.rz: int = 0
-        self.rightTrigger: int = 0
-        self.leftTrigger: int = 0
+        if "playerId" not in vars(self): self.playerId: int = 0
+        if "customGPoint" not in vars(self): self.customGPoint: CustomGPoint = None
+        if "rz" not in vars(self): self.rz: int = 0
+        if "rightTrigger" not in vars(self): self.rightTrigger: int = 0
+        if "leftTrigger" not in vars(self): self.leftTrigger: int = 0
     
 
     def __init__(self, playerId: int) -> None:
         from org.allbinary.graphics.CustomGPoint import CustomGPoint
-        self._init_fields()
+        __class__._init_fields(self)
         self.playerId = playerId
         self.customGPoint = CustomGPoint(0, 0, 0)
     

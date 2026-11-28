@@ -15,23 +15,31 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.game.ai.BasicAI import BasicAI
 
 
+@java_inherited_overloads
 class KeyPressesAI(BasicAI):
+    def _java_defaults(self):
+        vars(self).setdefault("on", False)
+        vars(self).setdefault("keys", None)
 
     def _init_fields(self) -> None:
         self.on: bool = True
-        self.keys: list[int] = None
+        if "keys" not in vars(self): self.keys: list[int] = None
     
 
     def __init__(self, hashtable: ABHashtable[object, object], ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.input.GameInput import GameInput
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         from org.allbinary.util.HashtableUtil import HashtableUtil
         from org.allbinary.util.ABHashtable import ABHashtable
         super().__init__(ownerLayerInterface, gameInput)
-        self._init_fields()
+        __class__._init_fields(self)
         self.keys = [None] * (hashtable.size())
         objectArray: list[object] = HashtableUtil.getInstance().getKeysAsArray(hashtable)
         size: int = len(objectArray)
@@ -44,12 +52,12 @@ class KeyPressesAI(BasicAI):
         from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         if self.on:
             for index in range(0, len(self.keys)):
-                super().processKeyAI(int(self.keys[index]))
+                java_super_call(super(), "processKeyAI", int(self.keys[index]))
     
 
     # throws Exception
     def toggle(self) -> None:
-        if self.isOn():
+        if java_predicate(self, "isOn"):
             self.setOn(False)
         else:
             self.setOn(True)

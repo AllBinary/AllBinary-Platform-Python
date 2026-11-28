@@ -16,6 +16,8 @@
 from __future__ import annotations
 
 import time
+from java.lang.JavaThread import JavaThread
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from org.allbinary.thread.RunnableInterface import RunnableInterface
 
@@ -24,34 +26,31 @@ class AbstractInputAutomationWorker(RunnableInterface):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
-        from org.allbinary.input.media.image.capture.CaptureWorkerInterface import CaptureWorkerInterface
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.media.image.comparison.ImageComparisonWorker import ImageComparisonWorker
-        from org.allbinary.media.image.comparison.motion.MotionRectanglesWorker import MotionRectanglesWorker
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.index: int = 0
-        self.running: bool = False
-        self.inputAutomationActionInterface: InputAutomationActionInterface = None
-        self.captureWorkerInterface: CaptureWorkerInterface = None
-        self.imageComparisonWorker: ImageComparisonWorker = None
-        self.motionRectanglesWorker: MotionRectanglesWorker = None
-        self.captureThread: threading.Thread = None
+        if "index" not in vars(self): self.index: int = 0
+        if "running" not in vars(self): self.running: bool = False
+        if "inputAutomationActionInterface" not in vars(self): self.inputAutomationActionInterface: InputAutomationActionInterface = None
+        if "captureWorkerInterface" not in vars(self): self.captureWorkerInterface: CaptureWorkerInterface = None
+        if "imageComparisonWorker" not in vars(self): self.imageComparisonWorker: ImageComparisonWorker = None
+        if "motionRectanglesWorker" not in vars(self): self.motionRectanglesWorker: MotionRectanglesWorker = None
+        if "captureThread" not in vars(self): self.captureThread: JavaThread = None
     
 
     def __init__(self, inputAutomationActionInterface: InputAutomationActionInterface) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
-    def setThread(self, thread: threading.Thread) -> None:
+    def setThread(self, thread: JavaThread) -> None:
         pass
     
 
     def isRunning(self) -> bool:
         with self._lock:
-            return self._isRunning_unlocked()
+            return __class__.__dict__["_isRunning_unlocked"].__get__(self, __class__)()
 
     def _isRunning_unlocked(self) -> bool:
         return self.running
@@ -59,7 +58,7 @@ class AbstractInputAutomationWorker(RunnableInterface):
 
     def setRunning(self, running: bool) -> None:
         with self._lock:
-            return self._setRunning_unlocked(running)
+            return __class__.__dict__["_setRunning_unlocked"].__get__(self, __class__)(running)
 
     def _setRunning_unlocked(self, running: bool) -> None:
         self.running = running
@@ -67,10 +66,10 @@ class AbstractInputAutomationWorker(RunnableInterface):
 
     def isAnyDataWorkerRunning(self) -> bool:
         with self._lock:
-            return self._isAnyDataWorkerRunning_unlocked()
+            return __class__.__dict__["_isAnyDataWorkerRunning_unlocked"].__get__(self, __class__)()
 
     def _isAnyDataWorkerRunning_unlocked(self) -> bool:
-        if self.captureThread is not None and (self.captureThread.isAlive() or self.getCaptureWorker().isRunning() or self.getMotionRectanglesWorker().isRunning() or self.getImageComparisonWorker().isRunning()):
+        if self.captureThread is not None and (self.captureThread.is_alive() or java_predicate(self.getCaptureWorker(), "isRunning") or java_predicate(self.getMotionRectanglesWorker(), "isRunning") or java_predicate(self.getImageComparisonWorker(), "isRunning")):
             return True
         return False
     
@@ -78,11 +77,11 @@ class AbstractInputAutomationWorker(RunnableInterface):
     # throws Exception
     def startDataWorkers(self) -> None:
         with self._lock:
-            return self._startDataWorkers_unlocked()
+            return __class__.__dict__["_startDataWorkers_unlocked"].__get__(self, __class__)()
 
     def _startDataWorkers_unlocked(self) -> None:
-        if not self.isAnyDataWorkerRunning():
-            self.captureThread = threading.Thread(target=self.getCaptureWorker().run)
+        if not (self.isAnyDataWorkerRunning()):
+            self.captureThread = JavaThread(target=self.getCaptureWorker().run)
             self.logUtil.putF("Starting CaptureWorkers - Need more images - Thread State: " + str(self.captureThread.getState()), self, "startCaptureWorkers")
             self.captureThread.start()
     
@@ -90,7 +89,7 @@ class AbstractInputAutomationWorker(RunnableInterface):
     # throws Exception
     def waitForDataWorkers(self) -> None:
         with self._lock:
-            return self._waitForDataWorkers_unlocked()
+            return __class__.__dict__["_waitForDataWorkers_unlocked"].__get__(self, __class__)()
 
     def _waitForDataWorkers_unlocked(self) -> None:
         while self.isAnyDataWorkerRunning():
@@ -115,7 +114,7 @@ class AbstractInputAutomationWorker(RunnableInterface):
             self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.RUN)
             self.setRunning(True)
             timeHelper: TimeDelayHelper = TimeDelayHelper(1000)
-            while self.isRunning():
+            while java_predicate(self, "isRunning"):
                 timeHelper.setStartTimeTNT()
                 self.process()
                 self.index += 1

@@ -32,7 +32,7 @@ class FilePathData:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
 # from jsinterop.annotations.JsType import JsType
 
 

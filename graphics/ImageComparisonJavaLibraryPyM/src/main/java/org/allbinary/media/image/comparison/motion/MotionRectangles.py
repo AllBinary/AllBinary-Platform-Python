@@ -20,18 +20,16 @@ from __future__ import annotations
 class MotionRectangles:
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
-        from org.allbinary.media.image.comparison.ImageComparisonResult import ImageComparisonResult
-        self.name: str = None
-        self.rectangleVector: BasicArrayList = None
-        self.imageComparisonResult: ImageComparisonResult = None
+        if "name" not in vars(self): self.name: str = None
+        if "rectangleVector" not in vars(self): self.rectangleVector: BasicArrayList = None
+        if "imageComparisonResult" not in vars(self): self.imageComparisonResult: ImageComparisonResult = None
         self.MAX_PIXEL_DISTANCE_THRESHOLD: int = 2
     
 
     def __init__(self, name: str, imageComparisonResult: ImageComparisonResult) -> None:
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         from org.allbinary.media.image.comparison.ImageComparisonResult import ImageComparisonResult
-        self._init_fields()
+        __class__._init_fields(self)
         self.name = name
         self.setImageComparisonResult(imageComparisonResult)
         self.setVector(BasicArrayListD())

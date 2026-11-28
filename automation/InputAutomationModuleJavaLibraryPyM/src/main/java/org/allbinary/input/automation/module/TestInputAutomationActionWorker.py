@@ -16,23 +16,29 @@
 from __future__ import annotations
 
 import time
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import threading
 from org.allbinary.input.automation.module.AbstractInputAutomationWorker import AbstractInputAutomationWorker
 
 
+@java_inherited_overloads
 class TestInputAutomationActionWorker(AbstractInputAutomationWorker):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("sleep", 0)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.sleep: int = None
+        if "sleep" not in vars(self): self.sleep: int = 0
     
 
     def __init__(self, sleep: int, inputAutomationActionInterface: InputAutomationActionInterface, imageComparatorConstraintsInterface: ImageComparatorConstraintsInterface, motionRectangleConstraintsInterface: MotionRectangleConstraintsInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.media.image.comparison.ImageComparatorConstraintsInterface import ImageComparatorConstraintsInterface
         from org.allbinary.media.image.comparison.motion.MotionRectangleConstraintsInterface import MotionRectangleConstraintsInterface
         super().__init__(inputAutomationActionInterface)
-        self._init_fields()
+        __class__._init_fields(self)
         self.logUtil.putF("BasicTestAttackWorder", self, self.commonStrings.CONSTRUCTOR)
         self.sleep = sleep
     

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 import datetime
 from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
 
@@ -22,48 +23,47 @@ from org.allbinary.business.user.commerce.inventory.item.ItemInterface import It
 class BasicItem(ItemInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.user.commerce.money.Money import Money
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.basicItemData: BasicItemData = BasicItemData.getInstance()
-        self.itemId: str = None
-        self.number: str = None
-        self.inBaskets: str = None
-        self.weight: str = None
-        self.enabled: str = None
-        self.newOrUsed: str = None
-        self.summary: str = None
-        self.distributor: str = None
-        self.idUsedByDistributor: str = None
-        self.producedBy: str = None
-        self.productionDate: str = None
-        self.startProductionDate: str = None
-        self.description: str = None
-        self.keywords: str = None
-        self.category: str = None
-        self.type_: str = None
-        self.smallImage: str = None
-        self.mediumImage: str = None
-        self.largeImage: str = None
-        self.price: Money = None
-        self.comment: str = None
-        self.customs: str = None
-        self.downloads: str = None
-        self.groups: str = None
-        self.options: str = None
-        self.permissions: str = None
-        self.specials: str = None
-        self.downloadable: bool = False
-        self.timeEntered: str = None
-        self.lastModified: str = None
+        if "itemId" not in vars(self): self.itemId: str = None
+        if "number" not in vars(self): self.number: str = None
+        if "inBaskets" not in vars(self): self.inBaskets: str = None
+        if "weight" not in vars(self): self.weight: str = None
+        if "enabled" not in vars(self): self.enabled: str = None
+        if "newOrUsed" not in vars(self): self.newOrUsed: str = None
+        if "summary" not in vars(self): self.summary: str = None
+        if "distributor" not in vars(self): self.distributor: str = None
+        if "idUsedByDistributor" not in vars(self): self.idUsedByDistributor: str = None
+        if "producedBy" not in vars(self): self.producedBy: str = None
+        if "productionDate" not in vars(self): self.productionDate: str = None
+        if "startProductionDate" not in vars(self): self.startProductionDate: str = None
+        if "description" not in vars(self): self.description: str = None
+        if "keywords" not in vars(self): self.keywords: str = None
+        if "category" not in vars(self): self.category: str = None
+        if "type_" not in vars(self): self.type_: str = None
+        if "smallImage" not in vars(self): self.smallImage: str = None
+        if "mediumImage" not in vars(self): self.mediumImage: str = None
+        if "largeImage" not in vars(self): self.largeImage: str = None
+        if "price" not in vars(self): self.price: Money = None
+        if "comment" not in vars(self): self.comment: str = None
+        if "customs" not in vars(self): self.customs: str = None
+        if "downloads" not in vars(self): self.downloads: str = None
+        if "groups" not in vars(self): self.groups: str = None
+        if "options" not in vars(self): self.options: str = None
+        if "permissions" not in vars(self): self.permissions: str = None
+        if "specials" not in vars(self): self.specials: str = None
+        if "downloadable" not in vars(self): self.downloadable: bool = False
+        if "timeEntered" not in vars(self): self.timeEntered: str = None
+        if "lastModified" not in vars(self): self.lastModified: str = None
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
         elif len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
     
 
     def _constructor1(self, itemHashMap: HashMap) -> None:
@@ -73,7 +73,7 @@ class BasicItem(ItemInterface):
         from org.allbinary.business.user.commerce.money.MoneyException import MoneyException
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-        self._init_fields()
+        __class__._init_fields(self)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PRODUCTSEARCHLOGGING):
             self.logUtil.putF(self.commonStrings.START, self, "Constructor(HashMap)")
         self.itemId = itemHashMap.get(self.basicItemData.ID)
@@ -114,7 +114,7 @@ class BasicItem(ItemInterface):
         from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-        self._init_fields()
+        __class__._init_fields(self)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().PRODUCTSEARCHLOGGING):
             self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
         EMPTY: str = StringUtil.getInstance().EMPTY_STRING
@@ -245,7 +245,7 @@ class BasicItem(ItemInterface):
     def setDownloads(self, value: str) -> None:
         from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         self.downloads = value
-        if not StringValidationUtil.getInstance().isEmpty(self.downloads):
+        if not (StringValidationUtil.getInstance().isEmpty(self.downloads)):
             downloadInteger: int = str(self.downloads)
             if int(downloadInteger) != 0:
                 self.setDownloadable(True)
@@ -506,5 +506,6 @@ class BasicItem(ItemInterface):
 # from org.allbinary.string.CommonStrings import CommonStrings
 # from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
 # from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
+from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
 
 

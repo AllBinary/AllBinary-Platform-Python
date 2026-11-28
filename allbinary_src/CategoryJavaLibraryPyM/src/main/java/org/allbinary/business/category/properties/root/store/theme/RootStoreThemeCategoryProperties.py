@@ -15,24 +15,26 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.business.category.properties.root.store.RootStoreCategoryProperties import RootStoreCategoryProperties
 
 
+@java_inherited_overloads
 class RootStoreThemeCategoryProperties(RootStoreCategoryProperties):
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
         elif len(args) == 2:
-            self.__jconstructor2(*args)
+            __class__.__jconstructor2(self, *args)
 
     def __jconstructor2(self, *args) -> None:
-        if True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)):
-            self._constructor2_1(*args)
-        elif True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)):
-            self._constructor2_2(*args)
+        if True and (args[0] is None or any(base.__name__ == "TransformInfoInterface" for base in type(args[0]).__mro__)) and (args[1] is None or any(base.__name__ == "AbPath" for base in type(args[1]).__mro__)):
+            __class__._constructor2_1(self, *args)
+        elif True and (args[0] is None or any(base.__name__ == "TransformInfoInterface" for base in type(args[0]).__mro__)) and (args[1] is None or any(base.__name__ == "Node" for base in type(args[1]).__mro__)):
+            __class__._constructor2_2(self, *args)
         else:
-            self._constructor2_3(*args)
+            __class__._constructor2_3(self, *args)
     
 
     def _constructor1(self, transformInfoInterface: TransformInfoInterface) -> None:

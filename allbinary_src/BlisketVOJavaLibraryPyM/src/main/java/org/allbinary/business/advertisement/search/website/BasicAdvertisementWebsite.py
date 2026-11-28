@@ -21,11 +21,11 @@ from org.allbinary.business.advertisement.search.website.AdvertisementWebsiteInt
 class BasicAdvertisementWebsite(AdvertisementWebsiteInterface):
 
     def _init_fields(self) -> None:
-        self.websiteId: str = None
+        if "websiteId" not in vars(self): self.websiteId: str = None
     
 
     def __init__(self, websiteId: str) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.websiteId = websiteId
     
 

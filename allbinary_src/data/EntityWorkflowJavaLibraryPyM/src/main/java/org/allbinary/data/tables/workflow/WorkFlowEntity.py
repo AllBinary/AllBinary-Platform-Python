@@ -15,16 +15,24 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.communication.sql.AbSqlBean import AbSqlBean
 from org.allbinary.data.tables.workflow.WorkFlowEntityInterface import WorkFlowEntityInterface
 
 
+@java_inherited_overloads
 class WorkFlowEntity(*java_bases(AbSqlBean, WorkFlowEntityInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("abeClientInformation", None)
+        vars(self).setdefault("tableName", None)
+        vars(self).setdefault("METHOD_GET", None)
+        vars(self).setdefault("METHOD_UPDATE", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.abeClientInformation: AbeClientInformationInterface = ServiceClientInformationInterfaceFactory.getInstance()
@@ -34,9 +42,10 @@ class WorkFlowEntity(*java_bases(AbSqlBean, WorkFlowEntityInterface)):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
         super().__init__(UserDbInitInfo())
-        self._init_fields()
+        __class__._init_fields(self)
         self.setTableName(self.tableName)
     
 
@@ -45,7 +54,7 @@ class WorkFlowEntity(*java_bases(AbSqlBean, WorkFlowEntityInterface)):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            super().insert(values)
+            java_super_call(super(), "insert", values)
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, self.INSERT)
         except Exception as e:
@@ -64,7 +73,7 @@ class WorkFlowEntity(*java_bases(AbSqlBean, WorkFlowEntityInterface)):
             keysAndValues: HashMap = StdUtil.getInstance().createHashMap()
             keysAndValues.put(WorkFlowData.getInstance().NAME, name)
             keysAndValues.put(StoreFrontData.getInstance().NAME, storeName)
-            super().deleteWhere(keysAndValues)
+            java_super_call(super(), "deleteWhere", keysAndValues)
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, self.commonStrings.delete)
         except Exception as e:
@@ -87,7 +96,7 @@ class WorkFlowEntity(*java_bases(AbSqlBean, WorkFlowEntityInterface)):
             keysAndValues: HashMap = StdUtil.getInstance().createHashMap()
             keysAndValues.put(WorkFlowData.getInstance().NAME, name)
             keysAndValues.put(StoreFrontData.getInstance().NAME, storeName)
-            hashMap: HashMap = super().getRow(keysAndValues)
+            hashMap: HashMap = java_super_call(super(), "getRow", keysAndValues)
             return DbWorkFlowFactory.getInstance().getInstance(self.abeClientInformation, hashMap)
         except LicensingException as e:
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
@@ -112,7 +121,7 @@ class WorkFlowEntity(*java_bases(AbSqlBean, WorkFlowEntityInterface)):
             workFlowsVector: BasicArrayList = BasicArrayListD()
             keysAndValues: HashMap = StdUtil.getInstance().createHashMap()
             keysAndValues.put(StoreFrontData.getInstance().NAME, storeName)
-            hashMapVector: BasicArrayList = super().getRows(keysAndValues)
+            hashMapVector: BasicArrayList = java_super_call(super(), "getRows", keysAndValues)
             size: int = hashMapVector.size()
             for i in range(0, size):
                 workFlowHashMap: HashMap = hashMapVector.get(i)
@@ -125,7 +134,9 @@ class WorkFlowEntity(*java_bases(AbSqlBean, WorkFlowEntityInterface)):
             return None
 
     def get(self, *args):
-        return getattr(self, "get_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("get_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().get(*args)
     
 
     def update(self, updatedValues: HashMap) -> None:
@@ -139,7 +150,7 @@ class WorkFlowEntity(*java_bases(AbSqlBean, WorkFlowEntityInterface)):
             wherekeysAndValues: HashMap = StdUtil.getInstance().createHashMap()
             wherekeysAndValues.put(WorkFlowData.getInstance().NAME, updatedValues.get(WorkFlowData.getInstance().NAME))
             wherekeysAndValues.put(StoreFrontData.getInstance().NAME, updatedValues.get(StoreFrontData.getInstance().NAME))
-            super().updateWhere(wherekeysAndValues, updatedValues)
+            java_super_call(super(), "updateWhere", wherekeysAndValues, updatedValues)
         except Exception as e:
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.put(self.commonStrings.FAILURE, self, self.METHOD_UPDATE, e)
@@ -158,11 +169,11 @@ class WorkFlowEntity(*java_bases(AbSqlBean, WorkFlowEntityInterface)):
     
 
     def createTable(self) -> str:
-        return super().createTable(self.createTableStatement())
+        return java_super_call(super(), "createTable", self.createTableStatement())
     
 
     def dropTable(self) -> str:
-        return super().dropTable()
+        return java_super_call(super(), "dropTable")
 # from java.util.HashMap import HashMap
 # from org.allbinary.util.BasicArrayList import BasicArrayList
 # from org.allbinary.util.BasicArrayListD import BasicArrayListD

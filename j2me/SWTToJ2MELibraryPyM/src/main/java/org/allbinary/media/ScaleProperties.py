@@ -22,14 +22,14 @@ class ScaleProperties:
     instance: ScaleProperties = None
 
     def _init_fields(self) -> None:
-        self.scaleX: float = 0.0
-        self.scaleY: float = 0.0
-        self.scaleWidth: int = 0
-        self.scaleHeight: int = 0
-        self.shouldScale: bool = False
+        if "scaleX" not in vars(self): self.scaleX: float = 0.0
+        if "scaleY" not in vars(self): self.scaleY: float = 0.0
+        if "scaleWidth" not in vars(self): self.scaleWidth: int = 0
+        if "scaleHeight" not in vars(self): self.scaleHeight: int = 0
+        if "shouldScale" not in vars(self): self.shouldScale: bool = False
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def toString(self) -> str:

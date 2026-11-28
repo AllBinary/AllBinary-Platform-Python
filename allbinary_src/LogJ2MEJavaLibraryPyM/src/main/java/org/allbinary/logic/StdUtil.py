@@ -23,13 +23,11 @@ class StdUtil:
     instance: StdUtil = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.ABHashtable import ABHashtable
-        from org.allbinary.util.ABVector import ABVector
         self.EMPTY_VECTOR: ABVector[object] = self.createVector()
         self.NULL_TABLE: ABHashtable[object, object] = self.createHashtable()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

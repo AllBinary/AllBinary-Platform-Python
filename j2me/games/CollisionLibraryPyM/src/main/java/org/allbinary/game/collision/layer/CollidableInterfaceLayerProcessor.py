@@ -15,9 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.layer.LayerProcessor import LayerProcessor
 
 
+@java_inherited_overloads
 class CollidableInterfaceLayerProcessor(LayerProcessor):
     
 

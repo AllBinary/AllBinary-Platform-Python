@@ -15,11 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.data.tables.TableMappingInterface import TableMappingInterface
 
 
 #import org.allbinary.business.user.commerce.money.Money;
 # Java interface
+@java_inherited_overloads
 class StoreFrontUsersStatisticsInterface(TableMappingInterface):
     
 

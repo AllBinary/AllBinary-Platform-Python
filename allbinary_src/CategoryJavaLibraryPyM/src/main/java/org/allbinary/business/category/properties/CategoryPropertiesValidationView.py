@@ -15,12 +15,17 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.validate.ValidationInterface import ValidationInterface
 from org.allbinary.business.category.properties.CategoryPropertiesView import CategoryPropertiesView
 
 
+@java_inherited_overloads
 class CategoryPropertiesValidationView(*java_bases(CategoryPropertiesView, ValidationInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -28,13 +33,14 @@ class CategoryPropertiesValidationView(*java_bases(CategoryPropertiesView, Valid
     
 
     def __init__(self, categoryPropertiesInterface: CategoryPropertiesInterface) -> None:
+        __class__._java_defaults(self)
         super().__init__(categoryPropertiesInterface)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
     def isValid(self) -> bool:
-        return self.categoryPropertiesInterface.isValid()
+        return java_predicate(self.categoryPropertiesInterface, "isValid")
     
 
     # throws Exception

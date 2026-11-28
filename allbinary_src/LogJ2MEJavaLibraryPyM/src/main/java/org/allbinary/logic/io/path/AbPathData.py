@@ -34,7 +34,7 @@ class AbPathData:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
 # from org.allbinary.logic.io.file.FilePathData import FilePathData
 # from org.allbinary.logic.string.StringUtil import StringUtil
 # from org.allbinary.string.CommonSeps import CommonSeps

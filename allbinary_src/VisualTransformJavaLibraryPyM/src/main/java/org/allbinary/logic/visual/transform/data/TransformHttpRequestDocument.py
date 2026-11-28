@@ -25,18 +25,16 @@ class TransformHttpRequestDocument(TransformDocumentInterface):
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
-        from org.w3c.dom.Document import Document
-        from org.w3c.dom.Node import Node
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.baseNode: Node = None
-        self.document: Document = None
+        if "baseNode" not in vars(self): self.baseNode: Node = None
+        if "document" not in vars(self): self.document: Document = None
 
     def __init__(self, *args) -> None:
         if len(args) == 2:
-            self._constructor2(*args)
+            __class__._constructor2(self, *args)
         elif len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
     
 
     def _constructor2(self, pageContext: PageContext, weblisketSession: WeblisketSession) -> None:
@@ -46,7 +44,7 @@ class TransformHttpRequestDocument(TransformDocumentInterface):
         from org.w3c.dom.Node import Node
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-        self._init_fields()
+        __class__._init_fields(self)
         try:
             contentType: str = AcceptableResponseGenerator.getInstance().get(pageContext.getRequest())
             self.document = DomDocumentHelper.create()
@@ -71,7 +69,7 @@ class TransformHttpRequestDocument(TransformDocumentInterface):
         from org.w3c.dom.Node import Node
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-        self._init_fields()
+        __class__._init_fields(self)
         try:
             contentType: str = searchRequest.getContentType()
             self.document = DomDocumentHelper.create()

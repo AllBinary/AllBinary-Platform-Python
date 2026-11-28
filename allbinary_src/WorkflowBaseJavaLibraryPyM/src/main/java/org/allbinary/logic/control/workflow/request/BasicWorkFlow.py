@@ -23,20 +23,19 @@ class BasicWorkFlow:
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
-        from org.w3c.dom.Document import Document
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.workFlowDoc: Document = None
-        self.workFlowName: str = None
-        self.storeName: str = None
+        if "workFlowDoc" not in vars(self): self.workFlowDoc: Document = None
+        if "workFlowName" not in vars(self): self.workFlowName: str = None
+        if "storeName" not in vars(self): self.storeName: str = None
 
     def __init__(self, *args) -> None:
         if len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
         elif len(args) == 2:
-            self._constructor2(*args)
+            __class__._constructor2(self, *args)
         elif len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
     
 
     def _constructor0(self) -> None:
@@ -44,7 +43,7 @@ class BasicWorkFlow:
         from org.allbinary.logic.control.workflow.WorkFlowData import WorkFlowData
         from org.allbinary.logic.string.StringUtil import StringUtil
         from org.w3c.dom.Node import Node
-        self._init_fields()
+        __class__._init_fields(self)
         self.workFlowName = StringUtil.getInstance().EMPTY_STRING
         self.workFlowDoc = DomDocumentHelper.create()
         workFlowNode: Node = self.workFlowDoc.createElement(WorkFlowData.getInstance().WORKFLOW)
@@ -57,7 +56,7 @@ class BasicWorkFlow:
         from org.allbinary.logic.communication.http.request.RequestParams import RequestParams
         from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
         from org.allbinary.logic.control.workflow.WorkFlowData import WorkFlowData
-        self._init_fields()
+        __class__._init_fields(self)
         weblisketSession: WeblisketSession = WeblisketSession(hashMap, pageContext)
         self.storeName = weblisketSession.getStoreName()
         requestHashMap: HashMap = RequestParams(pageContext).toHashMap()
@@ -70,7 +69,7 @@ class BasicWorkFlow:
         from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
         from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
         from org.allbinary.logic.control.workflow.WorkFlowData import WorkFlowData
-        self._init_fields()
+        __class__._init_fields(self)
         self.workFlowName = hashMap.get(WorkFlowData.getInstance().NAME)
         self.storeName = hashMap.get(StoreFrontData.getInstance().NAME)
         self.workFlowDoc = DomDocumentHelper.create(hashMap.get(WorkFlowData.getInstance().DATA))

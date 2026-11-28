@@ -20,17 +20,16 @@ from __future__ import annotations
 class HighScore:
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.GameInfo import GameInfo
-        self.id: int = None
-        self.name: str = None
-        self.gameInfo: GameInfo = None
-        self.score: int = None
-        self.scoreString: str = None
+        if "id" not in vars(self): self.id: int = 0
+        if "name" not in vars(self): self.name: str = None
+        if "gameInfo" not in vars(self): self.gameInfo: GameInfo = None
+        if "score" not in vars(self): self.score: int = 0
+        if "scoreString" not in vars(self): self.scoreString: str = None
     
 
     def __init__(self, id: int, name: str, gameInfo: GameInfo, score: int) -> None:
         from org.allbinary.game.GameInfo import GameInfo
-        self._init_fields()
+        __class__._init_fields(self)
         self.id = id
         self.name = name
         self.gameInfo = gameInfo
@@ -52,6 +51,7 @@ class HighScore:
 
     # throws Exception
     def getAsBytes(self) -> list[int]:
+        from java.io.ByteArrayOutputStream import ByteArrayOutputStream
         from java.io.DataOutputStream import DataOutputStream
         byteArrayOutputStream: ByteArrayOutputStream = ByteArrayOutputStream()
         outputStream: DataOutputStream = DataOutputStream(byteArrayOutputStream)

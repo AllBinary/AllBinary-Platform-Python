@@ -15,20 +15,24 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.android.view.BaseViewWrapper import BaseViewWrapper
 
 
+@java_inherited_overloads
 class ViewWrapper(BaseViewWrapper):
+    def _java_defaults(self):
+        vars(self).setdefault("view", None)
 
     def _init_fields(self) -> None:
-        from android.view.View import View
-        self.view: View = None
+        if "view" not in vars(self): self.view: View = None
     
 
     def __init__(self, view: View) -> None:
+        __class__._java_defaults(self)
         from android.view.View import View
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.view = view
     
 

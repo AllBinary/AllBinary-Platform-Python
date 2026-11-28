@@ -15,18 +15,23 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.media.graphics.geography.pathfinding.PathFindingNodeCostInfoFactoryBase import PathFindingNodeCostInfoFactoryBase
 
 
+@java_inherited_overloads
 class PathFindingNodeCostInfoFactory(PathFindingNodeCostInfoFactoryBase):
+    def _java_defaults(self):
+        vars(self).setdefault("pathFindingNodeCostInfoAdjacencyList", None)
 
     def _init_fields(self) -> None:
-        self.pathFindingNodeCostInfoAdjacencyList: list[list[PathFindingNodeCostInfo]] = None
+        if "pathFindingNodeCostInfoAdjacencyList" not in vars(self): self.pathFindingNodeCostInfoAdjacencyList: list[list[PathFindingNodeCostInfo]] = None
     
 
     def __init__(self, max: int) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.pathFindingNodeCostInfoAdjacencyList = [[None] * (max) for _ in range(max)]
     
 
@@ -58,7 +63,9 @@ class PathFindingNodeCostInfoFactory(PathFindingNodeCostInfoFactoryBase):
         return self.pathFindingNodeCostInfoAdjacencyList[geographicMapCellPosition.getId()][goingToFromGeographicMapCellPosition.getId()]
 
     def getInstance(self, *args):
-        return getattr(self, "getInstance_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("getInstance_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getInstance(*args)
     
 
     def getTotalCost(self, geographicMapInterface: BasicGeographicMap, comingFromGeographicMapCellPosition: GeographicMapCellPosition, geographicMapCellPosition: GeographicMapCellPosition) -> int:

@@ -15,11 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.logic.system.security.licensing.ClientInformation import ClientInformation
 
 
 # This is the information sent to the license server
+@java_inherited_overloads
 class AbeClientInformation(ClientInformation):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -27,8 +32,9 @@ class AbeClientInformation(ClientInformation):
     
 
     def __init__(self, name: str, version: str, specialName: str, shortName: str) -> None:
+        __class__._java_defaults(self)
         super().__init__(name, version, specialName, shortName)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def init(self) -> None:

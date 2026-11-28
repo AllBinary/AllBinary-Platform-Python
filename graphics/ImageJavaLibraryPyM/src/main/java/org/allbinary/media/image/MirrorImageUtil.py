@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -33,7 +34,7 @@ class MirrorImageUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getImage(self, bufferedImage: BufferedImage, verticle: bool, horizontal: bool) -> BufferedImage:
@@ -80,6 +81,7 @@ class MirrorImageUtil:
 # from java.awt.image.AffineTransformOp import AffineTransformOp
 # from java.awt.image.BufferedImage import BufferedImage
 # from org.allbinary.logic.communication.log.LogUtil import LogUtil
+from org.allbinary.media.image.ImageUtil import ImageUtil
 
 
 def _MirrorImageUtil_instance() -> object:

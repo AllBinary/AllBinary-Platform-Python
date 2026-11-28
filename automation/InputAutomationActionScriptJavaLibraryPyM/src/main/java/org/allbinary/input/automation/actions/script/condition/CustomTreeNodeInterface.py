@@ -15,10 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 # from javax.swing.tree.MutableTreeNode import MutableTreeNode
 
 
 # Java interface
+@java_inherited_overloads
 class CustomTreeNodeInterface(MutableTreeNode):
     
 

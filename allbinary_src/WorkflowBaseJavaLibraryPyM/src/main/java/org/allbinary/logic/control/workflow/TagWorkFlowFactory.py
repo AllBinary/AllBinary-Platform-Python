@@ -32,7 +32,7 @@ class TagWorkFlowFactory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception, LicensingException
@@ -62,7 +62,7 @@ class TagWorkFlowFactory:
                 stringBuffer.append("Failed To Get Instance: ")
                 stringBuffer.append(workFlowClassName)
                 stringBuffer.append("->")
-                stringBuffer.append(type(TagWorkFlowFactory.instance).__module__ + "." + type(TagWorkFlowFactory.instance).__qualname__)
+                stringBuffer.append(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(TagWorkFlowFactory.instance)))
                 commonStrings: CommonStrings = CommonStrings.getInstance()
                 self.logUtil.put(str(stringBuffer), self, commonStrings.GET_INSTANCE, e)
             raise e
@@ -73,13 +73,16 @@ class TagWorkFlowFactory:
                 stringBuffer.append("Failed To Get Instance: ")
                 stringBuffer.append(workFlowClassName)
                 stringBuffer.append("->")
-                stringBuffer.append(type(TagWorkFlowFactory.instance).__module__ + "." + type(TagWorkFlowFactory.instance).__qualname__)
+                stringBuffer.append(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(TagWorkFlowFactory.instance)))
                 commonStrings: CommonStrings = CommonStrings.getInstance()
                 self.logUtil.put(str(stringBuffer), self, commonStrings.GET_INSTANCE, e)
             raise e
 
-    def getInstance(self, *args):
-        return getattr(self, "getInstance_j" + str(len(args)))(*args)
+    def getInstance(self=None, *args):
+        if self is None and not args: return __class__.getInstance_j0()
+        implementation = __class__.__dict__.get("getInstance_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getInstance(*args)
 # from java.util.HashMap import HashMap
 # from javax.servlet.jsp.PageContext import PageContext
 # from org.allbinary.business.DynamicObjectData import DynamicObjectData

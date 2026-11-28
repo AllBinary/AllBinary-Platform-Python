@@ -15,20 +15,30 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 from org.allbinary.graphics.paint.Paintable import Paintable
 
 
 #J2MEForJ2ME
+@java_inherited_overloads
 class OwnershipPaintable(*java_bases(Paintable, UpdateMyFontInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("displayInfo", None)
+        vars(self).setdefault("myFontProcessor", None)
+        vars(self).setdefault("COPYRIGHT", None)
+        vars(self).setdefault("basicColor", None)
+        vars(self).setdefault("color", 0)
+        vars(self).setdefault("anchor", 0)
+        vars(self).setdefault("COPYRIGHT_Y", 0)
+        vars(self).setdefault("beginWidth", 0)
 
     def _init_fields(self) -> None:
         from org.allbinary.graphics.Anchor import Anchor
-        from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
@@ -38,8 +48,8 @@ class OwnershipPaintable(*java_bases(Paintable, UpdateMyFontInterface)):
         self.basicColor: BasicColor = BasicColorFactory.getInstance().WHITE
         self.color: int = int(self.basicColor)
         self.anchor: int = Anchor.TOP_LEFT
-        self.COPYRIGHT_Y: int = 0
-        self.beginWidth: int = 0
+        if "COPYRIGHT_Y" not in vars(self): self.COPYRIGHT_Y: int = 0
+        if "beginWidth" not in vars(self): self.beginWidth: int = 0
     
 
     @staticmethod
@@ -48,8 +58,9 @@ class OwnershipPaintable(*java_bases(Paintable, UpdateMyFontInterface)):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 
 
 class InitializerDatabase:
@@ -26,23 +27,23 @@ class InitializerDatabase:
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.adminDbUserName: str = None
-        self.adminDbPassword: str = None
-        self.adminJdbcDriver: str = None
-        self.adminSchema: str = None
-        self.adminServer: str = None
-        self.adminPort: str = None
-        self.initDb: DynamicInitDb = None
+        if "adminDbUserName" not in vars(self): self.adminDbUserName: str = None
+        if "adminDbPassword" not in vars(self): self.adminDbPassword: str = None
+        if "adminJdbcDriver" not in vars(self): self.adminJdbcDriver: str = None
+        if "adminSchema" not in vars(self): self.adminSchema: str = None
+        if "adminServer" not in vars(self): self.adminServer: str = None
+        if "adminPort" not in vars(self): self.adminPort: str = None
+        if "initDb" not in vars(self): self.initDb: DynamicInitDb = None
 
     def __init__(self, *args) -> None:
         if len(args) == 2:
-            self.__jconstructor2(*args)
+            __class__.__jconstructor2(self, *args)
 
     def __jconstructor2(self, *args) -> None:
-        if True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)):
-            self._constructor2_1(*args)
+        if True and (args[0] is None or any(base.__name__ == "AbeClientInformationInterface" for base in type(args[0]).__mro__)) and (args[1] is None or any(base.__name__ == "Map" for base in type(args[1]).__mro__)):
+            __class__._constructor2_1(self, *args)
         else:
-            self._constructor2_2(*args)
+            __class__._constructor2_2(self, *args)
     
 
     def _constructor2_1(self, abeClientInformation: AbeClientInformationInterface, map: Map) -> None:
@@ -52,7 +53,7 @@ class InitializerDatabase:
         from org.allbinary.logic.StdUtil import StdUtil
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-        self._init_fields()
+        __class__._init_fields(self)
         stringBuffer: StringMaker = StringMaker()
         hashMap: HashMap = StdUtil.getInstance().createHashMap()
         keys: Set = map.keySet()
@@ -74,7 +75,7 @@ class InitializerDatabase:
     def _constructor2_2(self, abeClientInformation: AbeClientInformationInterface, initHashMap: HashMap) -> None:
         from java.util.HashMap import HashMap
         from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-        self._init_fields()
+        __class__._init_fields(self)
         self.getFormData(abeClientInformation, initHashMap)
     
 
@@ -125,12 +126,12 @@ class InitializerDatabase:
     def isValid(self) -> bool:
         from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         isValid: bool = True
-        if not self.isJdbcDriverValid(self.adminJdbcDriver):
+        if not (self.isJdbcDriverValid(self.adminJdbcDriver)):
             isValid = False
         stringValidationUtil: StringValidationUtil = StringValidationUtil.getInstance()
-        if not stringValidationUtil.isValidRequired(self.adminDbUserName, InitializerDatabase.MIN, InitializerDatabase.MAX):
+        if not (stringValidationUtil.isValidRequired(self.adminDbUserName, InitializerDatabase.MIN, InitializerDatabase.MAX)):
             isValid = False
-        if not stringValidationUtil.isValidNotRequired(self.adminDbPassword, InitializerDatabase.MINPASSWORD, InitializerDatabase.MAX):
+        if not (stringValidationUtil.isValidNotRequired(self.adminDbPassword, InitializerDatabase.MINPASSWORD, InitializerDatabase.MAX)):
             isValid = False
         return isValid
     
@@ -151,15 +152,15 @@ class InitializerDatabase:
         isValid: bool = True
         isJdbcDriversValid: bool = True
         stringBuffer: StringMaker = StringMaker()
-        if not self.isJdbcDriverValid(self.adminJdbcDriver):
+        if not (self.isJdbcDriverValid(self.adminJdbcDriver)):
             isJdbcDriversValid = False
             stringBuffer.append(self.getJdbcDriverValidationInfo(self.getAdminJdbcDriver()))
         stringValidationUtil: StringValidationUtil = StringValidationUtil.getInstance()
-        if not stringValidationUtil.isValidRequired(self.adminDbUserName, InitializerDatabase.MIN, InitializerDatabase.MAX):
+        if not (stringValidationUtil.isValidRequired(self.adminDbUserName, InitializerDatabase.MIN, InitializerDatabase.MAX)):
             stringBuffer.append("Admin username should be < " + str(InitializerDatabase.MAX) + " and > " + str(InitializerDatabase.MIN) + " characters in length.<br />")
-        if not stringValidationUtil.isValidNotRequired(self.adminDbPassword, InitializerDatabase.MINPASSWORD, InitializerDatabase.MAX):
+        if not (stringValidationUtil.isValidNotRequired(self.adminDbPassword, InitializerDatabase.MINPASSWORD, InitializerDatabase.MAX)):
             stringBuffer.append("Admin password should be < " + str(InitializerDatabase.MAX) + " and > " + str(InitializerDatabase.MINPASSWORD) + " characters in length.<br />")
-        if not isJdbcDriversValid:
+        if not (isJdbcDriversValid):
             stringBuffer.append(InitializerData.getInstance().getJdbcDriverSolutionInfo())
         return str(stringBuffer)
     

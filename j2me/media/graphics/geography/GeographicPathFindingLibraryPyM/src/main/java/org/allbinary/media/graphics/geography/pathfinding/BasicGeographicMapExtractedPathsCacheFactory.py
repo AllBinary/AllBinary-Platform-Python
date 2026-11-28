@@ -3,16 +3,21 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.util.cache.BaseBasicArrayListCache import BaseBasicArrayListCache
 
 
+@java_inherited_overloads
 class BasicGeographicMapExtractedPathsCacheFactory(BaseBasicArrayListCache):
     instance: BasicGeographicMapExtractedPathsCacheFactory = None
+    def _java_defaults(self):
+        vars(self).setdefault("maxConcurrentPaths", 0)
+        vars(self).setdefault("maxPaths", 0)
 
     def _init_fields(self) -> None:
-        self.maxConcurrentPaths: int = 0
-        self.maxPaths: int = 0
+        if "maxConcurrentPaths" not in vars(self): self.maxConcurrentPaths: int = 0
+        if "maxPaths" not in vars(self): self.maxPaths: int = 0
     
 
     @staticmethod
@@ -21,8 +26,9 @@ class BasicGeographicMapExtractedPathsCacheFactory(BaseBasicArrayListCache):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def init(self, maxConcurrentPaths: int, maxPaths: int) -> None:

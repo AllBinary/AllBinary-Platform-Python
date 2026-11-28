@@ -15,18 +15,23 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.graphics.paint.LocationPaintable import LocationPaintable
 
 
+@java_inherited_overloads
 class StringLocationPaintable(LocationPaintable):
+    def _java_defaults(self):
+        vars(self).setdefault("value", None)
 
     def _init_fields(self) -> None:
-        self.value: str = None
+        if "value" not in vars(self): self.value: str = None
     
 
     def __init__(self, value: str) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.value = value
     
 

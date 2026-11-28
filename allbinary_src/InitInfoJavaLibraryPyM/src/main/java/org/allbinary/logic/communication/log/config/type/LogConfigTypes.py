@@ -41,6 +41,8 @@ class LogConfigTypes:
 
     @staticmethod
     def _init_unlocked() -> None:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         from org.allbinary.logic.communication.log.config.LoggingInitInfo import LoggingInitInfo
         from org.allbinary.util.BasicArrayList import BasicArrayList
@@ -60,6 +62,9 @@ class LogConfigTypes:
     # throws Exception
     @staticmethod
     def getInstance(node: Node) -> LogConfigType:
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeData import LogConfigTypeData
+        from org.allbinary.logic.communication.log.config.type.LogConfigTypeData import LogConfigTypeData
+        from org.allbinary.logic.communication.log.config.type.LogConfigType import LogConfigType
         from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
         from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
         from org.allbinary.util.BasicArrayList import BasicArrayList

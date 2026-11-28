@@ -15,29 +15,35 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.layer.waypoint.WaypointInfoHudPaintable import WaypointInfoHudPaintable
 
 
+@java_inherited_overloads
 class GeologicalResourceInfoHudPaintable(WaypointInfoHudPaintable):
     RESOURCES: str = "Resources: "
+    def _java_defaults(self):
+        vars(self).setdefault("keyvalueDrawString", None)
+        vars(self).setdefault("fontHeight", 0)
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.draw.KeyValueDrawCharArray import KeyValueDrawCharArray
-        self.keyvalueDrawString: KeyValueDrawCharArray = None
+        if "keyvalueDrawString" not in vars(self): self.keyvalueDrawString: KeyValueDrawCharArray = None
         self.fontHeight: int = 0
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.draw.KeyValueDrawCharArray import KeyValueDrawCharArray
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.keyvalueDrawString = KeyValueDrawCharArray(GeologicalResourceInfoHudPaintable.RESOURCES, self.textX)
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
         from javax.microedition.lcdui.Font import Font
         from javax.microedition.lcdui.Graphics import Graphics
-        super().updateMeasurement(graphics)
+        java_super_call(super(), "updateMeasurement", graphics)
         font: Font = graphics.getFont()
         self.fontHeight = (2 * font.getHeight())
     
@@ -45,7 +51,7 @@ class GeologicalResourceInfoHudPaintable(WaypointInfoHudPaintable):
     def updateSelectionInfo(self) -> None:
         from org.allbinary.game.layer.RTSLayer import RTSLayer
         from org.allbinary.util.BasicArrayList import BasicArrayList
-        super().updateSelectionInfo()
+        java_super_call(super(), "updateSelectionInfo")
         rtsLayer: RTSLayer = self.rtsLayerP
         list_: BasicArrayList = rtsLayer.geographicMapCellPositionAreaBase.getOccupyingGeographicMapCellPositionList()
         total: int = 0
@@ -58,7 +64,7 @@ class GeologicalResourceInfoHudPaintable(WaypointInfoHudPaintable):
 
     def paint(self, graphics: Graphics) -> None:
         from javax.microedition.lcdui.Graphics import Graphics
-        super().paint(graphics)
+        java_super_call(super(), "paint", graphics)
         self.keyvalueDrawString.paint(graphics, (self.y + self.fontHeight))
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics

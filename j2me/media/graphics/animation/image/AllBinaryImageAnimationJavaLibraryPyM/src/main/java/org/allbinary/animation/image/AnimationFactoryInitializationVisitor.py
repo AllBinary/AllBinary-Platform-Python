@@ -20,15 +20,15 @@ from __future__ import annotations
 class AnimationFactoryInitializationVisitor:
 
     def _init_fields(self) -> None:
-        self.width: int = 0
-        self.height: int = 0
-        self.dx: int = 0
-        self.dy: int = 0
-        self.originalDx: int = 0
-        self.originalDy: int = 0
+        if "width" not in vars(self): self.width: int = 0
+        if "height" not in vars(self): self.height: int = 0
+        if "dx" not in vars(self): self.dx: int = 0
+        if "dy" not in vars(self): self.dy: int = 0
+        if "originalDx" not in vars(self): self.originalDx: int = 0
+        if "originalDy" not in vars(self): self.originalDy: int = 0
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def visit(self) -> None:

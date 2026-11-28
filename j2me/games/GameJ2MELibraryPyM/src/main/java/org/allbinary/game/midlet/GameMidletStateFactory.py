@@ -10,7 +10,6 @@ class GameMidletStateFactory:
     INSTANCE: GameMidletStateFactory = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.state.GameState import GameState
         from org.allbinary.game.state.GameStateFactory import GameStateFactory
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
@@ -18,7 +17,7 @@ class GameMidletStateFactory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

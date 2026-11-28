@@ -15,18 +15,23 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
 
 
+@java_inherited_overloads
 class ImageComparisonSearchResultsEvent(AllBinaryEventObject):
+    def _java_defaults(self):
+        vars(self).setdefault("imageComparisonSearch", None)
 
     def _init_fields(self) -> None:
-        self.imageComparisonSearch: ImageComparisonSearch = None
+        if "imageComparisonSearch" not in vars(self): self.imageComparisonSearch: ImageComparisonSearch = None
     
 
     def __init__(self, anyType: object, imageComparisonSearch: ImageComparisonSearch) -> None:
+        __class__._java_defaults(self)
         super().__init__(anyType)
-        self._init_fields()
+        __class__._init_fields(self)
         self.setImageComparisonSearch(imageComparisonSearch)
     
 

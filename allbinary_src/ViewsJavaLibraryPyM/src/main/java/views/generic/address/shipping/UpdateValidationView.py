@@ -15,11 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.validate.ValidationComponentInterface import ValidationComponentInterface
 from views.generic.address.shipping.ShippingAddressView import ShippingAddressView
 
 
+@java_inherited_overloads
 class UpdateValidationView(*java_bases(ShippingAddressView, ValidationComponentInterface)):
     
 
@@ -32,9 +36,9 @@ class UpdateValidationView(*java_bases(ShippingAddressView, ValidationComponentI
     def isValid(self) -> bool:
         from org.allbinary.business.user.address.StreetAddress import StreetAddress
         self.streetAddress = StreetAddress(self.getRequest())
-        if self.streetAddress.isValid() == False:
+        if java_predicate(self.streetAddress, "isValid") == False:
             return False
-        return self.streetAddress.isValid()
+        return java_predicate(self.streetAddress, "isValid")
     
 
     def validationInfo(self) -> str:
@@ -55,7 +59,7 @@ class UpdateValidationView(*java_bases(ShippingAddressView, ValidationComponentI
     # throws Exception
     def getTransformInfoInterface(self) -> TransformInfoInterface:
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-        return super().getTransformInfoInterface()
+        return java_super_call(super(), "getTransformInfoInterface")
 # from org.allbinary.business.user.address.StreetAddress import StreetAddress
 # from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
 # from org.w3c.dom.Document import Document

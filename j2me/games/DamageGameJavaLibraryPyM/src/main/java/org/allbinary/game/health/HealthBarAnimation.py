@@ -15,26 +15,34 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.animation.Animation import Animation
 
 
+@java_inherited_overloads
 class HealthBarAnimation(Animation):
+    def _java_defaults(self):
+        vars(self).setdefault("basicColorFactory", None)
+        vars(self).setdefault("x2", 0)
+        vars(self).setdefault("thickness", 0)
+        vars(self).setdefault("location", 0)
+        vars(self).setdefault("allbinaryLayer", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-        from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         self.basicColorFactory: BasicColorFactory = BasicColorFactory.getInstance()
-        self.x2: int = 0
-        self.thickness: int = 0
-        self.location: int = None
-        self.allbinaryLayer: AllBinaryLayer = None
+        if "x2" not in vars(self): self.x2: int = 0
+        if "thickness" not in vars(self): self.thickness: int = 0
+        if "location" not in vars(self): self.location: int = 0
+        if "allbinaryLayer" not in vars(self): self.allbinaryLayer: AllBinaryLayer = None
     
 
     def __init__(self, layerInterface: AllBinaryLayer, location: int) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.graphics.hud.BasicHudFactory import BasicHudFactory
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.allbinaryLayer = layerInterface
         self.location = location
         basicHudFactory: BasicHudFactory = BasicHudFactory.getInstance()

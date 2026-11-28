@@ -38,9 +38,9 @@ class LayerPartialCellPositionsUtil:
             reusableList.add(topLeftGeographicMapCellPosition)
         if topRightGeographicMapCellPosition != SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION and topLeftGeographicMapCellPosition != topRightGeographicMapCellPosition:
             reusableList.add(topRightGeographicMapCellPosition)
-        if bottomLeftGeographicMapCellPosition != SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION and not reusableList.contains(bottomLeftGeographicMapCellPosition):
+        if bottomLeftGeographicMapCellPosition != SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION and not (reusableList.contains(bottomLeftGeographicMapCellPosition)):
             reusableList.add(bottomLeftGeographicMapCellPosition)
-        if bottomRightGeographicMapCellPosition != SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION and not reusableList.contains(bottomRightGeographicMapCellPosition):
+        if bottomRightGeographicMapCellPosition != SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION and not (reusableList.contains(bottomRightGeographicMapCellPosition)):
             reusableList.add(bottomRightGeographicMapCellPosition)
         return reusableList
     
@@ -61,9 +61,9 @@ class LayerPartialCellPositionsUtil:
             reusableList.add(topLeftGeographicMapCellPosition)
         if topRightGeographicMapCellPosition != SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION and topLeftGeographicMapCellPosition != topRightGeographicMapCellPosition:
             reusableList.add(topRightGeographicMapCellPosition)
-        if bottomLeftGeographicMapCellPosition != SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION and not reusableList.contains(bottomLeftGeographicMapCellPosition):
+        if bottomLeftGeographicMapCellPosition != SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION and not (reusableList.contains(bottomLeftGeographicMapCellPosition)):
             reusableList.add(bottomLeftGeographicMapCellPosition)
-        if bottomRightGeographicMapCellPosition != SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION and not reusableList.contains(bottomRightGeographicMapCellPosition):
+        if bottomRightGeographicMapCellPosition != SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION and not (reusableList.contains(bottomRightGeographicMapCellPosition)):
             reusableList.add(bottomRightGeographicMapCellPosition)
         return reusableList
     

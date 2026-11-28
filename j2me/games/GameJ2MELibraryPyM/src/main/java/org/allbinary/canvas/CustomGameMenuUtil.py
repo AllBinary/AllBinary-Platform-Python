@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 
 
 class CustomGameMenuUtil:
@@ -29,7 +30,7 @@ class CustomGameMenuUtil:
         gameCommandsFactory: GameCommandsFactory = GameCommandsFactory.getInstance()
         if AppletUtil.isAppletLoader(canvas):
             pass
-        elif J2MEUtil.isHTML():
+        elif java_predicate(J2MEUtil, "isHTML"):
             pass
         else:
             canvas.addCommand(gameCommandsFactory.EXIT_COMMAND)

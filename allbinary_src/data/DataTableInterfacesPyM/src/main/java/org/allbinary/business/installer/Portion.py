@@ -20,13 +20,13 @@ from __future__ import annotations
 class Portion:
 
     def _init_fields(self) -> None:
-        self.current: int = None
-        self.total: int = None
+        if "current" not in vars(self): self.current: int = None
+        if "total" not in vars(self): self.total: int = None
     
 
     def __init__(self, hashMap: HashMap) -> None:
         from java.util.HashMap import HashMap
-        self._init_fields()
+        __class__._init_fields(self)
         self.current = hashMap.get("current")
         self.total = hashMap.get("total")
     

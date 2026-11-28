@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaMonitor import java_monitor, java_wait
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -28,7 +29,7 @@ class NotificationUtil:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.notificationManager: NotificationManager = ResourceUtil.getInstance().getContext().getSystemService(Context.NOTIFICATION_SERVICE)
-        self.notificationBuilder: NotificationBuilder = None
+        if "notificationBuilder" not in vars(self): self.notificationBuilder: NotificationBuilder = None
     
 
     @staticmethod
@@ -40,7 +41,7 @@ class NotificationUtil:
         from org.allbinary.content.NotificationBuilder import NotificationBuilder
         from org.allbinary.content.NotificationBuilderAPI23 import NotificationBuilderAPI23
         from org.allbinary.android.AndroidInfoFactory import AndroidInfoFactory
-        self._init_fields()
+        __class__._init_fields(self)
         SDK_VERSION: int = AndroidInfoFactory.getInstance().getVersion()
         if SDK_VERSION > 22:
             self.notificationBuilder = NotificationBuilderAPI23()
@@ -60,7 +61,7 @@ class NotificationUtil:
         context: Context = ResourceUtil.getInstance().getContext()
         intent: Intent = CommandUriAction.getInstance().getIntent(command)
         integer: int = ResourceUtil.getInstance().getResourceId(resource)
-        FLAG_IMMUTABLE: int = 1 << 26
+        FLAG_IMMUTABLE: int = ((((1) << ((26) & 31)) + 0x80000000) % 0x100000000 - 0x80000000)
         SDK_VERSION: int = AndroidInfoFactory.getInstance().getVersion()
         pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, (FLAG_IMMUTABLE if SDK_VERSION > 22 else 0))
         if self.notificationBuilder is None:

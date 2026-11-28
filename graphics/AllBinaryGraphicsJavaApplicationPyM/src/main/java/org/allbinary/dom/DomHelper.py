@@ -32,7 +32,7 @@ class DomHelper:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def createDocument_j0(self) -> Document:
@@ -48,6 +48,7 @@ class DomHelper:
 
     # throws Exception
     def createDocument_j1(self, xmlFile: File) -> Document:
+        from java.io.File import File
         from org.w3c.dom.Document import Document
         try:
             factory: DocumentBuilderFactory = DocumentBuilderFactory.newInstance()
@@ -58,11 +59,14 @@ class DomHelper:
             raise e
 
     def createDocument(self, *args):
-        return getattr(self, "createDocument_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("createDocument_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().createDocument(*args)
     
 
     # throws Exception
     def toString(self, document: Document) -> str:
+        from java.io.ByteArrayOutputStream import ByteArrayOutputStream
         from org.w3c.dom.Document import Document
         try:
             domSource: DOMSource = DOMSource(document)
@@ -78,6 +82,7 @@ class DomHelper:
 
     # throws Exception
     def save(self, file: File, document: Document) -> None:
+        from java.io.File import File
         from org.w3c.dom.Document import Document
         try:
             copyTransformerFactory: TransformerFactory = TransformerFactory.newInstance()
@@ -161,11 +166,13 @@ class DomHelper:
         raise Exception(nodeName + " Node Not Found in search")
 
     def searchNodeList(self, *args):
-        if len(args) == 2 and True and (args[0] is None or isinstance(args[0], str)) and not isinstance(args[1], (str, list, int, float)):
-            return self.searchNodeList_j2_1(*args)
+        if len(args) == 2 and True and (args[0] is None or isinstance(args[0], str)) and (args[1] is None or any(base.__name__ == "NodeList" for base in type(args[1]).__mro__)):
+            return __class__.__dict__["searchNodeList_j2_1"].__get__(self, __class__)(*args)
         if len(args) == 2:
-            return self.searchNodeList_j2_2(*args)
-        return getattr(self, "searchNodeList_j" + str(len(args)))(*args)
+            return __class__.__dict__["searchNodeList_j2_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("searchNodeList_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().searchNodeList(*args)
 # from java.io.ByteArrayOutputStream import ByteArrayOutputStream
 # from java.io.File import File
 # from javax.xml.parsers.DocumentBuilder import DocumentBuilder

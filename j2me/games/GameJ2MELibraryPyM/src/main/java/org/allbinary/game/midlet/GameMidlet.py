@@ -15,29 +15,60 @@
 
 from __future__ import annotations
 
+from java.lang.JavaThread import JavaThread
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from java.lang.JavaRuntimeStatic import java_bases
 from javax.microedition.lcdui.CommandListener import CommandListener
 from org.allbinary.midlet.ProgressMidlet import ProgressMidlet
 
 
+@java_inherited_overloads
 class GameMidlet(*java_bases(ProgressMidlet, CommandListener)):
     _lock = threading.RLock()
+    def _java_defaults(self):
+        vars(self).setdefault("enumerationUtil", None)
+        vars(self).setdefault("basicColorFactory", None)
+        vars(self).setdefault("features", None)
+        vars(self).setdefault("midletStrings", None)
+        vars(self).setdefault("myCommandsFactory", None)
+        vars(self).setdefault("gameStrings", None)
+        vars(self).setdefault("gameAdStateFactory", None)
+        vars(self).setdefault("gameStateFactory", None)
+        vars(self).setdefault("tsUtil", None)
+        vars(self).setdefault("DISPLAYABLE", None)
+        vars(self).setdefault("COMMAND_NAME", None)
+        vars(self).setdefault("NO_COMMAND", None)
+        vars(self).setdefault("NO_DISPLAYABLE", None)
+        vars(self).setdefault("COMMAND_ACTION", None)
+        vars(self).setdefault("PAUSE_APP_BACKGROUND", None)
+        vars(self).setdefault("UN_PAUSE_APP_BACKGROUND", None)
+        vars(self).setdefault("aboutCommandProcessor", None)
+        vars(self).setdefault("webCommandProcessor", None)
+        vars(self).setdefault("gameMidletStateFactory", None)
+        vars(self).setdefault("gameStartTimeHelper", None)
+        vars(self).setdefault("fullScreenUtil", None)
+        vars(self).setdefault("debugInterface", None)
+        vars(self).setdefault("allbinaryGameCanvasRunnableInterface", None)
+        vars(self).setdefault("thread", None)
+        vars(self).setdefault("loadGameForm", None)
+        vars(self).setdefault("isFullScreen", False)
+        vars(self).setdefault("resized", False)
+        vars(self).setdefault("startedBefore", False)
 
     def _init_fields(self) -> None:
         from org.allbinary.TsUtil import TsUtil
         from org.allbinary.business.advertisement.GameAdStateFactory import GameAdStateFactory
         from org.allbinary.canvas.FullScreenUtil import FullScreenUtil
-        from org.allbinary.debug.DebugInterface import DebugInterface
         from org.allbinary.game.GameStrings import GameStrings
         from org.allbinary.game.configuration.feature.Features import Features
-        from org.allbinary.game.displayable.canvas.GameCanvasRunnableInterface import GameCanvasRunnableInterface
         from org.allbinary.game.displayable.canvas.NullGameCanvasRunnable import NullGameCanvasRunnable
         from org.allbinary.game.state.GameStateFactory import GameStateFactory
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         from org.allbinary.graphics.displayable.command.MyCommandsFactory import MyCommandsFactory
         from org.allbinary.graphics.displayable.screen.AboutCommandProcessor import AboutCommandProcessor
-        from org.allbinary.graphics.displayable.screen.CommandForm import CommandForm
         from org.allbinary.graphics.displayable.screen.WebCommandProcessor import WebCommandProcessor
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.midlet.MidletStrings import MidletStrings
@@ -65,16 +96,17 @@ class GameMidlet(*java_bases(ProgressMidlet, CommandListener)):
         self.gameMidletStateFactory: GameMidletStateFactory = GameMidletStateFactory.getInstance()
         self.gameStartTimeHelper: TimeDelayHelper = TimeDelayHelper(240)
         self.fullScreenUtil: FullScreenUtil = FullScreenUtil.getInstance()
-        self.debugInterface: DebugInterface = None
+        if "debugInterface" not in vars(self): self.debugInterface: DebugInterface = None
         self.allbinaryGameCanvasRunnableInterface: GameCanvasRunnableInterface = NullGameCanvasRunnable.NULL_GAME_CANVAS_RUNNABLE
-        self.thread: threading.Thread = NullThread.NULL_THREAD
-        self.loadGameForm: CommandForm = None
-        self.isFullScreen: bool = False
-        self.resized: bool = False
+        self.thread: JavaThread = NullThread.NULL_THREAD
+        if "loadGameForm" not in vars(self): self.loadGameForm: CommandForm = None
+        if "isFullScreen" not in vars(self): self.isFullScreen: bool = False
+        if "resized" not in vars(self): self.resized: bool = False
         self.startedBefore: bool = False
     
 
     def __init__(self, clientInformationFactory: ClientInformationFactory) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.debug.DebugFactory import DebugFactory
         from org.allbinary.game.configuration.event.ChangedGameFeatureListener import ChangedGameFeatureListener
         from org.allbinary.game.configuration.event.GameFeatureEventHandler import GameFeatureEventHandler
@@ -85,7 +117,7 @@ class GameMidlet(*java_bases(ProgressMidlet, CommandListener)):
         from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
         from org.allbinary.logic.system.security.licensing.ClientInformationFactory import ClientInformationFactory
         super().__init__(clientInformationFactory)
-        self._init_fields()
+        __class__._init_fields(self)
         SmallIntegerSingletonFactory.getInstance().initWithRange(0x291, 6)
         self.loadGameForm = CommandForm.getNullCommandForm()
         progressCanvas: ProgressCanvas = ProgressCanvasFactory.getInstance()
@@ -179,13 +211,13 @@ class GameMidlet(*java_bases(ProgressMidlet, CommandListener)):
             PreLogUtil.put(str(GameStatisticsFactory.getInstance()), self, METHOD_NAME)
             gameAdState: GameAdState = self.gameAdStateFactory.getCurrentInstance()
             gameAdState.getAdvertisements().stopAll()
-            if not self.isDestroyed():
+            if not (java_predicate(self, "isDestroyed")):
                 self.stopGameCanvasRunnableInterface()
                 self.setGameCanvasRunnableInterface(NullGameCanvasRunnable.NULL_GAME_CANVAS_RUNNABLE)
                 self.mediaShutdown()
             else:
                 self.logUtil.putF("Midlet Managment Error: Midlet Should Only Be Destroyed Once", self, METHOD_NAME)
-            super().destroyApp(True)
+            java_super_call(super(), "destroyApp", True)
             PreLogUtil.put(self.commonStrings.END, self, METHOD_NAME)
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, METHOD_NAME, e)
@@ -220,7 +252,7 @@ class GameMidlet(*java_bases(ProgressMidlet, CommandListener)):
 
     def commandAction(self, command: Command, displayable: Displayable) -> None:
         with self._lock:
-            return self._commandAction_unlocked(command, displayable)
+            return __class__.__dict__["_commandAction_unlocked"].__get__(self, __class__)(command, displayable)
 
     def _commandAction_unlocked(self, command: Command, displayable: Displayable) -> None:
         from org.allbinary.game.midlet.GameMidletEventHandler import GameMidletEventHandler
@@ -295,8 +327,8 @@ class GameMidlet(*java_bases(ProgressMidlet, CommandListener)):
                 self.exitProgress(False)
             elif command == gameCommandsFactory.START_COMMAND or command == gameCommandsFactory.RESTART_COMMAND or command == gameCommandsFactory.CONTINUE_COMMAND:
                 if self.gameMidletStateFactory.getCurrentGameState() != self.gameStateFactory.PLAYING_GAME_STATE or command == gameCommandsFactory.RESTART_COMMAND:
-                    if self.gameStartTimeHelper.isTimeTNT():
-                        if command == gameCommandsFactory.START_COMMAND and self.isDemoLoading():
+                    if java_predicate(self.gameStartTimeHelper, "isTimeTNT"):
+                        if command == gameCommandsFactory.START_COMMAND and java_predicate(self, "isDemoLoading"):
                             self.logUtil.putF("Trying to Start Game Before Loading Complete", self, self.midletStrings.COMMAND_ACTION)
                         else:
                             self.startedBefore = True
@@ -310,12 +342,12 @@ class GameMidlet(*java_bases(ProgressMidlet, CommandListener)):
                 inApplicationPurchaseFactory: InApplicationPurchaseFactory = InApplicationPurchaseFactory.getInstance()
                 list_: BasicArrayList = LockableFeatureFactory.getInstance().getList()
                 lockableFeature: LockableFeature = list_.get(0)
-                if list_.size() > 0 and not inApplicationPurchaseFactory.isPurchased(lockableFeature):
+                if list_.size() > 0 and not (inApplicationPurchaseFactory.isPurchased(lockableFeature)):
                     inApplicationPurchaseFactory.purchase(lockableFeature)
                 else:
                     TextNotificationUtil.getInstance().fireSuccess("Already Purchased")
             elif command == gameCommandsFactory.QUIT_COMMAND:
-                if self.gameStartTimeHelper.isTimeTNT():
+                if java_predicate(self.gameStartTimeHelper, "isTimeTNT"):
                     if isinstance(displayable, HighScoreTextBox):
                         menuListener: MenuListener = displayable
                         menuListener.close()
@@ -368,7 +400,7 @@ class GameMidlet(*java_bases(ProgressMidlet, CommandListener)):
                 menuListener.close()
                 self.commandAction(GameInputMappingCanvas.DISPLAY, NullCanvas.NULL_CANVAS)
             elif command == GameInputMappingCanvas.DISPLAY:
-                if J2MEUtil.isHTML():
+                if java_predicate(J2MEUtil, "isHTML"):
                     self.pauseAppBackground(False)
                 self.commandAction(gameCommandsFactory.SET_MENU_DISPLAYABLE, self.getInputMappingCanvas())
             elif command == GameInputMappingCanvas.DEFAULT:
@@ -405,9 +437,9 @@ class GameMidlet(*java_bases(ProgressMidlet, CommandListener)):
                 stringBuffer.appendboolean(self.isFullScreen)
                 stringBuffer.appendboolean(self.fullScreenUtil.isScreenChange(self.isFullScreen))
                 stringBuffer.append(" isResized: ")
-                stringBuffer.appendboolean(self.isResized())
+                stringBuffer.appendboolean(java_predicate(self, "isResized"))
                 PreLogUtil.put(str(stringBuffer), self, self.COMMAND_ACTION)
-                if self.isResized() or self.fullScreenUtil.isScreenChange(self.isFullScreen):
+                if java_predicate(self, "isResized") or self.fullScreenUtil.isScreenChange(self.isFullScreen):
                     self.updateFullScreen()
                 AllBinaryMediaManager.setMuted(False)
             elif command == gameCommandsFactory.DISPLAY_LOAD_FORM:
@@ -651,7 +683,7 @@ class GameMidlet(*java_bases(ProgressMidlet, CommandListener)):
         displayable: Displayable = self.getDisplay().getCurrent()
         if isinstance(displayable, DemoCanvas):
             demoCanvas: DemoCanvas = displayable
-            if demoCanvas.isDemoLoading():
+            if java_predicate(demoCanvas, "isDemoLoading"):
                 return True
         return False
 # from java.util.Enumeration import Enumeration

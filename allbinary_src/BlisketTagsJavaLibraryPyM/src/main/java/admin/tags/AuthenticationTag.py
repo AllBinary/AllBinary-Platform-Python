@@ -15,28 +15,38 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from tags.CustomTagSupport import CustomTagSupport
 
 
+@java_inherited_overloads
 class AuthenticationTag(CustomTagSupport):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("command", None)
+        vars(self).setdefault("userName", None)
+        vars(self).setdefault("password", None)
+        vars(self).setdefault("newPassword_field", None)
+        vars(self).setdefault("roles", None)
+        vars(self).setdefault("propertiesHashMap", None)
 
     def _init_fields(self) -> None:
-        from java.util.HashMap import HashMap
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.command: str = None
-        self.userName: str = None
-        self.password: str = None
-        self.newPassword: str = None
-        self.roles: BasicArrayList = None
-        self.propertiesHashMap: HashMap = None
+        if "command" not in vars(self): self.command: str = None
+        if "userName" not in vars(self): self.userName: str = None
+        if "password" not in vars(self): self.password: str = None
+        if "newPassword_field" not in vars(self): self.newPassword_field: str = None
+        if "roles" not in vars(self): self.roles: BasicArrayList = None
+        if "propertiesHashMap" not in vars(self): self.propertiesHashMap: HashMap = None
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.string.StringUtil import StringUtil
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         stringUtil: StringUtil = StringUtil.getInstance()
         self.userName = stringUtil.EMPTY_STRING
         self.password = stringUtil.EMPTY_STRING
@@ -55,7 +65,7 @@ class AuthenticationTag(CustomTagSupport):
     
 
     def setNewPassword(self, value: str) -> None:
-        self.newPassword = value
+        self.newPassword_field = value
     
 
     def setRoles(self, values: BasicArrayList) -> None:
@@ -295,7 +305,7 @@ class AuthenticationTag(CustomTagSupport):
                 if ((self.command > GLOBALS2.NEWPASSWORD) - (self.command < GLOBALS2.NEWPASSWORD)) == 0:
                     if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                         self.logUtil.putF("New Password", self, self.tagStrings.DO_START_TAG)
-                    if not self.newPassword():
+                    if not (self.newPassword()):
                         self.pageContext.getOut().print_("New Password Request Failed.<p/>")
                         return self.EVAL_BODY_INCLUDE
                     else:
@@ -304,7 +314,7 @@ class AuthenticationTag(CustomTagSupport):
                 elif ((self.command > GLOBALS2.CHANGEPASSWORD) - (self.command < GLOBALS2.CHANGEPASSWORD)) == 0:
                     if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                         self.logUtil.putF("Change Password", self, self.tagStrings.DO_START_TAG)
-                    if not self.changePassword():
+                    if not (self.changePassword()):
                         self.pageContext.getOut().print_("Password Change Attempt Failed.<p/>")
                         return self.EVAL_BODY_INCLUDE
                     else:
@@ -315,7 +325,7 @@ class AuthenticationTag(CustomTagSupport):
                         self.logUtil.putF("INVALIDATESESSION", self, self.tagStrings.DO_START_TAG)
                     return self.invalidateSession()
                 else:
-                    if self.isSessionOld():
+                    if java_predicate(self, "isSessionOld"):
                         if self.processInvalidation():
                             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                                 self.logUtil.putF("Processing Invalidation", self, self.tagStrings.DO_START_TAG)
@@ -331,7 +341,7 @@ class AuthenticationTag(CustomTagSupport):
                                 return TagSupport.SKIP_BODY
                             else:
                                 return TagSupport.EVAL_BODY_INCLUDE
-                    if (self.userName is None or ((self.userName > stringUtil.EMPTY_STRING) - (self.userName < stringUtil.EMPTY_STRING)) == 0) and (self.password is None or ((self.password > stringUtil.EMPTY_STRING) - (self.password < stringUtil.EMPTY_STRING)) == 0) and self.roles is not None and self.isAuthenticationSessionValid():
+                    if (self.userName is None or ((self.userName > stringUtil.EMPTY_STRING) - (self.userName < stringUtil.EMPTY_STRING)) == 0) and (self.password is None or ((self.password > stringUtil.EMPTY_STRING) - (self.password < stringUtil.EMPTY_STRING)) == 0) and self.roles is not None and java_predicate(self, "isAuthenticationSessionValid"):
                         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                             self.logUtil.putF("Authenticated session is valid", self, self.tagStrings.DO_START_TAG)
                         if ((self.command > GLOBALS2.PROCESSBODYIFAUTHENTICATED) - (self.command < GLOBALS2.PROCESSBODYIFAUTHENTICATED)) == 0:
@@ -341,7 +351,7 @@ class AuthenticationTag(CustomTagSupport):
                     if self.userName is not None and self.password is not None and self.processIfNewLogin():
                         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                             self.logUtil.putF("Processing new login.", self, self.tagStrings.DO_START_TAG)
-                        if self.isRoleValid():
+                        if java_predicate(self, "isRoleValid"):
                             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                                 self.logUtil.putF("Role is valid - Processing new login", self, self.tagStrings.DO_START_TAG)
                             self.pageContext.getOut().print_(self.validRole())

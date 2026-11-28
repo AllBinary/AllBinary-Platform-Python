@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.behavior.topview.placement.TileMapPlacementVisitor import TileMapPlacementVisitor
 
 
+@java_inherited_overloads
 class AllAnimationsEverywhereTileMapPlacementVisitor(TileMapPlacementVisitor):
 
     def __init__(self) -> None:

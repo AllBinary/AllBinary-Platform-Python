@@ -20,7 +20,6 @@ from __future__ import annotations
 class HtmlForm:
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.FORMBEGIN: str = "<form "
         self.END: str = ">"
         self.FORMEND: str = "</form>"
@@ -29,14 +28,14 @@ class HtmlForm:
         self.POST: str = "POST\""
         self.METHODS: list[str] = [self.GET, self.POST]
         self.METHOD: str = "METHOD=\""
-        self.method: str = None
-        self.action: str = None
-        self.inputs: BasicArrayList = None
+        if "method" not in vars(self): self.method: str = None
+        if "action" not in vars(self): self.action: str = None
+        if "inputs" not in vars(self): self.inputs: BasicArrayList = None
     
 
     def __init__(self, action: str) -> None:
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
-        self._init_fields()
+        __class__._init_fields(self)
         self.action = action
         self.inputs = BasicArrayListD()
     

@@ -15,49 +15,60 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.communication.http.request.RequestMapInterface import RequestMapInterface
 from views.business.context.modules.storefront.HttpStoreComponentView import HttpStoreComponentView
 
 
+@java_inherited_overloads
 class InventoryItemView(*java_bases(HttpStoreComponentView, RequestMapInterface)):
     TYPE_ID: int = 10
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("basicItemData", None)
+        vars(self).setdefault("request", None)
+        vars(self).setdefault("imageFileName", None)
+        vars(self).setdefault("mediaData", None)
+        vars(self).setdefault("itemInterface", None)
+        vars(self).setdefault("downloadableItemVector", None)
+        vars(self).setdefault("requestHashMap", None)
 
     def _init_fields(self) -> None:
-        from java.util.HashMap import HashMap
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
-        from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.logic.visual.media.MediaData import MediaData
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.basicItemData: BasicItemData = BasicItemData.getInstance()
-        self.request: HttpServletRequest = None
-        self.imageFileName: str = None
-        self.mediaData: MediaData = None
-        self.itemInterface: ItemInterface = None
-        self.downloadableItemVector: BasicArrayList = None
-        self.requestHashMap: HashMap = None
+        if "request" not in vars(self): self.request: HttpServletRequest = None
+        if "imageFileName" not in vars(self): self.imageFileName: str = None
+        if "mediaData" not in vars(self): self.mediaData: MediaData = None
+        if "itemInterface" not in vars(self): self.itemInterface: ItemInterface = None
+        if "downloadableItemVector" not in vars(self): self.downloadableItemVector: BasicArrayList = None
+        if "requestHashMap" not in vars(self): self.requestHashMap: HashMap = None
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
         elif len(args) == 2:
-            self._constructor2(*args)
+            __class__._constructor2(self, *args)
     
 
     def _constructor1(self, transformInfoInterface: TransformInfoInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
         self.request = self.getPageContext().getRequest()
         self.getFormData()
     
 
     def _constructor2(self, transformInfoInterface: TransformInfoInterface, empty: str) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
         self.request = self.getPageContext().getRequest()
     
 
@@ -125,7 +136,7 @@ class InventoryItemView(*java_bases(HttpStoreComponentView, RequestMapInterface)
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             self.addDomNodeInterfaces()
-            return super().view()
+            return java_super_call(super(), "view")
         except Exception as e:
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEWERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "view()", e)

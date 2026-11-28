@@ -15,34 +15,35 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.logic.communication.http.request.session.WeblisketSessionInterface import WeblisketSessionInterface
 
 
 class WeblisketSession(WeblisketSessionInterface):
 
     def _init_fields(self) -> None:
-        self.session: HttpSession = None
+        if "session" not in vars(self): self.session: HttpSession = None
 
     def __init__(self, *args) -> None:
         if len(args) == 2:
-            self.__jconstructor2(*args)
+            __class__.__jconstructor2(self, *args)
 
     def __jconstructor2(self, *args) -> None:
-        if True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)):
-            self._constructor2_1(*args)
+        if True and not isinstance(args[0], (str, list, int, float)) and (args[1] is None or any(base.__name__ == "PageContext" for base in type(args[1]).__mro__)):
+            __class__._constructor2_1(self, *args)
         else:
-            self._constructor2_2(*args)
+            __class__._constructor2_2(self, *args)
     
 
     def _constructor2_1(self, hashMap: HashMap, pageContext: PageContext) -> None:
         from java.util.HashMap import HashMap
-        self.__jconstructor2(hashMap, pageContext.getRequest())
+        __class__.__jconstructor2(self, hashMap, pageContext.getRequest())
     
 
     def _constructor2_2(self, hashMap: HashMap, httpServletRequest: HttpServletRequest) -> None:
         from java.util.HashMap import HashMap
         from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
-        self._init_fields()
+        __class__._init_fields(self)
         propertiesHashMap: HashMap = hashMap
         request: HttpServletRequest = httpServletRequest
         self.session = request.getSession(True)
@@ -70,6 +71,7 @@ class WeblisketSession(WeblisketSessionInterface):
     
 
     def setAuthenticated_j0(self) -> None:
+        from org.allbinary.logic.communication.http.request.session.WeblisketSessionData import WeblisketSessionData
         from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
         self.session.setAttribute(WeblisketSessionData.AUTHENTICATED, BooleanFactory.getInstance().TRUE_STRING)
     
@@ -81,10 +83,12 @@ class WeblisketSession(WeblisketSessionInterface):
     
 
     def setAttempts(self, value: int) -> None:
+        from org.allbinary.logic.communication.http.request.session.WeblisketSessionData import WeblisketSessionData
         self.session.setAttribute(WeblisketSessionData.ATTEMPTS, value)
     
 
     def setTimeout(self, value: str) -> None:
+        from org.allbinary.logic.communication.http.request.session.WeblisketSessionData import WeblisketSessionData
         self.session.setAttribute(WeblisketSessionData.TIMEOUT, value)
     
 
@@ -114,14 +118,17 @@ class WeblisketSession(WeblisketSessionInterface):
     
 
     def getAuthentication(self) -> str:
+        from org.allbinary.logic.communication.http.request.session.WeblisketSessionData import WeblisketSessionData
         return self.session.getAttribute(WeblisketSessionData.AUTHENTICATED)
     
 
     def getAttempts(self) -> int:
+        from org.allbinary.logic.communication.http.request.session.WeblisketSessionData import WeblisketSessionData
         return self.session.getAttribute(WeblisketSessionData.ATTEMPTS)
     
 
     def getTimeout(self) -> str:
+        from org.allbinary.logic.communication.http.request.session.WeblisketSessionData import WeblisketSessionData
         return self.session.getAttribute(WeblisketSessionData.TIMEOUT)
     
 
@@ -152,7 +159,7 @@ class WeblisketSession(WeblisketSessionInterface):
         from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         storeFrontInterface: StoreFrontInterface = StoreFrontFactory.getInstance(self.getStoreName())
         basketName: str = storeFrontInterface.getBasketName()
-        if not StringValidationUtil.getInstance().isEmpty(basketName):
+        if not (StringValidationUtil.getInstance().isEmpty(basketName)):
             orderInterface: OrderInterface = self.session.getAttribute(basketName)
             if orderInterface is None:
                 orderInterface = Order(Basket())
@@ -163,14 +170,19 @@ class WeblisketSession(WeblisketSessionInterface):
     
 
     def setAuthenticated_j1(self, value: bool) -> None:
+        from org.allbinary.logic.communication.http.request.session.WeblisketSessionData import WeblisketSessionData
         from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
         self.session.setAttribute(WeblisketSessionData.AUTHENTICATED, BooleanFactory.getInstance().FALSE_STRING)
 
     def setAuthenticated(self, *args):
-        return getattr(self, "setAuthenticated_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("setAuthenticated_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().setAuthenticated(*args)
     
 
     def clear(self) -> None:
+        from org.allbinary.logic.communication.http.request.session.WeblisketSessionData import WeblisketSessionData
+        from org.allbinary.logic.communication.http.request.session.WeblisketSessionData import WeblisketSessionData
         from org.allbinary.business.user.UserData import UserData
         from org.allbinary.business.user.role.UserRoleData import UserRoleData
         self.session.removeAttribute(WeblisketSessionData.AUTHENTICATED)
@@ -193,7 +205,7 @@ class WeblisketSession(WeblisketSessionInterface):
         from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         storeFrontInterface: StoreFrontInterface = StoreFrontFactory.getInstance(self.getStoreName())
         basketName: str = storeFrontInterface.getBasketName()
-        if not StringValidationUtil.getInstance().isEmpty(basketName):
+        if not (StringValidationUtil.getInstance().isEmpty(basketName)):
             self.session.removeAttribute(basketName)
 # from java.util.HashMap import HashMap
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest

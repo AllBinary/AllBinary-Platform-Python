@@ -15,11 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from tags.StoreWorkFlowTag import StoreWorkFlowTag
 
 
 #and remove the hidden fields
+@java_inherited_overloads
 class BasicWorkFlowTag(StoreWorkFlowTag):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -27,10 +32,11 @@ class BasicWorkFlowTag(StoreWorkFlowTag):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
             self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
     
@@ -45,7 +51,7 @@ class BasicWorkFlowTag(StoreWorkFlowTag):
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                 self.logUtil.putF(self.commonStrings.START, self, self.tagStrings.DO_START_TAG)
             self.getPropertiesHashMap().put(DynamicObjectData.NAME, "workflows.template.data.BasicStoreWorkFlow")
-            return super().doStartTag()
+            return java_super_call(super(), "doStartTag")
         except Exception as e:
             AbResponseHandler.sendJspTagRedirect(self.pageContext, e)
             return self.SKIP_BODY

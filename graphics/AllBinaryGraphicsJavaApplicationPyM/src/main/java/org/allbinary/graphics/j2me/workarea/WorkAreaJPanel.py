@@ -16,6 +16,10 @@
 from __future__ import annotations
 
 import time
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 import threading
 from java.lang.JavaRuntimeStatic import java_bases
 from java.util.EventListener import EventListener
@@ -24,35 +28,46 @@ from org.allbinary.graphics.j2me.workarea.canvas.event.MyCanvasEventListener imp
 from org.allbinary.graphics.j2me.workarea.WorkAreaJPanelInterface import WorkAreaJPanelInterface
 
 
+@java_inherited_overloads
 class WorkAreaJPanel(*java_bases(JPanel, WorkAreaJPanelInterface, MyCanvasEventListener, EventListener, object)):
     document: Document = None
     _lock = threading.RLock()
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("canvasJPanelList", None)
+        vars(self).setdefault("canvasHolderJPanel", None)
+        vars(self).setdefault("name", None)
+        vars(self).setdefault("selectedFrame", 0)
+        vars(self).setdefault("propertiesJPanel", None)
+        vars(self).setdefault("workAreaJTreeJPanel", None)
+        vars(self).setdefault("isPlaying_field", False)
+        vars(self).setdefault("innerJPanel", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.j2me.workarea.properties.PropertiesJPanel import PropertiesJPanel
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.canvasJPanelList: LinkedList = None
-        self.canvasHolderJPanel: JPanel = None
-        self.name: str = None
-        self.selectedFrame: int = 0
-        self.propertiesJPanel: PropertiesJPanel = None
-        self.workAreaJTreeJPanel: WorkAreaJTreeJPanel = None
-        self.isPlaying: bool = False
-        self.innerJPanel: JPanel = None
+        if "canvasJPanelList" not in vars(self): self.canvasJPanelList: LinkedList = None
+        if "canvasHolderJPanel" not in vars(self): self.canvasHolderJPanel: JPanel = None
+        if "name" not in vars(self): self.name: str = None
+        if "selectedFrame" not in vars(self): self.selectedFrame: int = 0
+        if "propertiesJPanel" not in vars(self): self.propertiesJPanel: PropertiesJPanel = None
+        if "workAreaJTreeJPanel" not in vars(self): self.workAreaJTreeJPanel: WorkAreaJTreeJPanel = None
+        self.isPlaying_field: bool = False
+        if "innerJPanel" not in vars(self): self.innerJPanel: JPanel = None
 
     def __init__(self, *args) -> None:
         if len(args) == 4:
-            self._constructor4(*args)
+            __class__._constructor4(self, *args)
         elif len(args) == 2:
-            self._constructor2(*args)
+            __class__._constructor2(self, *args)
     
 
     def _constructor4(self, name: str, dimension: Dimension, x: int, y: int) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.j2me.workarea.WorkAreaJTreeJPanel import WorkAreaJTreeJPanel
         from org.allbinary.graphics.j2me.workarea.canvas.CanvasJPanel import CanvasJPanel
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         try:
             self.initComponents()
             self.name = name
@@ -68,13 +83,14 @@ class WorkAreaJPanel(*java_bases(JPanel, WorkAreaJPanelInterface, MyCanvasEventL
     
 
     def _constructor2(self, workAreaDom: WorkAreaDom, dimension: Dimension) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.j2me.workarea.canvas.CanvasDom import CanvasDom
         from org.allbinary.graphics.j2me.workarea.canvas.CanvasJPanel import CanvasJPanel
         from org.allbinary.log.LOGGING import LOGGING
         from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.w3c.dom.Node import Node
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         try:
             self.initComponents()
             self.name = workAreaDom.getName()
@@ -153,26 +169,26 @@ class WorkAreaJPanel(*java_bases(JPanel, WorkAreaJPanelInterface, MyCanvasEventL
 
     def play(self) -> None:
         with self._lock:
-            return self._play_unlocked()
+            return __class__.__dict__["_play_unlocked"].__get__(self, __class__)()
 
     def _play_unlocked(self) -> None:
-        self.isPlaying = True
+        self.isPlaying_field = True
     
 
     def stop(self) -> None:
         with self._lock:
-            return self._stop_unlocked()
+            return __class__.__dict__["_stop_unlocked"].__get__(self, __class__)()
 
     def _stop_unlocked(self) -> None:
-        self.isPlaying = False
+        self.isPlaying_field = False
     
 
     def isPlaying(self) -> bool:
         with self._lock:
-            return self._isPlaying_unlocked()
+            return __class__.__dict__["_isPlaying_unlocked"].__get__(self, __class__)()
 
     def _isPlaying_unlocked(self) -> bool:
-        return self.isPlaying
+        return self.isPlaying_field
     
 
     def getName(self) -> str:
@@ -192,11 +208,11 @@ class WorkAreaJPanel(*java_bases(JPanel, WorkAreaJPanelInterface, MyCanvasEventL
     
 
     def deselect(self) -> None:
-        super().setVisible(False)
+        java_super_call(super(), "setVisible", False)
     
 
     def select_j0(self) -> None:
-        super().setVisible(True)
+        java_super_call(super(), "setVisible", True)
         if self.canvasHolderJPanel.getComponentCount() == 1:
             component: Component = self.canvasHolderJPanel.getComponent(0)
             if component is not None:
@@ -274,7 +290,7 @@ class WorkAreaJPanel(*java_bases(JPanel, WorkAreaJPanelInterface, MyCanvasEventL
     # Java overloaded method with the same parameter count: Python keeps the last definition
     def select_j1_1(self, index: int) -> None:
         with self._lock:
-            return self._select_j1_1_unlocked(index)
+            return __class__.__dict__["_select_j1_1_unlocked"].__get__(self, __class__)(index)
 
     def _select_j1_1_unlocked(self, index: int) -> None:
         from org.allbinary.graphics.j2me.workarea.canvas.CanvasJPanel import CanvasJPanel
@@ -332,20 +348,23 @@ class WorkAreaJPanel(*java_bases(JPanel, WorkAreaJPanelInterface, MyCanvasEventL
     def initComponents(self) -> None:
         self.innerJPanel = JPanel()
         self.setLayout(GridLayout(1, 1))
-        self.innerJPanel.addKeyListener((KeyAdapter()  # Java anonymous class body:
-#             
-# 
-#             def keyTyped(self, evt: KeyEvent) -> None:
-#                 self.innerJPanelKeyTyped(evt)
-#             
-# 
-#             def keyPressed(self, evt: KeyEvent) -> None:
-#                 self.innerJPanelKeyPressed(evt)
-#             
-# 
-#             def keyReleased(self, evt: KeyEvent) -> None:
-#                 self.innerJPanelKeyReleased(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN73513(KeyAdapter):
+            
+            
+
+            def keyTyped(self, evt: KeyEvent) -> None:
+                (self if hasattr(self, "innerJPanelKeyTyped") else _java_listener_owner).innerJPanelKeyTyped(evt)
+            
+
+            def keyPressed(self, evt: KeyEvent) -> None:
+                (self if hasattr(self, "innerJPanelKeyPressed") else _java_listener_owner).innerJPanelKeyPressed(evt)
+            
+
+            def keyReleased(self, evt: KeyEvent) -> None:
+                (self if hasattr(self, "innerJPanelKeyReleased") else _java_listener_owner).innerJPanelKeyReleased(evt)
+        self.innerJPanel.addKeyListener(_JavaListenerN73513()
+            )
         self.add(self.innerJPanel)
     
 
@@ -394,11 +413,13 @@ class WorkAreaJPanel(*java_bases(JPanel, WorkAreaJPanelInterface, MyCanvasEventL
         self.duplicate(evt.getTreeNode())
 
     def duplicate(self, *args):
-        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
-            return self.duplicate_j1_1(*args)
+        if len(args) == 1 and True and (args[0] is None or any(base.__name__ == "MutableTreeNode" for base in type(args[0]).__mro__)):
+            return __class__.__dict__["duplicate_j1_1"].__get__(self, __class__)(*args)
         if len(args) == 1:
-            return self.duplicate_j1_2(*args)
-        return getattr(self, "duplicate_j" + str(len(args)))(*args)
+            return __class__.__dict__["duplicate_j1_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("duplicate_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().duplicate(*args)
     
 
     # Java overloaded method with the same parameter count: Python keeps the last definition
@@ -410,12 +431,14 @@ class WorkAreaJPanel(*java_bases(JPanel, WorkAreaJPanelInterface, MyCanvasEventL
 
     def select(self, *args):
         if len(args) == 1 and True and isinstance(args[0], int) and not isinstance(args[0], bool):
-            return self.select_j1_1(*args)
-        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
-            return self.select_j1_2(*args)
+            return __class__.__dict__["select_j1_1"].__get__(self, __class__)(*args)
+        if len(args) == 1 and True and (args[0] is None or any(base.__name__ == "MutableTreeNode" for base in type(args[0]).__mro__)):
+            return __class__.__dict__["select_j1_2"].__get__(self, __class__)(*args)
         if len(args) == 1:
-            return self.select_j1_3(*args)
-        return getattr(self, "select_j" + str(len(args)))(*args)
+            return __class__.__dict__["select_j1_3"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("select_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().select(*args)
     
 
     def rotate(self, evt: MyCanvasEvent) -> None:
@@ -444,7 +467,9 @@ class WorkAreaJPanel(*java_bases(JPanel, WorkAreaJPanelInterface, MyCanvasEventL
         self.autoExplode(10, 0)
 
     def autoExplode(self, *args):
-        return getattr(self, "autoExplode_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("autoExplode_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().autoExplode(*args)
     
 
     # throws Exception
@@ -460,16 +485,18 @@ class WorkAreaJPanel(*java_bases(JPanel, WorkAreaJPanelInterface, MyCanvasEventL
         self.center()
 
     def center(self, *args):
-        return getattr(self, "center_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("center_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().center(*args)
     
 
     def run(self) -> None:
         try:
             while True:
-                if self.isPlaying():
+                if java_predicate(self, "isPlaying"):
                     size: int = self.canvasJPanelList.size()
                     for index in range(0, size):
-                        if not self.isPlaying():
+                        if not (java_predicate(self, "isPlaying")):
                             break
                         self.select(index)
                         time.sleep((100) / 1000)

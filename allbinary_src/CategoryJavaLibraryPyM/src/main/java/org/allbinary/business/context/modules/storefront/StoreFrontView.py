@@ -23,14 +23,14 @@ class StoreFrontView(DomNodeInterface):
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.storeFrontInterface: StoreFrontInterface = None
+        if "storeFrontInterface" not in vars(self): self.storeFrontInterface: StoreFrontInterface = None
     
 
     def __init__(self, storeFrontInterface: StoreFrontInterface) -> None:
         from org.allbinary.string.CommonStrings import CommonStrings
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-        self._init_fields()
+        __class__._init_fields(self)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             commonStrings: CommonStrings = CommonStrings.getInstance()
             self.logUtil.putF("Constructing: StoreFrontView for: " + storeFrontInterface.getName(), self, commonStrings.GET_INSTANCE)
@@ -39,6 +39,7 @@ class StoreFrontView(DomNodeInterface):
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
         from java.util.HashMap import HashMap
         from org.allbinary.business.user.commerce.inventory.basket.BasketData import BasketData
         from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper

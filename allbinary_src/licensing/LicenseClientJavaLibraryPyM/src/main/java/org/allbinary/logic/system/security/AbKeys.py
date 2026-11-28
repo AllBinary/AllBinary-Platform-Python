@@ -34,13 +34,13 @@ class AbKeys:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws LicensingException
     def getKey(self, abeClientInformation: AbeClientInformationInterface, keyName: str) -> str:
         with self._lock:
-            return self._getKey_unlocked(abeClientInformation, keyName)
+            return __class__.__dict__["_getKey_unlocked"].__get__(self, __class__)(abeClientInformation, keyName)
 
     def _getKey_unlocked(self, abeClientInformation: AbeClientInformationInterface, keyName: str) -> str:
         from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface

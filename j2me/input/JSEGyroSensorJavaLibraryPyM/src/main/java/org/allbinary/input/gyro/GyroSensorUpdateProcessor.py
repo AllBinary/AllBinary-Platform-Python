@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.canvas.Processor import Processor
 
 
+@java_inherited_overloads
 class GyroSensorUpdateProcessor(Processor):
 
     def __init__(self) -> None:

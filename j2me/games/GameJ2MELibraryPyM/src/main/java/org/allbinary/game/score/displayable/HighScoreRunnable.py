@@ -16,18 +16,24 @@
 from __future__ import annotations
 
 import time
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.thread.ARunnable import ARunnable
 
 
+@java_inherited_overloads
 class HighScoreRunnable(ARunnable):
+    def _java_defaults(self):
+        vars(self).setdefault("highScoresCanvas", None)
 
     def _init_fields(self) -> None:
-        self.highScoresCanvas: HighScoresCanvas = None
+        if "highScoresCanvas" not in vars(self): self.highScoresCanvas: HighScoresCanvas = None
     
 
     def __init__(self, highScoresCanvas: HighScoresCanvas) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.highScoresCanvas = highScoresCanvas
     
 
@@ -41,9 +47,9 @@ class HighScoreRunnable(ARunnable):
         logUtil: LogUtil = LogUtil.getInstance()
         highScoresCanvas: HighScoresCanvas = self.highScoresCanvas
         try:
-            isHTML: bool = J2MEUtil.isHTML()
-            if not isHTML:
-                while not highScoresCanvas.hasPainted:
+            isHTML: bool = java_predicate(J2MEUtil, "isHTML")
+            if not (isHTML):
+                while not (highScoresCanvas.hasPainted):
                     pass
                 highScoresCanvas.hasPainted = False
             stringMaker: StringMaker = StringMaker()
@@ -51,8 +57,8 @@ class HighScoreRunnable(ARunnable):
             currentTimeMillis: int = systemWrapper.currentTimeMillis()
             logUtil.putF(str(stringMaker.append("HighScoresCanvas - Request repaint to be sure: ").appendlong(currentTimeMillis)), self, commonStrings.RUN)
             highScoresCanvas.repaintBehavior.onChangeRepaint(highScoresCanvas)
-            if not isHTML:
-                while not highScoresCanvas.hasPainted:
+            if not (isHTML):
+                while not (highScoresCanvas.hasPainted):
                     pass
             stringMaker.delete(0, stringMaker.length())
             logUtil.putF(str(stringMaker.append("HighScoresCanvas - Now that the canvas has completed repaint go ahead and fetch the scores: ").appendlong(currentTimeMillis)), self, commonStrings.RUN)

@@ -15,10 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.paint.ColorFillBasePaintable import ColorFillBasePaintable
 
 
+@java_inherited_overloads
 class ColorFillPaintable(ColorFillBasePaintable):
+    def _java_defaults(self):
+        vars(self).setdefault("displayInfoSingleton", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
@@ -26,9 +30,10 @@ class ColorFillPaintable(ColorFillBasePaintable):
     
 
     def __init__(self, basicColor: BasicColor) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(basicColor)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def paint(self, graphics: Graphics) -> None:

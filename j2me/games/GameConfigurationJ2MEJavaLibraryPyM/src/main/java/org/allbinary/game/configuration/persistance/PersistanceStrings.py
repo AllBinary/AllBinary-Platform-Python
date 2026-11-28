@@ -35,7 +35,7 @@ class PersistanceStrings:
         self.GAME_ACTION_INPUT: str = " GameActionInput: "
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

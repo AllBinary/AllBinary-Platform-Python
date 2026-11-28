@@ -15,19 +15,30 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.ai.BasicAI import BasicAI
 
 
+@java_inherited_overloads
 class HorizontalScreenPatrolAI(BasicAI):
     SOUND: int = None
+    def _java_defaults(self):
+        vars(self).setdefault("keyDirection", 0)
+        vars(self).setdefault("displayInfoSingleton", None)
+        vars(self).setdefault("firingX", 0)
+        vars(self).setdefault("firedIndex", 0)
+        vars(self).setdefault("MAX_FIRE", 0)
+        vars(self).setdefault("timeDelayHelper", None)
+        vars(self).setdefault("secondaryPlayerQueue", None)
+        vars(self).setdefault("sound", None)
 
     def _init_fields(self) -> None:
         from javax.microedition.lcdui.Canvas import Canvas
         from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-        from org.allbinary.media.audio.PlayerQueue import PlayerQueue
         from org.allbinary.media.audio.SecondaryPlayerQueueFactory import SecondaryPlayerQueueFactory
-        from org.allbinary.media.audio.Sound import Sound
         from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         self.keyDirection: int = Canvas.LEFT
         self.displayInfoSingleton: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
@@ -36,16 +47,17 @@ class HorizontalScreenPatrolAI(BasicAI):
         self.MAX_FIRE: int = 28
         self.timeDelayHelper: TimeDelayHelper = TimeDelayHelper(240)
         self.secondaryPlayerQueue: PlayerQueue = SecondaryPlayerQueueFactory.getInstance()
-        self.sound: Sound = None
+        if "sound" not in vars(self): self.sound: Sound = None
     
 
     def __init__(self, hashtable: ABHashtable[object, object], ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.input.GameInput import GameInput
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         from org.allbinary.media.audio.Sound import Sound
         from org.allbinary.util.ABHashtable import ABHashtable
         super().__init__(ownerLayerInterface, gameInput)
-        self._init_fields()
+        __class__._init_fields(self)
         self.sound = hashtable.get(HorizontalScreenPatrolAI.SOUND)
         if self.sound is None:
             raise Exception("No Sound Provided!!")
@@ -58,8 +70,8 @@ class HorizontalScreenPatrolAI(BasicAI):
         from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-        super().processKeyAI(self.keyDirection)
-        if self.timeDelayHelper.isTimeTNT():
+        java_super_call(super(), "processKeyAI", self.keyDirection)
+        if java_predicate(self.timeDelayHelper, "isTimeTNT"):
             layerInterface: AllBinaryLayer = self.getOwnerLayerInterface()
             currentOwnerLayerX: int = layerInterface.getXP()
             if currentOwnerLayerX < -layerInterface.getWidth():
@@ -69,7 +81,7 @@ class HorizontalScreenPatrolAI(BasicAI):
                 self.firingX = self.displayInfoSingleton.getLastHalfWidth() + MyRandomFactory.getInstance().getNextInt(self.displayInfoSingleton.getLastHalfWidth())
                 self.secondaryPlayerQueue.add(self.sound)
             if currentOwnerLayerX < self.firingX and currentOwnerLayerX > -layerInterface.getWidth():
-                super().processKeyAI(Canvas.KEY_NUM1)
+                java_super_call(super(), "processKeyAI", Canvas.KEY_NUM1)
                 gameLayerManager: AllBinaryGameLayerManager = allBinaryLayerManager
                 FIRE: int = (gameLayerManager.getGameInfo().getCurrentLevel() + 12) >> 2
                 if FIRE > self.MAX_FIRE:

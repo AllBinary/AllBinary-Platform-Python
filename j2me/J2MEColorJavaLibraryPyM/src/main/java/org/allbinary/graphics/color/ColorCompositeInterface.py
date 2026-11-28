@@ -15,10 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.graphics.color.BasicColorCompositeSetterInterface import BasicColorCompositeSetterInterface
 
 
 # Java interface
+@java_inherited_overloads
 class ColorCompositeInterface(BasicColorCompositeSetterInterface):
     
 

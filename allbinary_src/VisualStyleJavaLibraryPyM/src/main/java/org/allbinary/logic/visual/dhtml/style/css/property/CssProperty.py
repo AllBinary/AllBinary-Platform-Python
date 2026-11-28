@@ -23,28 +23,29 @@ class CssProperty(DomNodeInterface):
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.propertyName: str = None
-        self.cssPropertyValues: CssPropertyValues = None
+        if "propertyName" not in vars(self): self.propertyName: str = None
+        if "cssPropertyValues" not in vars(self): self.cssPropertyValues: CssPropertyValues = None
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self.__jconstructor1(*args)
+            __class__.__jconstructor1(self, *args)
 
     def __jconstructor1(self, *args) -> None:
         if True and (args[0] is None or isinstance(args[0], str)):
-            self._constructor1_1(*args)
+            __class__._constructor1_1(self, *args)
         else:
-            self._constructor1_2(*args)
+            __class__._constructor1_2(self, *args)
     
 
     def _constructor1_1(self, name: str) -> None:
         from org.allbinary.logic.visual.dhtml.style.css.property.CssPropertyValues import CssPropertyValues
-        self._init_fields()
+        __class__._init_fields(self)
         self.propertyName = name
         self.cssPropertyValues = CssPropertyValues()
     
 
     def _constructor1_2(self, node: Node) -> None:
+        from org.allbinary.logic.visual.dhtml.style.css.property.CssPropertyData import CssPropertyData
         from org.allbinary.logic.visual.dhtml.style.css.property.CssPropertyValues import CssPropertyValues
         from org.allbinary.data.tree.dom.DomData import DomData
         from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
@@ -52,7 +53,7 @@ class CssProperty(DomNodeInterface):
         from org.w3c.dom.Node import Node
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-        self._init_fields()
+        __class__._init_fields(self)
         propertyNode: Node = DomSearchHelper.getNode(DomData.VALUE, node.getChildNodes())
         self.propertyName = DomNodeHelper.getTextNodeValue(propertyNode)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().STYLE):
@@ -66,6 +67,7 @@ class CssProperty(DomNodeInterface):
     
 
     def toHashMap(self) -> HashMap:
+        from org.allbinary.logic.visual.dhtml.style.css.property.CssPropertyData import CssPropertyData
         from java.util.HashMap import HashMap
         from org.allbinary.logic.StdUtil import StdUtil
         hashMap: HashMap = StdUtil.getInstance().createHashMap()
@@ -75,6 +77,7 @@ class CssProperty(DomNodeInterface):
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
+        from org.allbinary.logic.visual.dhtml.style.css.property.CssPropertyData import CssPropertyData
         from java.util.HashMap import HashMap
         from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
         from org.w3c.dom.Document import Document

@@ -15,20 +15,27 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from tags.ValidationTransformTag import ValidationTransformTag
 
 
+@java_inherited_overloads
 class StoreValidationTransformTag(ValidationTransformTag):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("storeName", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.storeName: str = None
+        if "storeName" not in vars(self): self.storeName: str = None
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def setStoreName(self, value: str) -> None:
@@ -45,7 +52,7 @@ class StoreValidationTransformTag(ValidationTransformTag):
         try:
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                 self.logUtil.putF("Tag Start", self, self.tagStrings.DO_START_TAG)
-            return super().doStartTag()
+            return java_super_call(super(), "doStartTag")
         except Exception as e:
             AbResponseHandler.sendJspTagRedirect(self.pageContext, e)
             return self.SKIP_BODY

@@ -21,16 +21,16 @@ from org.allbinary.media.image.analysis.ColorRangeInterface import ColorRangeInt
 class ColorRange(ColorRangeInterface):
 
     def _init_fields(self) -> None:
-        self.minRed: int = None
-        self.maxRed: int = None
-        self.minGreen: int = None
-        self.maxGreen: int = None
-        self.minBlue: int = None
-        self.maxBlue: int = None
+        if "minRed" not in vars(self): self.minRed: int = 0
+        if "maxRed" not in vars(self): self.maxRed: int = 0
+        if "minGreen" not in vars(self): self.minGreen: int = 0
+        if "maxGreen" not in vars(self): self.maxGreen: int = 0
+        if "minBlue" not in vars(self): self.minBlue: int = 0
+        if "maxBlue" not in vars(self): self.maxBlue: int = 0
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.minRed = 0
         self.maxRed = 0
         self.minGreen = 0

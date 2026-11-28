@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -31,7 +32,7 @@ class ImageRotationUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def rotateImage(self, originalImage: Image, image: Image, totalAngle: int) -> None:
@@ -39,11 +40,11 @@ class ImageRotationUtil:
         from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         from org.microemu.device.j2se.J2SEImmutableImage import J2SEImmutableImage
         from org.microemu.device.j2se.J2SEMutableImage import J2SEMutableImage
-        if image.isMutable():
+        if java_predicate(image, "isMutable"):
             j2seImage: J2SEMutableImage = image
             newBufferedImage: BufferedImage = j2seImage.getImage()
             originalAwtImage: Image = None
-            if originalImage.isMutable():
+            if java_predicate(originalImage, "isMutable"):
                 originalJ2SEImage: J2SEMutableImage = originalImage
                 originalAwtImage = originalJ2SEImage.getImage()
             else:
@@ -61,9 +62,9 @@ class ImageRotationUtil:
         from org.microemu.device.j2se.J2SEImmutableImage import J2SEImmutableImage
         from org.microemu.device.j2se.J2SEMutableImage import J2SEMutableImage
         image: Image = ImageCreationUtil.getInstance().createImageWH(originalImage.getWidth(), originalImage.getHeight())
-        if image.isMutable():
+        if java_predicate(image, "isMutable"):
             originalAwtImage: Image = None
-            if originalImage.isMutable():
+            if java_predicate(originalImage, "isMutable"):
                 originalJ2SEImage: J2SEMutableImage = originalImage
                 originalAwtImage = originalJ2SEImage.getImage()
             else:

@@ -20,14 +20,13 @@ from __future__ import annotations
 class MotionRectangle(object):
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
-        self.rectangle: Rectangle = None
-        self.pixelDeltaVector: BasicArrayList = None
+        if "rectangle" not in vars(self): self.rectangle: Rectangle = None
+        if "pixelDeltaVector" not in vars(self): self.pixelDeltaVector: BasicArrayList = None
     
 
     def __init__(self, rectangle: Rectangle) -> None:
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
-        self._init_fields()
+        __class__._init_fields(self)
         self.setRectangle(rectangle)
         self.setPixelDeltaVector(BasicArrayListD())
     

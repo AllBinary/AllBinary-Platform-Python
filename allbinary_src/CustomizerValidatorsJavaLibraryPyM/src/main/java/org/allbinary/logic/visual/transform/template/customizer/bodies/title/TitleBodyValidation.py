@@ -15,40 +15,47 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 from org.allbinary.logic.control.validate.Validation import Validation
 
 
+@java_inherited_overloads
 class TitleBodyValidation(*java_bases(Validation, DomNodeInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("body", None)
+        vars(self).setdefault("titleValidation", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.logic.visual.transform.template.customizer.widgets.title.TitleNotRequiredValidation import TitleNotRequiredValidation
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.body: str = None
-        self.titleValidation: TitleNotRequiredValidation = None
+        if "body" not in vars(self): self.body: str = None
+        if "titleValidation" not in vars(self): self.titleValidation: TitleNotRequiredValidation = None
 
     def __init__(self, *args) -> None:
         if len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
         elif len(args) == 1:
-            self.__jconstructor1(*args)
+            __class__.__jconstructor1(self, *args)
 
     def __jconstructor1(self, *args) -> None:
-        if True and not isinstance(args[0], (str, list, int, float)):
-            self._constructor1_1(*args)
+        if True and (args[0] is None or any(base.__name__ == "Document" for base in type(args[0]).__mro__)):
+            __class__._constructor1_1(self, *args)
         else:
-            self._constructor1_2(*args)
+            __class__._constructor1_2(self, *args)
     
 
     def _constructor0(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.string.StringUtil import StringUtil
         from org.allbinary.logic.visual.transform.template.customizer.widgets.title.TitleNotRequiredValidation import TitleNotRequiredValidation
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
         stringUtil: StringUtil = StringUtil.getInstance()
@@ -57,6 +64,7 @@ class TitleBodyValidation(*java_bases(Validation, DomNodeInterface)):
     
 
     def _constructor1_1(self, document: Document) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.data.tree.dom.DomData import DomData
         from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
         from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
@@ -69,7 +77,7 @@ class TitleBodyValidation(*java_bases(Validation, DomNodeInterface)):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF(self.commonStrings.CONSTRUCTOR, self, "Constructor(document)")
         nodeList: NodeList = document.getElementsByTagName(BodyData.getInstance().NAME)
@@ -85,11 +93,12 @@ class TitleBodyValidation(*java_bases(Validation, DomNodeInterface)):
     
 
     def _constructor1_2(self, hashMap: HashMap) -> None:
+        __class__._java_defaults(self)
         from java.util.HashMap import HashMap
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF(self.commonStrings.START, self, "Constructor(hashmap)")
         self.getFormData(hashMap)
@@ -114,9 +123,9 @@ class TitleBodyValidation(*java_bases(Validation, DomNodeInterface)):
             isValid: bool = True
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 self.logUtil.putF("TitleBodyValidation", self, self.commonStrings.IS_VALID)
-            if not StringValidationUtil.getInstance().isValidNotRequired(self.body, BodyData.getInstance().MIN, AbSqlData.MAXBLOB):
+            if not (StringValidationUtil.getInstance().isValidNotRequired(self.body, BodyData.getInstance().MIN, AbSqlData.MAXBLOB)):
                 isValid = False
-            if not self.titleValidation.isValid():
+            if not (java_predicate(self.titleValidation, "isValid")):
                 isValid = False
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 self.logUtil.putF("TitleBodyValidation: " + str(isValid), self, self.commonStrings.IS_VALID)

@@ -16,9 +16,11 @@
 from __future__ import annotations
 
 import time
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.content.NotificationBuilder import NotificationBuilder
 
 
+@java_inherited_overloads
 class NotificationBuilderAPI23(NotificationBuilder):
 
     def __init__(self) -> None:

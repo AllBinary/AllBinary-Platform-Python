@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -27,12 +29,12 @@ class DrawVerticalStringUtil:
         from org.allbinary.logic.string.StringUtil import StringUtil
         self.EMPTY_STRING: str = StringUtil.getInstance().EMPTY_STRING
         self.anchor: int = Anchor.TOP_LEFT
-        self.charHeight: int = 0
-        self.offsetY: int = 0
+        if "charHeight" not in vars(self): self.charHeight: int = 0
+        if "offsetY" not in vars(self): self.offsetY: int = 0
         self.offsetXArray: list[int] = NullUtil.getInstance().NULL_INT_ARRAY
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -50,11 +52,11 @@ class DrawVerticalStringUtil:
         font: Font = graphics.getFont()
         self.charHeight = font.getHeight()
         self.offsetY = 0
-        if J2MEUtil.isHTML():
+        if java_predicate(J2MEUtil, "isHTML"):
             self.charHeight += 1
-        elif openGLFeatureUtil.isAnyThreed():
+        elif java_predicate(openGLFeatureUtil, "isAnyThreed"):
             self.charHeight += 2
-            if AndroidUtil.isAndroid():
+            if java_predicate(AndroidUtil, "isAndroid"):
                 pass
             else:
                 self.offsetY = 2 + (int(self.charHeight * 2 / 3))
@@ -63,8 +65,9 @@ class DrawVerticalStringUtil:
         offsetXArray: list[int] = [0] * (size)
         for index in range(size - 1, 0 - 1, -1):
             aChar = string[index]
-            if openGLFeatureUtil.isAnyThreed():
-                offsetXArray[index] = font.charWidth(aChar) / 2
+            if java_predicate(openGLFeatureUtil, "isAnyThreed"):
+                offsetXArray[index] = java_divide(font.charWidth(aChar), 2)
+            
         self.offsetXArray = offsetXArray
     
 

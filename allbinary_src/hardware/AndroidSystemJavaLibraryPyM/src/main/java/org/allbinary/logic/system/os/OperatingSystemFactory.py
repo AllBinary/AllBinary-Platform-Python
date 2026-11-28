@@ -36,14 +36,18 @@ class OperatingSystemFactory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getOperatingSystemInstance(self) -> GenericOperatingSystem:
         with self._lock:
-            return self._getOperatingSystemInstance_unlocked()
+            return __class__.__dict__["_getOperatingSystemInstance_unlocked"].__get__(self, __class__)()
 
     def _getOperatingSystemInstance_unlocked(self) -> GenericOperatingSystem:
+        from org.allbinary.logic.system.os.SystemProperties import SystemProperties
+        from org.allbinary.logic.system.os.OperatingSystems import OperatingSystems
+        from org.allbinary.logic.system.os.OperatingSystems import OperatingSystems
+        from org.allbinary.logic.system.os.NoOperatingSystem import NoOperatingSystem
         from org.allbinary.logic.system.os.android.AndroidOperatingSystemFactory import AndroidOperatingSystemFactory
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.string.CommonStrings import CommonStrings
@@ -51,7 +55,7 @@ class OperatingSystemFactory:
         try:
             systemProperties: SystemProperties = SystemProperties.getInstance()
             osName: str = systemProperties.getName()
-            if not self.hasDetected:
+            if not (self.hasDetected):
                 self.hasDetected = True
                 if osName.find(OperatingSystems.getInstance().ANDROID) >= 0:
                     self.logUtil.putF("Found a Android OS", self, commonStrings.GET_INSTANCE)
@@ -71,6 +75,7 @@ class OperatingSystemFactory:
 # from org.allbinary.logic.communication.log.LogUtil import LogUtil
 # from org.allbinary.logic.string.StringMaker import StringMaker
 # from org.allbinary.string.CommonStrings import CommonStrings
+from org.allbinary.logic.system.os.NoOperatingSystem import NoOperatingSystem
 
 
 def _OperatingSystemFactory_instance() -> object:

@@ -28,7 +28,7 @@ class BasicColorUtil:
         self.ffOpaque: bool = True
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -41,18 +41,18 @@ class BasicColorUtil:
         if self.isAlpha:
             if self.ffOpaque:
                 value = self.ALPHA
-        value = (red << 16) | value
-        value = (green << 8) | value
+        value = (((((red) << ((16) & 31)) + 0x80000000) % 0x100000000 - 0x80000000)) | value
+        value = (((((green) << ((8) & 31)) + 0x80000000) % 0x100000000 - 0x80000000)) | value
         value = blue | value
         return value
     
 
     def getARGB(self, alphaValue: int, r: int, g: int, b: int) -> int:
-        return ((alphaValue << 24) & self.ALPHA) + ((r << 16) & 0x00FF0000) + ((g << 8) & 0x0000FF00) + (b & 0x000000FF)
+        return ((((((alphaValue) << ((24) & 31)) + 0x80000000) % 0x100000000 - 0x80000000)) & self.ALPHA) + ((((((r) << ((16) & 31)) + 0x80000000) % 0x100000000 - 0x80000000)) & 0x00FF0000) + ((((((g) << ((8) & 31)) + 0x80000000) % 0x100000000 - 0x80000000)) & 0x0000FF00) + (b & 0x000000FF)
     
 
     def get(self, alphaValue: int, color: int) -> int:
-        return ((alphaValue << 24) & self.ALPHA) + color
+        return ((((((alphaValue) << ((24) & 31)) + 0x80000000) % 0x100000000 - 0x80000000)) & self.ALPHA) + color
     
 
     def invert(self, color: int) -> int:

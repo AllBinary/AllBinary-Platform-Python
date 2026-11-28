@@ -15,17 +15,17 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 
 
 class InputAutomationModuleFactoryFactory:
 
     def _init_fields(self) -> None:
-        from java.util.HashMap import HashMap
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.hashMap: HashMap = None
-        self.defaultListModelHelper: DefaultListModelHelper = None
-        self.helpSetListenerInterface: HelpSetListener = None
+        if "hashMap" not in vars(self): self.hashMap: HashMap = None
+        if "defaultListModelHelper" not in vars(self): self.defaultListModelHelper: DefaultListModelHelper = None
+        if "helpSetListenerInterface" not in vars(self): self.helpSetListenerInterface: HelpSetListener = None
     
 
     def __init__(self, inputAutomationModuleConfigurations: InputAutomationModuleConfigurations, helpSetListenerInterface: HelpSetListener) -> None:
@@ -35,14 +35,14 @@ class InputAutomationModuleFactoryFactory:
         from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfiguration import InputAutomationModuleConfiguration
         from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfigurations import InputAutomationModuleConfigurations
         from org.allbinary.logic.StdUtil import StdUtil
-        self._init_fields()
+        __class__._init_fields(self)
         self.helpSetListenerInterface = helpSetListenerInterface
         self.defaultListModelHelper = DefaultListModelHelper()
         self.hashMap = StdUtil.getInstance().createHashMap()
         collection: Collection = inputAutomationModuleConfigurations.getHashMap().values()
         iterator: Iterator = collection.iterator()
         inputAutomationModuleConfiguration: InputAutomationModuleConfiguration = None
-        while iterator.hasNext():
+        while java_predicate(iterator, "hasNext"):
             inputAutomationModuleConfiguration = iterator.next()
             self.add(inputAutomationModuleConfiguration)
         self.defaultListModelHelper.initDefaultModelList()
@@ -56,7 +56,7 @@ class InputAutomationModuleFactoryFactory:
         self.hashMap.put(inputAutomationModuleConfiguration.getName(), inputAutomationModuleInterface)
         self.defaultListModelHelper.add(inputAutomationModuleConfiguration.getName())
         helpSet: HelpSet = inputAutomationModuleInterface.getHelpSet()
-        if not JavaHelpSetNotifier.isNotified(helpSet):
+        if not (JavaHelpSetNotifier.isNotified(helpSet)):
             helpSetEvent: HelpSetEvent = HelpSetEvent(self, helpSet, HelpSetEvent.HELPSET_ADDED)
             self.helpSetListenerInterface.helpSetAdded(helpSetEvent)
     

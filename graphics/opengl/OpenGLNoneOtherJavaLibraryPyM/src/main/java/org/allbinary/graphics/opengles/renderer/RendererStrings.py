@@ -29,7 +29,7 @@ class RendererStrings:
         self.ON_DRAW_FRAME_2D: str = "onDrawFrame2d"
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

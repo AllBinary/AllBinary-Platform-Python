@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.util.cache.AbstractArrayListPool import AbstractArrayListPool
 
 
+@java_inherited_overloads
 class BasicArrayListResetablePool(AbstractArrayListPool):
     
 

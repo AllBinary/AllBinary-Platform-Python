@@ -15,17 +15,46 @@
 
 from __future__ import annotations
 
+from java.lang.JavaThread import JavaThread
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.media.image.ImageProcessedVisitor import ImageProcessedVisitor
 # from javax.swing.JPanel import JPanel
 
 
+@java_inherited_overloads
 class SpriteSplitterImageJPanel(*java_bases(JPanel, ImageProcessedVisitor)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("commonSeps", None)
+        vars(self).setdefault("imageStrings", None)
+        vars(self).setdefault("imageProcessorInput", None)
+        vars(self).setdefault("result", None)
+        vars(self).setdefault("generateJButton", None)
+        vars(self).setdefault("heightReductionTextField", None)
+        vars(self).setdefault("increaseHeightTextField", None)
+        vars(self).setdefault("increaseWidthTextField", None)
+        vars(self).setdefault("jLabel1", None)
+        vars(self).setdefault("jLabel2", None)
+        vars(self).setdefault("jLabel3", None)
+        vars(self).setdefault("jLabel4", None)
+        vars(self).setdefault("jLabel5", None)
+        vars(self).setdefault("jLabel6", None)
+        vars(self).setdefault("jLabel7", None)
+        vars(self).setdefault("jLabel8", None)
+        vars(self).setdefault("jPanel1", None)
+        vars(self).setdefault("jPanel2", None)
+        vars(self).setdefault("spriteTypeJComboBox", None)
+        vars(self).setdefault("totalAnimationsJComboBox", None)
+        vars(self).setdefault("totalFramesJComboBox", None)
+        vars(self).setdefault("widthReductionTextField", None)
+        vars(self).setdefault("writeOverOriginalJCheckBox", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
         from org.allbinary.media.image.ImageStrings import ImageStrings
         from org.allbinary.string.CommonSeps import CommonSeps
         from org.allbinary.string.CommonStrings import CommonStrings
@@ -33,33 +62,34 @@ class SpriteSplitterImageJPanel(*java_bases(JPanel, ImageProcessedVisitor)):
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.commonSeps: CommonSeps = CommonSeps.getInstance()
         self.imageStrings: ImageStrings = ImageStrings.getInstance()
-        self.imageProcessorInput: ImageProcessorInput = None
-        self.result: BufferedImage = None
-        self.generateJButton: JButton = None
-        self.heightReductionTextField: JTextField = None
-        self.increaseHeightTextField: JTextField = None
-        self.increaseWidthTextField: JTextField = None
-        self.jLabel1: JLabel = None
-        self.jLabel2: JLabel = None
-        self.jLabel3: JLabel = None
-        self.jLabel4: JLabel = None
-        self.jLabel5: JLabel = None
-        self.jLabel6: JLabel = None
-        self.jLabel7: JLabel = None
-        self.jLabel8: JLabel = None
-        self.jPanel1: JPanel = None
-        self.jPanel2: JPanel = None
-        self.spriteTypeJComboBox: JComboBox[str] = None
-        self.totalAnimationsJComboBox: JComboBox[str] = None
-        self.totalFramesJComboBox: JComboBox[str] = None
-        self.widthReductionTextField: JTextField = None
-        self.writeOverOriginalJCheckBox: JCheckBox = None
+        if "imageProcessorInput" not in vars(self): self.imageProcessorInput: ImageProcessorInput = None
+        if "result" not in vars(self): self.result: BufferedImage = None
+        if "generateJButton" not in vars(self): self.generateJButton: JButton = None
+        if "heightReductionTextField" not in vars(self): self.heightReductionTextField: JTextField = None
+        if "increaseHeightTextField" not in vars(self): self.increaseHeightTextField: JTextField = None
+        if "increaseWidthTextField" not in vars(self): self.increaseWidthTextField: JTextField = None
+        if "jLabel1" not in vars(self): self.jLabel1: JLabel = None
+        if "jLabel2" not in vars(self): self.jLabel2: JLabel = None
+        if "jLabel3" not in vars(self): self.jLabel3: JLabel = None
+        if "jLabel4" not in vars(self): self.jLabel4: JLabel = None
+        if "jLabel5" not in vars(self): self.jLabel5: JLabel = None
+        if "jLabel6" not in vars(self): self.jLabel6: JLabel = None
+        if "jLabel7" not in vars(self): self.jLabel7: JLabel = None
+        if "jLabel8" not in vars(self): self.jLabel8: JLabel = None
+        if "jPanel1" not in vars(self): self.jPanel1: JPanel = None
+        if "jPanel2" not in vars(self): self.jPanel2: JPanel = None
+        if "spriteTypeJComboBox" not in vars(self): self.spriteTypeJComboBox: JComboBox[str] = None
+        if "totalAnimationsJComboBox" not in vars(self): self.totalAnimationsJComboBox: JComboBox[str] = None
+        if "totalFramesJComboBox" not in vars(self): self.totalFramesJComboBox: JComboBox[str] = None
+        if "widthReductionTextField" not in vars(self): self.widthReductionTextField: JTextField = None
+        if "writeOverOriginalJCheckBox" not in vars(self): self.writeOverOriginalJCheckBox: JCheckBox = None
     
 
     def __init__(self, imageProcessorInput: ImageProcessorInput) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.initComponents()
         self.imageProcessorInput = imageProcessorInput
     
@@ -67,26 +97,29 @@ class SpriteSplitterImageJPanel(*java_bases(JPanel, ImageProcessedVisitor)):
     def process(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.media.image.SpriteSplitterUtil import SpriteSplitterUtil
-        (threading.Thread()  # Java anonymous class body:
-#             
-# 
-#             def run(self) -> None:
-#                 from org.allbinary.logic.communication.log.LogUtil import LogUtil
-#                 from org.allbinary.media.image.SpriteSplitterUtil import SpriteSplitterUtil
-#                 logUtil: LogUtil = LogUtil.getInstance()
-#                 try:
-#                     spriteSplitterUtil: SpriteSplitterUtil = SpriteSplitterUtil.getInstance()
-#                     spriteType: str = self.spriteTypeJComboBox.getSelectedItem()
-#                     totalFrames: int = str(self.totalFramesJComboBox.getSelectedItem())
-#                     totalAnimations: int = str(self.totalAnimationsJComboBox.getSelectedItem())
-#                     widthReduction: int = str(self.widthReductionTextField.getText())
-#                     heightReduction: int = str(self.heightReductionTextField.getText())
-#                     increaseWidth: int = str(self.increaseWidthTextField.getText())
-#                     increaseHeight: int = str(self.increaseHeightTextField.getText())
-#                     spriteSplitterUtil.process(self.getImageProcessorInput(), totalFrames, totalAnimations, widthReduction, heightReduction, increaseWidth, increaseHeight, spriteType, self)
-#                 except Exception as e:
-#                     logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.RUN, e)
-).start()
+        _java_listener_owner = self
+        class _JavaListenerN66637(Thread):
+            
+            
+
+            def run(self) -> None:
+                from org.allbinary.logic.communication.log.LogUtil import LogUtil
+                from org.allbinary.media.image.SpriteSplitterUtil import SpriteSplitterUtil
+                logUtil: LogUtil = LogUtil.getInstance()
+                try:
+                    spriteSplitterUtil: SpriteSplitterUtil = SpriteSplitterUtil.getInstance()
+                    spriteType: str = _java_listener_owner.spriteTypeJComboBox.getSelectedItem()
+                    totalFrames: int = str(_java_listener_owner.totalFramesJComboBox.getSelectedItem())
+                    totalAnimations: int = str(_java_listener_owner.totalAnimationsJComboBox.getSelectedItem())
+                    widthReduction: int = str(_java_listener_owner.widthReductionTextField.getText())
+                    heightReduction: int = str(_java_listener_owner.heightReductionTextField.getText())
+                    increaseWidth: int = str(_java_listener_owner.increaseWidthTextField.getText())
+                    increaseHeight: int = str(_java_listener_owner.increaseHeightTextField.getText())
+                    spriteSplitterUtil.process(_java_listener_owner.getImageProcessorInput(), totalFrames, totalAnimations, widthReduction, heightReduction, increaseWidth, increaseHeight, spriteType, _java_listener_owner)
+                except Exception as e:
+                    logUtil.put(_java_listener_owner.commonStrings.EXCEPTION, self, _java_listener_owner.commonStrings.RUN, e)
+        _JavaListenerN66637()
+            .start()
     
 
     def initComponents(self) -> None:
@@ -95,13 +128,16 @@ class SpriteSplitterImageJPanel(*java_bases(JPanel, ImageProcessedVisitor)):
         self.writeOverOriginalJCheckBox = JCheckBox()
         self.widthReductionTextField = JTextField()
         self.jLabel5 = JLabel()
-        self.jPanel1 = (JPanel()  # Java anonymous class body:
-#             
-# 
-#             def paint(self, graphics: Graphics) -> None:
-#                 if self.result is not None:
-#                     graphics.drawImage(self.result, 0, 0, self.result.getWidth(None), self.result.getHeight(None), None)
-)
+        _java_listener_owner = self
+        class _JavaListenerN67613(JPanel):
+            
+            
+
+            def paint(self, graphics: Graphics) -> None:
+                if _java_listener_owner.result is not None:
+                    graphics.drawImage(_java_listener_owner.result, 0, 0, _java_listener_owner.result.getWidth(None), _java_listener_owner.result.getHeight(None), None)
+        self.jPanel1 = _JavaListenerN67613()
+            
         self.jLabel4 = JLabel()
         self.jLabel6 = JLabel()
         self.heightReductionTextField = JTextField()
@@ -128,19 +164,25 @@ class SpriteSplitterImageJPanel(*java_bases(JPanel, ImageProcessedVisitor)):
         self.jLabel8 = JLabel()
         self.increaseHeightTextField = JTextField()
         self.writeOverOriginalJCheckBox.setText("Write Over Original")
-        self.writeOverOriginalJCheckBox.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.writeOverOriginalJCheckBoxActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN69064(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "writeOverOriginalJCheckBoxActionPerformed") else _java_listener_owner).writeOverOriginalJCheckBoxActionPerformed(evt)
+        self.writeOverOriginalJCheckBox.addActionListener(_JavaListenerN69064()
+            )
         self.widthReductionTextField.setText(CommonPhoneStrings.getInstance().ZERO)
-        self.widthReductionTextField.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.widthReductionTextFieldActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN69223(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "widthReductionTextFieldActionPerformed") else _java_listener_owner).widthReductionTextFieldActionPerformed(evt)
+        self.widthReductionTextField.addActionListener(_JavaListenerN69223()
+            )
         self.jLabel5.setText("Less Width:")
         self.jLabel4.setText("Results:")
         jPanel1Layout: GroupLayout = GroupLayout(self.jPanel1)
@@ -150,47 +192,62 @@ class SpriteSplitterImageJPanel(*java_bases(JPanel, ImageProcessedVisitor)):
         self.jLabel6.setText("Less Height:")
         self.heightReductionTextField.setText(CommonPhoneStrings.getInstance().ZERO)
         self.generateJButton.setText("Generate")
-        self.generateJButton.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.generateJButtonActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN69883(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "generateJButtonActionPerformed") else _java_listener_owner).generateJButtonActionPerformed(evt)
+        self.generateJButton.addActionListener(_JavaListenerN69883()
+            )
         self.jLabel1.setText("Row Total:")
         self.totalFramesJComboBox.setSelectedIndex(1)
-        self.totalFramesJComboBox.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.totalFramesJComboBoxActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN70052(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "totalFramesJComboBoxActionPerformed") else _java_listener_owner).totalFramesJComboBoxActionPerformed(evt)
+        self.totalFramesJComboBox.addActionListener(_JavaListenerN70052()
+            )
         self.jLabel2.setText("Column Total :")
         self.totalAnimationsJComboBox.setSelectedIndex(3)
-        self.totalAnimationsJComboBox.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.totalAnimationsJComboBoxActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN70221(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "totalAnimationsJComboBoxActionPerformed") else _java_listener_owner).totalAnimationsJComboBoxActionPerformed(evt)
+        self.totalAnimationsJComboBox.addActionListener(_JavaListenerN70221()
+            )
         self.jLabel3.setText("Type:")
-        self.spriteTypeJComboBox.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.spriteTypeJComboBoxActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN70360(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "spriteTypeJComboBoxActionPerformed") else _java_listener_owner).spriteTypeJComboBoxActionPerformed(evt)
+        self.spriteTypeJComboBox.addActionListener(_JavaListenerN70360()
+            )
         jPanel2Layout: GroupLayout = GroupLayout(self.jPanel2)
         self.jPanel2.setLayout(jPanel2Layout)
         jPanel2Layout.setHorizontalGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup().addContainerGap().addComponent(self.jLabel1).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.totalFramesJComboBox, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.jLabel2).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.totalAnimationsJComboBox, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.jLabel3).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.spriteTypeJComboBox, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE).addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         jPanel2Layout.setVerticalGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(jPanel2Layout.createSequentialGroup().addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(self.jLabel1).addComponent(self.totalFramesJComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addComponent(self.jLabel2).addComponent(self.totalAnimationsJComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addComponent(self.jLabel3).addComponent(self.spriteTypeJComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
         self.jLabel7.setText("More Width:")
         self.increaseWidthTextField.setText(CommonPhoneStrings.getInstance().ZERO)
-        self.increaseWidthTextField.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.increaseWidthTextFieldActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN71649(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "increaseWidthTextFieldActionPerformed") else _java_listener_owner).increaseWidthTextFieldActionPerformed(evt)
+        self.increaseWidthTextField.addActionListener(_JavaListenerN71649()
+            )
         self.jLabel8.setText("More Height:")
         self.increaseHeightTextField.setText(CommonPhoneStrings.getInstance().ZERO)
         layout: GroupLayout = GroupLayout(self)
@@ -242,13 +299,14 @@ class SpriteSplitterImageJPanel(*java_bases(JPanel, ImageProcessedVisitor)):
 
     # throws IOException
     def visit(self, generatedBufferedImage: BufferedImage, name: str, index: int) -> None:
+        from java.io.File import File
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.logic.string.StringUtil import StringUtil
         self.logUtil.putF(self.commonStrings.VISIT, self, self.commonStrings.VISIT)
         self.result = generatedBufferedImage
         self.getParent().repaint()
         file: File = self.imageProcessorInput.getFiles()[index]
-        if not self.writeOverOriginalJCheckBox.isSelected():
+        if not (java_predicate(self.writeOverOriginalJCheckBox, "isSelected")):
             filePath: str = file.getAbsolutePath()
             extensionIndex: int = filePath.find(self.imageStrings.PNG_EXTENSION)
             filePath = str(StringMaker().append(filePath[0:extensionIndex]).append(self.commonSeps.UNDERSCORE).append(name).append(self.imageStrings.PNG_EXTENSION))

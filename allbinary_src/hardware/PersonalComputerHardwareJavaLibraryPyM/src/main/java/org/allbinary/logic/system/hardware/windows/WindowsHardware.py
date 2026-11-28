@@ -21,20 +21,19 @@ from org.allbinary.logic.system.hardware.HardwareInterface import HardwareInterf
 class WindowsHardware(HardwareInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.logic.system.hardware.components.ComponentFactory import ComponentFactory
-        self.componentInterfaceVector: BasicArrayList = None
-        self.videoInterfaceVector: BasicArrayList = None
-        self.hardDriveControllerInterfaceVector: BasicArrayList = None
-        self.cpuInterfaceVector: BasicArrayList = None
-        self.usbInterfaceVector: BasicArrayList = None
-        self.ethernetInterfaceVector: BasicArrayList = None
-        self.multimediaInterfaceVector: BasicArrayList = None
-        self.fireWireInterfaceVector: BasicArrayList = None
-        self.bridgeInterfaceVector: BasicArrayList = None
-        self.hardDriveInterfaceVector: BasicArrayList = None
-        self.macInterfaceVector: BasicArrayList = None
-        self.monitorInterfaceVector: BasicArrayList = None
+        if "componentInterfaceVector" not in vars(self): self.componentInterfaceVector: BasicArrayList = None
+        if "videoInterfaceVector" not in vars(self): self.videoInterfaceVector: BasicArrayList = None
+        if "hardDriveControllerInterfaceVector" not in vars(self): self.hardDriveControllerInterfaceVector: BasicArrayList = None
+        if "cpuInterfaceVector" not in vars(self): self.cpuInterfaceVector: BasicArrayList = None
+        if "usbInterfaceVector" not in vars(self): self.usbInterfaceVector: BasicArrayList = None
+        if "ethernetInterfaceVector" not in vars(self): self.ethernetInterfaceVector: BasicArrayList = None
+        if "multimediaInterfaceVector" not in vars(self): self.multimediaInterfaceVector: BasicArrayList = None
+        if "fireWireInterfaceVector" not in vars(self): self.fireWireInterfaceVector: BasicArrayList = None
+        if "bridgeInterfaceVector" not in vars(self): self.bridgeInterfaceVector: BasicArrayList = None
+        if "hardDriveInterfaceVector" not in vars(self): self.hardDriveInterfaceVector: BasicArrayList = None
+        if "macInterfaceVector" not in vars(self): self.macInterfaceVector: BasicArrayList = None
+        if "monitorInterfaceVector" not in vars(self): self.monitorInterfaceVector: BasicArrayList = None
         self.NAME: str = "Windows Hardware Profile"
         self.MINHARDWARE: int = 0
         self.componentFactory: ComponentFactory = ComponentFactory.getInstance()
@@ -42,7 +41,7 @@ class WindowsHardware(HardwareInterface):
 
     def __init__(self) -> None:
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
-        self._init_fields()
+        __class__._init_fields(self)
         try:
             self.componentInterfaceVector = BasicArrayListD()
             self.videoInterfaceVector = BasicArrayListD()

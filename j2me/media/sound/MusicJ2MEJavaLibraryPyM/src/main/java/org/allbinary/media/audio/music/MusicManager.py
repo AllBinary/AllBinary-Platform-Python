@@ -4,6 +4,8 @@
 from __future__ import annotations
 
 import time
+from java.lang.JavaRuntimeStatic import java_new_inner
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from javax.microedition.media.PlayerListener import PlayerListener
 
@@ -13,11 +15,11 @@ class MusicManager:
     class MusicManagerPlayerListener(PlayerListener):
 
         def _init_fields(self) -> None:
-            self.musicManager: MusicManager = None
+            if "musicManager" not in vars(self): self.musicManager: MusicManager = None
         
 
         def __init__(self, musicManager: MusicManager) -> None:
-            self._init_fields()
+            __class__._init_fields(self)
             self.musicManager = musicManager
         
 
@@ -31,14 +33,11 @@ class MusicManager:
     def _init_fields(self) -> None:
         from org.allbinary.media.audio.NoSound import NoSound
         from org.allbinary.media.audio.PlayerStateUtil import PlayerStateUtil
-        from org.allbinary.media.audio.Sound import Sound
         from org.allbinary.string.CommonLabels import CommonLabels
         from org.allbinary.string.CommonSeps import CommonSeps
         from org.allbinary.string.CommonStrings import CommonStrings
-        from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
         from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
         from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.commonSeps: CommonSeps = CommonSeps.getInstance()
@@ -46,7 +45,7 @@ class MusicManager:
         self.gameTickTimeDelayHelper: GameTickTimeDelayHelper = GameTickTimeDelayHelperFactory.getInstance()
         self.playerStateUtil: PlayerStateUtil = PlayerStateUtil.getInstance()
         self.timeDelayHelper: TimeDelayHelper = TimeDelayHelper(0)
-        self.playerListener: PlayerListener = MusicManagerPlayerListener(self)
+        self.playerListener: PlayerListener = java_new_inner(self, MusicManagerPlayerListener, self)
         self.PLAY: str = "Play "
         self.SONG: str = " for: "
         self.NEXT_SONG: str = str(CommonLabels.getInstance().NEXT) + " Song: "
@@ -55,17 +54,17 @@ class MusicManager:
         self.WAITING_FOR_MEDIA_TO_END: str = "Waiting for media to end"
         self.ALREADY_PLAYING: str = "Already Playing: "
         self.ALREADY_ENDED: str = "Last Song already ended: "
-        self.songList: BasicArrayList = None
+        if "songList" not in vars(self): self.songList: BasicArrayList = None
         self.currentSongSound: Sound = NoSound.getInstance()
         self.nextSongSound: Sound = NoSound.getInstance()
-        self.reset: bool = False
-        self.noDuration: bool = False
+        if "reset_field" not in vars(self): self.reset_field: bool = False
+        if "noDuration" not in vars(self): self.noDuration: bool = False
         self.stopped: bool = True
     
 
     def __init__(self, musicServiceClass: type, songList: BasicArrayList) -> None:
         from org.allbinary.util.BasicArrayList import BasicArrayList
-        self._init_fields()
+        __class__._init_fields(self)
         self.songList = songList
     
 
@@ -89,7 +88,7 @@ class MusicManager:
     
 
     def reset(self) -> None:
-        self.reset = True
+        self.reset_field = True
     
 
     def process(self) -> None:
@@ -106,8 +105,8 @@ class MusicManager:
                 return
             if self.songList.size() == 0:
                 return
-            if (self.timeDelayHelper.isTime(self.gameTickTimeDelayHelper.startTime) and not self.noDuration) or self.reset:
-                self.reset = False
+            if (self.timeDelayHelper.isTime(self.gameTickTimeDelayHelper.startTime) and not (self.noDuration)) or self.reset_field:
+                self.reset_field = False
                 self.noDuration = False
                 endingCurrentSongSound: Sound = self.currentSongSound
                 nextSongSound: Sound = self.nextSongSound
@@ -137,7 +136,7 @@ class MusicManager:
                             self.waitForStateChange(endingCurrentSongSound, startingCurrentSongSound)
                         else:
                             PreLogUtil.put(str(StringMaker().append(self.ALREADY_ENDED).append(self.PLAY).append(startingCurrentSongSound.getResource())), self, self.commonStrings.PROCESS)
-                            if AvianUtil.isAvian():
+                            if java_predicate(AvianUtil, "isAvian"):
                                 endingCurrentSongSound.getPlayerP().stop()
                                 startingCurrentSongSound.getPlayerP().stop()
                             startingCurrentSongSound.getPlayerP().start()
@@ -181,8 +180,8 @@ class MusicManager:
             PreLogUtil.put(str(StringMaker().append(self.commonStrings.END).append(StringUtil.getInstance().toString(currentSongSound))), self, self.commonStrings.END)
         except Exception as e:
             resource: str = StringUtil.getInstance().EMPTY_STRING
-            if currentSongSound != NoSound.getInstance():
-                resource = currentSongSound.getResource()
+            if self.currentSongSound != NoSound.getInstance():
+                resource = self.currentSongSound.getResource()
             PreLogUtil.putOE(str(self.commonStrings.EXCEPTION_LABEL) + resource, self, self.commonStrings.END, e)
 # from org.allbinary.thread.ARunnable import ARunnable
 # from javax.microedition.media.Player import Player

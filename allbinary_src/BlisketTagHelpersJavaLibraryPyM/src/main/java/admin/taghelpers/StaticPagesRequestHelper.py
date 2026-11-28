@@ -15,31 +15,39 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.business.context.AbContext import AbContext
 from admin.taghelpers.TagHelperInterface import TagHelperInterface
 
 
+@java_inherited_overloads
 class StaticPagesRequestHelper(*java_bases(AbContext, TagHelperInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("abeClientInformation", None)
+        vars(self).setdefault("request", None)
+        vars(self).setdefault("storeName", None)
+        vars(self).setdefault("searchParams", None)
+        vars(self).setdefault("xslFile", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.logic.control.search.SearchParams import SearchParams
-        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.abeClientInformation: AbeClientInformationInterface = ServiceClientInformationInterfaceFactory.getInstance()
-        self.request: HttpServletRequest = None
-        self.storeName: str = None
-        self.searchParams: SearchParams = None
-        self.xslFile: str = None
+        if "request" not in vars(self): self.request: HttpServletRequest = None
+        if "storeName" not in vars(self): self.storeName: str = None
+        if "searchParams" not in vars(self): self.searchParams: SearchParams = None
+        if "xslFile" not in vars(self): self.xslFile: str = None
     
 
     def __init__(self, propertiesHashMap: HashMap, pageContext: PageContext) -> None:
+        __class__._java_defaults(self)
         from java.util.HashMap import HashMap
         from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
         super().__init__(propertiesHashMap, pageContext)
-        self._init_fields()
+        __class__._init_fields(self)
         self.request = pageContext.getRequest()
         self.xslFile = propertiesHashMap.get(TransformInfoData.getInstance().TEMPLATEFILENAME)
         self.getFormData()

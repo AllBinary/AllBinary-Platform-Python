@@ -7,10 +7,34 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.communication.sql.AbSqlBean import AbSqlBean
 
 
+@java_inherited_overloads
 class AbDatabaseManagement(AbSqlBean):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("sqlCommandLog", None)
+        vars(self).setdefault("GRANT_ALL", None)
+        vars(self).setdefault("DOT_STAR", None)
+        vars(self).setdefault("TO", None)
+        vars(self).setdefault("AT_LOCALHOST", None)
+        vars(self).setdefault("IDENTIFIED_BY", None)
+        vars(self).setdefault("WITH_GRANT_OPTION", None)
+        vars(self).setdefault("FAILED", None)
+        vars(self).setdefault("GET_HOST_NAME", None)
+        vars(self).setdefault("METHOD_ADD_USER", None)
+        vars(self).setdefault("METHOD_ADD_USERS", None)
+        vars(self).setdefault("METHOD_ADD_DB", None)
+        vars(self).setdefault("METHOD_ADD_DATABASES", None)
+        vars(self).setdefault("METHOD_ADD_TABLES", None)
+        vars(self).setdefault("UNABLE_TO_CREATE_USER", None)
+        vars(self).setdefault("UNABLE_TO_CREATE_DATABASE", None)
+        vars(self).setdefault("UNABLE_TO_CREATE_TABLES", None)
+        vars(self).setdefault("ADD_TABLES_RESULTS_LABEL", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -39,26 +63,28 @@ class AbDatabaseManagement(AbSqlBean):
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self.__jconstructor1(*args)
+            __class__.__jconstructor1(self, *args)
 
     def __jconstructor1(self, *args) -> None:
-        if True and not isinstance(args[0], (str, list, int, float)):
-            self._constructor1_1(*args)
+        if True and (args[0] is None or any(base.__name__ == "DatabaseConnectionInfoInterface" for base in type(args[0]).__mro__)):
+            __class__._constructor1_1(self, *args)
         else:
-            self._constructor1_2(*args)
+            __class__._constructor1_2(self, *args)
     
 
     def _constructor1_1(self, databaseConnectionInfoInterface: DatabaseConnectionInfoInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.init.db.DatabaseConnectionInfoInterface import DatabaseConnectionInfoInterface
         from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
         super().__init__(databaseConnectionInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def _constructor1_2(self, connectionInfo: DbConnectionInfo) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
         super().__init__(connectionInfo)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getHostName(self) -> str:
@@ -86,7 +112,7 @@ class AbDatabaseManagement(AbSqlBean):
         sqlStatement: str = str(stringBuffer)
         self.sqlCommandLog.append(sqlStatement)
         self.sqlCommandLog.append(self.commonSeps.NEW_LINE)
-        super().executeSQLStatement(sqlStatement)
+        java_super_call(super(), "executeSQLStatement", sqlStatement)
         return True
     
 
@@ -102,7 +128,9 @@ class AbDatabaseManagement(AbSqlBean):
             return False
 
     def addDbUser(self, *args):
-        return getattr(self, "addDbUser_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("addDbUser_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().addDbUser(*args)
     
 
     def addDb(self, db: str) -> bool:
@@ -110,7 +138,7 @@ class AbDatabaseManagement(AbSqlBean):
             sqlStatement: str = str(self.sqlStrings.CREATE_DATABASE) + db
             self.sqlCommandLog.append(sqlStatement)
             self.sqlCommandLog.append(self.commonSeps.NEW_LINE)
-            super().executeSQLStatement(sqlStatement)
+            java_super_call(super(), "executeSQLStatement", sqlStatement)
             return True
         except Exception as e:
             self.logUtil.put(self.UNABLE_TO_CREATE_DATABASE + db, self, self.METHOD_ADD_DB, e)

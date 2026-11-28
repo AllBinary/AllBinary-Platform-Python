@@ -21,16 +21,17 @@ from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 class ThemePropertiesView(DomNodeInterface):
 
     def _init_fields(self) -> None:
-        self.themeInterface: ThemeInterface = None
+        if "themeInterface" not in vars(self): self.themeInterface: ThemeInterface = None
     
 
     def __init__(self, themeInterface: ThemeInterface) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.themeInterface = themeInterface
     
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
+        from org.allbinary.logic.visual.theme.ThemeData import ThemeData
         from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
         from org.w3c.dom.Document import Document
         from org.w3c.dom.Node import Node

@@ -15,10 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.physics.movement.BasicConstantVelocityMovement import BasicConstantVelocityMovement
 
 
+@java_inherited_overloads
 class DelayedConstantVelocityMovement(BasicConstantVelocityMovement):
+    def _java_defaults(self):
+        vars(self).setdefault("timeDelayHelper", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
@@ -26,10 +32,11 @@ class DelayedConstantVelocityMovement(BasicConstantVelocityMovement):
     
 
     def __init__(self, basicDecimal: BasicDecimal, velocityProperties: BasicVelocityProperties) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
         from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         super().__init__(basicDecimal, velocityProperties)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def init(self, speedBasicDecimal: BasicDecimal, angle: int, otherAngle: int) -> None:
@@ -42,7 +49,7 @@ class DelayedConstantVelocityMovement(BasicConstantVelocityMovement):
         from org.allbinary.game.layer.AllBinaryGameLayer import AllBinaryGameLayer
         from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
         if self.timeDelayHelper.isTime(GameTickTimeDelayHelperFactory.getInstance().startTime):
-            super().process(layer)
+            java_super_call(super(), "process", layer)
 # from org.allbinary.game.layer.AllBinaryGameLayer import AllBinaryGameLayer
 # from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
 # from org.allbinary.logic.math.BasicDecimal import BasicDecimal

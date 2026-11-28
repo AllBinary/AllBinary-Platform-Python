@@ -15,9 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_divide
 from org.allbinary.animation.VectorBaseRotationAnimation import VectorBaseRotationAnimation
 
 
+@java_inherited_overloads
 class VectorRotationAnimation(VectorBaseRotationAnimation):
     
 
@@ -25,7 +29,8 @@ class VectorRotationAnimation(VectorBaseRotationAnimation):
         from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.math.AngleFactory import AngleFactory
         from org.allbinary.math.AngleInfo import AngleInfo
-        super().__init__(AngleInfo.getInstance(((int((AngleFactory.getInstance().TOTAL_ANGLE / len(currentPoints))) + 32768) % 65536 - 32768)), currentPoints, basicColor, animationBehavior)
+        super().__init__(AngleInfo.getInstance(((int((java_divide(AngleFactory.getInstance().TOTAL_ANGLE, len(currentPoints))
+            )) + 32768) % 65536 - 32768)), currentPoints, basicColor, animationBehavior)
         self.angleInfo.adjustAngle(self.getFrame())
     
 
@@ -42,7 +47,7 @@ class VectorRotationAnimation(VectorBaseRotationAnimation):
     
 
     def setFrame(self, index: int) -> None:
-        super().setFrame(index)
+        java_super_call(super(), "setFrame", index)
         self.angleInfo.adjustAngle(self.getFrame())
     
 

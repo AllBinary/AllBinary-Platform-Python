@@ -15,35 +15,43 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from admin.taghelpers.ModifyTable import ModifyTable
 
 
+@java_inherited_overloads
 class CategoryRequestHelper(ModifyTable):
     categoryRequest: str = None
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("pageContext", None)
+        vars(self).setdefault("hashMap", None)
+        vars(self).setdefault("request", None)
+        vars(self).setdefault("categoryLoaderInterface", None)
+        vars(self).setdefault("categoryInterface", None)
+        vars(self).setdefault("childCategoryInterface", None)
+        vars(self).setdefault("transformInfoInterface", None)
 
     def _init_fields(self) -> None:
-        from java.util.HashMap import HashMap
-        from org.allbinary.business.category.CategoryInterface import CategoryInterface
-        from org.allbinary.data.tree.category.CategoryLoaderInterface import CategoryLoaderInterface
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.pageContext: PageContext = None
-        self.hashMap: HashMap = None
-        self.request: HttpServletRequest = None
-        self.categoryLoaderInterface: CategoryLoaderInterface = None
-        self.categoryInterface: CategoryInterface = None
-        self.childCategoryInterface: CategoryInterface = None
-        self.transformInfoInterface: TransformInfoInterface = None
+        if "pageContext" not in vars(self): self.pageContext: PageContext = None
+        if "hashMap" not in vars(self): self.hashMap: HashMap = None
+        if "request" not in vars(self): self.request: HttpServletRequest = None
+        if "categoryLoaderInterface" not in vars(self): self.categoryLoaderInterface: CategoryLoaderInterface = None
+        if "categoryInterface" not in vars(self): self.categoryInterface: CategoryInterface = None
+        if "childCategoryInterface" not in vars(self): self.childCategoryInterface: CategoryInterface = None
+        if "transformInfoInterface" not in vars(self): self.transformInfoInterface: TransformInfoInterface = None
     
 
     def __init__(self, hashMap: HashMap, pageContext: PageContext) -> None:
+        __class__._java_defaults(self)
         from java.util.HashMap import HashMap
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         try:
             self.request = pageContext.getRequest()
             self.pageContext = pageContext
@@ -76,7 +84,7 @@ class CategoryRequestHelper(ModifyTable):
             if size > 0:
                 xmlRequest: str = keyArray[0]
                 index: int = 1
-                while index < size and not xmlRequest.startswith(CategoryRequestHelper.categoryRequest):
+                while index < size and not (xmlRequest.startswith(CategoryRequestHelper.categoryRequest)):
                     xmlRequest = keyArray[index]
                     if xmlRequest.startswith(CategoryRequestHelper.categoryRequest):
                         break

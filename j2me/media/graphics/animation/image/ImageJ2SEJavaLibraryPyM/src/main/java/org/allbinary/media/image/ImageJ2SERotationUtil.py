@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import math
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -34,7 +35,7 @@ class ImageJ2SERotationUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getRotatedImage(self, bufferedImage: Image, totalAngle: int) -> BufferedImage:
@@ -47,7 +48,9 @@ class ImageJ2SERotationUtil:
     
 
     def drawRotatedImageRadians(self, bufferedImage: Image, newBufferedImage: BufferedImage, g: Graphics2D, radians: float) -> BufferedImage:
-        g.rotate(radians, newBufferedImage.getWidth(None) / 2, newBufferedImage.getHeight(None) / 2)
+        g.rotate(radians, java_divide(newBufferedImage.getWidth(None), 2)
+            , java_divide(newBufferedImage.getHeight(None), 2)
+            )
         g.drawImage(bufferedImage, 0, 0, bufferedImage.getWidth(None), bufferedImage.getHeight(None), None)
         g.dispose()
         return newBufferedImage

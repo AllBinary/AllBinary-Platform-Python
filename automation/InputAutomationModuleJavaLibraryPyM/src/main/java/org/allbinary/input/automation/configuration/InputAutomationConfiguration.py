@@ -22,20 +22,19 @@ class InputAutomationConfiguration:
     FILENAME: str = "InputAutomationConfig.xml"
 
     def _init_fields(self) -> None:
-        from java.util.List import List
-        from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfiguration import InputAutomationModuleConfiguration
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.installed: bool = False
-        self.inputAutomationModuleConfigurationList: List[InputAutomationModuleConfiguration] = None
+        if "installed" not in vars(self): self.installed: bool = False
+        if "inputAutomationModuleConfigurationList" not in vars(self): self.inputAutomationModuleConfigurationList: List[InputAutomationModuleConfiguration] = None
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
     def getFile() -> File:
+        from java.io.File import File
         return File(InputAutomationConfiguration.FILENAME)
     
 
@@ -56,6 +55,7 @@ class InputAutomationConfiguration:
 
     # throws Exception
     def save(self) -> None:
+        from java.io.File import File
         from org.allbinary.data.tree.dom.document.DomDocumentFileHelper import DomDocumentFileHelper
         from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
         from org.allbinary.logic.io.file.FileUtil import FileUtil

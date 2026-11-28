@@ -20,14 +20,14 @@ from __future__ import annotations
 class VectorInfo:
 
     def _init_fields(self) -> None:
-        self.width: int = None
-        self.height: int = None
-        self.points: list[list[int]] = None
-        self.totalFrames: int = None
+        if "width" not in vars(self): self.width: int = 0
+        if "height" not in vars(self): self.height: int = 0
+        if "points" not in vars(self): self.points: list[list[int]] = None
+        if "totalFrames" not in vars(self): self.totalFrames: int = 0
     
 
     def __init__(self, width: int, height: int, points: list[list[int]], totalFrames: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.width = width
         self.height = height
         self.points = points

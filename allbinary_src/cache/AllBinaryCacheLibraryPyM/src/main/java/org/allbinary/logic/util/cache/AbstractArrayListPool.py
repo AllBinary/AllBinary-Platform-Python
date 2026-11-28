@@ -22,15 +22,14 @@ class AbstractArrayListPool(PoolInterface):
 
     def _init_fields(self) -> None:
         from org.allbinary.string.CommonStrings import CommonStrings
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.buffers: BasicArrayList = BasicArrayListD()
-        self.cacheableInterfaceFactoryInterface: CacheableInterfaceFactoryInterface = None
+        if "cacheableInterfaceFactoryInterface" not in vars(self): self.cacheableInterfaceFactoryInterface: CacheableInterfaceFactoryInterface = None
     
 
     def __init__(self, cacheableInterfaceFactoryInterface: CacheableInterfaceFactoryInterface) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.cacheableInterfaceFactoryInterface = cacheableInterfaceFactoryInterface
     
 

@@ -15,10 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 # from javax.servlet.http.HttpServlet import HttpServlet
 
 
+@java_inherited_overloads
 class ImageServlet(HttpServlet):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("commonStrings", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -27,13 +32,15 @@ class ImageServlet(HttpServlet):
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws ServletException, IOException
     def processRequest(self, request: HttpServletRequest, response: HttpServletResponse) -> None:
         from org.allbinary.servlet.BlisketServletUtil import BlisketServletUtil
+        from java.io.ByteArrayOutputStream import ByteArrayOutputStream
         from java.io.InputStream import InputStream
         from org.allbinary.globals.URLGLOBALS import URLGLOBALS
         from org.allbinary.logic.io.CloudStreamUtil import CloudStreamUtil
@@ -56,7 +63,7 @@ class ImageServlet(HttpServlet):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "processRequest()", e)
         finally:
             StreamUtil.getInstance().close(response.getOutputStream())
-            if not StreamUtil.getInstance().close(inputStream):
+            if not (StreamUtil.getInstance().close(inputStream)):
                 response.sendError(HttpServletResponse.SC_NOT_FOUND)
     
 

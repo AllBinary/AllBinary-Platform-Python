@@ -26,13 +26,13 @@ class Health(HealthInterface):
     MAX_HEALTH_LABEL: str = " Max: "
 
     def _init_fields(self) -> None:
-        self.health: int = 0
-        self.maxHealth: int = 0
+        if "health" not in vars(self): self.health: int = 0
+        if "maxHealth" not in vars(self): self.maxHealth: int = 0
         self.healthListenerInterface: HealthListenerInterface = NullHealthListener.NULL_HEALTH_LISTENER
     
 
     def __init__(self, maxHealth: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.setMaxHealth(maxHealth)
         self.setHealth(maxHealth)
     

@@ -23,17 +23,15 @@ class SelectionTool(GraphicItemInterface):
     NAME: str = "Selection Tool"
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.GPoint import GPoint
         from org.allbinary.graphics.PointFactory import PointFactory
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-        from org.allbinary.graphics.j2me.workarea.canvas.CanvasJPanel import CanvasJPanel
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.canvasJPanel: CanvasJPanel = None
+        if "canvasJPanel" not in vars(self): self.canvasJPanel: CanvasJPanel = None
         self.active: bool = True
-        self.controlIdDown: bool = False
+        if "controlIdDown" not in vars(self): self.controlIdDown: bool = False
         self.rectColor: Color = Color(int(BasicColorFactory.getInstance().RED))
         self.startPoint: GPoint = PointFactory.getInstance().ZERO_ZERO
         self.endPoint: GPoint = self.startPoint
@@ -41,7 +39,7 @@ class SelectionTool(GraphicItemInterface):
 
     def __init__(self, canvasJPanel: CanvasJPanel) -> None:
         from org.allbinary.graphics.j2me.workarea.canvas.CanvasJPanel import CanvasJPanel
-        self._init_fields()
+        __class__._init_fields(self)
         self.canvasJPanel = canvasJPanel
     
 
@@ -124,7 +122,7 @@ class SelectionTool(GraphicItemInterface):
                 if RectangleCollisionPointUtil.allPointsInsideCell(xRect, yRect, xRect2, yRect2, item.getPointsInterface().getPoints(), self.canvasJPanel.getXPixelsPerWorkAreaPixel(), self.canvasJPanel.getYPixelsPerWorkAreaPixel()):
                     item.setColor(Color.YELLOW)
                     item.activate()
-                elif not self.controlIdDown:
+                elif not (self.controlIdDown):
                     item.setColor(Color.WHITE)
                     item.deactivate()
     

@@ -15,20 +15,27 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_divide
 from org.allbinary.game.part.weapon.BasicWeaponPart import BasicWeaponPart
 
 
+@java_inherited_overloads
 class ArcedMultiBeamWeaponPart(BasicWeaponPart):
+    def _java_defaults(self):
+        vars(self).setdefault("weaponLayerCircularStaticPool", None)
+        vars(self).setdefault("total", 0)
+        vars(self).setdefault("TOTAL_ANGLE", 0)
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.layer.weapon.WeaponLayerCircularPool import WeaponLayerCircularPool
         from org.allbinary.math.AngleFactory import AngleFactory
-        self.weaponLayerCircularStaticPool: WeaponLayerCircularPool = None
-        self.total: int = None
+        if "weaponLayerCircularStaticPool" not in vars(self): self.weaponLayerCircularStaticPool: WeaponLayerCircularPool = None
+        if "total" not in vars(self): self.total: int = 0
         self.TOTAL_ANGLE: int = int(AngleFactory.getInstance().TOTAL_ANGLE)
     
 
     def __init__(self, animationInterface: Animation, sourceLayerInterface: AllBinaryLayer, weaponLayerCircularStaticPool: WeaponLayerCircularPool, total: int, weaponProperties: WeaponProperties, scoreableInterface: ScoreableInterface, relativeRelationship: RelativeRelationship) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.animation.Animation import Animation
         from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
         from org.allbinary.game.layer.weapon.WeaponLayerCircularPool import WeaponLayerCircularPool
@@ -36,7 +43,7 @@ class ArcedMultiBeamWeaponPart(BasicWeaponPart):
         from org.allbinary.graphics.RelativeRelationship import RelativeRelationship
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         super().__init__(animationInterface, sourceLayerInterface, weaponProperties, scoreableInterface, relativeRelationship)
-        self._init_fields()
+        __class__._init_fields(self)
         self.total = total
         self.weaponLayerCircularStaticPool = weaponLayerCircularStaticPool
     
@@ -48,7 +55,7 @@ class ArcedMultiBeamWeaponPart(BasicWeaponPart):
         from org.allbinary.game.score.ScoreableInterface import ScoreableInterface
         from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         increment: int = ((int((int((self.total - 1) / self.TOTAL_ANGLE))) + 32768) % 65536 - 32768)
-        minAngle: int = ((int((angle - ((increment * self.total) >> 1))) + 32768) % 65536 - 32768)
+        minAngle: int = ((int((angle - (int((increment * self.total)) >> (int(1) & 31)))) + 32768) % 65536 - 32768)
         next: int = 0
         weaponLayer: WeaponLayer = None
         for index in range(0, self.total):

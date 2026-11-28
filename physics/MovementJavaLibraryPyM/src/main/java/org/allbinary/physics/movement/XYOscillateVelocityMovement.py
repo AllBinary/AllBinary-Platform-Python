@@ -15,23 +15,32 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.physics.movement.BasicConstantVelocityMovement import BasicConstantVelocityMovement
 
 
+@java_inherited_overloads
 class XYOscillateVelocityMovement(BasicConstantVelocityMovement):
+    def _java_defaults(self):
+        vars(self).setdefault("oscillateMin", 0)
+        vars(self).setdefault("oscillateMax", 0)
+        vars(self).setdefault("oscillate", 0)
+        vars(self).setdefault("oscillatePositive", False)
 
     def _init_fields(self) -> None:
-        self.oscillateMin: int = None
-        self.oscillateMax: int = None
-        self.oscillate: int = 0
-        self.oscillatePositive: bool = False
+        if "oscillateMin" not in vars(self): self.oscillateMin: int = 0
+        if "oscillateMax" not in vars(self): self.oscillateMax: int = 0
+        if "oscillate" not in vars(self): self.oscillate: int = 0
+        if "oscillatePositive" not in vars(self): self.oscillatePositive: bool = False
     
 
     def __init__(self, speedBasicDecimal: BasicDecimal, oscillateMin: int, oscillateMax: int) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
         from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         super().__init__(speedBasicDecimal, VelocityProperties(int(speedBasicDecimal.getUnscaled()), int(speedBasicDecimal.getUnscaled())))
-        self._init_fields()
+        __class__._init_fields(self)
         self.oscillateMin = oscillateMin
         self.oscillateMax = oscillateMax
     
@@ -39,7 +48,7 @@ class XYOscillateVelocityMovement(BasicConstantVelocityMovement):
     # throws Exception
     def process(self, layer: AllBinaryGameLayer) -> None:
         from org.allbinary.game.layer.AllBinaryGameLayer import AllBinaryGameLayer
-        super().process(layer)
+        java_super_call(super(), "process", layer)
         if self.oscillate < self.oscillateMin:
             self.oscillatePositive = True
             self.getVelocityProperties().getVelocityYBasicDecimalP().addint(3000)

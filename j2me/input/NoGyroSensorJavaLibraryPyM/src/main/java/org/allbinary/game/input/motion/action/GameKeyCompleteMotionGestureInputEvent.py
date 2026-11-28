@@ -15,12 +15,17 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.input.CompleteMotionGestureInputEvent import CompleteMotionGestureInputEvent
 from org.allbinary.game.input.GameKeyEventSourceInterface import GameKeyEventSourceInterface
 
 
+@java_inherited_overloads
 class GameKeyCompleteMotionGestureInputEvent(*java_bases(CompleteMotionGestureInputEvent, GameKeyEventSourceInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("gameKey", None)
+        vars(self).setdefault("gameKeyEvent", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.game.input.GameKey import GameKey
@@ -30,10 +35,11 @@ class GameKeyCompleteMotionGestureInputEvent(*java_bases(CompleteMotionGestureIn
     
 
     def __init__(self, name: str, motionGestureInput: MotionGestureInput, inputToGameKeyMapping: InputToGameKeyMapping) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
         from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
         super().__init__(name, motionGestureInput)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getSourceId(self) -> int:

@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import time
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 
@@ -28,7 +29,7 @@ class MediaPlayerUtil:
         self.logUtil: LogUtil = LogUtil.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -42,7 +43,7 @@ class MediaPlayerUtil:
         MESSAGE: str = "Not Stopped Waiting"
         METHOD_NAME: str = "wait"
         index: int = 0
-        while mediaPlayer.isPlaying() and index < 50:
+        while java_predicate(mediaPlayer, "isPlaying") and index < 50:
             self.logUtil.putF(MESSAGE, self, METHOD_NAME)
             time.sleep((100) / 1000)
             index += 1

@@ -15,25 +15,32 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from tags.PropertiesTag import PropertiesTag
 
 
+@java_inherited_overloads
 class HelperTag(PropertiesTag):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("tagHelperFactoryInterface", None)
+        vars(self).setdefault("anyType", None)
 
     def _init_fields(self) -> None:
-        from admin.taghelpers.TagHelperFactoryInterface import TagHelperFactoryInterface
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.tagHelperFactoryInterface: TagHelperFactoryInterface = None
-        self.anyType: object = None
+        if "tagHelperFactoryInterface" not in vars(self): self.tagHelperFactoryInterface: TagHelperFactoryInterface = None
+        if "anyType" not in vars(self): self.anyType: object = None
     
 
     def __init__(self, tagHelperFactoryInterface: TagHelperFactoryInterface) -> None:
+        __class__._java_defaults(self)
         from admin.taghelpers.TagHelperFactoryInterface import TagHelperFactoryInterface
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
             self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
         self.tagHelperFactoryInterface = tagHelperFactoryInterface
@@ -59,7 +66,7 @@ class HelperTag(PropertiesTag):
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
             self.logUtil.putF("Tag Ended", self, "doEndTag")
         self.anyType = None
-        return super().doEndTag()
+        return java_super_call(super(), "doEndTag")
 # from admin.taghelpers.TagHelperFactoryInterface import TagHelperFactoryInterface
 # from org.allbinary.logic.communication.log.LogUtil import LogUtil
 # from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory

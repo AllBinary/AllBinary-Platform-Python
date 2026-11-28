@@ -15,27 +15,24 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_divide
 from org.allbinary.animation.AnimationInterfaceFactoryInterface import AnimationInterfaceFactoryInterface
 
 
 class CustomTextAnimationFactory(AnimationInterfaceFactoryInterface):
 
     def _init_fields(self) -> None:
-        from javax.microedition.lcdui.Font import Font
-        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
-        from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.media.ScaleProperties import ScaleProperties
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.animationBehaviorFactory: AnimationBehaviorFactory = None
+        if "animationBehaviorFactory" not in vars(self): self.animationBehaviorFactory: AnimationBehaviorFactory = None
         self.basicColor: BasicColor = BasicColorFactory.getInstance().BLACK
-        self.text: str = None
-        self.initScaleHeight: int = None
+        if "text" not in vars(self): self.text: str = None
+        if "initScaleHeight" not in vars(self): self.initScaleHeight: int = 0
         self.dx: int = 0
         self.dy: int = 0
-        self.font: Font = None
-        self.scaleProperties: ScaleProperties = None
+        if "font" not in vars(self): self.font: Font = None
+        if "scaleProperties" not in vars(self): self.scaleProperties: ScaleProperties = None
     
 
     @staticmethod
@@ -51,7 +48,7 @@ class CustomTextAnimationFactory(AnimationInterfaceFactoryInterface):
         from javax.microedition.lcdui.Font import Font
         from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
         from org.allbinary.media.ScaleProperties import ScaleProperties
-        self._init_fields()
+        __class__._init_fields(self)
         self.scaleProperties = ScaleProperties()
         self.text = text
         self.scaleProperties.scaleHeight = fontSize - (int(fontSize / 4))

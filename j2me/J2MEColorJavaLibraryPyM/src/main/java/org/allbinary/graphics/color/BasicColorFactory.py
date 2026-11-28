@@ -23,7 +23,6 @@ class BasicColorFactory:
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.string.StringUtil import StringUtil
-        from jsinterop.annotations.JsProperty import JsProperty
         self.NULL_COLOR: BasicColor = self.createInstanceARGB(255, 255, 255, 255, "null color")
         self.TAN: BasicColor = self.createInstance(0xE9D8B5)
         self.SKIN_PINK: BasicColor = self.createInstance(0xFDCECE)
@@ -55,7 +54,7 @@ class BasicColorFactory:
         self.BORDER_COLOR: BasicColor = self.WHITE
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -90,7 +89,7 @@ class BasicColorFactory:
         from org.allbinary.logic.string.StringUtil import StringUtil
         from jsinterop.annotations.JsMethod import JsMethod
         ALPHA_MASK: int = 0xFF000000
-        return BasicColor(alphaValue, ((alphaValue << 24) & ALPHA_MASK) + ((r << 16) & 0x00FF0000) + ((g << 8) & 0x0000FF00) + (b & 0x000000FF), StringUtil.getInstance().EMPTY_STRING)
+        return BasicColor(alphaValue, ((((((alphaValue) << ((24) & 31)) + 0x80000000) % 0x100000000 - 0x80000000)) & ALPHA_MASK) + ((((((r) << ((16) & 31)) + 0x80000000) % 0x100000000 - 0x80000000)) & 0x00FF0000) + ((((((g) << ((8) & 31)) + 0x80000000) % 0x100000000 - 0x80000000)) & 0x0000FF00) + (b & 0x000000FF), StringUtil.getInstance().EMPTY_STRING)
 # from jsinterop.annotations.JsType import JsType
 # from org.allbinary.logic.string.StringUtil import StringUtil
 # from jsinterop.annotations.JsMethod import JsMethod

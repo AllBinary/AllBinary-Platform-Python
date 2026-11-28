@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.util.Stack import Stack
 
 
+@java_inherited_overloads
 class ABStack(Stack):
 
     def __init__(self) -> None:

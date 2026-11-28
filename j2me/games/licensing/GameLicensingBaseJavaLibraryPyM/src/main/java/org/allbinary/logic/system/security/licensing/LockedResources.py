@@ -25,7 +25,7 @@ class LockedResources:
         self.LOCKED_DEMO_GAME_FEATURE_RESOURCE: str = "/locked_demo_game_feature_64_by_64.png"
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

@@ -21,14 +21,12 @@ from org.allbinary.business.user.commerce.shipping.ShippingMethodsInterface impo
 class ShippingMethods(ShippingMethodsInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
-        from org.allbinary.business.user.commerce.shipping.modules.ShippingInterface import ShippingInterface
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.shippingVector: BasicArrayList = None
-        self.defaultShippingMethodInterface: ShippingInterface = None
+        if "shippingVector" not in vars(self): self.shippingVector: BasicArrayList = None
+        if "defaultShippingMethodInterface" not in vars(self): self.defaultShippingMethodInterface: ShippingInterface = None
     
 
     def __init__(self, abeClientInformation: AbeClientInformationInterface, storeFrontInterface: StoreFrontInterface) -> None:
@@ -36,7 +34,7 @@ class ShippingMethods(ShippingMethodsInterface):
         from org.allbinary.business.user.commerce.shipping.ShippingMethodsFactory import ShippingMethodsFactory
         from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
         from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-        self._init_fields()
+        __class__._init_fields(self)
         self.defaultShippingMethodInterface = ShippingMethodsFactory(abeClientInformation, storeFrontInterface).getDefaultInstance()
         self.shippingVector = ShippingMethodsFactory(abeClientInformation, storeFrontInterface).getInstance()
     

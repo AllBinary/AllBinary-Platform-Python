@@ -15,16 +15,21 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.layer.pickup.CountedPickedUpLayerInterfaceFactory import CountedPickedUpLayerInterfaceFactory
 
 
+@java_inherited_overloads
 class MineCountedPickedUpLayerInterfaceFactory(CountedPickedUpLayerInterfaceFactory):
     pickedUpLayerInterfaceFactoryInterface: PickedUpLayerInterfaceFactoryInterface = None
+    def _java_defaults(self):
+        vars(self).setdefault("weaponLayerCircularStaticPool", None)
+        vars(self).setdefault("weaponProperties", None)
+        vars(self).setdefault("smallIntegerSingletonFactory", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
-        from org.allbinary.game.layer.weapon.WeaponLayerCircularPool import WeaponLayerCircularPool
         from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
         self.weaponLayerCircularStaticPool: WeaponLayerCircularPool = MineLayerCircularStaticPool.getInstance()
         self.weaponProperties: WeaponProperties = WeaponProperties(-1, -1, 0, 8000, ((int(10) + 32768) % 65536 - 32768))
@@ -38,13 +43,14 @@ class MineCountedPickedUpLayerInterfaceFactory(CountedPickedUpLayerInterfaceFact
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.ag.layer.weapon.mine.MineWeaponResources import MineWeaponResources
         from org.allbinary.game.ag.layer.weapon.mine.MineWeaponResources import MineWeaponResources
         from org.allbinary.animation.FeaturedAnimationInterfaceFactoryInterfaceFactory import FeaturedAnimationInterfaceFactoryInterfaceFactory
         from org.allbinary.game.layer.pickup.IconLayerFactory import IconLayerFactory
         from org.allbinary.game.layer.pickup.PickedUpLayerTypeFactory import PickedUpLayerTypeFactory
         super().__init__(PickedUpLayerTypeFactory.getInstance().MINE, IconLayerFactory.getInstance(FeaturedAnimationInterfaceFactoryInterfaceFactory.getInstance().get(MineWeaponResources.getInstance().DROP_ICON_RESOURCE).getInstance(0), 10, 10), FeaturedAnimationInterfaceFactoryInterfaceFactory.getInstance().get(MineWeaponResources.getInstance().DROP_RESOURCE).getInstance(0))
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

@@ -15,20 +15,24 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.canvas.Processor import Processor
 
 
+@java_inherited_overloads
 class FormPlayerGameInputProcessor(Processor):
+    def _java_defaults(self):
+        vars(self).setdefault("playerGameInputCompositeInterface", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.input.PlayerGameInputCompositeInterface import PlayerGameInputCompositeInterface
-        self.playerGameInputCompositeInterface: PlayerGameInputCompositeInterface = None
+        if "playerGameInputCompositeInterface" not in vars(self): self.playerGameInputCompositeInterface: PlayerGameInputCompositeInterface = None
     
 
     def __init__(self, playerGameInputCompositeInterface: PlayerGameInputCompositeInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.input.PlayerGameInputCompositeInterface import PlayerGameInputCompositeInterface
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.playerGameInputCompositeInterface = playerGameInputCompositeInterface
     
 

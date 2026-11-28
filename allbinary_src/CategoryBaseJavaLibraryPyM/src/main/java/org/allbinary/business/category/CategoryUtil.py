@@ -47,6 +47,8 @@ class CategoryUtil:
 
     @staticmethod
     def _getNameFromNode_unlocked(node: Node) -> str:
+        from org.allbinary.business.category.CategoryData import CategoryData
+        from org.allbinary.business.category.CategoryData import CategoryData
         from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
         from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
         from org.allbinary.logic.string.StringUtil import StringUtil

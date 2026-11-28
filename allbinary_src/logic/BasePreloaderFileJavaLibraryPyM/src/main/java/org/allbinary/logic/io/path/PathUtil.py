@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -34,7 +35,7 @@ class PathUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getExtensionWithAbFilePath(self, abFilePath: AbFilePath) -> str:
@@ -90,13 +91,13 @@ class PathUtil:
     
 
     def adjustStart(self, path: str) -> str:
-        if not self.isValidStart(path):
+        if not (self.isValidStart(path)):
             path = str(self.abPathData.SEPARATOR) + path
         return path
     
 
     def adjustEnd(self, path: str) -> str:
-        if not self.isValidEnd(path):
+        if not (self.isValidEnd(path)):
             path = path + str(self.abPathData.SEPARATOR)
         return path
     

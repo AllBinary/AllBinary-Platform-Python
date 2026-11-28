@@ -21,16 +21,15 @@ from org.allbinary.animation.AnimationInterfaceFactoryInterface import Animation
 class VectorAnimationInterfaceFactory(AnimationInterfaceFactoryInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-        self.currentPoints: list[list[list[int]]] = None
+        if "currentPoints" not in vars(self): self.currentPoints: list[list[list[int]]] = None
         self.basicColor: BasicColor = BasicColorFactory.getInstance().WHITE
-        self.animationBehaviorFactory: AnimationBehaviorFactory = None
+        if "animationBehaviorFactory" not in vars(self): self.animationBehaviorFactory: AnimationBehaviorFactory = None
     
 
     def __init__(self, currentPoints: list[list[list[int]]], basicColor: BasicColor, animationBehaviorFactory: AnimationBehaviorFactory) -> None:
         from org.allbinary.graphics.color.BasicColor import BasicColor
-        self._init_fields()
+        __class__._init_fields(self)
         self.currentPoints = currentPoints
         self.setBasicColorP(basicColor)
         self.animationBehaviorFactory = animationBehaviorFactory

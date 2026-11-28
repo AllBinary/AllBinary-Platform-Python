@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.animation.NullRotationAnimation import NullRotationAnimation
 
 
+@java_inherited_overloads
 class NullRotationAnimation2(NullRotationAnimation):
     
 

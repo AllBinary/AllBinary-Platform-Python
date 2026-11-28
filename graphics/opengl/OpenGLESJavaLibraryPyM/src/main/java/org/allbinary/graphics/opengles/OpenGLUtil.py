@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaMonitor import java_monitor, java_wait
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 
@@ -19,7 +20,6 @@ class OpenGLUtil:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         from org.allbinary.thread.SynchObject import SynchObject
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
@@ -35,7 +35,7 @@ class OpenGLUtil:
         self.surfaceCreatedAndInitialized: bool = False
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -49,7 +49,7 @@ class OpenGLUtil:
         from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         from org.allbinary.string.CommonLabels import CommonLabels
         try:
-            if not self.created:
+            if not (self.created):
                 self.created = True
                 PreLogUtil.put(str(CommonLabels.getInstance().START_LABEL) + str(OpenGLCapabilities.getInstance()), self, self.renderStrings.ON_SURFACE_CREATED)
         except Exception as e:
@@ -67,7 +67,9 @@ class OpenGLUtil:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, self.renderStrings.ON_SURFACE_CREATED, e)
 
     def onSurfaceCreated(self, *args):
-        return getattr(self, "onSurfaceCreated_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("onSurfaceCreated_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().onSurfaceCreated(*args)
     
 
     # throws Exception
@@ -78,7 +80,7 @@ class OpenGLUtil:
         from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
         from org.allbinary.image.opengles.OpenGLImageCache import OpenGLImageCache
         from org.allbinary.image.opengles.OpenGLImageCacheFactory import OpenGLImageCacheFactory
-        if not self.surfaceCreatedAndInitialized:
+        if not (self.surfaceCreatedAndInitialized):
             graphics.init()
             self.surfaceCreatedAndInitialized = True
         graphics.update()
@@ -93,26 +95,26 @@ class OpenGLUtil:
         from javax.microedition.lcdui.Image import Image
         encapsulateImage: Image = self.preResourceImageUtil.encapsulate(image)
         if encapsulateImage != image:
-            with self._lock:  # synchronized (self.anyType)
+            with java_monitor(self.anyType):
                 self.list_.add(encapsulateImage)
             return encapsulateImage
         return image
     
 
     def clear(self) -> None:
-        with self._lock:  # synchronized (self.anyType)
+        with java_monitor(self.anyType):
             self.list_.clear()
     
 
     def addRunnable(self, runnable: object) -> None:
-        with self._lock:  # synchronized (self.lockObject)
-            if not self.runnableList.contains(runnable):
+        with java_monitor(self.lockObject):
+            if not (self.runnableList.contains(runnable)):
                 self.runnableList.add(runnable)
                 self.displayInfoSingleton.add(self.canvasStrings.SCALED_IMAGES)
     
 
     def processRunnables(self) -> None:
-        with self._lock:  # synchronized (self.lockObject)
+        with java_monitor(self.lockObject):
             runnable: object = None
             size: int = self.runnableList.size()
             for index in range(0, size):

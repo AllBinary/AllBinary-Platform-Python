@@ -15,23 +15,34 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.displayable.event.DisplayChangeEventListener import DisplayChangeEventListener
 from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
 
 
+@java_inherited_overloads
 class AndroidBasicTitleProgressBar(*java_bases(ProgressCanvas, DisplayChangeEventListener)):
     RESOURCE: str = "ProgressImage"
     background: int = 0
+    def _java_defaults(self):
+        vars(self).setdefault("showTitleProgressBarRunnable", None)
+        vars(self).setdefault("dismissTitleProgressBarRunnable", None)
+        vars(self).setdefault("titleProgressDialogPortionSetProgressRunnable", None)
+        vars(self).setdefault("titleProgressDialogSetProgressRunnable", None)
+        vars(self).setdefault("midletActivity", None)
+        vars(self).setdefault("portion", 0)
+        vars(self).setdefault("IMAGE", None)
+        vars(self).setdefault("image", None)
+        vars(self).setdefault("animation", None)
 
     def _init_fields(self) -> None:
         from javax.microedition.lcdui.Image import Image
         from javax.microedition.lcdui.NullImage import NullImage
-        from android.app.Activity import Activity
         from org.allbinary.AndroidUtil import AndroidUtil
-        from org.allbinary.animation.Animation import Animation
         from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
-        from org.allbinary.thread.ARunnable import ARunnable
         from org.allbinary.thread.NullRunnable import NullRunnable
         self.showTitleProgressBarRunnable: ARunnable = NullRunnable.getInstance()
         self.dismissTitleProgressBarRunnable: ARunnable = NullRunnable.getInstance()
@@ -45,11 +56,12 @@ class AndroidBasicTitleProgressBar(*java_bases(ProgressCanvas, DisplayChangeEven
     
 
     def __init__(self, title: str, backgroundBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.NullImage import NullImage
         from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.displayable.event.DisplayChangeEventHandler import DisplayChangeEventHandler
         super().__init__(title, backgroundBasicColor, foregroundBasicColor)
-        self._init_fields()
+        __class__._init_fields(self)
         self.init()
         DisplayChangeEventHandler.getInstance().addListenerInterface(self)
         size: int = len(self.IMAGE)
@@ -96,12 +108,12 @@ class AndroidBasicTitleProgressBar(*java_bases(ProgressCanvas, DisplayChangeEven
         from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         from org.allbinary.animation.image.ImageAnimation import ImageAnimation
         try:
-            if not self.isBackground():
+            if not (java_predicate(self, "isBackground")):
                 self.animation = NullAnimationFactory.getFactoryInstance().getInstance(0)
             elif AndroidBasicTitleProgressBar.background != 0:
                 displayInfo: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
                 currentImage: Image = None
-                if displayInfo.isPortrait():
+                if java_predicate(displayInfo, "isPortrait"):
                     currentImage = self.getImage(0)
                 else:
                     currentImage = self.getImage(2)
@@ -163,7 +175,7 @@ class AndroidBasicTitleProgressBar(*java_bases(ProgressCanvas, DisplayChangeEven
     def start(self) -> None:
         try:
             self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.START_METHOD_NAME)
-            super().start()
+            java_super_call(super(), "start")
             self.midletActivity.runOnUiThread(self.showTitleProgressBarRunnable)
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.START_METHOD_NAME, e)
@@ -173,7 +185,7 @@ class AndroidBasicTitleProgressBar(*java_bases(ProgressCanvas, DisplayChangeEven
         try:
             self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.END_METHOD_NAME)
             self.midletActivity.runOnUiThread(self.dismissTitleProgressBarRunnable)
-            super().end()
+            java_super_call(super(), "end")
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.END_METHOD_NAME, e)
     
@@ -182,7 +194,7 @@ class AndroidBasicTitleProgressBar(*java_bases(ProgressCanvas, DisplayChangeEven
         from org.allbinary.AndroidUtil import AndroidUtil
         try:
             self.portion = value
-            super().addEarlyPortion(value, text, index)
+            java_super_call(super(), "addEarlyPortion", value, text, index)
             if self.midletActivity != AndroidUtil.NULL_ACTIVITY:
                 self.midletActivity.runOnUiThread(self.titleProgressDialogPortionSetProgressRunnable)
         except Exception as e:
@@ -192,7 +204,7 @@ class AndroidBasicTitleProgressBar(*java_bases(ProgressCanvas, DisplayChangeEven
     def addPortion(self, value: int, text: str, index: int) -> None:
         try:
             self.portion = value
-            super().addPortion(value, text, index)
+            java_super_call(super(), "addPortion", value, text, index)
             self.midletActivity.runOnUiThread(self.titleProgressDialogPortionSetProgressRunnable)
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, self.ADD_PORTION, e)
@@ -201,7 +213,7 @@ class AndroidBasicTitleProgressBar(*java_bases(ProgressCanvas, DisplayChangeEven
     def addNormalPortion(self, value: int, text: str) -> None:
         try:
             self.portion = value
-            super().addNormalPortion(value, text)
+            java_super_call(super(), "addNormalPortion", value, text)
             self.midletActivity.runOnUiThread(self.titleProgressDialogPortionSetProgressRunnable)
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, self.ADD_PORTION, e)
@@ -209,7 +221,7 @@ class AndroidBasicTitleProgressBar(*java_bases(ProgressCanvas, DisplayChangeEven
 
     def setValue(self, value: int) -> None:
         try:
-            super().setValue(value)
+            java_super_call(super(), "setValue", value)
             self.midletActivity.runOnUiThread(self.titleProgressDialogSetProgressRunnable)
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, "setValue", e)
@@ -288,7 +300,7 @@ class AndroidBasicTitleProgressBar(*java_bases(ProgressCanvas, DisplayChangeEven
         from javax.microedition.lcdui.Graphics import Graphics
         try:
             self.animation.paintXY(graphics, 0, 20)
-            super().paint2(graphics)
+            java_super_call(super(), "paint2", graphics)
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, self.canvasStrings.PAINT, e)
     
@@ -299,7 +311,7 @@ class AndroidBasicTitleProgressBar(*java_bases(ProgressCanvas, DisplayChangeEven
     
 
     def setBackground(self, background: bool) -> None:
-        super().setBackground(background)
+        java_super_call(super(), "setBackground", background)
         self.updateCurrent()
     
 

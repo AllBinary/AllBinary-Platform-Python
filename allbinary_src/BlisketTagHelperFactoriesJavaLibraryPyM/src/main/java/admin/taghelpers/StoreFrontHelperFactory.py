@@ -15,10 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from admin.taghelpers.TagHelperFactory import TagHelperFactory
 
 
+@java_inherited_overloads
 class StoreFrontHelperFactory(TagHelperFactory):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -26,12 +30,14 @@ class StoreFrontHelperFactory(TagHelperFactory):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws LicensingException
     def getInstance(self, hashMap: HashMap, pageContext: PageContext) -> object:
+        from admin.taghelpers.StoreFrontHelper import StoreFrontHelper
         from java.util.HashMap import HashMap
         from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory

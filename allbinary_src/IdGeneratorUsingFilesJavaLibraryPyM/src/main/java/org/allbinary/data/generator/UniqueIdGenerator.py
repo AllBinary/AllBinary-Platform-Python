@@ -25,14 +25,13 @@ class UniqueIdGenerator(IdGeneratorInterface):
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.logic.io.file.AbFile import AbFile
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.newFile: AbFile = None
+        if "newFile" not in vars(self): self.newFile: AbFile = None
         self.id: int = 0
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def initialize(self, value: int) -> None:
@@ -54,7 +53,7 @@ class UniqueIdGenerator(IdGeneratorInterface):
     # throws Exception
     def setFile(self, filePathName: str, name: str) -> None:
         with self._lock:
-            return self._setFile_unlocked(filePathName, name)
+            return __class__.__dict__["_setFile_unlocked"].__get__(self, __class__)(filePathName, name)
 
     def _setFile_unlocked(self, filePathName: str, name: str) -> None:
         from org.allbinary.logic.io.file.AbFile import AbFile
@@ -64,7 +63,7 @@ class UniqueIdGenerator(IdGeneratorInterface):
     # throws IOException
     def getNext(self) -> str:
         with self._lock:
-            return self._getNext_unlocked()
+            return __class__.__dict__["_getNext_unlocked"].__get__(self, __class__)()
 
     def _getNext_unlocked(self) -> str:
         from org.allbinary.logic.io.AbDataInputStream import AbDataInputStream

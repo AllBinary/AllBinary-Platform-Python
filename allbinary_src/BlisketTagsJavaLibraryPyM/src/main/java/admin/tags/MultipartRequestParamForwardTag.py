@@ -15,20 +15,27 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from tags.CustomTagSupport import CustomTagSupport
 
 
+@java_inherited_overloads
 class MultipartRequestParamForwardTag(CustomTagSupport):
+    def _java_defaults(self):
+        vars(self).setdefault("page", None)
+        vars(self).setdefault("command", None)
+        vars(self).setdefault("paramVector", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
-        self.page: str = None
-        self.command: str = None
-        self.paramVector: BasicArrayList = None
+        if "page" not in vars(self): self.page: str = None
+        if "command" not in vars(self): self.command: str = None
+        if "paramVector" not in vars(self): self.paramVector: BasicArrayList = None
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def setPage(self, page: str) -> None:
@@ -47,6 +54,7 @@ class MultipartRequestParamForwardTag(CustomTagSupport):
     # throws JspTagException
     def doStartTag(self) -> int:
         from admin.tags.ParentInventoryTagHelper import ParentInventoryTagHelper
+        from admin.tags.AbTagData import AbTagData
         from java.util.HashMap import HashMap
         from admin.taghelpers.MultipartRequestParamForwardHelper import MultipartRequestParamForwardHelper
         from org.allbinary.logic.StdUtil import StdUtil

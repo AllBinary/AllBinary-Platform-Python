@@ -20,38 +20,37 @@ from __future__ import annotations
 class BasicTouchButtonCellPositionFactory:
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.CellPosition import CellPosition
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.TOP_RIGHT: CellPosition = None
-        self.TOP_LEFT: CellPosition = None
-        self.SECOND_FROM_TOP_LEFT: CellPosition = None
-        self.SECOND_FROM_TOP_RIGHT: CellPosition = None
-        self.TOP_SECOND_FROM_LEFT: CellPosition = None
-        self.TOP_SECOND_FROM_RIGHT: CellPosition = None
-        self.BOTTOM_RIGHT: CellPosition = None
-        self.BOTTOM_SECOND_FROM_RIGHT: CellPosition = None
-        self.SECOND_FROM_BOTTOM_RIGHT: CellPosition = None
-        self.THIRD_FROM_BOTTOM_RIGHT: CellPosition = None
-        self.FOURTH_FROM_BOTTOM_RIGHT: CellPosition = None
-        self.SECOND_FROM_BOTTOM_SECOND_FROM_RIGHT: CellPosition = None
-        self.SECOND_FROM_BOTTOM_THIRD_FROM_RIGHT: CellPosition = None
-        self.SECOND_FROM_BOTTOM_FOURTH_FROM_RIGHT: CellPosition = None
-        self.BOTTOM_THIRD_FROM_RIGHT: CellPosition = None
-        self.BOTTOM_FOURTH_FROM_RIGHT: CellPosition = None
-        self.BOTTOM_SECOND_FROM_LEFT: CellPosition = None
-        self.SECOND_FROM_BOTTOM_LEFT: CellPosition = None
-        self.THIRD_FROM_BOTTOM_LEFT: CellPosition = None
-        self.BOTTOM_LEFT: CellPosition = None
-        self.SECOND_FROM_BOTTOM_SECOND_FROM_LEFT: CellPosition = None
+        if "TOP_RIGHT" not in vars(self): self.TOP_RIGHT: CellPosition = None
+        if "TOP_LEFT" not in vars(self): self.TOP_LEFT: CellPosition = None
+        if "SECOND_FROM_TOP_LEFT" not in vars(self): self.SECOND_FROM_TOP_LEFT: CellPosition = None
+        if "SECOND_FROM_TOP_RIGHT" not in vars(self): self.SECOND_FROM_TOP_RIGHT: CellPosition = None
+        if "TOP_SECOND_FROM_LEFT" not in vars(self): self.TOP_SECOND_FROM_LEFT: CellPosition = None
+        if "TOP_SECOND_FROM_RIGHT" not in vars(self): self.TOP_SECOND_FROM_RIGHT: CellPosition = None
+        if "BOTTOM_RIGHT" not in vars(self): self.BOTTOM_RIGHT: CellPosition = None
+        if "BOTTOM_SECOND_FROM_RIGHT" not in vars(self): self.BOTTOM_SECOND_FROM_RIGHT: CellPosition = None
+        if "SECOND_FROM_BOTTOM_RIGHT" not in vars(self): self.SECOND_FROM_BOTTOM_RIGHT: CellPosition = None
+        if "THIRD_FROM_BOTTOM_RIGHT" not in vars(self): self.THIRD_FROM_BOTTOM_RIGHT: CellPosition = None
+        if "FOURTH_FROM_BOTTOM_RIGHT" not in vars(self): self.FOURTH_FROM_BOTTOM_RIGHT: CellPosition = None
+        if "SECOND_FROM_BOTTOM_SECOND_FROM_RIGHT" not in vars(self): self.SECOND_FROM_BOTTOM_SECOND_FROM_RIGHT: CellPosition = None
+        if "SECOND_FROM_BOTTOM_THIRD_FROM_RIGHT" not in vars(self): self.SECOND_FROM_BOTTOM_THIRD_FROM_RIGHT: CellPosition = None
+        if "SECOND_FROM_BOTTOM_FOURTH_FROM_RIGHT" not in vars(self): self.SECOND_FROM_BOTTOM_FOURTH_FROM_RIGHT: CellPosition = None
+        if "BOTTOM_THIRD_FROM_RIGHT" not in vars(self): self.BOTTOM_THIRD_FROM_RIGHT: CellPosition = None
+        if "BOTTOM_FOURTH_FROM_RIGHT" not in vars(self): self.BOTTOM_FOURTH_FROM_RIGHT: CellPosition = None
+        if "BOTTOM_SECOND_FROM_LEFT" not in vars(self): self.BOTTOM_SECOND_FROM_LEFT: CellPosition = None
+        if "SECOND_FROM_BOTTOM_LEFT" not in vars(self): self.SECOND_FROM_BOTTOM_LEFT: CellPosition = None
+        if "THIRD_FROM_BOTTOM_LEFT" not in vars(self): self.THIRD_FROM_BOTTOM_LEFT: CellPosition = None
+        if "BOTTOM_LEFT" not in vars(self): self.BOTTOM_LEFT: CellPosition = None
+        if "SECOND_FROM_BOTTOM_SECOND_FROM_LEFT" not in vars(self): self.SECOND_FROM_BOTTOM_SECOND_FROM_LEFT: CellPosition = None
     
 
     def __init__(self) -> None:
         from org.allbinary.input.motion.button.TouchButtonLocationHelper import TouchButtonLocationHelper
         from org.allbinary.graphics.CellPositionFactory import CellPositionFactory
-        self._init_fields()
+        __class__._init_fields(self)
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
         touchButtonLocationHelper: TouchButtonLocationHelper = TouchButtonLocationHelper()
         cellPositionFactory: CellPositionFactory = CellPositionFactory.getInstance()

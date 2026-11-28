@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from java.lang.JavaRuntimeStatic import java_bases
 from javax.microedition.lcdui.Image import Image
@@ -22,32 +24,41 @@ from org.allbinary.image.opengles.OpenGLSurfaceChangedInterface import OpenGLSur
 
 
 #OpenGLESSWTJOGLImageJavaLibrary
+@java_inherited_overloads
 class OpenGLESImage(*java_bases(Image, OpenGLSurfaceChangedInterface)):
     NULL_OPENGL_IMAGE: OpenGLESImage = None
     texture2dList: BasicArrayList = None
     TYPE: int = 4
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("textureFactory", None)
+        vars(self).setdefault("openGLBitmap", None)
+        vars(self).setdefault("imageProcessor", None)
+        vars(self).setdefault("openGLESImageTranslate", None)
+        vars(self).setdefault("openGLESImageProperties", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.platform.graphics.PlatformBitmapBase import PlatformBitmapBase
-        from org.allbinary.platform.opengles.PlatformTextureBaseFactory import PlatformTextureBaseFactory
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.textureFactory: PlatformTextureBaseFactory = None
-        self.openGLBitmap: PlatformBitmapBase = None
+        if "textureFactory" not in vars(self): self.textureFactory: PlatformTextureBaseFactory = None
+        if "openGLBitmap" not in vars(self): self.openGLBitmap: PlatformBitmapBase = None
         self.imageProcessor: OpenGLESImageProcessor = OpenGLESImageProcessor.getInstance()
         self.openGLESImageTranslate: OpenGLESImageTranslate = OpenGLESImageTranslate.getInstance()
         self.openGLESImageProperties: OpenGLESImageProperties = OpenGLESImageProperties()
     
 
     def __init__(self, image: Image, bitmapFactory: PlatformBitmapBaseFactory, textureFactory: PlatformTextureBaseFactory) -> None:
+        __class__._java_defaults(self)
+        from org.allbinary.image.opengles.OpenGLImageCacheFactory import OpenGLImageCacheFactory
         from javax.microedition.lcdui.OpenGLESPostLoadPlatformImage import OpenGLESPostLoadPlatformImage
         from javax.microedition.lcdui.PostLoadImageProcessor import PostLoadImageProcessor
         from org.allbinary.platform.graphics.PlatformBitmapBaseFactory import PlatformBitmapBaseFactory
         from org.allbinary.platform.opengles.PlatformTextureBaseFactory import PlatformTextureBaseFactory
         super().__init__(image.getName(), PostLoadImageProcessor.NULL_POST_LOAD_IMAGE_PROCESSOR)
-        self._init_fields()
+        __class__._init_fields(self)
         self.openGLBitmap = bitmapFactory.createBitmap(image)
         self.textureFactory = textureFactory
         OpenGLImageCacheFactory.getInstance().init(self)
@@ -70,7 +81,7 @@ class OpenGLESImage(*java_bases(Image, OpenGLSurfaceChangedInterface)):
 
     def initTexture(self, gl: GL10) -> bool:
         from javax.microedition.khronos.opengles.GL10 import GL10
-        if not OpenGLESImage.texture2dList.contains(self):
+        if not (OpenGLESImage.texture2dList.contains(self)):
             OpenGLESImage.texture2dList.add(self)
             textures: list[int] = [0] * (1)
             gl.glEnable(GL10.GL_TEXTURE_2D)
@@ -105,7 +116,7 @@ class OpenGLESImage(*java_bases(Image, OpenGLSurfaceChangedInterface)):
         from org.allbinary.graphics.GraphicsStrings import GraphicsStrings
         from org.allbinary.logic.string.StringMaker import StringMaker
         graphicsStrings: GraphicsStrings = GraphicsStrings.getInstance()
-        return str(StringMaker().append(self.getName()).append(str(super())).append(graphicsStrings.OPACITY).appendfloat(float(self.openGLESImageProperties.alphaf)))
+        return str(StringMaker().append(self.getName()).append(java_super_call(super(), "toString")).append(graphicsStrings.OPACITY).appendfloat(float(self.openGLESImageProperties.alphaf)))
 
     def __str__(self) -> str:
         return self.toString()
@@ -125,6 +136,7 @@ class OpenGLESImage(*java_bases(Image, OpenGLSurfaceChangedInterface)):
 # from org.allbinary.util.BasicArrayListD import BasicArrayListD
 from org.allbinary.image.opengles.OpenGLESImageProcessor import OpenGLESImageProcessor
 from org.allbinary.image.opengles.OpenGLESImageTranslate import OpenGLESImageTranslate
+from org.allbinary.image.opengles.OpenGLESImageProperties import OpenGLESImageProperties
 
 
 def _OpenGLESImage_NULL_OPENGL_IMAGE() -> object:

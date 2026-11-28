@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.util.PriorityQueue import PriorityQueue
 
 
+@java_inherited_overloads
 class ABPriorityQueue(PriorityQueue):
 
     def __init__(self) -> None:

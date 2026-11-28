@@ -20,15 +20,15 @@ from __future__ import annotations
 class ImageAnalysisResults:
 
     def _init_fields(self) -> None:
-        self.imageColorRangeResults: ImageColorRangeResults = None
-        self.imageColorResults: ImageColorResults = None
-        self.averageAmbientLevel: float = 0.0
+        if "imageColorRangeResults" not in vars(self): self.imageColorRangeResults: ImageColorRangeResults = None
+        if "imageColorResults" not in vars(self): self.imageColorResults: ImageColorResults = None
+        if "averageAmbientLevel" not in vars(self): self.averageAmbientLevel: float = 0.0
     
 
     def __init__(self) -> None:
         from org.allbinary.media.image.analysis.ImageColorRangeResults import ImageColorRangeResults
         from org.allbinary.media.image.analysis.ImageColorResults import ImageColorResults
-        self._init_fields()
+        __class__._init_fields(self)
         self.imageColorRangeResults = ImageColorRangeResults()
         self.imageColorResults = ImageColorResults()
     

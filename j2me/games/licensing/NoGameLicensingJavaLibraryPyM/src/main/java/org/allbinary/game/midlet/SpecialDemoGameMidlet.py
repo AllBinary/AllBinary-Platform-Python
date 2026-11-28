@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.midlet.DemoGameMidlet import DemoGameMidlet
 
 
+@java_inherited_overloads
 class SpecialDemoGameMidlet(DemoGameMidlet):
     
 

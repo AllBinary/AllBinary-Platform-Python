@@ -15,21 +15,32 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_equals
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.media.graphics.geography.map.GeographicMapCellTypeFactory import GeographicMapCellTypeFactory
 
 
+@java_inherited_overloads
 class BasicPlatormGeographicMapCellTypeFactory(GeographicMapCellTypeFactory):
+    def _java_defaults(self):
+        vars(self).setdefault("enumerationUtil", None)
+        vars(self).setdefault("BLOCK_CELL_TYPE", None)
+        vars(self).setdefault("JUMP_THRU_CELL_TYPE", None)
+        vars(self).setdefault("LADDER_CELL_TYPE", None)
+        vars(self).setdefault("maxTileId", 0)
 
     def _init_fields(self) -> None:
         from org.allbinary.util.EnumerationUtil import EnumerationUtil
         self.enumerationUtil: EnumerationUtil = EnumerationUtil.getInstance()
-        self.BLOCK_CELL_TYPE: BasicPlatormGeographicMapCellType = None
-        self.JUMP_THRU_CELL_TYPE: BasicPlatormGeographicMapCellType = None
-        self.LADDER_CELL_TYPE: BasicPlatormGeographicMapCellType = None
-        self.maxTileId: int = None
+        if "BLOCK_CELL_TYPE" not in vars(self): self.BLOCK_CELL_TYPE: BasicPlatormGeographicMapCellType = None
+        if "JUMP_THRU_CELL_TYPE" not in vars(self): self.JUMP_THRU_CELL_TYPE: BasicPlatormGeographicMapCellType = None
+        if "LADDER_CELL_TYPE" not in vars(self): self.LADDER_CELL_TYPE: BasicPlatormGeographicMapCellType = None
+        if "maxTileId" not in vars(self): self.maxTileId: int = 0
     
 
     def __init__(self, tileTypeToTileIdsMap: ABHashtable[object, object], maxTileId: int) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.media.graphics.geography.map.platform.BasicPlatormGeographicMapCellType import BasicPlatormGeographicMapCellType
         from org.allbinary.media.graphics.geography.map.platform.BasicPlatormGeographicMapCellType import BasicPlatormGeographicMapCellType
         from java.util.Enumeration import Enumeration
@@ -38,7 +49,7 @@ class BasicPlatormGeographicMapCellTypeFactory(GeographicMapCellTypeFactory):
         from org.allbinary.util.ABHashtable import ABHashtable
         from org.allbinary.util.BasicArrayList import BasicArrayList
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         commonStrings: CommonStrings = CommonStrings.getInstance()
         self.logUtil.putF(commonStrings.START, self, commonStrings.INIT)
         self.maxTileId = maxTileId
@@ -58,11 +69,11 @@ class BasicPlatormGeographicMapCellTypeFactory(GeographicMapCellTypeFactory):
             self.logUtil.putF(key, self, commonStrings.INIT)
             idsWithTypeList = tileTypeToTileIdsMap.get(key)
             basicPlatormGeographicMapCellType = BasicPlatormGeographicMapCellType(idsWithTypeList)
-            if (key == PLATFORM):
+            if java_equals(key, PLATFORM):
                 BLOCK_CELL_TYPE = basicPlatormGeographicMapCellType
-            if (key == JUMP_TRHU):
+            if java_equals(key, JUMP_TRHU):
                 JUMP_THRU_CELL_TYPE = basicPlatormGeographicMapCellType
-            if (key == LADDER):
+            if java_equals(key, LADDER):
                 LADDER_CELL_TYPE = basicPlatormGeographicMapCellType
         self.BLOCK_CELL_TYPE = BLOCK_CELL_TYPE
         self.JUMP_THRU_CELL_TYPE = JUMP_THRU_CELL_TYPE

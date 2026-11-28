@@ -15,10 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.media.AllBinaryVibrationME import AllBinaryVibrationME
 
 
+@java_inherited_overloads
 class AllBinaryVibration(AllBinaryVibrationME):
     VIBRATION: AllBinaryVibrationME = None
     

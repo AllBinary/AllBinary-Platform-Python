@@ -15,10 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.android.ActivityFractureUtil import ActivityFractureUtil
 
 
+@java_inherited_overloads
 class ActivityFractureUtilAPI1(ActivityFractureUtil):
     instance: ActivityFractureUtilAPI1 = None
 

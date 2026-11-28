@@ -8,18 +8,19 @@ from __future__ import annotations
 class StringMaker:
 
     def _init_fields(self) -> None:
-        self.charArray: list[str] = None
-        self.currentLength: int = 0
+        if "charArray" not in vars(self): self.charArray: list[str] = None
+        if "currentLength" not in vars(self): self.currentLength: int = 0
     
 
     def __init__(self) -> None:
         from jsinterop.annotations.JsConstructor import JsConstructor
-        self._init_fields()
+        __class__._init_fields(self)
         self.charArray = ['\0'] * (20)
     
 
     def append(self, string: str) -> StringMaker:
         from jsinterop.annotations.JsMethod import JsMethod
+        if string is None: string = "null"
         stringLength: int = len(string)
         self.ensureCapacity(self.currentLength + stringLength)
         self.charArray[self.currentLength:self.currentLength + (stringLength - 0)] = list(string[0:stringLength])
@@ -100,7 +101,7 @@ class StringMaker:
                 newCapacity = minSize
             copy: list[str] = ['\0'] * (newCapacity)
             min: int = self.min(len(self.charArray), newCapacity)
-            copy[0:0 + min] = self.charArray[0:0 + min]
+            __import__("java.lang.System", fromlist=["System"]).System.arraycopy(self.charArray, 0, copy, 0, min)
             self.charArray = copy
     
 

@@ -15,11 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.business.user.role.UserRole import UserRole
 
 
+@java_inherited_overloads
 class UserRoleB(UserRole):
     roleVector: BasicArrayList = None
     _lock = threading.RLock()
@@ -43,7 +46,7 @@ class UserRoleB(UserRole):
         from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         UserRoleFactory.getInstance()
-        if not StringValidationUtil.getInstance().isEmpty(role):
+        if not (StringValidationUtil.getInstance().isEmpty(role)):
             roleVector: BasicArrayList = UserRoleB.getAll()
             size: int = roleVector.size()
             for index in range(0, size):

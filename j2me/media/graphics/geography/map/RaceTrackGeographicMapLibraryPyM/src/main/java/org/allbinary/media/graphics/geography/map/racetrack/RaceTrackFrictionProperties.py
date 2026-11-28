@@ -20,13 +20,13 @@ from __future__ import annotations
 class RaceTrackFrictionProperties:
 
     def _init_fields(self) -> None:
-        self.ROAD_FRICTION_NOMINATOR: int = None
-        self.GROUND_FRICTION_NOMINATOR: int = None
+        if "ROAD_FRICTION_NOMINATOR" not in vars(self): self.ROAD_FRICTION_NOMINATOR: int = 0
+        if "GROUND_FRICTION_NOMINATOR" not in vars(self): self.GROUND_FRICTION_NOMINATOR: int = 0
     
 
     def __init__(self, roadFriction: int, groundFriction: int) -> None:
         from org.allbinary.game.physics.friction.FrictionData import FrictionData
-        self._init_fields()
+        __class__._init_fields(self)
         self.ROAD_FRICTION_NOMINATOR = FrictionData.getFrictionDenominator() - roadFriction
         self.GROUND_FRICTION_NOMINATOR = FrictionData.getFrictionDenominator() - groundFriction
     

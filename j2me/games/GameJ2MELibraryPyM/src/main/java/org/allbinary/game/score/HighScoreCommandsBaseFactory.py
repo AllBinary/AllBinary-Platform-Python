@@ -20,15 +20,14 @@ from __future__ import annotations
 class HighScoreCommandsBaseFactory:
 
     def _init_fields(self) -> None:
-        from javax.microedition.lcdui.Command import Command
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.HIGH_SCORE_COMMANDS: list[Command] = None
+        if "HIGH_SCORE_COMMANDS" not in vars(self): self.HIGH_SCORE_COMMANDS: list[Command] = None
     
 
     def __init__(self, HIGH_SCORE_COMMANDS: list[Command]) -> None:
         from javax.microedition.lcdui.Command import Command
-        self._init_fields()
+        __class__._init_fields(self)
         self.HIGH_SCORE_COMMANDS = HIGH_SCORE_COMMANDS
     
 

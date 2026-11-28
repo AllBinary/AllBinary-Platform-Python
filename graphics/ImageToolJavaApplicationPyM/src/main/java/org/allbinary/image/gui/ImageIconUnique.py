@@ -15,18 +15,23 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 # from javax.swing.ImageIcon import ImageIcon
 
 
+@java_inherited_overloads
 class ImageIconUnique(ImageIcon):
+    def _java_defaults(self):
+        vars(self).setdefault("id", 0)
 
     def _init_fields(self) -> None:
-        self.id: int = 0
+        if "id" not in vars(self): self.id: int = 0
     
 
     def __init__(self, bufferedImage: BufferedImage, index: int) -> None:
+        __class__._java_defaults(self)
         super().__init__(bufferedImage)
-        self._init_fields()
+        __class__._init_fields(self)
         self.setId(index)
     
 

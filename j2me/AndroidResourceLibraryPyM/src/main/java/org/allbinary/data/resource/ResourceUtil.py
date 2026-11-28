@@ -26,7 +26,6 @@ class ResourceUtil:
         from org.allbinary.logic.NullUtil import NullUtil
         from org.allbinary.logic.StdUtil import StdUtil
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.util.ABHashtable import ABHashtable
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.context: object = NullUtil.getInstance().NULL_OBJECT
         self.resources: object = NullUtil.getInstance().NULL_OBJECT
@@ -39,7 +38,7 @@ class ResourceUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def setLoadingPaths(self, path: str, ext: str) -> None:
@@ -104,7 +103,7 @@ class ResourceUtil:
     def setResources(self, resources: Resources) -> None:
         from android.content.res.Resources import Resources
         from org.allbinary.logic.string.StringMaker import StringMaker
-        self.logUtil.putF(str(StringMaker().append("Resource Loader: ").append(type(resources).__module__ + "." + type(resources).__qualname__)), self, "setResources")
+        self.logUtil.putF(str(StringMaker().append("Resource Loader: ").append(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(resources)))), self, "setResources")
         self.resources = resources
     
 

@@ -15,13 +15,17 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
 
 
+@java_inherited_overloads
 class DestroyedEvent(AllBinaryEventObject):
+    def _java_defaults(self):
+        vars(self).setdefault("allBinaryGameCanvas", None)
+        vars(self).setdefault("allBinaryLayerInterface", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
         from org.allbinary.game.displayable.canvas.NullGameCanvas import NullGameCanvas
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         self.allBinaryGameCanvas: AllBinaryGameCanvas = NullGameCanvas.getInstance()
@@ -29,10 +33,11 @@ class DestroyedEvent(AllBinaryEventObject):
     
 
     def __init__(self, combatGameCanvas: AllBinaryGameCanvas) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.combat.destroy.event.DestroyedEventHandler import DestroyedEventHandler
         from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
         super().__init__(DestroyedEventHandler.getInstance())
-        self._init_fields()
+        __class__._init_fields(self)
         self.setAllBinaryGameCanvas(combatGameCanvas)
     
 

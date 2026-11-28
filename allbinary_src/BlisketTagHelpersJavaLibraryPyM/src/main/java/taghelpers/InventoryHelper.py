@@ -15,28 +15,37 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from admin.taghelpers.TagHelper import TagHelper
 
 
+@java_inherited_overloads
 class InventoryHelper(TagHelper):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("basicItemData", None)
+        vars(self).setdefault("weblisketSession", None)
+        vars(self).setdefault("response", None)
+        vars(self).setdefault("request", None)
+        vars(self).setdefault("streetAddress", None)
+        vars(self).setdefault("id", None)
+        vars(self).setdefault("searchRequest", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.user.address.StreetAddress import StreetAddress
         from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
-        from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.logic.control.search.SearchRequest import SearchRequest
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.basicItemData: BasicItemData = BasicItemData.getInstance()
-        self.weblisketSession: WeblisketSession = None
-        self.response: HttpServletResponse = None
-        self.request: HttpServletRequest = None
-        self.streetAddress: StreetAddress = None
-        self.id: str = None
-        self.searchRequest: SearchRequest = None
+        if "weblisketSession" not in vars(self): self.weblisketSession: WeblisketSession = None
+        if "response" not in vars(self): self.response: HttpServletResponse = None
+        if "request" not in vars(self): self.request: HttpServletRequest = None
+        if "streetAddress" not in vars(self): self.streetAddress: StreetAddress = None
+        if "id" not in vars(self): self.id: str = None
+        if "searchRequest" not in vars(self): self.searchRequest: SearchRequest = None
     
 
     def __init__(self, propertiesHashMap: HashMap, pageContext: PageContext) -> None:
+        __class__._java_defaults(self)
         from java.util.HashMap import HashMap
         from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
         from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
@@ -46,7 +55,7 @@ class InventoryHelper(TagHelper):
         from org.allbinary.logic.control.search.SearchRequest import SearchRequest
         from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.response = pageContext.getResponse()
         self.request = pageContext.getRequest()
         storeName: str = propertiesHashMap.get(StoreFrontData.getInstance().NAME)

@@ -15,33 +15,38 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 from org.allbinary.logic.control.validate.Validation import Validation
 
 
+@java_inherited_overloads
 class MetasValidation(*java_bases(Validation, DomNodeInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("storeFrontInterface", None)
+        vars(self).setdefault("metaValidationVector", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
-        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.storeFrontInterface: StoreFrontInterface = None
-        self.metaValidationVector: BasicArrayList = None
+        if "storeFrontInterface" not in vars(self): self.storeFrontInterface: StoreFrontInterface = None
+        if "metaValidationVector" not in vars(self): self.metaValidationVector: BasicArrayList = None
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self.__jconstructor1(*args)
+            __class__.__jconstructor1(self, *args)
 
     def __jconstructor1(self, *args) -> None:
         if True and (args[0] is None or isinstance(args[0], str)):
-            self._constructor1_1(*args)
+            __class__._constructor1_1(self, *args)
         else:
-            self._constructor1_2(*args)
+            __class__._constructor1_2(self, *args)
     
 
     def _constructor1_1(self, storeName: str) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.visual.transform.template.customizer.includes.meta.MetaValidation import MetaValidation
         from org.allbinary.logic.visual.transform.template.customizer.includes.meta.MetaValidation import MetaValidation
         from org.allbinary.logic.visual.transform.template.customizer.includes.meta.MetaValidation import MetaValidation
@@ -50,7 +55,7 @@ class MetasValidation(*java_bases(Validation, DomNodeInterface)):
         from org.allbinary.logic.visual.dhtml.html.head.meta.HtmlMetaAttributeDataFactory import HtmlMetaAttributeDataFactory
         from org.allbinary.logic.visual.dhtml.html.head.meta.HtmlMetaAttributeValuesData import HtmlMetaAttributeValuesData
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.storeFrontInterface = StoreFrontFactory.getInstance(storeName)
         self.metaValidationVector = BasicArrayListD()
         contentValue: str = self.storeFrontInterface.getName() + " E-Commerce Site"
@@ -63,10 +68,11 @@ class MetasValidation(*java_bases(Validation, DomNodeInterface)):
     
 
     def _constructor1_2(self, document: Document) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.string.CommonStrings import CommonStrings
         from org.w3c.dom.Document import Document
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         raise Exception(CommonStrings.getInstance().NOT_IMPLEMENTED)
     
 

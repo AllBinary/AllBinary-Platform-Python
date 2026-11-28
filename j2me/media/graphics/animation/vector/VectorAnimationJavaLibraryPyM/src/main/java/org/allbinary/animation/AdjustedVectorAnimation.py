@@ -15,27 +15,34 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.animation.VectorAnimation import VectorAnimation
 
 
+@java_inherited_overloads
 class AdjustedVectorAnimation(VectorAnimation):
+    def _java_defaults(self):
+        vars(self).setdefault("dx", 0)
+        vars(self).setdefault("dy", 0)
 
     def _init_fields(self) -> None:
-        self.dx: int = None
-        self.dy: int = None
+        if "dx" not in vars(self): self.dx: int = 0
+        if "dy" not in vars(self): self.dy: int = 0
     
 
     def __init__(self, currentPoints: list[list[list[int]]], basicColor: BasicColor, dx: int, dy: int, animationBehavior: AnimationBehavior) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(currentPoints, basicColor, animationBehavior)
-        self._init_fields()
+        __class__._init_fields(self)
         self.dx = dx
         self.dy = dy
     
 
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
         from javax.microedition.lcdui.Graphics import Graphics
-        super().paintXY(graphics, x + self.dx, y + self.dy)
+        java_super_call(super(), "paintXY", graphics, x + self.dx, y + self.dy)
 # from javax.microedition.lcdui.Graphics import Graphics
 # from org.allbinary.graphics.color.BasicColor import BasicColor
 

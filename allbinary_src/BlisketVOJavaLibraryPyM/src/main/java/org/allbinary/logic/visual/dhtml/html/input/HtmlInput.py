@@ -15,10 +15,22 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.visual.dhtml.html.HtmlTag import HtmlTag
 
 
+@java_inherited_overloads
 class HtmlInput(HtmlTag):
+    def _java_defaults(self):
+        vars(self).setdefault("END", None)
+        vars(self).setdefault("STARTINPUT", None)
+        vars(self).setdefault("ENDINPUT", None)
+        vars(self).setdefault("TYPE", None)
+        vars(self).setdefault("NAME", None)
+        vars(self).setdefault("before", None)
+        vars(self).setdefault("type_", None)
+        vars(self).setdefault("name", None)
+        vars(self).setdefault("after", None)
 
     def _init_fields(self) -> None:
         self.END: str = ">"
@@ -26,15 +38,16 @@ class HtmlInput(HtmlTag):
         self.ENDINPUT: str = "</INPUT>"
         self.TYPE: str = "TYPE=\""
         self.NAME: str = "NAME=\""
-        self.before: str = None
-        self.type_: str = None
-        self.name: str = None
-        self.after: str = None
+        if "before" not in vars(self): self.before: str = None
+        if "type_" not in vars(self): self.type_: str = None
+        if "name" not in vars(self): self.name: str = None
+        if "after" not in vars(self): self.after: str = None
     
 
     def __init__(self, before: str, type_: str, name: str, after: str) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.before = before
         self.type_ = type_
         self.name = name

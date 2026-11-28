@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -32,7 +33,7 @@ class WindowsOperatingSystemFactory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getOperatingSystemInstance(self) -> GenericOperatingSystem:
@@ -67,7 +68,7 @@ class WindowsOperatingSystemFactory:
             elif ((osName > operatingSystems.WINDOWS_VISTA) - (osName < operatingSystems.WINDOWS_VISTA)) == 0:
                 operatingSystemInterface = WindowsOS()
             else:
-                if operatingSystems.isUnknownSpecificOSAllowed():
+                if java_predicate(operatingSystems, "isUnknownSpecificOSAllowed"):
                     operatingSystemInterface = WindowsOS()
                 else:
                     raise Exception("Specific Windows OS Not Supported: " + osName)

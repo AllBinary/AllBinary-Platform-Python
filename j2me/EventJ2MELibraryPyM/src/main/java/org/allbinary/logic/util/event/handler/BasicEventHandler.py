@@ -24,18 +24,16 @@ class BasicEventHandler(BasicEventHandlerInterface):
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.logic.util.event.EventStrings import EventStrings
         from org.allbinary.string.CommonStrings import CommonStrings
-        from org.allbinary.util.BasicArrayList import BasicArrayList
-        from jsinterop.annotations.JsProperty import JsProperty
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.eventStrings: EventStrings = EventStrings.getInstance()
-        self.eventListenerInterfaceList: BasicArrayList = None
+        if "eventListenerInterfaceList" not in vars(self): self.eventListenerInterfaceList: BasicArrayList = None
     
 
     def __init__(self) -> None:
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         from jsinterop.annotations.JsConstructor import JsConstructor
-        self._init_fields()
+        __class__._init_fields(self)
         self.eventListenerInterfaceList = BasicArrayListD()
     
 
@@ -70,14 +68,14 @@ class BasicEventHandler(BasicEventHandlerInterface):
     def addListenerSingleThreaded(self, eventListenerInterface: EventListenerInterface) -> None:
         from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         from jsinterop.annotations.JsMethod import JsMethod
-        if not self.eventListenerInterfaceList.contains(eventListenerInterface):
+        if not (self.eventListenerInterfaceList.contains(eventListenerInterface)):
             self.eventListenerInterfaceList.add(eventListenerInterface)
     
 
     def addListenerInterface(self, eventListenerInterface: EventListenerInterface) -> None:
         from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         from jsinterop.annotations.JsMethod import JsMethod
-        if not self.eventListenerInterfaceList.contains(eventListenerInterface):
+        if not (self.eventListenerInterfaceList.contains(eventListenerInterface)):
             self.eventListenerInterfaceList.add(eventListenerInterface)
     
 

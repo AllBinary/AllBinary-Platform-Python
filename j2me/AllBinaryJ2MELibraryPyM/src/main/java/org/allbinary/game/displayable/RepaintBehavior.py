@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.JavaThread import JavaThread
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 
@@ -28,7 +30,7 @@ class RepaintBehavior:
         self.NAME: str = "RepaintBehavior"
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -52,7 +54,7 @@ class RepaintBehavior:
         if features.isFeature(openGLFeatureFactory.OPENGL):
             DisplayInfoSingleton.getInstance().process()
         else:
-            thread: threading.Thread = threading.Thread(target=RepaintRunnable(canvas).run, name=self.NAME)
+            thread: JavaThread = JavaThread(target=RepaintRunnable(canvas).run, name=self.NAME)
             thread.start()
 # from javax.microedition.lcdui.Canvas import Canvas
 # from org.allbinary.game.configuration.feature.Features import Features

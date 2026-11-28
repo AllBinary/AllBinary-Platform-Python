@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.game.ai.ArtificialIntelligenceInterfaceFactoryInterface import ArtificialIntelligenceInterfaceFactoryInterface
 
 
@@ -30,7 +31,7 @@ class KeyPressesAIFactory(ArtificialIntelligenceInterfaceFactoryInterface):
         from org.allbinary.game.input.GameInput import GameInput
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         from org.allbinary.util.ABHashtable import ABHashtable
-        isSingleKeyProcessing: bool = InputFeatureFactory.getInstance().isSingleKeyProcessing()
+        isSingleKeyProcessing: bool = java_predicate(InputFeatureFactory.getInstance(), "isSingleKeyProcessing")
         if isSingleKeyProcessing:
             return KeyPressesAI(hashtable, ownerLayerInterface, gameInput)
         else:

@@ -15,23 +15,23 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 
 
 class LayerPlacer:
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.GPoint import GPoint
-        from org.allbinary.layer.LayerInterfaceVisitor import LayerInterfaceVisitor
         from org.allbinary.util.EnumerationUtil import EnumerationUtil
         self.enumerationUtil: EnumerationUtil = EnumerationUtil.getInstance()
-        self.layerInterfaceVisitor: LayerInterfaceVisitor = None
-        self.dimension: GPoint = None
+        if "layerInterfaceVisitor" not in vars(self): self.layerInterfaceVisitor: LayerInterfaceVisitor = None
+        if "dimension" not in vars(self): self.dimension: GPoint = None
     
 
     def __init__(self, layerInterfaceVisitor: LayerInterfaceVisitor, dimension: GPoint) -> None:
         from org.allbinary.graphics.GPoint import GPoint
         from org.allbinary.layer.LayerInterfaceVisitor import LayerInterfaceVisitor
-        self._init_fields()
+        __class__._init_fields(self)
         self.layerInterfaceVisitor = layerInterfaceVisitor
         self.dimension = dimension
     
@@ -84,13 +84,16 @@ class LayerPlacer:
         if layerPlacementType == LayerPlacementTypeFactory.getInstance().MAP:
             width: int = layerPlacementInterface.getWidth()
             height: int = layerPlacementInterface.getHeight()
-            x: int = ((self.dimension.getX() - width) / 2)
-            y: int = ((self.dimension.getY() - height) / 2)
+            x: int = (java_divide((self.dimension.getX() - width), 2)
+            )
+            y: int = (java_divide((self.dimension.getY() - height), 2)
+            )
             return pointFactory.createXY(x, y)
         elif layerPlacementType == LayerPlacementTypeFactory.getInstance().UP:
             width: int = layerPlacementInterface.getWidth()
             height: int = layerPlacementInterface.getHeight()
-            x: int = ((self.dimension.getX() - width) / 2)
+            x: int = (java_divide((self.dimension.getX() - width), 2)
+            )
             y: int = -height
             return pointFactory.createXY(x, y)
         else:

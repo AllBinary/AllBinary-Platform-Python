@@ -15,18 +15,29 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 from org.allbinary.graphics.paint.Paintable import Paintable
 
 
+@java_inherited_overloads
 class HelpPaintable(*java_bases(Paintable, UpdateMyFontInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("displayInfo", None)
+        vars(self).setdefault("updateMyFontProcessor", None)
+        vars(self).setdefault("myFontProcessor", None)
+        vars(self).setdefault("anchor", 0)
+        vars(self).setdefault("title", None)
+        vars(self).setdefault("inputInfo", None)
+        vars(self).setdefault("basicColor", None)
+        vars(self).setdefault("titleBeginWidth", 0)
+        vars(self).setdefault("beginWidthArray", None)
+        vars(self).setdefault("charHeight", 0)
 
     def _init_fields(self) -> None:
         from org.allbinary.graphics.Anchor import Anchor
-        from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
         from org.allbinary.logic.NullUtil import NullUtil
         from org.allbinary.logic.string.StringUtil import StringUtil
@@ -34,18 +45,19 @@ class HelpPaintable(*java_bases(Paintable, UpdateMyFontInterface)):
         self.updateMyFontProcessor: MyFontProcessor = UpdateMyFontProcessor(self)
         self.myFontProcessor: MyFontProcessor = self.updateMyFontProcessor
         self.anchor: int = Anchor.TOP_LEFT
-        self.title: str = None
+        if "title" not in vars(self): self.title: str = None
         self.inputInfo: list[str] = StringUtil.getInstance().getArrayInstance()
-        self.basicColor: BasicColor = None
-        self.titleBeginWidth: int = 0
+        if "basicColor" not in vars(self): self.basicColor: BasicColor = None
+        if "titleBeginWidth" not in vars(self): self.titleBeginWidth: int = 0
         self.beginWidthArray: list[int] = NullUtil.getInstance().NULL_INT_ARRAY
-        self.charHeight: int = 0
+        if "charHeight" not in vars(self): self.charHeight: int = 0
     
 
     def __init__(self, title: str, backgroundBasicColor: BasicColor, basicColor: BasicColor) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.title = title
         self.basicColor = basicColor
     

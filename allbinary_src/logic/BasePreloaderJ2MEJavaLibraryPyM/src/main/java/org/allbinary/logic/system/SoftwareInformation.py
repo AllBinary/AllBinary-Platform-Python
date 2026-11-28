@@ -20,15 +20,15 @@ from __future__ import annotations
 class SoftwareInformation:
 
     def _init_fields(self) -> None:
-        self.name: str = None
-        self.shortName: str = None
-        self.version: str = None
+        if "name" not in vars(self): self.name: str = None
+        if "shortName" not in vars(self): self.shortName: str = None
+        if "version" not in vars(self): self.version: str = None
     
 
     def __init__(self, name: str, version: str, shortName: str) -> None:
         from org.allbinary.KotlinUtil import KotlinUtil
         from org.allbinary.logic.string.StringMaker import StringMaker
-        self._init_fields()
+        __class__._init_fields(self)
         self.name = name
         self.version = version
         self.shortName = str(StringMaker().append(shortName).append(KotlinUtil.getShortName()))

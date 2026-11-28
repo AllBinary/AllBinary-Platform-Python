@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.AnimationInterface import AnimationInterface
 from org.allbinary.animation.SequenceInterface import SequenceInterface
 
 
 # Java interface
+@java_inherited_overloads
 class SequentialAnimationInterface(*java_bases(AnimationInterface, SequenceInterface)):
     
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 
 
@@ -23,11 +24,11 @@ class CategoryView(DomNodeInterface):
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.categoryInterface: CategoryInterface = None
+        if "categoryInterface" not in vars(self): self.categoryInterface: CategoryInterface = None
     
 
     def __init__(self, categoryInterface: CategoryInterface) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.categoryInterface = categoryInterface
     
 
@@ -37,6 +38,7 @@ class CategoryView(DomNodeInterface):
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
+        from org.allbinary.business.category.CategoryData import CategoryData
         from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
         from org.allbinary.business.category.properties.CategoryPropertiesView import CategoryPropertiesView

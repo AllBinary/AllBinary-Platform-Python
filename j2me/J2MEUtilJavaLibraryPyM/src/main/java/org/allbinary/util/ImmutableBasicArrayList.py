@@ -15,18 +15,23 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.util.BasicArrayListS import BasicArrayListS
 
 
+@java_inherited_overloads
 class ImmutableBasicArrayList(BasicArrayListS):
+    def _java_defaults(self):
+        vars(self).setdefault("name", None)
 
     def _init_fields(self) -> None:
-        self.name: str = None
+        if "name" not in vars(self): self.name: str = None
     
 
     def __init__(self, name: str, size: int) -> None:
+        __class__._java_defaults(self)
         super().__init__(size)
-        self._init_fields()
+        __class__._init_fields(self)
         self.name = name
     
 

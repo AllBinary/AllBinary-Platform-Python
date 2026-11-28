@@ -15,36 +15,55 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import datetime
 from admin.taghelpers.ModifyTable import ModifyTable
 
 
+@java_inherited_overloads
 class PermissionItemsRequestHelper(ModifyTable):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("basicItemData", None)
+        vars(self).setdefault("request", None)
+        vars(self).setdefault("id", None)
+        vars(self).setdefault("enabled", None)
+        vars(self).setdefault("number", None)
+        vars(self).setdefault("who", None)
+        vars(self).setdefault("what", None)
+        vars(self).setdefault("type_", None)
+        vars(self).setdefault("remoteAddr", None)
+        vars(self).setdefault("startTime", None)
+        vars(self).setdefault("endTime", None)
+        vars(self).setdefault("price", None)
+        vars(self).setdefault("timeEntered", None)
+        vars(self).setdefault("lastModified", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.basicItemData: BasicItemData = BasicItemData.getInstance()
-        self.request: HttpServletRequest = None
-        self.id: str = None
-        self.enabled: str = None
-        self.number: str = None
-        self.who: str = None
-        self.what: str = None
-        self.type_: str = None
-        self.remoteAddr: str = None
-        self.startTime: str = None
-        self.endTime: str = None
-        self.price: str = None
-        self.timeEntered: str = None
-        self.lastModified: str = None
+        if "request" not in vars(self): self.request: HttpServletRequest = None
+        if "id" not in vars(self): self.id: str = None
+        if "enabled" not in vars(self): self.enabled: str = None
+        if "number" not in vars(self): self.number: str = None
+        if "who" not in vars(self): self.who: str = None
+        if "what" not in vars(self): self.what: str = None
+        if "type_" not in vars(self): self.type_: str = None
+        if "remoteAddr" not in vars(self): self.remoteAddr: str = None
+        if "startTime" not in vars(self): self.startTime: str = None
+        if "endTime" not in vars(self): self.endTime: str = None
+        if "price" not in vars(self): self.price: str = None
+        if "timeEntered" not in vars(self): self.timeEntered: str = None
+        if "lastModified" not in vars(self): self.lastModified: str = None
     
 
     def __init__(self, hashMap: HashMap, pageContext: PageContext) -> None:
+        __class__._java_defaults(self)
         from java.util.HashMap import HashMap
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.request = pageContext.getRequest()
         self.getFormData()
     

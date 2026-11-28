@@ -20,13 +20,14 @@ from __future__ import annotations
 class BufferedLineReader:
 
     def _init_fields(self) -> None:
-        self.tmpIn: BufferedReader = None
+        if "tmpIn" not in vars(self): self.tmpIn: BufferedReader = None
     
 
     def __init__(self, file: AbFile) -> None:
+        from java.io.BufferedReader import BufferedReader
         from org.allbinary.logic.io.file.AbFile import AbFile
         from org.allbinary.logic.io.file.AbFileNativeUtil import AbFileNativeUtil
-        self._init_fields()
+        __class__._init_fields(self)
         self.tmpIn = BufferedReader(FileReader(AbFileNativeUtil.get(file)))
     
 

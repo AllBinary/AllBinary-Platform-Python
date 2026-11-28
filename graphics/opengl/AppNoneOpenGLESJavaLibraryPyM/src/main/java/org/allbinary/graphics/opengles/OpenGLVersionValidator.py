@@ -25,7 +25,7 @@ class OpenGLVersionValidator:
         self.EGL_CONTEXT_CLIENT_VERSION_VALUE: int = -1
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

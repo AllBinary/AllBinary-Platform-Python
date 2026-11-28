@@ -20,22 +20,20 @@ from __future__ import annotations
 class InputAutomationServiceConsumer:
 
     def _init_fields(self) -> None:
-        from org.osgi.framework.BundleContext import BundleContext
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.osgi.OSGIServiceVisitorInterface import OSGIServiceVisitorInterface
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.osgiServiceUtil: OSGIServiceUtil = OSGIServiceUtil.getInstance()
-        self.registryName: str = None
-        self.bundleContext: BundleContext = None
-        self.osgiServiceVisitorInterface: OSGIServiceVisitorInterface = None
+        if "registryName" not in vars(self): self.registryName: str = None
+        if "bundleContext" not in vars(self): self.bundleContext: BundleContext = None
+        if "osgiServiceVisitorInterface" not in vars(self): self.osgiServiceVisitorInterface: OSGIServiceVisitorInterface = None
     
 
     def __init__(self, registryName: str, bundleContext: BundleContext, osgiServiceVisitorInterface: OSGIServiceVisitorInterface) -> None:
         from org.osgi.framework.BundleContext import BundleContext
         from org.allbinary.osgi.OSGIServiceVisitorInterface import OSGIServiceVisitorInterface
-        self._init_fields()
+        __class__._init_fields(self)
         self.setRegistryName(registryName)
         self.setBundleContext(bundleContext)
         self.setOsgiServiceVisitorInterface(osgiServiceVisitorInterface)
@@ -52,7 +50,7 @@ class InputAutomationServiceConsumer:
         osgiServiceInterface: OSGIServiceInterface = None
         for index in range(0, size):
             osgiServiceInterface = vector.get(index)
-            if not self.getOsgiServiceVisitorInterface().visit(osgiServiceInterface):
+            if not (self.getOsgiServiceVisitorInterface().visit(osgiServiceInterface)):
                 raise Exception("Unable to process service: " + str(osgiServiceInterface))
     
 

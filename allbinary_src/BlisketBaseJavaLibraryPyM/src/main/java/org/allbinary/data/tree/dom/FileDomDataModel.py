@@ -21,19 +21,19 @@ from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 class FileDomDataModel(DomNodeInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.logic.io.file.AbFile import AbFile
-        self.file: AbFile = None
+        if "file" not in vars(self): self.file: AbFile = None
     
 
     def __init__(self, file: AbFile) -> None:
         from org.allbinary.logic.io.file.AbFile import AbFile
-        self._init_fields()
+        __class__._init_fields(self)
         self.file = file
     
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
         from org.allbinary.data.tree.dom.FileTableMapping import FileTableMapping
+        from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
         from java.util.HashMap import HashMap
         from org.allbinary.data.tables.TableMappingInterface import TableMappingInterface
         from org.w3c.dom.Document import Document

@@ -15,28 +15,34 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from admin.taghelpers.ModifyTable import ModifyTable
 
 
+@java_inherited_overloads
 class InventoryRequestHelper(ModifyTable):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("basicItemData", None)
+        vars(self).setdefault("itemInterface", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
-        from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.basicItemData: BasicItemData = BasicItemData.getInstance()
-        self.itemInterface: ItemInterface = None
+        if "itemInterface" not in vars(self): self.itemInterface: ItemInterface = None
     
 
     def __init__(self, propertiesHashMap: HashMap, pageContext: PageContext) -> None:
+        __class__._java_defaults(self)
         from admin.taghelpers.InventoryItemViewParentTagHelper import InventoryItemViewParentTagHelper
         from java.util.HashMap import HashMap
         from admin.tags.AbTagData import AbTagData
         from tags.HelperTag import HelperTag
         from views.admin.inventory.InventoryItemView import InventoryItemView
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         inventoryTag: HelperTag = propertiesHashMap.get(AbTagData.PARENT)
         itemView: InventoryItemView = InventoryItemViewParentTagHelper.getInstance().getInventoryItemView(inventoryTag)
         self.itemInterface = itemView.getItemInterface()

@@ -15,6 +15,9 @@
 
 from __future__ import annotations
 
+from java.lang.JavaMonitor import java_monitor, java_wait
+from java.lang.JavaRuntimeStatic import java_equals
+from java.lang.JavaRuntimeStatic import java_predicate
 import gc
 from java.lang.JavaRuntimeStatic import lazy_static
 
@@ -30,13 +33,13 @@ class TsUtil:
     
 
     def hashCode(self, anyType: object) -> int:
-        return hash(anyType)
+        return java_predicate(anyType, "hashCode")
     
 
     # throws InterruptedException
     def waitFor(self, any: object, timeoutMillis: int) -> None:
         anyType: object = any
-        anyType.wait(timeoutMillis)
+        java_wait(anyType, timeoutMillis)
     
 
     def getRecord(self, anyType: object, recordId: int) -> list[int]:
@@ -52,7 +55,7 @@ class TsUtil:
     
 
     def equalsNotstring(self, anyType: object, object2: object) -> bool:
-        return anyType.equals(object2)
+        return java_equals(anyType, object2)
     
 
     def toNumberFromChar(self, value: str) -> int:

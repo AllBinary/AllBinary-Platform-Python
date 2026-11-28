@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 
 
 class AbPath:
@@ -46,15 +47,15 @@ class AbPath:
 
     def __init__(self, aPath: str, name: str) -> None:
         from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-        self._init_fields()
+        __class__._init_fields(self)
         stringValidationUtil: StringValidationUtil = StringValidationUtil.getInstance()
-        if not stringValidationUtil.isEmpty(aPath):
+        if not (stringValidationUtil.isEmpty(aPath)):
             self.schema = self.getSchema(aPath)
             self.nameP = name
             self.path = self.abPathUtil.adjustEnd(self.abPathUtil.adjust(self.getPathFromPath(aPath)))
         else:
             self.init()
-            if not stringValidationUtil.isEmpty(name):
+            if not (stringValidationUtil.isEmpty(name)):
                 self.nameP = name
     
 
@@ -82,7 +83,7 @@ class AbPath:
         from org.allbinary.logic.io.file.FilePathData import FilePathData
         filePathData: FilePathData = FilePathData.getInstance()
         tempPath: str = aPath
-        if not self.hasSchema():
+        if not (java_predicate(self, "hasSchema")):
             tempPath = self.abPathUtil.adjustStart(tempPath)
         else:
             beginIndex: int = tempPath.find(self.commonSeps.COLON)
@@ -108,7 +109,7 @@ class AbPath:
     def toString(self) -> str:
         from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
-        if self.hasSchema():
+        if java_predicate(self, "hasSchema"):
             stringBuffer.append(self.schema)
             stringBuffer.append(AbPath.NETWORK_SEP)
         stringBuffer.append(self.getPath())
@@ -123,7 +124,7 @@ class AbPath:
         from org.allbinary.logic.io.file.FilePathData import FilePathData
         from org.allbinary.logic.io.file.FilePathUtil import FilePathUtil
         from org.allbinary.logic.string.StringMaker import StringMaker
-        if self.hasSchema():
+        if java_predicate(self, "hasSchema"):
             filePathData: FilePathData = FilePathData.getInstance()
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.append(self.schema)

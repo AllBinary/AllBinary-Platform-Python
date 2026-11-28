@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.System import System
 
 
 class DomDocumentHelper:
@@ -78,7 +79,7 @@ class DomDocumentHelper:
 
     @staticmethod
     def create(*args):
-        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
+        if len(args) == 1 and True and (args[0] is None or any(base.__name__ == "InputStream" for base in type(args[0]).__mro__)):
             return DomDocumentHelper.create_j1_1(*args)
         if len(args) == 1:
             return DomDocumentHelper.create_j1_2(*args)

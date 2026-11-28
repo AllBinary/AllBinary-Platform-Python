@@ -24,14 +24,14 @@ class TransformTemplateCustomizerUtil:
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.CUSTOMIZER_NAME: str = None
-        self.BODY_VIEWNAMEKEY: str = None
-        self.TITLE_VIEWNAMEKEY: str = None
-        self.GLOBALS_NEW: str = None
-        self.GLOBALS_INSERT: str = None
-        self.GLOBALS_DELETE: str = None
-        self.GLOBALS_EDIT: str = None
-        self.GLOBALS_UPDATE: str = None
+        if "CUSTOMIZER_NAME" not in vars(self): self.CUSTOMIZER_NAME: str = None
+        if "BODY_VIEWNAMEKEY" not in vars(self): self.BODY_VIEWNAMEKEY: str = None
+        if "TITLE_VIEWNAMEKEY" not in vars(self): self.TITLE_VIEWNAMEKEY: str = None
+        if "GLOBALS_NEW" not in vars(self): self.GLOBALS_NEW: str = None
+        if "GLOBALS_INSERT" not in vars(self): self.GLOBALS_INSERT: str = None
+        if "GLOBALS_DELETE" not in vars(self): self.GLOBALS_DELETE: str = None
+        if "GLOBALS_EDIT" not in vars(self): self.GLOBALS_EDIT: str = None
+        if "GLOBALS_UPDATE" not in vars(self): self.GLOBALS_UPDATE: str = None
     
 
     @staticmethod
@@ -46,7 +46,7 @@ class TransformTemplateCustomizerUtil:
         from org.allbinary.logic.visual.transform.template.customizer.widgets.title.TitleData import TitleData
         from org.allbinary.string.CommonSeps import CommonSeps
         from org.allbinary.string.CommonStrings import CommonStrings
-        self._init_fields()
+        __class__._init_fields(self)
         commonStrings: CommonStrings = CommonStrings.getInstance()
         SPACE: str = CommonSeps.getInstance().SPACE
         self.CUSTOMIZER_NAME = SPACE + str(CustomizerTransformInfoData.NAME)

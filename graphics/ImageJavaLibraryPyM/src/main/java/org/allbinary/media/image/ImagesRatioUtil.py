@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -33,7 +34,7 @@ class ImagesRatioUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def isEqual(self, bufferedImageArray: list[BufferedImage], totalImages: int) -> bool:
@@ -66,10 +67,12 @@ class ImagesRatioUtil:
         newWidth: int = bufferedImage.getWidth()
         if ratio > imageRatio:
             newWidth = int((float(bufferedImage.getHeight()) * ratio))
-            point.x = (newWidth - bufferedImage.getWidth()) / 2
+            point.x = java_divide((newWidth - bufferedImage.getWidth()), 2)
+            
         else:
             newHeight = int((float(bufferedImage.getWidth()) / ratio))
-            point.y = (newHeight - bufferedImage.getHeight()) / 2
+            point.y = java_divide((newHeight - bufferedImage.getHeight()), 2)
+            
         commonLabels: CommonLabels = CommonLabels.getInstance()
         self.logUtil.putF(str(commonLabels.WIDTH_LABEL + bufferedImage.getWidth()) + " newWidth: " + str(newWidth) + str(commonLabels.HEIGHT_LABEL) + str(bufferedImage.getHeight()) + " newHeight: " + str(newHeight) + " needed ratio: " + str((float(newWidth) / float(newHeight))), self, "fudge")
         newBufferedImage: BufferedImage = self.imageUtil.create(newWidth, newHeight)
@@ -103,12 +106,15 @@ class ImagesRatioUtil:
         return fudgedBufferedImageArray
 
     def fudge(self, *args):
-        return getattr(self, "fudge_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("fudge_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().fudge(*args)
 # from java.awt.Point import Point
 # from java.awt.Graphics2D import Graphics2D
 # from java.awt.image.BufferedImage import BufferedImage
 # from org.allbinary.logic.communication.log.LogUtil import LogUtil
 # from org.allbinary.string.CommonLabels import CommonLabels
+from org.allbinary.media.image.ImageUtil import ImageUtil
 
 
 def _ImagesRatioUtil_instance() -> object:

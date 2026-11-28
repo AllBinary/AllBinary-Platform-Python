@@ -15,17 +15,23 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.graphics.GPoint import GPoint
 
 
+@java_inherited_overloads
 class CustomGPoint(GPoint):
     NULL_CUSTOM_POINT: CustomGPoint = None
+    def _java_defaults(self):
+        vars(self).setdefault("cx", 0)
+        vars(self).setdefault("cy", 0)
+        vars(self).setdefault("cz", 0)
 
     def _init_fields(self) -> None:
-        self.cx: int = 0
-        self.cy: int = 0
-        self.cz: int = 0
+        if "cx" not in vars(self): self.cx: int = 0
+        if "cy" not in vars(self): self.cy: int = 0
+        if "cz" not in vars(self): self.cz: int = 0
     
 
     @staticmethod
@@ -39,8 +45,9 @@ class CustomGPoint(GPoint):
     
 
     def __init__(self, x: int, y: int, z: int) -> None:
+        __class__._java_defaults(self)
         super().__init__(x, y, z)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def setX(self, x: int) -> None:

@@ -15,26 +15,31 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from admin.taghelpers.ModifyTable import ModifyTable
 
 
+@java_inherited_overloads
 class DownloadItemsRequestHelper(ModifyTable):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("downloadableItem", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.user.commerce.inventory.item.download.DownloadableItem import DownloadableItem
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.downloadableItem: DownloadableItem = None
+        if "downloadableItem" not in vars(self): self.downloadableItem: DownloadableItem = None
     
 
     def __init__(self, hashMap: HashMap, pageContext: PageContext) -> None:
+        __class__._java_defaults(self)
         from admin.taghelpers.InventoryItemViewParentTagHelper import InventoryItemViewParentTagHelper
         from java.util.HashMap import HashMap
         from admin.tags.AbTagData import AbTagData
         from tags.HelperTag import HelperTag
         from views.admin.inventory.download.DownloadableInventoryItemView import DownloadableInventoryItemView
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         inventoryTag: HelperTag = hashMap.get(AbTagData.PARENT)
         inventoryItemViewParentTagHelper: InventoryItemViewParentTagHelper = InventoryItemViewParentTagHelper.getInstance()
         downloadableInventoryItemView: DownloadableInventoryItemView = inventoryItemViewParentTagHelper.getDownloadableInventoryItemView(inventoryTag)

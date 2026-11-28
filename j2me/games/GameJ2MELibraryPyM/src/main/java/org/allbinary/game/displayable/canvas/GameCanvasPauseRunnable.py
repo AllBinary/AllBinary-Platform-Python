@@ -15,20 +15,27 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.game.displayable.canvas.GameRunnable import GameRunnable
 
 
+@java_inherited_overloads
 class GameCanvasPauseRunnable(GameRunnable):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("allBinaryGameCanvas", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.allBinaryGameCanvas: AllBinaryGameCanvas = None
+        if "allBinaryGameCanvas" not in vars(self): self.allBinaryGameCanvas: AllBinaryGameCanvas = None
     
 
     def __init__(self, allBinaryGameCanvas: AllBinaryGameCanvas) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.allBinaryGameCanvas = allBinaryGameCanvas
     
 

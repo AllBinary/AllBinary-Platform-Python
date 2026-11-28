@@ -15,18 +15,23 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
 
 
+@java_inherited_overloads
 class TerrainEvent(AllBinaryEventObject):
+    def _java_defaults(self):
+        vars(self).setdefault("basicTerrainInfo", None)
 
     def _init_fields(self) -> None:
         self.basicTerrainInfo: BasicTerrainInfo = BasicTerrainInfo.NULL_BASIC_TERRAIN_INFO
     
 
     def __init__(self, basicTerrainInfo: object) -> None:
+        __class__._java_defaults(self)
         super().__init__(basicTerrainInfo)
-        self._init_fields()
+        __class__._init_fields(self)
         self.setBasicTerrainInfo(self.basicTerrainInfo)
     
 

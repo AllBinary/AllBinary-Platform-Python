@@ -15,20 +15,20 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_divide
 
 
 class BasicGraphicsPipeline:
 
     def _init_fields(self) -> None:
         from org.allbinary.math.NoDecimalTrigTable import NoDecimalTrigTable
-        from org.allbinary.util.BasicArrayList import BasicArrayList
-        self.pointBasicArrayList: BasicArrayList = None
+        if "pointBasicArrayList" not in vars(self): self.pointBasicArrayList: BasicArrayList = None
         self.noDecimalTrigTable: NoDecimalTrigTable = NoDecimalTrigTable.getInstance()
     
 
     def __init__(self, points: BasicArrayList) -> None:
         from org.allbinary.util.BasicArrayList import BasicArrayList
-        self._init_fields()
+        __class__._init_fields(self)
         self.pointBasicArrayList = points
     
 
@@ -104,7 +104,7 @@ class BasicGraphicsPipeline:
         from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         pointFactory: PointFactory = PointFactory.getInstance()
-        halfWidth: int = (width >> 1)
+        halfWidth: int = (int(width) >> (int(1) & 31))
         newBasicArrayList: BasicArrayList = BasicArrayListD()
         secondPoint: GPoint = None
         newX: int = 0

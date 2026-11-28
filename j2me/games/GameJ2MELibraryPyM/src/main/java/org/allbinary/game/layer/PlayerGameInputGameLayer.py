@@ -15,19 +15,23 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.input.PlayerGameInputCompositeInterface import PlayerGameInputCompositeInterface
 from org.allbinary.game.layer.AllBinaryGameLayer import AllBinaryGameLayer
 
 
+@java_inherited_overloads
 class PlayerGameInputGameLayer(*java_bases(AllBinaryGameLayer, PlayerGameInputCompositeInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("playerGameInput", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.input.PlayerGameInput import PlayerGameInput
-        self.playerGameInput: PlayerGameInput = None
+        if "playerGameInput" not in vars(self): self.playerGameInput: PlayerGameInput = None
     
 
     def __init__(self, playerInputId: int) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.input.PlayerGameInput import PlayerGameInput
         from org.allbinary.graphics.PointFactory import PointFactory
         from org.allbinary.graphics.Rectangle import Rectangle
@@ -36,7 +40,7 @@ class PlayerGameInputGameLayer(*java_bases(AllBinaryGameLayer, PlayerGameInputCo
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         from org.allbinary.view.StaticViewPosition import StaticViewPosition
         super().__init__(StringUtil.getInstance().EMPTY_STRING, Rectangle(PointFactory.getInstance().ZERO_ZERO, 0, 0), StaticViewPosition(0, 0, 0))
-        self._init_fields()
+        __class__._init_fields(self)
         self.playerGameInput = PlayerGameInput(self.getGameKeyEventList(), BasicArrayListD(), playerInputId)
         canvasStrings: CanvasStrings = CanvasStrings.getInstance()
         self.logUtil.putF("Danger Danger Danger: Should Not Be Called Except For Testing Input", self, canvasStrings.PAINT)

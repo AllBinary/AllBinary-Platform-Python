@@ -15,12 +15,20 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.communication.sql.AbSqlBean import AbSqlBean
 from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntityInterface import InventoryEntityInterface
 
 
+@java_inherited_overloads
 class InventoryEntity(*java_bases(AbSqlBean, InventoryEntityInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("basicItemData", None)
+        vars(self).setdefault("tableName", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
@@ -31,9 +39,10 @@ class InventoryEntity(*java_bases(AbSqlBean, InventoryEntityInterface)):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.init.db.InventoryDbInitInfo import InventoryDbInitInfo
         super().__init__(InventoryDbInitInfo())
-        self._init_fields()
+        __class__._init_fields(self)
         self.setTableName(self.tableName)
     
 
@@ -42,7 +51,7 @@ class InventoryEntity(*java_bases(AbSqlBean, InventoryEntityInterface)):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            super().insert(values)
+            java_super_call(super(), "insert", values)
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, self.INSERT)
         except Exception as e:
@@ -54,7 +63,7 @@ class InventoryEntity(*java_bases(AbSqlBean, InventoryEntityInterface)):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            super().deleteWhere(self.basicItemData.ID, value)
+            java_super_call(super(), "deleteWhere", self.basicItemData.ID, value)
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, self.commonStrings.delete)
         except Exception as e:
@@ -77,13 +86,13 @@ class InventoryEntity(*java_bases(AbSqlBean, InventoryEntityInterface)):
             self.logUtil.putF("Getting Items For: " + storeFrontInterface.getName(), self, "getItems")
         itemVector: BasicArrayList = BasicArrayListD()
         keysAndValues: HashMap = StdUtil.getInstance().createHashMap()
-        itemHashMapVector: BasicArrayList = super().getRows(keysAndValues)
+        itemHashMapVector: BasicArrayList = java_super_call(super(), "getRows", keysAndValues)
         size: int = itemHashMapVector.size()
         for i in range(0, size):
             itemHashMap: HashMap = itemHashMapVector.get(i)
             if itemHashMap is not None:
                 category: str = itemHashMap.get(self.basicItemData.CATEGORY)
-                if not StringValidationUtil.getInstance().isEmpty(category) and category.startswith(storeFrontInterface.getCategoryPath()):
+                if not (StringValidationUtil.getInstance().isEmpty(category)) and category.startswith(storeFrontInterface.getCategoryPath()):
                     itemVector.add(BasicItem(itemHashMap))
         return itemVector
     
@@ -97,7 +106,7 @@ class InventoryEntity(*java_bases(AbSqlBean, InventoryEntityInterface)):
         from org.allbinary.logic.StdUtil import StdUtil
         keysAndValues: HashMap = StdUtil.getInstance().createHashMap()
         keysAndValues.put(self.basicItemData.ID, id)
-        itemHashMap: HashMap = super().getRow(keysAndValues)
+        itemHashMap: HashMap = java_super_call(super(), "getRow", keysAndValues)
         if itemHashMap is not None:
             return BasicItem(itemHashMap)
         else:
@@ -105,7 +114,7 @@ class InventoryEntity(*java_bases(AbSqlBean, InventoryEntityInterface)):
     
 
     def getWeight(self, id: str) -> str:
-        return super().getField(self.basicItemData.ID, id, self.basicItemData.WEIGHT)
+        return java_super_call(super(), "getField", self.basicItemData.ID, id, self.basicItemData.WEIGHT)
     
 
     def createTableStatement(self) -> str:
@@ -180,20 +189,20 @@ class InventoryEntity(*java_bases(AbSqlBean, InventoryEntityInterface)):
     
 
     def createTable(self) -> str:
-        return super().createTable(self.createTableStatement())
+        return java_super_call(super(), "createTable", self.createTableStatement())
     
 
     def update(self, updatedValues: HashMap) -> None:
         from java.util.HashMap import HashMap
-        super().updateWhere(self.basicItemData.ID, updatedValues.get(self.basicItemData.ID), updatedValues)
+        java_super_call(super(), "updateWhere", self.basicItemData.ID, updatedValues.get(self.basicItemData.ID), updatedValues)
     
 
     def dropTable(self) -> str:
-        return super().dropTable()
+        return java_super_call(super(), "dropTable")
     
 
     def deleteWhere(self, key: str, value: str) -> None:
-        super().deleteWhere(key, value)
+        java_super_call(super(), "deleteWhere", key, value)
 # from java.util.HashMap import HashMap
 # from org.allbinary.util.BasicArrayList import BasicArrayList
 # from org.allbinary.util.BasicArrayListD import BasicArrayListD

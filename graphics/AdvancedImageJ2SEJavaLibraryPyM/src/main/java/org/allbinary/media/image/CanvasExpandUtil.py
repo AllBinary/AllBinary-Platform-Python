@@ -28,7 +28,7 @@ class CanvasExpandUtil:
         self.stringUtil: StringUtil = StringUtil.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -38,6 +38,7 @@ class CanvasExpandUtil:
 
     # throws Exception
     def process(self, imageProcessorInput: ImageProcessorInput, increaseX: int, increaseY: int, visitor: ImageProcessedVisitor) -> None:
+        from org.allbinary.media.image.ImageUtil import ImageUtil
         imageUtil: ImageUtil = ImageUtil.getInstance()
         bufferedImageArray: list[BufferedImage] = imageProcessorInput.getBufferedImageArray()
         subBufferedImageArray: list[BufferedImage] = [None] * (len(bufferedImageArray))

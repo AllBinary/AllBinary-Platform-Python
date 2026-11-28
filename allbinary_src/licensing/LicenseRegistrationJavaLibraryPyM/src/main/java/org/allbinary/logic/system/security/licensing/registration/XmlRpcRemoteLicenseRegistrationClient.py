@@ -15,10 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.communication.xmlrpc.XmlRpcAbeClient import XmlRpcAbeClient
 
 
+@java_inherited_overloads
 class XmlRpcRemoteLicenseRegistrationClient(XmlRpcAbeClient):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("PAGE", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -27,9 +32,10 @@ class XmlRpcRemoteLicenseRegistrationClient(XmlRpcAbeClient):
     
 
     def __init__(self, clientInfo: AbeClientInformationInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         super().__init__(clientInfo, "LicenseRegistrationServer.process")
-        self._init_fields()
+        __class__._init_fields(self)
         self.setServer(0)
     
 
@@ -69,7 +75,7 @@ class XmlRpcRemoteLicenseRegistrationClient(XmlRpcAbeClient):
             return result
         except OSError as e:
             self.logUtil.putF(self.TRYING_OTHER_SERVERS + ExceptionUtil.getInstance().getStackTrace(e), self, self.commonStrings.GET)
-            if not str(e).startsWith(self.HOST_NOT_RESOLVED):
+            if not (str(e).startsWith(self.HOST_NOT_RESOLVED)):
                 return self.tryAnother(anyType)
             else:
                 raise Exception(self.HOST_NOT_RESOLVED_MSG)

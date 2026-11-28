@@ -15,28 +15,37 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 from org.allbinary.graphics.paint.InitUpdatePaintable import InitUpdatePaintable
 
 
+@java_inherited_overloads
 class GamePerformanceInitUpdatePaintable(*java_bases(InitUpdatePaintable, UpdateMyFontInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("halfHeight", 0)
+        vars(self).setdefault("yArray", None)
+        vars(self).setdefault("myFontProcessor", None)
+        vars(self).setdefault("baseRefreshHelperCharArray", None)
+        vars(self).setdefault("defaultStringWidth", 0)
+        vars(self).setdefault("RED", 0)
 
     def _init_fields(self) -> None:
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
         self.halfHeight: int = DisplayInfoSingleton.getInstance().getLastHalfHeight()
         self.yArray: list[int] = [self.halfHeight + 30, self.halfHeight + 30, self.halfHeight + 30 + 15, self.halfHeight + 30 + 15, self.halfHeight + 30 + 30, self.halfHeight + 30 + 30, self.halfHeight + 30 + 45, self.halfHeight + 30 + 45]
         self.myFontProcessor: MyFontProcessor = UpdateMyFontProcessor(self)
         self.baseRefreshHelperCharArray: list[list[str]] = [['\0'] * (0) for _ in range(0)]
-        self.defaultStringWidth: int = 0
+        if "defaultStringWidth" not in vars(self): self.defaultStringWidth: int = 0
         self.RED: int = int(BasicColorFactory.getInstance().RED)
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:

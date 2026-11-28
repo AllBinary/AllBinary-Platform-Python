@@ -22,14 +22,14 @@ class RaceTrackGeographicMapCellTypes:
     instance: RaceTrackGeographicMapCellTypes = None
 
     def _init_fields(self) -> None:
-        self.BOTTOM_LEFT_TURN_ROAD_CELL_TYPE: RaceTrackGeographicMapCellType = None
-        self.BOTTOM_RIGHT_TURN_ROAD_CELL_TYPE: RaceTrackGeographicMapCellType = None
-        self.TOP_LEFT_TURN_ROAD_CELL_TYPE: RaceTrackGeographicMapCellType = None
-        self.TOP_RIGHT_TURN_ROAD_CELL_TYPE: RaceTrackGeographicMapCellType = None
-        self.HORIZONTAL_STRAIGHT_ROAD_CELL_TYPE: RaceTrackGeographicMapCellType = None
-        self.VERTICAL_STRAIGHT_ROAD_CELL_TYPE: RaceTrackGeographicMapCellType = None
-        self.START_LINE_ROAD_CELL_TYPE: RaceTrackGeographicMapCellType = None
-        self.DEFAULT_FINISH_LINE_ROAD_CELL_TYPE: RaceTrackGeographicMapCellType = None
+        if "BOTTOM_LEFT_TURN_ROAD_CELL_TYPE" not in vars(self): self.BOTTOM_LEFT_TURN_ROAD_CELL_TYPE: RaceTrackGeographicMapCellType = None
+        if "BOTTOM_RIGHT_TURN_ROAD_CELL_TYPE" not in vars(self): self.BOTTOM_RIGHT_TURN_ROAD_CELL_TYPE: RaceTrackGeographicMapCellType = None
+        if "TOP_LEFT_TURN_ROAD_CELL_TYPE" not in vars(self): self.TOP_LEFT_TURN_ROAD_CELL_TYPE: RaceTrackGeographicMapCellType = None
+        if "TOP_RIGHT_TURN_ROAD_CELL_TYPE" not in vars(self): self.TOP_RIGHT_TURN_ROAD_CELL_TYPE: RaceTrackGeographicMapCellType = None
+        if "HORIZONTAL_STRAIGHT_ROAD_CELL_TYPE" not in vars(self): self.HORIZONTAL_STRAIGHT_ROAD_CELL_TYPE: RaceTrackGeographicMapCellType = None
+        if "VERTICAL_STRAIGHT_ROAD_CELL_TYPE" not in vars(self): self.VERTICAL_STRAIGHT_ROAD_CELL_TYPE: RaceTrackGeographicMapCellType = None
+        if "START_LINE_ROAD_CELL_TYPE" not in vars(self): self.START_LINE_ROAD_CELL_TYPE: RaceTrackGeographicMapCellType = None
+        if "DEFAULT_FINISH_LINE_ROAD_CELL_TYPE" not in vars(self): self.DEFAULT_FINISH_LINE_ROAD_CELL_TYPE: RaceTrackGeographicMapCellType = None
     
 
     @staticmethod
@@ -46,7 +46,7 @@ class RaceTrackGeographicMapCellTypes:
         from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellType import RaceTrackGeographicMapCellType
         from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellType import RaceTrackGeographicMapCellType
         from org.allbinary.media.graphics.geography.map.racetrack.RaceTrackGeographicMapCellType import RaceTrackGeographicMapCellType
-        self._init_fields()
+        __class__._init_fields(self)
         self.BOTTOM_LEFT_TURN_ROAD_CELL_TYPE = RaceTrackGeographicMapCellType("Bottom Left Turn", 1, 1, 0)
         self.BOTTOM_RIGHT_TURN_ROAD_CELL_TYPE = RaceTrackGeographicMapCellType("Bottom Right Turn", 2, 1, 0)
         self.TOP_LEFT_TURN_ROAD_CELL_TYPE = RaceTrackGeographicMapCellType("Top Left Turn", 3, 1, 0)

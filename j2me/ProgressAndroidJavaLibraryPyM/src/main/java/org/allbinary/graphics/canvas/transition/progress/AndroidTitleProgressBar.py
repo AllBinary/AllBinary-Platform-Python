@@ -15,18 +15,23 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_new_inner
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_divide
 from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
 
 
+@java_inherited_overloads
 class AndroidTitleProgressBar(ProgressCanvas):
     class TitleProgressBarSetProgressRunnable(object):
 
         def _init_fields(self) -> None:
-            self.androidTitleProgressBar: AndroidTitleProgressBar = None
+            if "androidTitleProgressBar" not in vars(self): self.androidTitleProgressBar: AndroidTitleProgressBar = None
         
 
         def __init__(self, androidTitleProgressBar: AndroidTitleProgressBar) -> None:
-            self._init_fields()
+            __class__._init_fields(self)
             self.androidTitleProgressBar = androidTitleProgressBar
         
 
@@ -43,11 +48,11 @@ class AndroidTitleProgressBar(ProgressCanvas):
     class TitleProgressBarPortionSetProgressRunnable(object):
 
         def _init_fields(self) -> None:
-            self.androidTitleProgressBar: AndroidTitleProgressBar = None
+            if "androidTitleProgressBar" not in vars(self): self.androidTitleProgressBar: AndroidTitleProgressBar = None
         
 
         def __init__(self, androidTitleProgressBar: AndroidTitleProgressBar) -> None:
-            self._init_fields()
+            __class__._init_fields(self)
             self.androidTitleProgressBar = androidTitleProgressBar
         
 
@@ -57,18 +62,19 @@ class AndroidTitleProgressBar(ProgressCanvas):
             logUtil: LogUtil = LogUtil.getInstance()
             commonStrings: CommonStrings = CommonStrings.getInstance()
             try:
-                value: int = int((self.androidTitleProgressBar.getValue() + self.androidTitleProgressBar.getMaxValue() / self.androidTitleProgressBar.portion))
+                value: int = int((self.androidTitleProgressBar.getValue() + java_divide(self.androidTitleProgressBar.getMaxValue(), self.androidTitleProgressBar.portion)
+            ))
                 self.androidTitleProgressBar.progressActivity.onTitleProgressBarSetProgress(value)
             except Exception as e:
                 logUtil.put(commonStrings.EXCEPTION, self, commonStrings.RUN, e)
     class ShowTitleProgressBarRunnable(object):
 
         def _init_fields(self) -> None:
-            self.androidTitleProgressBar: AndroidTitleProgressBar = None
+            if "androidTitleProgressBar" not in vars(self): self.androidTitleProgressBar: AndroidTitleProgressBar = None
         
 
         def __init__(self, androidTitleProgressBar: AndroidTitleProgressBar) -> None:
-            self._init_fields()
+            __class__._init_fields(self)
             self.androidTitleProgressBar = androidTitleProgressBar
         
 
@@ -85,11 +91,11 @@ class AndroidTitleProgressBar(ProgressCanvas):
     class DismissTitleProgressBarRunnable(object):
 
         def _init_fields(self) -> None:
-            self.androidTitleProgressBar: AndroidTitleProgressBar = None
+            if "androidTitleProgressBar" not in vars(self): self.androidTitleProgressBar: AndroidTitleProgressBar = None
         
 
         def __init__(self, androidTitleProgressBar: AndroidTitleProgressBar) -> None:
-            self._init_fields()
+            __class__._init_fields(self)
             self.androidTitleProgressBar = androidTitleProgressBar
         
 
@@ -102,22 +108,29 @@ class AndroidTitleProgressBar(ProgressCanvas):
                 self.androidTitleProgressBar.progressActivity.onDismissTitleProgressBar()
             except Exception as e:
                 logUtil.put(commonStrings.EXCEPTION, self, commonStrings.RUN, e)
+    def _java_defaults(self):
+        vars(self).setdefault("showTitleProgressBarRunnable", None)
+        vars(self).setdefault("dismissTitleProgressBarRunnable", None)
+        vars(self).setdefault("progressDialogPortionSetProgressRunnable", None)
+        vars(self).setdefault("progressDialogSetProgressRunnable", None)
+        vars(self).setdefault("progressActivity", None)
+        vars(self).setdefault("portion", 0)
 
     def _init_fields(self) -> None:
         from org.allbinary.android.activity.NullProgressActivity import NullProgressActivity
-        from org.allbinary.android.activity.ProgressActivityInterface import ProgressActivityInterface
-        self.showTitleProgressBarRunnable: ShowTitleProgressBarRunnable = ShowTitleProgressBarRunnable(self)
-        self.dismissTitleProgressBarRunnable: DismissTitleProgressBarRunnable = DismissTitleProgressBarRunnable(self)
-        self.progressDialogPortionSetProgressRunnable: TitleProgressBarPortionSetProgressRunnable = TitleProgressBarPortionSetProgressRunnable(self)
-        self.progressDialogSetProgressRunnable: TitleProgressBarSetProgressRunnable = TitleProgressBarSetProgressRunnable(self)
+        self.showTitleProgressBarRunnable: ShowTitleProgressBarRunnable = java_new_inner(self, ShowTitleProgressBarRunnable, self)
+        self.dismissTitleProgressBarRunnable: DismissTitleProgressBarRunnable = java_new_inner(self, DismissTitleProgressBarRunnable, self)
+        self.progressDialogPortionSetProgressRunnable: TitleProgressBarPortionSetProgressRunnable = java_new_inner(self, TitleProgressBarPortionSetProgressRunnable, self)
+        self.progressDialogSetProgressRunnable: TitleProgressBarSetProgressRunnable = java_new_inner(self, TitleProgressBarSetProgressRunnable, self)
         self.progressActivity: ProgressActivityInterface = NullProgressActivity.NULL_PROGRESS_ACTIVITY
         self.portion: int = 0
     
 
     def __init__(self, title: str, backgroundBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(title, backgroundBasicColor, foregroundBasicColor)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def init(self, activity: ProgressActivityInterface) -> None:
@@ -136,7 +149,7 @@ class AndroidTitleProgressBar(ProgressCanvas):
     def start(self) -> None:
         try:
             self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.START_METHOD_NAME)
-            super().start()
+            java_super_call(super(), "start")
             self.progressActivity.runOnUiThread(self.showTitleProgressBarRunnable)
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.START_METHOD_NAME, e)
@@ -146,14 +159,14 @@ class AndroidTitleProgressBar(ProgressCanvas):
         try:
             self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.END_METHOD_NAME)
             self.progressActivity.runOnUiThread(self.dismissTitleProgressBarRunnable)
-            super().end()
+            java_super_call(super(), "end")
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.END_METHOD_NAME, e)
     
 
     def addPortion(self, value: int, text: str, index: int) -> None:
         try:
-            super().addPortion(value, text, index)
+            java_super_call(super(), "addPortion", value, text, index)
             self.portion = value
             self.progressActivity.runOnUiThread(self.progressDialogPortionSetProgressRunnable)
         except Exception as e:
@@ -162,7 +175,7 @@ class AndroidTitleProgressBar(ProgressCanvas):
 
     def addNormalPortion(self, value: int, text: str) -> None:
         try:
-            super().addNormalPortion(value, text)
+            java_super_call(super(), "addNormalPortion", value, text)
             self.portion = value
             self.progressActivity.runOnUiThread(self.progressDialogPortionSetProgressRunnable)
         except Exception as e:
@@ -171,7 +184,7 @@ class AndroidTitleProgressBar(ProgressCanvas):
 
     def setValue(self, value: int) -> None:
         try:
-            super().setValue(value)
+            java_super_call(super(), "setValue", value)
             self.progressActivity.runOnUiThread(self.progressDialogSetProgressRunnable)
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, "setValue", e)

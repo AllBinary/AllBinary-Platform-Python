@@ -15,9 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.input.Input import Input
 
 
+@java_inherited_overloads
 class J2MEGameKey(Input):
     
 
@@ -32,7 +35,7 @@ class J2MEGameKey(Input):
 
     def toString(self) -> str:
         from org.allbinary.logic.string.StringMaker import StringMaker
-        return str(StringMaker().append("J2MEGameKey: ").append(str(super())))
+        return str(StringMaker().append("J2MEGameKey: ").append(java_super_call(super(), "toString")))
 
     def __str__(self) -> str:
         return self.toString()

@@ -33,13 +33,13 @@ class ParentInventoryTagHelper:
         from tags.HelperTag import HelperTag
         if parentTag is None:
             raise Exception("Must have parent tag.")
-        elif not isinstance(parentTag, HelperTag):
+        elif not (isinstance(parentTag, HelperTag)):
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.append("Must have at least a ")
             stringBuffer.append("tags.HelperTag")
             stringBuffer.append(" as parent")
             stringBuffer.append("and not: ")
-            stringBuffer.append(type(parentTag).__module__ + "." + type(parentTag).__qualname__)
+            stringBuffer.append(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(parentTag)))
             raise Exception(str(stringBuffer))
 # from javax.servlet.jsp.tagext.Tag import Tag
 # from org.allbinary.logic.string.StringMaker import StringMaker

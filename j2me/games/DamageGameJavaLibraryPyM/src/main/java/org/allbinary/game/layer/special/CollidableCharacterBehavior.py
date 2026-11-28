@@ -15,9 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.layer.special.CollidableDestroyableDamageableBehavior import CollidableDestroyableDamageableBehavior
 
 
+@java_inherited_overloads
 class CollidableCharacterBehavior(CollidableDestroyableDamageableBehavior):
     
 
@@ -37,7 +40,7 @@ class CollidableCharacterBehavior(CollidableDestroyableDamageableBehavior):
             collidableDestroyableDamageableLayer: CollidableDestroyableDamageableLayer = ownerLayer
             collidableDestroyableDamageableLayer.getPickupBehavior().doPickupLayer(collidableInterfaceCompositeInterface)
         else:
-            super().collide(ownerLayer, collidableInterfaceCompositeInterface)
+            java_super_call(super(), "collide", ownerLayer, collidableInterfaceCompositeInterface)
     
 
     # throws Exception

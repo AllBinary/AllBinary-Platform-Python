@@ -28,7 +28,7 @@ class StatusFactory:
         self.STATUS_LABEL: str = "Status: "
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

@@ -15,11 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.validate.ValidationInterface import ValidationInterface
 from org.allbinary.business.category.store.theme.StoreThemeCategoryView import StoreThemeCategoryView
 
 
+@java_inherited_overloads
 class StoreThemeCategoryValidationView(*java_bases(StoreThemeCategoryView, ValidationInterface)):
     
 

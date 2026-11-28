@@ -25,7 +25,7 @@ class AngleIncrementInfoFactory:
         self.angleIncrementInfo: list[AngleIncrementInfo] = [None] * (int(AngleFactory.getInstance().TOTAL_ANGLE))
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -35,7 +35,7 @@ class AngleIncrementInfoFactory:
 
     def getAt(self, angleIncrement: int) -> AngleIncrementInfo:
         from org.allbinary.math.AngleIncrementInfo import AngleIncrementInfo
-        halfAngleIncrement: int = (angleIncrement >> 1)
+        halfAngleIncrement: int = (int(angleIncrement) >> (int(1) & 31))
         angleIncrementInfo: AngleIncrementInfo = None
         angleIncrementInfoCanBeNull: AngleIncrementInfo = self.angleIncrementInfo[halfAngleIncrement]
         if angleIncrementInfoCanBeNull is None:

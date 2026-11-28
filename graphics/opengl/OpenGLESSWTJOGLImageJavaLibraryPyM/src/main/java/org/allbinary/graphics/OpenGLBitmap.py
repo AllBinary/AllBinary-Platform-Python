@@ -3,20 +3,25 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.platform.graphics.PlatformBitmapBase import PlatformBitmapBase
 
 
+@java_inherited_overloads
 class OpenGLBitmap(PlatformBitmapBase):
+    def _java_defaults(self):
+        vars(self).setdefault("image", None)
 
     def _init_fields(self) -> None:
-        from javax.microedition.lcdui.Image import Image
-        self.image: Image = None
+        if "image" not in vars(self): self.image: Image = None
     
 
     def __init__(self, bitmap: object) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.Image import Image
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.image = bitmap
     
 
@@ -28,7 +33,7 @@ class OpenGLBitmap(PlatformBitmapBase):
     def getDepth(self) -> int:
         from org.microemu.device.swt.SwtImmutableImage import SwtImmutableImage
         from org.microemu.device.swt.SwtMutableImage import SwtMutableImage
-        if self.image.isMutable():
+        if java_predicate(self.image, "isMutable"):
             mutableImage: SwtMutableImage = self.image
             return mutableImage.getDepth()
         else:
@@ -39,7 +44,7 @@ class OpenGLBitmap(PlatformBitmapBase):
     def getPixels(self, pixels: list[int], offset: int, stride: int, x: int, y: int, width: int, height: int) -> None:
         from org.microemu.device.swt.SwtImmutableImage import SwtImmutableImage
         from org.microemu.device.swt.SwtMutableImage import SwtMutableImage
-        if self.image.isMutable():
+        if java_predicate(self.image, "isMutable"):
             mutableImage: SwtMutableImage = self.image
             mutableImage.getRGB(pixels, offset, stride, x, y, width, height)
         else:

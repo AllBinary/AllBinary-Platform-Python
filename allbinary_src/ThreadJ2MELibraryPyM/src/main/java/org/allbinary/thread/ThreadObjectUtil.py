@@ -3,6 +3,8 @@
 
 from __future__ import annotations
 
+from java.lang.JavaMonitor import java_monitor, java_wait
+from java.lang.JavaThread import JavaThread
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 
@@ -14,7 +16,7 @@ class ThreadObjectUtil:
         self.NULL_PRIORITY_RUNNABLE: PriorityRunnable = NullPriorityRunnable()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -23,12 +25,12 @@ class ThreadObjectUtil:
     
 
     def notifyObject(self, anyType: object) -> None:
-        anyType.notify()
+        java_monitor(anyType).notify()
     
 
     # throws Exception
     def waitObject(self, anyType: object) -> None:
-        anyType.wait()
+        java_wait(anyType)
     
 
     # throws Exception
@@ -38,7 +40,7 @@ class ThreadObjectUtil:
     
 
     def processThread(self, runnable: object) -> None:
-        thread: threading.Thread = threading.Thread(target=runnable.run)
+        thread: JavaThread = JavaThread(target=runnable.run)
         thread.start()
 # from org.allbinary.TsUtil import TsUtil
 from org.allbinary.thread.NullPriorityRunnable import NullPriorityRunnable

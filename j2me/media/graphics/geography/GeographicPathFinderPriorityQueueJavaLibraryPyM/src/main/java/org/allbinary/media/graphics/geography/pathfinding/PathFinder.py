@@ -15,10 +15,22 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_equals
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.media.graphics.geography.pathfinding.GeographicPathFinderBase import GeographicPathFinderBase
 
 
+@java_inherited_overloads
 class PathFinder(GeographicPathFinderBase):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("basicArrayListUtil", None)
+        vars(self).setdefault("mathUtil", None)
+        vars(self).setdefault("openPriorityQueue", None)
+        vars(self).setdefault("closedSet", None)
+        vars(self).setdefault("geographicMapInterface", None)
+        vars(self).setdefault("costArray", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.NullUtil import NullUtil
@@ -36,12 +48,15 @@ class PathFinder(GeographicPathFinderBase):
         self.costArray: list[list[PathFindingNodeCost]] = PathFindingNodeCost.NULL_PATH_FINDING_NODE_COST_ARRAY_ARRAY
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
     def init(self, geographicMapInterface: BasicGeographicMap) -> None:
+        from org.allbinary.media.graphics.geography.pathfinding.PathFindingNodeCost import PathFindingNodeCost
+        from org.allbinary.media.graphics.geography.pathfinding.PathFindingNodeCostInfo import PathFindingNodeCostInfo
         from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
         from org.allbinary.logic.NullUtil import NullUtil
         from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
@@ -146,7 +161,7 @@ class PathFinder(GeographicPathFinderBase):
         while True:
             current = self.openPriorityQueue.poll()
             self.closedSet.add(current)
-            if current.equals(targetNode):
+            if java_equals(current, targetNode):
                 return self.extractPath(start, current)
             neighbor: PathFindingNodeCost = None
             neighborInfo: PathFindingNodeCostInfo = None
@@ -159,13 +174,13 @@ class PathFinder(GeographicPathFinderBase):
                             continue
                         neighborInfo = neighbor.pathFindingNodeCostInfoP
                         calculatedCost = neighborInfo.costToEndP + neighborInfo.costFromStartP + current.pathFindingNodeCostInfoP.totalCostP
-                        if calculatedCost < neighborInfo.totalCostP or not self.openPriorityQueue.contains(neighbor):
+                        if calculatedCost < neighborInfo.totalCostP or not (self.openPriorityQueue.contains(neighbor)):
                             neighborInfo.totalCostP = calculatedCost
                             neighbor.parent = current
-                            if not self.openPriorityQueue.contains(neighbor):
+                            if not (self.openPriorityQueue.contains(neighbor)):
                                 if geographicMapInterface.isOfFourDirections(current.geographicMapCellPosition, neighbor.geographicMapCellPosition):
                                     self.openPriorityQueue.add(neighbor)
-            if not (not self.openPriorityQueue.isEmpty()):
+            if not (not (java_predicate(self.openPriorityQueue, "isEmpty"))):
                 break
         raise RuntimeError()
     
@@ -208,7 +223,7 @@ class PathFinder(GeographicPathFinderBase):
         while True:
             current = self.openPriorityQueue.poll()
             self.closedSet.add(current)
-            if current.equals(targetNode):
+            if java_equals(current, targetNode):
                 return self.extractPath(start, current)
             neighbor: PathFindingNodeCost = None
             neighborInfo: PathFindingNodeCostInfo = None
@@ -221,16 +236,16 @@ class PathFinder(GeographicPathFinderBase):
                             continue
                         neighborInfo = neighbor.pathFindingNodeCostInfoP
                         calculatedCost = neighborInfo.costToEndP + neighborInfo.costFromStartP + current.pathFindingNodeCostInfoP.totalCostP
-                        if calculatedCost < neighborInfo.totalCostP or not self.openPriorityQueue.contains(neighbor):
+                        if calculatedCost < neighborInfo.totalCostP or not (self.openPriorityQueue.contains(neighbor)):
                             neighborInfo.totalCostP = calculatedCost
                             neighbor.parent = current
-                            if not self.openPriorityQueue.contains(neighbor):
+                            if not (self.openPriorityQueue.contains(neighbor)):
                                 if geographicMapInterface.isOfFourDirections(current.geographicMapCellPosition, neighbor.geographicMapCellPosition):
                                     self.openPriorityQueue.add(neighbor)
             total += 1
             if total > 10:
                 return self.basicArrayListUtil.getImmutableInstance()
-            if not (not self.openPriorityQueue.isEmpty()):
+            if not (not (java_predicate(self.openPriorityQueue, "isEmpty"))):
                 break
         raise RuntimeError()
     
@@ -262,5 +277,6 @@ class PathFinder(GeographicPathFinderBase):
 # from org.allbinary.util.BasicArrayList import BasicArrayList
 # from org.allbinary.util.BasicArrayListD import BasicArrayListD
 # from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
+from org.allbinary.media.graphics.geography.pathfinding.PathFindingNodeCost import PathFindingNodeCost
 
 

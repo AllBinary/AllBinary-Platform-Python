@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import time
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 
 
@@ -41,22 +42,22 @@ class KeyboardInputAutomationProcessor:
         integer: list[int] = keyActionScriptInputInterface.getKeyArray()
         if keyActionScriptInputInterface.getDelayBetweenKeys() == 0:
             for index in range(0, len(keyActionScriptInputInterface.getKeyArray())):
-                if keyActionScriptInputInterface.isPress():
+                if java_predicate(keyActionScriptInputInterface, "isPress"):
                     inputRobotInterface.keyPress(integer[index])
             time.sleep((keyActionScriptInputInterface.getTime()) / 1000)
             for index in range(len(keyActionScriptInputInterface.getKeyArray()) - 1, 0 - 1, -1):
-                if keyActionScriptInputInterface.isRelease():
+                if java_predicate(keyActionScriptInputInterface, "isRelease"):
                     inputRobotInterface.keyRelease(integer[index])
         else:
             for index in range(0, len(keyActionScriptInputInterface.getKeyArray())):
-                if keyActionScriptInputInterface.isPress():
+                if java_predicate(keyActionScriptInputInterface, "isPress"):
                     inputRobotInterface.keyPress(integer[index])
                 time.sleep((keyActionScriptInputInterface.getTime()) / 1000)
-                if keyActionScriptInputInterface.isRelease():
+                if java_predicate(keyActionScriptInputInterface, "isRelease"):
                     inputRobotInterface.keyRelease(integer[index])
                 timeHelper: TimeDelayHelper = TimeDelayHelper(keyActionScriptInputInterface.getDelayBetweenKeys())
                 toLong: int = 0
-                while not timeHelper.isTimeTNT() or toLong > 6000:
+                while not (java_predicate(timeHelper, "isTimeTNT")) or toLong > 6000:
                     toLong += 1
                     time.sleep((50) / 1000)
 # from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface

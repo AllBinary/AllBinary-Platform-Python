@@ -23,17 +23,16 @@ class GameMotionGestureListener(MotionGestureEventListener):
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.motionGestureCollection: BasicArrayList = BasicArrayListD()
         self.touchGestureCollection: BasicArrayList = BasicArrayListD()
-        self.signed: CompleteMotionGestureListenerInterface = None
+        if "signed" not in vars(self): self.signed: CompleteMotionGestureListenerInterface = None
     
 
     def __init__(self, signed: CompleteMotionGestureListenerInterface) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
         self.signed = signed
     

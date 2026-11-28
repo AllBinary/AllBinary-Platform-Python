@@ -15,16 +15,21 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.util.cache.BaseBasicArrayListCache import BaseBasicArrayListCache
 from org.allbinary.logic.util.cache.CacheInterface import CacheInterface
 
 
+@java_inherited_overloads
 class IndexedBasicArrayListCache(*java_bases(BaseBasicArrayListCache, CacheInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("size", 0)
+        vars(self).setdefault("index", 0)
 
     def _init_fields(self) -> None:
         from org.allbinary.string.CommonStrings import CommonStrings
-        from jsinterop.annotations.JsProperty import JsProperty
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.size: int = 0
         self.index: int = 0
@@ -40,9 +45,10 @@ class IndexedBasicArrayListCache(*java_bases(BaseBasicArrayListCache, CacheInter
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from jsinterop.annotations.JsConstructor import JsConstructor
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception

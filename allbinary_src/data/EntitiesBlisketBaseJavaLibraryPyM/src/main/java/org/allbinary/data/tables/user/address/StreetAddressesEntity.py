@@ -15,36 +15,44 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import datetime
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.communication.sql.AbSqlBean import AbSqlBean
 from org.allbinary.data.tables.user.address.StreetAddressesEntityInterface import StreetAddressesEntityInterface
 
 
+@java_inherited_overloads
 class StreetAddressesEntity(*java_bases(AbSqlBean, StreetAddressesEntityInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("userName", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.userName: str = None
+        if "userName" not in vars(self): self.userName: str = None
 
     def __init__(self, *args) -> None:
         if len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
         elif len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
     
 
     def _constructor0(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
         super().__init__(UserDbInitInfo())
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def _constructor1(self, userName: str) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
         super().__init__(UserDbInitInfo())
-        self._init_fields()
+        __class__._init_fields(self)
         self.userName = userName
     
 
@@ -59,7 +67,7 @@ class StreetAddressesEntity(*java_bases(AbSqlBean, StreetAddressesEntityInterfac
             whereHashMap: HashMap = StdUtil.getInstance().createHashMap()
             whereHashMap.put(UserData.USERNAME, self.userName)
             whereHashMap.put(StreetAddressData.ID, str(index))
-            super().deleteWhere(whereHashMap)
+            java_super_call(super(), "deleteWhere", whereHashMap)
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, "remove")
         except Exception as e:
@@ -94,7 +102,7 @@ class StreetAddressesEntity(*java_bases(AbSqlBean, StreetAddressesEntityInterfac
             calendar: datetime.datetime = datetime.datetime.now()
             time: str = str(str(int(calendar.getTimeInMillis())))
             values.add(time)
-            super().insert(values)
+            java_super_call(super(), "insert", values)
             self.setDefault(self.getLastId())
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, "add")
@@ -103,7 +111,9 @@ class StreetAddressesEntity(*java_bases(AbSqlBean, StreetAddressesEntityInterfac
                 self.logUtil.put(self.commonStrings.FAILURE, self, "add", e)
 
     def add(self, *args):
-        return getattr(self, "add_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("add_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().add(*args)
     
 
     def update(self, address: StreetAddress) -> None:
@@ -119,7 +129,7 @@ class StreetAddressesEntity(*java_bases(AbSqlBean, StreetAddressesEntityInterfac
             whereKeyValuePairs: HashMap = StdUtil.getInstance().createHashMap()
             whereKeyValuePairs.put(StreetAddressData.ID, address.getId())
             whereKeyValuePairs.put(UserData.USERNAME, self.userName)
-            super().updateWhere(whereKeyValuePairs, addressHashMap)
+            java_super_call(super(), "updateWhere", whereKeyValuePairs, addressHashMap)
             self.setDefault(address.getId())
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, "update")
@@ -131,7 +141,7 @@ class StreetAddressesEntity(*java_bases(AbSqlBean, StreetAddressesEntityInterfac
     def getLastId(self) -> str:
         from org.allbinary.business.user.UserData import UserData
         from org.allbinary.business.user.address.StreetAddressData import StreetAddressData
-        return super().getLargestIntegerInColumnWhere(StreetAddressData.ID, UserData.USERNAME, self.userName)
+        return java_super_call(super(), "getLargestIntegerInColumnWhere", StreetAddressData.ID, UserData.USERNAME, self.userName)
     
 
     def get_j0(self) -> BasicArrayList:
@@ -147,7 +157,7 @@ class StreetAddressesEntity(*java_bases(AbSqlBean, StreetAddressesEntityInterfac
             streetAddressVector: BasicArrayList = BasicArrayListD()
             keyAndValue: HashMap = StdUtil.getInstance().createHashMap()
             keyAndValue.put(UserData.USERNAME, self.userName)
-            addressList: BasicArrayList = super().getRows(keyAndValue)
+            addressList: BasicArrayList = java_super_call(super(), "getRows", keyAndValue)
             size: int = addressList.size()
             for index in range(0, size):
                 addressHashMap: HashMap = addressList.get(index)
@@ -173,7 +183,7 @@ class StreetAddressesEntity(*java_bases(AbSqlBean, StreetAddressesEntityInterfac
             keyAndValue: HashMap = StdUtil.getInstance().createHashMap()
             keyAndValue.put(UserData.USERNAME, self.userName)
             keyAndValue.put(StreetAddressData.ID, str(index))
-            addressHashMap: HashMap = super().getRow(keyAndValue)
+            addressHashMap: HashMap = java_super_call(super(), "getRow", keyAndValue)
             if addressHashMap is not None:
                 return StreetAddress(addressHashMap)
             else:
@@ -184,7 +194,9 @@ class StreetAddressesEntity(*java_bases(AbSqlBean, StreetAddressesEntityInterfac
             return None
 
     def get(self, *args):
-        return getattr(self, "get_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("get_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().get(*args)
     
 
     def getDefault(self) -> StreetAddress:
@@ -200,7 +212,7 @@ class StreetAddressesEntity(*java_bases(AbSqlBean, StreetAddressesEntityInterfac
             updateKeyAndValue: HashMap = StdUtil.getInstance().createHashMap()
             updateKeyAndValue.put(StreetAddressData.DEFAULT, StreetAddressData.DEFAULT)
             updateKeyAndValue.put(UserData.USERNAME, self.userName)
-            addressHashMap = super().getRow(updateKeyAndValue)
+            addressHashMap = java_super_call(super(), "getRow", updateKeyAndValue)
             if addressHashMap is not None:
                 streetAddress: StreetAddress = StreetAddress(addressHashMap)
                 if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
@@ -233,10 +245,10 @@ class StreetAddressesEntity(*java_bases(AbSqlBean, StreetAddressesEntityInterfac
             if streetAddress is not None:
                 updateKeyAndValue.put(StreetAddressData.DEFAULT, StringUtil.getInstance().EMPTY_STRING)
                 whereKeyAndValue.put(StreetAddressData.ID, streetAddress.getId())
-                super().updateWhere(whereKeyAndValue, updateKeyAndValue)
+                java_super_call(super(), "updateWhere", whereKeyAndValue, updateKeyAndValue)
             whereKeyAndValue.put(StreetAddressData.ID, value)
             updateKeyAndValue.put(StreetAddressData.DEFAULT, StreetAddressData.DEFAULT)
-            super().updateWhere(whereKeyAndValue, updateKeyAndValue)
+            java_super_call(super(), "updateWhere", whereKeyAndValue, updateKeyAndValue)
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, "setDefault")
         except Exception as e:
@@ -259,15 +271,15 @@ class StreetAddressesEntity(*java_bases(AbSqlBean, StreetAddressesEntityInterfac
     
 
     def createTable(self) -> str:
-        return super().createTable(self.createTableStatement())
+        return java_super_call(super(), "createTable", self.createTableStatement())
     
 
     def drop(self) -> str:
-        return super().dropTable()
+        return java_super_call(super(), "dropTable")
     
 
     def dropTable(self) -> str:
-        return super().dropTable()
+        return java_super_call(super(), "dropTable")
 # from java.util.Calendar import Calendar
 # from java.util.HashMap import HashMap
 # from org.allbinary.util.BasicArrayList import BasicArrayList

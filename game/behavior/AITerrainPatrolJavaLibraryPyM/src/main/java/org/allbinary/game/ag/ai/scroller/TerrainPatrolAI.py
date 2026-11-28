@@ -15,15 +15,21 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.ag.ai.scroller.PacePatrolAI import PacePatrolAI
 
 
+@java_inherited_overloads
 class TerrainPatrolAI(PacePatrolAI):
+    def _java_defaults(self):
+        vars(self).setdefault("terrainEventListener", None)
+        vars(self).setdefault("DOWN", None)
+        vars(self).setdefault("CLIFF", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.game.terrain.BasicTerrainInfo import BasicTerrainInfo
         from org.allbinary.game.terrain.TerrainEventListener import TerrainEventListener
-        from org.allbinary.math.Angle import Angle
         from org.allbinary.math.AngleFactory import AngleFactory
         self.terrainEventListener: TerrainEventListener = TerrainEventListener()
         self.DOWN: Angle = AngleFactory.getInstance().DOWN
@@ -31,19 +37,20 @@ class TerrainPatrolAI(PacePatrolAI):
     
 
     def __init__(self, hashtable: ABHashtable[object, object], ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.input.GameInput import GameInput
         from org.allbinary.game.terrain.TerrainEventCircularStaticPool import TerrainEventCircularStaticPool
         from org.allbinary.game.terrain.TerrainEventHandler import TerrainEventHandler
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         from org.allbinary.util.ABHashtable import ABHashtable
         super().__init__(hashtable, ownerLayerInterface, gameInput)
-        self._init_fields()
+        __class__._init_fields(self)
         TerrainEventHandler.getInstance(ownerLayerInterface).addListener(self.terrainEventListener)
         self.terrainEventListener.onTerrainEvent(TerrainEventCircularStaticPool.getInstance().getNext(self.CLIFF))
     
 
     def update(self) -> None:
-        super().update()
+        java_super_call(super(), "update")
         self.changeDirectionIfCliffReached()
     
 
@@ -60,7 +67,7 @@ class TerrainPatrolAI(PacePatrolAI):
             angle: Angle = basicTerrainInfo.getAngle()
             if angle == self.DOWN:
                 self.nextDirection()
-                if not self.isFollowLimitedByTerrain:
+                if not (self.isFollowLimitedByTerrain):
                     self.logUtil.putF("Following Limited", self, "onTerrainEvent")
                     self.isFollowLimitedByTerrain = True
 # from org.allbinary.game.input.GameInput import GameInput

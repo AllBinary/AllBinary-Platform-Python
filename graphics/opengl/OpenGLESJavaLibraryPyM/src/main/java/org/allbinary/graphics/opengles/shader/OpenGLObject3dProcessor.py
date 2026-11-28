@@ -12,7 +12,7 @@ class OpenGLObject3dProcessor:
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def process_j2(self, gl: GL10, object3d: object) -> None:
@@ -25,7 +25,9 @@ class OpenGLObject3dProcessor:
         pass
 
     def process(self, *args):
-        return getattr(self, "process_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("process_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().process(*args)
 # from javax.microedition.khronos.opengles.GL10 import GL10
 # from org.allbinary.string.CommonStrings import CommonStrings
 

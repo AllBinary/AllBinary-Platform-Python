@@ -28,7 +28,7 @@ class AcceptableResponse:
 
     def __init__(self, candidate: str, tagName: str, index: int) -> None:
         from org.allbinary.logic.communication.http.AcceptableResponseUtil import AcceptableResponseUtil
-        self._init_fields()
+        __class__._init_fields(self)
         self.logUtil.putF(tagName, self, self.commonStrings.CONSTRUCTOR)
         acceptableResponseUtil: AcceptableResponseUtil = AcceptableResponseUtil.getInstance()
         acceptableResponseUtil.candidateVector.addAt(index, candidate)

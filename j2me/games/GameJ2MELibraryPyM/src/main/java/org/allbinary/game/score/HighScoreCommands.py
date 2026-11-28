@@ -29,7 +29,7 @@ class HighScoreCommands:
         self.WORLD: Command = Command("World", StringUtil.getInstance().EMPTY_STRING, Command.SCREEN, 1)
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

@@ -27,18 +27,21 @@ class NullAnimationFactory(*java_bases(AnimationInterfaceFactoryInterface, Proce
 
     def _init_fields(self) -> None:
         from javax.microedition.lcdui.Graphics import Graphics
-        self.NULL_ANIMATION: Animation = (Animation()  # Java anonymous class body:
-#         
-# 
-#         def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
-#             from javax.microedition.lcdui.Graphics import Graphics
-#             pass
-)
+        _java_listener_owner = self
+        class _JavaListenerN65758(Animation):
+                
+
+
+            def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
+                from javax.microedition.lcdui.Graphics import Graphics
+                pass
+        self.NULL_ANIMATION: Animation = _JavaListenerN65758()
+            
         self.EMPTY_ARRAY: list[Animation] = [None] * (0)
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

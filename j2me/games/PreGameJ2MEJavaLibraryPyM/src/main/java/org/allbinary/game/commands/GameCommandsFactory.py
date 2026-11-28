@@ -64,7 +64,7 @@ class GameCommandsFactory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
 # from javax.microedition.lcdui.Command import Command
 # from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
 # from org.allbinary.logic.NullUtil import NullUtil

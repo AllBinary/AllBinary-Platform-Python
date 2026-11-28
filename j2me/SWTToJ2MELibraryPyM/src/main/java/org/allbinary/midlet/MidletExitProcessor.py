@@ -15,27 +15,31 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import sys
 from org.allbinary.canvas.Processor import Processor
 
 
+@java_inherited_overloads
 class MidletExitProcessor(Processor):
+    def _java_defaults(self):
+        vars(self).setdefault("midlet", None)
 
     def _init_fields(self) -> None:
-        from javax.microedition.midlet.MIDlet import MIDlet
-        self.midlet: MIDlet = None
+        if "midlet" not in vars(self): self.midlet: MIDlet = None
     
 
     def __init__(self, midlet: MIDlet) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.midlet.MIDlet import MIDlet
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.midlet = midlet
     
 
     # throws Exception
     def process(self) -> None:
-        sys.exit(0)
+        __import__("java.lang.System", fromlist=["System"]).System.exit(0)
 # from javax.microedition.midlet.MIDlet import MIDlet
 
 

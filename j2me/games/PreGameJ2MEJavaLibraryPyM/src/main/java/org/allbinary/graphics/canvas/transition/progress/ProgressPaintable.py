@@ -15,18 +15,23 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.graphics.paint.Paintable import Paintable
 
 
+@java_inherited_overloads
 class ProgressPaintable(Paintable):
+    def _java_defaults(self):
+        vars(self).setdefault("progressCanvas", None)
 
     def _init_fields(self) -> None:
-        self.progressCanvas: ProgressCanvas = None
+        if "progressCanvas" not in vars(self): self.progressCanvas: ProgressCanvas = None
     
 
     def __init__(self, progressCanvas: ProgressCanvas) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.progressCanvas = progressCanvas
     
 

@@ -15,12 +15,19 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.validate.ValidationComponentInterface import ValidationComponentInterface
 from views.business.context.modules.storefront.customizer.hedges.header.TopBarView import TopBarView
 
 
+@java_inherited_overloads
 class InsertHeaderValidationView(*java_bases(TopBarView, ValidationComponentInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("LOGOPATH", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -29,6 +36,7 @@ class InsertHeaderValidationView(*java_bases(TopBarView, ValidationComponentInte
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        __class__._java_defaults(self)
         from java.util.HashMap import HashMap
         from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
         from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
@@ -38,7 +46,7 @@ class InsertHeaderValidationView(*java_bases(TopBarView, ValidationComponentInte
         from org.allbinary.logic.visual.transform.template.customizer.hedges.heading.HeadingValidation import HeadingValidation
         from org.allbinary.logic.visual.transform.template.customizer.widgets.logo.LogoData import LogoData
         super().__init__(transformInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
         multipartRequestHashMap: HashMap = MultipartRequestParams(self.getPageContext()).toHashMap()
         storeFrontInterface: StoreFrontInterface = StoreFrontFactory.getInstance(self.getWeblisketSession().getStoreName())
         fullPath: str = str(URLGLOBALS.getWebappPath() + storeFrontInterface.getCurrentHostNamePath()) + self.LOGOPATH
@@ -60,7 +68,7 @@ class InsertHeaderValidationView(*java_bases(TopBarView, ValidationComponentInte
         try:
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 self.logUtil.putF("topbarValidation", self, self.commonStrings.IS_VALID)
-            isValid: bool = self.heading.isValid()
+            isValid: bool = java_predicate(self.heading, "isValid")
             if isValid == True:
                 CustomizerUtil.getInstance().insert(self.getTransformInfoInterface(), self)
             return isValid
@@ -98,7 +106,7 @@ class InsertHeaderValidationView(*java_bases(TopBarView, ValidationComponentInte
     # throws Exception
     def getTransformInfoInterface(self) -> TransformInfoInterface:
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-        return super().getTransformInfoInterface()
+        return java_super_call(super(), "getTransformInfoInterface")
 # from java.util.HashMap import HashMap
 # from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory
 # from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface

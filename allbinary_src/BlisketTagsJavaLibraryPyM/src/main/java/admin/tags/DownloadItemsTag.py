@@ -15,9 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from admin.tags.TableTag import TableTag
 
 
+@java_inherited_overloads
 class DownloadItemsTag(TableTag):
     
 
@@ -32,16 +36,17 @@ class DownloadItemsTag(TableTag):
     # throws JspTagException
     def doStartTag(self) -> int:
         from admin.tags.ParentInventoryTagHelper import ParentInventoryTagHelper
+        from admin.tags.AbTagData import AbTagData
         from org.allbinary.logic.communication.http.request.AbResponseHandler import AbResponseHandler
         from org.allbinary.globals.GLOBALS2 import GLOBALS2
         try:
-            if self.isEnabled():
+            if java_predicate(self, "isEnabled"):
                 if self.getCommand() is not None:
                     if self.getCommand().compareTo(GLOBALS2.BACKUP) != 0 and self.getCommand().compareTo(GLOBALS2.RESTORE) != 0 and self.getCommand().compareTo(self.commonStrings.CREATE) != 0 and self.getCommand().compareTo(self.commonStrings.DROP) != 0:
                         parentTag: Tag = self.getParent()
                         ParentInventoryTagHelper.getInstance().isValid(self, parentTag)
                         self.getPropertiesHashMap().put(AbTagData.PARENT, parentTag)
-                    return super().doStartTag()
+                    return java_super_call(super(), "doStartTag")
             return self.SKIP_BODY
         except Exception as e:
             AbResponseHandler.sendJspTagRedirect(self.pageContext, e)

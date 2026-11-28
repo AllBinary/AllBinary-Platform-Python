@@ -49,7 +49,7 @@ class LogFormatUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def get(self, className: str, functionName: str, specialMessage: str, exception: object) -> str:

@@ -15,17 +15,22 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.ClassLoader import ClassLoader
 
 
+@java_inherited_overloads
 class NativeLibraryClassLoader(ClassLoader):
+    def _java_defaults(self):
+        vars(self).setdefault("message", None)
 
     def _init_fields(self) -> None:
         self.message: str = "This Class Loader Does Not Load Classes - Only For Loading and Unloading of Native Libraries"
     
 
     def __init__(self, parent: ClassLoader) -> None:
+        __class__._java_defaults(self)
         super().__init__(parent)
-        self._init_fields()
+        __class__._init_fields(self)
 
 

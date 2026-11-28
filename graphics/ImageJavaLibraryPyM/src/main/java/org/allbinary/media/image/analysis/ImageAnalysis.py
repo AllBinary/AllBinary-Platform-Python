@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -32,7 +34,7 @@ class ImageAnalysis:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -77,11 +79,13 @@ class ImageAnalysis:
         return imageAnalysisResults
 
     def process(self, *args):
-        if len(args) == 2 and True and (args[0] is None or isinstance(args[0], list)) and not isinstance(args[1], (str, list, int, float)):
-            return self.process_j2_1(*args)
+        if len(args) == 2 and True and (args[0] is None or isinstance(args[0], list)) and (args[1] is None or any(base.__name__ == "ColorRangeInterface" for base in type(args[1]).__mro__)):
+            return __class__.__dict__["process_j2_1"].__get__(self, __class__)(*args)
         if len(args) == 2:
-            return self.process_j2_2(*args)
-        return getattr(self, "process_j" + str(len(args)))(*args)
+            return __class__.__dict__["process_j2_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("process_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().process(*args)
     
 
     @staticmethod

@@ -15,11 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.android.input.VirtualKeyboard import VirtualKeyboard
 from org.allbinary.input.event.VirtualKeyboardEventListenerInterface import VirtualKeyboardEventListenerInterface
 
 
+@java_inherited_overloads
 class VirtualKeyboardAPI1(*java_bases(VirtualKeyboard, VirtualKeyboardEventListenerInterface)):
     MIN_API: int = 1
     MAX_API: int = 2
@@ -32,12 +35,12 @@ class VirtualKeyboardAPI1(*java_bases(VirtualKeyboard, VirtualKeyboardEventListe
 
     def onVirtualKeyboardEvent(self, virtualKeyboardEvent: VirtualKeyboardEvent) -> None:
         from org.allbinary.input.event.VirtualKeyboardEvent import VirtualKeyboardEvent
-        super().onVirtualKeyboardEvent(virtualKeyboardEvent)
+        java_super_call(super(), "onVirtualKeyboardEvent", virtualKeyboardEvent)
     
 
     def onEvent(self, eventObject: AllBinaryEventObject) -> None:
         from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-        super().onEvent(eventObject)
+        java_super_call(super(), "onEvent", eventObject)
 # from android.app.Activity import Activity
 # from org.allbinary.input.event.VirtualKeyboardEvent import VirtualKeyboardEvent
 # from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject

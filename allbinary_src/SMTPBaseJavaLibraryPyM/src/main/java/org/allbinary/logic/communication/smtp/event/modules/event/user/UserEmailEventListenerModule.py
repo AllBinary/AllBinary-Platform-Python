@@ -21,15 +21,14 @@ from org.allbinary.logic.communication.smtp.event.UserEmailEventListenerInterfac
 class UserEmailEventListenerModule(UserEmailEventListenerInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.user.UserInterface import UserInterface
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.userInterface: UserInterface = None
+        if "userInterface" not in vars(self): self.userInterface: UserInterface = None
     
 
     def __init__(self, userInterface: UserInterface) -> None:
         from org.allbinary.business.user.UserInterface import UserInterface
-        self._init_fields()
+        __class__._init_fields(self)
         self.userInterface = userInterface
     
 

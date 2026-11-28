@@ -15,26 +15,39 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.graphics.hud.BasicHud import BasicHud
 from org.allbinary.game.health.HealthListenerInterface import HealthListenerInterface
 from org.allbinary.graphics.paint.PaintableInterface import PaintableInterface
 
 
+@java_inherited_overloads
 class HealthHudWidget(*java_bases(BasicHud, PaintableInterface, HealthListenerInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("healthScale", 0)
+        vars(self).setdefault("animationInterface", None)
+        vars(self).setdefault("healthInterface", None)
+        vars(self).setdefault("max", 0)
+        vars(self).setdefault("xArray", None)
+        vars(self).setdefault("gameTickTimeDelayHelper", None)
+        vars(self).setdefault("timeDelayHelper", None)
+        vars(self).setdefault("slowBeatTimeDelayHelper", None)
+        vars(self).setdefault("mediumBeatTimeDelayHelper", None)
+        vars(self).setdefault("fastBeatTimeDelayHelper", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.animation.Animation import Animation
-        from org.allbinary.game.health.Health import Health
-        from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
         from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
         from org.allbinary.time.NoTimeDelayHelper import NoTimeDelayHelper
         from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
-        self.healthScale: int = None
-        self.animationInterface: Animation = None
-        self.healthInterface: Health = None
-        self.max: int = 0
-        self.xArray: list[int] = None
+        if "healthScale" not in vars(self): self.healthScale: int = 0
+        if "animationInterface" not in vars(self): self.animationInterface: Animation = None
+        if "healthInterface" not in vars(self): self.healthInterface: Health = None
+        if "max" not in vars(self): self.max: int = 0
+        if "xArray" not in vars(self): self.xArray: list[int] = None
         self.gameTickTimeDelayHelper: GameTickTimeDelayHelper = GameTickTimeDelayHelperFactory.getInstance()
         self.timeDelayHelper: TimeDelayHelper = NoTimeDelayHelper.SINGLETON
         self.slowBeatTimeDelayHelper: TimeDelayHelper = TimeDelayHelper(1280)
@@ -43,15 +56,17 @@ class HealthHudWidget(*java_bases(BasicHud, PaintableInterface, HealthListenerIn
     
 
     def __init__(self, animationInterface: Animation, healthInterface: Health, location: int, direction: int) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.animation.Animation import Animation
         from org.allbinary.game.health.Health import Health
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         super().__init__(location, direction, 2, BasicColorFactory.getInstance().WHITE)
-        self._init_fields()
+        __class__._init_fields(self)
         self.animationInterface = animationInterface
         self.healthInterface = healthInterface
         self.healthInterface.addListener(self)
-        self.healthScale = (self.healthInterface.getMaxHealth() / 6) + 1
+        self.healthScale = (java_divide(self.healthInterface.getMaxHealth(), 6)
+            ) + 1
         self.onHealthChange()
         self.updateMaxWidth = healthInterface.getMaxHealth() * 16
         self.updateMaxHeight = 16
@@ -66,15 +81,16 @@ class HealthHudWidget(*java_bases(BasicHud, PaintableInterface, HealthListenerIn
     
 
     def setX(self, x: int) -> None:
-        super().setX(x)
+        java_super_call(super(), "setX", x)
         self.update()
     
 
     def onHealthChange(self) -> None:
         from org.allbinary.time.NoTimeDelayHelper import NoTimeDelayHelper
-        self.max = (self.healthInterface.getHealth() / self.healthScale)
+        self.max = (java_divide(self.healthInterface.getHealth(), self.healthScale)
+            )
         self.timeDelayHelper = NoTimeDelayHelper.SINGLETON
-        if self.max <= 1 and self.healthInterface.isAlive():
+        if self.max <= 1 and java_predicate(self.healthInterface, "isAlive"):
             self.max = 1
             if self.healthScale - self.healthInterface.getHealth() > int((self.healthScale * 2) / 3):
                 self.timeDelayHelper = self.slowBeatTimeDelayHelper

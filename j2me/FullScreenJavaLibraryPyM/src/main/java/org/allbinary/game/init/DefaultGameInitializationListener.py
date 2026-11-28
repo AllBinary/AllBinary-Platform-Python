@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import time
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from org.allbinary.game.configuration.event.GameInitializedListenerInterface import GameInitializedListenerInterface
 
@@ -32,7 +33,7 @@ class DefaultGameInitializationListener(GameInitializedListenerInterface):
 
     def __init__(self) -> None:
         from org.allbinary.game.configuration.event.GameInitializedEventHandler import GameInitializedEventHandler
-        self._init_fields()
+        __class__._init_fields(self)
         gameInitializedEventHandler: GameInitializedEventHandler = GameInitializedEventHandler.getInstance()
         gameInitializedEventHandler.removeAllListeners()
         gameInitializedEventHandler.addListenerInterface(self)
@@ -53,7 +54,7 @@ class DefaultGameInitializationListener(GameInitializedListenerInterface):
         commonStrings: CommonStrings = CommonStrings.getInstance()
         try:
             self.logUtil.putF(commonStrings.START, self, ON_GAME_INITIALIZED)
-            while not self.swtJOGLProcessor.isHolderCreated():
+            while not (java_predicate(self.swtJOGLProcessor, "isHolderCreated")):
                 self.logUtil.putF(commonStrings.UPDATE, self, ON_GAME_INITIALIZED)
                 time.sleep((20) / 1000)
             FeatureResourceInitializationUtil.getInstance().init(gameInitializedEvent.getLevel())

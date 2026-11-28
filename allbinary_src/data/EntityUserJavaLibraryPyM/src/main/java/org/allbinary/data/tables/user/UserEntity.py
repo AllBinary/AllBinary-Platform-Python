@@ -15,12 +15,25 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.communication.sql.AbSqlBean import AbSqlBean
 from org.allbinary.data.tables.user.UserEntityInterface import UserEntityInterface
 
 
+@java_inherited_overloads
 class UserEntity(*java_bases(AbSqlBean, UserEntityInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("tableName", None)
+        vars(self).setdefault("COMMAND_SUCCESS_FOR_USER", None)
+        vars(self).setdefault("PASSWORD_LABEL", None)
+        vars(self).setdefault("EQUALS", None)
+        vars(self).setdefault("COMMAND_SUCCESS_BUT_LOGIN_FAILED", None)
+        vars(self).setdefault("INVALID_PASSWORD_LABEL", None)
+        vars(self).setdefault("NOT_EQUAL", None)
+        vars(self).setdefault("END_QUOTES", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -37,9 +50,10 @@ class UserEntity(*java_bases(AbSqlBean, UserEntityInterface)):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
         super().__init__(UserDbInitInfo())
-        self._init_fields()
+        __class__._init_fields(self)
         self.setTableName(self.tableName)
     
 
@@ -48,7 +62,7 @@ class UserEntity(*java_bases(AbSqlBean, UserEntityInterface)):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            super().insert(values)
+            java_super_call(super(), "insert", values)
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, self.INSERT)
         except Exception as e:
@@ -78,7 +92,7 @@ class UserEntity(*java_bases(AbSqlBean, UserEntityInterface)):
         usersVector: BasicArrayList = BasicArrayListD()
         keysAndValues.put(str(UserRoleData.NAME), str(UserRoleFactory.getInstance().STOREMANAGER))
         keysAndValues.put(UserData.PERMISSIONS, storeFrontInterface.getName())
-        usersHashMapVector: BasicArrayList = super().getRows(keysAndValues)
+        usersHashMapVector: BasicArrayList = java_super_call(super(), "getRows", keysAndValues)
         size: int = usersHashMapVector.size()
         for i in range(0, size):
             userHashMap: HashMap = usersHashMapVector.get(i)
@@ -106,7 +120,7 @@ class UserEntity(*java_bases(AbSqlBean, UserEntityInterface)):
         keysAndValues: HashMap = StdUtil.getInstance().createHashMap()
         usersVector: BasicArrayList = BasicArrayListD()
         keysAndValues.put(str(UserRoleData.NAME), str(userRole))
-        usersHashMapVector: BasicArrayList = super().getRows(keysAndValues)
+        usersHashMapVector: BasicArrayList = java_super_call(super(), "getRows", keysAndValues)
         size: int = usersHashMapVector.size()
         for index in range(0, size):
             userHashMap: HashMap = usersHashMapVector.get(index)
@@ -127,7 +141,7 @@ class UserEntity(*java_bases(AbSqlBean, UserEntityInterface)):
         keysAndValues: HashMap = StdUtil.getInstance().createHashMap()
         usersVector: BasicArrayList = BasicArrayListD()
         keysAndValues.put(StoreFrontData.getInstance().NAME, storeFrontInterface.getName())
-        usersHashMapVector: BasicArrayList = super().getRows(keysAndValues)
+        usersHashMapVector: BasicArrayList = java_super_call(super(), "getRows", keysAndValues)
         size: int = usersHashMapVector.size()
         for index in range(0, size):
             userHashMap: HashMap = usersHashMapVector.get(index)
@@ -145,7 +159,7 @@ class UserEntity(*java_bases(AbSqlBean, UserEntityInterface)):
         from org.allbinary.logic.StdUtil import StdUtil
         row: HashMap = StdUtil.getInstance().createHashMap()
         row.put(UserData.USERNAME, userName)
-        userHashMap: HashMap = super().getRow(row)
+        userHashMap: HashMap = java_super_call(super(), "getRow", row)
         if userHashMap is not None:
             return CreateUserFactory.getInstance(userHashMap)
         else:
@@ -156,7 +170,7 @@ class UserEntity(*java_bases(AbSqlBean, UserEntityInterface)):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            super().deleteWhere(key, value)
+            java_super_call(super(), "deleteWhere", key, value)
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, "deleteWhere")
         except Exception as e:
@@ -174,8 +188,8 @@ class UserEntity(*java_bases(AbSqlBean, UserEntityInterface)):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             isUserNameAndPasswordCorrect: int = 0
-            result: str = super().getField(UserData.USERNAME, userName, UserData.PASSWORD)
-            encryption: str = super().getField(UserData.USERNAME, userName, EntryData.getInstance().ENCRYPTION)
+            result: str = java_super_call(super(), "getField", UserData.USERNAME, userName, UserData.PASSWORD)
+            encryption: str = java_super_call(super(), "getField", UserData.USERNAME, userName, EntryData.getInstance().ENCRYPTION)
             if encryption is not None and ((encryption > self.stringUtil.EMPTY_STRING) - (encryption < self.stringUtil.EMPTY_STRING)) != 0:
                 isUserNameAndPasswordCorrect = ((result > SuperCrypt(int(int(encryption))).encrypt(password)) - (result < SuperCrypt(int(int(encryption))).encrypt(password)))
             else:
@@ -214,11 +228,11 @@ class UserEntity(*java_bases(AbSqlBean, UserEntityInterface)):
     def update(self, userName: str, updatedValues: HashMap) -> None:
         from java.util.HashMap import HashMap
         from org.allbinary.business.user.UserData import UserData
-        super().updateWhere(UserData.USERNAME, userName, updatedValues)
+        java_super_call(super(), "updateWhere", UserData.USERNAME, userName, updatedValues)
     
 
     def dropTables(self) -> str:
-        return super().dropTable()
+        return java_super_call(super(), "dropTable")
     
 
     def createTableStatement(self) -> str:
@@ -233,11 +247,11 @@ class UserEntity(*java_bases(AbSqlBean, UserEntityInterface)):
     
 
     def createTable(self) -> str:
-        return super().createTable(self.createTableStatement())
+        return java_super_call(super(), "createTable", self.createTableStatement())
     
 
     def dropTable(self) -> str:
-        return super().dropTable()
+        return java_super_call(super(), "dropTable")
 # from java.util.HashMap import HashMap
 # from org.allbinary.util.BasicArrayList import BasicArrayList
 # from org.allbinary.util.BasicArrayListD import BasicArrayListD

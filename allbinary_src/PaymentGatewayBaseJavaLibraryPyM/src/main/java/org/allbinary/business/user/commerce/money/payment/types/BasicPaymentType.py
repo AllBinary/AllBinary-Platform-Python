@@ -20,29 +20,27 @@ from __future__ import annotations
 class BasicPaymentType:
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayInterfaceFactoryInterface import PaymentGatewayInterfaceFactoryInterface
-        from org.allbinary.business.user.commerce.money.payment.gateway.modules.gateway.PaymentGatewayDomNodeFactoryInterface import PaymentGatewayDomNodeFactoryInterface
-        self.name: str = None
-        self.value: str = None
-        self.paymentGatewayInterfaceFactoryInterface: PaymentGatewayInterfaceFactoryInterface = None
-        self.paymentGatewayDomNodeFactoryInterface: PaymentGatewayDomNodeFactoryInterface = None
+        if "name" not in vars(self): self.name: str = None
+        if "value" not in vars(self): self.value: str = None
+        if "paymentGatewayInterfaceFactoryInterface" not in vars(self): self.paymentGatewayInterfaceFactoryInterface: PaymentGatewayInterfaceFactoryInterface = None
+        if "paymentGatewayDomNodeFactoryInterface" not in vars(self): self.paymentGatewayDomNodeFactoryInterface: PaymentGatewayDomNodeFactoryInterface = None
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
         elif len(args) == 3:
-            self._constructor3(*args)
+            __class__._constructor3(self, *args)
     
 
     def _constructor1(self, paymentMethod: str) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.init(paymentMethod)
     
 
     def _constructor3(self, paymentMethod: str, paymentGatewayInterfaceFactoryInterface: PaymentGatewayInterfaceFactoryInterface, paymentGatewayDomNodeFactoryInterface: PaymentGatewayDomNodeFactoryInterface) -> None:
         from org.allbinary.business.user.commerce.money.payment.gateway.PaymentGatewayInterfaceFactoryInterface import PaymentGatewayInterfaceFactoryInterface
         from org.allbinary.business.user.commerce.money.payment.gateway.modules.gateway.PaymentGatewayDomNodeFactoryInterface import PaymentGatewayDomNodeFactoryInterface
-        self._init_fields()
+        __class__._init_fields(self)
         self.init(paymentMethod)
         self.paymentGatewayInterfaceFactoryInterface = paymentGatewayInterfaceFactoryInterface
         self.paymentGatewayDomNodeFactoryInterface = paymentGatewayDomNodeFactoryInterface

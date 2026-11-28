@@ -14,7 +14,7 @@ class OpenGLStrings:
         self.SET: str = "set(GL10)"
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

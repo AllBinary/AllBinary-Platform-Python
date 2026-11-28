@@ -15,6 +15,9 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_new_inner
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 from playn.core.Callback import Callback
 
 
@@ -22,19 +25,17 @@ class ImageModifierUtil:
     class ImageCopyCallback(Callback):
 
         def _init_fields(self) -> None:
-            from javax.microedition.lcdui.Image import Image
-            from playn.core.CoreImage import CoreImage
-            self.imageModifierUtil: ImageModifierUtil = None
-            self.imageArray: list[Image] = None
-            self.index: int = None
-            self.image: Image = None
-            self.image3: CoreImage = None
+            if "imageModifierUtil" not in vars(self): self.imageModifierUtil: ImageModifierUtil = None
+            if "imageArray" not in vars(self): self.imageArray: list[Image] = None
+            if "index" not in vars(self): self.index: int = 0
+            if "image" not in vars(self): self.image: Image = None
+            if "image3" not in vars(self): self.image3: CoreImage = None
         
 
         def __init__(self, imageModifierUtil: ImageModifierUtil, imageArray: list[Image], index: int, image: Image, image3: CoreImage) -> None:
             from javax.microedition.lcdui.Image import Image
             from playn.core.CoreImage import CoreImage
-            self._init_fields()
+            __class__._init_fields(self)
             self.imageModifierUtil = imageModifierUtil
             self.imageArray = imageArray
             self.index = index
@@ -68,10 +69,10 @@ class ImageModifierUtil:
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.resourceCallbackStrings: ResourceCallbackStrings = ResourceCallbackStrings.getInstance()
         self.playnUtil: HTMLPlaynUtil = HTMLPlaynUtil.getInstance()
-        self.alphaArray: list[bool] = None
+        if "alphaArray" not in vars(self): self.alphaArray: list[bool] = None
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -150,13 +151,13 @@ class ImageModifierUtil:
         from playn.core.CoreImage import CoreImage
         image3: CoreImage = (image).getImage()
         if image3 is not None:
-            if image3.isReady() or image3.width() + image3.height() <= 0 or image.getName() == self.resourceCallbackStrings.FROM_DATA:
+            if java_predicate(image3, "isReady") or image3.width() + image3.height() <= 0 or image.getName() == self.resourceCallbackStrings.FROM_DATA:
                 self.copy(imageArray, index, image, image3)
             else:
-                callback: Callback = ImageModifierUtil.ImageCopyCallback(self, imageArray, index, image, image3)
+                callback: Callback = java_new_inner(self, ImageModifierUtil.ImageCopyCallback, self, imageArray, index, image, image3)
                 image3.addCallback(callback)
         else:
-            self.logUtil.putF(self.resourceCallbackStrings.NULL + image.isMutable(), self, self.resourceCallbackStrings.HANDLE_IMAGE)
+            self.logUtil.putF(self.resourceCallbackStrings.NULL + java_predicate(image, "isMutable"), self, self.resourceCallbackStrings.HANDLE_IMAGE)
     
 
     def copy(self, imageArray: list[Image], index: int, image: Image, image3: CoreImage) -> None:

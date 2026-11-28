@@ -16,6 +16,10 @@
 from __future__ import annotations
 
 import math
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.layer.AdvancedRTSGameLayer import AdvancedRTSGameLayer
@@ -23,41 +27,60 @@ from org.allbinary.game.layer.building.event.BuildingEventListenerInterface impo
 from org.allbinary.game.tracking.TrackingEventListenerInterface import TrackingEventListenerInterface
 
 
+@java_inherited_overloads
 class UnitLayer(*java_bases(AdvancedRTSGameLayer, BuildingEventListenerInterface, TrackingEventListenerInterface)):
     partialPositionList: BasicArrayList = None
     SENSOR_RANGE_MULTIPLIER: int = 6
     MOVE: str = "Moving"
+    def _java_defaults(self):
+        vars(self).setdefault("basicColorFactory", None)
+        vars(self).setdefault("groupCommonFactory", None)
+        vars(self).setdefault("layerPartialCellPositionsUtil", None)
+        vars(self).setdefault("layerDistanceUtil", None)
+        vars(self).setdefault("angleFactory", None)
+        vars(self).setdefault("cellPositionFactory", None)
+        vars(self).setdefault("maxResourceLoad", 0)
+        vars(self).setdefault("vehicleProperties", None)
+        vars(self).setdefault("accelerationBasicDecimal", None)
+        vars(self).setdefault("decelerationBasicDecimal", None)
+        vars(self).setdefault("trackingEvent", None)
+        vars(self).setdefault("damageFloaters", None)
+        vars(self).setdefault("damageFloatersPaintableInterface", None)
+        vars(self).setdefault("healthBar", None)
+        vars(self).setdefault("moveSoundInterface", None)
+        vars(self).setdefault("initResourceAnimation", None)
+        vars(self).setdefault("resourceAnimation", None)
+        vars(self).setdefault("initPathAnimation", None)
+        vars(self).setdefault("pathAnimation", None)
+        vars(self).setdefault("captionAnimationHelper", None)
+        vars(self).setdefault("decalAnimation", None)
+        vars(self).setdefault("waypointLayerInterfaceFactoryInterface", None)
+        vars(self).setdefault("resourceLoad", 0)
+        vars(self).setdefault("weaponRange", 0)
+        vars(self).setdefault("rtsLogHelper", None)
+        vars(self).setdefault("rotationAnimationInterfaceP", None)
+        vars(self).setdefault("movementAngle", None)
+        vars(self).setdefault("steeringInsideGeographicMapCellPosition", None)
+        vars(self).setdefault("sensorGeographicMapCellPositionList", None)
+        vars(self).setdefault("CAPITAL_EVENT", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.animation.Animation import Animation
         from org.allbinary.animation.FeaturedAnimationInterfaceFactoryInterfaceFactory import FeaturedAnimationInterfaceFactoryInterfaceFactory
         from org.allbinary.animation.IndexedAnimation import IndexedAnimation
         from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
         from org.allbinary.animation.NullIndexedAnimationFactory import NullIndexedAnimationFactory
-        from org.allbinary.animation.RotationAnimation import RotationAnimation
         from org.allbinary.animation.caption.CaptionAnimationHelper import CaptionAnimationHelper
-        from org.allbinary.animation.caption.CaptionAnimationHelperBase import CaptionAnimationHelperBase
-        from org.allbinary.game.combat.damage.DamageFloaters import DamageFloaters
         from org.allbinary.game.identification.GroupCommonFactory import GroupCommonFactory
         from org.allbinary.game.layer.LayerCaptionResources import LayerCaptionResources
-        from org.allbinary.game.layer.PathAnimation import PathAnimation
         from org.allbinary.game.layer.RTSLayerLogHelper import RTSLayerLogHelper
-        from org.allbinary.game.layer.VehicleProperties import VehicleProperties
         from org.allbinary.game.layer.capital.event.CapitalEvent import CapitalEvent
         from org.allbinary.game.layer.geographic.map.LayerPartialCellPositionsUtil import LayerPartialCellPositionsUtil
-        from org.allbinary.game.tracking.TrackingEvent import TrackingEvent
         from org.allbinary.graphics.CellPositionFactory import CellPositionFactory
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-        from org.allbinary.graphics.paint.Paintable import Paintable
-        from org.allbinary.layer.LayerInterfaceFactoryInterface import LayerInterfaceFactoryInterface
         from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         from org.allbinary.math.AngleFactory import AngleFactory
         from org.allbinary.math.LayerDistanceUtil import LayerDistanceUtil
-        from org.allbinary.math.NamedAngle import NamedAngle
-        from org.allbinary.media.audio.Sound import Sound
-        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.basicColorFactory: BasicColorFactory = BasicColorFactory.getInstance()
         self.groupCommonFactory: GroupCommonFactory = GroupCommonFactory.getInstance()
@@ -65,26 +88,26 @@ class UnitLayer(*java_bases(AdvancedRTSGameLayer, BuildingEventListenerInterface
         self.layerDistanceUtil: LayerDistanceUtil = LayerDistanceUtil.getInstance()
         self.angleFactory: AngleFactory = AngleFactory.getInstance()
         self.cellPositionFactory: CellPositionFactory = CellPositionFactory.getInstance()
-        self.maxResourceLoad: int = None
-        self.vehicleProperties: VehicleProperties = None
+        if "maxResourceLoad" not in vars(self): self.maxResourceLoad: int = 0
+        if "vehicleProperties" not in vars(self): self.vehicleProperties: VehicleProperties = None
         self.accelerationBasicDecimal: BasicDecimal = BasicDecimal(1600)
         self.decelerationBasicDecimal: BasicDecimal = BasicDecimal(-1000)
-        self.trackingEvent: TrackingEvent = None
-        self.damageFloaters: DamageFloaters = None
-        self.damageFloatersPaintableInterface: Paintable = None
-        self.healthBar: Paintable = None
-        self.moveSoundInterface: Sound = None
-        self.initResourceAnimation: RotationAnimation = None
+        if "trackingEvent" not in vars(self): self.trackingEvent: TrackingEvent = None
+        if "damageFloaters" not in vars(self): self.damageFloaters: DamageFloaters = None
+        if "damageFloatersPaintableInterface" not in vars(self): self.damageFloatersPaintableInterface: Paintable = None
+        if "healthBar" not in vars(self): self.healthBar: Paintable = None
+        if "moveSoundInterface" not in vars(self): self.moveSoundInterface: Sound = None
+        if "initResourceAnimation" not in vars(self): self.initResourceAnimation: RotationAnimation = None
         self.resourceAnimation: IndexedAnimation = NullIndexedAnimationFactory.getFactoryInstance().getInstance(0)
-        self.initPathAnimation: PathAnimation = None
+        if "initPathAnimation" not in vars(self): self.initPathAnimation: PathAnimation = None
         self.pathAnimation: Animation = NullAnimationFactory.getFactoryInstance().getInstance(0)
         self.captionAnimationHelper: CaptionAnimationHelperBase = CaptionAnimationHelper(FeaturedAnimationInterfaceFactoryInterfaceFactory.getInstance().get(LayerCaptionResources.getInstance().RESOURCE).getInstance(0), -23, -25, 6, 0)
-        self.decalAnimation: RotationAnimation = None
-        self.waypointLayerInterfaceFactoryInterface: LayerInterfaceFactoryInterface = None
+        if "decalAnimation" not in vars(self): self.decalAnimation: RotationAnimation = None
+        if "waypointLayerInterfaceFactoryInterface" not in vars(self): self.waypointLayerInterfaceFactoryInterface: LayerInterfaceFactoryInterface = None
         self.resourceLoad: int = 0
-        self.weaponRange: int = 0
+        if "weaponRange" not in vars(self): self.weaponRange: int = 0
         self.rtsLogHelper: RTSLayerLogHelper = RTSLayerLogHelper.getInstance()
-        self.rotationAnimationInterfaceP: RotationAnimation = None
+        if "rotationAnimationInterfaceP" not in vars(self): self.rotationAnimationInterfaceP: RotationAnimation = None
         self.movementAngle: NamedAngle = self.angleFactory.NOT_ANGLE
         self.steeringInsideGeographicMapCellPosition: GeographicMapCellPosition = SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION
         self.sensorGeographicMapCellPositionList: BasicArrayList = BasicArrayListD()
@@ -92,6 +115,7 @@ class UnitLayer(*java_bases(AdvancedRTSGameLayer, BuildingEventListenerInterface
     
 
     def __init__(self, remoteInfo: RemoteInfo, parentLayer: PathFindingLayerInterface, advancedRTSProperties: AdvancedRTSProperties, groupInterface: list[Group], rootName: str, name: str, vehicleProperties: VehicleProperties, healthInterface: Health, maxResourceLoad: int, moveSoundInterface: Sound, waypointLayerInterfaceFactoryInterface: LayerInterfaceFactoryInterface, animationInterfaceFactoryInterface: AnimationInterfaceFactoryInterface, emptyAnimationInterfaceFactoryInterface: AnimationInterfaceFactoryInterface, baseAnimationInterfaceFactoryInterface: AnimationInterfaceFactoryInterface, buildAnimationInterfaceFactoryInterface: AnimationInterfaceFactoryInterface, verticleBuildAnimationInterfaceFactoryInterface: AnimationInterfaceFactoryInterface, decalAnimationInterfaceFactoryInterface: AnimationInterfaceFactoryInterface, resourceAnimationInterfaceFactoryInterface: AnimationInterfaceFactoryInterface, proceduralAnimationInterfaceFactoryInterface: ProceduralAnimationInterfaceFactoryInterface, rectangle: Rectangle, direction: Direction, x: int, y: int, z: int, viewPosition: ViewPositionBase) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.layer.unit.CollidableUnitBehavior import CollidableUnitBehavior
         from org.allbinary.animation.AnimationInterfaceFactoryInterface import AnimationInterfaceFactoryInterface
         from org.allbinary.animation.ProceduralAnimationInterfaceFactoryInterface import ProceduralAnimationInterfaceFactoryInterface
@@ -121,7 +145,7 @@ class UnitLayer(*java_bases(AdvancedRTSGameLayer, BuildingEventListenerInterface
         from org.allbinary.media.audio.Sound import Sound
         from org.allbinary.view.ViewPositionBase import ViewPositionBase
         super().__init__(remoteInfo, parentLayer, advancedRTSProperties, groupInterface, rootName, name, healthInterface, WaypointRTSFormInput(groupInterface, True), animationInterfaceFactoryInterface, emptyAnimationInterfaceFactoryInterface, baseAnimationInterfaceFactoryInterface, buildAnimationInterfaceFactoryInterface, verticleBuildAnimationInterfaceFactoryInterface, proceduralAnimationInterfaceFactoryInterface, rectangle, x, y, viewPosition)
-        self._init_fields()
+        __class__._init_fields(self)
         self.setCollidableInferface(CollidableUnitBehavior(True))
         self.waypointLayerInterfaceFactoryInterface = waypointLayerInterfaceFactoryInterface
         self.maxResourceLoad = int(maxResourceLoad)
@@ -151,7 +175,7 @@ class UnitLayer(*java_bases(AdvancedRTSGameLayer, BuildingEventListenerInterface
     # throws Exception
     def setAllBinaryGameLayerManager(self, allBinaryGameLayerManager: AllBinaryGameLayerManager) -> None:
         from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
-        super().setAllBinaryGameLayerManager(allBinaryGameLayerManager)
+        java_super_call(super(), "setAllBinaryGameLayerManager", allBinaryGameLayerManager)
         self.initPathAnimation.setAllBinaryGameLayerManager(allBinaryGameLayerManager)
     
 
@@ -175,9 +199,9 @@ class UnitLayer(*java_bases(AdvancedRTSGameLayer, BuildingEventListenerInterface
         hashtable.put(AllBinaryGameLayerManager.ID, self.allBinaryGameLayerManagerP)
         self.setWaypointBehavior(UnitWaypointBehavior2(self, self.waypointLayerInterfaceFactoryInterface.getNextInstance(hashtable, self.x, self.y, self.z)))
         features: Features = Features.getInstance()
-        waypoint: WaypointBase = (MultipassNoCacheWaypoint(self, AttackSound.getInstance()) if J2MEUtil.isHTML() else NoCacheWaypoint(self, AttackSound.getInstance()))
+        waypoint: WaypointBase = (MultipassNoCacheWaypoint(self, AttackSound.getInstance()) if java_predicate(J2MEUtil, "isHTML") else NoCacheWaypoint(self, AttackSound.getInstance()))
         self.getWaypointBehavior().setWaypoint(waypoint)
-        super().updateWaypointBehavior(geographicMapInterface)
+        java_super_call(super(), "updateWaypointBehavior", geographicMapInterface)
         self.initRangeHack()
     
 
@@ -187,7 +211,7 @@ class UnitLayer(*java_bases(AdvancedRTSGameLayer, BuildingEventListenerInterface
         from org.allbinary.game.layer.building.event.BuildingEventHandler import BuildingEventHandler
         from org.allbinary.game.layer.waypoint.event.WaypointEventHandlerFactory import WaypointEventHandlerFactory
         from org.allbinary.game.tracking.TrackingEventHandler import TrackingEventHandler
-        super().construct(rtsPlayerLayerInterface)
+        java_super_call(super(), "construct", rtsPlayerLayerInterface)
         TrackingEventHandler.getInstance().addListenerInterface(self)
         WaypointEventHandlerFactory.getInstance(self.getGroupInterface()[0]).addListenerInterface(self.getUnitWaypointBehavior())
         BuildingEventHandler.getInstance().addListenerInterface(self)
@@ -212,7 +236,9 @@ class UnitLayer(*java_bases(AdvancedRTSGameLayer, BuildingEventListenerInterface
             geographicMapCompositeInterface: GeographicMapCompositeInterface = self.allBinaryGameLayerManagerP
             geographicMapInterface: BasicGeographicMap = geographicMapCompositeInterface.getGeographicMapInterface()[0]
             tiledLayer: AllBinaryTiledLayer = geographicMapInterface.getAllBinaryTiledLayer()
-            totalCells: int = (sensorRange / tiledLayer.getCellHeight()) / 2
+            totalCells: int = java_divide((java_divide(sensorRange, tiledLayer.getCellHeight())
+            ), 2)
+            
             geographicMapCellPositionFactory: BasicGeographicMapCellPositionFactory = geographicMapInterface.getGeographicMapCellPositionFactory()
             column: int = currentGeographicMapCellPosition.getColumn()
             row: int = currentGeographicMapCellPosition.getRow()
@@ -231,7 +257,7 @@ class UnitLayer(*java_bases(AdvancedRTSGameLayer, BuildingEventListenerInterface
             for index in range(lastColumn - 1, firstColumn - 1, -1):
                 for index2 in range(lastRow - 1, firstRow - 1, -1):
                     geographicMapCellPosition: GeographicMapCellPosition = geographicMapCellPositionFactory.getAt(index, index2)
-                    if not self.sensorGeographicMapCellPositionList.contains(geographicMapCellPosition):
+                    if not (self.sensorGeographicMapCellPositionList.contains(geographicMapCellPosition)):
                         self.sensorGeographicMapCellPositionList.add(geographicMapCellPosition)
     
 
@@ -242,13 +268,13 @@ class UnitLayer(*java_bases(AdvancedRTSGameLayer, BuildingEventListenerInterface
 
     def select(self) -> None:
         self.pathAnimation = self.initPathAnimation
-        super().select()
+        java_super_call(super(), "select")
     
 
     def deselect(self) -> None:
         from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
         self.pathAnimation = NullAnimationFactory.getFactoryInstance().getInstance(0)
-        super().deselect()
+        java_super_call(super(), "deselect")
     
 
     def setSelected(self, selected: bool) -> None:
@@ -256,7 +282,7 @@ class UnitLayer(*java_bases(AdvancedRTSGameLayer, BuildingEventListenerInterface
         from org.allbinary.game.layer.RTSLayer2SelectedLogHelper import RTSLayer2SelectedLogHelper
         from org.allbinary.game.layer.RTSLayerLogHelper import RTSLayerLogHelper
         from org.allbinary.game.layer.RTSLayerSelectedLogHelper import RTSLayerSelectedLogHelper
-        super().setSelected(selected)
+        java_super_call(super(), "setSelected", selected)
         if selected:
             if self.debug:
                 self.rtsLogHelper = RTSLayerSelectedLogHelper.getInstance()
@@ -333,12 +359,12 @@ class UnitLayer(*java_bases(AdvancedRTSGameLayer, BuildingEventListenerInterface
         from org.allbinary.ag.weapon.media.audio.ExplosionBasicSound import ExplosionBasicSound
         from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         from org.allbinary.media.audio.SecondaryPlayerQueueFactory import SecondaryPlayerQueueFactory
-        if not self.getHealthInterface().isAlive():
-            if self.isReadyForExplosion():
+        if not (java_predicate(self.getHealthInterface(), "isAlive")):
+            if java_predicate(self, "isReadyForExplosion"):
                 currentFrame: int = self.destroyAnimationInterface.getFrame()
                 size: int = self.destroyAnimationInterface.getSize() - 1
                 if currentFrame == size:
-                    if not self.getHealthInterface().isAlive():
+                    if not (java_predicate(self.getHealthInterface(), "isAlive")):
                         self.setDestroyed(True)
                 else:
                     self.destroyAnimationInterface.nextFrame()
@@ -349,7 +375,7 @@ class UnitLayer(*java_bases(AdvancedRTSGameLayer, BuildingEventListenerInterface
                 self.vibration.vibrate(self.duration, 0, 0)
                 self.setReadyForExplosion(True)
         else:
-            super().processBuiltTick(allBinaryLayerManager)
+            java_super_call(super(), "processBuiltTick", allBinaryLayerManager)
         self.captionAnimationHelper.tick()
         self.getUnitWaypointBehavior().processTick(allBinaryLayerManager)
     
@@ -371,7 +397,7 @@ class UnitLayer(*java_bases(AdvancedRTSGameLayer, BuildingEventListenerInterface
         geographicMapInterface: BasicGeographicMap = geographicMapCompositeInterface.getGeographicMapInterface()[0]
         geographicMapCellPosition: GeographicMapCellPosition = geographicMapInterface.getCellPositionAtXY(self.x + self.getHalfWidth(), self.y + self.getHalfHeight())
         raceTrackGeographicMap: RaceTrackGeographicMap = geographicMapInterface
-        if not raceTrackGeographicMap.isValid(geographicMapCellPosition):
+        if not (raceTrackGeographicMap.isValid(geographicMapCellPosition)):
             raise Exception("Position is not really on the map: " + str(geographicMapCellPosition))
         return geographicMapCellPosition
     
@@ -380,7 +406,7 @@ class UnitLayer(*java_bases(AdvancedRTSGameLayer, BuildingEventListenerInterface
     def fire(self, layerManager: AllBinaryLayerManager, gameKeyEvent: GameKeyEvent) -> None:
         from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
         from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-        if self.fireTimeHelper.isTimeTNT():
+        if java_predicate(self.fireTimeHelper, "isTimeTNT"):
             self.fireAll(layerManager)
         else:
             self.reload()
@@ -403,14 +429,14 @@ class UnitLayer(*java_bases(AdvancedRTSGameLayer, BuildingEventListenerInterface
     def down(self) -> None:
         from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
         velocityProperties: VelocityProperties = self.getVehicleProperties().getVelocityProperties()
-        if not velocityProperties.isOverXYMaxForwardVelocity():
+        if not (java_predicate(velocityProperties, "isOverXYMaxForwardVelocity")):
             self.accelerate(self.decelerationBasicDecimal)
     
 
     def up(self) -> None:
         from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
         velocityProperties: VelocityProperties = self.getVehicleProperties().getVelocityProperties()
-        if not velocityProperties.isOverXYMaxForwardVelocity():
+        if not (java_predicate(velocityProperties, "isOverXYMaxForwardVelocity")):
             self.accelerate(self.accelerationBasicDecimal)
     
 
@@ -427,7 +453,7 @@ class UnitLayer(*java_bases(AdvancedRTSGameLayer, BuildingEventListenerInterface
         self.inputProcessorArray[Canvas.KEY_POUND] = self.inputProcessorArray[Canvas.KEY_NUM0]
         self.inputProcessorArray[Canvas.DOWN] = SpecialDownGameInputProcessor(self)
         self.inputProcessorArray[Canvas.UP] = SpecialUpGameInputProcessor(self)
-        super().initInputProcessors()
+        java_super_call(super(), "initInputProcessors")
     
 
     # throws Exception
@@ -468,11 +494,11 @@ class UnitLayer(*java_bases(AdvancedRTSGameLayer, BuildingEventListenerInterface
 
     def downgrade(self) -> None:
         if self.getLevel() > 1:
-            super().downgrade()
+            java_super_call(super(), "downgrade")
     
 
     def upgrade(self) -> None:
-        super().upgrade()
+        java_super_call(super(), "upgrade")
         self.initRangeHack()
     
 
@@ -607,7 +633,7 @@ class UnitLayer(*java_bases(AdvancedRTSGameLayer, BuildingEventListenerInterface
                 if anyType is None:
                     list_.removeAt(index)
             self.fireOrMove()
-        elif not self.turnTo(dx, dy, targetAngle):
+        elif not (self.turnTo(dx, dy, targetAngle)):
             self.fireOrMove()
     
 
@@ -620,7 +646,7 @@ class UnitLayer(*java_bases(AdvancedRTSGameLayer, BuildingEventListenerInterface
         gameKeyEventFactory: GameKeyEventFactory = GameKeyEventFactory.getInstance()
         if self.getUnitWaypointBehavior().needToMove():
             self.rtsLayer2LogHelper.steeringUp(self)
-            if self.showMoreCaptionStates and not self.captionAnimationHelper.isShowing():
+            if self.showMoreCaptionStates and not (java_predicate(self.captionAnimationHelper, "isShowing")):
                 self.captionAnimationHelper.update(UnitLayer.MOVE, self.basicColorFactory.GREEN)
             self.getGameKeyEventList().add(gameKeyEventFactory.getInstanceForKey(self, Canvas.UP))
         else:
@@ -665,11 +691,11 @@ class UnitLayer(*java_bases(AdvancedRTSGameLayer, BuildingEventListenerInterface
                     allbinaryLayer: AllBinaryLayer = DropCellPositionHistory.getInstance().getLayerInterface(cellPosition)
                     self.getUnitWaypointBehavior().setMovingFromStopped(False)
                     self.getUnitWaypointBehavior().addBuildingChase(allbinaryLayer, cellPosition)
-            if self.getUnitWaypointBehavior().isMoving():
+            if java_predicate(self.getUnitWaypointBehavior(), "isMoving"):
                 TrackingEventHandler.getInstance().fireEvent(self.getTrackingEvent())
             else:
                 self.getUnitWaypointBehavior().setMovingFromStopped(False)
-            if self.getUnitWaypointBehavior().isMovingFromStopped() and self.isVisible():
+            if java_predicate(self.getUnitWaypointBehavior(), "isMovingFromStopped") and java_predicate(self, "isVisible"):
                 SecondaryPlayerQueueFactory.getInstance().add(self.moveSoundInterface)
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, "move", e)
@@ -685,8 +711,8 @@ class UnitLayer(*java_bases(AdvancedRTSGameLayer, BuildingEventListenerInterface
     def paint(self, graphics: Graphics) -> None:
         from javax.microedition.lcdui.Graphics import Graphics
         from org.allbinary.view.ViewPositionBase import ViewPositionBase
-        if self.isVisible():
-            super().paint(graphics)
+        if java_predicate(self, "isVisible"):
+            java_super_call(super(), "paint", graphics)
             viewPosition: ViewPositionBase = self.getViewPosition()
             viewX: int = viewPosition.getX()
             viewY: int = viewPosition.getY()
@@ -715,7 +741,7 @@ class UnitLayer(*java_bases(AdvancedRTSGameLayer, BuildingEventListenerInterface
 
     # throws Exception
     def damage(self, damage: int, damageType: int) -> None:
-        super().damage(damage, damageType)
+        java_super_call(super(), "damage", damage, damageType)
         self.damageFloaters.add(damage)
         if damage > 0:
             self.getHealthInterface().damage(damage)
@@ -734,12 +760,12 @@ class UnitLayer(*java_bases(AdvancedRTSGameLayer, BuildingEventListenerInterface
         from org.allbinary.game.tracking.TrackingEventHandler import TrackingEventHandler
         from org.allbinary.media.audio.SecondaryPlayerQueueFactory import SecondaryPlayerQueueFactory
         self.logUtil.putF(self.commonStrings.START, self, "setDestroyed")
-        super().setDestroyed(destroyed)
-        if self.isDestroyed():
+        java_super_call(super(), "setDestroyed", destroyed)
+        if java_predicate(self, "isDestroyed"):
             WaypointEventHandlerFactory.getInstance(self.getGroupInterface()[0]).removeListener(self.getUnitWaypointBehavior())
             TrackingEventHandler.getInstance().removeListener(self)
             BuildingEventHandler.getInstance().removeListener(self)
-            if not self.getHealthInterface().isAlive():
+            if not (java_predicate(self.getHealthInterface(), "isAlive")):
                 damage: int = self.getHealthInterface().getMaxHealth()
                 if damage > 10:
                     SecondaryPlayerQueueFactory.getInstance().add(ExplosionBasicSound.getInstance())

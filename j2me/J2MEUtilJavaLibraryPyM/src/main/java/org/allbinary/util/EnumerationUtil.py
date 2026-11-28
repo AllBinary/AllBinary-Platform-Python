@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -32,7 +33,7 @@ class EnumerationUtil:
     def hasMoreElements(self, enumeration: Enumeration) -> bool:
         from java.util.Enumeration import Enumeration
         from jsinterop.annotations.JsMethod import JsMethod
-        return enumeration.hasMoreElements()
+        return java_predicate(enumeration, "hasMoreElements")
     
 
     def nextElement(self, enumeration: Enumeration) -> object:

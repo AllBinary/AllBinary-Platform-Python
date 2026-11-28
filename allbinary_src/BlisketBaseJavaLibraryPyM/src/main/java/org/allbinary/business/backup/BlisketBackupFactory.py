@@ -32,7 +32,7 @@ class BlisketBackupFactory:
         self.directory: Directory = Directory.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -209,7 +209,9 @@ class BlisketBackupFactory:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, "backup()", e)
 
     def backup(self, *args):
-        return getattr(self, "backup_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("backup_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().backup(*args)
 # from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
 # from org.allbinary.data.tables.context.module.storefronts.StoreFrontsEntity import StoreFrontsEntity
 # from org.allbinary.data.tables.context.module.storefronts.StoreFrontsEntityFactory import StoreFrontsEntityFactory

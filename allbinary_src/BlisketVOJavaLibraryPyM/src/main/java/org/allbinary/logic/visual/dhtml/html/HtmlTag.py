@@ -20,13 +20,12 @@ from __future__ import annotations
 class HtmlTag:
 
     def _init_fields(self) -> None:
-        from java.util.HashMap import HashMap
-        self.otherAttributes: HashMap = None
+        if "otherAttributes" not in vars(self): self.otherAttributes: HashMap = None
     
 
     def __init__(self) -> None:
         from org.allbinary.logic.StdUtil import StdUtil
-        self._init_fields()
+        __class__._init_fields(self)
         self.otherAttributes = StdUtil.getInstance().createHashMap()
     
 

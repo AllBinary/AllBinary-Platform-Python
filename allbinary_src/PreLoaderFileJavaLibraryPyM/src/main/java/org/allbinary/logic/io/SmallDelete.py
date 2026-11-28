@@ -24,13 +24,13 @@ class SmallDelete:
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.fileName: str = None
-        self.string: str = None
+        if "fileName" not in vars(self): self.fileName: str = None
+        if "string" not in vars(self): self.string: str = None
     
 
     def __init__(self, fileName: str) -> None:
         from org.allbinary.logic.io.file.AbFileSystem import AbFileSystem
-        self._init_fields()
+        __class__._init_fields(self)
         self.fileName = fileName
         self.string = AbFileSystem.getInstance().readAsString(fileName)
     

@@ -15,10 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from java.io.OutputStream import OutputStream
 
 
+@java_inherited_overloads
 class NullOutputStream(OutputStream):
     NULL_OUTPUT_STREAM: NullOutputStream = None
 
@@ -36,7 +38,9 @@ class NullOutputStream(OutputStream):
         pass
 
     def write(self, *args):
-        return getattr(self, "write_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("write_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().write(*args)
     
 
     def close(self) -> None:

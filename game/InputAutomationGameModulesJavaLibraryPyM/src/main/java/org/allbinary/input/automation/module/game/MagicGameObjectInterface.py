@@ -15,10 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.input.automation.module.game.MeteredGameObjectInterface import MeteredGameObjectInterface
 
 
 # Java interface
+@java_inherited_overloads
 class MagicGameObjectInterface(MeteredGameObjectInterface):
     pass
 

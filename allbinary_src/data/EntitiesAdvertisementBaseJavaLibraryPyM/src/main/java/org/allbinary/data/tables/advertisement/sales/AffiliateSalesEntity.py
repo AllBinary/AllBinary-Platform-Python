@@ -15,12 +15,18 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.communication.sql.AbSqlBean import AbSqlBean
 from org.allbinary.data.tables.advertisement.sales.AffiliateSalesEntityInterface import AffiliateSalesEntityInterface
 
 
+@java_inherited_overloads
 class AffiliateSalesEntity(*java_bases(AbSqlBean, AffiliateSalesEntityInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("tableName", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -29,9 +35,10 @@ class AffiliateSalesEntity(*java_bases(AbSqlBean, AffiliateSalesEntityInterface)
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
         super().__init__(UserDbInitInfo())
-        self._init_fields()
+        __class__._init_fields(self)
         self.setTableName(self.tableName)
     
 
@@ -40,7 +47,7 @@ class AffiliateSalesEntity(*java_bases(AbSqlBean, AffiliateSalesEntityInterface)
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            super().deleteWhere(StoreFrontData.getInstance().NAME, value)
+            java_super_call(super(), "deleteWhere", StoreFrontData.getInstance().NAME, value)
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, self.commonStrings.delete)
         except Exception as e:
@@ -64,23 +71,23 @@ class AffiliateSalesEntity(*java_bases(AbSqlBean, AffiliateSalesEntityInterface)
     
 
     def createTable(self) -> str:
-        returnStr: str = super().createTable(self.createTableStatement())
+        returnStr: str = java_super_call(super(), "createTable", self.createTableStatement())
         return returnStr
     
 
     def update(self, updatedValues: HashMap) -> None:
         from java.util.HashMap import HashMap
         from org.allbinary.business.entry.EntryData import EntryData
-        super().updateWhere(EntryData.getInstance().ID, updatedValues.get(EntryData.getInstance().ID), updatedValues)
+        java_super_call(super(), "updateWhere", EntryData.getInstance().ID, updatedValues.get(EntryData.getInstance().ID), updatedValues)
     
 
     def dropTable(self) -> str:
-        return super().dropTable()
+        return java_super_call(super(), "dropTable")
     
 
     def insert(self, values: BasicArrayList) -> None:
         from org.allbinary.util.BasicArrayList import BasicArrayList
-        super().insert(values)
+        java_super_call(super(), "insert", values)
 # from java.util.HashMap import HashMap
 # from org.allbinary.business.DynamicObjectData import DynamicObjectData
 # from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData

@@ -15,32 +15,40 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from admin.taghelpers.BasicTable import BasicTable
 
 
+@java_inherited_overloads
 class ShippingAddressHelper(BasicTable):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("stringUtil", None)
+        vars(self).setdefault("weblisketSession", None)
+        vars(self).setdefault("request", None)
+        vars(self).setdefault("userName", None)
+        vars(self).setdefault("streetAddress", None)
+        vars(self).setdefault("portion", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.installer.Portion import Portion
-        from org.allbinary.business.user.address.StreetAddress import StreetAddress
-        from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.logic.string.StringUtil import StringUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.stringUtil: StringUtil = StringUtil.getInstance()
-        self.weblisketSession: WeblisketSession = None
-        self.request: HttpServletRequest = None
-        self.userName: str = None
-        self.streetAddress: StreetAddress = None
-        self.portion: Portion = None
+        if "weblisketSession" not in vars(self): self.weblisketSession: WeblisketSession = None
+        if "request" not in vars(self): self.request: HttpServletRequest = None
+        if "userName" not in vars(self): self.userName: str = None
+        if "streetAddress" not in vars(self): self.streetAddress: StreetAddress = None
+        if "portion" not in vars(self): self.portion: Portion = None
     
 
     def __init__(self, hashMap: HashMap, pageContext: PageContext) -> None:
+        __class__._java_defaults(self)
         from java.util.HashMap import HashMap
         from org.allbinary.business.installer.Portion import Portion
         from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.request = pageContext.getRequest()
         self.weblisketSession = WeblisketSession(hashMap, pageContext)
         self.portion = Portion(hashMap)

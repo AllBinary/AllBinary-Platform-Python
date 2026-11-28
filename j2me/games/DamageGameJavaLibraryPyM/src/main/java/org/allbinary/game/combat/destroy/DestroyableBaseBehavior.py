@@ -29,7 +29,7 @@ class DestroyableBaseBehavior(DestroyableInterface):
     
 
     def getName(self) -> str:
-        return type(self).__module__ + "." + type(self).__qualname__
+        return __import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(self))
     
 
     # throws Exception

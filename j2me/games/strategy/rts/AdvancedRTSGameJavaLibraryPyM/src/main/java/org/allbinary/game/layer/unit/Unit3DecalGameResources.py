@@ -15,10 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.layer.resources.BasicGameResources import BasicGameResources
 
 
+@java_inherited_overloads
 class Unit3DecalGameResources(BasicGameResources):
     instance: object = None
     
@@ -40,12 +44,12 @@ class Unit3DecalGameResources(BasicGameResources):
         SIZE_FIVE: str = SMALL
         SIZE_SIX: str = SMALL
         SIZE: list[str] = [SMALL, MEDIUM, SIZE_FOUR, SIZE_FIVE, SIZE_SIX]
-        super().init(ROOT, SIZE)
+        java_super_call(super(), "init", ROOT, SIZE)
     
 
     # throws Exception
     def append(self, ROOT: str, sizeString: str) -> None:
-        super().append(ROOT, sizeString)
+        java_super_call(super(), "append", ROOT, sizeString)
     
 
     # throws Exception
@@ -53,10 +57,10 @@ class Unit3DecalGameResources(BasicGameResources):
         from org.allbinary.game.layer.resources.GameGraphicsResourceUtil import GameGraphicsResourceUtil
         from org.allbinary.AndroidUtil import AndroidUtil
         from org.allbinary.game.configuration.feature.GraphicsFeatureFactory import GraphicsFeatureFactory
-        if AndroidUtil.isAndroid():
+        if java_predicate(AndroidUtil, "isAndroid"):
             return GameGraphicsResourceUtil.getInstance().getStringForFeature(GraphicsFeatureFactory.getInstance().SPRITE_QUARTER_ROTATION_GRAPHICS)
         else:
-            return super().getString()
+            return java_super_call(super(), "getString")
 # from org.allbinary.game.layer.resources.GameGraphicsResourceUtil import GameGraphicsResourceUtil
 # from org.allbinary.AndroidUtil import AndroidUtil
 # from org.allbinary.game.configuration.feature.GraphicsFeatureFactory import GraphicsFeatureFactory

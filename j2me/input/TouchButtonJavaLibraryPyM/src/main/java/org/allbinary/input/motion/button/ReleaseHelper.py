@@ -20,11 +20,11 @@ from __future__ import annotations
 class ReleaseHelper:
 
     def _init_fields(self) -> None:
-        self.touchButtonRecognizer: TouchButtonRecognizer = None
+        if "touchButtonRecognizer" not in vars(self): self.touchButtonRecognizer: TouchButtonRecognizer = None
     
 
     def __init__(self, touchButtonRecognizer: TouchButtonRecognizer) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.touchButtonRecognizer = touchButtonRecognizer
     
 

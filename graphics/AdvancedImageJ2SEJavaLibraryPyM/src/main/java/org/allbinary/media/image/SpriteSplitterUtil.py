@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -36,7 +37,7 @@ class SpriteSplitterUtil:
         self._ROW: str = "_row"
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -46,6 +47,14 @@ class SpriteSplitterUtil:
 
     # throws Exception
     def process(self, imageProcessorInput: ImageProcessorInput, totalFrames: int, totalAnimations: int, widthReduction: int, heightReduction: int, increaseWidth: int, increaseHeight: int, spriteType: str, visitor: ImageProcessedVisitor) -> None:
+        from org.allbinary.media.image.ImageUtil import ImageUtil
+        from org.allbinary.media.image.ImageUnifierProperties import ImageUnifierProperties
+        from org.allbinary.media.image.ImageUnifierCell import ImageUnifierCell
+        from org.allbinary.media.image.ImageUnifierUtil import ImageUnifierUtil
+        from org.allbinary.media.image.ImageUtil import ImageUtil
+        from org.allbinary.media.image.ImageUnifierProperties import ImageUnifierProperties
+        from org.allbinary.media.image.ImageUnifierCell import ImageUnifierCell
+        from org.allbinary.media.image.ImageUnifierUtil import ImageUnifierUtil
         from org.allbinary.logic.string.StringMaker import StringMaker
         bufferedImage: BufferedImage = None
         generatedBufferedImageArray: list[list[BufferedImage]] = None
@@ -54,8 +63,10 @@ class SpriteSplitterUtil:
             bufferedImage = bufferedImageArray[index]
             self.logUtil.putF(spriteType, self, self.commonStrings.RUN)
             if spriteType == self.HORIZONTAL_SPRITE:
-                cellHeight: int = bufferedImage.getHeight() / totalAnimations
-                cellWidth: int = bufferedImage.getWidth() / totalFrames
+                cellHeight: int = java_divide(bufferedImage.getHeight(), totalAnimations)
+            
+                cellWidth: int = java_divide(bufferedImage.getWidth(), totalFrames)
+            
                 columns: int = totalFrames
                 rows: int = totalAnimations
                 generatedBufferedImageArray = [[None] * (columns) for _ in range(rows)]
@@ -92,8 +103,10 @@ class SpriteSplitterUtil:
                 pass
             elif spriteType == self.DIRECTIONAL_ANIMATIONS:
                 totalFrames2: int = 4
-                cellHeight: int = bufferedImage.getHeight() / totalFrames2
-                cellWidth: int = bufferedImage.getWidth() / totalAnimations
+                cellHeight: int = java_divide(bufferedImage.getHeight(), totalFrames2)
+            
+                cellWidth: int = java_divide(bufferedImage.getWidth(), totalAnimations)
+            
                 columns: int = totalAnimations
                 rows: int = totalFrames2
                 generatedBufferedImageArray = [[None] * (columns) for _ in range(rows)]

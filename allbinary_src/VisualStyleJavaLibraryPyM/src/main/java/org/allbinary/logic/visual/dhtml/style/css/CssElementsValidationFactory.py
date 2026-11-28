@@ -55,7 +55,7 @@ class CssElementsValidationFactory:
 
     @staticmethod
     def getInstance(*args):
-        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
+        if len(args) == 1 and True and (args[0] is None or any(base.__name__ == "BasicArrayList" for base in type(args[0]).__mro__)):
             return CssElementsValidationFactory.getInstance_j1_1(*args)
         if len(args) == 1:
             return CssElementsValidationFactory.getInstance_j1_2(*args)

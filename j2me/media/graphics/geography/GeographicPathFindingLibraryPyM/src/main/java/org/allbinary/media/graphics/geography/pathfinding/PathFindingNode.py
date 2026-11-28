@@ -21,7 +21,6 @@ class PathFindingNode:
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.NullUtil import NullUtil
-        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
         self.parent: object = NullUtil.getInstance().NULL_OBJECT
         self.geographicMapCellPosition: GeographicMapCellPosition = SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION
@@ -30,7 +29,7 @@ class PathFindingNode:
     def __init__(self, parent: object, geographicMapCellPosition: GeographicMapCellPosition) -> None:
         from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
-        self._init_fields()
+        __class__._init_fields(self)
         self.parent = parent
         self.setGeographicMapCellPositionP(geographicMapCellPosition)
         if self.geographicMapCellPosition == SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION:
@@ -51,7 +50,7 @@ class PathFindingNode:
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.string.CommonLabels import CommonLabels
         stringBuffer: StringMaker = StringMaker()
-        stringBuffer.append(type(self).__module__ + "." + type(self).__qualname__)
+        stringBuffer.append(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(self)))
         stringBuffer.append(CommonLabels.getInstance().COLON_SEP)
         stringBuffer.append(" Path: ")
         stringBuffer.append(str(self.geographicMapCellPosition))

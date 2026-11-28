@@ -36,6 +36,8 @@ class QueueInterface:
         raise NotImplementedError()
 
     def remove(self, *args):
-        return getattr(self, "remove_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("remove_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().remove(*args)
 
 

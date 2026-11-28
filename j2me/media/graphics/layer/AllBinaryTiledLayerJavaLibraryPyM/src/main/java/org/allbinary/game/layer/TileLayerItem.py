@@ -15,21 +15,27 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
 from org.allbinary.graphics.form.item.ABCustomItemInterface import ABCustomItemInterface
 
 
+@java_inherited_overloads
 class TileLayerItem(*java_bases(ABCustomItem, ABCustomItemInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("tiledLayer", None)
 
     def _init_fields(self) -> None:
-        self.tiledLayer: AllBinaryTiledLayer = None
+        if "tiledLayer" not in vars(self): self.tiledLayer: AllBinaryTiledLayer = None
     
 
     def __init__(self, label: str, tiledLayer: AllBinaryTiledLayer, layout: int, altText: str, backgroundBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(label, backgroundBasicColor, foregroundBasicColor)
-        self._init_fields()
+        __class__._init_fields(self)
         self.tiledLayer = tiledLayer
     
 
@@ -74,7 +80,7 @@ class TileLayerItem(*java_bases(ABCustomItem, ABCustomItemInterface)):
     
 
     def getLabel(self) -> str:
-        return super().getLabel()
+        return java_super_call(super(), "getLabel")
 # from javax.microedition.lcdui.Graphics import Graphics
 # from javax.microedition.lcdui.Screen import Screen
 # from org.allbinary.graphics.color.BasicColor import BasicColor

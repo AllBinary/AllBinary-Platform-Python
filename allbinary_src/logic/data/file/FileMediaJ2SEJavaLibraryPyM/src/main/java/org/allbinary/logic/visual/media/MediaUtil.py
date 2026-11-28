@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -21,7 +22,7 @@ class MediaUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -35,7 +36,7 @@ class MediaUtil:
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.media.image.ImageUtil import ImageUtil
         from org.allbinary.string.CommonLabels import CommonLabels
-        if originalImageFile is None or not originalImageFile.isFile():
+        if originalImageFile is None or not (java_predicate(originalImageFile, "isFile")):
             raise Exception("Original Image File Does Not Exist.")
         bufferedImage: BufferedImage = ImageIOUtil.read(originalImageFile)
         if bufferedImage is None:
@@ -48,7 +49,7 @@ class MediaUtil:
         imageUtil: ImageUtil = ImageUtil.getInstance()
         newBufferedImage: BufferedImage = imageUtil.createBufferedImageForSave(bufferedImage, newWidth, newHeight)
         isWritten: bool = ImageIOUtil.write(newBufferedImage, mediaData.getName(), imageFile)
-        if not isWritten:
+        if not (isWritten):
             raise Exception("Unable to write.")
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             commonLabels: CommonLabels = CommonLabels.getInstance()

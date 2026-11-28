@@ -22,7 +22,6 @@ class PointFactory:
     instance: PointFactory = None
 
     def _init_fields(self) -> None:
-        from jsinterop.annotations.JsProperty import JsProperty
         self.ZERO_ZERO: GPoint = self.createXYZ(0, 0, 0)
     
 
@@ -39,7 +38,7 @@ class PointFactory:
 
     def __init__(self) -> None:
         from jsinterop.annotations.JsConstructor import JsConstructor
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def createXY(self, x: int, y: int) -> GPoint:

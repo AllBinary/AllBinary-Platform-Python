@@ -15,11 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.input.AllBinarySensorListener import AllBinarySensorListener
 from org.allbinary.input.magnetic.field.AllBinaryMagneticFieldSensor import AllBinaryMagneticFieldSensor
 
 
+@java_inherited_overloads
 class NoMagneticFieldSensor(*java_bases(AllBinaryMagneticFieldSensor, AllBinarySensorListener)):
 
     def __init__(self) -> None:

@@ -15,25 +15,31 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_divide
 from org.allbinary.physics.movement.Movement import Movement
 
 
+@java_inherited_overloads
 class ConstantVelocityNotifyViewChangeMovement(Movement):
+    def _java_defaults(self):
+        vars(self).setdefault("basicVelocityProperties", None)
+        vars(self).setdefault("speedBasicDecimal", None)
+        vars(self).setdefault("axisMathVectorUtil", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
-        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         from org.allbinary.logic.math.vector.AxisMathVectorUtil import AxisMathVectorUtil
-        self.basicVelocityProperties: BasicVelocityProperties = None
-        self.speedBasicDecimal: BasicDecimal = None
+        if "basicVelocityProperties" not in vars(self): self.basicVelocityProperties: BasicVelocityProperties = None
+        if "speedBasicDecimal" not in vars(self): self.speedBasicDecimal: BasicDecimal = None
         self.axisMathVectorUtil: AxisMathVectorUtil = AxisMathVectorUtil.getInstance()
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
         from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.speedBasicDecimal = BasicDecimal.ZERO_BIGDECIMAL
         self.basicVelocityProperties = BasicVelocityProperties()
     
@@ -49,9 +55,12 @@ class ConstantVelocityNotifyViewChangeMovement(Movement):
     def moveOutsideRadius(self, layer: AllBinaryLayer, radius: int, angle: int, otherAngle: int) -> None:
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         scaleFactorValue: int = self.speedBasicDecimal.getScaledFactorValue()
-        xVector: int = int((self.axisMathVectorUtil.calculateX(radius, angle) / scaleFactorValue))
-        yVector: int = int((self.axisMathVectorUtil.calculateY(radius, angle) / scaleFactorValue))
-        zVector: int = int((self.axisMathVectorUtil.calculateZ(radius, otherAngle) / scaleFactorValue))
+        xVector: int = int((java_divide(self.axisMathVectorUtil.calculateX(radius, angle), scaleFactorValue)
+            ))
+        yVector: int = int((java_divide(self.axisMathVectorUtil.calculateY(radius, angle), scaleFactorValue)
+            ))
+        zVector: int = int((java_divide(self.axisMathVectorUtil.calculateZ(radius, otherAngle), scaleFactorValue)
+            ))
         layer.moveDXYZ(xVector, yVector, zVector)
     
 

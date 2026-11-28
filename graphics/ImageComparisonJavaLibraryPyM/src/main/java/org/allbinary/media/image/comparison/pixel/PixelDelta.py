@@ -15,26 +15,26 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.logic.util.cache.CacheableInterface import CacheableInterface
 
 
 class PixelDelta(CacheableInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.GPoint import GPoint
-        from org.allbinary.media.image.comparison.color.ColorDelta import ColorDelta
-        self.point: GPoint = None
-        self.colorDelta: ColorDelta = None
-        self.key: object = None
+        if "point" not in vars(self): self.point: GPoint = None
+        if "colorDelta" not in vars(self): self.colorDelta: ColorDelta = None
+        if "key" not in vars(self): self.key: object = None
     
 
     def __init__(self, point: GPoint, colorDelta: ColorDelta) -> None:
         from org.allbinary.graphics.GPoint import GPoint
         from org.allbinary.media.image.comparison.color.ColorDelta import ColorDelta
-        self._init_fields()
+        __class__._init_fields(self)
         self.setPoint(point)
         self.setColorDelta(colorDelta)
-        self.key = PixelDelta.getKey(self.getPoint(), self.getColorDelta())
+        self.key = PixelDelta.getKey_j2(self.getPoint(), self.getColorDelta())
+            
     
 
     def getKey_j0(self) -> object:
@@ -51,7 +51,9 @@ class PixelDelta(CacheableInterface):
         return str(StringMaker().appendint(int(TsUtil.getInstance().hashCode(point))).append(CommonSeps.getInstance().UNDERSCORE).append(str(colorDelta.getKey())))
 
     def getKey(self, *args):
-        return getattr(self, "getKey_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("getKey_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getKey(*args)
     
 
     def getPoint(self) -> GPoint:

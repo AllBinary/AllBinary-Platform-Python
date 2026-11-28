@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 
 
 class DomDocumentFileHelper:
@@ -27,6 +28,7 @@ class DomDocumentFileHelper:
     # throws Exception
     @staticmethod
     def createDocument(xmlFile: AbFile) -> Document:
+        from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
         from org.allbinary.logic.io.AbFileInputStream import AbFileInputStream
         from org.allbinary.logic.io.file.AbFile import AbFile
         from org.w3c.dom.Document import Document
@@ -49,7 +51,7 @@ class DomDocumentFileHelper:
             copyTransformerFactory: TransformerFactory = TransformerFactory.newInstance()
             copyTransformer: Transformer = copyTransformerFactory.newTransformer()
             domSource: DOMSource = DOMSource(document)
-            if file.isFile():
+            if java_predicate(file, "isFile"):
                 file.delete()
             file.createNewFile()
             dataOutputStream = DataOutputStreamFactory.getInstance().getInstanceForAbFile(file)

@@ -22,13 +22,12 @@ class FileFactory:
     SINGLETON: FileFactory = None
 
     def _init_fields(self) -> None:
-        from android.content.Context import Context
-        self.context: Context = None
+        if "context" not in vars(self): self.context: Context = None
     
 
     def __init__(self, context: Context) -> None:
         from android.content.Context import Context
-        self._init_fields()
+        __class__._init_fields(self)
         self.context = context
     
 
@@ -39,6 +38,7 @@ class FileFactory:
 
     # throws Exception
     def isFile(self, path: str) -> bool:
+        from java.io.FileNotFoundException import FileNotFoundException
         try:
             self.context.openFileInput(path)
             return True
@@ -62,8 +62,11 @@ class FileFactory:
         from org.allbinary.logic.io.file.AbFile import AbFile
         return AbFile.createAbFileWithChild(file, childFilePath)
 
-    def getInstance(self, *args):
-        return getattr(self, "getInstance_j" + str(len(args)))(*args)
+    def getInstance(self=None, *args):
+        if self is None and not args: return __class__.getInstance_j0()
+        implementation = __class__.__dict__.get("getInstance_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getInstance(*args)
 # from java.io.FileNotFoundException import FileNotFoundException
 # from android.content.Context import Context
 # from org.allbinary.data.resource.ResourceUtil import ResourceUtil

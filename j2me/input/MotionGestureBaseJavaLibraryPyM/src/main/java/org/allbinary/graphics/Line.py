@@ -15,20 +15,21 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_divide
 
 
 class Line:
 
     def _init_fields(self) -> None:
-        self.p1: GPoint = None
-        self.p2: GPoint = None
-        self.deltaX: float = 0.0
-        self.deltaY: float = 0.0
+        if "p1" not in vars(self): self.p1: GPoint = None
+        if "p2" not in vars(self): self.p2: GPoint = None
+        if "deltaX" not in vars(self): self.deltaX: float = 0.0
+        if "deltaY" not in vars(self): self.deltaY: float = 0.0
     
 
     def __init__(self, p1: GPoint, p2: GPoint) -> None:
         from org.allbinary.graphics.PointFactory import PointFactory
-        self._init_fields()
+        __class__._init_fields(self)
         self.p1 = PointFactory.getInstance().ZERO_ZERO
         self.p2 = self.p1
         self.setP1(p1)

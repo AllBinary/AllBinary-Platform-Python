@@ -15,20 +15,24 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.canvas.Processor import Processor
 
 
+@java_inherited_overloads
 class ScreenRepaintProcessor(Processor):
+    def _java_defaults(self):
+        vars(self).setdefault("displayable", None)
 
     def _init_fields(self) -> None:
-        from javax.microedition.lcdui.Displayable import Displayable
-        self.displayable: Displayable = None
+        if "displayable" not in vars(self): self.displayable: Displayable = None
     
 
     def __init__(self, displayable: Displayable) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.Displayable import Displayable
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.displayable = displayable
     
 

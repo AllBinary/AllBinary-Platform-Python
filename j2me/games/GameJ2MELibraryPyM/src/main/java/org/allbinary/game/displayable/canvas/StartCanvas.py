@@ -15,6 +15,9 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.canvas.RunnableCanvas import RunnableCanvas
@@ -23,28 +26,58 @@ from org.allbinary.game.displayable.canvas.GameCanvasRunnableInterface import Ga
 from org.allbinary.game.displayable.canvas.MenuListener import MenuListener
 
 
+@java_inherited_overloads
 class StartCanvas(*java_bases(RunnableCanvas, GameCanvasRunnableInterface, MenuListener, DisplayChangeEventListener)):
     id: int = 0
     BOT_GAME_STATS: str = "Bot Game Statistics: "
     _lock = threading.RLock()
+    def _java_defaults(self):
+        vars(self).setdefault("basicColorFactory", None)
+        vars(self).setdefault("features", None)
+        vars(self).setdefault("openGLFeatureFactory", None)
+        vars(self).setdefault("myCommandsFactory", None)
+        vars(self).setdefault("gameAdStateFactory", None)
+        vars(self).setdefault("gameStateFactory", None)
+        vars(self).setdefault("gameInputStrings", None)
+        vars(self).setdefault("formUtil", None)
+        vars(self).setdefault("basicGameDemoPaintable", None)
+        vars(self).setdefault("specialAnimationInterface", None)
+        vars(self).setdefault("paintedSpecialAnimationInterface", None)
+        vars(self).setdefault("fullScreenUtil", None)
+        vars(self).setdefault("highScoresHelper", None)
+        vars(self).setdefault("realHighScoresPaintable", None)
+        vars(self).setdefault("highScoresPaintable", None)
+        vars(self).setdefault("state", 0)
+        vars(self).setdefault("timeDelayHelper", None)
+        vars(self).setdefault("highScoresFactoryInterface", None)
+        vars(self).setdefault("menuInputProcessor", None)
+        vars(self).setdefault("menuForm", None)
+        vars(self).setdefault("gameInitializationInterfaceFactoryInterface", None)
+        vars(self).setdefault("initialized", False)
+        vars(self).setdefault("defaultPaintableInterface", None)
+        vars(self).setdefault("paintableInterface", None)
+        vars(self).setdefault("overlayPaintable", None)
+        vars(self).setdefault("tempWait", 0)
+        vars(self).setdefault("inputToGameKeyMapping", None)
+        vars(self).setdefault("gameRunnable", None)
+        vars(self).setdefault("progressPaintable", None)
+        vars(self).setdefault("isSingleKeyRepeatableProcessing", False)
+        vars(self).setdefault("NONE", None)
+        vars(self).setdefault("gameKeyEventFactory", None)
+        vars(self).setdefault("SET_STATE", None)
+        vars(self).setdefault("baseGameStatistics", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.animation.Animation import Animation
         from org.allbinary.animation.special.SpecialAnimation import SpecialAnimation
         from org.allbinary.business.advertisement.GameAdStateFactory import GameAdStateFactory
-        from org.allbinary.canvas.BaseGameStatistics import BaseGameStatistics
         from org.allbinary.canvas.FullScreenUtil import FullScreenUtil
         from org.allbinary.canvas.GameStatisticsFactory import GameStatisticsFactory
         from org.allbinary.game.configuration.feature.Features import Features
         from org.allbinary.game.configuration.feature.InputFeatureFactory import InputFeatureFactory
-        from org.allbinary.game.init.BasicBuildGameInitializerFactory import BasicBuildGameInitializerFactory
         from org.allbinary.game.input.GameInputStrings import GameInputStrings
-        from org.allbinary.game.input.GameKey import GameKey
         from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
         from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
         from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
-        from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
-        from org.allbinary.game.score.HighScoresFactoryInterface import HighScoresFactoryInterface
         from org.allbinary.game.score.HighScoresHelper import HighScoresHelper
         from org.allbinary.game.score.HighScoresPaintable import HighScoresPaintable
         from org.allbinary.game.state.GameStateFactory import GameStateFactory
@@ -53,11 +86,7 @@ class StartCanvas(*java_bases(RunnableCanvas, GameCanvasRunnableInterface, MenuL
         from org.allbinary.graphics.displayable.command.MyCommandsFactory import MyCommandsFactory
         from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
         from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
-        from org.allbinary.graphics.paint.InitUpdatePaintable import InitUpdatePaintable
         from org.allbinary.graphics.paint.NullPaintable import NullPaintable
-        from org.allbinary.graphics.paint.Paintable import Paintable
-        from org.allbinary.graphics.paint.PaintableInterface import PaintableInterface
-        from org.allbinary.graphics.paint.StatePaintable import StatePaintable
         from org.allbinary.graphics.paint.StatePaintableFactory import StatePaintableFactory
         from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         self.basicColorFactory: BasicColorFactory = BasicColorFactory.getInstance()
@@ -77,14 +106,14 @@ class StartCanvas(*java_bases(RunnableCanvas, GameCanvasRunnableInterface, MenuL
         self.highScoresPaintable: Paintable = NullPaintable.getInstance()
         self.state: int = 0
         self.timeDelayHelper: TimeDelayHelper = TimeDelayHelper(6000)
-        self.highScoresFactoryInterface: HighScoresFactoryInterface = None
+        if "highScoresFactoryInterface" not in vars(self): self.highScoresFactoryInterface: HighScoresFactoryInterface = None
         self.menuInputProcessor: BasicMenuInputProcessor = NoMenuInputProcessor.getInstance()
         self.menuForm: ScrollSelectionForm = ScrollSelectionForm.getNullScrollSelectionForm()
-        self.gameInitializationInterfaceFactoryInterface: BasicBuildGameInitializerFactory = None
-        self.initialized: bool = False
+        if "gameInitializationInterfaceFactoryInterface" not in vars(self): self.gameInitializationInterfaceFactoryInterface: BasicBuildGameInitializerFactory = None
+        if "initialized" not in vars(self): self.initialized: bool = False
         self.defaultPaintableInterface: Paintable = NullPaintable.getInstance()
         self.paintableInterface: PaintableInterface = NullPaintable.getInstance()
-        self.overlayPaintable: InitUpdatePaintable = None
+        if "overlayPaintable" not in vars(self): self.overlayPaintable: InitUpdatePaintable = None
         self.tempWait: int = NullWaitGameRunnable.getInstance().WAIT
         self.inputToGameKeyMapping: InputToGameKeyMapping = PlatformInputMappingFactory.getInstance().getPersistentInputMappingInstance().getInputMapping()
         self.gameRunnable: GameRunnable = NullWaitGameRunnable.getInstance()
@@ -97,6 +126,7 @@ class StartCanvas(*java_bases(RunnableCanvas, GameCanvasRunnableInterface, MenuL
     
 
     def __init__(self, abeClientInformation: AbeClientInformationInterface, commandListener: CommandListener, highScoresFactoryInterface: HighScoresFactoryInterface, paintable: Paintable, overlayPaintable: InitUpdatePaintable, gameInitializationInterfaceFactoryInterface: BasicBuildGameInitializerFactory, isContinue: bool) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.displayable.canvas.NullWaitGameRunnable import NullWaitGameRunnable
         from javax.microedition.lcdui.CommandListener import CommandListener
         from org.allbinary.game.commands.GameCommandsFactory import GameCommandsFactory
@@ -112,7 +142,7 @@ class StartCanvas(*java_bases(RunnableCanvas, GameCanvasRunnableInterface, MenuL
         from org.allbinary.graphics.paint.Paintable import Paintable
         from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         super().__init__(commandListener, CurrentDisplayableFactory.getInstance().DEFAULT_CHILD_NAME_LIST, True)
-        self._init_fields()
+        __class__._init_fields(self)
         self.setWait(NullWaitGameRunnable.getInstance().WAIT)
         self.gameInitializationInterfaceFactoryInterface = gameInitializationInterfaceFactoryInterface
         GameInitializationUtil.getInstance().initDemo(abeClientInformation, self, gameInitializationInterfaceFactoryInterface)
@@ -167,23 +197,23 @@ class StartCanvas(*java_bases(RunnableCanvas, GameCanvasRunnableInterface, MenuL
         from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         gameCommandsFactory: GameCommandsFactory = GameCommandsFactory.getInstance()
-        if J2MEUtil.isHTML():
+        if java_predicate(J2MEUtil, "isHTML"):
             commandArray: list[object] = [gameCommandsFactory.START_COMMAND, HighScoreCommands.getInstance().DISPLAY, GameInputMappingCanvas.DISPLAY, gameCommandsFactory.DISPLAY_ABOUT]
             return commandArray
         else:
             commandList: BasicArrayList = BasicArrayListD()
             commandList.add(gameCommandsFactory.START_COMMAND)
             inApplicationPurchaseFactory: InApplicationPurchaseFactory = InApplicationPurchaseFactory.getInstance()
-            if inApplicationPurchaseFactory.isEnabled():
+            if java_predicate(inApplicationPurchaseFactory, "isEnabled"):
                 list_: BasicArrayList = LockableFeatureFactory.getInstance().getList()
-                if list_.size() > 0 and not inApplicationPurchaseFactory.isPurchased(list_.get(0)):
+                if list_.size() > 0 and not (inApplicationPurchaseFactory.isPurchased(list_.get(0))):
                     commandList.add(gameCommandsFactory.BUY_COMMAND)
             commandList.add(HighScoreCommands.getInstance().DISPLAY)
             try:
-                isOverScan: bool = OperatingSystemFactory.getInstance().getOperatingSystemInstance().isOverScan()
+                isOverScan: bool = java_predicate(OperatingSystemFactory.getInstance().getOperatingSystemInstance(), "isOverScan")
                 if SWTUtil.isSWT:
                     commandList.add(GameInputMappingCanvas.DISPLAY)
-                elif not isOverScan:
+                elif not (isOverScan):
                     commandList.add(gameCommandsFactory.DISPLAY_OPTIONS)
                     commandList.add(gameCommandsFactory.DISPLAY_LOAD_FORM)
                     commandList.add(GameInputMappingCanvas.DISPLAY)
@@ -308,7 +338,7 @@ class StartCanvas(*java_bases(RunnableCanvas, GameCanvasRunnableInterface, MenuL
 
     def pause(self) -> None:
         with self._lock:
-            return self._pause_unlocked()
+            return __class__.__dict__["_pause_unlocked"].__get__(self, __class__)()
 
     def _pause_unlocked(self) -> None:
         self.close()
@@ -317,7 +347,7 @@ class StartCanvas(*java_bases(RunnableCanvas, GameCanvasRunnableInterface, MenuL
 
     def unPause(self) -> None:
         with self._lock:
-            return self._unPause_unlocked()
+            return __class__.__dict__["_unPause_unlocked"].__get__(self, __class__)()
 
     def _unPause_unlocked(self) -> None:
         self.open()
@@ -381,7 +411,7 @@ class StartCanvas(*java_bases(RunnableCanvas, GameCanvasRunnableInterface, MenuL
 
     def processGameOver(self) -> None:
         with self._lock:
-            return self._processGameOver_unlocked()
+            return __class__.__dict__["_processGameOver_unlocked"].__get__(self, __class__)()
 
     def _processGameOver_unlocked(self) -> None:
         self.logUtil.putF("Not Implemented since not a game", self, "setGameOver")
@@ -394,7 +424,7 @@ class StartCanvas(*java_bases(RunnableCanvas, GameCanvasRunnableInterface, MenuL
         if newState > 2:
             newState = 0
         elif newState == 2:
-            if not self.highScoresHelper.isAnyHighScores():
+            if not (java_predicate(self.highScoresHelper, "isAnyHighScores")):
                 newState = 0
             else:
                 highScores: HighScores = self.highScoresHelper.getNextHighScores()
@@ -505,10 +535,10 @@ class StartCanvas(*java_bases(RunnableCanvas, GameCanvasRunnableInterface, MenuL
             self.updateDemoState()
             if self.features.isDefault(self.openGLFeatureFactory.OPENGL_AS_GAME_THREAD):
                 OpenGLThreadUtil.getInstance().onResume()
-            if self.features.isDefault(self.openGLFeatureFactory.OPENGL_AS_GAME_THREAD) or J2MEUtil.isHTML():
+            if self.features.isDefault(self.openGLFeatureFactory.OPENGL_AS_GAME_THREAD) or java_predicate(J2MEUtil, "isHTML"):
                 pass
             else:
-                while self.isRunning():
+                while java_predicate(self, "isRunning"):
                     self.loopTimeHelper.setStartTimeTNT()
                     self.processGame()
                     self.processLoopSleep()
@@ -521,9 +551,9 @@ class StartCanvas(*java_bases(RunnableCanvas, GameCanvasRunnableInterface, MenuL
     def setRunning(self, running: bool) -> None:
         from org.allbinary.J2MEUtil import J2MEUtil
         from org.allbinary.graphics.opengles.CurrentDisplayableFactory import CurrentDisplayableFactory
-        super().setRunning(running)
+        java_super_call(super(), "setRunning", running)
         try:
-            if (self.features.isDefault(self.openGLFeatureFactory.OPENGL) or J2MEUtil.isHTML()) and not running:
+            if (self.features.isDefault(self.openGLFeatureFactory.OPENGL) or java_predicate(J2MEUtil, "isHTML")) and not (running):
                 currentDisplayableFactory: CurrentDisplayableFactory = CurrentDisplayableFactory.getInstance()
                 currentDisplayableFactory.clearRunnable()
                 self.end()
@@ -661,7 +691,7 @@ class StartCanvas(*java_bases(RunnableCanvas, GameCanvasRunnableInterface, MenuL
     def isSingleThread(self) -> bool:
         from org.allbinary.game.layer.SWTUtil import SWTUtil
         from org.allbinary.graphics.opengles.OpenGLFeatureUtil import OpenGLFeatureUtil
-        return OpenGLFeatureUtil.getInstance().isAnyThreed() or SWTUtil.isSWT
+        return java_predicate(OpenGLFeatureUtil.getInstance(), "isAnyThreed") or SWTUtil.isSWT
     
 
     def isRunningInAnotherThread(self) -> bool:
@@ -672,7 +702,7 @@ class StartCanvas(*java_bases(RunnableCanvas, GameCanvasRunnableInterface, MenuL
         if features.isDefault(openGLFeatureFactory.OPENGL_AS_GAME_THREAD):
             return True
         else:
-            return self.isRunning()
+            return java_predicate(self, "isRunning")
     
 
     def getGameInitializationInterfaceFactoryInterface(self) -> BasicBuildGameInitializerFactory:
@@ -681,15 +711,15 @@ class StartCanvas(*java_bases(RunnableCanvas, GameCanvasRunnableInterface, MenuL
     
 
     def getTitle(self) -> str:
-        return super().getTitle()
+        return java_super_call(super(), "getTitle")
     
 
     def isPaused(self) -> bool:
-        return super().isPaused()
+        return java_super_call(super(), "isPaused")
     
 
     def getType(self) -> int:
-        return super().getType()
+        return java_super_call(super(), "getType")
 # from javax.microedition.lcdui.Command import Command
 # from javax.microedition.lcdui.CommandListener import CommandListener
 # from javax.microedition.lcdui.Graphics import Graphics

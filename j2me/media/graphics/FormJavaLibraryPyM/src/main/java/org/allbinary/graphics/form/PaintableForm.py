@@ -3,21 +3,28 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.graphics.form.ABCustomForm import ABCustomForm
 
 
+@java_inherited_overloads
 class PaintableForm(ABCustomForm):
     NULL_PAINTABLE_FORM: object = None
+    def _java_defaults(self):
+        vars(self).setdefault("canvasStrings", None)
+        vars(self).setdefault("rectangle", None)
+        vars(self).setdefault("x", 0)
+        vars(self).setdefault("y", 0)
+        vars(self).setdefault("formType", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.Rectangle import Rectangle
         from org.allbinary.graphics.RectangleFactory import RectangleFactory
         from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
         self.canvasStrings: CanvasStrings = CanvasStrings.getInstance()
         self.rectangle: Rectangle = RectangleFactory.SINGLETON
-        self.x: int = 0
-        self.y: int = 0
+        if "x" not in vars(self): self.x: int = 0
+        if "y" not in vars(self): self.y: int = 0
         self.formType: FormType = FormTypeFactory.getInstance().NULL_FORM_TYPE
     
 
@@ -33,10 +40,11 @@ class PaintableForm(ABCustomForm):
     
 
     def __init__(self, title: str, items: list[ABCustomItem], backgroundBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
         super().__init__(title, items, backgroundBasicColor, foregroundBasicColor)
-        self._init_fields()
+        __class__._init_fields(self)
         self.setSelectedIndex(0)
     
 

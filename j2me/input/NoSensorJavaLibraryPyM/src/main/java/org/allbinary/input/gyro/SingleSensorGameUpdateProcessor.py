@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.input.gyro.SensorGameUpdateProcessor import SensorGameUpdateProcessor
 
 
+@java_inherited_overloads
 class SingleSensorGameUpdateProcessor(SensorGameUpdateProcessor):
 
     def __init__(self) -> None:

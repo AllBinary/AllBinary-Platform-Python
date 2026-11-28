@@ -21,22 +21,20 @@ from org.allbinary.input.motion.gesture.observer.MotionGestureEventListener impo
 class ReleaseControlledMotionGestureListener(MotionGestureEventListener):
 
     def _init_fields(self) -> None:
-        from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
         from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.currentMotionGesture: MotionGestureInput = TouchMotionGestureFactory.getInstance().NO_MOTION
         self.isMouseGestureOccurring: bool = False
         self.motionGestureCollection: BasicArrayList = BasicArrayListD()
-        self.signed: CompleteMotionGestureListenerInterface = None
+        if "signed" not in vars(self): self.signed: CompleteMotionGestureListenerInterface = None
     
 
     def __init__(self, signed: CompleteMotionGestureListenerInterface) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
         self.signed = signed
     

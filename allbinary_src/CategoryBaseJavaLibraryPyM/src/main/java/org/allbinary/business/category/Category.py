@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from org.allbinary.business.category.CategoryInterface import CategoryInterface
 
@@ -24,16 +25,13 @@ class Category(CategoryInterface):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
-        from org.allbinary.business.category.hierarchy.CategoryHierarchyInterface import CategoryHierarchyInterface
-        from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.categoryHierarchyInterface: CategoryHierarchyInterface = None
-        self.categoryPropertiesInterface: CategoryPropertiesInterface = None
+        if "categoryHierarchyInterface" not in vars(self): self.categoryHierarchyInterface: CategoryHierarchyInterface = None
+        if "categoryPropertiesInterface" not in vars(self): self.categoryPropertiesInterface: CategoryPropertiesInterface = None
         self.childCategoryVector: BasicArrayList = BasicArrayListD()
         self.typeVector: BasicArrayList = BasicArrayListD()
         self.PROPERTIES: int = int(1)
@@ -41,11 +39,11 @@ class Category(CategoryInterface):
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
         elif len(args) == 2:
-            self._constructor2(*args)
+            __class__._constructor2(self, *args)
         elif len(args) == 3:
-            self._constructor3(*args)
+            __class__._constructor3(self, *args)
     
 
     def _constructor1(self, categoryPropertiesFactoryInterface: CategoryPropertiesFactoryInterface) -> None:
@@ -54,7 +52,7 @@ class Category(CategoryInterface):
         from org.allbinary.business.category.properties.CategoryPropertiesFactoryInterface import CategoryPropertiesFactoryInterface
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-        self._init_fields()
+        __class__._init_fields(self)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().CATEGORY):
             self.logUtil.putF(self.commonStrings.CONSTRUCTOR, self, "Category(CategoryPropertiesFactoryInterface)")
         self.categoryPropertiesInterface = categoryPropertiesFactoryInterface.getInstance()
@@ -66,7 +64,7 @@ class Category(CategoryInterface):
         from org.allbinary.business.category.hierarchy.CategoryHierarchy import CategoryHierarchy
         from org.allbinary.business.category.hierarchy.CategoryHierarchyInterface import CategoryHierarchyInterface
         from org.allbinary.business.category.properties.CategoryPropertiesFactoryInterface import CategoryPropertiesFactoryInterface
-        self._init_fields()
+        __class__._init_fields(self)
         self.categoryPropertiesInterface = categoryPropertiesFactoryInterface.getInstance()
         self.categoryHierarchyInterface = CategoryHierarchy(self, self, level)
         self.log()
@@ -77,7 +75,7 @@ class Category(CategoryInterface):
         from org.allbinary.business.category.hierarchy.CategoryHierarchyInterface import CategoryHierarchyInterface
         from org.allbinary.business.category.properties.CategoryPropertiesFactoryInterface import CategoryPropertiesFactoryInterface
         from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
-        self._init_fields()
+        __class__._init_fields(self)
         self.categoryPropertiesInterface = categoryPropertiesFactoryInterface.getInstance()
         self.categoryHierarchyInterface = CategoryHierarchy(rootCategoryInterface, parentCategoryInterface)
         self.log()
@@ -95,7 +93,7 @@ class Category(CategoryInterface):
         from org.allbinary.logic.string.StringUtil import StringUtil
         rootAbPath: AbPath = AbPath(Category.NOT_ROOT, StringUtil.getInstance().EMPTY_STRING)
         categoryInterface: CategoryInterface = self.categoryHierarchyInterface.getRoot()
-        if categoryInterface.getProperties().isRoot():
+        if java_predicate(categoryInterface.getProperties(), "isRoot"):
             rootCategoryPropertiesInterface: RootCategoryPropertiesInterface = categoryInterface.getProperties()
             rootAbPath = rootCategoryPropertiesInterface.getRootFilePath()
         return rootAbPath
@@ -122,7 +120,7 @@ class Category(CategoryInterface):
 
     def addChildProperty(self, categoryPropertiesInterface: CategoryPropertiesInterface) -> bool:
         with self._lock:
-            return self._addChildProperty_unlocked(categoryPropertiesInterface)
+            return __class__.__dict__["_addChildProperty_unlocked"].__get__(self, __class__)(categoryPropertiesInterface)
 
     def _addChildProperty_unlocked(self, categoryPropertiesInterface: CategoryPropertiesInterface) -> bool:
         from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
@@ -132,7 +130,7 @@ class Category(CategoryInterface):
 
     def addChild(self, categoryInterface: CategoryInterface) -> bool:
         with self._lock:
-            return self._addChild_unlocked(categoryInterface)
+            return __class__.__dict__["_addChild_unlocked"].__get__(self, __class__)(categoryInterface)
 
     def _addChild_unlocked(self, categoryInterface: CategoryInterface) -> bool:
         from org.allbinary.business.category.hierarchy.CategoryHierarchyInterface import CategoryHierarchyInterface
@@ -156,7 +154,7 @@ class Category(CategoryInterface):
 
     def removeChild(self, categoryInterface: CategoryInterface) -> bool:
         with self._lock:
-            return self._removeChild_unlocked(categoryInterface)
+            return __class__.__dict__["_removeChild_unlocked"].__get__(self, __class__)(categoryInterface)
 
     def _removeChild_unlocked(self, categoryInterface: CategoryInterface) -> bool:
         from org.allbinary.util.BasicArrayList import BasicArrayList
@@ -187,7 +185,7 @@ class Category(CategoryInterface):
 
     def removeDuplicateChild(self, categoryInterface: CategoryInterface) -> bool:
         with self._lock:
-            return self._removeDuplicateChild_unlocked(categoryInterface)
+            return __class__.__dict__["_removeDuplicateChild_unlocked"].__get__(self, __class__)(categoryInterface)
 
     def _removeDuplicateChild_unlocked(self, categoryInterface: CategoryInterface) -> bool:
         from org.allbinary.util.BasicArrayList import BasicArrayList
@@ -248,22 +246,22 @@ class Category(CategoryInterface):
     # throws Exception
     def isValid(self) -> bool:
         with self._lock:
-            return self._isValid_unlocked()
+            return __class__.__dict__["_isValid_unlocked"].__get__(self, __class__)()
 
     def _isValid_unlocked(self) -> bool:
         from org.allbinary.business.category.properties.CategoryPropertiesInterface import CategoryPropertiesInterface
-        if not self.categoryPropertiesInterface.isValid():
+        if not (java_predicate(self.categoryPropertiesInterface, "isValid")):
             return False
         size: int = self.childCategoryVector.size()
         for index in range(0, size):
             anyType: object = self.childCategoryVector.get(index)
             if self.PROPERTIES == self.typeVector.get(index):
                 categoryPropertiesInterface: CategoryPropertiesInterface = anyType
-                if not categoryPropertiesInterface.isValid():
+                if not (java_predicate(categoryPropertiesInterface, "isValid")):
                     return False
             elif self.CATEGORY == self.typeVector.get(index):
                 categoryInterface: CategoryInterface = anyType
-                if not categoryInterface.isValid():
+                if not (java_predicate(categoryInterface, "isValid")):
                     return False
         return True
     

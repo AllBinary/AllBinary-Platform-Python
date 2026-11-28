@@ -15,32 +15,32 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_divide
 
 
 class ImageComparisonSearch:
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.isSameHeight: bool = False
-        self.isSameWidth: bool = False
-        self.pixelsThatMatch: int = 0
-        self.pixelsIgnored: int = 0
-        self.imageHeight: int = None
-        self.imageWidth: int = None
-        self.tolerance: int = 0
-        self.nonMatchingPixelVector: BasicArrayList = None
-        self.bufferedImages: list[BufferedImage] = None
+        if "isSameHeight" not in vars(self): self.isSameHeight: bool = False
+        if "isSameWidth" not in vars(self): self.isSameWidth: bool = False
+        if "pixelsThatMatch" not in vars(self): self.pixelsThatMatch: int = 0
+        if "pixelsIgnored" not in vars(self): self.pixelsIgnored: int = 0
+        if "imageHeight" not in vars(self): self.imageHeight: int = 0
+        if "imageWidth" not in vars(self): self.imageWidth: int = 0
+        if "tolerance" not in vars(self): self.tolerance: int = 0
+        if "nonMatchingPixelVector" not in vars(self): self.nonMatchingPixelVector: BasicArrayList = None
+        if "bufferedImages" not in vars(self): self.bufferedImages: list[BufferedImage] = None
         self.matchingPercent: float = float(-1)
     
 
     def __init__(self, bufferedImage: BufferedImage, bufferedImage2: BufferedImage, tolerance: int) -> None:
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         from org.allbinary.media.image.ImageUtil import ImageUtil
-        self._init_fields()
+        __class__._init_fields(self)
         self.nonMatchingPixelVector = BasicArrayListD()
         self.setBufferedImages([None] * (2))
         self.getBufferedImages()[0] = bufferedImage
@@ -59,7 +59,7 @@ class ImageComparisonSearch:
                 self.imageWidth = bufferedImage2.getWidth()
         else:
             self.isSameWidth = True
-        if not self.isSameWidth or not self.isSameHeight:
+        if not (self.isSameWidth) or not (self.isSameHeight):
             imageUtil: ImageUtil = ImageUtil.getInstance()
             self.logUtil.putF("Images were not the same size? Most likely a resolution change.", self, self.commonStrings.CONSTRUCTOR)
             self.logUtil.putF("1: " + imageUtil.toString(bufferedImage), self, self.commonStrings.CONSTRUCTOR)

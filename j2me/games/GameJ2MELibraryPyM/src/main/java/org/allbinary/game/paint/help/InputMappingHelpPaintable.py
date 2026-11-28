@@ -15,18 +15,33 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.paint.help.HelpPaintable import HelpPaintable
 
 
+@java_inherited_overloads
 class InputMappingHelpPaintable(HelpPaintable):
     AND: str = " and "
     SEP: str = ", "
     MORE_THAN_TWO_IN_LIST_AND: str = ", and "
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("commonSeps", None)
+        vars(self).setdefault("stringUtil", None)
+        vars(self).setdefault("basicColorFactory", None)
+        vars(self).setdefault("NONE", None)
+        vars(self).setdefault("EMPTY_STRING", None)
+        vars(self).setdefault("gameInputMappingArray", None)
+        vars(self).setdefault("keyMappingArray", None)
+        vars(self).setdefault("actionBasicColor", None)
+        vars(self).setdefault("inputBasicColorArray", None)
+        vars(self).setdefault("selectedBasicColor", None)
+        vars(self).setdefault("updateMyFontProperties", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.input.GameKey import GameKey
         from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
-        from org.allbinary.game.input.mapping.GameInputMapping import GameInputMapping
         from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         from org.allbinary.graphics.color.BasicColorUtil import BasicColorUtil
@@ -42,19 +57,20 @@ class InputMappingHelpPaintable(HelpPaintable):
         self.basicColorFactory: BasicColorFactory = BasicColorFactory.getInstance()
         self.NONE: GameKey = GameKeyFactory.getInstance().NONE
         self.EMPTY_STRING: str = StringUtil.getInstance().EMPTY_STRING
-        self.gameInputMappingArray: list[GameInputMapping] = None
+        if "gameInputMappingArray" not in vars(self): self.gameInputMappingArray: list[GameInputMapping] = None
         self.keyMappingArray: list[BasicArrayList] = [None] * (0)
         self.actionBasicColor: list[BasicColor] = BasicColorUtil.getInstance().ZERO_ARRAY
         self.inputBasicColorArray: list[list[BasicColor]] = [[None] * (0) for _ in range(0)]
-        self.selectedBasicColor: BasicColor = None
+        if "selectedBasicColor" not in vars(self): self.selectedBasicColor: BasicColor = None
         self.updateMyFontProperties: UpdateMyFontProperties = UpdateMyFontProperties()
     
 
     def __init__(self, gameInputMappingArray: list[GameInputMapping], backgroundBasicColor: BasicColor, basicColor: BasicColor) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.input.mapping.GameInputMapping import GameInputMapping
         from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__("Input Mapping", backgroundBasicColor, basicColor)
-        self._init_fields()
+        __class__._init_fields(self)
         self.gameInputMappingArray = gameInputMappingArray
         self.update(self.NONE, self.NONE)
         if backgroundBasicColor == self.basicColorFactory.WHITE or basicColor == self.basicColorFactory.WHITE:
@@ -115,7 +131,7 @@ class InputMappingHelpPaintable(HelpPaintable):
                 if updateMyFontProperties.sepArray[index][index2] != self.EMPTY_STRING:
                     updateMyFontProperties.sepWidthArray[index][index2] = font.stringWidth(updateMyFontProperties.sepArray[index][index2])
         self.updateMyFontProperties = updateMyFontProperties
-        super().updateMeasurement(graphics)
+        java_super_call(super(), "updateMeasurement", graphics)
     
 
     def update(self, selectedGameKey: GameKey, selectedInput: Input) -> None:
@@ -163,7 +179,7 @@ class InputMappingHelpPaintable(HelpPaintable):
         self.keyMappingArray = keyMappingArray
         self.actionBasicColor = actionBasicColor
         self.inputBasicColorArray = inputBasicColorArray
-        super().setInputInfoP(keyInfo)
+        java_super_call(super(), "setInputInfoP", keyInfo)
         self.myFontProcessor = self.updateMyFontProcessor
     
 

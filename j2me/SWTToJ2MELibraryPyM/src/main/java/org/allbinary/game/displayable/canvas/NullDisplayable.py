@@ -3,16 +3,19 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from javax.microedition.lcdui.Canvas import Canvas
 
 
 #SWTToJ2ME
+@java_inherited_overloads
 class NullDisplayable(Canvas):
     SINGLETON: NullDisplayable = None
+    def _java_defaults(self):
+        vars(self).setdefault("baseGameStatistics", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.canvas.BaseGameStatistics import BaseGameStatistics
         from org.allbinary.canvas.GameStatisticsFactory import GameStatisticsFactory
         self.baseGameStatistics: BaseGameStatistics = GameStatisticsFactory.getInstance()
     
@@ -23,8 +26,9 @@ class NullDisplayable(Canvas):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def paint(self, graphics: Graphics) -> None:

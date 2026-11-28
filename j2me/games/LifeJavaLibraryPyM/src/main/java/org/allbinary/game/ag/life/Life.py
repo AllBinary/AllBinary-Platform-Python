@@ -23,9 +23,9 @@ class Life(LifeInterface):
     NO_LIFE: Life = None
 
     def _init_fields(self) -> None:
-        self.lives: int = None
-        self.startLives: int = None
-        self.maxlives: int = None
+        if "lives" not in vars(self): self.lives: int = 0
+        if "startLives" not in vars(self): self.startLives: int = 0
+        if "maxlives" not in vars(self): self.maxlives: int = 0
     
 
     @staticmethod
@@ -37,7 +37,7 @@ class Life(LifeInterface):
     
 
     def __init__(self, lives: int, maxlives: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.maxlives = maxlives
         if lives > self.maxlives:
             raise Exception("To Many Lives")
@@ -58,7 +58,7 @@ class Life(LifeInterface):
     
 
     def add(self, lives: int) -> None:
-        if not self.reachedLimit():
+        if not (self.reachedLimit()):
             if self.lives + lives <= self.getMaxlives():
                 self.lives = ((int((self.lives + lives)) + 32768) % 65536 - 32768)
             else:
@@ -84,7 +84,7 @@ class Life(LifeInterface):
     
 
     def deaths(self, lives: int) -> None:
-        if not self.reachedLimit():
+        if not (self.reachedLimit()):
             if self.lives - lives >= 0:
                 self.lives = ((int((self.lives - lives)) + 32768) % 65536 - 32768)
             else:

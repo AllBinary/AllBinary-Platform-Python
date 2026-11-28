@@ -28,10 +28,10 @@ class DirectionFactory:
         self.RIGHT: Direction = Direction(CommonPhoneStrings.getInstance().RIGHT, "EAST", 1, 0)
         self.DOWN: Direction = Direction(CommonPhoneStrings.getInstance().DOWN, "SOUTH", 2, 0)
         self.UP: Direction = Direction(CommonPhoneStrings.getInstance().UP, "NORTH", 3, 0)
-        self.UP_LEFT: Direction = None
-        self.UP_RIGHT: Direction = None
-        self.DOWN_LEFT: Direction = None
-        self.DOWN_RIGHT: Direction = None
+        if "UP_LEFT" not in vars(self): self.UP_LEFT: Direction = None
+        if "UP_RIGHT" not in vars(self): self.UP_RIGHT: Direction = None
+        if "DOWN_LEFT" not in vars(self): self.DOWN_LEFT: Direction = None
+        if "DOWN_RIGHT" not in vars(self): self.DOWN_RIGHT: Direction = None
         self.NOT_BORDERED_WITH: Direction = Direction("NOT_BORDERED_WITH", "NOT_BORDERED_WITH", 8, 0)
         self.NO_DIRECTION: Direction = Direction("NO_DIRECTION", "NO_DIRECTION", 9, 0)
         self.TOP: Direction = Direction("TOP", "TOP", 10, 0)
@@ -51,7 +51,7 @@ class DirectionFactory:
         from org.allbinary.direction.Direction import Direction
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.string.CommonSeps import CommonSeps
-        self._init_fields()
+        __class__._init_fields(self)
         stringBuffer: StringMaker = StringMaker()
         commonSeps: CommonSeps = CommonSeps.getInstance()
         self.UP_LEFT = Direction("UP LEFT", str(stringBuffer.append(self.UP.getOtherName()).append(commonSeps.SPACE).append(self.LEFT.getOtherName())), 4, 0)

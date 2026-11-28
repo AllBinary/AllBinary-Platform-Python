@@ -15,10 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.android.activity.ViewCompositeInterface import ViewCompositeInterface
 
 
 # Java interface
+@java_inherited_overloads
 class KeyInputViewCompositeInterface(ViewCompositeInterface):
     
 

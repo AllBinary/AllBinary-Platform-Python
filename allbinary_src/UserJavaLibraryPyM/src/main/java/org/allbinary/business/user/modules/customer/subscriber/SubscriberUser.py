@@ -15,40 +15,47 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.business.user.modules.User import User
 
 
+@java_inherited_overloads
 class SubscriberUser(User):
+    def _java_defaults(self):
+        vars(self).setdefault("subscription", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.user.subscription.Subscription import Subscription
-        self.subscription: Subscription = None
+        if "subscription" not in vars(self): self.subscription: Subscription = None
 
     def __init__(self, *args) -> None:
         if len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
         elif len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
     
 
     def _constructor0(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.user.subscription.Subscription import Subscription
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.subscription = Subscription()
     
 
     def _constructor1(self, userHashMap: HashMap) -> None:
+        __class__._java_defaults(self)
         from java.util.HashMap import HashMap
         from org.allbinary.business.user.subscription.Subscription import Subscription
         super().__init__(userHashMap)
-        self._init_fields()
+        __class__._init_fields(self)
         self.subscription = Subscription()
     
 
     def validateSession(self, weblisketSession: WeblisketSessionInterface) -> None:
         from org.allbinary.logic.communication.http.request.session.WeblisketSessionInterface import WeblisketSessionInterface
-        super().validateSession(weblisketSession)
+        java_super_call(super(), "validateSession", weblisketSession)
         self.updateSession(weblisketSession)
     
 
@@ -58,7 +65,7 @@ class SubscriberUser(User):
     
 
     def isSessionValid(self) -> bool:
-        return self.subscription.isSubscribed()
+        return java_predicate(self.subscription, "isSubscribed")
 # from java.util.HashMap import HashMap
 # from org.allbinary.business.user.subscription.Subscription import Subscription
 # from org.allbinary.logic.communication.http.request.session.WeblisketSessionInterface import WeblisketSessionInterface

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -28,6 +29,7 @@ class ChoiceGroupImageUtil:
     
 
     def init(self) -> None:
+        from org.allbinary.image.PreResourceImageUtil import PreResourceImageUtil
         from javax.microedition.lcdui.ChoiceGroupImageFactory import ChoiceGroupImageFactory
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
@@ -45,6 +47,7 @@ class ChoiceGroupImageUtil:
 
     # Java overloaded method with the same parameter count: Python keeps the last definition
     def update_j1_1(self, gl: GL) -> None:
+        from org.allbinary.image.PreResourceImageUtil import PreResourceImageUtil
         from javax.microedition.khronos.opengles.GL import GL
         from javax.microedition.lcdui.ChoiceGroupImageFactory import ChoiceGroupImageFactory
         from javax.microedition.lcdui.Image import Image
@@ -63,6 +66,7 @@ class ChoiceGroupImageUtil:
 
     # Java overloaded method with the same parameter count: Python keeps the last definition
     def update_j1_2(self, graphics: Graphics) -> None:
+        from org.allbinary.image.PreResourceImageUtil import PreResourceImageUtil
         from javax.microedition.lcdui.ChoiceGroupImageFactory import ChoiceGroupImageFactory
         from javax.microedition.lcdui.Graphics import Graphics
         from javax.microedition.lcdui.Image import Image
@@ -79,11 +83,13 @@ class ChoiceGroupImageUtil:
         choiceGroupFactory.init(imageArray)
 
     def update(self, *args):
-        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
-            return self.update_j1_1(*args)
+        if len(args) == 1 and True and (args[0] is None or any(base.__name__ == "GL" for base in type(args[0]).__mro__)):
+            return __class__.__dict__["update_j1_1"].__get__(self, __class__)(*args)
         if len(args) == 1:
-            return self.update_j1_2(*args)
-        return getattr(self, "update_j" + str(len(args)))(*args)
+            return __class__.__dict__["update_j1_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("update_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().update(*args)
 # from javax.microedition.khronos.opengles.GL import GL
 # from javax.microedition.lcdui.ChoiceGroupImageFactory import ChoiceGroupImageFactory
 # from javax.microedition.lcdui.Graphics import Graphics

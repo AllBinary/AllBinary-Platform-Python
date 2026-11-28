@@ -15,13 +15,20 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.emulator.device.TrueTypeFontUtilBase import TrueTypeFontUtilBase
 
 
 #TTF
+@java_inherited_overloads
 class TrueTypeFontUtil(TrueTypeFontUtilBase):
     instance: TrueTypeFontUtil = None
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("preResourceImageUtil", None)
+        vars(self).setdefault("realFontSize", 0)
+        vars(self).setdefault("fontImage", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.image.PreResourceImageUtil import PreResourceImageUtil
@@ -39,11 +46,13 @@ class TrueTypeFontUtil(TrueTypeFontUtilBase):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__(1)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def saveFontAtlasAsFile(self) -> None:
+        from java.io.File import File
         from java.io.FileOutputStream import FileOutputStream
         from android.graphics.Bitmap import Bitmap
         from org.allbinary.data.resource.ResourceUtil import ResourceUtil
@@ -102,7 +111,7 @@ class TrueTypeFontUtil(TrueTypeFontUtilBase):
                 if bounds.bottom - bounds.top > biggestHeight:
                     biggestHeight = bounds.bottom - bounds.top
                 x = (index % self.CELLS_PER_ROW) * cellSize
-                x += (cellSize >> 1)
+                x += (int(cellSize) >> (int(1) & 31))
                 x -= (self._characterWidth[index] >> 1)
                 y = 0
                 if index >= self.CELLS_PER_ROW:
@@ -120,7 +129,7 @@ class TrueTypeFontUtil(TrueTypeFontUtilBase):
                 if index >= cellsPerRow7:
                     y += cellSize
                 y += cellSize
-                y -= (cellSize >> 2)
+                y -= (int(cellSize) >> (int(2) & 31))
                 canvas.drawText(self.characterArray, 0, 1, float(x) - 3.0, float(y) - 6.0, paint)
             canvas.save()
             image: Image = AndroidImmutableImage.create(bitmap)
@@ -177,7 +186,7 @@ class TrueTypeFontUtil(TrueTypeFontUtilBase):
                     self._characterWidth[index] = bounds.right - 7
                 else:
                     self._characterWidth[index] = bounds.right
-        self._characterWidth[0] = (fontSize >> 1) - 2
+        self._characterWidth[0] = (int(fontSize) >> (int(1) & 31)) - 2
         return self._characterWidth
 # from java.io.File import File
 # from java.io.FileOutputStream import FileOutputStream

@@ -15,13 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from javax.microedition.lcdui.Gauge import Gauge
 
 
+@java_inherited_overloads
 class GameConfigurationGauge(Gauge):
     
 
     def __init__(self, gameConfiguration: GameConfiguration) -> None:
-        super().__init__(gameConfiguration.getName(), gameConfiguration.isModifiable(), int(gameConfiguration.getMaxValue()) - int(gameConfiguration.getMinValue()), int(gameConfiguration.getValue()) - int(gameConfiguration.getMinValue()))
+        super().__init__(gameConfiguration.getName(), java_predicate(gameConfiguration, "isModifiable"), int(gameConfiguration.getMaxValue()) - int(gameConfiguration.getMinValue()), int(gameConfiguration.getValue()) - int(gameConfiguration.getMinValue()))
 
 

@@ -3,22 +3,19 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 
 
 class MusicManager:
 
     def _init_fields(self) -> None:
-        from android.content.Intent import Intent
         from org.allbinary.android.AndroidServicesUtil import AndroidServicesUtil
         from org.allbinary.data.resource.ResourceUtil import ResourceUtil
         from org.allbinary.media.audio.NoSound import NoSound
-        from org.allbinary.media.audio.Sound import Sound
         from org.allbinary.string.CommonStateStrings import CommonStateStrings
         from org.allbinary.string.CommonStrings import CommonStrings
-        from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
         from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
         from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         self.PLAY: str = "Play "
         self.FOR: str = " for: "
@@ -31,20 +28,20 @@ class MusicManager:
         self.gameTickTimeDelayHelper: GameTickTimeDelayHelper = GameTickTimeDelayHelperFactory.getInstance()
         self.timeDelayHelper: TimeDelayHelper = TimeDelayHelper(0)
         self.timeDelayHelper2: TimeDelayHelper = TimeDelayHelper(1200)
-        self.songList: BasicArrayList = None
+        if "songList" not in vars(self): self.songList: BasicArrayList = None
         self.currentSongSound: Sound = NoSound.getInstance()
         self.nextSongSound: Sound = NoSound.getInstance()
         self.leftVolume: int = 100
         self.rightVolume: int = 100
-        self.musicServiceClass: type = None
-        self.currentIntent: Intent = None
+        if "musicServiceClass" not in vars(self): self.musicServiceClass: type = None
+        if "currentIntent" not in vars(self): self.currentIntent: Intent = None
     
 
     def __init__(self, musicServiceClass: type, songList: BasicArrayList) -> None:
         from android.content.Intent import Intent
         from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         from org.allbinary.util.BasicArrayList import BasicArrayList
-        self._init_fields()
+        __class__._init_fields(self)
         PreLogUtil.put(self.commonStateStrings.CONTEXT + self.resourceUtil.getContext(), self, self.commonStrings.CONSTRUCTOR)
         self.musicServiceClass = musicServiceClass
         self.currentIntent = Intent(self.resourceUtil.getContext(), musicServiceClass)
@@ -73,7 +70,7 @@ class MusicManager:
             self.startNewSong()
             return
         if self.timeDelayHelper2.isTime(self.gameTickTimeDelayHelper.startTime):
-            if self.androidServicesUtil.isServiceRunning(self.musicServiceClass.__module__ + "." + self.musicServiceClass.__qualname__):
+            if self.androidServicesUtil.isServiceRunning(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(self.musicServiceClass)):
                 pass
             else:
                 self.startNewSong()
@@ -140,7 +137,7 @@ class MusicManager:
         from android.content.Intent import Intent
         from org.allbinary.android.AndroidServicesUtil import AndroidServicesUtil
         from org.allbinary.string.CommonStateStrings import CommonStateStrings
-        if AndroidServicesUtil.getInstance().isServiceRunning(musicServiceClass.__module__ + "." + musicServiceClass.__qualname__):
+        if AndroidServicesUtil.getInstance().isServiceRunning(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(musicServiceClass)):
             commonStateStrings: CommonStateStrings = CommonStateStrings.getInstance()
             musicResumeIntent: Intent = Intent(activity, musicServiceClass)
             musicResumeIntent.putExtra(commonStateStrings.ON_START_COMMAND, 2)

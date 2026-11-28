@@ -15,33 +15,39 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.communication.sql.AbDatabaseManagement import AbDatabaseManagement
 
 
 #Warning you must have sql root access
+@java_inherited_overloads
 class InitDbCrypted(AbDatabaseManagement):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("userDbInitInfo", None)
+        vars(self).setdefault("inventoryDbInitInfo", None)
+        vars(self).setdefault("historyDbInitInfo", None)
+        vars(self).setdefault("staticpagesDbInitInfo", None)
+        vars(self).setdefault("logDbInitInfo", None)
+        vars(self).setdefault("SQL_FILE", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.init.db.HistoryDbInitInfo import HistoryDbInitInfo
-        from org.allbinary.business.init.db.InventoryDbInitInfo import InventoryDbInitInfo
-        from org.allbinary.business.init.db.LogDbInitInfo import LogDbInitInfo
-        from org.allbinary.business.init.db.StaticPagesDbInitInfo import StaticPagesDbInitInfo
-        from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.userDbInitInfo: UserDbInitInfo = None
-        self.inventoryDbInitInfo: InventoryDbInitInfo = None
-        self.historyDbInitInfo: HistoryDbInitInfo = None
-        self.staticpagesDbInitInfo: StaticPagesDbInitInfo = None
-        self.logDbInitInfo: LogDbInitInfo = None
+        if "userDbInitInfo" not in vars(self): self.userDbInitInfo: UserDbInitInfo = None
+        if "inventoryDbInitInfo" not in vars(self): self.inventoryDbInitInfo: InventoryDbInitInfo = None
+        if "historyDbInitInfo" not in vars(self): self.historyDbInitInfo: HistoryDbInitInfo = None
+        if "staticpagesDbInitInfo" not in vars(self): self.staticpagesDbInitInfo: StaticPagesDbInitInfo = None
+        if "logDbInitInfo" not in vars(self): self.logDbInitInfo: LogDbInitInfo = None
         self.SQL_FILE: str = "initWeblisket.sql"
     
 
     def __init__(self, databaseConnectionInfoInterface: DatabaseConnectionInfoInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.init.db.DatabaseConnectionInfoInterface import DatabaseConnectionInfoInterface
         from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
         super().__init__(databaseConnectionInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def addUsers(self) -> bool:
@@ -60,31 +66,31 @@ class InitDbCrypted(AbDatabaseManagement):
             CUSTOMERDB: str = self.userDbInitInfo.getName()
             CUSTOMERDBUSER: str = self.userDbInitInfo.getUserName()
             CUSTOMERDBPASSWORD: str = self.userDbInitInfo.getPassword()
-            if not self.addDbUser(CUSTOMERDB, CUSTOMERDBUSER, CUSTOMERDBPASSWORD):
+            if not (self.addDbUser(CUSTOMERDB, CUSTOMERDBUSER, CUSTOMERDBPASSWORD)):
                 self.logUtil.putF(str(self.UNABLE_TO_CREATE_USER) + CUSTOMERDBUSER, self, self.METHOD_ADD_USERS)
                 return False
             INVENTORYDB: str = self.inventoryDbInitInfo.getName()
             INVENTORYDBUSER: str = self.inventoryDbInitInfo.getUserName()
             INVENTORYDBPASSWORD: str = self.inventoryDbInitInfo.getPassword()
-            if not self.addDbUser(INVENTORYDB, INVENTORYDBUSER, INVENTORYDBPASSWORD):
+            if not (self.addDbUser(INVENTORYDB, INVENTORYDBUSER, INVENTORYDBPASSWORD)):
                 self.logUtil.putF(str(self.UNABLE_TO_CREATE_USER) + INVENTORYDBUSER, self, self.METHOD_ADD_USERS)
                 return False
             HISTORYDB: str = self.historyDbInitInfo.getName()
             HISTORYDBUSER: str = self.historyDbInitInfo.getUserName()
             HISTORYDBPASSWORD: str = self.historyDbInitInfo.getPassword()
-            if not self.addDbUser(HISTORYDB, HISTORYDBUSER, HISTORYDBPASSWORD):
+            if not (self.addDbUser(HISTORYDB, HISTORYDBUSER, HISTORYDBPASSWORD)):
                 self.logUtil.putF(str(self.UNABLE_TO_CREATE_USER) + HISTORYDBUSER, self, self.METHOD_ADD_USERS)
                 return False
             STATICPAGESDB: str = self.staticpagesDbInitInfo.getName()
             STATICPAGESDBUSER: str = self.staticpagesDbInitInfo.getUserName()
             STATICPAGESDBPASSWORD: str = self.staticpagesDbInitInfo.getPassword()
-            if not self.addDbUser(STATICPAGESDB, STATICPAGESDBUSER, STATICPAGESDBPASSWORD):
+            if not (self.addDbUser(STATICPAGESDB, STATICPAGESDBUSER, STATICPAGESDBPASSWORD)):
                 self.logUtil.putF(str(self.UNABLE_TO_CREATE_USER) + STATICPAGESDBUSER, self, self.METHOD_ADD_USERS)
                 return False
             LOGDB: str = self.logDbInitInfo.getName()
             LOGDBUSER: str = self.logDbInitInfo.getUserName()
             LOGDBPASSWORD: str = self.logDbInitInfo.getPassword()
-            if not self.addDbUser(LOGDB, LOGDBUSER, LOGDBPASSWORD):
+            if not (self.addDbUser(LOGDB, LOGDBUSER, LOGDBPASSWORD)):
                 self.logUtil.putF(str(self.UNABLE_TO_CREATE_USER) + LOGDBUSER, self, self.METHOD_ADD_USERS)
                 return False
             self.logUtil.putF(self.commonStrings.END, self, self.METHOD_ADD_USERS)
@@ -112,23 +118,23 @@ class InitDbCrypted(AbDatabaseManagement):
             self.staticpagesDbInitInfo = StaticPagesDbInitInfo()
             self.logDbInitInfo = LogDbInitInfo()
             CUSTOMERDB: str = self.userDbInitInfo.getName()
-            if not self.addDb(CUSTOMERDB):
+            if not (self.addDb(CUSTOMERDB)):
                 self.logUtil.putF(str(self.UNABLE_TO_CREATE_DATABASE) + CUSTOMERDB, self, self.METHOD_ADD_DATABASES)
                 return False
             INVENTORYDB: str = self.inventoryDbInitInfo.getName()
-            if not self.addDb(INVENTORYDB):
+            if not (self.addDb(INVENTORYDB)):
                 self.logUtil.putF(str(self.UNABLE_TO_CREATE_DATABASE) + INVENTORYDB, self, self.METHOD_ADD_DATABASES)
                 return False
             HISTORYDB: str = self.historyDbInitInfo.getName()
-            if not self.addDb(HISTORYDB):
+            if not (self.addDb(HISTORYDB)):
                 self.logUtil.putF(str(self.UNABLE_TO_CREATE_DATABASE) + HISTORYDB, self, self.METHOD_ADD_DATABASES)
                 return False
             STATICPAGESDB: str = self.staticpagesDbInitInfo.getName()
-            if not self.addDb(STATICPAGESDB):
+            if not (self.addDb(STATICPAGESDB)):
                 self.logUtil.putF(str(self.UNABLE_TO_CREATE_DATABASE) + STATICPAGESDB, self, self.METHOD_ADD_DATABASES)
                 return False
             LOGDB: str = self.logDbInitInfo.getName()
-            if not self.addDb(LOGDB):
+            if not (self.addDb(LOGDB)):
                 self.logUtil.putF(str(self.UNABLE_TO_CREATE_DATABASE) + LOGDB, self, self.METHOD_ADD_DATABASES)
                 return False
             file: AbFile = FileFactory.getInstance().getInstance(self.SQL_FILE)

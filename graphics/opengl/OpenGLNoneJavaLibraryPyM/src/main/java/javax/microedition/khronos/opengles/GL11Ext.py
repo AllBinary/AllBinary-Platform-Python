@@ -3,10 +3,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from javax.microedition.khronos.opengles.GL import GL
 
 
 # Java interface
+@java_inherited_overloads
 class GL11Ext(GL):
     GL_MATRIX_INDEX_ARRAY_BUFFER_BINDING_OES: int = 35742
     GL_MATRIX_INDEX_ARRAY_OES: int = 34884
@@ -46,7 +48,9 @@ class GL11Ext(GL):
         raise NotImplementedError()
 
     def glDrawTexfvOES(self, *args):
-        return getattr(self, "glDrawTexfvOES_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glDrawTexfvOES_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glDrawTexfvOES(*args)
     
 
     def glDrawTexiOES(self, x: int, y: int, z: int, width: int, height: int) -> None:
@@ -61,7 +65,9 @@ class GL11Ext(GL):
         raise NotImplementedError()
 
     def glDrawTexivOES(self, *args):
-        return getattr(self, "glDrawTexivOES_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glDrawTexivOES_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glDrawTexivOES(*args)
     
 
     def glDrawTexsOES(self, x: int, y: int, z: int, width: int, height: int) -> None:
@@ -76,7 +82,9 @@ class GL11Ext(GL):
         raise NotImplementedError()
 
     def glDrawTexsvOES(self, *args):
-        return getattr(self, "glDrawTexsvOES_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glDrawTexsvOES_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glDrawTexsvOES(*args)
     
 
     def glDrawTexxOES(self, x: int, y: int, z: int, width: int, height: int) -> None:
@@ -91,7 +99,9 @@ class GL11Ext(GL):
         raise NotImplementedError()
 
     def glDrawTexxvOES(self, *args):
-        return getattr(self, "glDrawTexxvOES_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glDrawTexxvOES_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glDrawTexxvOES(*args)
     
 
     def glEnable(self, cap: int) -> None:
@@ -116,11 +126,13 @@ class GL11Ext(GL):
         raise NotImplementedError()
 
     def glMatrixIndexPointerOES(self, *args):
-        if len(args) == 4 and True and isinstance(args[0], int) and not isinstance(args[0], bool) and isinstance(args[1], int) and not isinstance(args[1], bool) and isinstance(args[2], int) and not isinstance(args[2], bool) and not isinstance(args[3], (str, list, int, float)):
-            return self.glMatrixIndexPointerOES_j4_1(*args)
+        if len(args) == 4 and True and isinstance(args[0], int) and not isinstance(args[0], bool) and isinstance(args[1], int) and not isinstance(args[1], bool) and isinstance(args[2], int) and not isinstance(args[2], bool) and (args[3] is None or any(base.__name__ == "Buffer" for base in type(args[3]).__mro__)):
+            return __class__.__dict__["glMatrixIndexPointerOES_j4_1"].__get__(self, __class__)(*args)
         if len(args) == 4:
-            return self.glMatrixIndexPointerOES_j4_2(*args)
-        return getattr(self, "glMatrixIndexPointerOES_j" + str(len(args)))(*args)
+            return __class__.__dict__["glMatrixIndexPointerOES_j4_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("glMatrixIndexPointerOES_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glMatrixIndexPointerOES(*args)
     
 
     # Java overloaded method with the same parameter count: Python keeps the last definition
@@ -133,11 +145,13 @@ class GL11Ext(GL):
         raise NotImplementedError()
 
     def glWeightPointerOES(self, *args):
-        if len(args) == 4 and True and isinstance(args[0], int) and not isinstance(args[0], bool) and isinstance(args[1], int) and not isinstance(args[1], bool) and isinstance(args[2], int) and not isinstance(args[2], bool) and not isinstance(args[3], (str, list, int, float)):
-            return self.glWeightPointerOES_j4_1(*args)
+        if len(args) == 4 and True and isinstance(args[0], int) and not isinstance(args[0], bool) and isinstance(args[1], int) and not isinstance(args[1], bool) and isinstance(args[2], int) and not isinstance(args[2], bool) and (args[3] is None or any(base.__name__ == "Buffer" for base in type(args[3]).__mro__)):
+            return __class__.__dict__["glWeightPointerOES_j4_1"].__get__(self, __class__)(*args)
         if len(args) == 4:
-            return self.glWeightPointerOES_j4_2(*args)
-        return getattr(self, "glWeightPointerOES_j" + str(len(args)))(*args)
+            return __class__.__dict__["glWeightPointerOES_j4_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("glWeightPointerOES_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glWeightPointerOES(*args)
 # from java.nio.Buffer import Buffer
 # from java.nio.FloatBuffer import FloatBuffer
 # from java.nio.IntBuffer import IntBuffer

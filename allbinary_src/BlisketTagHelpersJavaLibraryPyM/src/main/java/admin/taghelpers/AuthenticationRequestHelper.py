@@ -15,46 +15,55 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_equals
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from admin.taghelpers.TagHelper import TagHelper
 
 
+@java_inherited_overloads
 class AuthenticationRequestHelper(TagHelper):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("abeClientInformation", None)
+        vars(self).setdefault("weblisketSession", None)
+        vars(self).setdefault("request", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.abeClientInformation: AbeClientInformationInterface = ServiceClientInformationInterfaceFactory.getInstance()
-        self.weblisketSession: WeblisketSession = None
-        self.request: HttpServletRequest = None
+        if "weblisketSession" not in vars(self): self.weblisketSession: WeblisketSession = None
+        if "request" not in vars(self): self.request: HttpServletRequest = None
 
     def __init__(self, *args) -> None:
         if len(args) == 2:
-            self.__jconstructor2(*args)
+            __class__.__jconstructor2(self, *args)
 
     def __jconstructor2(self, *args) -> None:
-        if True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)):
-            self._constructor2_1(*args)
+        if True and not isinstance(args[0], (str, list, int, float)) and (args[1] is None or any(base.__name__ == "PageContext" for base in type(args[1]).__mro__)):
+            __class__._constructor2_1(self, *args)
         else:
-            self._constructor2_2(*args)
+            __class__._constructor2_2(self, *args)
     
 
     def _constructor2_1(self, hashMap: HashMap, pageContext: PageContext) -> None:
+        __class__._java_defaults(self)
         from java.util.HashMap import HashMap
         from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.weblisketSession = WeblisketSession(hashMap, pageContext)
         self.request = pageContext.getRequest()
     
 
     def _constructor2_2(self, hashMap: HashMap, httpServletRequest: HttpServletRequest) -> None:
+        __class__._java_defaults(self)
         from java.util.HashMap import HashMap
         from org.allbinary.logic.communication.http.request.session.WeblisketSession import WeblisketSession
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.weblisketSession = WeblisketSession(hashMap, httpServletRequest)
         self.request = httpServletRequest
     
@@ -62,7 +71,7 @@ class AuthenticationRequestHelper(TagHelper):
     # throws Exception
     def generateNewPassword(self) -> str:
         if self.weblisketSession is not None and self.weblisketSession.getId() is not None:
-            startIndex: int = self.weblisketSession.getId().length()
+            startIndex: int = __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(self.weblisketSession.getId())
             if startIndex >= 8:
                 return self.weblisketSession.getId().substring(startIndex - 8)
             else:
@@ -126,7 +135,7 @@ class AuthenticationRequestHelper(TagHelper):
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPER):
                 self.logUtil.putF("Changing Password For User: " + userName, self, "changePassword()")
             password: Password = Password(newPassword)
-            if not password.isValid():
+            if not (java_predicate(password, "isValid")):
                 if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPER):
                     self.logUtil.putF("New Password Is Not Valid", self, "changePassword()")
                 return False
@@ -176,7 +185,7 @@ class AuthenticationRequestHelper(TagHelper):
             size: int = len(basicUserRoleArray)
             for index in range(0, size):
                 nextRole: BasicUserRole = basicUserRoleArray[index]
-                if userInterface.getRole().getBasicUserRole().equals(nextRole):
+                if java_equals(userInterface.getRole().getBasicUserRole(), nextRole):
                     userInterface.validateSession(self.weblisketSession)
                     self.request.removeAttribute(WeblisketSessionData.REMOVABLEUSERNAME)
                     self.request.removeAttribute(WeblisketSessionData.REMOVABLEPASSWORD)

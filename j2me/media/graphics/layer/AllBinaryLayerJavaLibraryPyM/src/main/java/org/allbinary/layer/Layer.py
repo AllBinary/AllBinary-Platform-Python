@@ -24,16 +24,16 @@ class Layer:
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.x: int = 0
-        self.y: int = 0
+        if "x" not in vars(self): self.x: int = 0
+        if "y" not in vars(self): self.y: int = 0
         self.z: int = 3
-        self.width: int = 0
-        self.height: int = 0
+        if "width" not in vars(self): self.width: int = 0
+        if "height" not in vars(self): self.height: int = 0
         self.visible: bool = True
     
 
     def __init__(self, width: int, height: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.setLayerWidth(width)
         self.setLayerHeight(height)
     

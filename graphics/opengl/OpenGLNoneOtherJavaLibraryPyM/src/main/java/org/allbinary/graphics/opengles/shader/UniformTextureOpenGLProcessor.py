@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.graphics.opengles.shader.OpenGLObject3dProcessor import OpenGLObject3dProcessor
 
 
+@java_inherited_overloads
 class UniformTextureOpenGLProcessor(OpenGLObject3dProcessor):
     
 

@@ -15,23 +15,32 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.canvas.Processor import Processor
 
 
+@java_inherited_overloads
 class StartIntermissionProcessor(Processor):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("gameCanvas", None)
+        vars(self).setdefault("WAIT", 0)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.gameCanvas: AllBinaryGameCanvas = None
+        if "gameCanvas" not in vars(self): self.gameCanvas: AllBinaryGameCanvas = None
         self.WAIT: int = 5000
     
 
     def __init__(self, gameCanvas: AllBinaryGameCanvas) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.gameCanvas = gameCanvas
     
 

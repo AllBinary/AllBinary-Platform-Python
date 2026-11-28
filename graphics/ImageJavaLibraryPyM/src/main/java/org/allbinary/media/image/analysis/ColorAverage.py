@@ -20,13 +20,13 @@ from __future__ import annotations
 class ColorAverage:
 
     def _init_fields(self) -> None:
-        self.avgRed: float = 0.0
-        self.avgGreen: float = 0.0
-        self.avgBlue: float = 0.0
+        if "avgRed" not in vars(self): self.avgRed: float = 0.0
+        if "avgGreen" not in vars(self): self.avgGreen: float = 0.0
+        if "avgBlue" not in vars(self): self.avgBlue: float = 0.0
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.setAvgRed(0)
         self.setAvgGreen(0)
         self.setAvgBlue(0)

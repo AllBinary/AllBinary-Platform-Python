@@ -15,21 +15,27 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.input.automation.module.generic.configuration.profile.GenericProfileDataWorkerType import GenericProfileDataWorkerType
 
 
+@java_inherited_overloads
 class SavedCaptureGenericProfileDataWorkerType(GenericProfileDataWorkerType):
     SAVED_CAPTURE: SavedCaptureGenericProfileDataWorkerType = None
+    def _java_defaults(self):
+        vars(self).setdefault("path", None)
+        vars(self).setdefault("lastFrame", 0)
 
     def _init_fields(self) -> None:
-        self.path: str = None
-        self.lastFrame: int = 0
+        if "path" not in vars(self): self.path: str = None
+        if "lastFrame" not in vars(self): self.lastFrame: int = 0
     
 
     def __init__(self, name: str, path: str, lastFrame: int) -> None:
+        __class__._java_defaults(self)
         super().__init__(name)
-        self._init_fields()
+        __class__._init_fields(self)
         self.setPath(path)
         self.setLastFrame(lastFrame)
     

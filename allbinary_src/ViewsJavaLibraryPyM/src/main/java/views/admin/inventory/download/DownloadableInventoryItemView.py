@@ -15,47 +15,57 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.communication.http.request.RequestMapInterface import RequestMapInterface
 from views.business.context.modules.storefront.HttpStoreComponentView import HttpStoreComponentView
 
 
+@java_inherited_overloads
 class DownloadableInventoryItemView(*java_bases(HttpStoreComponentView, RequestMapInterface)):
     TYPE_ID: int = 11
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("basicItemData", None)
+        vars(self).setdefault("request", None)
+        vars(self).setdefault("id", None)
+        vars(self).setdefault("itemInterface", None)
+        vars(self).setdefault("downloadableItem", None)
+        vars(self).setdefault("requestHashMap", None)
 
     def _init_fields(self) -> None:
-        from java.util.HashMap import HashMap
         from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
-        from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
-        from org.allbinary.business.user.commerce.inventory.item.download.DownloadableItem import DownloadableItem
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.basicItemData: BasicItemData = BasicItemData.getInstance()
-        self.request: HttpServletRequest = None
-        self.id: str = None
-        self.itemInterface: ItemInterface = None
-        self.downloadableItem: DownloadableItem = None
-        self.requestHashMap: HashMap = None
+        if "request" not in vars(self): self.request: HttpServletRequest = None
+        if "id" not in vars(self): self.id: str = None
+        if "itemInterface" not in vars(self): self.itemInterface: ItemInterface = None
+        if "downloadableItem" not in vars(self): self.downloadableItem: DownloadableItem = None
+        if "requestHashMap" not in vars(self): self.requestHashMap: HashMap = None
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
         elif len(args) == 2:
-            self._constructor2(*args)
+            __class__._constructor2(self, *args)
     
 
     def _constructor1(self, transformInfoInterface: TransformInfoInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
         self.request = self.getPageContext().getRequest()
         self.getFormData()
     
 
     def _constructor2(self, transformInfoInterface: TransformInfoInterface, empty: str) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
         self.request = self.getPageContext().getRequest()
     
 
@@ -87,7 +97,7 @@ class DownloadableInventoryItemView(*java_bases(HttpStoreComponentView, RequestM
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             self.addDomNodeInterfaces()
-            return super().view()
+            return java_super_call(super(), "view")
         except Exception as e:
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEWERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "view()", e)
@@ -96,6 +106,7 @@ class DownloadableInventoryItemView(*java_bases(HttpStoreComponentView, RequestM
 
     # throws Exception
     def processFile(self, fileItem: FileItem) -> None:
+        from java.io.ByteArrayInputStream import ByteArrayInputStream
         from org.allbinary.logic.io.file.AbFile import AbFile
         from org.allbinary.logic.io.file.FileUtil import FileUtil
         from org.allbinary.logic.string.StringMaker import StringMaker

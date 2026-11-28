@@ -15,12 +15,18 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.communication.sql.AbSqlBean import AbSqlBean
 from org.allbinary.data.tables.context.module.storefronts.StoreFrontsEntityInterface import StoreFrontsEntityInterface
 
 
+@java_inherited_overloads
 class StoreFrontsEntity(*java_bases(AbSqlBean, StoreFrontsEntityInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("tableName", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -29,9 +35,10 @@ class StoreFrontsEntity(*java_bases(AbSqlBean, StoreFrontsEntityInterface)):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
         super().__init__(UserDbInitInfo())
-        self._init_fields()
+        __class__._init_fields(self)
         self.setTableName(self.tableName)
     
 
@@ -40,7 +47,7 @@ class StoreFrontsEntity(*java_bases(AbSqlBean, StoreFrontsEntityInterface)):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            super().insert(values)
+            java_super_call(super(), "insert", values)
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, self.INSERT)
         except Exception as e:
@@ -53,7 +60,7 @@ class StoreFrontsEntity(*java_bases(AbSqlBean, StoreFrontsEntityInterface)):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            super().deleteWhere(StoreFrontData.getInstance().NAME, value)
+            java_super_call(super(), "deleteWhere", StoreFrontData.getInstance().NAME, value)
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, self.commonStrings.delete)
         except Exception as e:
@@ -69,7 +76,7 @@ class StoreFrontsEntity(*java_bases(AbSqlBean, StoreFrontsEntityInterface)):
         from org.allbinary.logic.StdUtil import StdUtil
         keysAndValues: HashMap = StdUtil.getInstance().createHashMap()
         keysAndValues.put(StoreFrontData.getInstance().NAME, name)
-        storeHashMap: HashMap = super().getRow(keysAndValues)
+        storeHashMap: HashMap = java_super_call(super(), "getRow", keysAndValues)
         if storeHashMap is not None:
             return StoreFront(storeHashMap)
         else:
@@ -79,14 +86,14 @@ class StoreFrontsEntity(*java_bases(AbSqlBean, StoreFrontsEntityInterface)):
     def getStoreFrontNames(self) -> BasicArrayList:
         from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
-        storeFrontNames: BasicArrayList = super().getColumn(StoreFrontData.getInstance().NAME)
+        storeFrontNames: BasicArrayList = java_super_call(super(), "getColumn", StoreFrontData.getInstance().NAME)
         return storeFrontNames
     
 
     def update(self, updatedValues: HashMap) -> None:
         from java.util.HashMap import HashMap
         from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
-        super().updateWhere(StoreFrontData.getInstance().NAME, updatedValues.get(StoreFrontData.getInstance().NAME), updatedValues)
+        java_super_call(super(), "updateWhere", StoreFrontData.getInstance().NAME, updatedValues.get(StoreFrontData.getInstance().NAME), updatedValues)
     
 
     def createTableStatement(self) -> str:
@@ -159,11 +166,11 @@ class StoreFrontsEntity(*java_bases(AbSqlBean, StoreFrontsEntityInterface)):
     
 
     def createTable(self) -> str:
-        return super().createTable(self.createTableStatement())
+        return java_super_call(super(), "createTable", self.createTableStatement())
     
 
     def dropTable(self) -> str:
-        return super().dropTable()
+        return java_super_call(super(), "dropTable")
 # from java.util.HashMap import HashMap
 # from org.allbinary.util.BasicArrayList import BasicArrayList
 # from org.allbinary.util.BasicArrayListD import BasicArrayListD

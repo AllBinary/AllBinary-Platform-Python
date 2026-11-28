@@ -23,6 +23,8 @@ class BufferedIOUtil:
     # throws Exception
     @staticmethod
     def copy(backupFile: AbFile, backupFileBak: AbFile) -> None:
+        from java.io.BufferedReader import BufferedReader
+        from java.io.FileWriter import FileWriter
         from org.allbinary.logic.io.file.AbFile import AbFile
         from org.allbinary.logic.io.file.AbFileNativeUtil import AbFileNativeUtil
         from org.allbinary.logic.string.StringUtil import StringUtil

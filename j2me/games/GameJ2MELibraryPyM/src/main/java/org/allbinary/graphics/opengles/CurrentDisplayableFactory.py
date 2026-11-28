@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.JavaMonitor import java_monitor, java_wait
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 
@@ -24,14 +26,11 @@ class CurrentDisplayableFactory:
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
-        from javax.microedition.lcdui.Displayable import Displayable
-        from org.allbinary.game.displayable.canvas.GameRunnable import GameRunnable
         from org.allbinary.game.displayable.canvas.NullDisplayable import NullDisplayable
         from org.allbinary.game.displayable.canvas.NullWaitGameRunnable import NullWaitGameRunnable
         from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
         from org.allbinary.logic.string.StringUtil import StringUtil
         from org.allbinary.string.CommonStrings import CommonStrings
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.canvasStrings: CanvasStrings = CanvasStrings.getInstance()
@@ -58,7 +57,7 @@ class CurrentDisplayableFactory:
         from org.allbinary.game.displayable.canvas.GameInputMappingCanvas import GameInputMappingCanvas
         from org.allbinary.game.displayable.canvas.GameInputMappingInstructionsCanvas import GameInputMappingInstructionsCanvas
         from org.allbinary.game.score.displayable.HighScoresCanvas import HighScoresCanvas
-        self._init_fields()
+        __class__._init_fields(self)
         self.DEFAULT_CHILD_NAME_LIST.add(self.canvasStrings.ABOUT)
         self.DEFAULT_CHILD_NAME_LIST.add(self.canvasStrings.OPTIONS)
         self.DEFAULT_CHILD_NAME_LIST.add(GameInputMappingCanvas.NAME)
@@ -130,15 +129,15 @@ class CurrentDisplayableFactory:
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.string.CommonSeps import CommonSeps
         from org.allbinary.thread.NullRunnable import NullRunnable
-        with self._lock:  # synchronized (self)
+        with java_monitor(self):
             commonSeps: CommonSeps = CommonSeps.getInstance()
             features: Features = Features.getInstance()
             stringMaker: StringMaker = StringMaker()
             stringMaker.append(self.stringUtil.toString(self.openGlReadydisplayable))
-            if SWTUtil.isSWT and not features.isDefault(OpenGLFeatureFactory.getInstance().OPENGL):
+            if SWTUtil.isSWT and not (features.isDefault(OpenGLFeatureFactory.getInstance().OPENGL)):
                 PreLogUtil.put(str(stringMaker.append(commonSeps.SPACE).append(SWTUtil.SWT).append(commonSeps.SPACE).append(self.RUNNABLE).append(self.stringUtil.toString(NullRunnable.getInstance()))), self, self.commonStrings.UPDATE)
                 self.setUsedRunnable(NullWaitGameRunnable.getInstance())
-            elif J2MEUtil.isHTML():
+            elif java_predicate(J2MEUtil, "isHTML"):
                 PreLogUtil.put(str(stringMaker.append(commonSeps.SPACE).append(GraphicsStrings.getInstance().HTML).append(commonSeps.SPACE).append(self.RUNNABLE).append(self.stringUtil.toString(self.runnable))), self, self.commonStrings.UPDATE)
                 self.setUsedRunnable(self.runnable)
             elif isinstance(self.openGlReadydisplayable, DemoCanvas) or isinstance(self.openGlReadydisplayable, AllBinaryGameCanvas) or features.isDefault(OpenGLFeatureFactory.getInstance().OPENGL):

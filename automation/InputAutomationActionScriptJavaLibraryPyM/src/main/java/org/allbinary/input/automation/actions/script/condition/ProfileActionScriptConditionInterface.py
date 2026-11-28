@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.input.automation.actions.script.ProfileActionScriptItemInterface import ProfileActionScriptItemInterface
 from org.allbinary.input.automation.actions.script.ProfileActionScriptNodeInterface import ProfileActionScriptNodeInterface
@@ -22,6 +23,7 @@ from org.allbinary.input.automation.actions.script.condition.CustomTreeNodeInter
 
 
 # Java interface
+@java_inherited_overloads
 class ProfileActionScriptConditionInterface(*java_bases(ProfileActionScriptNodeInterface, CustomTreeNodeInterface, ProfileActionScriptItemInterface)):
     
 

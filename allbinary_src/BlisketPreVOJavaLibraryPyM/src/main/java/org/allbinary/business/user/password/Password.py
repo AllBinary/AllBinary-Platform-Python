@@ -16,6 +16,7 @@
 from __future__ import annotations
 
 import random
+from java.lang.JavaRuntimeStatic import java_predicate
 
 
 class Password:
@@ -23,11 +24,11 @@ class Password:
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.password: str = None
+        if "password" not in vars(self): self.password: str = None
     
 
     def __init__(self, password: str) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.password = password
     
 
@@ -50,7 +51,7 @@ class Password:
             valid: bool = True
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VALIDATION):
                 self.logUtil.putF("Password: " + self.password, self, commonStrings.IS_VALID)
-            if not StringValidationUtil.getInstance().isValidRequired(self.password, 6, UserData.MAXLEN):
+            if not (StringValidationUtil.getInstance().isValidRequired(self.password, 6, UserData.MAXLEN)):
                 if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VALIDATION):
                     self.logUtil.putF("Password is invalid", self, commonStrings.IS_VALID)
                 valid = False
@@ -65,7 +66,7 @@ class Password:
         from org.allbinary.business.user.UserData import UserData
         from org.allbinary.logic.string.StringUtil import StringUtil
         from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-        if not StringValidationUtil.getInstance().isValidRequired(self.password, 6, UserData.MAXLEN):
+        if not (StringValidationUtil.getInstance().isValidRequired(self.password, 6, UserData.MAXLEN)):
             return "Please enter a Password with more than 6 characters.<br />"
         stringUtil: StringUtil = StringUtil.getInstance()
         return stringUtil.EMPTY_STRING

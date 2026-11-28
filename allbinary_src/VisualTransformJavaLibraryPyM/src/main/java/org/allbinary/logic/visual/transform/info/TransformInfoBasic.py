@@ -15,24 +15,29 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.business.context.AbContext import AbContext
 from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
 
 
 #Hack class should not exist
+@java_inherited_overloads
 class TransformInfoBasic(*java_bases(AbContext, TransformInfoHttpInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("storeFrontInterface", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-        self.storeFrontInterface: StoreFrontInterface = None
+        if "storeFrontInterface" not in vars(self): self.storeFrontInterface: StoreFrontInterface = None
     
 
     def __init__(self, storeFrontInterface: StoreFrontInterface, propertiesHashMap: HashMap, pageContext: PageContext) -> None:
+        __class__._java_defaults(self)
         from java.util.HashMap import HashMap
         from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
         super().__init__(propertiesHashMap, pageContext)
-        self._init_fields()
+        __class__._init_fields(self)
         self.storeFrontInterface = storeFrontInterface
     
 
@@ -170,16 +175,16 @@ class TransformInfoBasic(*java_bases(AbContext, TransformInfoHttpInterface)):
 
     def getWeblisketSession(self) -> WeblisketSessionInterface:
         from org.allbinary.logic.communication.http.request.session.WeblisketSessionInterface import WeblisketSessionInterface
-        return super().getWeblisketSession()
+        return java_super_call(super(), "getWeblisketSession")
     
 
     def getPageContext(self) -> PageContext:
-        return super().getPageContext()
+        return java_super_call(super(), "getPageContext")
     
 
     def getPropertiesHashMap(self) -> HashMap:
         from java.util.HashMap import HashMap
-        return super().getPropertiesHashMap()
+        return java_super_call(super(), "getPropertiesHashMap")
 # from java.util.HashMap import HashMap
 # from org.allbinary.util.BasicArrayList import BasicArrayList
 # from org.allbinary.util.BasicArrayListD import BasicArrayListD

@@ -22,13 +22,13 @@ from java.lang.ClassLoader import ClassLoader
 class NativeLibraryHelperWrapper:
 
     def _init_fields(self) -> None:
-        self.libraryName: str = None
-        self.loader: ClassLoader = None
-        self.anyType: object = None
+        if "libraryName" not in vars(self): self.libraryName: str = None
+        if "loader" not in vars(self): self.loader: ClassLoader = None
+        if "anyType" not in vars(self): self.anyType: object = None
     
 
     def __init__(self, libraryName: str) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.setLibraryName(libraryName)
     
 
@@ -40,7 +40,7 @@ class NativeLibraryHelperWrapper:
         params[0] = self.getLibraryName()
         classes: list[type] = [None] * (1)
         classes[0] = type(self.getLibraryName())
-        self.loader = NativeLibraryClassLoader(type(self).getClassLoader())
+        self.loader = NativeLibraryClassLoader(__import__("java.lang.ClassLoader", fromlist=["ClassLoader"]).ClassLoader.getSystemClassLoader())
         myClass: type = self.loader.loadClass("dynamic.NativeLibraryHelper")
         constructor: Constructor = myClass.getConstructor(classes)
         self.anyType = constructor.newInstance(params)

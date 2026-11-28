@@ -15,23 +15,31 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.graphics.paint.Paintable import Paintable
 
 
+@java_inherited_overloads
 class TouchButtonsMappingPaintable(Paintable):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("foregroundColor", 0)
+        vars(self).setdefault("paintableTable", None)
+        vars(self).setdefault("touchButtonLocationHelper", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.foregroundColor: int = None
+        if "foregroundColor" not in vars(self): self.foregroundColor: int = 0
         self.paintableTable: list[list[Paintable]] = [[None] * (0) for _ in range(0)]
         self.touchButtonLocationHelper: TouchButtonLocationHelper = TouchButtonLocationHelper()
     
 
     def __init__(self, basicColor: BasicColor) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.foregroundColor = int(basicColor)
         self.init()
     

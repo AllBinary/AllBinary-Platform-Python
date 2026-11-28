@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 # from javax.swing.tree.MutableTreeNode import MutableTreeNode
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
@@ -23,6 +24,7 @@ from org.allbinary.input.automation.actions.script.condition.CustomTreeNodeInter
 
 
 # Java interface
+@java_inherited_overloads
 class ProfileActionScriptProcessorInterface(*java_bases(CustomTreeNodeInterface, DomNodeInterface, MutableTreeNode, ProfileActionScriptItemInterface)):
     pass
 

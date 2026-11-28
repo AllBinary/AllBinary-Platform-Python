@@ -15,26 +15,33 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_divide
 from org.allbinary.game.health.HealthBarAnimation import HealthBarAnimation
 
 
+@java_inherited_overloads
 class HealthBarThreedAnimation(HealthBarAnimation):
+    def _java_defaults(self):
+        vars(self).setdefault("rectangle", None)
+        vars(self).setdefault("basicColorFactory", None)
+        vars(self).setdefault("object3dProcessor", None)
 
     def _init_fields(self) -> None:
-        from min3d.objectPrimitives.Rectangle import Rectangle
-        from org.allbinary.graphics.threed.min3d.renderer.Object3dProcessor import Object3dProcessor
         from org.allbinary.graphics.threed.min3d.renderer.Object3dProcessorUtil import Object3dProcessorUtil
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-        self.rectangle: Rectangle = None
+        if "rectangle" not in vars(self): self.rectangle: Rectangle = None
         self.basicColorFactory: BasicColorFactory = BasicColorFactory.getInstance()
         self.object3dProcessor: Object3dProcessor = Object3dProcessorUtil.getInstance().getInstanceObject3dProcessor()
     
 
     def __init__(self, layerInterface: AllBinaryLayer, location: int) -> None:
+        __class__._java_defaults(self)
         from min3d.objectPrimitives.Rectangle import Rectangle
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         super().__init__(layerInterface, location)
-        self._init_fields()
+        __class__._init_fields(self)
         self.basicColor = self.basicColorFactory.GREEN
         self.colorP = int(self.basicColor)
         self.rectangle = Rectangle(0, 0, 1, 1, self.basicColor)
@@ -72,7 +79,7 @@ class HealthBarThreedAnimation(HealthBarAnimation):
     
 
     def onHealthChange(self, newX2: int) -> None:
-        super().onHealthChange(newX2)
+        java_super_call(super(), "onHealthChange", newX2)
         self.updateColor()
         self.updateSize()
     

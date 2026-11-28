@@ -15,6 +15,9 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
 from org.allbinary.graphics.displayable.event.DisplayChangeEventListener import DisplayChangeEventListener
@@ -22,42 +25,57 @@ from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterf
 from org.allbinary.game.displayable.canvas.MenuListener import MenuListener
 
 
+@java_inherited_overloads
 class GameCommandCanvas(*java_bases(MyCanvas, MenuListener, DisplayChangeEventListener, UpdateMyFontInterface)):
     id: int = 0
+    def _java_defaults(self):
+        vars(self).setdefault("repaintProcessor", None)
+        vars(self).setdefault("gameInputStrings", None)
+        vars(self).setdefault("foregroundBasicColor", None)
+        vars(self).setdefault("backgroundBasicColor", None)
+        vars(self).setdefault("inputToGameKeyMapping", None)
+        vars(self).setdefault("gameKeyFactory", None)
+        vars(self).setdefault("gameKeyEventFactory", None)
+        vars(self).setdefault("downGameKeyEventHandler", None)
+        vars(self).setdefault("upGameKeyEventHandler", None)
+        vars(self).setdefault("repaintBehavior", None)
+        vars(self).setdefault("updateMyFontProcessor", None)
+        vars(self).setdefault("myFontProcessor", None)
+        vars(self).setdefault("foregroundColor", 0)
+        vars(self).setdefault("backgroundColor", 0)
+        vars(self).setdefault("menuInputProcessor", None)
+        vars(self).setdefault("menuPaintable", None)
+        vars(self).setdefault("menuForm", None)
+        vars(self).setdefault("isSingleKeyRepeatableProcessing", False)
+        vars(self).setdefault("fontHeight", 0)
 
     def _init_fields(self) -> None:
-        from org.allbinary.canvas.Processor import Processor
         from org.allbinary.game.configuration.feature.Features import Features
         from org.allbinary.game.configuration.feature.InputFeatureFactory import InputFeatureFactory
-        from org.allbinary.game.displayable.RepaintBehavior import RepaintBehavior
         from org.allbinary.game.input.GameInputStrings import GameInputStrings
         from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
         from org.allbinary.game.input.PlatformInputMappingFactory import PlatformInputMappingFactory
         from org.allbinary.game.input.event.DownGameKeyEventHandler import DownGameKeyEventHandler
         from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
         from org.allbinary.game.input.event.UpGameKeyEventHandler import UpGameKeyEventHandler
-        from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
-        from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.displayable.screen.ScreenRepaintProcessorFactory import ScreenRepaintProcessorFactory
-        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
         from org.allbinary.graphics.form.PaintableForm import PaintableForm
         from org.allbinary.graphics.paint.NullPaintable import NullPaintable
-        from org.allbinary.graphics.paint.Paintable import Paintable
         self.repaintProcessor: Processor = ScreenRepaintProcessorFactory.getInstance().create(self)
         self.gameInputStrings: GameInputStrings = GameInputStrings.getInstance()
-        self.foregroundBasicColor: BasicColor = None
-        self.backgroundBasicColor: BasicColor = None
+        if "foregroundBasicColor" not in vars(self): self.foregroundBasicColor: BasicColor = None
+        if "backgroundBasicColor" not in vars(self): self.backgroundBasicColor: BasicColor = None
         self.inputToGameKeyMapping: InputToGameKeyMapping = PlatformInputMappingFactory.getInstance().getPersistentInputMappingInstance().getInputMapping()
         self.gameKeyFactory: GameKeyFactory = GameKeyFactory.getInstance()
         self.gameKeyEventFactory: GameKeyEventFactory = GameKeyEventFactory.getInstance()
         self.downGameKeyEventHandler: DownGameKeyEventHandler = DownGameKeyEventHandler.getInstance()
         self.upGameKeyEventHandler: UpGameKeyEventHandler = UpGameKeyEventHandler.getInstance()
-        self.repaintBehavior: RepaintBehavior = None
+        if "repaintBehavior" not in vars(self): self.repaintBehavior: RepaintBehavior = None
         self.updateMyFontProcessor: MyFontProcessor = UpdateMyFontProcessor(self)
         self.myFontProcessor: MyFontProcessor = self.updateMyFontProcessor
-        self.foregroundColor: int = None
-        self.backgroundColor: int = None
+        if "foregroundColor" not in vars(self): self.foregroundColor: int = 0
+        if "backgroundColor" not in vars(self): self.backgroundColor: int = 0
         self.menuInputProcessor: BasicMenuInputProcessor = NoMenuInputProcessor.getInstance()
         self.menuPaintable: Paintable = NullPaintable.getInstance()
         self.menuForm: PaintableForm = PaintableForm.getNullPaintableForm()
@@ -66,13 +84,14 @@ class GameCommandCanvas(*java_bases(MyCanvas, MenuListener, DisplayChangeEventLi
     
 
     def __init__(self, cmdListener: CommandListener, name: str, backgroundBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.CommandListener import CommandListener
         from javax.microedition.lcdui.NullCommandListener import NullCommandListener
         from org.allbinary.game.displayable.RepaintBehavior import RepaintBehavior
         from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
         super().__init__(name, CanvasStrings.getInstance().EMPTY_CHILD_NAME_LIST)
-        self._init_fields()
+        __class__._init_fields(self)
         self.repaintBehavior = RepaintBehavior.getInstance()
         self.foregroundBasicColor = foregroundBasicColor
         self.backgroundBasicColor = backgroundBasicColor
@@ -163,7 +182,8 @@ class GameCommandCanvas(*java_bases(MyCanvas, MenuListener, DisplayChangeEventLi
         from org.allbinary.graphics.PointFactory import PointFactory
         from org.allbinary.graphics.Rectangle import Rectangle
         height: int = size * self.fontHeight
-        startY: int = (self.displayInfo.getLastHeight() * 2 / 3) - height
+        startY: int = (java_divide(self.displayInfo.getLastHeight() * 2, 3)
+            ) - height
         pointFactory: PointFactory = PointFactory.getInstance()
         rectangle: Rectangle = Rectangle(pointFactory.createXY(30, startY), self.displayInfo.getLastWidth() - 30, startY)
         return rectangle

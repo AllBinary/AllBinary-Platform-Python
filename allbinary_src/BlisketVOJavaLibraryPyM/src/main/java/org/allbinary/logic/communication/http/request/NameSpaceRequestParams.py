@@ -15,11 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.logic.communication.http.request.RequestParams import RequestParams
 
 
 #containing string values and other hashmaps of the like
+@java_inherited_overloads
 class NameSpaceRequestParams(RequestParams):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -27,40 +32,43 @@ class NameSpaceRequestParams(RequestParams):
 
     def __init__(self, *args) -> None:
         if len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
         elif len(args) == 1:
-            self.__jconstructor1(*args)
+            __class__.__jconstructor1(self, *args)
 
     def __jconstructor1(self, *args) -> None:
-        if True and not isinstance(args[0], (str, list, int, float)):
-            self._constructor1_1(*args)
+        if True and (args[0] is None or any(base.__name__ == "HttpServletRequest" for base in type(args[0]).__mro__)):
+            __class__._constructor1_1(self, *args)
         else:
-            self._constructor1_2(*args)
+            __class__._constructor1_2(self, *args)
     
 
     def _constructor0(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().HTTPREQUEST):
             self.logUtil.putF("Constructing empty", self, self.commonStrings.CONSTRUCTOR)
     
 
     def _constructor1_1(self, httpServletRequest: HttpServletRequest) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__(httpServletRequest)
-        self._init_fields()
+        __class__._init_fields(self)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().HTTPREQUEST):
             self.logUtil.putF("Constructing from HttpServletRequest", self, self.commonStrings.CONSTRUCTOR)
     
 
     def _constructor1_2(self, pageContext: PageContext) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__(pageContext)
-        self._init_fields()
+        __class__._init_fields(self)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().HTTPREQUEST):
             self.logUtil.putF("Constructing from PageContext", self, self.commonStrings.CONSTRUCTOR)
     
@@ -86,6 +94,7 @@ class NameSpaceRequestParams(RequestParams):
 
     # throws Exception
     def createPackageMultiNode(self, document: Document, nameSpaceRequestParam: NameSpaceRequestParam, packageName: str, packagePropertiesHashMap: HashMap) -> Node:
+        from org.allbinary.logic.communication.http.request.NameSpaceRequestParamData import NameSpaceRequestParamData
         from java.util.HashMap import HashMap
         from org.allbinary.data.tree.dom.DomData import DomData
         from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
@@ -235,7 +244,7 @@ class NameSpaceRequestParams(RequestParams):
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().HTTPREQUEST):
                 self.logUtil.putF("\nDocument Contains " + str(elementNodeVector.size()) + " Node(s) With Same Name", self, "addChildren")
             isElementValueTextNodeUniqueIndex: int = self.isElementValueTextNodeUnique(nextPackagePropertiesHashMap, elementNodeVector)
-            if (elementNodeVector.size() == 0 or isElementValueTextNodeUniqueIndex == -1) and not nextPackageName.endswith(CommonSeps.getInstance().BRACKET_CLOSE):
+            if (elementNodeVector.size() == 0 or isElementValueTextNodeUniqueIndex == -1) and not (nextPackageName.endswith(CommonSeps.getInstance().BRACKET_CLOSE)):
                 nextNode: Node = self.createPackageNode(document, nextPackageName, nextPackagePropertiesHashMap)
                 node.appendChild(nextNode)
                 node = nextNode
@@ -286,6 +295,9 @@ class NameSpaceRequestParams(RequestParams):
 
     # throws Exception
     def toHashMap(self) -> HashMap:
+        from org.allbinary.logic.communication.http.request.NameSpaceRequestParamData import NameSpaceRequestParamData
+        from org.allbinary.logic.communication.http.request.NameSpaceRequestParamData import NameSpaceRequestParamData
+        from org.allbinary.logic.communication.http.request.NameSpaceRequestParamData import NameSpaceRequestParamData
         from java.util.HashMap import HashMap
         from java.util.Set import Set
         from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
@@ -304,7 +316,7 @@ class NameSpaceRequestParams(RequestParams):
         for i in range(0, keySize):
             key: str = keyArray[i]
             anyType: object = self.getMap().get(key)
-            className: str = type(anyType).__module__ + "." + type(anyType).__qualname__
+            className: str = __import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(anyType))
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().HTTPREQUEST):
                 self.logUtil.putF("Request Param Class: " + className, self, "toHashMap")
             if isinstance(self.getMap().get(key), str):

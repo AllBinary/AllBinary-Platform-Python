@@ -22,19 +22,15 @@ class ProductListing(ProductListingInterface):
 
     def _init_fields(self) -> None:
         from org.allbinary.business.user.commerce.inventory.item.BasicItemData import BasicItemData
-        from org.allbinary.data.tables.context.module.storefronts.StoreFrontsEntity import StoreFrontsEntity
-        from org.allbinary.data.tables.staticpages.StaticPagesEntity import StaticPagesEntity
-        from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntity import InventoryEntity
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.logic.control.search.SearchRequest import SearchRequest
         from org.allbinary.logic.io.file.directory.Directory import Directory
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.directory: Directory = Directory.getInstance()
         self.basicItemData: BasicItemData = BasicItemData.getInstance()
-        self.storeFronts: StoreFrontsEntity = None
-        self.staticPages: StaticPagesEntity = None
-        self.inventory: InventoryEntity = None
-        self.searchRequest: SearchRequest = None
+        if "storeFronts" not in vars(self): self.storeFronts: StoreFrontsEntity = None
+        if "staticPages" not in vars(self): self.staticPages: StaticPagesEntity = None
+        if "inventory" not in vars(self): self.inventory: InventoryEntity = None
+        if "searchRequest" not in vars(self): self.searchRequest: SearchRequest = None
         self.INVENTORY: str = ".InventoryView"
     
 
@@ -43,7 +39,7 @@ class ProductListing(ProductListingInterface):
         from org.allbinary.data.tables.staticpages.StaticPagesEntity import StaticPagesEntity
         from org.allbinary.data.tables.user.commerce.inventory.item.InventoryEntity import InventoryEntity
         from org.allbinary.logic.control.search.SearchRequest import SearchRequest
-        self._init_fields()
+        __class__._init_fields(self)
         self.searchRequest = searchRequest
         self.storeFronts = StoreFrontsEntity()
         self.staticPages = StaticPagesEntity()
@@ -145,7 +141,7 @@ class ProductListing(ProductListingInterface):
             stringBuffer.append(AbPathData.getInstance().EXTENSION_SEP)
             stringBuffer.append(InputOutputTypeData.getInstance().DEFAULT)
             file: str = str(stringBuffer)
-            if not self.directory.create(staticPath):
+            if not (self.directory.create(staticPath)):
                 raise Exception("Could Not Create Directory: " + str(staticPath))
             self.savePage(file, productListingPages[index])
     
@@ -253,7 +249,9 @@ class ProductListing(ProductListingInterface):
             raise e
 
     def generateAll(self, *args):
-        return getattr(self, "generateAll_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("generateAll_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().generateAll(*args)
 # from java.util.HashMap import HashMap
 # from java.util.HashSet import HashSet
 # from java.util.Set import Set

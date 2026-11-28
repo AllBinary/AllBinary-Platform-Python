@@ -15,44 +15,74 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 # from javax.swing.JPanel import JPanel
 
 
+@java_inherited_overloads
 class ImageAnalysisResultsJPanel(JPanel):
+    def _java_defaults(self):
+        vars(self).setdefault("avgBlueJTextField", None)
+        vars(self).setdefault("avgGreenJTextField", None)
+        vars(self).setdefault("avgRedJTextField", None)
+        vars(self).setdefault("jComboBox1", None)
+        vars(self).setdefault("jLabel1", None)
+        vars(self).setdefault("jLabel10", None)
+        vars(self).setdefault("jLabel11", None)
+        vars(self).setdefault("jLabel12", None)
+        vars(self).setdefault("jLabel13", None)
+        vars(self).setdefault("jLabel2", None)
+        vars(self).setdefault("jLabel3", None)
+        vars(self).setdefault("jLabel4", None)
+        vars(self).setdefault("jLabel5", None)
+        vars(self).setdefault("jLabel6", None)
+        vars(self).setdefault("jLabel7", None)
+        vars(self).setdefault("jLabel8", None)
+        vars(self).setdefault("jLabel9", None)
+        vars(self).setdefault("matchingPixelsJTextField", None)
+        vars(self).setdefault("maxBlueJTextField", None)
+        vars(self).setdefault("maxGreenJTextField", None)
+        vars(self).setdefault("maxRedJTextField", None)
+        vars(self).setdefault("minBlueJTextField", None)
+        vars(self).setdefault("minGreenJTextField", None)
+        vars(self).setdefault("minRedJTextField", None)
+        vars(self).setdefault("percentMatchingJTextField", None)
+        vars(self).setdefault("totalPixelsJTextField", None)
 
     def _init_fields(self) -> None:
-        self.avgBlueJTextField: JTextField = None
-        self.avgGreenJTextField: JTextField = None
-        self.avgRedJTextField: JTextField = None
-        self.jComboBox1: JComboBox = None
-        self.jLabel1: JLabel = None
-        self.jLabel10: JLabel = None
-        self.jLabel11: JLabel = None
-        self.jLabel12: JLabel = None
-        self.jLabel13: JLabel = None
-        self.jLabel2: JLabel = None
-        self.jLabel3: JLabel = None
-        self.jLabel4: JLabel = None
-        self.jLabel5: JLabel = None
-        self.jLabel6: JLabel = None
-        self.jLabel7: JLabel = None
-        self.jLabel8: JLabel = None
-        self.jLabel9: JLabel = None
-        self.matchingPixelsJTextField: JTextField = None
-        self.maxBlueJTextField: JTextField = None
-        self.maxGreenJTextField: JTextField = None
-        self.maxRedJTextField: JTextField = None
-        self.minBlueJTextField: JTextField = None
-        self.minGreenJTextField: JTextField = None
-        self.minRedJTextField: JTextField = None
-        self.percentMatchingJTextField: JTextField = None
-        self.totalPixelsJTextField: JTextField = None
+        if "avgBlueJTextField" not in vars(self): self.avgBlueJTextField: JTextField = None
+        if "avgGreenJTextField" not in vars(self): self.avgGreenJTextField: JTextField = None
+        if "avgRedJTextField" not in vars(self): self.avgRedJTextField: JTextField = None
+        if "jComboBox1" not in vars(self): self.jComboBox1: JComboBox = None
+        if "jLabel1" not in vars(self): self.jLabel1: JLabel = None
+        if "jLabel10" not in vars(self): self.jLabel10: JLabel = None
+        if "jLabel11" not in vars(self): self.jLabel11: JLabel = None
+        if "jLabel12" not in vars(self): self.jLabel12: JLabel = None
+        if "jLabel13" not in vars(self): self.jLabel13: JLabel = None
+        if "jLabel2" not in vars(self): self.jLabel2: JLabel = None
+        if "jLabel3" not in vars(self): self.jLabel3: JLabel = None
+        if "jLabel4" not in vars(self): self.jLabel4: JLabel = None
+        if "jLabel5" not in vars(self): self.jLabel5: JLabel = None
+        if "jLabel6" not in vars(self): self.jLabel6: JLabel = None
+        if "jLabel7" not in vars(self): self.jLabel7: JLabel = None
+        if "jLabel8" not in vars(self): self.jLabel8: JLabel = None
+        if "jLabel9" not in vars(self): self.jLabel9: JLabel = None
+        if "matchingPixelsJTextField" not in vars(self): self.matchingPixelsJTextField: JTextField = None
+        if "maxBlueJTextField" not in vars(self): self.maxBlueJTextField: JTextField = None
+        if "maxGreenJTextField" not in vars(self): self.maxGreenJTextField: JTextField = None
+        if "maxRedJTextField" not in vars(self): self.maxRedJTextField: JTextField = None
+        if "minBlueJTextField" not in vars(self): self.minBlueJTextField: JTextField = None
+        if "minGreenJTextField" not in vars(self): self.minGreenJTextField: JTextField = None
+        if "minRedJTextField" not in vars(self): self.minRedJTextField: JTextField = None
+        if "percentMatchingJTextField" not in vars(self): self.percentMatchingJTextField: JTextField = None
+        if "totalPixelsJTextField" not in vars(self): self.totalPixelsJTextField: JTextField = None
     
 
     def __init__(self, imageAnalysisResultsArray: list[ImageAnalysisResults]) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.media.image.analysis.ImageAnalysisResults import ImageAnalysisResults
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.initComponents()
         imageAnalysisResults: ImageAnalysisResults = imageAnalysisResultsArray[0]
         self.updateImageColorRangeResults(imageAnalysisResults)

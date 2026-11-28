@@ -16,6 +16,8 @@
 from __future__ import annotations
 
 import math
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -41,9 +43,9 @@ class ImageRotationUtil:
         from playn.core.CanvasImage import CanvasImage
         from playn.core.CanvasSurface import CanvasSurface
         image: Image = ImageCreationUtil.getInstance().getInstance(originalImage.getWidth(), originalImage.getHeight())
-        if image.isMutable():
+        if java_predicate(image, "isMutable"):
             originalPlayNImage: Image = None
-            if originalImage.isMutable():
+            if java_predicate(originalImage, "isMutable"):
                 originalHTMLImage: PlaynMutableImage = originalImage
                 originalPlayNImage = originalHTMLImage.getImage()
             else:
@@ -52,9 +54,13 @@ class ImageRotationUtil:
             htmlImage: PlaynMutableImage = image
             canvasImage: CanvasImage = htmlImage.getImage()
             canvasSurface: CanvasSurface = htmlImage.getCanvasSurface(canvasImage)
-            canvasSurface.translate(originalPlayNImage.width() / 2, originalPlayNImage.height() / 2)
+            canvasSurface.translate(java_divide(originalPlayNImage.width(), 2)
+            , java_divide(originalPlayNImage.height(), 2)
+            )
             canvasSurface.rotate(float(math.radians(rotationInDegrees)))
-            canvasSurface.drawImage(originalPlayNImage, -originalPlayNImage.width() / 2, -originalPlayNImage.height() / 2)
+            canvasSurface.drawImage(originalPlayNImage, java_divide(-originalPlayNImage.width(), 2)
+            , java_divide(-originalPlayNImage.height(), 2)
+            )
             return image
         else:
             raise Exception("Not Mutable")

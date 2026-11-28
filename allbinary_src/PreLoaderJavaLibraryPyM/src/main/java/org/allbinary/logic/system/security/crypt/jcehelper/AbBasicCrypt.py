@@ -21,16 +21,16 @@ from org.allbinary.init.crypt.jcehelper.CryptInterface import CryptInterface
 class AbBasicCrypt(CryptInterface):
 
     def _init_fields(self) -> None:
-        self.cipher: Cipher = None
-        self.secretKey: SecretKey = None
-        self.algorithm: str = None
-        self.key: list[int] = None
+        if "cipher" not in vars(self): self.cipher: Cipher = None
+        if "secretKey" not in vars(self): self.secretKey: SecretKey = None
+        if "algorithm" not in vars(self): self.algorithm: str = None
+        if "key" not in vars(self): self.key: list[int] = None
     
 
     def __init__(self, algorithm: str, key: str) -> None:
         from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
-        self._init_fields()
+        __class__._init_fields(self)
         try:
             self.algorithm = algorithm
             self.key = key.getBytes()
@@ -41,6 +41,7 @@ class AbBasicCrypt(CryptInterface):
     
 
     def init(self) -> None:
+        from org.allbinary.logic.system.security.crypt.jcehelper.KeySpecFactory import KeySpecFactory
         from java.security.Provider import Provider
         from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         from org.allbinary.string.CommonStrings import CommonStrings

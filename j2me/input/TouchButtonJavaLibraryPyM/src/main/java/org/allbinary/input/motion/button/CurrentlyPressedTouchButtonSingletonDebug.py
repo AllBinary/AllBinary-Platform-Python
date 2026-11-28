@@ -15,12 +15,25 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.input.motion.button.CurrentlyPressedTouchButtonSingleton import CurrentlyPressedTouchButtonSingleton
 
 
+@java_inherited_overloads
 class CurrentlyPressedTouchButtonSingletonDebug(CurrentlyPressedTouchButtonSingleton):
     instanceC: CurrentlyPressedTouchButtonSingletonDebug = None
+    def _java_defaults(self):
+        vars(self).setdefault("string", None)
+        vars(self).setdefault("listString", None)
+        vars(self).setdefault("appendText", None)
+        vars(self).setdefault("PRESSED_AND_FIRED", None)
+        vars(self).setdefault("PRESSED_AND_NOT_FIRED", None)
+        vars(self).setdefault("ASSOCIATED_RELEASED_AND_FIRED", None)
+        vars(self).setdefault("RELEASED_AND_FIRED", None)
+        vars(self).setdefault("RELEASED_AND_FIRED_2", None)
+        vars(self).setdefault("RELEASED_AND_NOT_FIRED", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.string.StringUtil import StringUtil
@@ -35,8 +48,9 @@ class CurrentlyPressedTouchButtonSingletonDebug(CurrentlyPressedTouchButtonSingl
         self.RELEASED_AND_NOT_FIRED: str = "rel & not fired"
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -95,7 +109,7 @@ class CurrentlyPressedTouchButtonSingletonDebug(CurrentlyPressedTouchButtonSingl
 
     def removeAt(self, index: int) -> TouchButtonInput:
         from org.allbinary.logic.string.StringMaker import StringMaker
-        touchButtonInput: TouchButtonInput = super().removeAt(index)
+        touchButtonInput: TouchButtonInput = java_super_call(super(), "removeAt", index)
         self.listString = str(self.list_)
         self.string = str(StringMaker().append(self.listString).append(self.appendText))
         return touchButtonInput
@@ -103,7 +117,7 @@ class CurrentlyPressedTouchButtonSingletonDebug(CurrentlyPressedTouchButtonSingl
 
     def remove(self, touchButtonInput: TouchButtonInput) -> bool:
         from org.allbinary.logic.string.StringMaker import StringMaker
-        isRemoved: bool = super().remove(touchButtonInput)
+        isRemoved: bool = java_super_call(super(), "remove", touchButtonInput)
         self.listString = str(self.list_)
         self.string = str(StringMaker().append(self.listString).append(self.appendText))
         return isRemoved
@@ -111,7 +125,7 @@ class CurrentlyPressedTouchButtonSingletonDebug(CurrentlyPressedTouchButtonSingl
 
     def add(self, touchButtonInput: TouchButtonInput) -> None:
         from org.allbinary.logic.string.StringMaker import StringMaker
-        super().add(touchButtonInput)
+        java_super_call(super(), "add", touchButtonInput)
         self.listString = str(self.list_)
         self.string = str(StringMaker().append(self.listString).append(self.appendText))
     

@@ -37,7 +37,7 @@ class MyCommandsFactory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
 # from javax.microedition.lcdui.Command import Command
 # from org.allbinary.logic.string.StringUtil import StringUtil
 

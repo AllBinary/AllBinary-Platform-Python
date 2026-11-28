@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from javax.microedition.lcdui.ItemStateListener import ItemStateListener
 from org.allbinary.game.state.GameStateCompositeInterface import GameStateCompositeInterface
@@ -23,6 +24,7 @@ from org.allbinary.thread.RunnableInterface import RunnableInterface
 
 
 # Java interface
+@java_inherited_overloads
 class GameCanvasRunnableInterface(*java_bases(RunnableInterface, PaintableInterface, ItemStateListener, GameStateCompositeInterface)):
     
 

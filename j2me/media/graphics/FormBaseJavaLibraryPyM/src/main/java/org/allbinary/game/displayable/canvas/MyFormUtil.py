@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -22,7 +23,6 @@ class MyFormUtil:
     instance: MyFormUtil = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.Rectangle import Rectangle
         from org.allbinary.graphics.RectangleFactory import RectangleFactory
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
@@ -31,7 +31,7 @@ class MyFormUtil:
         self.popupMenuRectangle: Rectangle = RectangleFactory.SINGLETON
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -53,7 +53,7 @@ class MyFormUtil:
         displayInfo: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
         features: Features = Features.getInstance()
         isOpenGL: bool = features.isDefault(OpenGLFeatureFactory.getInstance().OPENGL)
-        TOTAL_CHAR_WIDTH: int = (2 if SWTJOGLProcessor.getInstance().isJOGL() and isOpenGL else 3)
+        TOTAL_CHAR_WIDTH: int = (2 if java_predicate(SWTJOGLProcessor.getInstance(), "isJOGL") and isOpenGL else 3)
         width: int = MyFontProcessor.defaultStringWidth(font, TOTAL_CHAR_WIDTH)
         pointFactory: PointFactory = PointFactory.getInstance()
         if displayInfo.getLastHeight() < 320:

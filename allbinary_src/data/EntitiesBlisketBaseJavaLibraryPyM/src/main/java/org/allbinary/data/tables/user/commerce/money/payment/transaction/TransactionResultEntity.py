@@ -15,13 +15,19 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import datetime
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.communication.sql.AbSqlBean import AbSqlBean
 from org.allbinary.data.tables.user.commerce.money.payment.transaction.TransactionResultEntityInterface import TransactionResultEntityInterface
 
 
+@java_inherited_overloads
 class TransactionResultEntity(*java_bases(AbSqlBean, TransactionResultEntityInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("tableName", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -30,9 +36,10 @@ class TransactionResultEntity(*java_bases(AbSqlBean, TransactionResultEntityInte
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
         super().__init__(UserDbInitInfo())
-        self._init_fields()
+        __class__._init_fields(self)
         self.setTableName(self.tableName)
     
 
@@ -47,7 +54,7 @@ class TransactionResultEntity(*java_bases(AbSqlBean, TransactionResultEntityInte
             whereHashMap: HashMap = StdUtil.getInstance().createHashMap()
             whereHashMap.put(OrderData.ID, orderNumber)
             whereHashMap.put(UserData.USERNAME, userName)
-            super().deleteWhere(whereHashMap)
+            java_super_call(super(), "deleteWhere", whereHashMap)
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, "remove")
         except Exception as e:
@@ -70,7 +77,7 @@ class TransactionResultEntity(*java_bases(AbSqlBean, TransactionResultEntityInte
             time: str = str(int(calendar.getTimeInMillis()))
             values.add(time)
             values.add(time)
-            super().insert(values)
+            java_super_call(super(), "insert", values)
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, "add")
         except Exception as e:
@@ -90,7 +97,7 @@ class TransactionResultEntity(*java_bases(AbSqlBean, TransactionResultEntityInte
             resultHashMap: HashMap = StdUtil.getInstance().createHashMap()
             updateKeyAndValue: HashMap = StdUtil.getInstance().createHashMap()
             updateKeyAndValue.put(OrderData.ID, orderNumber)
-            resultHashMap = super().getRow(updateKeyAndValue)
+            resultHashMap = java_super_call(super(), "getRow", updateKeyAndValue)
             if resultHashMap is not None:
                 transactionResult: TransactionResult = TransactionResult(resultHashMap)
                 if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
@@ -126,11 +133,11 @@ class TransactionResultEntity(*java_bases(AbSqlBean, TransactionResultEntityInte
     
 
     def createTable(self) -> str:
-        return super().createTable(self.createTableStatement())
+        return java_super_call(super(), "createTable", self.createTableStatement())
     
 
     def dropTable(self) -> str:
-        return super().dropTable()
+        return java_super_call(super(), "dropTable")
 # from java.util.Calendar import Calendar
 # from java.util.HashMap import HashMap
 # from org.allbinary.util.BasicArrayList import BasicArrayList

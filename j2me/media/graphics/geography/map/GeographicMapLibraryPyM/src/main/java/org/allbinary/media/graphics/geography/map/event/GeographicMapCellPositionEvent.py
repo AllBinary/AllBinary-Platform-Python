@@ -15,21 +15,25 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
 
 
+@java_inherited_overloads
 class GeographicMapCellPositionEvent(AllBinaryEventObject):
+    def _java_defaults(self):
+        vars(self).setdefault("geographicMapCellPosition", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.CellPosition import CellPosition
         from org.allbinary.graphics.CellPositionFactory import CellPositionFactory
         self.geographicMapCellPosition: CellPosition = CellPositionFactory.getInstance().NONE
     
 
     def __init__(self, anyType: object, geographicMapCellPosition: CellPosition) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.CellPosition import CellPosition
         super().__init__(anyType)
-        self._init_fields()
+        __class__._init_fields(self)
         self.geographicMapCellPosition = geographicMapCellPosition
     
 

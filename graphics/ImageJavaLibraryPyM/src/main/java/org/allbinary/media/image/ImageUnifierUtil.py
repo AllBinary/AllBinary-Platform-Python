@@ -33,7 +33,7 @@ class ImageUnifierUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getDefaultConfiguration(self) -> GraphicsConfiguration:
@@ -68,6 +68,7 @@ class ImageUnifierUtil:
 # from java.awt.image.BufferedImage import BufferedImage
 # from org.allbinary.logic.communication.log.LogUtil import LogUtil
 # from org.allbinary.string.CommonLabels import CommonLabels
+from org.allbinary.media.image.ImageUtil import ImageUtil
 
 
 def _ImageUnifierUtil_instance() -> object:

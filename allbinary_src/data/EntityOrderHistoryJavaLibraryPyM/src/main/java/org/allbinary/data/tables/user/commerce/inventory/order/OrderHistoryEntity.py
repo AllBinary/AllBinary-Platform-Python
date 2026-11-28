@@ -16,13 +16,19 @@
 from __future__ import annotations
 
 import random
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import datetime
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.communication.sql.AbSqlBean import AbSqlBean
 from org.allbinary.data.tables.user.commerce.inventory.order.OrderHistoryEntityInterface import OrderHistoryEntityInterface
 
 
+@java_inherited_overloads
 class OrderHistoryEntity(*java_bases(AbSqlBean, OrderHistoryEntityInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("tableName", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -31,9 +37,10 @@ class OrderHistoryEntity(*java_bases(AbSqlBean, OrderHistoryEntityInterface)):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.init.db.HistoryDbInitInfo import HistoryDbInitInfo
         super().__init__(HistoryDbInitInfo())
-        self._init_fields()
+        __class__._init_fields(self)
         self.setTableName(self.tableName)
     
 
@@ -159,7 +166,7 @@ class OrderHistoryEntity(*java_bases(AbSqlBean, OrderHistoryEntityInterface)):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            super().insert(values)
+            java_super_call(super(), "insert", values)
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, self.INSERT)
         except Exception as e:
@@ -167,7 +174,9 @@ class OrderHistoryEntity(*java_bases(AbSqlBean, OrderHistoryEntityInterface)):
                 self.logUtil.put(self.commonStrings.FAILURE, self, self.INSERT, e)
 
     def insert(self, *args):
-        return getattr(self, "insert_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("insert_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().insert(*args)
     
 
     def setStatus(self, orderId: str, status: str) -> None:
@@ -186,7 +195,7 @@ class OrderHistoryEntity(*java_bases(AbSqlBean, OrderHistoryEntityInterface)):
                 updateHashMap.put(OrderHistoryData.CANCELDATE, time)
             elif ((status > OrderHistoryData.SHIPPED) - (status < OrderHistoryData.SHIPPED)) == 0:
                 updateHashMap.put(OrderHistoryData.SHIPPEDDATE, time)
-            super().updateWhere(OrderData.ID, orderId, updateHashMap)
+            java_super_call(super(), "updateWhere", OrderData.ID, orderId, updateHashMap)
         except Exception as e:
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.put(self.commonStrings.FAILURE, self, "setStatus", e)
@@ -206,7 +215,7 @@ class OrderHistoryEntity(*java_bases(AbSqlBean, OrderHistoryEntityInterface)):
             updateHashMap: HashMap = StdUtil.getInstance().createHashMap()
             updateHashMap.put(PaymentData.METHOD, paymentMethod)
             updateHashMap.put(OrderHistoryData.TRANSDATE, time)
-            super().updateWhere(OrderData.ID, orderId, updateHashMap)
+            java_super_call(super(), "updateWhere", OrderData.ID, orderId, updateHashMap)
         except Exception as e:
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.put(self.commonStrings.FAILURE, self, "setPaymentMethod", e)
@@ -225,7 +234,7 @@ class OrderHistoryEntity(*java_bases(AbSqlBean, OrderHistoryEntityInterface)):
         orderReviewVector: BasicArrayList = BasicArrayListD()
         whereHashMap: HashMap = StdUtil.getInstance().createHashMap()
         whereHashMap.put(StoreFrontData.getInstance().NAME, storeFrontInterface.getName())
-        orderHashMapVector: BasicArrayList = super().getRows(whereHashMap)
+        orderHashMapVector: BasicArrayList = java_super_call(super(), "getRows", whereHashMap)
         size: int = orderHashMapVector.size()
         for i in range(0, size):
             orderReviewHashMap: HashMap = orderHashMapVector.get(i)
@@ -246,7 +255,7 @@ class OrderHistoryEntity(*java_bases(AbSqlBean, OrderHistoryEntityInterface)):
         orderReviewVector: BasicArrayList = BasicArrayListD()
         whereHashMap: HashMap = StdUtil.getInstance().createHashMap()
         whereHashMap.put(UserData.USERNAME, userName)
-        orderHashMapVector: BasicArrayList = super().getRows(whereHashMap)
+        orderHashMapVector: BasicArrayList = java_super_call(super(), "getRows", whereHashMap)
         size: int = orderHashMapVector.size()
         for index in range(0, size):
             orderReviewHashMap: HashMap = orderHashMapVector.get(index)
@@ -267,7 +276,7 @@ class OrderHistoryEntity(*java_bases(AbSqlBean, OrderHistoryEntityInterface)):
         orderReviewVector: BasicArrayList = BasicArrayListD()
         whereHashMap: HashMap = StdUtil.getInstance().createHashMap()
         whereHashMap.put(OrderHistoryData.STATUS, status)
-        orderHashMapVector: BasicArrayList = super().getRowsWhereBetween(whereHashMap, OrderHistoryData.ORDERDATE, fromDate, toDate)
+        orderHashMapVector: BasicArrayList = java_super_call(super(), "getRowsWhereBetween", whereHashMap, OrderHistoryData.ORDERDATE, fromDate, toDate)
         size: int = orderHashMapVector.size()
         for index in range(0, size):
             orderReviewHashMap: HashMap = orderHashMapVector.get(index)
@@ -285,7 +294,7 @@ class OrderHistoryEntity(*java_bases(AbSqlBean, OrderHistoryEntityInterface)):
         from org.allbinary.business.user.commerce.inventory.order.OrderHistory import OrderHistory
         from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
         orderReviewVector: BasicArrayList = BasicArrayListD()
-        orderHashMapVector: BasicArrayList = super().getRowsWhereBetween(OrderHistoryData.ORDERDATE, fromDate, toDate)
+        orderHashMapVector: BasicArrayList = java_super_call(super(), "getRowsWhereBetween", OrderHistoryData.ORDERDATE, fromDate, toDate)
         size: int = orderHashMapVector.size()
         for index in range(0, size):
             orderReviewHashMap: HashMap = orderHashMapVector.get(index)
@@ -294,7 +303,9 @@ class OrderHistoryEntity(*java_bases(AbSqlBean, OrderHistoryEntityInterface)):
         return orderReviewVector
 
     def getOrders(self, *args):
-        return getattr(self, "getOrders_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("getOrders_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getOrders(*args)
     
 
     # throws Exception
@@ -306,7 +317,7 @@ class OrderHistoryEntity(*java_bases(AbSqlBean, OrderHistoryEntityInterface)):
         from org.allbinary.logic.StdUtil import StdUtil
         whereHashMap: HashMap = StdUtil.getInstance().createHashMap()
         whereHashMap.put(OrderData.ID, id)
-        orderReviewHashMap: HashMap = super().getRow(whereHashMap)
+        orderReviewHashMap: HashMap = java_super_call(super(), "getRow", whereHashMap)
         if orderReviewHashMap is not None:
             orderHistory: OrderHistory = OrderHistory(Basket(), orderReviewHashMap)
             return orderHistory
@@ -411,11 +422,11 @@ class OrderHistoryEntity(*java_bases(AbSqlBean, OrderHistoryEntityInterface)):
     
 
     def createTable(self) -> str:
-        return super().createTable(self.createTableStatement())
+        return java_super_call(super(), "createTable", self.createTableStatement())
     
 
     def dropTable(self) -> str:
-        return super().dropTable()
+        return java_super_call(super(), "dropTable")
     
 
     # throws Exception

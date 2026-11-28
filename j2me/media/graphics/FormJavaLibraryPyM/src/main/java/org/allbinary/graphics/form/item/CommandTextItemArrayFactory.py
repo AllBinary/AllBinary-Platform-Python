@@ -15,21 +15,20 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 
 
 class CommandTextItemArrayFactory:
 
     def _init_fields(self) -> None:
-        from org.allbinary.logic.util.visitor.Visitor import Visitor
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.list_: BasicArrayList = BasicArrayListD()
-        self.visitorInterface: Visitor = None
+        if "visitorInterface" not in vars(self): self.visitorInterface: Visitor = None
     
 
     def __init__(self, visitorInterface: Visitor) -> None:
         from org.allbinary.logic.util.visitor.Visitor import Visitor
-        self._init_fields()
+        __class__._init_fields(self)
         self.visitorInterface = visitorInterface
     
 
@@ -48,8 +47,8 @@ class CommandTextItemArrayFactory:
         textItem: CommandTextItem = None
         priorityLimit: int = 7
         displayInfo: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
-        isLargeEnoughDisplayForBigMenu: bool = (displayInfo.isPortrait() and displayInfo.getLastHeight() >= ScreenInfo.getInstance().MEDIUM_WIDTH) or (not displayInfo.isPortrait() and displayInfo.getLastWidth() >= ScreenInfo.getInstance().MEDIUM_WIDTH)
-        if not isLargeEnoughDisplayForBigMenu and size > 3:
+        isLargeEnoughDisplayForBigMenu: bool = (java_predicate(displayInfo, "isPortrait") and displayInfo.getLastHeight() >= ScreenInfo.getInstance().MEDIUM_WIDTH) or (not (java_predicate(displayInfo, "isPortrait")) and displayInfo.getLastWidth() >= ScreenInfo.getInstance().MEDIUM_WIDTH)
+        if not (isLargeEnoughDisplayForBigMenu) and size > 3:
             priorityLimit = 3
         command: Command = None
         for index in range(0, size):

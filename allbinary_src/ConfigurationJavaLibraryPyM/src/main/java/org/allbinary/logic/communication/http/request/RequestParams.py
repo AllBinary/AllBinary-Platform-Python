@@ -21,41 +21,40 @@ from __future__ import annotations
 class RequestParams:
 
     def _init_fields(self) -> None:
-        from java.util.Map import Map
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.map: Map = None
+        if "map" not in vars(self): self.map: Map = None
         self.KEY: str = "Key: "
         self.VALUE: str = " Value: "
 
     def __init__(self, *args) -> None:
         if len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
         elif len(args) == 1:
-            self.__jconstructor1(*args)
+            __class__.__jconstructor1(self, *args)
 
     def __jconstructor1(self, *args) -> None:
-        if True and not isinstance(args[0], (str, list, int, float)):
-            self._constructor1_1(*args)
+        if True and (args[0] is None or any(base.__name__ == "HttpServletRequest" for base in type(args[0]).__mro__)):
+            __class__._constructor1_1(self, *args)
         else:
-            self._constructor1_2(*args)
+            __class__._constructor1_2(self, *args)
     
 
     def _constructor0(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.logUtil.putF("New RequestParams Size: 0", self, self.commonStrings.CONSTRUCTOR)
     
 
     def _constructor1_1(self, request: HttpServletRequest) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.map = request.getParameterMap()
         self.logUtil.putF("RequestParams Size: " + str(self.getMap().keySet().size()), self, self.commonStrings.CONSTRUCTOR)
     
 
     def _constructor1_2(self, pageContext: PageContext) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.map = pageContext.getRequest().getParameterMap()
         self.logUtil.putF("Request Params Size: " + str(self.getMap().keySet().size()), self, self.commonStrings.CONSTRUCTOR)
     
@@ -71,6 +70,8 @@ class RequestParams:
     
 
     def toXmlNode(self, document: Document) -> Node:
+        from org.allbinary.logic.communication.http.request.RequestData import RequestData
+        from org.allbinary.logic.communication.http.request.RequestData import RequestData
         from java.util.Set import Set
         from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
         from org.allbinary.logic.string.StringMaker import StringMaker

@@ -15,23 +15,28 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.android.input.motion.MotionEventProcessor import MotionEventProcessor
 
 
+@java_inherited_overloads
 class BaseGameInputMotionEventProcessor(MotionEventProcessor):
+    def _java_defaults(self):
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("gameMotionGestureListener", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.input.motion.gesture.observer.GameMotionGestureListener import GameMotionGestureListener
         from org.allbinary.string.CommonStrings import CommonStrings
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.gameMotionGestureListener: GameMotionGestureListener = None
+        if "gameMotionGestureListener" not in vars(self): self.gameMotionGestureListener: GameMotionGestureListener = None
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.input.motion.gesture.observer.GameMotionGestureListener import GameMotionGestureListener
         from org.allbinary.input.motion.gesture.observer.MotionGestureReceiveInterfaceFactory import MotionGestureReceiveInterfaceFactory
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.gameMotionGestureListener = GameMotionGestureListener(MotionGestureReceiveInterfaceFactory.getInstance())
         self.addListener()
     

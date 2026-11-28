@@ -20,11 +20,11 @@ from __future__ import annotations
 class CanvasTreeLabel:
 
     def _init_fields(self) -> None:
-        self.label: str = None
+        if "label" not in vars(self): self.label: str = None
     
 
     def __init__(self, str_: str) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.label = str_
     
 

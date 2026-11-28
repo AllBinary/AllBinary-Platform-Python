@@ -15,26 +15,30 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.IndexedAnimation import IndexedAnimation
 from org.allbinary.animation.compound.CompoundAnimationInterface import CompoundAnimationInterface
 
 
+@java_inherited_overloads
 class CompoundIndexedAnimation(*java_bases(IndexedAnimation, CompoundAnimationInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("circularIndexUtil", None)
+        vars(self).setdefault("animationInterfaceArray", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.animation.Animation import Animation
-        from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
-        self.circularIndexUtil: CircularIndexUtil = None
-        self.animationInterfaceArray: list[Animation] = None
+        if "circularIndexUtil" not in vars(self): self.circularIndexUtil: CircularIndexUtil = None
+        if "animationInterfaceArray" not in vars(self): self.animationInterfaceArray: list[Animation] = None
     
 
     def __init__(self, animationInterfaceArray: list[Animation], animationBehavior: AnimationBehavior) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.animation.Animation import Animation
         from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         super().__init__(animationBehavior)
-        self._init_fields()
+        __class__._init_fields(self)
         self.animationInterfaceArray = animationInterfaceArray
         self.circularIndexUtil = CircularIndexUtil.createInstance(len(self.animationInterfaceArray))
     

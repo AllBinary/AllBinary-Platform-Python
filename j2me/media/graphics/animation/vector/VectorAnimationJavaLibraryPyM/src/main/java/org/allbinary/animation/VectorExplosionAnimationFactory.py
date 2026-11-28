@@ -21,16 +21,15 @@ from org.allbinary.animation.ProceduralAnimationInterfaceFactoryInterface import
 class VectorExplosionAnimationFactory(ProceduralAnimationInterfaceFactoryInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         self.vectorExplosionGenerator: VectorExplosionGenerator = VectorExplosionGenerator.getInstance()
         self.basicColor: BasicColor = BasicColorFactory.getInstance().WHITE
-        self.animationBehaviorFactory: AnimationBehaviorFactory = None
+        if "animationBehaviorFactory" not in vars(self): self.animationBehaviorFactory: AnimationBehaviorFactory = None
     
 
     def __init__(self, basicColor: BasicColor, animationBehaviorFactory: AnimationBehaviorFactory) -> None:
         from org.allbinary.graphics.color.BasicColor import BasicColor
-        self._init_fields()
+        __class__._init_fields(self)
         self.animationBehaviorFactory = animationBehaviorFactory
         self.setBasicColorP(basicColor)
     

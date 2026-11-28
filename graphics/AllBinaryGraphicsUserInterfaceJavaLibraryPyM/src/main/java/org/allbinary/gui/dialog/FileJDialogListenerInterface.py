@@ -22,6 +22,7 @@ class FileJDialogListenerInterface:
     
 
     def onFiles(self, files: list[File]) -> None:
+        from java.io.File import File
         raise NotImplementedError()
 # from java.io.File import File
 

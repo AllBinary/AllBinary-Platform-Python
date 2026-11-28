@@ -32,11 +32,12 @@ class TransformInfoPropertiesFactory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
     def getInstance_j1(self, node: Node) -> TransformInfoProperties:
+        from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
         from org.allbinary.logic.visual.transform.info.TransformInfoProperties import TransformInfoProperties
         from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
         from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
@@ -69,8 +70,11 @@ class TransformInfoPropertiesFactory:
         transformInfoProperties: TransformInfoProperties = TransformInfoProperties(name, label, description, objectFileName, objectConfigFileName, templateFileName)
         return transformInfoProperties
 
-    def getInstance(self, *args):
-        return getattr(self, "getInstance_j" + str(len(args)))(*args)
+    def getInstance(self=None, *args):
+        if self is None and not args: return __class__.getInstance_j0()
+        implementation = __class__.__dict__.get("getInstance_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getInstance(*args)
 # from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
 # from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
 # from org.allbinary.logic.communication.log.LogUtil import LogUtil

@@ -15,15 +15,19 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.input.AllBinarySensor import AllBinarySensor
 
 
+@java_inherited_overloads
 class AllBinaryOrientationSensor(AllBinarySensor):
     NULL_ALLBINARY_ORIENTATION_SENSOR: AllBinaryOrientationSensor = None
+    def _java_defaults(self):
+        vars(self).setdefault("sensorDataFloatArray", None)
+        vars(self).setdefault("listener", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.input.CompleteMotionGestureInputEventListenerInterface import CompleteMotionGestureInputEventListenerInterface
         from org.allbinary.game.input.motion.action.NoCompleteMotionGestureInputEventListener import NoCompleteMotionGestureInputEventListener
         from org.allbinary.logic.math.PrimitiveFloatUtil import PrimitiveFloatUtil
         self.sensorDataFloatArray: list[float] = PrimitiveFloatUtil.getArrayInstance()
@@ -36,8 +40,9 @@ class AllBinaryOrientationSensor(AllBinarySensor):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception

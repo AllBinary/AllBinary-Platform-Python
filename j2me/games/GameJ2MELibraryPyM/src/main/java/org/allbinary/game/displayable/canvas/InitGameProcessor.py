@@ -15,25 +15,31 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.canvas.Processor import Processor
 
 
+@java_inherited_overloads
 class InitGameProcessor(Processor):
+    def _java_defaults(self):
+        vars(self).setdefault("gameCanvas", None)
 
     def _init_fields(self) -> None:
-        self.gameCanvas: AllBinaryGameCanvas = None
+        if "gameCanvas" not in vars(self): self.gameCanvas: AllBinaryGameCanvas = None
     
 
     def __init__(self, gameCanvas: AllBinaryGameCanvas) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.gameCanvas = gameCanvas
     
 
     # throws Exception
     def process(self) -> None:
         from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
-        if ProgressCanvasFactory.getInstance().isInGame():
+        if java_predicate(ProgressCanvasFactory.getInstance(), "isInGame"):
             self.gameCanvas.setProcessGameProcessorInit()
 # from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
 # from org.allbinary.logic.communication.log.LogUtil import LogUtil

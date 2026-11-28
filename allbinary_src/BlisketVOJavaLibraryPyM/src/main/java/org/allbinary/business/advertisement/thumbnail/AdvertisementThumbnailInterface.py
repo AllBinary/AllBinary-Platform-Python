@@ -15,10 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.business.advertisement.image.AdvertisementImageInterface import AdvertisementImageInterface
 
 
 # Java interface
+@java_inherited_overloads
 class AdvertisementThumbnailInterface(AdvertisementImageInterface):
     pass
 

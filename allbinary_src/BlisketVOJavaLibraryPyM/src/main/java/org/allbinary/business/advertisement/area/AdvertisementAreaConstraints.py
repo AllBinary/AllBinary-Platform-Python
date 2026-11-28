@@ -21,19 +21,18 @@ from org.allbinary.business.advertisement.area.AdvertisementAreaConstraintsInter
 class AdvertisementAreaConstraints(AdvertisementAreaConstraintsInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.logic.control.contraints.display.browser.DisplayInBrowserContraintsInterface import DisplayInBrowserContraintsInterface
-        from org.allbinary.logic.control.contraints.size.TwoDimensionalConstraintInterface import TwoDimensionalConstraintInterface
-        self.displayInBrowserContraintsInterface: DisplayInBrowserContraintsInterface = None
-        self.twoDimensionConstraintsInterface: TwoDimensionalConstraintInterface = None
+        if "displayInBrowserContraintsInterface" not in vars(self): self.displayInBrowserContraintsInterface: DisplayInBrowserContraintsInterface = None
+        if "twoDimensionConstraintsInterface" not in vars(self): self.twoDimensionConstraintsInterface: TwoDimensionalConstraintInterface = None
     
 
     def __init__(self, document: Document) -> None:
+        from org.allbinary.business.advertisement.area.AdvertisementAreaData import AdvertisementAreaData
         from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
         from org.allbinary.logic.control.contraints.display.browser.DisplayInBrowserContraints import DisplayInBrowserContraints
         from org.allbinary.logic.control.contraints.size.TwoDimensionalConstraint import TwoDimensionalConstraint
         from org.w3c.dom.Document import Document
         from org.w3c.dom.Node import Node
-        self._init_fields()
+        __class__._init_fields(self)
         node: Node = DomSearchHelper.getNode(AdvertisementAreaData.getInstance().NAME, document.getChildNodes())
         self.displayInBrowserContraintsInterface = DisplayInBrowserContraints(node)
         self.twoDimensionConstraintsInterface = TwoDimensionalConstraint(node)
@@ -59,7 +58,9 @@ class AdvertisementAreaConstraints(AdvertisementAreaConstraintsInterface):
         return self.twoDimensionConstraintsInterface
 
     def getTwoDimensionContraints(self, *args):
-        return getattr(self, "getTwoDimensionContraints_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("getTwoDimensionContraints_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getTwoDimensionContraints(*args)
 # from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
 # from org.allbinary.logic.control.contraints.display.browser.DisplayInBrowserContraints import DisplayInBrowserContraints
 # from org.allbinary.logic.control.contraints.display.browser.DisplayInBrowserContraintsInterface import DisplayInBrowserContraintsInterface

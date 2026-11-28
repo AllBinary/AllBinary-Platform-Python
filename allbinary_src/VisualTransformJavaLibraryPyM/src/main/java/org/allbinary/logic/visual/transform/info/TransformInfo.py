@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 import datetime
 from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
 
@@ -24,45 +25,43 @@ class TransformInfo(TransformInfoInterface):
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.logic.string.StringUtil import StringUtil
-        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
-        from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfigInterface import TransformInfoObjectConfigInterface
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.abeClientInformation: AbeClientInformationInterface = ServiceClientInformationInterfaceFactory.getInstance()
-        self.isChild: bool = False
-        self.name: str = None
-        self.storeName: str = None
-        self.objectFileName: str = None
-        self.anyType: object = None
-        self.objectConfigFileName: str = None
-        self.objectConfigInterface: TransformInfoObjectConfigInterface = None
-        self.template: str = None
-        self.templateFileName: str = None
-        self.dataFileName: str = None
+        self.isChild_field: bool = False
+        if "name" not in vars(self): self.name: str = None
+        if "storeName" not in vars(self): self.storeName: str = None
+        if "objectFileName" not in vars(self): self.objectFileName: str = None
+        if "anyType" not in vars(self): self.anyType: object = None
+        if "objectConfigFileName" not in vars(self): self.objectConfigFileName: str = None
+        if "objectConfigInterface" not in vars(self): self.objectConfigInterface: TransformInfoObjectConfigInterface = None
+        if "template" not in vars(self): self.template: str = None
+        if "templateFileName" not in vars(self): self.templateFileName: str = None
+        if "dataFileName" not in vars(self): self.dataFileName: str = None
         self.data: str = StringUtil.getInstance().EMPTY_STRING
 
     def __init__(self, *args) -> None:
         if len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
         elif len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
         elif len(args) == 5:
-            self._constructor5(*args)
+            __class__._constructor5(self, *args)
     
 
     def _constructor0(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def _constructor1(self, name: str) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.setName(name)
     
 
     def _constructor5(self, name: str, objectFileName: str, objectConfigFileName: str, templateFileName: str, dataFileName: str) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.setName(name)
         self.setObjectFile(objectFileName)
         self.setObjectConfigFile(objectConfigFileName)
@@ -72,6 +71,7 @@ class TransformInfo(TransformInfoInterface):
 
     # throws Exception
     def override(self, hashMap: HashMap) -> None:
+        from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
         from java.util.HashMap import HashMap
         from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
         from org.allbinary.globals.FREEBLISKET_PATH_GLOBALS import FREEBLISKET_PATH_GLOBALS
@@ -92,7 +92,7 @@ class TransformInfo(TransformInfoInterface):
         transformInfoData: TransformInfoData = TransformInfoData.getInstance()
         stringValidationUtil: StringValidationUtil = StringValidationUtil.getInstance()
         aName: str = hashMap.get(transformInfoData.NAME)
-        if not stringValidationUtil.isEmpty(aName):
+        if not (stringValidationUtil.isEmpty(aName)):
             self.name = aName
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             stringBuffer: StringMaker = StringMaker()
@@ -102,10 +102,10 @@ class TransformInfo(TransformInfoInterface):
             stringBuffer.append(str(hashMap))
             self.logUtil.putF(str(stringBuffer), self, "override(HashMap hashMap)")
         aStoreName: str = hashMap.get(StoreFrontData.getInstance().NAME)
-        if not stringValidationUtil.isEmpty(aStoreName):
+        if not (stringValidationUtil.isEmpty(aStoreName)):
             self.storeName = aStoreName
         aObjectFileName: str = hashMap.get(transformInfoData.OBJECTFILENAME)
-        if not stringValidationUtil.isEmpty(aObjectFileName):
+        if not (stringValidationUtil.isEmpty(aObjectFileName)):
             self.objectFileName = aObjectFileName
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(URLGLOBALS.getMainPath())
@@ -114,45 +114,45 @@ class TransformInfo(TransformInfoInterface):
         stringBuffer.append(AbPathData.getInstance().SEPARATOR)
         fileAbPath: AbPath = AbPath(str(stringBuffer), StringUtil.getInstance().EMPTY_STRING)
         aObject: str = hashMap.get(transformInfoData.OBJECT)
-        if not stringValidationUtil.isEmpty(aObject):
+        if not (stringValidationUtil.isEmpty(aObject)):
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 self.logUtil.putF("TransformInfo override view Object for: " + self.getName(), self, "override(HashMap hashMap)")
             fileDataString: str = CryptFileReader(TransformInfoObjectData.getInstance().UNCRYPTED_EXTENSION, TransformInfoObjectData.getInstance().ENCRYPTED_EXTENSION).get(AbPath(str(fileAbPath), aObject))
             if fileDataString is not None:
                 self.anyType = fileDataString
-        if not stringValidationUtil.isEmpty(hashMap.get(transformInfoData.OBJECTCONFIG)):
+        if not (stringValidationUtil.isEmpty(hashMap.get(transformInfoData.OBJECTCONFIG))):
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 self.logUtil.putF("TransformInfo override ObjectConfig for: " + self.getName(), self, "override(HashMap hashMap)")
             self.setObjectConfig(hashMap.get(transformInfoData.OBJECTCONFIG))
         objectConfigFileName: str = hashMap.get(transformInfoData.OBJECTCONFIGFILENAME)
-        if not stringValidationUtil.isEmpty(objectConfigFileName):
+        if not (stringValidationUtil.isEmpty(objectConfigFileName)):
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 self.logUtil.putF("TransformInfo override ObjectConfig File for: " + self.getName(), self, "override(HashMap hashMap)")
             self.setObjectConfigFile(objectConfigFileName)
         type_: str = hashMap.get(OutputTypeData.getInstance().NAME)
-        if not stringValidationUtil.isEmpty(type_):
+        if not (stringValidationUtil.isEmpty(type_)):
             if self.getObjectConfigInterface() is None:
                 self.setObjectConfigInterface(TransformInfoObjectConfig(self))
             self.getObjectConfigInterface().setOutputTypeName(type_)
         aTemplateFileName: str = hashMap.get(transformInfoData.TEMPLATEFILENAME)
-        if not stringValidationUtil.isEmpty(aTemplateFileName):
+        if not (stringValidationUtil.isEmpty(aTemplateFileName)):
             self.templateFileName = aTemplateFileName
         aTemplate: str = hashMap.get(transformInfoData.TEMPLATE)
-        if not stringValidationUtil.isEmpty(aTemplate):
+        if not (stringValidationUtil.isEmpty(aTemplate)):
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 self.logUtil.putF("TransformInfo override Template for: " + self.getName(), self, "override(HashMap hashMap)")
             fileDataString: str = CryptFileReader(TransformInfoTemplateData.getInstance().UNCRYPTED_EXTENSION, TransformInfoTemplateData.getInstance().ENCRYPTED_EXTENSION).get(AbPath(str(fileAbPath), aTemplate))
-            if not stringValidationUtil.isEmpty(fileDataString):
+            if not (stringValidationUtil.isEmpty(fileDataString)):
                 self.template = fileDataString
         aDataFileName: str = hashMap.get(transformInfoData.DATAFILENAME)
-        if not stringValidationUtil.isEmpty(aDataFileName):
+        if not (stringValidationUtil.isEmpty(aDataFileName)):
             self.dataFileName = aDataFileName
         aData: str = hashMap.get(transformInfoData.DATA)
-        if not stringValidationUtil.isEmpty(aData):
+        if not (stringValidationUtil.isEmpty(aData)):
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                 self.logUtil.putF("TransformInfo override Data for: " + self.getName(), self, "override(HashMap hashMap)")
             fileDataString: str = CryptFileReader(TransformInfoDataData.getInstance().UNCRYPTED_EXTENSION, TransformInfoDataData.getInstance().ENCRYPTED_EXTENSION).get(AbPath(str(fileAbPath), aData))
-            if not stringValidationUtil.isEmpty(fileDataString):
+            if not (stringValidationUtil.isEmpty(fileDataString)):
                 self.data = fileDataString
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             stringBuffer = StringMaker()
@@ -312,10 +312,10 @@ class TransformInfo(TransformInfoInterface):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         stringValidationUtil: StringValidationUtil = StringValidationUtil.getInstance()
         dataFileString: str = self.getDataFile()
-        if not stringValidationUtil.isEmpty(dataFileString):
+        if not (stringValidationUtil.isEmpty(dataFileString)):
             try:
                 fileData: str = CryptFileReader(TransformInfoDataData.getInstance().UNCRYPTED_EXTENSION, TransformInfoDataData.getInstance().ENCRYPTED_EXTENSION).get(self.getDataFilePath())
-                if not stringValidationUtil.isEmpty(self.data):
+                if not (stringValidationUtil.isEmpty(self.data)):
                     if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
                         self.logUtil.putF("Data File overriding existing data: " + str(self.getDataFilePath()), self, "getData()")
                 self.data = fileData
@@ -323,7 +323,7 @@ class TransformInfo(TransformInfoInterface):
                 if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEWERROR):
                     self.logUtil.put("Could Not Load Data from: " + str(self.getDataFile()), self, "getData()", e)
         try:
-            if not stringValidationUtil.isEmpty(self.data):
+            if not (stringValidationUtil.isEmpty(self.data)):
                 if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEWERROR):
                     self.logUtil.putF("Data: " + XmlDocumentHelper.toString(DomDocumentHelper.create(self.data)), self, "getData()")
             else:
@@ -366,6 +366,7 @@ class TransformInfo(TransformInfoInterface):
     
 
     def toHashMap(self) -> HashMap:
+        from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
         from java.util.HashMap import HashMap
         from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
         from org.allbinary.business.entry.EntryData import EntryData
@@ -416,11 +417,11 @@ class TransformInfo(TransformInfoInterface):
     
 
     def setChild(self) -> None:
-        self.isChild = True
+        self.isChild_field = True
     
 
     def isChild(self) -> bool:
-        return self.isChild
+        return self.isChild_field
     
 
     def getObjectConfigInterface(self) -> TransformInfoObjectConfigInterface:

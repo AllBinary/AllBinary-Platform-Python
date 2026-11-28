@@ -29,7 +29,7 @@ class ABSystemWrapper:
     
 
     def arraycopy(self, src: object, srcPos: int, dest: object, destPos: int, length: int) -> None:
-        dest[destPos:destPos + length] = src[srcPos:srcPos + length]
+        __import__("java.lang.System", fromlist=["System"]).System.arraycopy(src, srcPos, dest, destPos, length)
     
 
     def currentTimeMillis(self) -> int:

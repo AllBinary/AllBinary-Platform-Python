@@ -20,12 +20,12 @@ from __future__ import annotations
 class ImageUnifierCell:
 
     def _init_fields(self) -> None:
-        self.width: int = None
-        self.height: int = None
+        if "width" not in vars(self): self.width: int = None
+        if "height" not in vars(self): self.height: int = None
     
 
     def __init__(self, width: int, height: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.setWidth(width)
         self.setHeight(height)
     

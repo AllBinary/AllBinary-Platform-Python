@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tables.TableMappingInterface import TableMappingInterface
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 
 
 # Java interface
+@java_inherited_overloads
 class PaymentTransactionInterface(*java_bases(TableMappingInterface, DomNodeInterface)):
     
 

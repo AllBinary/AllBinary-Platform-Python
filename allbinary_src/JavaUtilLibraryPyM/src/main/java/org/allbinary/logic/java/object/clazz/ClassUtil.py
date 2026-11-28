@@ -45,7 +45,7 @@ class ClassUtil:
             classes: list[type] = myClass.getClasses()
             stringBuffer.append(lineBreak)
             stringBuffer.append("Class: ")
-            stringBuffer.append(myClass.__module__ + "." + myClass.__qualname__)
+            stringBuffer.append(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(myClass))
             stringBuffer.append(" uses ")
             stringBuffer.appendint(len(classes))
             stringBuffer.append(" other classes")

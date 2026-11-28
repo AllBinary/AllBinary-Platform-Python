@@ -15,26 +15,32 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from admin.taghelpers.BasicTable import BasicTable
 
 
+@java_inherited_overloads
 class WorkFlowHelper(BasicTable):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("hashMap", None)
+        vars(self).setdefault("pageContext", None)
+        vars(self).setdefault("portion", None)
 
     def _init_fields(self) -> None:
-        from java.util.HashMap import HashMap
-        from org.allbinary.business.installer.Portion import Portion
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.hashMap: HashMap = None
-        self.pageContext: PageContext = None
-        self.portion: Portion = None
+        if "hashMap" not in vars(self): self.hashMap: HashMap = None
+        if "pageContext" not in vars(self): self.pageContext: PageContext = None
+        if "portion" not in vars(self): self.portion: Portion = None
     
 
     def __init__(self, hashMap: HashMap, pageContext: PageContext) -> None:
+        __class__._java_defaults(self)
         from java.util.HashMap import HashMap
         from org.allbinary.business.installer.Portion import Portion
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.hashMap = hashMap
         self.pageContext = pageContext
         self.portion = Portion(hashMap)

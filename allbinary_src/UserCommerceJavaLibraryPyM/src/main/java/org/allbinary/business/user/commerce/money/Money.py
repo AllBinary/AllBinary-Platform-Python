@@ -15,48 +15,50 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 
 
 class Money:
 
     def _init_fields(self) -> None:
-        self.units: int = None
+        if "units" not in vars(self): self.units: int = None
         self.DEFAULT_CURRENCY: str = "USD"
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self.__jconstructor1(*args)
+            __class__.__jconstructor1(self, *args)
         elif len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
 
     def __jconstructor1(self, *args) -> None:
-        if True and not isinstance(args[0], (str, list, int, float)):
-            self._constructor1_1(*args)
+        if True and (args[0] is None or any(base.__name__ == "Money" for base in type(args[0]).__mro__)):
+            __class__._constructor1_1(self, *args)
         elif True and (args[0] is None or isinstance(args[0], str)):
-            self._constructor1_2(*args)
+            __class__._constructor1_2(self, *args)
         else:
-            self._constructor1_3(*args)
+            __class__._constructor1_3(self, *args)
     
 
     def _constructor1_1(self, money: Money) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.units = int(money.getUnits())
     
 
     def _constructor0(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.units = int(0)
     
 
     def _constructor1_2(self, usDollarStr: str) -> None:
         from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-        self._init_fields()
+        __class__._init_fields(self)
         if usDollarStr is not None and StringValidationUtil.getInstance().isNumber(usDollarStr):
             self.units = int(self.convertUsdToUnits(usDollarStr))
     
 
     def _constructor1_3(self, units: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.units = int(units)
     
 
@@ -77,11 +79,13 @@ class Money:
         self.units = int(int(self.units) + self.convertUsdToUnits(usDollarStr))
 
     def add(self, *args):
-        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
-            return self.add_j1_1(*args)
+        if len(args) == 1 and True and (args[0] is None or any(base.__name__ == "Money" for base in type(args[0]).__mro__)):
+            return __class__.__dict__["add_j1_1"].__get__(self, __class__)(*args)
         if len(args) == 1:
-            return self.add_j1_2(*args)
-        return getattr(self, "add_j" + str(len(args)))(*args)
+            return __class__.__dict__["add_j1_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("add_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().add(*args)
     
 
     def subtract(self, usDollarStr: str) -> None:
@@ -99,10 +103,12 @@ class Money:
 
     def multiply(self, *args):
         if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
-            return self.multiply_j1_1(*args)
+            return __class__.__dict__["multiply_j1_1"].__get__(self, __class__)(*args)
         if len(args) == 1:
-            return self.multiply_j1_2(*args)
-        return getattr(self, "multiply_j" + str(len(args)))(*args)
+            return __class__.__dict__["multiply_j1_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("multiply_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().multiply(*args)
     
 
     def convertUnitsTo(self, currency: str) -> str:
@@ -111,7 +117,8 @@ class Money:
         from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
         stringBuffer: StringMaker = StringMaker()
         if ((currency > self.DEFAULT_CURRENCY) - (currency < self.DEFAULT_CURRENCY)) == 0:
-            dollar: int = int(self.units) / 100
+            dollar: int = java_divide(int(self.units), 100)
+            
             cents: int = int(self.units) - (dollar * 100)
             stringBuffer.append(str(int(dollar)))
             stringBuffer.append(AbPathData.getInstance().EXTENSION_SEP)

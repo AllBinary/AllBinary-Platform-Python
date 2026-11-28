@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -33,7 +34,7 @@ class MidletExitProcessorFactory:
         from org.allbinary.AppletUtil import AppletUtil
         from org.allbinary.J2MEUtil import J2MEUtil
         from org.allbinary.canvas.Processor import Processor
-        if AppletUtil.isAppletLoader(midlet) or J2MEUtil.isJ2ME():
+        if AppletUtil.isAppletLoader(midlet) or java_predicate(J2MEUtil, "isJ2ME"):
             return Processor.getInstance()
         else:
             return MidletExitProcessor(midlet)

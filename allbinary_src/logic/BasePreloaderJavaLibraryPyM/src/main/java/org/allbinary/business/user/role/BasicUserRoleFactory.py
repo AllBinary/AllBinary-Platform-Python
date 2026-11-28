@@ -45,7 +45,7 @@ class BasicUserRoleFactory:
         self.VIEWEDITOR: BasicUserRole = BasicUserRole("ViewEditor", "View Editor", 15, self.MAXSESSIONTIME, self.INACTIVITYTIMEOUT)
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

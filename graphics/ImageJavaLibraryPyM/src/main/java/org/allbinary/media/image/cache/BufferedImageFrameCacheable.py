@@ -21,12 +21,12 @@ from org.allbinary.logic.util.cache.CacheableInterface import CacheableInterface
 class BufferedImageFrameCacheable(CacheableInterface):
 
     def _init_fields(self) -> None:
-        self.frame: int = None
-        self.bufferedImage: BufferedImage = None
+        if "frame" not in vars(self): self.frame: int = None
+        if "bufferedImage" not in vars(self): self.bufferedImage: BufferedImage = None
     
 
     def __init__(self, bufferedImage: BufferedImage, frame: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.frame = frame
         self.setBufferedImage(bufferedImage)
     
@@ -54,7 +54,7 @@ class BufferedImageFrameCacheable(CacheableInterface):
     def toString(self) -> str:
         from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
-        stringBuffer.append(type(self).__module__ + "." + type(self).__qualname__)
+        stringBuffer.append(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(self)))
         stringBuffer.append(" Frame: ")
         stringBuffer.appendlong(self.getFrame())
         return str(stringBuffer)

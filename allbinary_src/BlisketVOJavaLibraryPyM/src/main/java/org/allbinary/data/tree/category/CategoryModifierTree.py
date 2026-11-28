@@ -15,14 +15,21 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tree.category.CategoryPrivateTree import CategoryPrivateTree
 from org.allbinary.data.tree.category.CategoryModifierTreeInterface import CategoryModifierTreeInterface
 
 
+@java_inherited_overloads
 class CategoryModifierTree(*java_bases(CategoryPrivateTree, CategoryModifierTreeInterface)):
     _lock = threading.RLock()
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("directory", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -34,18 +41,19 @@ class CategoryModifierTree(*java_bases(CategoryPrivateTree, CategoryModifierTree
     
 
     def __init__(self, categoryFactoryInterface: CategoryFactoryInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.category.CategoryFactoryInterface import CategoryFactoryInterface
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__(categoryFactoryInterface)
-        self._init_fields()
+        __class__._init_fields(self)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().CATEGORY):
             self.logUtil.putF(self.commonStrings.START, self, "CategoryModifierTree(CategoryFactoryInterface categoryFactoryInterface)")
     
 
     def insert(self, parentCategoryInterface: CategoryInterface, newChildCategoryInterface: CategoryInterface) -> None:
         with self._lock:
-            return self._insert_unlocked(parentCategoryInterface, newChildCategoryInterface)
+            return __class__.__dict__["_insert_unlocked"].__get__(self, __class__)(parentCategoryInterface, newChildCategoryInterface)
 
     def _insert_unlocked(self, parentCategoryInterface: CategoryInterface, newChildCategoryInterface: CategoryInterface) -> None:
         from org.allbinary.business.category.CategoryInterface import CategoryInterface
@@ -56,7 +64,7 @@ class CategoryModifierTree(*java_bases(CategoryPrivateTree, CategoryModifierTree
         try:
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().CATEGORY):
                 self.logUtil.putF("Inserting", self, "insert()")
-            if parentCategoryInterface.isValid():
+            if java_predicate(parentCategoryInterface, "isValid"):
                 parentCategoryInterface.addChild(newChildCategoryInterface)
                 directoryToBeCreatedAbPath: AbPath = AbPath(str(newChildCategoryInterface.getRootFilePath()) + str(newChildCategoryInterface.getPath()), StringUtil.getInstance().EMPTY_STRING)
                 self.directory.create(directoryToBeCreatedAbPath)
@@ -73,7 +81,7 @@ class CategoryModifierTree(*java_bases(CategoryPrivateTree, CategoryModifierTree
 
     def delete(self, parentCategoryInterface: CategoryInterface, existingChildCategoryInterface: CategoryInterface) -> None:
         with self._lock:
-            return self._delete_unlocked(parentCategoryInterface, existingChildCategoryInterface)
+            return __class__.__dict__["_delete_unlocked"].__get__(self, __class__)(parentCategoryInterface, existingChildCategoryInterface)
 
     def _delete_unlocked(self, parentCategoryInterface: CategoryInterface, existingChildCategoryInterface: CategoryInterface) -> None:
         from org.allbinary.business.category.CategoryInterface import CategoryInterface
@@ -82,7 +90,7 @@ class CategoryModifierTree(*java_bases(CategoryPrivateTree, CategoryModifierTree
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            if parentCategoryInterface.isValid():
+            if java_predicate(parentCategoryInterface, "isValid"):
                 parentCategoryInterface.addChild(existingChildCategoryInterface)
                 directoryToBeDeletedAbPath: AbPath = AbPath(str(existingChildCategoryInterface.getRootFilePath()) + str(existingChildCategoryInterface.getPath()), StringUtil.getInstance().EMPTY_STRING)
                 self.delete(existingChildCategoryInterface)
@@ -94,6 +102,10 @@ class CategoryModifierTree(*java_bases(CategoryPrivateTree, CategoryModifierTree
         except Exception as e:
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.put(self.commonStrings.FAILURE, self, self.commonStrings.delete, e)
+    _declared_delete = delete
+    def delete(self, *args, **kwargs):
+        if len(args) + len(kwargs) == 2 and (kwargs or (True and (args[0] is None or any(base.__name__ == "CategoryInterface" for base in type(args[0]).__mro__)) and (args[1] is None or any(base.__name__ == "CategoryInterface" for base in type(args[1]).__mro__)))): return __class__._declared_delete(self, *args, **kwargs)
+        return super().delete(*args, **kwargs)
 # from org.allbinary.business.category.CategoryFactoryInterface import CategoryFactoryInterface
 # from org.allbinary.business.category.CategoryInterface import CategoryInterface
 # from org.allbinary.logic.communication.log.LogUtil import LogUtil

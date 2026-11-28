@@ -15,35 +15,50 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.game.displayable.canvas.BasicMenuInputProcessor import BasicMenuInputProcessor
 
 
 #In general allow scrolling of the menu and selection the center item
+@java_inherited_overloads
 class CommandFormInputProcessor(BasicMenuInputProcessor):
+    def _java_defaults(self):
+        vars(self).setdefault("MOTION_GESTURE_SOURCE_ID", 0)
+        vars(self).setdefault("CLICK_DELAY", 0)
+        vars(self).setdefault("clickTimeHelper", None)
+        vars(self).setdefault("DOUBLE_CLICK_DELAY", 0)
+        vars(self).setdefault("doubleClickTimeHelper", None)
+        vars(self).setdefault("isSingleKeyProcessing", False)
+        vars(self).setdefault("form", None)
+        vars(self).setdefault("hasPressed", False)
+        vars(self).setdefault("PROCESS_COMMAND", None)
+        vars(self).setdefault("NAME_LABEL", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.game.configuration.feature.InputFeatureFactory import InputFeatureFactory
         from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
-        from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
         from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         self.MOTION_GESTURE_SOURCE_ID: int = GameKeyEventFactory.getInstance().MOTION_GESTURE_SOURCE_ID
         self.CLICK_DELAY: int = 150
         self.clickTimeHelper: TimeDelayHelper = TimeDelayHelper(self.CLICK_DELAY)
         self.DOUBLE_CLICK_DELAY: int = 1200
         self.doubleClickTimeHelper: TimeDelayHelper = TimeDelayHelper(self.DOUBLE_CLICK_DELAY)
-        self.isSingleKeyProcessing: bool = InputFeatureFactory.getInstance().isSingleKeyProcessing()
-        self.form: ScrollSelectionForm = None
+        self.isSingleKeyProcessing: bool = java_predicate(InputFeatureFactory.getInstance(), "isSingleKeyProcessing")
+        if "form" not in vars(self): self.form: ScrollSelectionForm = None
         self.hasPressed: bool = False
         self.PROCESS_COMMAND: str = "processCommand"
         self.NAME_LABEL: str = " ScrollSelectionForm: "
     
 
     def __init__(self, gameKeyEventList: BasicArrayList, playerInputId: int, gameCanvas: MyCanvas, form: ScrollSelectionForm) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
         from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
         from org.allbinary.util.BasicArrayList import BasicArrayList
         super().__init__(gameKeyEventList, playerInputId, gameCanvas)
-        self._init_fields()
+        __class__._init_fields(self)
         self.form = form
     
 
@@ -141,14 +156,14 @@ class CommandFormInputProcessor(BasicMenuInputProcessor):
                 if index != -1:
                     PrimaryPlayerQueueFactory.getInstance().add(SelectSound.getInstance())
                     if index == self.form.getSelectedIndex():
-                        if self.clickTimeHelper.isTimeTNT():
+                        if java_predicate(self.clickTimeHelper, "isTimeTNT"):
                             self.processCommand()
                     else:
                         self.form.setSelectedIndex(index)
                 else:
                     pass
             if self.hasPressed:
-                if not self.doubleClickTimeHelper.isTimeTNT():
+                if not (java_predicate(self.doubleClickTimeHelper, "isTimeTNT")):
                     self.logUtil.putF("Double Press", self, self.gameInputStrings.PROCESS_MOTION_INPUT)
                     self.processCommand()
                 self.doubleClickTimeHelper.delay = self.DOUBLE_CLICK_DELAY
@@ -161,7 +176,7 @@ class CommandFormInputProcessor(BasicMenuInputProcessor):
 
     def toString(self) -> str:
         from org.allbinary.logic.string.StringMaker import StringMaker
-        return str(StringMaker().append(str(super())).append(self.NAME_LABEL).append(str(self.form)))
+        return str(StringMaker().append(java_super_call(super(), "toString")).append(self.NAME_LABEL).append(str(self.form)))
 
     def __str__(self) -> str:
         return self.toString()

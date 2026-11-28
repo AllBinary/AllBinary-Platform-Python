@@ -21,18 +21,16 @@ from org.osgi.framework.BundleActivator import BundleActivator
 class InputAutomationModuleBundleActivator(BundleActivator):
 
     def _init_fields(self) -> None:
-        from org.osgi.framework.ServiceFactory import ServiceFactory
-        from org.allbinary.input.automation.module.InputAutomationModuleFactoryInterface import InputAutomationModuleFactoryInterface
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.inputAutomationModuleInterface: list[InputAutomationModuleFactoryInterface] = None
-        self.serviceFactory: ServiceFactory = None
+        if "inputAutomationModuleInterface" not in vars(self): self.inputAutomationModuleInterface: list[InputAutomationModuleFactoryInterface] = None
+        if "serviceFactory" not in vars(self): self.serviceFactory: ServiceFactory = None
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.init()
     
 
@@ -46,14 +44,14 @@ class InputAutomationModuleBundleActivator(BundleActivator):
         from org.osgi.framework.BundleContext import BundleContext
         from org.osgi.framework.ServiceReference import ServiceReference
         from bundle.input.automation.module.configuration.InputAutomationConfigurationModuleChangeListener import InputAutomationConfigurationModuleChangeListener
-        serviceReference: ServiceReference = context.getServiceReference(InputAutomationConfigurationModuleChangeListener.__module__ + "." + InputAutomationConfigurationModuleChangeListener.__qualname__)
+        serviceReference: ServiceReference = context.getServiceReference(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(InputAutomationConfigurationModuleChangeListener))
         if serviceReference is not None:
             inputAutomationConfigurationModuleChangeListener: InputAutomationConfigurationModuleChangeListener = context.getService(serviceReference)
             if inputAutomationConfigurationModuleChangeListener is None:
                 raise Exception("No Service For ServiceReference")
             return inputAutomationConfigurationModuleChangeListener
         else:
-            self.logUtil.putF("No ServiceReference: " + InputAutomationConfigurationModuleChangeListener.__module__ + "." + InputAutomationConfigurationModuleChangeListener.__qualname__, self, "addModules")
+            self.logUtil.putF("No ServiceReference: " + __import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(InputAutomationConfigurationModuleChangeListener), self, "addModules")
             return None
     
 
@@ -78,7 +76,7 @@ class InputAutomationModuleBundleActivator(BundleActivator):
         from org.osgi.framework.BundleContext import BundleContext
         from bundle.input.automation.module.InputAutomationModuleServiceInterface import InputAutomationModuleServiceInterface
         from org.allbinary.osgi.OSGIActivatorUtil import OSGIActivatorUtil
-        OSGIActivatorUtil.registerAsService(bundleContext, self.getServiceFactory(), InputAutomationModuleServiceInterface.__module__ + "." + InputAutomationModuleServiceInterface.__qualname__)
+        OSGIActivatorUtil.registerAsService(bundleContext, self.getServiceFactory(), __import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(InputAutomationModuleServiceInterface))
     
 
     def removeModules(self, context: BundleContext) -> None:

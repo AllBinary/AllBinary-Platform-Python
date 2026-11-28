@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -29,7 +30,7 @@ class RTSLayerUtil:
         self.MAX_RELOAD_TIME: int = int(int(2147483647) / 100000)
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -44,7 +45,8 @@ class RTSLayerUtil:
             reloadTime = reloadTime + 50
         elif lastLevel < currentLevel:
             reloadTime = reloadTime - 50
-        newWeaponProperties: WeaponProperties = WeaponProperties(reloadTime, weaponProperties.getTargetingTime(), weaponProperties.getSpeed().getUnscaled(), weaponProperties.getDamage() / lastLevel * currentLevel, weaponProperties.getDissipation())
+        newWeaponProperties: WeaponProperties = WeaponProperties(reloadTime, weaponProperties.getTargetingTime(), weaponProperties.getSpeed().getUnscaled(), java_divide(weaponProperties.getDamage(), lastLevel)
+             * currentLevel, weaponProperties.getDissipation())
         return newWeaponProperties
     
 
@@ -82,7 +84,8 @@ class RTSLayerUtil:
 
     def getWeaponPropertiesCost(self, weaponProperties: WeaponProperties) -> int:
         from org.allbinary.game.combat.weapon.WeaponProperties import WeaponProperties
-        cost: int = (weaponProperties.getDamage() + weaponProperties.getRange() + ((self.MAX_RELOAD_TIME / weaponProperties.getReloadTime()) >> 1))
+        cost: int = (weaponProperties.getDamage() + weaponProperties.getRange() + ((java_divide(self.MAX_RELOAD_TIME, weaponProperties.getReloadTime())
+            ) >> 1))
         cost = self.getCostExponential(cost)
         return cost
     
@@ -160,6 +163,7 @@ class RTSLayerUtil:
 
     def createFakeRTSLayerHashtable(self, baseRaceTrackGeographicMap: BaseRaceTrackGeographicMap) -> ABHashtable[object, object]:
         from org.allbinary.game.layer.FakeLayerManager import FakeLayerManager
+        from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
         from org.allbinary.direction.DirectionFactory import DirectionFactory
         from org.allbinary.game.GameInfo import GameInfo
         from org.allbinary.game.identification.BasicGroupFactory import BasicGroupFactory

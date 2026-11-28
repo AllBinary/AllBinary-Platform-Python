@@ -15,30 +15,41 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.input.automation.module.actions.script.condition.processors.output.BasicProfileActionScriptOutput import BasicProfileActionScriptOutput
 from org.allbinary.input.automation.module.actions.script.condition.processors.output.ImageActionScriptOutputInterface import ImageActionScriptOutputInterface
 
 
+@java_inherited_overloads
 class ImageActionScriptOutput(*java_bases(BasicProfileActionScriptOutput, ImageActionScriptOutputInterface)):
     NAME: str = "Captures"
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("saved", False)
+        vars(self).setdefault("display", False)
+        vars(self).setdefault("imageTypes", None)
+        vars(self).setdefault("actionScriptOutputJPanel", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.saved: bool = False
         self.display: bool = False
-        self.imageTypes: ImageTypes = None
-        self.actionScriptOutputJPanel: ImageActionScriptOutputJPanel = None
+        if "imageTypes" not in vars(self): self.imageTypes: ImageTypes = None
+        if "actionScriptOutputJPanel" not in vars(self): self.actionScriptOutputJPanel: ImageActionScriptOutputJPanel = None
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
         elif len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
     
 
     def _constructor1(self, node: Node) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.input.automation.module.actions.script.condition.processors.output.ImageActionScriptOutputData import ImageActionScriptOutputData
         from org.allbinary.input.automation.module.actions.script.condition.processors.output.ImageActionScriptOutputData import ImageActionScriptOutputData
         from org.allbinary.input.automation.module.actions.script.condition.processors.output.ImageActionScriptOutputData import ImageActionScriptOutputData
@@ -50,7 +61,7 @@ class ImageActionScriptOutput(*java_bases(BasicProfileActionScriptOutput, ImageA
         from org.w3c.dom.Node import Node
         from org.w3c.dom.NodeList import NodeList
         super().__init__(ImageActionScriptOutput.NAME, node)
-        self._init_fields()
+        __class__._init_fields(self)
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
         actionNode: Node = DomSearchHelper.getNode(ImageActionScriptOutputData.NAME, node.getChildNodes())
         if actionNode is not None:
@@ -74,10 +85,11 @@ class ImageActionScriptOutput(*java_bases(BasicProfileActionScriptOutput, ImageA
     
 
     def _constructor0(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.input.automation.module.actions.script.condition.processors.output.ImageTypes import ImageTypes
         from org.allbinary.input.automation.module.actions.script.condition.processors.output.ImageActionScriptOutputJPanel import ImageActionScriptOutputJPanel
         super().__init__(ImageActionScriptOutput.NAME)
-        self._init_fields()
+        __class__._init_fields(self)
         self.setImageTypes(ImageTypes())
         self.setAllowsChildren(False)
         self.actionScriptOutputJPanel = ImageActionScriptOutputJPanel(self)
@@ -93,8 +105,8 @@ class ImageActionScriptOutput(*java_bases(BasicProfileActionScriptOutput, ImageA
         from java.util.HashMap import HashMap
         from org.allbinary.logic.StdUtil import StdUtil
         hashMap: HashMap = StdUtil.getInstance().createHashMap()
-        hashMap.put(ImageActionScriptOutputData.DISPLAY, str(self.isDisplay()))
-        hashMap.put(ImageActionScriptOutputData.SAVE, str(self.isSaved()))
+        hashMap.put(ImageActionScriptOutputData.DISPLAY, str(java_predicate(self, "isDisplay")))
+        hashMap.put(ImageActionScriptOutputData.SAVE, str(java_predicate(self, "isSaved")))
         self.logUtil.putF("HashMap: " + str(hashMap), self, "toHashMap()")
         return hashMap
     
@@ -105,7 +117,7 @@ class ImageActionScriptOutput(*java_bases(BasicProfileActionScriptOutput, ImageA
         from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
         from org.w3c.dom.Document import Document
         from org.w3c.dom.Node import Node
-        node: Node = super().toXmlNode(document)
+        node: Node = java_super_call(super(), "toXmlNode", document)
         newNode: Node = ModDomHelper.createNodeWithValueNodes(document, ImageActionScriptOutputData.NAME, self.toHashMap())
         newNode.appendChild(self.getImageTypes().toXmlNode(document))
         node.appendChild(newNode)
@@ -142,9 +154,9 @@ class ImageActionScriptOutput(*java_bases(BasicProfileActionScriptOutput, ImageA
         from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append(" Is Save: ")
-        stringBuffer.appendboolean(self.isSaved())
+        stringBuffer.appendboolean(java_predicate(self, "isSaved"))
         stringBuffer.append(" Is Display: ")
-        stringBuffer.appendboolean(self.isDisplay())
+        stringBuffer.appendboolean(java_predicate(self, "isDisplay"))
         stringBuffer.append(" ")
         stringBuffer.append(str(self.getImageTypes()))
         return str(stringBuffer)

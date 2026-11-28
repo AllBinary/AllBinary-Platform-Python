@@ -16,13 +16,19 @@
 from __future__ import annotations
 
 import random
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import datetime
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.communication.sql.AbSqlBean import AbSqlBean
 from org.allbinary.data.tables.user.commerce.money.payment.PaymentEntityInterface import PaymentEntityInterface
 
 
+@java_inherited_overloads
 class PaymentEntity(*java_bases(AbSqlBean, PaymentEntityInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("tableName", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -31,16 +37,17 @@ class PaymentEntity(*java_bases(AbSqlBean, PaymentEntityInterface)):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
         super().__init__(UserDbInitInfo())
-        self._init_fields()
+        __class__._init_fields(self)
         self.setTableName(self.tableName)
     
 
     def getLastId(self, userName: str) -> str:
         from org.allbinary.business.user.UserData import UserData
         from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
-        return super().getLargestIntegerInColumnWhere(PaymentData.ID, UserData.USERNAME, userName)
+        return java_super_call(super(), "getLargestIntegerInColumnWhere", PaymentData.ID, UserData.USERNAME, userName)
     
 
     def setDefault(self, userName: str, index: int) -> None:
@@ -61,10 +68,10 @@ class PaymentEntity(*java_bases(AbSqlBean, PaymentEntityInterface)):
             if paymentInterface is not None:
                 updateKeyAndValue.put(EntryData.getInstance().DEFAULT, StringUtil.getInstance().EMPTY_STRING)
                 whereKeyAndValue.put(PaymentData.ID, paymentInterface.getId())
-                super().updateWhere(whereKeyAndValue, updateKeyAndValue)
+                java_super_call(super(), "updateWhere", whereKeyAndValue, updateKeyAndValue)
             updateKeyAndValue.put(EntryData.getInstance().DEFAULT, EntryData.getInstance().DEFAULT)
             whereKeyAndValue.put(PaymentData.ID, str(index))
-            super().updateWhere(whereKeyAndValue, updateKeyAndValue)
+            java_super_call(super(), "updateWhere", whereKeyAndValue, updateKeyAndValue)
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, "setDefault")
         except Exception as e:
@@ -85,7 +92,7 @@ class PaymentEntity(*java_bases(AbSqlBean, PaymentEntityInterface)):
             paymentVector: BasicArrayList = BasicArrayListD()
             keyAndValue: HashMap = StdUtil.getInstance().createHashMap()
             keyAndValue.put(UserData.USERNAME, userName)
-            paymentList: BasicArrayList = super().getRows(keyAndValue)
+            paymentList: BasicArrayList = java_super_call(super(), "getRows", keyAndValue)
             size: int = paymentList.size()
             for index in range(0, size):
                 paymentHashMap: HashMap = paymentList.get(index)
@@ -113,7 +120,7 @@ class PaymentEntity(*java_bases(AbSqlBean, PaymentEntityInterface)):
             updateKeyAndValue: HashMap = StdUtil.getInstance().createHashMap()
             updateKeyAndValue.put(EntryData.getInstance().DEFAULT, EntryData.getInstance().DEFAULT)
             updateKeyAndValue.put(UserData.USERNAME, userName)
-            paymentHashMap = super().getRow(updateKeyAndValue)
+            paymentHashMap = java_super_call(super(), "getRow", updateKeyAndValue)
             if paymentHashMap is not None:
                 payment: Payment = Payment(paymentHashMap)
                 if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
@@ -138,7 +145,7 @@ class PaymentEntity(*java_bases(AbSqlBean, PaymentEntityInterface)):
             whereHashMap: HashMap = StdUtil.getInstance().createHashMap()
             whereHashMap.put(UserData.USERNAME, userName)
             whereHashMap.put(PaymentData.ID, str(index))
-            super().deleteWhere(whereHashMap)
+            java_super_call(super(), "deleteWhere", whereHashMap)
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, "remove")
         except Exception as e:
@@ -169,7 +176,7 @@ class PaymentEntity(*java_bases(AbSqlBean, PaymentEntityInterface)):
             calendar: datetime.datetime = datetime.datetime.now()
             time: str = str(str(int(calendar.getTimeInMillis())))
             vector.add(time)
-            super().insert(vector)
+            java_super_call(super(), "insert", vector)
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, "add")
         except Exception as e:
@@ -189,20 +196,20 @@ class PaymentEntity(*java_bases(AbSqlBean, PaymentEntityInterface)):
     
 
     def createTable(self) -> str:
-        return super().createTable(self.createTableStatement())
+        return java_super_call(super(), "createTable", self.createTableStatement())
     
 
     def drop(self) -> str:
-        return super().dropTable()
+        return java_super_call(super(), "dropTable")
     
 
     def insert(self, values: BasicArrayList) -> None:
         from org.allbinary.util.BasicArrayList import BasicArrayList
-        super().insert(values)
+        java_super_call(super(), "insert", values)
     
 
     def dropTable(self) -> str:
-        return super().dropTable()
+        return java_super_call(super(), "dropTable")
 # from java.util.Calendar import Calendar
 # from java.util.HashMap import HashMap
 # from java.util.Random import Random

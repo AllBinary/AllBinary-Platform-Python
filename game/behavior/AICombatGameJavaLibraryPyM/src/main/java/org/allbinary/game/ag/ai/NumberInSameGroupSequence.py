@@ -20,17 +20,17 @@ from __future__ import annotations
 class NumberInSameGroupSequence:
 
     def _init_fields(self) -> None:
-        self.NUMBER_ON_SAME_TEAM_SEQUENCE_ZERO: int = None
-        self.NUMBER_ON_SAME_TEAM_SEQUENCE_ONE: int = None
-        self.NUMBER_ON_SAME_TEAM_SEQUENCE_TWO: int = None
-        self.NUMBER_ON_SAME_TEAM_SEQUENCE_THREE: int = None
-        self.NUMBER_ON_SAME_TEAM_SEQUENCE_FOUR: int = None
-        self.NUMBER_ON_SAME_TEAM_SEQUENCE_FIVE: int = None
-        self.NUMBER_ON_SAME_TEAM_SEQUENCE_SIX: int = None
-        self.NUMBER_ON_SAME_TEAM_SEQUENCE_SEVEN: int = None
-        self.NUMBER_ON_SAME_TEAM_SEQUENCE_EIGHT: int = None
-        self.NUMBER_ON_SAME_TEAM_SEQUENCE_NINE: int = None
-        self.NUMBER_ON_SAME_TEAM_SEQUENCE: list[int] = None
+        if "NUMBER_ON_SAME_TEAM_SEQUENCE_ZERO" not in vars(self): self.NUMBER_ON_SAME_TEAM_SEQUENCE_ZERO: int = None
+        if "NUMBER_ON_SAME_TEAM_SEQUENCE_ONE" not in vars(self): self.NUMBER_ON_SAME_TEAM_SEQUENCE_ONE: int = None
+        if "NUMBER_ON_SAME_TEAM_SEQUENCE_TWO" not in vars(self): self.NUMBER_ON_SAME_TEAM_SEQUENCE_TWO: int = None
+        if "NUMBER_ON_SAME_TEAM_SEQUENCE_THREE" not in vars(self): self.NUMBER_ON_SAME_TEAM_SEQUENCE_THREE: int = None
+        if "NUMBER_ON_SAME_TEAM_SEQUENCE_FOUR" not in vars(self): self.NUMBER_ON_SAME_TEAM_SEQUENCE_FOUR: int = None
+        if "NUMBER_ON_SAME_TEAM_SEQUENCE_FIVE" not in vars(self): self.NUMBER_ON_SAME_TEAM_SEQUENCE_FIVE: int = None
+        if "NUMBER_ON_SAME_TEAM_SEQUENCE_SIX" not in vars(self): self.NUMBER_ON_SAME_TEAM_SEQUENCE_SIX: int = None
+        if "NUMBER_ON_SAME_TEAM_SEQUENCE_SEVEN" not in vars(self): self.NUMBER_ON_SAME_TEAM_SEQUENCE_SEVEN: int = None
+        if "NUMBER_ON_SAME_TEAM_SEQUENCE_EIGHT" not in vars(self): self.NUMBER_ON_SAME_TEAM_SEQUENCE_EIGHT: int = None
+        if "NUMBER_ON_SAME_TEAM_SEQUENCE_NINE" not in vars(self): self.NUMBER_ON_SAME_TEAM_SEQUENCE_NINE: int = None
+        if "NUMBER_ON_SAME_TEAM_SEQUENCE" not in vars(self): self.NUMBER_ON_SAME_TEAM_SEQUENCE: list[int] = None
     
 
     @staticmethod
@@ -40,7 +40,7 @@ class NumberInSameGroupSequence:
 
     def __init__(self) -> None:
         from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
-        self._init_fields()
+        __class__._init_fields(self)
         smallIntegerSingletonFactory: SmallIntegerSingletonFactory = SmallIntegerSingletonFactory.getInstance()
         self.NUMBER_ON_SAME_TEAM_SEQUENCE_ZERO = smallIntegerSingletonFactory.getAt(100)
         self.NUMBER_ON_SAME_TEAM_SEQUENCE_ONE = smallIntegerSingletonFactory.getAt(101)

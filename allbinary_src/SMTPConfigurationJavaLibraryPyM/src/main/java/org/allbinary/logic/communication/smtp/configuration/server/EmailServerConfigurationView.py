@@ -21,25 +21,28 @@ from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 class EmailServerConfigurationView(DomNodeInterface):
 
     def _init_fields(self) -> None:
-        self.emailServerConfigurationInterface: EmailServerConfigurationInterface = None
+        if "emailServerConfigurationInterface" not in vars(self): self.emailServerConfigurationInterface: EmailServerConfigurationInterface = None
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self.__jconstructor1(*args)
+            __class__.__jconstructor1(self, *args)
 
     def __jconstructor1(self, *args) -> None:
-        if True and not isinstance(args[0], (str, list, int, float)):
-            self._constructor1_1(*args)
+        if True and (args[0] is None or any(base.__name__ == "Node" for base in type(args[0]).__mro__)):
+            __class__._constructor1_1(self, *args)
         else:
-            self._constructor1_2(*args)
+            __class__._constructor1_2(self, *args)
     
 
     def _constructor1_1(self, node: Node) -> None:
+        from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfigurationData import EmailServerConfigurationData
+        from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfigurationData import EmailServerConfigurationData
+        from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfigurationData import EmailServerConfigurationData
         from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfiguration import EmailServerConfiguration
         from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
         from org.w3c.dom.Node import Node
         from org.w3c.dom.NodeList import NodeList
-        self._init_fields()
+        __class__._init_fields(self)
         childNodeList: NodeList = node.getChildNodes()
         server: str = DomNodeHelper.getTextNodeValue(EmailServerConfigurationData.SERVER, childNodeList)
         accountName: str = DomNodeHelper.getTextNodeValue(EmailServerConfigurationData.ACCOUNT, childNodeList)
@@ -48,7 +51,7 @@ class EmailServerConfigurationView(DomNodeInterface):
     
 
     def _constructor1_2(self, emailServerConfigurationInterface: EmailServerConfigurationInterface) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.emailServerConfigurationInterface = emailServerConfigurationInterface
     
 
@@ -59,6 +62,7 @@ class EmailServerConfigurationView(DomNodeInterface):
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
         from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfigurationMapping import EmailServerConfigurationMapping
+        from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfigurationData import EmailServerConfigurationData
         from java.util.HashMap import HashMap
         from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
         from org.w3c.dom.Document import Document

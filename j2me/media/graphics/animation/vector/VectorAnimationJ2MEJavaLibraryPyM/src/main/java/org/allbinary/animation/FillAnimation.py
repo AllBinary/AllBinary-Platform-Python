@@ -3,20 +3,28 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.animation.IndexedAnimation import IndexedAnimation
 
 
+@java_inherited_overloads
 class FillAnimation(IndexedAnimation):
+    def _java_defaults(self):
+        vars(self).setdefault("pixelBuffer", None)
+        vars(self).setdefault("width", 0)
+        vars(self).setdefault("height", 0)
 
     def _init_fields(self) -> None:
-        self.pixelBuffer: list[int] = None
-        self.width: int = None
-        self.height: int = None
+        if "pixelBuffer" not in vars(self): self.pixelBuffer: list[int] = None
+        if "width" not in vars(self): self.width: int = 0
+        if "height" not in vars(self): self.height: int = 0
     
 
     def __init__(self, pixelBuffer: list[int], width: int, height: int, animationBehavior: AnimationBehavior) -> None:
+        __class__._java_defaults(self)
         super().__init__(animationBehavior)
-        self._init_fields()
+        __class__._init_fields(self)
         self.width = 100
         self.height = 100
         self.pixelBuffer = pixelBuffer
@@ -27,7 +35,7 @@ class FillAnimation(IndexedAnimation):
         changed: bool = False
         if self.getBasicColorP() is None or int(self.getBasicColorP()) != int(basicColor):
             changed = True
-        super().setBasicColorP(basicColor)
+        java_super_call(super(), "setBasicColorP", basicColor)
         if changed:
             self.updateModifiers()
     
@@ -37,7 +45,7 @@ class FillAnimation(IndexedAnimation):
         changed: bool = False
         if self.getChangeBasicColor() is None or int(self.getChangeBasicColor()) != int(basicColor):
             changed = True
-        super().changeBasicColor(basicColor)
+        java_super_call(super(), "changeBasicColor", basicColor)
         if changed:
             self.updateModifiers()
     
@@ -46,7 +54,7 @@ class FillAnimation(IndexedAnimation):
         changed: bool = False
         if self.alphaP != alpha:
             changed = True
-        super().setAlpha(alpha)
+        java_super_call(super(), "setAlpha", alpha)
         if changed:
             self.updateModifiers()
     

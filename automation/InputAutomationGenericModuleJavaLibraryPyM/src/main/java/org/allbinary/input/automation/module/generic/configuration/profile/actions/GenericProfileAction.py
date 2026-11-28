@@ -21,18 +21,17 @@ from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 class GenericProfileAction(DomNodeInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.GenericProfileActionScript import GenericProfileActionScript
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.name: str = None
-        self.genericProfileActionScript: GenericProfileActionScript = None
-        self.genericProfileActionJPanel: GenericProfileActionJPanel = None
+        if "name" not in vars(self): self.name: str = None
+        if "genericProfileActionScript" not in vars(self): self.genericProfileActionScript: GenericProfileActionScript = None
+        if "genericProfileActionJPanel" not in vars(self): self.genericProfileActionJPanel: GenericProfileActionJPanel = None
 
     def __init__(self, *args) -> None:
         if len(args) == 2:
-            self._constructor2(*args)
+            __class__._constructor2(self, *args)
         elif len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
     
 
     def _constructor2(self, genericProfileActionJPanel: GenericProfileActionJPanel, node: Node) -> None:
@@ -41,7 +40,7 @@ class GenericProfileAction(DomNodeInterface):
         from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
         from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.GenericProfileActionScript import GenericProfileActionScript
         from org.w3c.dom.Node import Node
-        self._init_fields()
+        __class__._init_fields(self)
         actionNameNode: Node = DomSearchHelper.getNode(GenericProfileActionData.NAME, node.getChildNodes())
         if actionNameNode is not None:
             self.name = DomNodeHelper.getTextNodeValue(actionNameNode)
@@ -52,7 +51,7 @@ class GenericProfileAction(DomNodeInterface):
 
     def _constructor1(self, name: str) -> None:
         from org.allbinary.input.automation.module.generic.configuration.profile.actions.script.GenericProfileActionScript import GenericProfileActionScript
-        self._init_fields()
+        __class__._init_fields(self)
         self.name = name
         self.setGenericProfileActionScript(GenericProfileActionScript(self.genericProfileActionJPanel))
     

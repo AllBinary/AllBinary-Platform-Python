@@ -15,10 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.logic.communication.xmlrpc.XmlRpcAbeClient import XmlRpcAbeClient
 
 
+@java_inherited_overloads
 class XmlRpcAbeLicenseRetrievalClient(XmlRpcAbeClient):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -26,9 +31,10 @@ class XmlRpcAbeLicenseRetrievalClient(XmlRpcAbeClient):
     
 
     def __init__(self, clientInfo: AbeClientInformationInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         super().__init__(clientInfo, "LicServ.getLicense")
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -63,7 +69,7 @@ class XmlRpcAbeLicenseRetrievalClient(XmlRpcAbeClient):
             result: object = xmlRpcClient.executeWithCrypt(self.getRemoteMethod(), param, cryptInterface)
             self.logUtil.putF(str(self.RESULT) + str(result), self, self.commonStrings.GET)
             resultHashtable: ABHashtable[object, object] = result
-            if not AbeClientLicense.hasRequiredKeys(resultHashtable):
+            if not (AbeClientLicense.hasRequiredKeys(resultHashtable)):
                 self.logUtil.putF(self.INVALID, self, self.commonStrings.GET)
                 return self.tryAnother(anyType)
             abeLicenseInterface: AbeLicenseInterface = AbeClientLicense(resultHashtable)
@@ -73,7 +79,7 @@ class XmlRpcAbeLicenseRetrievalClient(XmlRpcAbeClient):
         except OSError as e:
             self.logUtil.put(self.EXCEPTION_IN_CLIENT, self, self.commonStrings.GET, e)
             self.logUtil.putF(self.TRYING_OTHER_SERVERS + ExceptionUtil.getInstance().getStackTrace(e), self, self.commonStrings.GET)
-            if not str(e).startsWith(self.HOST_NOT_RESOLVED):
+            if not (str(e).startsWith(self.HOST_NOT_RESOLVED)):
                 return self.tryAnother(anyType)
             else:
                 self.isOnline = False

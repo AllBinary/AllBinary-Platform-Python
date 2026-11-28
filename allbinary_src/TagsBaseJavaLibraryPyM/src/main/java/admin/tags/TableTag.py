@@ -15,28 +15,39 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from tags.PropertiesTag import PropertiesTag
 
 
+@java_inherited_overloads
 class TableTag(PropertiesTag):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("enabled", None)
+        vars(self).setdefault("tagHelperFactoryInterface", None)
+        vars(self).setdefault("tagRequestHelperFactoryInterface", None)
+        vars(self).setdefault("requestObject", None)
+        vars(self).setdefault("current", None)
+        vars(self).setdefault("total", None)
 
     def _init_fields(self) -> None:
-        from admin.taghelpers.TagHelperFactoryInterface import TagHelperFactoryInterface
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.enabled: str = None
-        self.tagHelperFactoryInterface: TagHelperFactoryInterface = None
-        self.tagRequestHelperFactoryInterface: TagHelperFactoryInterface = None
-        self.requestObject: object = None
-        self.current: int = None
-        self.total: int = None
+        if "enabled" not in vars(self): self.enabled: str = None
+        if "tagHelperFactoryInterface" not in vars(self): self.tagHelperFactoryInterface: TagHelperFactoryInterface = None
+        if "tagRequestHelperFactoryInterface" not in vars(self): self.tagRequestHelperFactoryInterface: TagHelperFactoryInterface = None
+        if "requestObject" not in vars(self): self.requestObject: object = None
+        if "current" not in vars(self): self.current: int = None
+        if "total" not in vars(self): self.total: int = None
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
             self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
     
@@ -49,7 +60,7 @@ class TableTag(PropertiesTag):
     def isEnabled(self) -> bool:
         from org.allbinary.logic.java.bool.BooleanUtil import BooleanUtil
         from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-        if not StringValidationUtil.getInstance().isEmpty(self.enabled):
+        if not (StringValidationUtil.getInstance().isEmpty(self.enabled)):
             if BooleanUtil.getInstance().getFromString(self.enabled) or ((self.enabled > "on") - (self.enabled < "on")) == 0:
                 return True
         return False
@@ -228,19 +239,19 @@ class TableTag(PropertiesTag):
                 request: HttpServletRequest = self.pageContext.getRequest()
                 stringBuffer: StringMaker = StringMaker()
                 stringBuffer.append("TableTag Helper: ")
-                stringBuffer.append(type(self.getTagHelperFactoryInterface()).__module__ + "." + type(self.getTagHelperFactoryInterface()).__qualname__)
+                stringBuffer.append(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(self.getTagHelperFactoryInterface())))
                 stringBuffer.append(" Request URI: ")
                 stringBuffer.append(request.getRequestURI())
                 self.logUtil.putF(str(stringBuffer), self, self.tagStrings.DO_START_TAG)
             if self.getTagRequestHelperFactoryInterface() is not None:
                 if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
-                    self.logUtil.putF("TableTag RequestHelper: " + type(self.getTagRequestHelperFactoryInterface()).__module__ + "." + type(self.getTagRequestHelperFactoryInterface()).__qualname__, self, self.tagStrings.DO_START_TAG)
+                    self.logUtil.putF("TableTag RequestHelper: " + __import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(self.getTagRequestHelperFactoryInterface())), self, self.tagStrings.DO_START_TAG)
             else:
                 if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                     self.logUtil.putF("TableTag RequestHelper: null", self, self.tagStrings.DO_START_TAG)
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
                 self.logUtil.putF("TableTag this.getCommand(): " + str(self.getCommand()), self, self.tagStrings.DO_START_TAG)
-            if self.isEnabled():
+            if java_predicate(self, "isEnabled"):
                 if self.getCommand() is not None:
                     if self.getCommand().compareTo(self.commonStrings.INSERT) == 0 or self.getCommand().compareTo(SqlStrings.getInstance().INSERT_INTO) == 0 or self.getCommand().compareTo(self.commonStrings.DELETE) == 0 or self.getCommand().compareTo(self.commonStrings.UPDATE) == 0 or self.getCommand().compareTo(SqlStrings.getInstance().UPDATE) == 0:
                         self.requestObject = self.getTagRequestHelperFactoryInterface().getInstance(self.getPropertiesHashMap(), self.pageContext)

@@ -21,18 +21,16 @@ from org.osgi.framework.BundleActivator import BundleActivator
 class InputAutomationRobotBundleActivator(BundleActivator):
 
     def _init_fields(self) -> None:
-        from org.osgi.framework.ServiceFactory import ServiceFactory
-        from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.inputRobotInterface: list[InputRobotInterface] = None
-        self.serviceFactory: ServiceFactory = None
+        if "inputRobotInterface" not in vars(self): self.inputRobotInterface: list[InputRobotInterface] = None
+        if "serviceFactory" not in vars(self): self.serviceFactory: ServiceFactory = None
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.init()
     
 
@@ -46,7 +44,7 @@ class InputAutomationRobotBundleActivator(BundleActivator):
         from org.osgi.framework.BundleContext import BundleContext
         from bundle.input.automation.robot.InputAutomationRobotServiceInterface import InputAutomationRobotServiceInterface
         from org.allbinary.osgi.OSGIActivatorUtil import OSGIActivatorUtil
-        OSGIActivatorUtil.registerAsService(bundleContext, self.getServiceFactory(), InputAutomationRobotServiceInterface.__module__ + "." + InputAutomationRobotServiceInterface.__qualname__)
+        OSGIActivatorUtil.registerAsService(bundleContext, self.getServiceFactory(), __import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(InputAutomationRobotServiceInterface))
     
 
     # throws Exception
@@ -54,14 +52,14 @@ class InputAutomationRobotBundleActivator(BundleActivator):
         from org.osgi.framework.BundleContext import BundleContext
         from org.osgi.framework.ServiceReference import ServiceReference
         from bundle.input.automation.robot.InputAutomationRobotChangeListener import InputAutomationRobotChangeListener
-        serviceReference: ServiceReference = context.getServiceReference(InputAutomationRobotChangeListener.__module__ + "." + InputAutomationRobotChangeListener.__qualname__)
+        serviceReference: ServiceReference = context.getServiceReference(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(InputAutomationRobotChangeListener))
         if serviceReference is not None:
             inputAutomationRobotChangeListener: InputAutomationRobotChangeListener = context.getService(serviceReference)
             if inputAutomationRobotChangeListener is None:
                 raise Exception("No Service For ServiceReference")
             return inputAutomationRobotChangeListener
         else:
-            self.logUtil.putF("No ServiceReference: " + InputAutomationRobotChangeListener.__module__ + "." + InputAutomationRobotChangeListener.__qualname__, self, "getInputAutomationRobotChangeListener")
+            self.logUtil.putF("No ServiceReference: " + __import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(InputAutomationRobotChangeListener), self, "getInputAutomationRobotChangeListener")
             return None
     
 

@@ -22,16 +22,15 @@ class InputProbability:
     INPUT_PROBABILITY: int = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
-        self.likelyhoodIntegerArray: list[list[int]] = None
-        self.repeatLikelyhoodIntegerArray: list[int] = None
-        self.max: int = None
-        self.timeDelayHelper: TimeDelayHelper = None
+        if "likelyhoodIntegerArray" not in vars(self): self.likelyhoodIntegerArray: list[list[int]] = None
+        if "repeatLikelyhoodIntegerArray" not in vars(self): self.repeatLikelyhoodIntegerArray: list[int] = None
+        if "max" not in vars(self): self.max: int = 0
+        if "timeDelayHelper" not in vars(self): self.timeDelayHelper: TimeDelayHelper = None
     
 
     def __init__(self, likelyhoodIntegerArray: list[list[int]], repeatLikelyhoodIntegerArray: list[int], max: int, timeDelayHelper: TimeDelayHelper) -> None:
         from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
-        self._init_fields()
+        __class__._init_fields(self)
         self.likelyhoodIntegerArray = likelyhoodIntegerArray
         self.repeatLikelyhoodIntegerArray = repeatLikelyhoodIntegerArray
         self.max = max

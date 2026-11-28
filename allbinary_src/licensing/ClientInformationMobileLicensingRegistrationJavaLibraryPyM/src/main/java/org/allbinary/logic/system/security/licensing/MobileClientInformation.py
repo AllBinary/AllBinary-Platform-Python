@@ -15,16 +15,21 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.system.security.licensing.AbeClientInformation import AbeClientInformation
 
 
+@java_inherited_overloads
 class MobileClientInformation(AbeClientInformation):
     DESC: str = "Mobile"
     ANDROID_DESC: str = None
     
 
     def __init__(self, name: str, version: str, specialName: str, shortName: str) -> None:
+        from org.allbinary.logic.system.security.licensing.PartnerIdentifierFileUtil import PartnerIdentifierFileUtil
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.string.CommonSeps import CommonSeps
         from org.allbinary.string.CommonStrings import CommonStrings
@@ -34,7 +39,7 @@ class MobileClientInformation(AbeClientInformation):
         if Integer.getInteger(number) is None:
             self.setHardSale(False)
         commonStrings: CommonStrings = CommonStrings.getInstance()
-        if self.isHardSale():
+        if java_predicate(self, "isHardSale"):
             self.logUtil.putF("Use Hard Coded Selling", self, commonStrings.CONSTRUCTOR)
         else:
             self.logUtil.putF("Don't Use Hard Coded Selling", self, commonStrings.CONSTRUCTOR)
@@ -43,7 +48,7 @@ class MobileClientInformation(AbeClientInformation):
     def toHashtable(self) -> ABHashtable[object, object]:
         from org.allbinary.logic.system.security.licensing.registration.RegistrationConfiguration import RegistrationConfiguration
         from org.allbinary.util.ABHashtable import ABHashtable
-        hashtable: ABHashtable[object, object] = super().toHashtable()
+        hashtable: ABHashtable[object, object] = java_super_call(super(), "toHashtable")
         registrationConfiguration: RegistrationConfiguration = RegistrationConfiguration.getInstance()
         hashtable.put(registrationConfiguration.NAME, registrationConfiguration.getRegistrationCode())
         return hashtable

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -26,7 +27,7 @@ class LayerCoveringCellPositionsUtil:
         self.cellPositionsUtil: CellPositionsUtil = CellPositionsUtil.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -51,8 +52,10 @@ class LayerCoveringCellPositionsUtil:
         from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
         from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         reusableList.clear()
-        columns: int = layerInterface.getWidth() / geographicMapInterface.getAllBinaryTiledLayer().getCellWidth()
-        rows: int = layerInterface.getHeight() / geographicMapInterface.getAllBinaryTiledLayer().getCellHeight()
+        columns: int = java_divide(layerInterface.getWidth(), geographicMapInterface.getAllBinaryTiledLayer().getCellWidth())
+            
+        rows: int = java_divide(layerInterface.getHeight(), geographicMapInterface.getAllBinaryTiledLayer().getCellHeight())
+            
         if columns == 0:
             columns = 1
         if rows == 0:

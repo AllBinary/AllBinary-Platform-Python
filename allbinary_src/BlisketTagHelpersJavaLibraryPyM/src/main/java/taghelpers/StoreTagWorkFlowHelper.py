@@ -15,28 +15,33 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from admin.taghelpers.TagHelper import TagHelper
 
 
+@java_inherited_overloads
 class StoreTagWorkFlowHelper(TagHelper):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("abeClientInformation", None)
+        vars(self).setdefault("storeWorkFlowInterface", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.logic.control.workflow.StoreWorkFlowInterface import StoreWorkFlowInterface
-        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.abeClientInformation: AbeClientInformationInterface = ServiceClientInformationInterfaceFactory.getInstance()
-        self.storeWorkFlowInterface: StoreWorkFlowInterface = None
+        if "storeWorkFlowInterface" not in vars(self): self.storeWorkFlowInterface: StoreWorkFlowInterface = None
     
 
     def __init__(self, hashMap: HashMap, pageContext: PageContext) -> None:
+        __class__._java_defaults(self)
         from java.util.HashMap import HashMap
         from org.allbinary.logic.control.workflow.StoreTagWorkFlowFactory import StoreTagWorkFlowFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPER):
             self.logUtil.putF("Properties: " + str(hashMap), self, "StoreTagWorkFlowHelper()")
         self.storeWorkFlowInterface = StoreTagWorkFlowFactory.getInstance().getInstance(self.abeClientInformation, hashMap, pageContext)

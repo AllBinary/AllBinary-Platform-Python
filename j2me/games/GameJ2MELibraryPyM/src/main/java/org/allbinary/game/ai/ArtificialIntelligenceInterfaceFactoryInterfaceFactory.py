@@ -22,12 +22,11 @@ class ArtificialIntelligenceInterfaceFactoryInterfaceFactory:
     SINGLETON: ArtificialIntelligenceInterfaceFactoryInterfaceFactory = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         self.list_: BasicArrayList = BasicArrayListUtil.getInstance().getImmutableInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def clear(self) -> None:

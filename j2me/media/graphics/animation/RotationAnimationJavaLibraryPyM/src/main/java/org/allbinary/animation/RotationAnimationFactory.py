@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.AnimationInterfaceFactoryInterface import AnimationInterfaceFactoryInterface
 from org.allbinary.animation.ProceduralAnimationInterfaceFactoryInterface import ProceduralAnimationInterfaceFactoryInterface
@@ -23,8 +24,8 @@ from org.allbinary.animation.ProceduralAnimationInterfaceFactoryInterface import
 class RotationAnimationFactory(*java_bases(AnimationInterfaceFactoryInterface, ProceduralAnimationInterfaceFactoryInterface)):
 
     def _init_fields(self) -> None:
-        self.totalAngle: int = None
-        self.angleIncrement: int = None
+        if "totalAngle" not in vars(self): self.totalAngle: int = 0
+        if "angleIncrement" not in vars(self): self.angleIncrement: int = 0
     
 
     @staticmethod
@@ -32,11 +33,12 @@ class RotationAnimationFactory(*java_bases(AnimationInterfaceFactoryInterface, P
         from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
         from org.allbinary.math.AngleFactory import AngleFactory
         totalAngle: int = AngleFactory.getInstance().TOTAL_ANGLE
-        return RotationAnimationFactory(totalAngle, ((int((totalAngle / GameConfigurationCentral.getInstance().getGameControlFidelity())) + 32768) % 65536 - 32768))
+        return RotationAnimationFactory(totalAngle, ((int((java_divide(totalAngle, GameConfigurationCentral.getInstance().getGameControlFidelity())
+            )) + 32768) % 65536 - 32768))
     
 
     def __init__(self, totalAngle: int, angleIncrement: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.totalAngle = totalAngle
         self.angleIncrement = angleIncrement
     

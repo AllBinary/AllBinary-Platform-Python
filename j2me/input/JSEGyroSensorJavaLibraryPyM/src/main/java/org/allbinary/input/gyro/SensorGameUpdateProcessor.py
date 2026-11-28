@@ -20,11 +20,10 @@ from __future__ import annotations
 class SensorGameUpdateProcessor:
 
     def _init_fields(self) -> None:
-        from org.allbinary.input.AllBinarySensor import AllBinarySensor
-        self.inputSensor: AllBinarySensor = None
+        if "inputSensor" not in vars(self): self.inputSensor: AllBinarySensor = None
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def setInputSensor(self, inputSensor: AllBinarySensor) -> None:

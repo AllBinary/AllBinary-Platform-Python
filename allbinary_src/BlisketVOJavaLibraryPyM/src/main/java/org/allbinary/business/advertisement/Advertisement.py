@@ -21,28 +21,23 @@ from org.allbinary.business.advertisement.AdvertisementInterface import Advertis
 class Advertisement(AdvertisementInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.advertisement.image.AdvertisementImageInterface import AdvertisementImageInterface
-        from org.allbinary.business.advertisement.product.AdvertisementProductInterface import AdvertisementProductInterface
-        from org.allbinary.business.advertisement.thumbnail.AdvertisementThumbnailInterface import AdvertisementThumbnailInterface
-        from org.allbinary.business.user.commerce.money.Money import Money
-        from org.allbinary.logic.control.contraints.display.browser.DisplayInBrowserContraintsInterface import DisplayInBrowserContraintsInterface
-        self.artist: str = None
-        self.artistLink: str = None
-        self.title: str = None
-        self.dateAdded: str = None
-        self.directory: str = None
-        self.framedLink: str = None
-        self.rank: int = 0
-        self.listPrice: Money = None
-        self.ourPrice: Money = None
-        self.image: AdvertisementImageInterface = None
-        self.product: AdvertisementProductInterface = None
-        self.thumbnail: AdvertisementThumbnailInterface = None
-        self.displayInBrowserContraintsInterface: DisplayInBrowserContraintsInterface = None
+        if "artist" not in vars(self): self.artist: str = None
+        if "artistLink" not in vars(self): self.artistLink: str = None
+        if "title" not in vars(self): self.title: str = None
+        if "dateAdded" not in vars(self): self.dateAdded: str = None
+        if "directory" not in vars(self): self.directory: str = None
+        if "framedLink" not in vars(self): self.framedLink: str = None
+        if "rank" not in vars(self): self.rank: int = 0
+        if "listPrice" not in vars(self): self.listPrice: Money = None
+        if "ourPrice" not in vars(self): self.ourPrice: Money = None
+        if "image" not in vars(self): self.image: AdvertisementImageInterface = None
+        if "product" not in vars(self): self.product: AdvertisementProductInterface = None
+        if "thumbnail" not in vars(self): self.thumbnail: AdvertisementThumbnailInterface = None
+        if "displayInBrowserContraintsInterface" not in vars(self): self.displayInBrowserContraintsInterface: DisplayInBrowserContraintsInterface = None
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.displayInBrowserContraintsInterface = None
     
 

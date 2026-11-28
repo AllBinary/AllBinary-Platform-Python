@@ -20,17 +20,15 @@ from __future__ import annotations
 class AdvancedRTSProperties:
 
     def _init_fields(self) -> None:
-        from org.allbinary.animation.transition.shake.ShakeAnimationListener import ShakeAnimationListener
-        from org.allbinary.game.tick.TickableInterface import TickableInterface
-        from org.allbinary.media.AllBinaryVibrationME import AllBinaryVibrationME
-        self.shakeListener: ShakeAnimationListener = None
-        self.vibration: AllBinaryVibrationME = None
-        self.duration: int = None
-        self.waypointBehaviorBase: TickableInterface = None
+        if "shakeListener" not in vars(self): self.shakeListener: ShakeAnimationListener = None
+        if "vibration" not in vars(self): self.vibration: AllBinaryVibrationME = None
+        if "duration" not in vars(self): self.duration: int = 0
+        if "waypointBehaviorBase" not in vars(self): self.waypointBehaviorBase: TickableInterface = None
     
 
     @staticmethod
     def createPropertiesSimulated() -> AdvancedRTSProperties:
+        from org.allbinary.game.layer.WaypointBehaviorBase import WaypointBehaviorBase
         from org.allbinary.animation.transition.shake.NoShakeAnimationListener import NoShakeAnimationListener
         from org.allbinary.media.AllBinaryNoVibration import AllBinaryNoVibration
         return AdvancedRTSProperties(NoShakeAnimationListener.NO_SHAKE_ANIMATION_LISTENER, AllBinaryNoVibration.NO_VIBRATION, 0, WaypointBehaviorBase())
@@ -38,6 +36,7 @@ class AdvancedRTSProperties:
 
     @staticmethod
     def createProperties() -> AdvancedRTSProperties:
+        from org.allbinary.game.layer.WaypointBehaviorBase import WaypointBehaviorBase
         from org.allbinary.animation.transition.shake.ShakeAnimationListenerFactory import ShakeAnimationListenerFactory
         from org.allbinary.game.configuration.GameConfigurationCentral import GameConfigurationCentral
         from org.allbinary.media.AllBinaryVibration import AllBinaryVibration
@@ -48,7 +47,7 @@ class AdvancedRTSProperties:
         from org.allbinary.animation.transition.shake.ShakeAnimationListener import ShakeAnimationListener
         from org.allbinary.game.tick.TickableInterface import TickableInterface
         from org.allbinary.media.AllBinaryVibrationME import AllBinaryVibrationME
-        self._init_fields()
+        __class__._init_fields(self)
         self.shakeListener = shakeListener
         self.vibration = vibration
         self.duration = duration

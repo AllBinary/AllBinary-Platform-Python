@@ -15,48 +15,66 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 from org.allbinary.graphics.paint.InitUpdatePaintable import InitUpdatePaintable
 
 
+@java_inherited_overloads
 class StartIntermissionPaintable(*java_bases(InitUpdatePaintable, UpdateMyFontInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("fontDebugFactory", None)
+        vars(self).setdefault("basicSetColorUtil", None)
+        vars(self).setdefault("gameCanvas", None)
+        vars(self).setdefault("stringArray", None)
+        vars(self).setdefault("fontSize", 0)
+        vars(self).setdefault("font", None)
+        vars(self).setdefault("lastWidth", None)
+        vars(self).setdefault("updateMyFontProcessor", None)
+        vars(self).setdefault("myFontProcessor", None)
+        vars(self).setdefault("basicColor", None)
+        vars(self).setdefault("color", 0)
+        vars(self).setdefault("lineYOffsetArray", None)
+        vars(self).setdefault("hasChanged", False)
+        vars(self).setdefault("anchor", 0)
+        vars(self).setdefault("fontHeightP", 0)
+        vars(self).setdefault("BEGIN_LEVEL", None)
+        vars(self).setdefault("EMPTY_STRING", None)
 
     def _init_fields(self) -> None:
-        from javax.microedition.lcdui.Font import Font
         from org.allbinary.graphics.Anchor import Anchor
-        from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         from org.allbinary.graphics.color.BasicColorSetUtil import BasicColorSetUtil
         from org.allbinary.graphics.font.FontDebugFactory import FontDebugFactory
-        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
         from org.allbinary.logic.NullUtil import NullUtil
         from org.allbinary.logic.string.StringUtil import StringUtil
         self.fontDebugFactory: FontDebugFactory = FontDebugFactory.getInstance()
         self.basicSetColorUtil: BasicColorSetUtil = BasicColorSetUtil.getInstance()
-        self.gameCanvas: AllBinaryGameCanvas = None
-        self.stringArray: list[str] = None
-        self.fontSize: int = None
-        self.font: Font = None
-        self.lastWidth: list[int] = None
+        if "gameCanvas" not in vars(self): self.gameCanvas: AllBinaryGameCanvas = None
+        if "stringArray" not in vars(self): self.stringArray: list[str] = None
+        if "fontSize" not in vars(self): self.fontSize: int = 0
+        if "font" not in vars(self): self.font: Font = None
+        if "lastWidth" not in vars(self): self.lastWidth: list[int] = None
         self.updateMyFontProcessor: MyFontProcessor = UpdateMyFontProcessor(self)
         self.myFontProcessor: MyFontProcessor = self.updateMyFontProcessor
         self.basicColor: BasicColor = BasicColorFactory.getInstance().BLACK
-        self.color: int = None
+        if "color" not in vars(self): self.color: int = 0
         self.lineYOffsetArray: list[int] = NullUtil.getInstance().NULL_INT_ARRAY
         self.hasChanged: bool = True
         self.anchor: int = Anchor.TOP_LEFT
-        self.fontHeightP: int = 0
+        if "fontHeightP" not in vars(self): self.fontHeightP: int = 0
         self.BEGIN_LEVEL: str = "Begin Level "
         self.EMPTY_STRING: str = StringUtil.getInstance().EMPTY_STRING
     
 
     def __init__(self, gameCanvas: AllBinaryGameCanvas, stringArray: list[str], basicColor: BasicColor, font: Font) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.Font import Font
         from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.gameCanvas = gameCanvas
         self.stringArray = stringArray
         self.lastWidth = [0] * (len(self.stringArray))

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.input.event.DownGameKeyEventListenerInterface import DownGameKeyEventListenerInterface
 from org.allbinary.game.input.event.UpGameKeyEventListenerInterface import UpGameKeyEventListenerInterface
@@ -22,6 +23,7 @@ from org.allbinary.game.input.event.PressGameKeyEventListenerInterface import Pr
 
 
 # Java interface
+@java_inherited_overloads
 class GameKeyEventListenerInterface(*java_bases(DownGameKeyEventListenerInterface, UpGameKeyEventListenerInterface, PressGameKeyEventListenerInterface)):
     pass
 

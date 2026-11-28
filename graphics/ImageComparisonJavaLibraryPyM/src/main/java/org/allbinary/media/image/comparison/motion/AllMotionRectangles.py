@@ -15,9 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.media.image.comparison.motion.MotionRectangles import MotionRectangles
 
 
+@java_inherited_overloads
 class AllMotionRectangles(MotionRectangles):
     NAME: str = "allMotionRectangles_"
     
@@ -64,7 +67,7 @@ class AllMotionRectangles(MotionRectangles):
     def addPixelDeltaToAMotionRectangle(self, pixelDelta: PixelDelta) -> None:
         from org.allbinary.media.image.comparison.motion.MotionRectangle import MotionRectangle
         from org.allbinary.media.image.comparison.pixel.PixelDelta import PixelDelta
-        if not self.addPixelDeltaToExistingMotionRectangle(pixelDelta):
+        if not (self.addPixelDeltaToExistingMotionRectangle(pixelDelta)):
             newRectangle: Rectangle = Rectangle(pixelDelta.getPoint().getX(), pixelDelta.getPoint().getY(), 1, 1)
             motionRectangle: MotionRectangle = MotionRectangle(newRectangle)
             motionRectangle.getPixelDeltaVector().add(pixelDelta)
@@ -79,7 +82,7 @@ class AllMotionRectangles(MotionRectangles):
             raise Exception("PixelAboveTheRectangle")
         if motionRectangle.getRectangle().x > pixelDelta.getPoint().getX():
             isPixelLeftOfTheRectangle = True
-        if not isPixelLeftOfTheRectangle:
+        if not (isPixelLeftOfTheRectangle):
             return self.isPixelDeltaLikelyPartOfMotionRectangle(motionRectangle, pixelDelta)
         return False
     

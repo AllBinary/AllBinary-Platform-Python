@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.color.ColorCompositeInterface import ColorCompositeInterface
 from org.allbinary.animation.IndexedAnimationInterface import IndexedAnimationInterface
 
 
 # Java interface
+@java_inherited_overloads
 class VectorAnimationInterface(*java_bases(IndexedAnimationInterface, ColorCompositeInterface)):
     
 

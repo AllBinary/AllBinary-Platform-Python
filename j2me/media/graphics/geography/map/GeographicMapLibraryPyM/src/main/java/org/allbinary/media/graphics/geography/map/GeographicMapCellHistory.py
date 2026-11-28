@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_divide
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 
 
@@ -22,23 +23,20 @@ class GeographicMapCellHistory(UpdateMyFontInterface):
     NULL_GEOGRPAHIC_MAP_HISTORY_ARRAY: list[GeographicMapCellHistory] = [None] * (0)
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
-        from org.allbinary.animation.Animation import Animation
         from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         from org.allbinary.animation.text.TextAnimation import TextAnimation
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.booleanFactory: BooleanFactory = BooleanFactory.getInstance()
-        self.list_: BasicArrayList = None
-        self.visitedList: BasicArrayList = None
+        if "list_" not in vars(self): self.list_: BasicArrayList = None
+        if "visitedList" not in vars(self): self.visitedList: BasicArrayList = None
         self.MISSED_INFO: str = "Missed"
         self.animation: Animation = TextAnimation(self.MISSED_INFO, AnimationBehavior.getInstance())
         self.myFontProcessor: MyFontProcessor = UpdateMyFontProcessor(self)
-        self.totalVisited: int = 0
+        if "totalVisited" not in vars(self): self.totalVisited: int = 0
         self.halfWidth: int = 0
         self.fontHeight: int = 0
         self.RED: int = int(BasicColorFactory.getInstance().RED)
@@ -46,7 +44,7 @@ class GeographicMapCellHistory(UpdateMyFontInterface):
 
     def __init__(self) -> None:
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
-        self._init_fields()
+        __class__._init_fields(self)
         self.list_ = BasicArrayListD()
         self.visitedList = BasicArrayListD()
         self.init()
@@ -85,7 +83,7 @@ class GeographicMapCellHistory(UpdateMyFontInterface):
     
 
     def track(self, geographicMapCellPosition: GeographicMapCellPosition) -> None:
-        if not self.list_.contains(geographicMapCellPosition):
+        if not (self.list_.contains(geographicMapCellPosition)):
             self.list_.add(geographicMapCellPosition)
             self.visitedList.add(self.booleanFactory.FALSE)
     
@@ -143,7 +141,7 @@ class GeographicMapCellHistory(UpdateMyFontInterface):
         geographicMapCellPosition: GeographicMapCellPosition = None
         for index in range(0, size):
             geographicMapCellPosition = pathList.get(index)
-            if not localList.contains(geographicMapCellPosition):
+            if not (localList.contains(geographicMapCellPosition)):
                 inPathButNotTrackedList.add(geographicMapCellPosition)
         return inPathButNotTrackedList
     
@@ -194,7 +192,7 @@ class GeographicMapCellHistory(UpdateMyFontInterface):
     def isPortionVisited(self, basicDecimal: BasicDecimal) -> bool:
         from org.allbinary.logic.math.BasicDecimal import BasicDecimal
         size: int = self.getSize()
-        numberRequired: int = int((size << basicDecimal.getScaledFactor()) / int(basicDecimal.getUnscaled()))
+        numberRequired: int = int((((((size) << ((basicDecimal.getScaledFactor()) & 31)) + 0x80000000) % 0x100000000 - 0x80000000)) / int(basicDecimal.getUnscaled()))
         numberNotVisited: int = self.getSize() - 1 - self.totalVisited
         if size - numberNotVisited > numberRequired:
             return True
@@ -240,7 +238,7 @@ class GeographicMapCellHistory(UpdateMyFontInterface):
             while (index := index - 1) >= 0:
                 geographicMapCellPosition = self.list_.get(index)
                 isCellVisitedBoolean = localVisitedList.get(index)
-                if not isCellVisitedBoolean:
+                if not (isCellVisitedBoolean):
                     self.paintNotVisitedRelativeToPoint(graphics, geographicMapInterface.getAllBinaryTiledLayer(), geographicMapCellPosition.getPoint())
         except Exception as e:
             commonStrings: CommonStrings = CommonStrings.getInstance()

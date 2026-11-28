@@ -23,7 +23,6 @@ class CommonSeps:
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.string.StringMaker import StringMaker
-        from jsinterop.annotations.JsProperty import JsProperty
         self.NEW_LINE: str = "\n"
         self.SEMICOLON: str = ";"
         self.EQUALS: str = "="
@@ -52,7 +51,7 @@ class CommonSeps:
         self.INDENT: str = "    "
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

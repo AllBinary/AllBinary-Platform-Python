@@ -21,16 +21,17 @@ from org.allbinary.logic.util.cache.CacheableInterface import CacheableInterface
 class ColorDelta(CacheableInterface):
 
     def _init_fields(self) -> None:
-        self.rgb1: int = 0
-        self.rgb2: int = 0
-        self.key: object = None
+        if "rgb1" not in vars(self): self.rgb1: int = 0
+        if "rgb2" not in vars(self): self.rgb2: int = 0
+        if "key" not in vars(self): self.key: object = None
     
 
     def __init__(self, rgb1: int, rgb2: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.setRgb1(rgb1)
         self.setRgb2(rgb2)
-        self.key = ColorDelta.getKey(rgb1, rgb2)
+        self.key = ColorDelta.getKey_j2(rgb1, rgb2)
+            
     
 
     def getKey_j0(self) -> object:
@@ -44,7 +45,9 @@ class ColorDelta(CacheableInterface):
         return str(StringMaker().append(str(rgb1)).append(CommonSeps.getInstance().UNDERSCORE).append(str(rgb2)))
 
     def getKey(self, *args):
-        return getattr(self, "getKey_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("getKey_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getKey(*args)
     
 
     def getRgb1(self) -> int:

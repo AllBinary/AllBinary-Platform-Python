@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -24,11 +25,10 @@ class Features:
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.list_: BasicArrayList = None
-        self.defaultList: BasicArrayList = None
+        if "list_" not in vars(self): self.list_: BasicArrayList = None
+        if "defaultList" not in vars(self): self.defaultList: BasicArrayList = None
     
 
     @staticmethod
@@ -41,7 +41,7 @@ class Features:
 
     def __init__(self) -> None:
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
-        self._init_fields()
+        __class__._init_fields(self)
         self.list_ = BasicArrayListD()
         self.defaultList = BasicArrayListD()
         self.init()
@@ -50,7 +50,7 @@ class Features:
     # throws Exception
     def addDefault(self, gameFeature: Feature) -> None:
         self.add(gameFeature)
-        if not self.defaultList.contains(gameFeature):
+        if not (self.defaultList.contains(gameFeature)):
             self.defaultList.add(gameFeature)
     
 
@@ -60,7 +60,7 @@ class Features:
         from org.allbinary.game.configuration.event.GameFeatureEventHandler import GameFeatureEventHandler
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.string.CommonLabels import CommonLabels
-        if not self.list_.contains(gameFeature):
+        if not (self.list_.contains(gameFeature)):
             self.logUtil.putF(str(StringMaker().append(CommonLabels.getInstance().START_LABEL).append(str(gameFeature))), self, self.commonStrings.ADD)
             self.list_.add(gameFeature)
             GameFeatureEventHandler.getInstance().fireEvent(GameFeatureEvent(gameFeature, str(gameFeature)))
@@ -109,7 +109,7 @@ class Features:
             self.addDefault(gameFeatureFactory.SCREEN_SHAKE)
             self.addDefault(gameFeatureFactory.POST_IMAGE_LOADING_MODIFICATION)
             operatingSystemInterface: GenericOperatingSystem = OperatingSystemFactory.getInstance().getOperatingSystemInstance()
-            if operatingSystemInterface.isOverScan():
+            if java_predicate(operatingSystemInterface, "isOverScan"):
                 self.addDefault(sensorFeatureFactory.NO_ORIENTATION)
                 self.addDefault(touchFeatureFactory.HIDE_SCREEN_BUTTONS)
             else:

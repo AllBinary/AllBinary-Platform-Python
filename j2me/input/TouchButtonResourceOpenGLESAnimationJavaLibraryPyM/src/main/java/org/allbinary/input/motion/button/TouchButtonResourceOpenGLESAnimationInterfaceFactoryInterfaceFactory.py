@@ -15,9 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.input.motion.button.TouchButtonResourceAnimationInterfaceFactoryInterfaceFactory import TouchButtonResourceAnimationInterfaceFactoryInterfaceFactory
 
 
+@java_inherited_overloads
 class TouchButtonResourceOpenGLESAnimationInterfaceFactoryInterfaceFactory(TouchButtonResourceAnimationInterfaceFactoryInterfaceFactory):
     
 
@@ -28,7 +32,7 @@ class TouchButtonResourceOpenGLESAnimationInterfaceFactoryInterfaceFactory(Touch
     # throws Exception
     def init(self, level: int) -> None:
         from org.allbinary.image.opengles.OpenGLImageCacheFactory import OpenGLImageCacheFactory
-        super().initImageCache(OpenGLImageCacheFactory.getInstance(), level)
+        java_super_call(super(), "initImageCache", OpenGLImageCacheFactory.getInstance(), level)
     
 
     def isFeature(self) -> bool:

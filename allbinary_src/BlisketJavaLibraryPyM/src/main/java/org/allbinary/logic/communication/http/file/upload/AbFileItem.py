@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.apache.commons.fileupload.FileItem import FileItem
 
 
@@ -25,13 +26,13 @@ class AbFileItem(FileItem):
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.name: str = None
-        self.fieldName: str = None
-        self.byteArray: list[int] = None
+        if "name" not in vars(self): self.name: str = None
+        if "fieldName" not in vars(self): self.fieldName: str = None
+        if "byteArray" not in vars(self): self.byteArray: list[int] = None
     
 
     def __init__(self, name: str, fieldName: str, byteArray: list[int]) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.name = name
         self.fieldName = fieldName
         self.byteArray = byteArray
@@ -81,12 +82,15 @@ class AbFileItem(FileItem):
             return StringUtil.getInstance().EMPTY_STRING
 
     def getString(self, *args):
-        return getattr(self, "getString_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("getString_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getString(*args)
     
 
     # throws Exception
     # Java overloaded method with the same parameter count: Python keeps the last definition
     def write_j1_1(self, file: File) -> None:
+        from java.io.File import File
         raise Exception(self.commonStrings.NOT_IMPLEMENTED)
     
 
@@ -97,11 +101,13 @@ class AbFileItem(FileItem):
         raise Exception(self.commonStrings.NOT_IMPLEMENTED)
 
     def write(self, *args):
-        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
-            return self.write_j1_1(*args)
+        if len(args) == 1 and True and (args[0] is None or any(base.__name__ == "File" for base in type(args[0]).__mro__)):
+            return __class__.__dict__["write_j1_1"].__get__(self, __class__)(*args)
         if len(args) == 1:
-            return self.write_j1_2(*args)
-        return getattr(self, "write_j" + str(len(args)))(*args)
+            return __class__.__dict__["write_j1_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("write_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().write(*args)
     
 
     def delete(self) -> None:

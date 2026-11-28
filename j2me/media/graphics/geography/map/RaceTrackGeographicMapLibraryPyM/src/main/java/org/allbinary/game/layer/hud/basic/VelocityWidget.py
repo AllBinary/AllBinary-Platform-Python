@@ -15,31 +15,46 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.game.graphics.hud.BasicHud import BasicHud
 
 
+@java_inherited_overloads
 class VelocityWidget(BasicHud):
+    def _java_defaults(self):
+        vars(self).setdefault("KILOMETERS_PER_HOUR_STR", None)
+        vars(self).setdefault("totalChars", 0)
+        vars(self).setdefault("velocity", 0)
+        vars(self).setdefault("maxVelocity", 0)
+        vars(self).setdefault("string", None)
+        vars(self).setdefault("totalDigits", 0)
+        vars(self).setdefault("powerOfTenVelocity", 0)
+        vars(self).setdefault("primitiveLongUtil", None)
+        vars(self).setdefault("offset", 0)
+        vars(self).setdefault("offset2", 0)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.math.PrimitiveLongSingleton import PrimitiveLongSingleton
-        from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
         self.KILOMETERS_PER_HOUR_STR: list[str] = [' ', 'k', 'm', '/', 'h']
         self.totalChars: int = len(self.KILOMETERS_PER_HOUR_STR)
-        self.velocity: int = None
-        self.maxVelocity: int = None
+        if "velocity" not in vars(self): self.velocity: int = 0
+        if "maxVelocity" not in vars(self): self.maxVelocity: int = 0
         self.string: list[str] = PrimitiveLongSingleton.getInstance().ZERO
         self.totalDigits: int = 1
-        self.powerOfTenVelocity: int = None
-        self.primitiveLongUtil: PrimitiveLongUtil = None
+        if "powerOfTenVelocity" not in vars(self): self.powerOfTenVelocity: int = 0
+        if "primitiveLongUtil" not in vars(self): self.primitiveLongUtil: PrimitiveLongUtil = None
         self.offset: int = 0
         self.offset2: int = 0
     
 
     def __init__(self, powerOfTenVelocity: int, location: int, direction: int, basicColor: BasicColor) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.logic.math.PrimitiveLongUtil import PrimitiveLongUtil
         super().__init__(location, direction, 2, basicColor)
-        self._init_fields()
+        __class__._init_fields(self)
         self.powerOfTenVelocity = powerOfTenVelocity
         self.maxVelocity = powerOfTenVelocity
         self.velocity = 0
@@ -54,7 +69,7 @@ class VelocityWidget(BasicHud):
         from org.allbinary.logic.math.MathUtil import MathUtil
         font: Font = graphics.getFont()
         self.updateMaxWidth = font.getSize() * (5 + MathUtil.getInstance().getTotalDigits(self.powerOfTenVelocity) + 1)
-        super().updateMeasurement(graphics)
+        java_super_call(super(), "updateMeasurement", graphics)
         self.offset = MyFontProcessor.defaultStringWidth(font, self.primitiveLongUtil.getMaxDigits()) + MyFontProcessor.defaultStringWidth(font, 2)
         self.offset2 = self.offset - MyFontProcessor.defaultStringWidth(font, self.totalDigits) - MyFontProcessor.defaultStringWidth(font, 2)
     
@@ -75,7 +90,7 @@ class VelocityWidget(BasicHud):
             self.velocity = 0
         if lastVelocity != self.velocity:
             self.string = self.primitiveLongUtil.getCharArray(self.velocity * 18)
-            if OpenGLFeatureUtil.getInstance().isAnyThreed():
+            if java_predicate(OpenGLFeatureUtil.getInstance(), "isAnyThreed"):
                 self.totalDigits = self.primitiveLongUtil.getCurrentTotalDigits() + 1
             else:
                 self.totalDigits = self.primitiveLongUtil.getCurrentTotalDigits()
@@ -88,7 +103,7 @@ class VelocityWidget(BasicHud):
 
     def paint(self, graphics: Graphics) -> None:
         from javax.microedition.lcdui.Graphics import Graphics
-        super().paintDXY(graphics, self.string, 0, self.totalDigits, self.KILOMETERS_PER_HOUR_STR, 0, self.totalChars, self.offset2, self.offset)
+        java_super_call(super(), "paintDXY", graphics, self.string, 0, self.totalDigits, self.KILOMETERS_PER_HOUR_STR, 0, self.totalChars, self.offset2, self.offset)
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
 # from org.allbinary.graphics.opengles.OpenGLFeatureUtil import OpenGLFeatureUtil

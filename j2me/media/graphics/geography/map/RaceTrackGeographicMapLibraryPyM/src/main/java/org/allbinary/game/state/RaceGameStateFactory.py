@@ -27,7 +27,7 @@ class RaceGameStateFactory:
         self.RED_LIGHT_GAME_STATE: GameState = GameStateFactory.getInstance().createGameState("RED_LIGHT_GAME_STATE")
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -37,6 +37,7 @@ class RaceGameStateFactory:
             RaceGameStateFactory.instance = RaceGameStateFactory()
         return RaceGameStateFactory.instance
 # from org.allbinary.logic.NullUtil import NullUtil
+from org.allbinary.game.state.GameStateFactory import GameStateFactory
 
 
 def _RaceGameStateFactory_instance() -> object:

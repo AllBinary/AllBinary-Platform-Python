@@ -15,11 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
 from org.allbinary.game.multiplayer.layer.MultiPlayerGameLayerInterface import MultiPlayerGameLayerInterface
 
 
+@java_inherited_overloads
 class MultiPlayerGameLayer(*java_bases(CollidableDestroyableDamageableLayer, MultiPlayerGameLayerInterface)):
     
 

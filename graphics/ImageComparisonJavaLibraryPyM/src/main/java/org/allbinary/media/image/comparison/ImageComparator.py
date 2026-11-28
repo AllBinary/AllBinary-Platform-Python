@@ -16,16 +16,17 @@
 from __future__ import annotations
 
 import math
+from java.lang.JavaRuntimeStatic import java_predicate
 
 
 class ImageComparator:
 
     def _init_fields(self) -> None:
-        self.imageComparatorConstraintsInterface: ImageComparatorConstraintsInterface = None
+        if "imageComparatorConstraintsInterface" not in vars(self): self.imageComparatorConstraintsInterface: ImageComparatorConstraintsInterface = None
     
 
     def __init__(self, imageComparatorConstraintsInterface: ImageComparatorConstraintsInterface) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.imageComparatorConstraintsInterface = imageComparatorConstraintsInterface
     
 
@@ -37,7 +38,7 @@ class ImageComparator:
         from org.allbinary.logic.util.cache.AutomaticCacheInterface import AutomaticCacheInterface
         from org.allbinary.media.image.comparison.pixel.PixelDeltaFactory import PixelDeltaFactory
         isCollsionWithAvoidRectangles: bool = self.imageComparatorConstraintsInterface.isCollisionWithAvoidRectangles(point)
-        if not isCollsionWithAvoidRectangles:
+        if not (isCollsionWithAvoidRectangles):
             rgb1: int = imageComparisonInfo.getBufferedImages()[0].getRGB(point.getX(), point.getY())
             rgb2: int = imageComparisonInfo.getBufferedImages()[1].getRGB(point.getX(), point.getY())
             automaticCacheInterface: AutomaticCacheInterface = ColorCacheFactory.getInstance()
@@ -77,7 +78,9 @@ class ImageComparator:
         return imageComparisonInfo
 
     def compare(self, *args):
-        return getattr(self, "compare_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("compare_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().compare(*args)
 # from java.awt.Color import Color
 # from java.awt.image.BufferedImage import BufferedImage
 # from org.allbinary.graphics.GPoint import GPoint

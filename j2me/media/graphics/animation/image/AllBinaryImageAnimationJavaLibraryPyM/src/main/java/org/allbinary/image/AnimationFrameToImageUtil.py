@@ -33,10 +33,10 @@ class AnimationFrameToImageUtil:
         from javax.microedition.lcdui.Graphics import Graphics
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.animation.Animation import Animation
-        image: Image = GameFeatureImageCacheFactory.getInstance().get(type(AnimationFrameToImageUtil.instance).__module__ + "." + type(AnimationFrameToImageUtil.instance).__qualname__, ((width * 3) >> 1), ((height * 3) >> 1))
+        image: Image = GameFeatureImageCacheFactory.getInstance().get(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(AnimationFrameToImageUtil.instance)), (int((width * 3)) >> (int(1) & 31)), (int((height * 3)) >> (int(1) & 31)))
         graphics: Graphics = image.getGraphics()
-        tranlateX: int = (width >> 2)
-        tranlateY: int = (height >> 2)
+        tranlateX: int = (int(width) >> (int(2) & 31))
+        tranlateY: int = (int(height) >> (int(2) & 31))
         graphics.translate(tranlateX, tranlateY)
         animationInterface.paintXY(graphics, 0, 0)
         graphics.translate(-tranlateX, -tranlateY)
@@ -49,7 +49,7 @@ class AnimationFrameToImageUtil:
         from javax.microedition.lcdui.Graphics import Graphics
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.animation.Animation import Animation
-        image: Image = GameFeatureImageCacheFactory.getInstance().get(type(AnimationFrameToImageUtil.instance).__module__ + "." + type(AnimationFrameToImageUtil.instance).__qualname__, width, height)
+        image: Image = GameFeatureImageCacheFactory.getInstance().get(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(AnimationFrameToImageUtil.instance)), width, height)
         graphics: Graphics = image.getGraphics()
         animationInterface.paintXY(graphics, 0, 0)
         return image

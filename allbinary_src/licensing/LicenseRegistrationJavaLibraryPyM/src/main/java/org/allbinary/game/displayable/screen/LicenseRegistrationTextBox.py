@@ -15,19 +15,25 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.graphics.form.item.CustomTextBox import CustomTextBox
 
 
+@java_inherited_overloads
 class LicenseRegistrationTextBox(CustomTextBox):
     DISPLAY_COMMAND: Command = None
     SUBMIT_COMMAND: Command = None
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("pleaseWaitPaintable", None)
+        vars(self).setdefault("paintable", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         from org.allbinary.graphics.paint.NullPaintable import NullPaintable
-        from org.allbinary.graphics.paint.Paintable import Paintable
         from org.allbinary.graphics.paint.SimpleTextPaintable import SimpleTextPaintable
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.pleaseWaitPaintable: Paintable = SimpleTextPaintable(self.commonStrings.PLEASE_WAIT, BasicColorFactory.getInstance().WHITE)
@@ -35,13 +41,14 @@ class LicenseRegistrationTextBox(CustomTextBox):
     
 
     def __init__(self, cmdListener: CommandListener, backgrounBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.CommandListener import CommandListener
         from javax.microedition.lcdui.Font import Font
         from javax.microedition.lcdui.TextField import TextField
         from org.allbinary.logic.string.StringUtil import StringUtil
         from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(cmdListener, "Enter Registration Code:", StringUtil.getInstance().EMPTY_STRING, 60, TextField.ANY, Font.getDefaultFont(), backgrounBasicColor, foregroundBasicColor)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def initCommands(self, cmdListener: CommandListener) -> None:
@@ -62,7 +69,7 @@ class LicenseRegistrationTextBox(CustomTextBox):
             virtualKeyboardEventHandler.fireEvent(virtualKeyboardEventHandler.SHOW_EVENT)
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, "open", e)
-        super().open()
+        java_super_call(super(), "open")
         self.paintable = NullPaintable.getInstance()
         self.repaint()
     
@@ -77,12 +84,12 @@ class LicenseRegistrationTextBox(CustomTextBox):
             self.logUtil.put(self.commonStrings.EXCEPTION, self, "open", e)
         self.paintable = self.pleaseWaitPaintable
         self.repaint()
-        super().close()
+        java_super_call(super(), "close")
     
 
     def paint(self, graphics: Graphics) -> None:
         from javax.microedition.lcdui.Graphics import Graphics
-        super().paint(graphics)
+        java_super_call(super(), "paint", graphics)
         self.paintable.paint(graphics)
     
 

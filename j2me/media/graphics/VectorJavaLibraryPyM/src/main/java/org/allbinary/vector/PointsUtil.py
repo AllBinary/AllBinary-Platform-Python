@@ -59,7 +59,9 @@ class PointsUtil:
         return newPoints
 
     def adjust(self, *args):
-        return getattr(self, "adjust_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("adjust_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().adjust(*args)
 
 
 def _PointsUtil_instance() -> object:

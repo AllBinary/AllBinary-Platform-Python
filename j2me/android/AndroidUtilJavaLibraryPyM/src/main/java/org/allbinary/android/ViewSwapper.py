@@ -10,9 +10,8 @@ class ViewSwapper:
     NULL_VIEW_ARRAY: list[View] = [None] * (0)
 
     def _init_fields(self) -> None:
-        from android.app.Activity import Activity
-        self.rootViewId: int = None
-        self.activity: Activity = None
+        if "rootViewId" not in vars(self): self.rootViewId: int = 0
+        if "activity" not in vars(self): self.activity: Activity = None
         self.currentMainViewId: int = -1
         self.mainViewArray: list[View] = ViewSwapper.NULL_VIEW_ARRAY
         self.topViewArray: list[View] = ViewSwapper.NULL_VIEW_ARRAY
@@ -20,7 +19,7 @@ class ViewSwapper:
 
     def __init__(self, activity: Activity, rootViewId: int) -> None:
         from android.app.Activity import Activity
-        self._init_fields()
+        __class__._init_fields(self)
         self.activity = activity
         self.rootViewId = rootViewId
     

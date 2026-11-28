@@ -23,6 +23,7 @@ class LogFactory:
 
     @staticmethod
     def getInstance(specialMessage: str, anyType: object, functionName: str, exception: object) -> Log:
+        from org.allbinary.logic.communication.log.Log import Log
         return Log(specialMessage, anyType, functionName, exception)
     
 

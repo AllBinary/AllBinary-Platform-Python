@@ -32,7 +32,7 @@ class TransformsGeneratorUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -87,7 +87,9 @@ class TransformsGeneratorUtil:
         return str(stringBuffer)
 
     def generateComponentsFromObjectConfig(self, *args):
-        return getattr(self, "generateComponentsFromObjectConfig_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("generateComponentsFromObjectConfig_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().generateComponentsFromObjectConfig(*args)
 # from org.allbinary.util.BasicArrayList import BasicArrayList
 # from org.allbinary.util.BasicArrayListD import BasicArrayListD
 # from org.allbinary.logic.communication.log.LogUtil import LogUtil

@@ -28,6 +28,7 @@ class CssPropertiesValidationFactory:
     # Java overloaded method with the same parameter count: Python keeps the last definition
     @staticmethod
     def getInstance_j1_1(nodeList: NodeList) -> BasicArrayList:
+        from org.allbinary.logic.visual.dhtml.style.css.property.CssPropertyData import CssPropertyData
         from org.allbinary.logic.visual.dhtml.style.css.property.CssPropertyValidationFactory import CssPropertyValidationFactory
         from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
@@ -54,7 +55,7 @@ class CssPropertiesValidationFactory:
 
     @staticmethod
     def getInstance(*args):
-        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
+        if len(args) == 1 and True and (args[0] is None or any(base.__name__ == "NodeList" for base in type(args[0]).__mro__)):
             return CssPropertiesValidationFactory.getInstance_j1_1(*args)
         if len(args) == 1:
             return CssPropertiesValidationFactory.getInstance_j1_2(*args)

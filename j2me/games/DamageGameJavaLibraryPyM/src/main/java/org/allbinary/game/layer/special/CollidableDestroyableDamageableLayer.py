@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.combat.damage.DamageableInterface import DamageableInterface
@@ -24,25 +26,37 @@ from org.allbinary.game.layer.pickup.PickupCompositeInterface import PickupCompo
 from org.allbinary.game.layer.special.SpecialGameInputInterface import SpecialGameInputInterface
 
 
+@java_inherited_overloads
 class CollidableDestroyableDamageableLayer(*java_bases(CollidableCompositeLayer, DestroyableInterface, DamageableInterface, PickupCompositeInterface, SpecialGameInputInterface)):
     NULL_COLLIDABLE_DESTROYABLE_DAMAGE_LAYER: object = None
     READYFOREXPLOSION: str = "ReadyForExplosion: "
+    def _java_defaults(self):
+        vars(self).setdefault("groupInterface", None)
+        vars(self).setdefault("readyForExplosion", False)
+        vars(self).setdefault("initWidth", 0)
+        vars(self).setdefault("initHeight", 0)
+        vars(self).setdefault("initX", 0)
+        vars(self).setdefault("initY", 0)
+        vars(self).setdefault("initZ", 0)
+        vars(self).setdefault("partInterfaceArrayP", None)
+        vars(self).setdefault("pickupBehavior", None)
+        vars(self).setdefault("allBinaryGameLayerManagerP", None)
+        vars(self).setdefault("isDraggable", False)
+        vars(self).setdefault("isDragged", False)
+        vars(self).setdefault("isDropped", False)
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.identification.Group import Group
         from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
-        from org.allbinary.game.layer.pickup.PickupBehavior import PickupBehavior
-        from org.allbinary.game.part.PartInterface import PartInterface
         from org.allbinary.game.part.PartInterfaceUtil import PartInterfaceUtil
-        self.groupInterface: list[Group] = None
-        self.readyForExplosion: bool = False
-        self.initWidth: int = None
-        self.initHeight: int = None
-        self.initX: int = 0
-        self.initY: int = 0
-        self.initZ: int = 0
+        if "groupInterface" not in vars(self): self.groupInterface: list[Group] = None
+        if "readyForExplosion" not in vars(self): self.readyForExplosion: bool = False
+        if "initWidth" not in vars(self): self.initWidth: int = 0
+        if "initHeight" not in vars(self): self.initHeight: int = 0
+        if "initX" not in vars(self): self.initX: int = 0
+        if "initY" not in vars(self): self.initY: int = 0
+        if "initZ" not in vars(self): self.initZ: int = 0
         self.partInterfaceArrayP: list[PartInterface] = PartInterfaceUtil.getZeroArray()
-        self.pickupBehavior: PickupBehavior = None
+        if "pickupBehavior" not in vars(self): self.pickupBehavior: PickupBehavior = None
         self.allBinaryGameLayerManagerP: AllBinaryGameLayerManager = AllBinaryGameLayerManager.getNullInstance()
         self.isDraggable: bool = False
         self.isDragged: bool = False
@@ -62,13 +76,14 @@ class CollidableDestroyableDamageableLayer(*java_bases(CollidableCompositeLayer,
     
 
     def __init__(self, groupInterface: list[Group], name: str, layerInfo: Rectangle, viewPosition: ViewPositionBase) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.collision.CollidableNeverCollideBehaviorFactory import CollidableNeverCollideBehaviorFactory
         from org.allbinary.game.identification.Group import Group
         from org.allbinary.game.layer.pickup.PickupBehavior import PickupBehavior
         from org.allbinary.graphics.Rectangle import Rectangle
         from org.allbinary.view.ViewPositionBase import ViewPositionBase
         super().__init__(name, layerInfo, viewPosition, CollidableNeverCollideBehaviorFactory.getInstance())
-        self._init_fields()
+        __class__._init_fields(self)
         self.initWidth = layerInfo.getWidth()
         self.initHeight = layerInfo.getHeight()
         self.groupInterface = groupInterface
@@ -89,7 +104,7 @@ class CollidableDestroyableDamageableLayer(*java_bases(CollidableCompositeLayer,
 
     def paint(self, graphics: Graphics) -> None:
         from javax.microedition.lcdui.Graphics import Graphics
-        super().paint(graphics)
+        java_super_call(super(), "paint", graphics)
     
 
     # throws Exception
@@ -294,7 +309,7 @@ class CollidableDestroyableDamageableLayer(*java_bases(CollidableCompositeLayer,
         from org.allbinary.string.CommonSeps import CommonSeps
         commonSeps: CommonSeps = CommonSeps.getInstance()
         positionStrings: PositionStrings = PositionStrings.getInstance()
-        super().toStringAppend(stringBuffer)
+        java_super_call(super(), "toStringAppend", stringBuffer)
         stringBuffer.append(commonSeps.NEW_LINE)
         groupInterfaceArray: list[Group] = self.getGroupInterface()
         size: int = len(groupInterfaceArray)

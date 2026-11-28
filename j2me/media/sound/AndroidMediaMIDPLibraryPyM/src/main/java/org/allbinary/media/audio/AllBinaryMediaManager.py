@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 
 
@@ -47,6 +48,7 @@ class AllBinaryMediaManager:
     # throws Exception
     @staticmethod
     def init(soundsFactoryInterface: SoundsFactoryInterface) -> None:
+        from org.allbinary.media.audio.Sounds import Sounds
         from org.allbinary.TsUtil import TsUtil
         from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -64,7 +66,10 @@ class AllBinaryMediaManager:
     # throws Exception
     @staticmethod
     def shutdown(soundsFactoryInterface: SoundsFactoryInterface) -> None:
+        from org.allbinary.media.audio.Sounds import Sounds
+        from org.allbinary.media.audio.AndroidMediaPlayerWrapper import AndroidMediaPlayerWrapper
         from org.allbinary.media.audio.MediaPlayerUtil import MediaPlayerUtil
+        from org.allbinary.media.audio.Sounds import Sounds
         from javax.microedition.media.Player import Player
         from org.allbinary.TsUtil import TsUtil
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -72,7 +77,7 @@ class AllBinaryMediaManager:
         logUtil: LogUtil = LogUtil.getInstance()
         commonString: CommonStrings = CommonStrings.getInstance()
         logUtil.putF(commonString.START, AllBinaryMediaManager.THIS, "shutdown")
-        if soundsFactoryInterface.isInitialized():
+        if java_predicate(soundsFactoryInterface, "isInitialized"):
             Sounds(soundsFactoryInterface).stopAll()
             soundInterfaceArray: list[Sound] = soundsFactoryInterface.getSoundInterfaceArray()
             player: Player = None
@@ -87,7 +92,7 @@ class AllBinaryMediaManager:
                             androidMediaPlayerWrapper = player2
                             MediaPlayerUtil.getInstance().waitForMediaPlayer(androidMediaPlayerWrapper.getMediaPlayer())
                         else:
-                            raise Exception("Unknown Property Player: " + type(player).__module__ + "." + type(player).__qualname__)
+                            raise Exception("Unknown Property Player: " + __import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(player)))
             Sounds(soundsFactoryInterface).closeAll()
             TsUtil.getInstance().gc()
             soundsFactoryInterface.setInitialized(False)
@@ -98,7 +103,9 @@ class AllBinaryMediaManager:
     # throws Exception
     @staticmethod
     def createPlayer(resource: str) -> Player:
+        from org.allbinary.media.audio.NoPlayer import NoPlayer
         from org.allbinary.media.audio.AndroidMediaPlayerWrapper import AndroidMediaPlayerWrapper
+        from org.allbinary.media.audio.NoPlayer import NoPlayer
         from javax.microedition.media.Player import Player
         from org.allbinary.game.configuration.feature.Features import Features
         from org.allbinary.game.configuration.feature.GameFeatureFactory import GameFeatureFactory

@@ -15,27 +15,39 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.layer.Layer import Layer
 from org.allbinary.layer.LayerInterface import LayerInterface
 
 
+@java_inherited_overloads
 class AllBinaryLayer(*java_bases(Layer, LayerInterface)):
     NULL_ALLBINARY_LAYER: AllBinaryLayer = None
     TYPE: str = "Type: "
+    def _java_defaults(self):
+        vars(self).setdefault("viewPositionEvent", None)
+        vars(self).setdefault("halfWidth", 0)
+        vars(self).setdefault("halfHeight", 0)
+        vars(self).setdefault("name", None)
+        vars(self).setdefault("viewPosition", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.view.ViewPositionBase import ViewPositionBase
         from org.allbinary.view.event.ViewPositionEvent import ViewPositionEvent
         self.viewPositionEvent: ViewPositionEvent = ViewPositionEvent(self)
-        self.halfWidth: int = 0
-        self.halfHeight: int = 0
-        self.name: str = None
+        if "halfWidth" not in vars(self): self.halfWidth: int = 0
+        if "halfHeight" not in vars(self): self.halfHeight: int = 0
+        if "name" not in vars(self): self.name: str = None
         self.viewPosition: ViewPositionBase = ViewPositionBase.NULL_VIEW_POSITION
     
 
     def __init__(self, name: str, rectangle: Rectangle, viewPosition: ViewPositionBase) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.GPoint import GPoint
         from org.allbinary.graphics.Rectangle import Rectangle
         from org.allbinary.TsUtil import TsUtil
@@ -43,57 +55,57 @@ class AllBinaryLayer(*java_bases(Layer, LayerInterface)):
         from org.allbinary.string.CommonSeps import CommonSeps
         from org.allbinary.view.ViewPositionBase import ViewPositionBase
         super().__init__(rectangle.getWidth(), rectangle.getHeight())
-        self._init_fields()
+        __class__._init_fields(self)
         localName: str = None
         localName = str(StringMaker().append(name).append(CommonSeps.getInstance().COLON).append(format(TsUtil.getInstance().hashCode(self), "x")))
         self.name = localName
         point: GPoint = rectangle.getPoint()
         self.setPosition(point.getX(), point.getY(), point.getZ())
-        self.setHalfWidth((self.getWidth() >> 1))
-        self.setHalfHeight((self.getHeight() >> 1))
+        self.setHalfWidth((int(self.getWidth()) >> (int(1) & 31)))
+        self.setHalfHeight((int(self.getHeight()) >> (int(1) & 31)))
         self.viewPosition = viewPosition
         self.viewPosition.setAllbinaryLayer(self)
     
 
     def setPosition(self, x: int, y: int, z: int) -> None:
-        super().setPosition(x, y, z)
+        java_super_call(super(), "setPosition", x, y, z)
     
 
     def moveDXYZ(self, dx: int, dy: int, dz: int) -> None:
-        super().moveDXYZ(dx, dy, dz)
+        java_super_call(super(), "moveDXYZ", dx, dy, dz)
     
 
     def getXP(self) -> int:
-        return super().getXP()
+        return java_super_call(super(), "getXP")
     
 
     def getYP(self) -> int:
-        return super().getYP()
+        return java_super_call(super(), "getYP")
     
 
     def getZP(self) -> int:
-        return super().getZP()
+        return java_super_call(super(), "getZP")
     
 
     def getWidth(self) -> int:
-        return super().getWidth()
+        return java_super_call(super(), "getWidth")
     
 
     def getHeight(self) -> int:
-        return super().getHeight()
+        return java_super_call(super(), "getHeight")
     
 
     def setVisible(self, visible: bool) -> None:
-        super().setVisible(visible)
+        java_super_call(super(), "setVisible", visible)
     
 
     def isVisible(self) -> bool:
-        return super().isVisible()
+        return java_super_call(super(), "isVisible")
     
 
     def paint(self, graphics: Graphics) -> None:
         from javax.microedition.lcdui.Graphics import Graphics
-        super().paint(graphics)
+        java_super_call(super(), "paint", graphics)
     
 
     # throws Exception
@@ -177,7 +189,7 @@ class AllBinaryLayer(*java_bases(Layer, LayerInterface)):
 
     def implementsThreedInterface(self) -> bool:
         from org.allbinary.graphics.opengles.OpenGLFeatureUtil import OpenGLFeatureUtil
-        return OpenGLFeatureUtil.getInstance().isAnyThreed()
+        return java_predicate(OpenGLFeatureUtil.getInstance(), "isAnyThreed")
     
 
     def getType(self) -> int:

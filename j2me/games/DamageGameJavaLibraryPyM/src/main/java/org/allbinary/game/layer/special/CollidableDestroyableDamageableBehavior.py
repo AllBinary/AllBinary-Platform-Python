@@ -15,10 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.game.collision.CollidableBaseBehavior import CollidableBaseBehavior
 
 
+@java_inherited_overloads
 class CollidableDestroyableDamageableBehavior(CollidableBaseBehavior):
+    def _java_defaults(self):
+        vars(self).setdefault("damageUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.game.combat.damage.DamageUtil import DamageUtil
@@ -26,14 +32,15 @@ class CollidableDestroyableDamageableBehavior(CollidableBaseBehavior):
     
 
     def __init__(self, collidable: bool) -> None:
+        __class__._java_defaults(self)
         super().__init__(collidable)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def isCollision(self, ownerLayer: CollidableCompositeLayer, collisionLayer: CollidableCompositeLayer) -> bool:
         from org.allbinary.game.layer.CollidableCompositeLayer import CollidableCompositeLayer
         if ownerLayer.getGroupInterface()[0] != collisionLayer.getGroupInterface()[0]:
-            return super().isCollision(ownerLayer, collisionLayer)
+            return java_super_call(super(), "isCollision", ownerLayer, collisionLayer)
         return False
     
 

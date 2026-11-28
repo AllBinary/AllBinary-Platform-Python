@@ -15,20 +15,24 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.graphics.paint.InitUpdatePaintable import InitUpdatePaintable
 
 
+@java_inherited_overloads
 class AnimationCompositePaintable(InitUpdatePaintable):
+    def _java_defaults(self):
+        vars(self).setdefault("animationInterface", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.animation.Animation import Animation
-        self.animationInterface: Animation = None
+        if "animationInterface" not in vars(self): self.animationInterface: Animation = None
     
 
     def __init__(self, animationInterface: Animation) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.animation.Animation import Animation
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.animationInterface = animationInterface
     
 

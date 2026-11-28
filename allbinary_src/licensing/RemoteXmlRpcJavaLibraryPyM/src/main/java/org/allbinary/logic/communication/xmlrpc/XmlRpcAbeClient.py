@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 
 
 class XmlRpcAbeClient:
@@ -23,21 +24,19 @@ class XmlRpcAbeClient:
     def _init_fields(self) -> None:
         from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         from org.allbinary.string.CommonLabels import CommonLabels
         from org.allbinary.string.CommonSeps import CommonSeps
         from org.allbinary.string.CommonStrings import CommonStrings
         from org.apache.xmlrpc.NullXmlRpcHandler import NullXmlRpcHandler
-        from org.apache.xmlrpc.XmlRpcHandler import XmlRpcHandler
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.remoteMethod: str = None
-        self.clientInfo: AbeClientInformationInterface = None
+        if "remoteMethod" not in vars(self): self.remoteMethod: str = None
+        if "clientInfo" not in vars(self): self.clientInfo: AbeClientInformationInterface = None
         self.client: XmlRpcHandler = NullXmlRpcHandler.NULL_XML_RPC_HANDLER
-        self.server: int = None
-        self.start: int = 0
-        self.maxServers: int = 0
-        self.isDone: bool = None
+        if "server" not in vars(self): self.server: int = 0
+        if "start" not in vars(self): self.start: int = 0
+        if "maxServers" not in vars(self): self.maxServers: int = 0
+        if "isDone" not in vars(self): self.isDone: bool = False
         self.START_SERVER: str = "Start With Server #"
         self.TRYING: str = "Trying Server #"
         self.SEP: str = CommonLabels.getInstance().COLON_SEP
@@ -56,7 +55,7 @@ class XmlRpcAbeClient:
     def __init__(self, clientInfo: AbeClientInformationInterface, remoteMethod: str) -> None:
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-        self._init_fields()
+        __class__._init_fields(self)
         self.remoteMethod = remoteMethod
         self.clientInfo = clientInfo
         if clientInfo.getNumberOfLicenseServers() > 1:
@@ -89,7 +88,7 @@ class XmlRpcAbeClient:
             self.setServer(self.getServer() + 1)
         else:
             self.setServer(0)
-        if self.getServer() != self.getStart() and not self.isIsDone():
+        if self.getServer() != self.getStart() and not (self.isIsDone()):
             return self.get(anyType)
         else:
             self.setIsDone(True)

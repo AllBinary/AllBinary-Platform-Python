@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 
 
 class RectangleCollisionUtil:
@@ -49,7 +50,7 @@ class RectangleCollisionUtil:
 
     @staticmethod
     def isCollision(*args):
-        if len(args) == 2 and True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)):
+        if len(args) == 2 and True and (args[0] is None or any(base.__name__ == "Rectangle" for base in type(args[0]).__mro__)) and (args[1] is None or any(base.__name__ == "GPoint" for base in type(args[1]).__mro__)):
             return RectangleCollisionUtil.isCollision_j2_1(*args)
         if len(args) == 2:
             return RectangleCollisionUtil.isCollision_j2_2(*args)

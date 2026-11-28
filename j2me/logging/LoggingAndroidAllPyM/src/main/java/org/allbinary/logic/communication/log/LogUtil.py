@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -35,7 +36,7 @@ class LogUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def putL(self, log: Log) -> None:
@@ -60,7 +61,7 @@ class LogUtil:
         from org.allbinary.TsUtil import TsUtil
         from org.allbinary.logic.string.StringMaker import StringMaker
         className: str = self.LABEL
-        className = str(str(StringMaker().append(type(anyType).__module__ + "." + type(anyType).__qualname__).append(self.commonSeps.COLON).append(format(TsUtil.getInstance().hashCode(anyType), "x"))))
+        className = str(str(StringMaker().append(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(anyType))).append(self.commonSeps.COLON).append(format(TsUtil.getInstance().hashCode(anyType), "x"))))
         message: str = self.logFormatUtil.get(className, functionName, specialMessage, exception)
         android.util.Log.i(self.LABEL, message)
     
@@ -76,6 +77,7 @@ class LogUtil:
 # from org.allbinary.TsUtil import TsUtil
 # from org.allbinary.logic.string.StringMaker import StringMaker
 # from org.allbinary.string.CommonSeps import CommonSeps
+from org.allbinary.logic.communication.log.LogFormatUtil import LogFormatUtil
 
 
 def _LogUtil_instance() -> object:

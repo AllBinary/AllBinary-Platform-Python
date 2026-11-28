@@ -20,10 +20,8 @@ from __future__ import annotations
 class MotionGestureConfiguration:
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         from org.allbinary.logic.string.StringUtil import StringUtil
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.diagonalMotionGestureAllowed: bool = True
         self.diagonalTolerance: int = 7
@@ -36,7 +34,7 @@ class MotionGestureConfiguration:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def addMotionGestureAction(self, list_: BasicArrayList, commandAction: CompleteMotionGestureInputEvent) -> None:

@@ -15,25 +15,30 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.paint.help.HelpPaintable import HelpPaintable
 
 
+@java_inherited_overloads
 class BasicInputMappingHelpPaintable(HelpPaintable):
+    def _java_defaults(self):
+        vars(self).setdefault("gameInputMappingArray", None)
+        vars(self).setdefault("NONE", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.input.GameKey import GameKey
         from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
-        from org.allbinary.game.input.mapping.GameInputMapping import GameInputMapping
-        self.gameInputMappingArray: list[GameInputMapping] = None
+        if "gameInputMappingArray" not in vars(self): self.gameInputMappingArray: list[GameInputMapping] = None
         self.NONE: GameKey = GameKeyFactory.getInstance().NONE
     
 
     def __init__(self, gameInputMappingArray: list[GameInputMapping], basicColor: BasicColor) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.input.mapping.GameInputMapping import GameInputMapping
         from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         super().__init__("Help Screen", BasicColorFactory.getInstance().BLACK, basicColor)
-        self._init_fields()
+        __class__._init_fields(self)
         self.gameInputMappingArray = gameInputMappingArray
         self.update(self.NONE, self.NONE)
     
@@ -60,7 +65,7 @@ class BasicInputMappingHelpPaintable(HelpPaintable):
             list_ = gameKeyMapping.getInputMapping().getMappedInput(gameKey)
             stringMaker.delete(0, stringMaker.length())
             keyInfo[index] = str(stringMaker.append(gameInputMapping.getName()).append(EQUAL).append(self.get(list_)))
-        super().setInputInfoP(keyInfo)
+        java_super_call(super(), "setInputInfoP", keyInfo)
     
 
     def get(self, keyList: BasicArrayList) -> str:

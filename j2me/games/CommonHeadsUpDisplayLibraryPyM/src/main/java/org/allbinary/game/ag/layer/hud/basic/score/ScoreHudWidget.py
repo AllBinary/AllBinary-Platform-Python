@@ -15,9 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.ag.layer.hud.basic.NumberStringHud import NumberStringHud
 
 
+@java_inherited_overloads
 class ScoreHudWidget(NumberStringHud):
     
 
@@ -39,7 +42,7 @@ class ScoreHudWidget(NumberStringHud):
         from javax.microedition.lcdui.Graphics import Graphics
         font: Font = graphics.getFont()
         self.updateMaxWidth = font.getSize() * 5
-        super().updateMeasurement(graphics)
+        java_super_call(super(), "updateMeasurement", graphics)
 # from javax.microedition.lcdui.Font import Font
 # from javax.microedition.lcdui.Graphics import Graphics
 # from org.allbinary.graphics.color.BasicColor import BasicColor

@@ -22,7 +22,6 @@ class IntermissionFactory:
     instance: IntermissionFactory = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.state.GameState import GameState
         from org.allbinary.game.state.GameStateFactory import GameStateFactory
         self.START_LEVEL_INTERMISSION_GAME_STATE: GameState = GameStateFactory.getInstance().createGameState("START_LEVEL_INTERMISSION_GAME_STATE")
         self.WAIT_LEVEL_INTERMISSION_GAME_STATE: GameState = GameStateFactory.getInstance().createGameState("WAIT_LEVEL_INTERMISSION_GAME_STATE")
@@ -30,7 +29,7 @@ class IntermissionFactory:
         self.SHOW_HIGH_SCORE_LEVEL_INTERMISSION_GAME_STATE: GameState = GameStateFactory.getInstance().createGameState("SHOW_HIGH_SCORE_LEVEL_INTERMISSION_GAME_STATE")
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

@@ -21,14 +21,14 @@ from org.allbinary.media.image.comparison.motion.MotionRectangleConstraintsInter
 class MotionRectangleConstraints(MotionRectangleConstraintsInterface):
 
     def _init_fields(self) -> None:
-        self.minDimension: Dimension = None
-        self.maxDimension: Dimension = None
-        self.maxMotionRectangles: int = 0
-        self.minArea: int = 0
+        if "minDimension" not in vars(self): self.minDimension: Dimension = None
+        if "maxDimension" not in vars(self): self.maxDimension: Dimension = None
+        if "maxMotionRectangles" not in vars(self): self.maxMotionRectangles: int = 0
+        if "minArea" not in vars(self): self.minArea: int = 0
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getMinDimension(self) -> Dimension:

@@ -15,6 +15,9 @@
 
 from __future__ import annotations
 
+from java.lang.System import System
+from java.lang.JavaThread import JavaThread
+from java.lang.JavaRuntimeStatic import java_predicate
 import os
 import platform
 import threading
@@ -29,33 +32,31 @@ class InputAutomationNewBundleRunnable(RunnableInterface):
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
-        from bundle.input.automation.InputAutomationBundleActivator import InputAutomationBundleActivator
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.inputAutomationBundleActivator: InputAutomationBundleActivator = None
-        self.running: bool = False
-        self.fileBasicArrayList: BasicArrayList = None
+        if "inputAutomationBundleActivator" not in vars(self): self.inputAutomationBundleActivator: InputAutomationBundleActivator = None
+        if "running" not in vars(self): self.running: bool = False
+        if "fileBasicArrayList" not in vars(self): self.fileBasicArrayList: BasicArrayList = None
     
 
     def __init__(self, inputAutomationBundleActivator: InputAutomationBundleActivator) -> None:
         from bundle.input.automation.InputAutomationBundleActivator import InputAutomationBundleActivator
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
-        self._init_fields()
+        __class__._init_fields(self)
         self.inputAutomationBundleActivator = inputAutomationBundleActivator
         self.fileBasicArrayList = BasicArrayListD()
     
 
     # throws Exception
-    def setThread(self, thread: threading.Thread) -> None:
+    def setThread(self, thread: JavaThread) -> None:
         pass
     
 
     def isRunning(self) -> bool:
         with self._lock:
-            return self._isRunning_unlocked()
+            return __class__.__dict__["_isRunning_unlocked"].__get__(self, __class__)()
 
     def _isRunning_unlocked(self) -> bool:
         return self.running
@@ -63,7 +64,7 @@ class InputAutomationNewBundleRunnable(RunnableInterface):
 
     def setRunning(self, running: bool) -> None:
         with self._lock:
-            return self._setRunning_unlocked(running)
+            return __class__.__dict__["_setRunning_unlocked"].__get__(self, __class__)(running)
 
     def _setRunning_unlocked(self, running: bool) -> None:
         self.running = running
@@ -86,6 +87,7 @@ class InputAutomationNewBundleRunnable(RunnableInterface):
 
     # throws Exception
     def getAllJarSymbolicNameHashMap(self) -> HashMap:
+        from java.io.File import File
         from java.io.FileInputStream import FileInputStream
         from java.net.URL import URL
         from java.util.HashMap import HashMap
@@ -102,7 +104,7 @@ class InputAutomationNewBundleRunnable(RunnableInterface):
         file: File = None
         for index in range(0, size):
             file = jarFileBasicArrayList.get(index)
-            if not file.isDirectory():
+            if not (java_predicate(file, "isDirectory")):
                 fileInputStream: FileInputStream = FileInputStream(file)
                 jarInputStream: JarInputStream = JarInputStream(fileInputStream)
                 manifest: Manifest = jarInputStream.getManifest()
@@ -116,19 +118,20 @@ class InputAutomationNewBundleRunnable(RunnableInterface):
     
 
     def getJarModuleFileBasicArrayList(self) -> BasicArrayList:
+        from java.io.File import File
         from org.allbinary.logic.io.file.FileWrapperUtil import FileWrapperUtil
         from org.allbinary.logic.io.file.directory.SubDirectory import SubDirectory
         from org.allbinary.logic.io.file.filter.BasicFileFilterUtil import BasicFileFilterUtil
         from org.allbinary.util.BasicArrayList import BasicArrayList
         self.logUtil.putF(self.commonStrings.START, self, "getJarModuleFileBasicArrayList")
-        baseJarPath: str = {"os.name": platform.system(), "os.arch": platform.machine(), "os.version": platform.version(), "user.home": os.path.expanduser("~"), "user.dir": os.getcwd(), "file.separator": os.sep, "path.separator": os.pathsep, "line.separator": os.linesep, "java.version": "1.8.0"}.get(InputAutomationNewBundleRunnable.JAR_DIR_PROP, os.environ.get(str(InputAutomationNewBundleRunnable.JAR_DIR_PROP)))
+        baseJarPath: str = System.getProperty(InputAutomationNewBundleRunnable.JAR_DIR_PROP)
         if baseJarPath.startswith(InputAutomationNewBundleRunnable.FILE):
-            baseJarPath = baseJarPath[InputAutomationNewBundleRunnable.FILE.length():]
+            baseJarPath = baseJarPath[__import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(InputAutomationNewBundleRunnable.FILE):]
         jarFileFilter: FileFilter = BasicFileFilterUtil.getInstance(".jar")
         path: str = baseJarPath + str(InputAutomationNewBundleRunnable.INPUT_AUTMATION_MODULE_BUNDLE_JAR_PATH)
         self.logUtil.putF("Path: " + path, self, "getJarModuleFileBasicArrayList")
         file: File = File(path)
-        self.logUtil.putF("File: " + str(file.getAbsolutePath()) + " isDirectory: " + str(file.isDirectory()), self, "getJarModuleFileBasicArrayList")
+        self.logUtil.putF("File: " + str(file.getAbsolutePath()) + " isDirectory: " + str(java_predicate(file, "isDirectory")), self, "getJarModuleFileBasicArrayList")
         return SubDirectory.getInstance().search(jarFileFilter, FileWrapperUtil.wrapFile(file))
     
 
@@ -181,7 +184,7 @@ class InputAutomationNewBundleRunnable(RunnableInterface):
         size: int = len(symbolicNameArray)
         for index in range(0, size):
             symbolicName: str = symbolicNameArray[index]
-            if not self.isInstalled(symbolicName):
+            if not (self.isInstalled(symbolicName)):
                 vector.add(hashMap.get(symbolicName))
         return vector
     
@@ -205,7 +208,7 @@ class InputAutomationNewBundleRunnable(RunnableInterface):
             self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.RUN)
             self.setRunning(True)
             timeHelper: TimeDelayHelper = TimeDelayHelper(1000)
-            while self.isRunning():
+            while java_predicate(self, "isRunning"):
                 timeHelper.setStartTimeTNT()
                 self.logUtil.putF(CommonLabels.getInstance().ELAPSED + timeHelper.getElapsedTNT(), self, self.commonStrings.RUN)
                 self.updateModules()

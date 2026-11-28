@@ -32,7 +32,7 @@ class HttpFileUploadUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -40,7 +40,7 @@ class HttpFileUploadUtil:
         from org.allbinary.logic.java.anyType.clazz.ClassUtil import ClassUtil
         from org.allbinary.string.CommonSeps import CommonSeps
         from org.apache.commons.fileupload.FileItem import FileItem
-        if anyType is not None and not isinstance(anyType, str):
+        if anyType is not None and not (isinstance(anyType, str)):
             if isinstance(anyType, FileItem):
                 return True
             else:
@@ -108,7 +108,7 @@ class HttpFileUploadUtil:
 
     @staticmethod
     def log(*args):
-        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
+        if len(args) == 1 and True and (args[0] is None or any(base.__name__ == "FileItemStream" for base in type(args[0]).__mro__)):
             return HttpFileUploadUtil.log_j1_1(*args)
         if len(args) == 1:
             return HttpFileUploadUtil.log_j1_2(*args)

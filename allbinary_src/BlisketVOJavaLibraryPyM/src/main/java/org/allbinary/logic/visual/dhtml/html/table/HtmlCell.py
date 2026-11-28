@@ -15,10 +15,23 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.visual.dhtml.html.HtmlTag import HtmlTag
 
 
+@java_inherited_overloads
 class HtmlCell(HtmlTag):
+    def _java_defaults(self):
+        vars(self).setdefault("END", None)
+        vars(self).setdefault("START", None)
+        vars(self).setdefault("ENDTAG", None)
+        vars(self).setdefault("HEIGHT", None)
+        vars(self).setdefault("WIDTH", None)
+        vars(self).setdefault("height", None)
+        vars(self).setdefault("width", None)
+        vars(self).setdefault("before", None)
+        vars(self).setdefault("body", None)
+        vars(self).setdefault("after", None)
 
     def _init_fields(self) -> None:
         self.END: str = ">"
@@ -26,16 +39,17 @@ class HtmlCell(HtmlTag):
         self.ENDTAG: str = "</td>"
         self.HEIGHT: str = "height"
         self.WIDTH: str = "width"
-        self.height: str = None
-        self.width: str = None
-        self.before: str = None
-        self.body: str = None
-        self.after: str = None
+        if "height" not in vars(self): self.height: str = None
+        if "width" not in vars(self): self.width: str = None
+        if "before" not in vars(self): self.before: str = None
+        if "body" not in vars(self): self.body: str = None
+        if "after" not in vars(self): self.after: str = None
     
 
     def __init__(self, before: str, width: str, height: str, after: str) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.before = str(before)
         self.after = str(after)
         self.height = str(height)

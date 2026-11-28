@@ -26,8 +26,8 @@ class CellPositionFactory:
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.NONE: CellPosition = CellPosition(-1, -1, -1, -1)
         self.cellPositionArray: list[list[CellPosition]] = [[None] * (0) for _ in range(0)]
-        self.columns: int = 0
-        self.rows: int = 0
+        if "columns" not in vars(self): self.columns: int = 0
+        if "rows" not in vars(self): self.rows: int = 0
     
 
     @staticmethod
@@ -36,7 +36,7 @@ class CellPositionFactory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def init(self, columns: int, rows: int) -> None:

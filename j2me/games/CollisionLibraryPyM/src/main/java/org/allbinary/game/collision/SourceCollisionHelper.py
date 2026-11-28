@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.collision.CollisionHelper import CollisionHelper
 
 
+@java_inherited_overloads
 class SourceCollisionHelper(CollisionHelper):
     
 

@@ -32,7 +32,7 @@ class StreamUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -52,6 +52,7 @@ class StreamUtil:
 
     # throws Exception
     def getByteArray(self, inputStream: InputStream, outputStream2: ByteArrayOutputStream, byteArray: list[int]) -> list[int]:
+        from java.io.ByteArrayOutputStream import ByteArrayOutputStream
         from java.io.InputStream import InputStream
         outputStream: ByteArrayOutputStream = outputStream2
         try:

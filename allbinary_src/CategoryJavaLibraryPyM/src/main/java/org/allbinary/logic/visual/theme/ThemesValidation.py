@@ -15,47 +15,53 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 from org.allbinary.logic.control.validate.Validation import Validation
 
 
+@java_inherited_overloads
 class ThemesValidation(*java_bases(Validation, DomNodeInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("themeVector", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
-        self.themeVector: BasicArrayList = None
+        if "themeVector" not in vars(self): self.themeVector: BasicArrayList = None
 
     def __init__(self, *args) -> None:
         if len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
         elif len(args) == 1:
-            self.__jconstructor1(*args)
+            __class__.__jconstructor1(self, *args)
 
     def __jconstructor1(self, *args) -> None:
-        if True and not isinstance(args[0], (str, list, int, float)):
-            self._constructor1_1(*args)
+        if True and (args[0] is None or any(base.__name__ == "Node" for base in type(args[0]).__mro__)):
+            __class__._constructor1_1(self, *args)
         else:
-            self._constructor1_2(*args)
+            __class__._constructor1_2(self, *args)
     
 
     def _constructor0(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.themeVector = BasicArrayListD()
     
 
     def _constructor1_1(self, node: Node) -> None:
+        __class__._java_defaults(self)
         from org.w3c.dom.Node import Node
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def _constructor1_2(self, hashMap: HashMap) -> None:
+        __class__._java_defaults(self)
         from java.util.HashMap import HashMap
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def isValid(self) -> bool:
@@ -79,6 +85,7 @@ class ThemesValidation(*java_bases(Validation, DomNodeInterface)):
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
+        from org.allbinary.logic.visual.theme.ThemesData import ThemesData
         from org.w3c.dom.Document import Document
         from org.w3c.dom.Node import Node
         node: Node = document.createElement(ThemesData.getInstance().NAME)

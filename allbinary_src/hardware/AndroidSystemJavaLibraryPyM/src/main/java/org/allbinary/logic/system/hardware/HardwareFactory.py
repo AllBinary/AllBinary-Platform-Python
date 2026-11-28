@@ -34,11 +34,12 @@ class HardwareFactory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
     def getInstance_j1(self, os: GenericOperatingSystem) -> HardwareInterface:
+        from org.allbinary.logic.system.hardware.NoHardware import NoHardware
         from org.allbinary.logic.system.hardware.android.AndroidHardware import AndroidHardware
         from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
         from org.allbinary.logic.system.os.OperatingSystems import OperatingSystems
@@ -55,8 +56,11 @@ class HardwareFactory:
             self.logUtil.put("Ignoring Exception Returning NoHardware", self, commonStrings.GET_INSTANCE, e)
             return NoHardware()
 
-    def getInstance(self, *args):
-        return getattr(self, "getInstance_j" + str(len(args)))(*args)
+    def getInstance(self=None, *args):
+        if self is None and not args: return __class__.getInstance_j0()
+        implementation = __class__.__dict__.get("getInstance_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getInstance(*args)
 # from org.allbinary.TsUtil import TsUtil
 # from org.allbinary.logic.communication.log.LogUtil import LogUtil
 # from org.allbinary.logic.system.hardware.android.AndroidHardware import AndroidHardware

@@ -15,22 +15,30 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.input.automation.module.AbstractInputAutomationWorker import AbstractInputAutomationWorker
 
 
+@java_inherited_overloads
 class GenericInputAutomationWorker(AbstractInputAutomationWorker):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("PROCESS_DATA_WORKER_RESULTS", None)
+        vars(self).setdefault("lastFrame", None)
+        vars(self).setdefault("frame", None)
+        vars(self).setdefault("genericProfile", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.input.automation.module.generic.configuration.profile.GenericProfile import GenericProfile
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.PROCESS_DATA_WORKER_RESULTS: str = "processDataWorkerResults"
         self.lastFrame: int = int(-1)
-        self.frame: int = None
-        self.genericProfile: GenericProfile = None
+        if "frame" not in vars(self): self.frame: int = None
+        if "genericProfile" not in vars(self): self.genericProfile: GenericProfile = None
     
 
     def __init__(self, inputAutomationActionInterface: InputAutomationActionInterface, genericProfile: GenericProfile, motionRectangleConstraintsInterface: MotionRectangleConstraintsInterface, imageComparatorConstraintsInterface: ImageComparatorConstraintsInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.input.automation.module.generic.GenericProfileCaptureWorkerFactory import GenericProfileCaptureWorkerFactory
         from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.input.automation.module.InputAutomationActionInterface import InputAutomationActionInterface
@@ -41,7 +49,7 @@ class GenericInputAutomationWorker(AbstractInputAutomationWorker):
         from org.allbinary.media.image.comparison.motion.MotionRectangleConstraintsInterface import MotionRectangleConstraintsInterface
         from org.allbinary.media.image.comparison.motion.MotionRectanglesWorker import MotionRectanglesWorker
         super().__init__(inputAutomationActionInterface)
-        self._init_fields()
+        __class__._init_fields(self)
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
         self.setCaptureWorker(GenericProfileCaptureWorkerFactory.getInstance(genericProfile))
         self.setInputAutomationActionInterface(inputAutomationActionInterface)

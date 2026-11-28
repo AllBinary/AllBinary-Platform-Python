@@ -15,24 +15,31 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.Animation import Animation
 from org.allbinary.animation.IndexedAnimationInterface import IndexedAnimationInterface
 
 
+@java_inherited_overloads
 class IndexedAnimation(*java_bases(Animation, IndexedAnimationInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("animationBehaviorP", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.animationBehaviorP: AnimationBehavior = None
+        if "animationBehaviorP" not in vars(self): self.animationBehaviorP: AnimationBehavior = None
     
 
     def __init__(self, animationBehavior: AnimationBehavior) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.animationBehaviorP = animationBehavior
     
 

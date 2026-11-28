@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaMonitor import java_monitor, java_wait
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 
@@ -27,8 +28,8 @@ class XmlDocumentHelper:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.INDENT_NUMBER: str = "indent-number"
-        self.indent: int = 0
-        self.ignoreDeclaration: bool = False
+        if "indent" not in vars(self): self.indent: int = 0
+        if "ignoreDeclaration" not in vars(self): self.ignoreDeclaration: bool = False
     
 
     @staticmethod
@@ -37,13 +38,13 @@ class XmlDocumentHelper:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.init(4, True)
     
 
     def init(self, indent: int, ignoreDeclaration: bool) -> None:
         with self._lock:
-            return self._init_unlocked(indent, ignoreDeclaration)
+            return __class__.__dict__["_init_unlocked"].__get__(self, __class__)(indent, ignoreDeclaration)
 
     def _init_unlocked(self, indent: int, ignoreDeclaration: bool) -> None:
         self.indent = indent
@@ -68,13 +69,15 @@ class XmlDocumentHelper:
     def createTransformer_j0(self) -> Transformer:
         currentIndent: int = 0
         currentIgnoreDeclaration: bool = False
-        with self._lock:  # synchronized (self)
+        with java_monitor(self):
             currentIndent = self.indent
             currentIgnoreDeclaration = self.ignoreDeclaration
         return self.createTransformer(currentIndent, currentIgnoreDeclaration)
 
     def createTransformer(self, *args):
-        return getattr(self, "createTransformer_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("createTransformer_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().createTransformer(*args)
     
 
     # throws Exception
@@ -84,6 +87,7 @@ class XmlDocumentHelper:
 
     # throws Exception
     def formatWithTransformer(self, xmlString: str, transformer: Transformer) -> str:
+        from java.io.StringReader import StringReader
         from java.io.Writer import Writer
         from org.w3c.dom.Document import Document
         from org.xml.sax.InputSource import InputSource
@@ -97,6 +101,7 @@ class XmlDocumentHelper:
     # throws Exception
     @staticmethod
     def toString(document: Document) -> str:
+        from java.io.ByteArrayOutputStream import ByteArrayOutputStream
         from org.w3c.dom.Document import Document
         try:
             domSource: DOMSource = DOMSource(document)

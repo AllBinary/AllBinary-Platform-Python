@@ -15,16 +15,19 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.business.user.modules.User import User
 
 
+@java_inherited_overloads
 class StoreAdminUser(User):
 
     def __init__(self, *args) -> None:
         if len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
         elif len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
     
 
     def _constructor0(self) -> None:
@@ -38,7 +41,7 @@ class StoreAdminUser(User):
 
     def validateSession(self, weblisketSession: WeblisketSessionInterface) -> None:
         from org.allbinary.logic.communication.http.request.session.WeblisketSessionInterface import WeblisketSessionInterface
-        super().validateSession(weblisketSession)
+        java_super_call(super(), "validateSession", weblisketSession)
         self.updateSession(weblisketSession)
     
 

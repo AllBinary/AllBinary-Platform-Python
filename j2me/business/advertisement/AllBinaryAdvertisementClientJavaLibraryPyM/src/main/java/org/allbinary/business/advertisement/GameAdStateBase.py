@@ -20,13 +20,13 @@ from __future__ import annotations
 class GameAdStateBase:
 
     def _init_fields(self) -> None:
-        self.adConfigurationP: AdConfiguration = None
+        if "adConfigurationP" not in vars(self): self.adConfigurationP: AdConfiguration = None
         self.advertisementsP: Advertisements = Advertisements()
-        self.okayToShowAdsP: bool = False
+        if "okayToShowAdsP" not in vars(self): self.okayToShowAdsP: bool = False
     
 
     def __init__(self, adConfiguration: AdConfiguration) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.adConfigurationP = adConfiguration
     
 

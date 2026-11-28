@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -33,10 +34,11 @@ class ImageRotationUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def rotateImage(self, originalImage: Image, image: Image, totalAngle: int) -> None:
+        from org.allbinary.media.image.SwtOpenGLESImageBridge import SwtOpenGLESImageBridge
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
         from org.allbinary.image.opengles.OpenGLESImage import OpenGLESImage
@@ -54,7 +56,7 @@ class ImageRotationUtil:
         originalSwtImage: Image = (originalImage2.getImage())
         gc: GC = None
         copySwtImage: Image = None
-        if image.isMutable():
+        if java_predicate(image, "isMutable"):
             swtImage: SwtMutableImage = image
             copySwtImage = swtImage.getImage()
             gc = swtImage.getGc()

@@ -15,10 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from tags.StoreValidationTransformTag import StoreValidationTransformTag
 
 
+@java_inherited_overloads
 class InventoryTag(StoreValidationTransformTag):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -26,8 +31,9 @@ class InventoryTag(StoreValidationTransformTag):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws LicensingException
@@ -102,7 +108,7 @@ class InventoryTag(StoreValidationTransformTag):
                 elif self.getCommand().compareTo(GLOBALS2.VIEW) == 0:
                     self.setName("Basic Inventory View")
                     self.setObjectFile("views.generic.inventory.AutoValidationInventoryView")
-                    return super().doStartTag()
+                    return java_super_call(super(), "doStartTag")
                 else:
                     raise Exception("No Such View Command: " + str(self.getCommand()))
             raise Exception("Command Null")

@@ -15,11 +15,22 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_divide
 from org.allbinary.image.opengles.OpenGLESImage import OpenGLESImage
 
 
 #This is not actually VBO impl
+@java_inherited_overloads
 class OpenGLESGL11VBOImage(OpenGLESImage):
+    def _java_defaults(self):
+        vars(self).setdefault("glUtil", None)
+        vars(self).setdefault("textureVertexFloatBuffer", None)
+        vars(self).setdefault("regionRectangleFloatArray", None)
+        vars(self).setdefault("regionRectangleVertexFloatBuffer", None)
+        vars(self).setdefault("regionTextureRectangleFloatArray", None)
+        vars(self).setdefault("regionTextureVertexFloatBuffer", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.opengles.GLUtil import GLUtil
@@ -32,14 +43,15 @@ class OpenGLESGL11VBOImage(OpenGLESImage):
     
 
     def __init__(self, image: Image, bitmapFactory: PlatformBitmapBaseFactory, textureFactory: PlatformTextureBaseFactory) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.platform.graphics.PlatformBitmapBaseFactory import PlatformBitmapBaseFactory
         from org.allbinary.platform.opengles.PlatformTextureBaseFactory import PlatformTextureBaseFactory
         super().__init__(image, bitmapFactory, textureFactory)
-        self._init_fields()
+        __class__._init_fields(self)
         self.initVertices()
-        self.regionRectangleVertexFloatBuffer.put(self.regionRectangleFloatArray)
-        self.regionTextureVertexFloatBuffer.put(self.regionTextureRectangleFloatArray)
+        self.regionRectangleVertexFloatBuffer.put(FloatBuffer.wrap(self.regionRectangleFloatArray))
+        self.regionTextureVertexFloatBuffer.put(FloatBuffer.wrap(self.regionTextureRectangleFloatArray))
     
 
     def initVertices(self) -> None:
@@ -59,7 +71,7 @@ class OpenGLESGL11VBOImage(OpenGLESImage):
         from javax.microedition.khronos.opengles.GL10 import GL10
         from org.allbinary.graphics.opengles.OpenGLLogUtil import OpenGLLogUtil
         gl10: GL10 = gl
-        if super().initTexture(gl10):
+        if java_super_call(super(), "initTexture", gl10):
             self.textureFactory.load(gl10, GL10.GL_TEXTURE_2D, 0, self, 0, True)
             gl10.glDisable(GL10.GL_TEXTURE_2D)
             OpenGLLogUtil.getInstance().logError(gl10, self)

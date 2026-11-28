@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.util.HashMap import HashMap
 
 
+@java_inherited_overloads
 class ABHashMap(HashMap):
 
     def __init__(self) -> None:

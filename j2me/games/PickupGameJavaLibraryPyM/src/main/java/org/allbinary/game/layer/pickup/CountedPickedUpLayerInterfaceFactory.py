@@ -15,25 +15,30 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.layer.pickup.PickedUpLayerInterfaceFactory import PickedUpLayerInterfaceFactory
 from org.allbinary.game.layer.pickup.CountedPickedUpLayerInterfaceFactoryInterface import CountedPickedUpLayerInterfaceFactoryInterface
 
 
+@java_inherited_overloads
 class CountedPickedUpLayerInterfaceFactory(*java_bases(PickedUpLayerInterfaceFactory, CountedPickedUpLayerInterfaceFactoryInterface)):
     NULL_COUNTED_PICKUP_LAYER_FACTORY: CountedPickedUpLayerInterfaceFactory = None
+    def _java_defaults(self):
+        vars(self).setdefault("id", 0)
 
     def _init_fields(self) -> None:
-        self.id: int = None
+        if "id" not in vars(self): self.id: int = 0
     
 
     def __init__(self, pickeUpLayerType: PickedUpLayerType, iconLayer: IconLayer, animationInterface: Animation) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.layer.pickup.CountedPickedUpLayerInterfaceFactoryPool import CountedPickedUpLayerInterfaceFactoryPool
         from org.allbinary.animation.Animation import Animation
         from org.allbinary.util.BasicArrayList import BasicArrayList
         super().__init__(pickeUpLayerType, iconLayer, animationInterface)
-        self._init_fields()
+        __class__._init_fields(self)
         list_: BasicArrayList = CountedPickedUpLayerInterfaceFactoryPool.getInstance().getList()
         self.id = list_.size()
         list_.add(self)

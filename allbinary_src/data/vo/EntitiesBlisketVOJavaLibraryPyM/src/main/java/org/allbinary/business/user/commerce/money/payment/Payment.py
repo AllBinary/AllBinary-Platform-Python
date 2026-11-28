@@ -23,42 +23,57 @@ from org.allbinary.business.user.commerce.money.payment.PaymentInterface import 
 class Payment(*java_bases(PaymentInterface, DomNodeInterface)):
 
     def _init_fields(self) -> None:
-        self.name: str = None
-        self.expiration: str = None
-        self.encryption: str = None
-        self.number: str = None
-        self.id: str = None
-        self.type_: str = None
-        self.tenderType: str = None
-        self.transactionType: str = None
-        self.aba: str = None
-        self.account: str = None
-        self.accountType: str = None
-        self.authorizationCode: str = None
-        self.checkNumber: str = None
-        self.checkType: str = None
-        self.driversLicense: str = None
-        self.magneticInkCheckReader: str = None
-        self.isDefault: bool = False
+        if "name" not in vars(self): self.name: str = None
+        if "expiration" not in vars(self): self.expiration: str = None
+        if "encryption" not in vars(self): self.encryption: str = None
+        if "number" not in vars(self): self.number: str = None
+        if "id" not in vars(self): self.id: str = None
+        if "type_" not in vars(self): self.type_: str = None
+        if "tenderType" not in vars(self): self.tenderType: str = None
+        if "transactionType" not in vars(self): self.transactionType: str = None
+        if "aba" not in vars(self): self.aba: str = None
+        if "account" not in vars(self): self.account: str = None
+        if "accountType" not in vars(self): self.accountType: str = None
+        if "authorizationCode" not in vars(self): self.authorizationCode: str = None
+        if "checkNumber" not in vars(self): self.checkNumber: str = None
+        if "checkType" not in vars(self): self.checkType: str = None
+        if "driversLicense" not in vars(self): self.driversLicense: str = None
+        if "magneticInkCheckReader" not in vars(self): self.magneticInkCheckReader: str = None
+        self.isDefault_field: bool = False
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self.__jconstructor1(*args)
+            __class__.__jconstructor1(self, *args)
         elif len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
 
     def __jconstructor1(self, *args) -> None:
         if True and not isinstance(args[0], (str, list, int, float)):
-            self._constructor1_1(*args)
+            __class__._constructor1_1(self, *args)
         else:
-            self._constructor1_2(*args)
+            __class__._constructor1_2(self, *args)
     
 
     def _constructor1_1(self, payment: HashMap) -> None:
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
         from java.util.HashMap import HashMap
         from org.allbinary.business.entry.EntryData import EntryData
         from org.allbinary.logic.control.crypt.SuperCrypt import SuperCrypt
-        self._init_fields()
+        __class__._init_fields(self)
         self.name = payment.get(PaymentData.NAME)
         self.type_ = payment.get(PaymentData.TYPE)
         self.expiration = payment.get(PaymentData.EXPIRATION)
@@ -67,9 +82,9 @@ class Payment(*java_bases(PaymentInterface, DomNodeInterface)):
         self.id = payment.get(PaymentData.ID)
         def_: str = payment.get(EntryData.getInstance().DEFAULT)
         if def_ is not None and ((def_ > EntryData.getInstance().DEFAULT) - (def_ < EntryData.getInstance().DEFAULT)) == 0:
-            self.isDefault = True
+            self.isDefault_field = True
         else:
-            self.isDefault = False
+            self.isDefault_field = False
         self.tenderType = payment.get(PaymentData.TENDERTYPE)
         self.transactionType = payment.get(PaymentData.TRANSACTIONTYPE)
         self.aba = payment.get(PaymentData.ABA)
@@ -83,7 +98,21 @@ class Payment(*java_bases(PaymentInterface, DomNodeInterface)):
     
 
     def _constructor1_2(self, request: ServletRequest) -> None:
-        self._init_fields()
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        __class__._init_fields(self)
         self.name = request.getParameter(PaymentData.NAME)
         self.type_ = request.getParameter(PaymentData.TYPE)
         self.expiration = request.getParameter(PaymentData.EXPIRATION)
@@ -101,7 +130,7 @@ class Payment(*java_bases(PaymentInterface, DomNodeInterface)):
     
 
     def _constructor0(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def isValid(self) -> bool:
@@ -239,6 +268,8 @@ class Payment(*java_bases(PaymentInterface, DomNodeInterface)):
     
 
     def getLastFour(self) -> str:
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
         if len(self.number) > PaymentData.MIN and len(self.number) <= PaymentData.MAX:
             return self.number[len(self.number) - 4:]
         else:
@@ -246,10 +277,23 @@ class Payment(*java_bases(PaymentInterface, DomNodeInterface)):
     
 
     def isDefault(self) -> bool:
-        return self.isDefault
+        return self.isDefault_field
     
 
     def toHashMap(self) -> HashMap:
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
         from java.util.HashMap import HashMap
         from org.allbinary.business.entry.EntryData import EntryData
         from org.allbinary.logic.StdUtil import StdUtil
@@ -268,7 +312,7 @@ class Payment(*java_bases(PaymentInterface, DomNodeInterface)):
         hashMap.put(PaymentData.CHECKNUMBER, self.checkNumber)
         hashMap.put(PaymentData.DRIVERSLICENSE, self.driversLicense)
         hashMap.put(PaymentData.MAGNETICINKCHECKREADER, self.magneticInkCheckReader)
-        if self.isDefault:
+        if self.isDefault_field:
             hashMap.put(EntryData.getInstance().DEFAULT, EntryData.getInstance().DEFAULT)
         else:
             hashMap.put(EntryData.getInstance().DEFAULT, StringUtil.getInstance().EMPTY_STRING)
@@ -277,6 +321,7 @@ class Payment(*java_bases(PaymentInterface, DomNodeInterface)):
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
+        from org.allbinary.business.user.commerce.money.payment.PaymentData import PaymentData
         from java.util.HashMap import HashMap
         from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
         from org.w3c.dom.Document import Document

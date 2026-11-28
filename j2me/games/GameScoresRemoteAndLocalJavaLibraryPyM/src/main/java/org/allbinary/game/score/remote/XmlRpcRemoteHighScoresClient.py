@@ -15,21 +15,27 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.communication.xmlrpc.XmlRpcAbeClient import XmlRpcAbeClient
 
 
+@java_inherited_overloads
 class XmlRpcRemoteHighScoresClient(XmlRpcAbeClient):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("page", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.page: str = None
+        if "page" not in vars(self): self.page: str = None
     
 
     def __init__(self, clientInfo: AbeClientInformationInterface, page: str, remoteMethod: str) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         super().__init__(clientInfo, remoteMethod)
-        self._init_fields()
+        __class__._init_fields(self)
         self.page = page
         self.setServer(0)
     
@@ -68,7 +74,7 @@ class XmlRpcRemoteHighScoresClient(XmlRpcAbeClient):
             return result
         except OSError as e:
             self.logUtil.put(self.TRYING_OTHER_SERVERS + ExceptionUtil.getInstance().getStackTrace(e), self, self.commonStrings.GET, e)
-            if not str(e).startsWith(self.HOST_NOT_RESOLVED):
+            if not (str(e).startsWith(self.HOST_NOT_RESOLVED)):
                 return self.tryAnother(anyType)
             else:
                 raise Exception(self.HOST_NOT_RESOLVED_MSG)

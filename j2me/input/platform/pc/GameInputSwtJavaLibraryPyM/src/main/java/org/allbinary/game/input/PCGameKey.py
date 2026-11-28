@@ -15,9 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.input.Input import Input
 
 
+@java_inherited_overloads
 class PCGameKey(Input):
     
 
@@ -30,7 +33,7 @@ class PCGameKey(Input):
     
 
     def toString(self) -> str:
-        return "PCGameKey: " + str(super())
+        return "PCGameKey: " + java_super_call(super(), "toString")
 
     def __str__(self) -> str:
         return self.toString()

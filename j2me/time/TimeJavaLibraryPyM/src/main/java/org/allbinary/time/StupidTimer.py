@@ -3,6 +3,8 @@
 
 from __future__ import annotations
 
+from java.lang.JavaMonitor import java_monitor, java_wait
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 
 
@@ -20,7 +22,7 @@ class StupidTimer:
         self.threadObjectUtil: ThreadObjectUtil = ThreadObjectUtil.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def visitBool(self, visitorInterface: Visitor) -> bool:
@@ -44,9 +46,9 @@ class StupidTimer:
             if index % 10 == 0:
                 PreLogUtil.put(str(StringMaker().append(WAITING_FOR).appendint(index)), self, self.commonStrings.VISIT)
             index += 1
-            with self._lock:  # synchronized (self)
+            with java_monitor(self):
                 self.threadObjectUtil.waitObjectFor(self, 1800)
-            if timeDelayHelper.isTimeTNT():
+            if java_predicate(timeDelayHelper, "isTimeTNT"):
                 tookTooLong = True
                 break
         if tookTooLong:
@@ -57,7 +59,7 @@ class StupidTimer:
 
     # throws Exception
     def stopWaiting(self) -> None:
-        with self._lock:  # synchronized (self)
+        with java_monitor(self):
             self.threadObjectUtil.notifyObject(self)
 # from org.allbinary.logic.NullUtil import NullUtil
 # from org.allbinary.logic.communication.log.LogUtil import LogUtil

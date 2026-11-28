@@ -15,13 +15,23 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.layer.SelectionHudPaintable import SelectionHudPaintable
 
 
+@java_inherited_overloads
 class MultiSelectPaintable(SelectionHudPaintable):
+    def _java_defaults(self):
+        vars(self).setdefault("rootNameList", None)
+        vars(self).setdefault("totalCharArray", None)
+        vars(self).setdefault("rootNamesString", None)
+        vars(self).setdefault("TOTAL", None)
+        vars(self).setdefault("backgroundColor", 0)
+        vars(self).setdefault("totalWidth", 0)
+        vars(self).setdefault("textLine2Y", 0)
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         from org.allbinary.logic.string.StringUtil import StringUtil
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
@@ -31,19 +41,20 @@ class MultiSelectPaintable(SelectionHudPaintable):
         self.rootNamesString: str = StringUtil.getInstance().EMPTY_STRING
         self.TOTAL: str = "Total Selected: "
         self.backgroundColor: int = int(BasicColorFactory.getInstance().GREY)
-        self.totalWidth: int = 0
-        self.textLine2Y: int = 0
+        if "totalWidth" not in vars(self): self.totalWidth: int = 0
+        if "textLine2Y" not in vars(self): self.textLine2Y: int = 0
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def updateMeasurement(self, graphics: Graphics) -> None:
         from javax.microedition.lcdui.Font import Font
         from javax.microedition.lcdui.Graphics import Graphics
-        super().updateMeasurement(graphics)
+        java_super_call(super(), "updateMeasurement", graphics)
         font: Font = graphics.getFont()
         self.totalWidth = font.stringWidth(self.TOTAL)
         self.textLine2Y = (self.y + font.getHeight())
@@ -58,7 +69,7 @@ class MultiSelectPaintable(SelectionHudPaintable):
         self.totalCharArray = self.getPrimitiveLongUtil().getCharArray(size)
         for index in range(list_.size() - 1, 0 - 1, -1):
             rtsLayer: RTSLayer = list_.get(index)
-            if not self.rootNameList.contains(rtsLayer.getRootName()):
+            if not (self.rootNameList.contains(rtsLayer.getRootName())):
                 self.rootNameList.add(rtsLayer.getRootName())
         COMMA_SEP: str = CommonSeps.getInstance().COMMA_SEP
         stringBuffer: StringMaker = StringMaker()

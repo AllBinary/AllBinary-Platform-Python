@@ -21,14 +21,14 @@ class Direction:
     directionArray: list[Direction] = [None] * (13)
 
     def _init_fields(self) -> None:
-        self.name: str = None
-        self.otherName: str = None
-        self.value: int = None
-        self.frameFactor: int = None
+        if "name" not in vars(self): self.name: str = None
+        if "otherName" not in vars(self): self.otherName: str = None
+        if "value" not in vars(self): self.value: int = 0
+        if "frameFactor" not in vars(self): self.frameFactor: int = 0
     
 
     def __init__(self, name: str, otherName: str, value: int, frameFactor: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.name = name
         self.otherName = otherName
         self.value = value

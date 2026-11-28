@@ -44,6 +44,8 @@ class AbXslHelper:
     # throws Exception
     # Java overloaded method with the same parameter count: Python keeps the last definition
     def translate_j2_3(self, xsltFilePath: str, xmlFilePath: str) -> str:
+        from org.allbinary.data.tree.dom.XslHelper import XslHelper
+        from java.io.ByteArrayOutputStream import ByteArrayOutputStream
         try:
             outputStream: ByteArrayOutputStream = ByteArrayOutputStream()
             return str(XslHelper.getInstance().translate(StreamSource(xsltFilePath), StreamSource(xmlFilePath), StreamResult(outputStream)))
@@ -51,13 +53,15 @@ class AbXslHelper:
             raise e
 
     def translate(self, *args):
-        if len(args) == 2 and True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)):
-            return self.translate_j2_1(*args)
-        if len(args) == 2 and True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)):
-            return self.translate_j2_2(*args)
+        if len(args) == 2 and True and (args[0] is None or any(base.__name__ == "AbFile" for base in type(args[0]).__mro__)) and (args[1] is None or any(base.__name__ == "AbFile" for base in type(args[1]).__mro__)):
+            return __class__.__dict__["translate_j2_1"].__get__(self, __class__)(*args)
+        if len(args) == 2 and True and (args[0] is None or any(base.__name__ == "AbPath" for base in type(args[0]).__mro__)) and (args[1] is None or any(base.__name__ == "AbPath" for base in type(args[1]).__mro__)):
+            return __class__.__dict__["translate_j2_2"].__get__(self, __class__)(*args)
         if len(args) == 2:
-            return self.translate_j2_3(*args)
-        return getattr(self, "translate_j" + str(len(args)))(*args)
+            return __class__.__dict__["translate_j2_3"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("translate_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().translate(*args)
 # from java.io.ByteArrayOutputStream import ByteArrayOutputStream
 # from javax.xml.transform.stream.StreamResult import StreamResult
 # from javax.xml.transform.stream.StreamSource import StreamSource

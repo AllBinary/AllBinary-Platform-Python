@@ -15,36 +15,44 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from org.allbinary.game.displayable.canvas.CommandFormInputProcessor import CommandFormInputProcessor
 
 
+@java_inherited_overloads
 class ImmediateCommandFormInputProcessor(CommandFormInputProcessor):
     _lock = threading.RLock()
+    def _java_defaults(self):
+        vars(self).setdefault("timeHelper", None)
+        vars(self).setdefault("gameCommandCanvas", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         self.timeHelper: TimeDelayHelper = TimeDelayHelper(25)
-        self.gameCommandCanvas: GameCommandCanvas = None
+        if "gameCommandCanvas" not in vars(self): self.gameCommandCanvas: GameCommandCanvas = None
     
 
     def __init__(self, gameKeyEventList: BasicArrayList, playerInputId: int, gameCommandCanvas: GameCommandCanvas, form: ScrollSelectionForm) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.form.ScrollSelectionForm import ScrollSelectionForm
         from org.allbinary.util.BasicArrayList import BasicArrayList
         super().__init__(gameKeyEventList, playerInputId, gameCommandCanvas, form)
-        self._init_fields()
+        __class__._init_fields(self)
         self.gameCommandCanvas = gameCommandCanvas
     
 
     def onPressGameKeyEvent(self, gameKeyEvent: GameKeyEvent) -> None:
         with self._lock:
-            return self._onPressGameKeyEvent_unlocked(gameKeyEvent)
+            return __class__.__dict__["_onPressGameKeyEvent_unlocked"].__get__(self, __class__)(gameKeyEvent)
 
     def _onPressGameKeyEvent_unlocked(self, gameKeyEvent: GameKeyEvent) -> None:
         from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
         try:
-            super().onPressGameKeyEvent(gameKeyEvent)
-            if self.timeHelper.isTimeTNT():
+            java_super_call(super(), "onPressGameKeyEvent", gameKeyEvent)
+            if java_predicate(self.timeHelper, "isTimeTNT"):
                 self.processInputList()
                 self.gameCommandCanvas.repaintBehavior.onChangeRepaint(self.getCanvas())
         except Exception as e:
@@ -53,13 +61,13 @@ class ImmediateCommandFormInputProcessor(CommandFormInputProcessor):
 
     def onDownGameKeyEvent(self, gameKeyEvent: GameKeyEvent) -> None:
         with self._lock:
-            return self._onDownGameKeyEvent_unlocked(gameKeyEvent)
+            return __class__.__dict__["_onDownGameKeyEvent_unlocked"].__get__(self, __class__)(gameKeyEvent)
 
     def _onDownGameKeyEvent_unlocked(self, gameKeyEvent: GameKeyEvent) -> None:
         from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
         try:
-            super().onDownGameKeyEvent(gameKeyEvent)
-            if self.timeHelper.isTimeTNT():
+            java_super_call(super(), "onDownGameKeyEvent", gameKeyEvent)
+            if java_predicate(self.timeHelper, "isTimeTNT"):
                 self.processInputList()
                 self.gameCommandCanvas.repaintBehavior.onChangeRepaint(self.getCanvas())
         except Exception as e:
@@ -68,13 +76,13 @@ class ImmediateCommandFormInputProcessor(CommandFormInputProcessor):
 
     def onUpGameKeyEvent(self, gameKeyEvent: GameKeyEvent) -> None:
         with self._lock:
-            return self._onUpGameKeyEvent_unlocked(gameKeyEvent)
+            return __class__.__dict__["_onUpGameKeyEvent_unlocked"].__get__(self, __class__)(gameKeyEvent)
 
     def _onUpGameKeyEvent_unlocked(self, gameKeyEvent: GameKeyEvent) -> None:
         from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
         try:
-            super().onUpGameKeyEvent(gameKeyEvent)
-            if self.timeHelper.isTimeTNT():
+            java_super_call(super(), "onUpGameKeyEvent", gameKeyEvent)
+            if java_predicate(self.timeHelper, "isTimeTNT"):
                 self.processInputList()
                 self.gameCommandCanvas.repaintBehavior.onChangeRepaint(self.getCanvas())
         except Exception as e:
@@ -84,8 +92,8 @@ class ImmediateCommandFormInputProcessor(CommandFormInputProcessor):
     def onMotionGestureEvent(self, motionGestureEvent: MotionGestureEvent) -> None:
         from org.allbinary.input.motion.gesture.observer.MotionGestureEvent import MotionGestureEvent
         try:
-            super().onMotionGestureEvent(motionGestureEvent)
-            if self.timeHelper.isTimeTNT():
+            java_super_call(super(), "onMotionGestureEvent", motionGestureEvent)
+            if java_predicate(self.timeHelper, "isTimeTNT"):
                 self.processInputList()
                 self.gameCommandCanvas.repaintBehavior.onChangeRepaint(self.getCanvas())
         except Exception as e:

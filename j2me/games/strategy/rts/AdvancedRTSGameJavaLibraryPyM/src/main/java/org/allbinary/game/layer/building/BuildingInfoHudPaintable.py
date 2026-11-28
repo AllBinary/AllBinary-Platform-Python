@@ -15,28 +15,40 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.ag.layer.hud.basic.NumberStringHud import NumberStringHud
 from org.allbinary.game.layer.SelectionHudPaintable import SelectionHudPaintable
 
 
+@java_inherited_overloads
 class BuildingInfoHudPaintable(SelectionHudPaintable):
     instance: BuildingInfoHudPaintable = None
+    @java_inherited_overloads
     class BuildingNumberHud(NumberStringHud):
+        def _java_defaults(self):
+            vars(self).setdefault("baseTextX", 0)
+            vars(self).setdefault("baseY", 0)
+            vars(self).setdefault("row", 0)
+            vars(self).setdefault("prefixLength", 0)
+            vars(self).setdefault("positionBeforeMeasurement", False)
 
         def _init_fields(self) -> None:
-            self.baseTextX: int = None
-            self.baseY: int = None
-            self.row: int = None
-            self.prefixLength: int = None
-            self.positionBeforeMeasurement: bool = None
+            if "baseTextX" not in vars(self): self.baseTextX: int = 0
+            if "baseY" not in vars(self): self.baseY: int = 0
+            if "row" not in vars(self): self.row: int = 0
+            if "prefixLength" not in vars(self): self.prefixLength: int = 0
+            if "positionBeforeMeasurement" not in vars(self): self.positionBeforeMeasurement: bool = False
         
 
         def __init__(self, label: str, maximum: int, basicHudFactory: BasicHudFactory, basicColor: BasicColor, baseTextX: int, baseY: int, row: int, prefixLength: int, positionBeforeMeasurement: bool) -> None:
+            __class__._java_defaults(self)
             from org.allbinary.game.graphics.hud.BasicHudFactory import BasicHudFactory
             from org.allbinary.graphics.color.BasicColor import BasicColor
             super().__init__(label, maximum, basicHudFactory.ABSOLUTE, basicHudFactory.HORIZONTAL, 0, basicColor)
-            self._init_fields()
+            __class__._init_fields(self)
             self.baseTextX = baseTextX
             self.baseY = baseY
             self.row = row
@@ -47,24 +59,32 @@ class BuildingInfoHudPaintable(SelectionHudPaintable):
         def updateMeasurement(self, graphics: Graphics) -> None:
             from javax.microedition.lcdui.Font import Font
             from javax.microedition.lcdui.Graphics import Graphics
-            if not self.positionBeforeMeasurement:
-                super().updateMeasurement(graphics)
+            if not (self.positionBeforeMeasurement):
+                java_super_call(super(), "updateMeasurement", graphics)
             font: Font = graphics.getFont()
             self.updateMaxWidth = self.baseTextX + self.prefixLength * font.getHeight()
             self.updateMaxHeight = self.baseY + self.row * font.getHeight()
             if self.positionBeforeMeasurement:
-                super().updateMeasurement(graphics)
+                java_super_call(super(), "updateMeasurement", graphics)
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("HEALTH", None)
+        vars(self).setdefault("productivityHud", None)
+        vars(self).setdefault("efficiencyHud", None)
+        vars(self).setdefault("healthHud", None)
+        vars(self).setdefault("maxHealthHud", None)
+        vars(self).setdefault("rtsLayer", None)
+        vars(self).setdefault("currentHealth", 0)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.game.layer.NullPathFindingLayer import NullPathFindingLayer
-        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.HEALTH: str = "Health:"
-        self.productivityHud: NumberStringHud = None
-        self.efficiencyHud: NumberStringHud = None
-        self.healthHud: NumberStringHud = None
-        self.maxHealthHud: NumberStringHud = None
+        if "productivityHud" not in vars(self): self.productivityHud: NumberStringHud = None
+        if "efficiencyHud" not in vars(self): self.efficiencyHud: NumberStringHud = None
+        if "healthHud" not in vars(self): self.healthHud: NumberStringHud = None
+        if "maxHealthHud" not in vars(self): self.maxHealthHud: NumberStringHud = None
         self.rtsLayer: PathFindingLayerInterface = NullPathFindingLayer.NULL_PATH_FINDING_LAYER
         self.currentHealth: int = 0
     
@@ -75,12 +95,13 @@ class BuildingInfoHudPaintable(SelectionHudPaintable):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.ag.layer.hud.basic.NumberStringHudFactory import NumberStringHudFactory
         from org.allbinary.string.CommonStrings import CommonStrings
         from org.allbinary.game.graphics.hud.BasicHudFactory import BasicHudFactory
         from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         numberStringHudFactory: NumberStringHudFactory = NumberStringHudFactory.getInstance()
         productivityHud: NumberStringHud = numberStringHudFactory.NULL_NUMBER_STRING_HUD
         efficiencyHud: NumberStringHud = numberStringHudFactory.NULL_NUMBER_STRING_HUD
@@ -117,7 +138,7 @@ class BuildingInfoHudPaintable(SelectionHudPaintable):
 
     def setBasicColorP(self, basicColor: BasicColor) -> None:
         from org.allbinary.graphics.color.BasicColor import BasicColor
-        super().setBasicColorP(basicColor)
+        java_super_call(super(), "setBasicColorP", basicColor)
         self.productivityHud.setBasicColorP(basicColor)
         self.efficiencyHud.setBasicColorP(basicColor)
         self.healthHud.setBasicColorP(basicColor)
@@ -126,7 +147,7 @@ class BuildingInfoHudPaintable(SelectionHudPaintable):
 
     def paint(self, graphics: Graphics) -> None:
         from javax.microedition.lcdui.Graphics import Graphics
-        super().paint(graphics)
+        java_super_call(super(), "paint", graphics)
         self.myFontProcessor.process(graphics)
         self.productivityHud.paint(graphics)
         self.efficiencyHud.paint(graphics)
@@ -140,7 +161,8 @@ class BuildingInfoHudPaintable(SelectionHudPaintable):
         self.setName(buildingLayer.getName())
         self.setAnimationInterface(buildingLayer.getVerticleBuildAnimationInterface())
         self.productivityHud.set(buildingLayer.getProductivity())
-        self.efficiencyHud.set(buildingLayer.getEfficiency() / 100)
+        self.efficiencyHud.set(java_divide(buildingLayer.getEfficiency(), 100)
+            )
         self.currentHealth = buildingLayer.getHealthInterface().getHealth()
         self.healthHud.set(self.currentHealth)
         self.myFontProcessor = self.updateMyFontProcessor

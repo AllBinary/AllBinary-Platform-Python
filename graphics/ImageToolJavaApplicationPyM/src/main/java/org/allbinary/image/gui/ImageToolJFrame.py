@@ -15,60 +15,96 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.gui.dialog.FileJDialogListenerInterface import FileJDialogListenerInterface
 # from javax.swing.JFrame import JFrame
 
 
+@java_inherited_overloads
 class ImageToolJFrame(*java_bases(JFrame, FileJDialogListenerInterface)):
     imageProcessorInputCompositeInterface: ImageProcessorInputCompositeInterface = None
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("fileJDialog", None)
+        vars(self).setdefault("imageProcessorInput", None)
+        vars(self).setdefault("analysisActionJDialog", None)
+        vars(self).setdefault("analyzeJMenuItem", None)
+        vars(self).setdefault("blueJLabel", None)
+        vars(self).setdefault("colorRangeJLabel", None)
+        vars(self).setdefault("createStripImageJMenuItem", None)
+        vars(self).setdefault("fileJMenu", None)
+        vars(self).setdefault("generateSpriteSplitterMenuItem", None)
+        vars(self).setdefault("generateRotationMenuItem", None)
+        vars(self).setdefault("generateMirrorSpriteMenuItem", None)
+        vars(self).setdefault("generateRotationSpriteJMenuItem", None)
+        vars(self).setdefault("greenJLabel", None)
+        vars(self).setdefault("jPanel1", None)
+        vars(self).setdefault("mainJMenuBar", None)
+        vars(self).setdefault("maxBlueJTextField", None)
+        vars(self).setdefault("maxGreenJTextField", None)
+        vars(self).setdefault("maxJLabel", None)
+        vars(self).setdefault("maxRedJTextField", None)
+        vars(self).setdefault("minBlueJTextField", None)
+        vars(self).setdefault("minGreenJTextField", None)
+        vars(self).setdefault("minJLabel", None)
+        vars(self).setdefault("minRedJTextField", None)
+        vars(self).setdefault("mirrorJMenuItem", None)
+        vars(self).setdefault("okJButton", None)
+        vars(self).setdefault("openImageJMenuItem", None)
+        vars(self).setdefault("processingJMenu", None)
+        vars(self).setdefault("redJLabel", None)
+        vars(self).setdefault("scaleImagesJMenuItem", None)
+        vars(self).setdefault("canvasImagesJMenuItem", None)
+        vars(self).setdefault("createIconImagesJMenuItem", None)
+        vars(self).setdefault("titleJLabel", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.gui.dialog.FileJDialog import FileJDialog
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.fileJDialog: FileJDialog = None
-        self.imageProcessorInput: ImageProcessorInput = None
-        self.analysisActionJDialog: JDialog = None
-        self.analyzeJMenuItem: JMenuItem = None
-        self.blueJLabel: JLabel = None
-        self.colorRangeJLabel: JLabel = None
-        self.createStripImageJMenuItem: JMenuItem = None
-        self.fileJMenu: JMenu = None
-        self.generateSpriteSplitterMenuItem: JMenuItem = None
-        self.generateRotationMenuItem: JMenuItem = None
-        self.generateMirrorSpriteMenuItem: JMenuItem = None
-        self.generateRotationSpriteJMenuItem: JMenuItem = None
-        self.greenJLabel: JLabel = None
-        self.jPanel1: JPanel = None
-        self.mainJMenuBar: JMenuBar = None
-        self.maxBlueJTextField: JTextField = None
-        self.maxGreenJTextField: JTextField = None
-        self.maxJLabel: JLabel = None
-        self.maxRedJTextField: JTextField = None
-        self.minBlueJTextField: JTextField = None
-        self.minGreenJTextField: JTextField = None
-        self.minJLabel: JLabel = None
-        self.minRedJTextField: JTextField = None
-        self.mirrorJMenuItem: JMenuItem = None
-        self.okJButton: JButton = None
-        self.openImageJMenuItem: JMenuItem = None
-        self.processingJMenu: JMenu = None
-        self.redJLabel: JLabel = None
-        self.scaleImagesJMenuItem: JMenuItem = None
-        self.canvasImagesJMenuItem: JMenuItem = None
-        self.createIconImagesJMenuItem: JMenuItem = None
-        self.titleJLabel: JLabel = None
+        if "fileJDialog" not in vars(self): self.fileJDialog: FileJDialog = None
+        if "imageProcessorInput" not in vars(self): self.imageProcessorInput: ImageProcessorInput = None
+        if "analysisActionJDialog" not in vars(self): self.analysisActionJDialog: JDialog = None
+        if "analyzeJMenuItem" not in vars(self): self.analyzeJMenuItem: JMenuItem = None
+        if "blueJLabel" not in vars(self): self.blueJLabel: JLabel = None
+        if "colorRangeJLabel" not in vars(self): self.colorRangeJLabel: JLabel = None
+        if "createStripImageJMenuItem" not in vars(self): self.createStripImageJMenuItem: JMenuItem = None
+        if "fileJMenu" not in vars(self): self.fileJMenu: JMenu = None
+        if "generateSpriteSplitterMenuItem" not in vars(self): self.generateSpriteSplitterMenuItem: JMenuItem = None
+        if "generateRotationMenuItem" not in vars(self): self.generateRotationMenuItem: JMenuItem = None
+        if "generateMirrorSpriteMenuItem" not in vars(self): self.generateMirrorSpriteMenuItem: JMenuItem = None
+        if "generateRotationSpriteJMenuItem" not in vars(self): self.generateRotationSpriteJMenuItem: JMenuItem = None
+        if "greenJLabel" not in vars(self): self.greenJLabel: JLabel = None
+        if "jPanel1" not in vars(self): self.jPanel1: JPanel = None
+        if "mainJMenuBar" not in vars(self): self.mainJMenuBar: JMenuBar = None
+        if "maxBlueJTextField" not in vars(self): self.maxBlueJTextField: JTextField = None
+        if "maxGreenJTextField" not in vars(self): self.maxGreenJTextField: JTextField = None
+        if "maxJLabel" not in vars(self): self.maxJLabel: JLabel = None
+        if "maxRedJTextField" not in vars(self): self.maxRedJTextField: JTextField = None
+        if "minBlueJTextField" not in vars(self): self.minBlueJTextField: JTextField = None
+        if "minGreenJTextField" not in vars(self): self.minGreenJTextField: JTextField = None
+        if "minJLabel" not in vars(self): self.minJLabel: JLabel = None
+        if "minRedJTextField" not in vars(self): self.minRedJTextField: JTextField = None
+        if "mirrorJMenuItem" not in vars(self): self.mirrorJMenuItem: JMenuItem = None
+        if "okJButton" not in vars(self): self.okJButton: JButton = None
+        if "openImageJMenuItem" not in vars(self): self.openImageJMenuItem: JMenuItem = None
+        if "processingJMenu" not in vars(self): self.processingJMenu: JMenu = None
+        if "redJLabel" not in vars(self): self.redJLabel: JLabel = None
+        if "scaleImagesJMenuItem" not in vars(self): self.scaleImagesJMenuItem: JMenuItem = None
+        if "canvasImagesJMenuItem" not in vars(self): self.canvasImagesJMenuItem: JMenuItem = None
+        if "createIconImagesJMenuItem" not in vars(self): self.createIconImagesJMenuItem: JMenuItem = None
+        if "titleJLabel" not in vars(self): self.titleJLabel: JLabel = None
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.gui.dialog.FileJDialog import FileJDialog
         from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.initComponents()
         commonPhoneStrings: CommonPhoneStrings = CommonPhoneStrings.getInstance()
         self.setSize(640, 480)
@@ -122,122 +158,164 @@ class ImageToolJFrame(*java_bases(JFrame, FileJDialogListenerInterface)):
         self.greenJLabel.setText("Green:")
         self.blueJLabel.setText("Blue:")
         self.okJButton.setText("OK")
-        self.okJButton.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.okJButtonActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN68221(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "okJButtonActionPerformed") else _java_listener_owner).okJButtonActionPerformed(evt)
+        self.okJButton.addActionListener(_JavaListenerN68221()
+            )
         analysisActionJDialogLayout: GroupLayout = GroupLayout(self.analysisActionJDialog.getContentPane())
         self.analysisActionJDialog.getContentPane().setLayout(analysisActionJDialogLayout)
-        analysisActionJDialogLayout.setHorizontalGroup(analysisActionJDialogLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING).add(analysisActionJDialogLayout.createSequentialGroup().addContainerGap().add(analysisActionJDialogLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING).add(analysisActionJDialogLayout.createSequentialGroup().add(analysisActionJDialogLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING).add(self.blueJLabel).add(self.greenJLabel).add(self.redJLabel).add(self.colorRangeJLabel)).add(29, 29, 29).add(analysisActionJDialogLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING).add(org.jdesktop.layout.GroupLayout.TRAILING, self.minJLabel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE).add(analysisActionJDialogLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, False).add(org.jdesktop.layout.GroupLayout.LEADING, self.minBlueJTextField).add(org.jdesktop.layout.GroupLayout.LEADING, self.minGreenJTextField).add(org.jdesktop.layout.GroupLayout.LEADING, self.minRedJTextField, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE).add(org.jdesktop.layout.GroupLayout.LEADING, self.okJButton))).addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED).add(analysisActionJDialogLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING).add(org.jdesktop.layout.GroupLayout.LEADING, analysisActionJDialogLayout.createSequentialGroup().add(analysisActionJDialogLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, False).add(org.jdesktop.layout.GroupLayout.LEADING, self.maxRedJTextField).add(org.jdesktop.layout.GroupLayout.LEADING, analysisActionJDialogLayout.createSequentialGroup().add(1, 1, 1).add(analysisActionJDialogLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING).add(self.maxBlueJTextField).add(self.maxGreenJTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 43, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))).addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 17, Short.MAX_VALUE)).add(org.jdesktop.layout.GroupLayout.LEADING, self.maxJLabel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)).addContainerGap()).add(org.jdesktop.layout.GroupLayout.TRAILING, analysisActionJDialogLayout.createSequentialGroup().add(self.titleJLabel).add(25, 25, 25)))))
-        analysisActionJDialogLayout.setVerticalGroup(analysisActionJDialogLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING).add(analysisActionJDialogLayout.createSequentialGroup().add(self.titleJLabel).addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED).add(analysisActionJDialogLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE).add(self.minJLabel).add(self.colorRangeJLabel).add(self.maxJLabel)).addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED).add(analysisActionJDialogLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING).add(self.redJLabel).add(analysisActionJDialogLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE).add(self.minRedJTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE).add(self.maxRedJTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))).addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED).add(analysisActionJDialogLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING).add(self.greenJLabel).add(analysisActionJDialogLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE).add(self.minGreenJTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE).add(self.maxGreenJTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))).addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED).add(analysisActionJDialogLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING).add(self.blueJLabel).add(analysisActionJDialogLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE).add(self.minBlueJTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE).add(self.maxBlueJTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))).add(16, 16, 16).add(self.okJButton).addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        analysisActionJDialogLayout.setHorizontalGroup(analysisActionJDialogLayout.createParallelGroup(__import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.LEADING).add(analysisActionJDialogLayout.createSequentialGroup().addContainerGap().add(analysisActionJDialogLayout.createParallelGroup(__import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.LEADING).add(analysisActionJDialogLayout.createSequentialGroup().add(analysisActionJDialogLayout.createParallelGroup(__import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.LEADING).add(self.blueJLabel).add(self.greenJLabel).add(self.redJLabel).add(self.colorRangeJLabel)).add(29, 29, 29).add(analysisActionJDialogLayout.createParallelGroup(__import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.LEADING).add(__import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.TRAILING, self.minJLabel, __import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE).add(analysisActionJDialogLayout.createParallelGroup(__import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.TRAILING, False).add(__import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.LEADING, self.minBlueJTextField).add(__import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.LEADING, self.minGreenJTextField).add(__import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.LEADING, self.minRedJTextField, __import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE).add(__import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.LEADING, self.okJButton))).addPreferredGap(__import__("org.jdesktop.layout.LayoutStyle", fromlist=["LayoutStyle"]).LayoutStyle.RELATED).add(analysisActionJDialogLayout.createParallelGroup(__import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.TRAILING).add(__import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.LEADING, analysisActionJDialogLayout.createSequentialGroup().add(analysisActionJDialogLayout.createParallelGroup(__import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.TRAILING, False).add(__import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.LEADING, self.maxRedJTextField).add(__import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.LEADING, analysisActionJDialogLayout.createSequentialGroup().add(1, 1, 1).add(analysisActionJDialogLayout.createParallelGroup(__import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.LEADING).add(self.maxBlueJTextField).add(self.maxGreenJTextField, __import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.PREFERRED_SIZE, 43, __import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.PREFERRED_SIZE)))).addPreferredGap(__import__("org.jdesktop.layout.LayoutStyle", fromlist=["LayoutStyle"]).LayoutStyle.RELATED, 17, Short.MAX_VALUE)).add(__import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.LEADING, self.maxJLabel, __import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)).addContainerGap()).add(__import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.TRAILING, analysisActionJDialogLayout.createSequentialGroup().add(self.titleJLabel).add(25, 25, 25)))))
+        analysisActionJDialogLayout.setVerticalGroup(analysisActionJDialogLayout.createParallelGroup(__import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.LEADING).add(analysisActionJDialogLayout.createSequentialGroup().add(self.titleJLabel).addPreferredGap(__import__("org.jdesktop.layout.LayoutStyle", fromlist=["LayoutStyle"]).LayoutStyle.RELATED).add(analysisActionJDialogLayout.createParallelGroup(__import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.BASELINE).add(self.minJLabel).add(self.colorRangeJLabel).add(self.maxJLabel)).addPreferredGap(__import__("org.jdesktop.layout.LayoutStyle", fromlist=["LayoutStyle"]).LayoutStyle.RELATED).add(analysisActionJDialogLayout.createParallelGroup(__import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.TRAILING).add(self.redJLabel).add(analysisActionJDialogLayout.createParallelGroup(__import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.BASELINE).add(self.minRedJTextField, __import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.PREFERRED_SIZE, __import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.DEFAULT_SIZE, __import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.PREFERRED_SIZE).add(self.maxRedJTextField, __import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.PREFERRED_SIZE, __import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.DEFAULT_SIZE, __import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.PREFERRED_SIZE))).addPreferredGap(__import__("org.jdesktop.layout.LayoutStyle", fromlist=["LayoutStyle"]).LayoutStyle.RELATED).add(analysisActionJDialogLayout.createParallelGroup(__import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.TRAILING).add(self.greenJLabel).add(analysisActionJDialogLayout.createParallelGroup(__import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.BASELINE).add(self.minGreenJTextField, __import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.PREFERRED_SIZE, __import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.DEFAULT_SIZE, __import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.PREFERRED_SIZE).add(self.maxGreenJTextField, __import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.PREFERRED_SIZE, __import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.DEFAULT_SIZE, __import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.PREFERRED_SIZE))).addPreferredGap(__import__("org.jdesktop.layout.LayoutStyle", fromlist=["LayoutStyle"]).LayoutStyle.RELATED).add(analysisActionJDialogLayout.createParallelGroup(__import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.TRAILING).add(self.blueJLabel).add(analysisActionJDialogLayout.createParallelGroup(__import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.BASELINE).add(self.minBlueJTextField, __import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.PREFERRED_SIZE, __import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.DEFAULT_SIZE, __import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.PREFERRED_SIZE).add(self.maxBlueJTextField, __import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.PREFERRED_SIZE, __import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.DEFAULT_SIZE, __import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.PREFERRED_SIZE))).add(16, 16, 16).add(self.okJButton).addContainerGap(__import__("org.jdesktop.layout.GroupLayout", fromlist=["GroupLayout"]).GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         self.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE)
         self.getContentPane().setLayout(GridLayout(1, 0))
         self.jPanel1.setLayout(GridLayout(1, 0))
         self.getContentPane().add(self.jPanel1)
         self.fileJMenu.setText("File")
-        self.fileJMenu.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.fileJMenuActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN72402(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "fileJMenuActionPerformed") else _java_listener_owner).fileJMenuActionPerformed(evt)
+        self.fileJMenu.addActionListener(_JavaListenerN72402()
+            )
         self.openImageJMenuItem.setText("Open")
-        self.openImageJMenuItem.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.openImageJMenuItemActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN72541(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "openImageJMenuItemActionPerformed") else _java_listener_owner).openImageJMenuItemActionPerformed(evt)
+        self.openImageJMenuItem.addActionListener(_JavaListenerN72541()
+            )
         self.fileJMenu.add(self.openImageJMenuItem)
         self.mainJMenuBar.add(self.fileJMenu)
         self.processingJMenu.setText("Processing")
-        self.processingJMenu.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.processingJMenuActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN72754(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "processingJMenuActionPerformed") else _java_listener_owner).processingJMenuActionPerformed(evt)
+        self.processingJMenu.addActionListener(_JavaListenerN72754()
+            )
         self.analyzeJMenuItem.setText("Image Analyze")
-        self.analyzeJMenuItem.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.analyzeJMenuItemActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN72893(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "analyzeJMenuItemActionPerformed") else _java_listener_owner).analyzeJMenuItemActionPerformed(evt)
+        self.analyzeJMenuItem.addActionListener(_JavaListenerN72893()
+            )
         self.processingJMenu.add(self.analyzeJMenuItem)
         self.generateMirrorSpriteMenuItem.setText("Mirror Sprite Generator")
-        self.generateMirrorSpriteMenuItem.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.generateMirrorSpriteMenuItemActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN73069(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "generateMirrorSpriteMenuItemActionPerformed") else _java_listener_owner).generateMirrorSpriteMenuItemActionPerformed(evt)
+        self.generateMirrorSpriteMenuItem.addActionListener(_JavaListenerN73069()
+            )
         self.processingJMenu.add(self.generateMirrorSpriteMenuItem)
         self.generateRotationSpriteJMenuItem.setText("Rotation Sprite Generator")
-        self.generateRotationSpriteJMenuItem.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.generateRotationSpriteJMenuItemActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN73245(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "generateRotationSpriteJMenuItemActionPerformed") else _java_listener_owner).generateRotationSpriteJMenuItemActionPerformed(evt)
+        self.generateRotationSpriteJMenuItem.addActionListener(_JavaListenerN73245()
+            )
         self.processingJMenu.add(self.generateRotationSpriteJMenuItem)
         self.generateSpriteSplitterMenuItem.setText("Sprite Splitter Generator")
-        self.generateSpriteSplitterMenuItem.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.generateSpriteSplitterMenuItemActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN73421(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "generateSpriteSplitterMenuItemActionPerformed") else _java_listener_owner).generateSpriteSplitterMenuItemActionPerformed(evt)
+        self.generateSpriteSplitterMenuItem.addActionListener(_JavaListenerN73421()
+            )
         self.processingJMenu.add(self.generateSpriteSplitterMenuItem)
         self.generateRotationMenuItem.setText("Rotate Image Generator")
-        self.generateRotationMenuItem.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.generateRotationMenuItemActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN73597(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "generateRotationMenuItemActionPerformed") else _java_listener_owner).generateRotationMenuItemActionPerformed(evt)
+        self.generateRotationMenuItem.addActionListener(_JavaListenerN73597()
+            )
         self.processingJMenu.add(self.generateRotationMenuItem)
         self.createStripImageJMenuItem.setText("Multi Image Unifier")
-        self.createStripImageJMenuItem.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.createStripImageJMenuItemActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN73773(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "createStripImageJMenuItemActionPerformed") else _java_listener_owner).createStripImageJMenuItemActionPerformed(evt)
+        self.createStripImageJMenuItem.addActionListener(_JavaListenerN73773()
+            )
         self.processingJMenu.add(self.createStripImageJMenuItem)
         self.mirrorJMenuItem.setText("Mirror Image(s)")
-        self.mirrorJMenuItem.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.mirrorJMenuItemActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN73949(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "mirrorJMenuItemActionPerformed") else _java_listener_owner).mirrorJMenuItemActionPerformed(evt)
+        self.mirrorJMenuItem.addActionListener(_JavaListenerN73949()
+            )
         self.processingJMenu.add(self.mirrorJMenuItem)
         self.scaleImagesJMenuItem.setText("Scale Image(s)")
-        self.scaleImagesJMenuItem.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.scaleImagesJMenuItemActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN74125(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "scaleImagesJMenuItemActionPerformed") else _java_listener_owner).scaleImagesJMenuItemActionPerformed(evt)
+        self.scaleImagesJMenuItem.addActionListener(_JavaListenerN74125()
+            )
         self.processingJMenu.add(self.scaleImagesJMenuItem)
         self.canvasImagesJMenuItem.setText("Canvas Image(s)")
-        self.canvasImagesJMenuItem.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.canvasImagesJMenuItemActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN74301(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "canvasImagesJMenuItemActionPerformed") else _java_listener_owner).canvasImagesJMenuItemActionPerformed(evt)
+        self.canvasImagesJMenuItem.addActionListener(_JavaListenerN74301()
+            )
         self.processingJMenu.add(self.canvasImagesJMenuItem)
         self.createIconImagesJMenuItem.setText("Create Icon Image(s)")
-        self.createIconImagesJMenuItem.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.createIconsJMenuItemActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN74477(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "createIconsJMenuItemActionPerformed") else _java_listener_owner).createIconsJMenuItemActionPerformed(evt)
+        self.createIconImagesJMenuItem.addActionListener(_JavaListenerN74477()
+            )
         self.processingJMenu.add(self.createIconImagesJMenuItem)
         self.mainJMenuBar.add(self.processingJMenu)
         self.setJMenuBar(self.mainJMenuBar)
@@ -285,29 +363,35 @@ class ImageToolJFrame(*java_bases(JFrame, FileJDialogListenerInterface)):
     
 
     def onFiles(self, files: list[File]) -> None:
+        from java.io.File import File
+        from java.util.Comparator import Comparator
         from org.allbinary.media.image.ImageProcessorInput import ImageProcessorInput
         try:
             self.logUtil.putF("Reading " + str(len(files)) + " files.", self, "onFiles")
-            Arrays.sort(files, (Comparator()  # Java anonymous class body:
-#                 
-# 
-#                 def compare(self, file1: File, file2: File) -> int:
-#                     fileNameIndexValue1: int = self.extractIndexNumberIfAnyFromFileName(file1.getName())
-#                     fileNameIndexValue2: int = self.extractIndexNumberIfAnyFromFileName(file2.getName())
-#                     return fileNameIndexValue1 - fileNameIndexValue2
-#                 
-# 
-#                 def extractIndexNumberIfAnyFromFileName(self, name: str) -> int:
-#                     i: int = 0
-#                     try:
-#                         start: int = name.rfind('_') + 1
-#                         end: int = name.rfind('.')
-#                         number: str = name[start:end]
-#                         i = int(number)
-#                     except Exception as e:
-#                         i = 0
-#                     return i
-))
+            _java_listener_owner = self
+            class _JavaListenerN75892(Comparator):
+            
+                
+
+                def compare(self, file1: File, file2: File) -> int:
+                    from java.io.File import File
+                    fileNameIndexValue1: int = (self if hasattr(self, "extractIndexNumberIfAnyFromFileName") else _java_listener_owner).extractIndexNumberIfAnyFromFileName(file1.getName())
+                    fileNameIndexValue2: int = (self if hasattr(self, "extractIndexNumberIfAnyFromFileName") else _java_listener_owner).extractIndexNumberIfAnyFromFileName(file2.getName())
+                    return fileNameIndexValue1 - fileNameIndexValue2
+                
+
+                def extractIndexNumberIfAnyFromFileName(self, name: str) -> int:
+                    i: int = 0
+                    try:
+                        start: int = name.rfind('_') + 1
+                        end: int = name.rfind('.')
+                        number: str = name[start:end]
+                        i = int(number)
+                    except Exception as e:
+                        i = 0
+                    return i
+            Arrays.sort(files, _JavaListenerN75892()
+            )
             bufferedImageArray: list[BufferedImage] = [None] * (len(files))
             for index in range(0, len(files)):
                 bufferedImageArray[index] = ImageIO.read(files[index])

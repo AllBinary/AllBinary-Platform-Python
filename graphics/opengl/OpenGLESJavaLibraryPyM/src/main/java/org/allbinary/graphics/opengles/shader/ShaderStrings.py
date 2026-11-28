@@ -28,7 +28,7 @@ class ShaderStrings:
         self.UNIFORM_ATTRIBUTE_HANDLE: str = "Uniform Attribute Handle: "
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

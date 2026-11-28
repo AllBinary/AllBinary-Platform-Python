@@ -15,12 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.visual.transform.TransformInterface import TransformInterface
 from org.allbinary.logic.control.validate.ValidationInterface import ValidationInterface
 
 
 # Java interface
+@java_inherited_overloads
 class ValidationComponentInterface(*java_bases(TransformInterface, ValidationInterface)):
     pass
 

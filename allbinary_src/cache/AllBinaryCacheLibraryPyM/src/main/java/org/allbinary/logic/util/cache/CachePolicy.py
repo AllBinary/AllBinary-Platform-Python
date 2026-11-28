@@ -20,13 +20,13 @@ from __future__ import annotations
 class CachePolicy:
 
     def _init_fields(self) -> None:
-        self.name: str = None
-        self.maxTime: int = 0
-        self.maxSize: int = 0
+        if "name" not in vars(self): self.name: str = None
+        if "maxTime" not in vars(self): self.maxTime: int = 0
+        if "maxSize" not in vars(self): self.maxSize: int = 0
     
 
     def __init__(self, name: str, maxTime: int, maxSize: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.name = name
         self.setMaxTime(maxTime)
         self.setMaxSize(maxSize)

@@ -22,12 +22,12 @@ class AllBinaryEventObject:
     NULL_EVENT: AllBinaryEventObject = None
 
     def _init_fields(self) -> None:
-        self.source: object = None
+        if "source" not in vars(self): self.source: object = None
     
 
     def __init__(self, anyType: object) -> None:
         from jsinterop.annotations.JsConstructor import JsConstructor
-        self._init_fields()
+        __class__._init_fields(self)
         self.source = anyType
     
 

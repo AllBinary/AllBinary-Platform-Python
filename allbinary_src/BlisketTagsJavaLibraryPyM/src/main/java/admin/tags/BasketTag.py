@@ -15,23 +15,31 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from tags.CustomTagSupport import CustomTagSupport
 
 
+@java_inherited_overloads
 class BasketTag(CustomTagSupport):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("command", None)
+        vars(self).setdefault("storeName", None)
+        vars(self).setdefault("propertiesHashMap", None)
 
     def _init_fields(self) -> None:
-        from java.util.HashMap import HashMap
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.command: str = None
-        self.storeName: str = None
-        self.propertiesHashMap: HashMap = None
+        if "command" not in vars(self): self.command: str = None
+        if "storeName" not in vars(self): self.storeName: str = None
+        if "propertiesHashMap" not in vars(self): self.propertiesHashMap: HashMap = None
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def setCommand(self, command: str) -> None:
@@ -133,14 +141,14 @@ class BasketTag(CustomTagSupport):
                 self.propertiesHashMap = StdUtil.getInstance().createHashMap()
                 self.propertiesHashMap.put(StoreFrontData.getInstance().NAME, self.storeName)
                 if ((self.command > BasketData.INSERT) - (self.command < BasketData.INSERT)) == 0:
-                    if not self.addItemToBasket():
+                    if not (self.addItemToBasket()):
                         self.pageContext.getOut().println("Item is not currently being sold.<p/>")
                 elif ((self.command > BasketData.DELETE) - (self.command < BasketData.DELETE)) == 0:
                     self.removeItemFromBasket()
                 elif ((self.command > BasketData.ADJUST) - (self.command < BasketData.ADJUST)) == 0:
                     self.adjustBasket()
                 elif ((self.command > BasketData.ISEMPTY) - (self.command < BasketData.ISEMPTY)) == 0:
-                    if self.isBasketEmpty():
+                    if java_predicate(self, "isBasketEmpty"):
                         return self.EVAL_BODY_INCLUDE
                     else:
                         return self.SKIP_BODY

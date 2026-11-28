@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 import datetime
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
@@ -24,10 +26,8 @@ class StoreFront(StoreFrontInterface):
     RESOURCES: str = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.context.configuration.ContextConfigurationInterface import ContextConfigurationInterface
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.logic.io.file.directory.Directory import Directory
-        from org.allbinary.logic.io.path.AbPath import AbPath
         from org.allbinary.logic.io.path.AbPathUtil import AbPathUtil
         from org.allbinary.logic.string.StringUtil import StringUtil
         from org.allbinary.string.CommonStrings import CommonStrings
@@ -50,7 +50,7 @@ class StoreFront(StoreFrontInterface):
         self.staticPath: AbPath = self.abPathUtil.NO_ABPATH
         self.categoryPath: AbPath = self.abPathUtil.NO_ABPATH
         self.inventoryControl: str = self.stringUtil.EMPTY_STRING
-        self.contextConfigurationInterface: ContextConfigurationInterface = None
+        if "contextConfigurationInterface" not in vars(self): self.contextConfigurationInterface: ContextConfigurationInterface = None
         self.subStores: str = self.stringUtil.EMPTY_STRING
         self.tagLocation: str = self.stringUtil.EMPTY_STRING
         self.packageLocation: str = self.stringUtil.EMPTY_STRING
@@ -72,20 +72,20 @@ class StoreFront(StoreFrontInterface):
 
     def __init__(self, *args) -> None:
         if len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
         elif len(args) == 1:
-            self.__jconstructor1(*args)
+            __class__.__jconstructor1(self, *args)
 
     def __jconstructor1(self, *args) -> None:
-        if True and not isinstance(args[0], (str, list, int, float)):
-            self._constructor1_1(*args)
+        if True and (args[0] is None or any(base.__name__ == "HttpServletRequest" for base in type(args[0]).__mro__)):
+            __class__._constructor1_1(self, *args)
         else:
-            self._constructor1_2(*args)
+            __class__._constructor1_2(self, *args)
     
 
     def _constructor0(self) -> None:
         from org.allbinary.business.context.configuration.ContextConfiguration import ContextConfiguration
-        self._init_fields()
+        __class__._init_fields(self)
         self.contextConfigurationInterface = ContextConfiguration()
     
 
@@ -94,7 +94,7 @@ class StoreFront(StoreFrontInterface):
         from org.allbinary.logic.communication.http.request.RequestParams import RequestParams
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-        self._init_fields()
+        __class__._init_fields(self)
         self.getFormData(RequestParams(request).toHashMap())
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().EMAILLOGGING):
             self.logUtil.putF("TWB- needs update for adding and updating context configuration - currently defaults to admin context config", self, "StoreFront")
@@ -102,11 +102,12 @@ class StoreFront(StoreFrontInterface):
     
 
     def _constructor1_2(self, hashMap: HashMap) -> None:
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
         from java.util.HashMap import HashMap
         from org.allbinary.business.context.configuration.ContextConfigurationInterfaceFactory import ContextConfigurationInterfaceFactory
         from org.allbinary.data.tree.dom.document.DomDocumentHelper import DomDocumentHelper
         from org.w3c.dom.Document import Document
-        self._init_fields()
+        __class__._init_fields(self)
         self.getFormData(hashMap)
         domDocumentString: str = hashMap.get(StoreFrontData.getInstance().CONFIGURATION)
         if domDocumentString is None:
@@ -115,6 +116,7 @@ class StoreFront(StoreFrontInterface):
     
 
     def isColumn(self, columnName: str) -> bool:
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
         from org.allbinary.business.user.UserData import UserData
         if ((columnName > StoreFrontData.getInstance().NAME) - (columnName < StoreFrontData.getInstance().NAME)) == 0 or ((columnName > UserData.MAINEMAIL) - (columnName < UserData.MAINEMAIL)) == 0:
             return True
@@ -138,7 +140,9 @@ class StoreFront(StoreFrontInterface):
         return AbPath(self.create(append, key, hashMap), StringUtil.getInstance().EMPTY_STRING)
 
     def createPath(self, *args):
-        return getattr(self, "createPath_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("createPath_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().createPath(*args)
     
 
     def get(self, key: str, hashMap: HashMap) -> str:
@@ -161,6 +165,7 @@ class StoreFront(StoreFrontInterface):
 
     # throws Exception
     def getFormData(self, storeHashMap: HashMap) -> None:
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
         from java.util.HashMap import HashMap
         from org.allbinary.business.entry.EntryData import EntryData
         from org.allbinary.logic.io.path.AbPathData import AbPathData
@@ -201,7 +206,7 @@ class StoreFront(StoreFrontInterface):
         from org.allbinary.logic.string.regex.replace.Replace import Replace
         from org.allbinary.string.CommonSeps import CommonSeps
         from org.apache.commons.lang3.StringEscapeUtils import StringEscapeUtils
-        if not StringValidationUtil.getInstance().isValidRequired(self.name, self.MINSTORENAMELENGTH, self.MAXCHAR):
+        if not (StringValidationUtil.getInstance().isValidRequired(self.name, self.MINSTORENAMELENGTH, self.MAXCHAR)):
             return False
         else:
             isEscapedCharactersContained: bool = False
@@ -222,55 +227,55 @@ class StoreFront(StoreFrontInterface):
     def isValid(self) -> bool:
         from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         valid: bool = True
-        valid = self.isNameValid()
+        valid = java_predicate(self, "isNameValid")
         stringValidationUtil: StringValidationUtil = StringValidationUtil.getInstance()
-        if not stringValidationUtil.isValidRequired(self.basketName, self.MINCHAR, self.MAXCHAR):
+        if not (stringValidationUtil.isValidRequired(self.basketName, self.MINCHAR, self.MAXCHAR)):
             valid = False
-        if not stringValidationUtil.isValidRequired(self.homeHostName, self.MINCHAR, self.MAXCHAR):
+        if not (stringValidationUtil.isValidRequired(self.homeHostName, self.MINCHAR, self.MAXCHAR)):
             valid = False
-        if not stringValidationUtil.isValidNotRequired(str(self.homeHostNamePath), self.MINCHAR, self.MAXCHAR):
+        if not (stringValidationUtil.isValidNotRequired(str(self.homeHostNamePath), self.MINCHAR, self.MAXCHAR)):
             valid = False
-        if not stringValidationUtil.isValidRequired(self.hostName, self.MINCHAR, self.MAXCHAR):
+        if not (stringValidationUtil.isValidRequired(self.hostName, self.MINCHAR, self.MAXCHAR)):
             valid = False
-        if not stringValidationUtil.isValidRequired(str(self.hostNamePath), self.MINCHAR, self.MAXCHAR):
+        if not (stringValidationUtil.isValidRequired(str(self.hostNamePath), self.MINCHAR, self.MAXCHAR)):
             valid = False
-        if not stringValidationUtil.isValidNotRequired(self.testHomeHostName, self.MINCHAR, self.MAXCHAR):
+        if not (stringValidationUtil.isValidNotRequired(self.testHomeHostName, self.MINCHAR, self.MAXCHAR)):
             valid = False
-        if not stringValidationUtil.isValidNotRequired(str(self.testHomeHostNamePath), self.MINCHAR, self.MAXCHAR):
+        if not (stringValidationUtil.isValidNotRequired(str(self.testHomeHostNamePath), self.MINCHAR, self.MAXCHAR)):
             valid = False
-        if not stringValidationUtil.isValidNotRequired(self.testHostName, self.MINCHAR, self.MAXCHAR):
+        if not (stringValidationUtil.isValidNotRequired(self.testHostName, self.MINCHAR, self.MAXCHAR)):
             valid = False
-        if not stringValidationUtil.isValidNotRequired(str(self.testHostNamePath), self.MINCHAR, self.MAXCHAR):
+        if not (stringValidationUtil.isValidNotRequired(str(self.testHostNamePath), self.MINCHAR, self.MAXCHAR)):
             valid = False
-        if not stringValidationUtil.isValidRequired(str(self.imagePath), self.MINCHAR, self.MAXCHAR):
+        if not (stringValidationUtil.isValidRequired(str(self.imagePath), self.MINCHAR, self.MAXCHAR)):
             valid = False
-        if not stringValidationUtil.isValidRequired(str(self.staticPath), self.MINCHAR, self.MAXCHAR):
+        if not (stringValidationUtil.isValidRequired(str(self.staticPath), self.MINCHAR, self.MAXCHAR)):
             valid = False
-        if not stringValidationUtil.isValidRequired(str(self.categoryPath), self.MINCHAR, self.MAXCHAR):
+        if not (stringValidationUtil.isValidRequired(str(self.categoryPath), self.MINCHAR, self.MAXCHAR)):
             valid = False
-        if not stringValidationUtil.isValidRequired(self.inventoryControl, self.MINCHAR, self.MAXCHAR):
+        if not (stringValidationUtil.isValidRequired(self.inventoryControl, self.MINCHAR, self.MAXCHAR)):
             valid = False
-        if not stringValidationUtil.isValidNotRequired(self.subStores, self.MINCHAR, self.MAXCHAR):
+        if not (stringValidationUtil.isValidNotRequired(self.subStores, self.MINCHAR, self.MAXCHAR)):
             valid = False
-        if not stringValidationUtil.isValidNotRequired(self.tagLocation, self.MINCHAR, self.MAXCHAR):
+        if not (stringValidationUtil.isValidNotRequired(self.tagLocation, self.MINCHAR, self.MAXCHAR)):
             valid = False
-        if not stringValidationUtil.isValidRequired(self.packageLocation, self.MINCHAR, self.MAXCHAR):
+        if not (stringValidationUtil.isValidRequired(self.packageLocation, self.MINCHAR, self.MAXCHAR)):
             valid = False
-        if not stringValidationUtil.isValidNotRequired(self.ftp, self.MINCHAR, self.MAXCHAR):
+        if not (stringValidationUtil.isValidNotRequired(self.ftp, self.MINCHAR, self.MAXCHAR)):
             valid = False
-        if not stringValidationUtil.isValidNotRequired(str(self.ftpPath), self.MINCHAR, self.MAXCHAR):
+        if not (stringValidationUtil.isValidNotRequired(str(self.ftpPath), self.MINCHAR, self.MAXCHAR)):
             valid = False
-        if not stringValidationUtil.isValidNotRequired(self.ftpUserName, self.MINCHAR, self.MAXCHAR):
+        if not (stringValidationUtil.isValidNotRequired(self.ftpUserName, self.MINCHAR, self.MAXCHAR)):
             valid = False
-        if not stringValidationUtil.isValidNotRequired(self.ftpPassword, self.MINCHAR, self.MAXCHAR):
+        if not (stringValidationUtil.isValidNotRequired(self.ftpPassword, self.MINCHAR, self.MAXCHAR)):
             valid = False
-        if not stringValidationUtil.isValidNotRequired(self.testFtp, self.MINCHAR, self.MAXCHAR):
+        if not (stringValidationUtil.isValidNotRequired(self.testFtp, self.MINCHAR, self.MAXCHAR)):
             valid = False
-        if not stringValidationUtil.isValidNotRequired(str(self.testFtpPath), self.MINCHAR, self.MAXCHAR):
+        if not (stringValidationUtil.isValidNotRequired(str(self.testFtpPath), self.MINCHAR, self.MAXCHAR)):
             valid = False
-        if not stringValidationUtil.isValidNotRequired(self.testFtpUserName, self.MINCHAR, self.MAXCHAR):
+        if not (stringValidationUtil.isValidNotRequired(self.testFtpUserName, self.MINCHAR, self.MAXCHAR)):
             valid = False
-        if not stringValidationUtil.isValidNotRequired(self.testFtpPassword, self.MINCHAR, self.MAXCHAR):
+        if not (stringValidationUtil.isValidNotRequired(self.testFtpPassword, self.MINCHAR, self.MAXCHAR)):
             valid = False
         if valid == True:
             return True
@@ -282,7 +287,7 @@ class StoreFront(StoreFrontInterface):
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         stringValidationUtil: StringValidationUtil = StringValidationUtil.getInstance()
-        if not stringValidationUtil.isValidRequired(self.name, self.MINCHAR, self.MAXCHAR):
+        if not (stringValidationUtil.isValidRequired(self.name, self.MINCHAR, self.MAXCHAR)):
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.append("Name is invalid. Must be < ")
             stringBuffer.appendint(self.MAXCHAR)
@@ -300,63 +305,63 @@ class StoreFront(StoreFrontInterface):
             stringValidationUtil: StringValidationUtil = StringValidationUtil.getInstance()
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.append(self.nameValidationInfo())
-            if not stringValidationUtil.isValidRequired(self.basketName, self.MINCHAR, self.MAXCHAR):
+            if not (stringValidationUtil.isValidRequired(self.basketName, self.MINCHAR, self.MAXCHAR)):
                 stringBuffer.append("Basket name is invalid. Must be < ")
                 stringBuffer.appendint(self.MAXCHAR)
                 stringBuffer.append(" and > 0 characters.<br>")
-            if not stringValidationUtil.isValidRequired(self.homeHostName, self.MINCHAR, self.MAXCHAR):
+            if not (stringValidationUtil.isValidRequired(self.homeHostName, self.MINCHAR, self.MAXCHAR)):
                 stringBuffer.append("Home host name is invalid. Must be < ")
                 stringBuffer.appendint(self.MAXCHAR)
                 stringBuffer.append(" and > 0 characters.<br>")
-            if not stringValidationUtil.isValidNotRequired(str(self.homeHostNamePath), self.MINCHAR, self.MAXCHAR):
+            if not (stringValidationUtil.isValidNotRequired(str(self.homeHostNamePath), self.MINCHAR, self.MAXCHAR)):
                 stringBuffer.append("Home host name path is invalid. Must be < ")
                 stringBuffer.appendint(self.MAXCHAR)
                 stringBuffer.append(" and > 0 characters.<br>")
-            if not stringValidationUtil.isValidRequired(self.hostName, self.MINCHAR, self.MAXCHAR):
+            if not (stringValidationUtil.isValidRequired(self.hostName, self.MINCHAR, self.MAXCHAR)):
                 stringBuffer.append("Host name is invalid. Must be < ")
                 stringBuffer.appendint(self.MAXCHAR)
                 stringBuffer.append(" and > 0 characters.<br>")
-            if not stringValidationUtil.isValidRequired(str(self.hostNamePath), self.MINCHAR, self.MAXCHAR):
+            if not (stringValidationUtil.isValidRequired(str(self.hostNamePath), self.MINCHAR, self.MAXCHAR)):
                 stringBuffer.append("Host name path is invalid. Must be < ")
                 stringBuffer.appendint(self.MAXCHAR)
                 stringBuffer.append(" and > 0 characters.<br>")
-            if not stringValidationUtil.isValidNotRequired(self.testHomeHostName, self.MINCHAR, self.MAXCHAR):
+            if not (stringValidationUtil.isValidNotRequired(self.testHomeHostName, self.MINCHAR, self.MAXCHAR)):
                 stringBuffer.append("Test home host name is invalid. Must be < " + str(self.MAXCHAR) + " and > 0 characters.<br>")
-            if not stringValidationUtil.isValidNotRequired(str(self.testHomeHostNamePath), self.MINCHAR, self.MAXCHAR):
+            if not (stringValidationUtil.isValidNotRequired(str(self.testHomeHostNamePath), self.MINCHAR, self.MAXCHAR)):
                 stringBuffer.append("Test home host name path is invalid. Must be < " + str(self.MAXCHAR) + " and > 0 characters.<br>")
-            if not stringValidationUtil.isValidNotRequired(self.testHostName, self.MINCHAR, self.MAXCHAR):
+            if not (stringValidationUtil.isValidNotRequired(self.testHostName, self.MINCHAR, self.MAXCHAR)):
                 stringBuffer.append("Test host name is invalid. Must be < " + str(self.MAXCHAR) + " and > 0 characters.<br>")
-            if not stringValidationUtil.isValidNotRequired(str(self.testHostNamePath), self.MINCHAR, self.MAXCHAR):
+            if not (stringValidationUtil.isValidNotRequired(str(self.testHostNamePath), self.MINCHAR, self.MAXCHAR)):
                 stringBuffer.append("Test host name path is invalid. Must be < " + str(self.MAXCHAR) + " and > 0 characters.<br>")
-            if not stringValidationUtil.isValidRequired(str(self.imagePath), self.MINCHAR, self.MAXCHAR):
+            if not (stringValidationUtil.isValidRequired(str(self.imagePath), self.MINCHAR, self.MAXCHAR)):
                 stringBuffer.append("Image path is invalid. Must be < " + str(self.MAXCHAR) + " and > 0 characters.<br>")
-            if not stringValidationUtil.isValidRequired(str(self.staticPath), self.MINCHAR, self.MAXCHAR):
+            if not (stringValidationUtil.isValidRequired(str(self.staticPath), self.MINCHAR, self.MAXCHAR)):
                 stringBuffer.append("Static path is invalid. Must be < " + str(self.MAXCHAR) + " and > 0 characters.<br>")
-            if not stringValidationUtil.isValidRequired(str(self.categoryPath), self.MINCHAR, self.MAXCHAR):
+            if not (stringValidationUtil.isValidRequired(str(self.categoryPath), self.MINCHAR, self.MAXCHAR)):
                 stringBuffer.append("Category path is invalid. Must be < " + str(self.MAXCHAR) + " and > 0 characters.<br>")
-            if not stringValidationUtil.isValidRequired(self.inventoryControl, self.MINCHAR, self.MAXCHAR):
+            if not (stringValidationUtil.isValidRequired(self.inventoryControl, self.MINCHAR, self.MAXCHAR)):
                 stringBuffer.append("Inventory control is invalid. Must be < " + str(self.MAXCHAR) + " and > 0 characters.<br>")
-            if not stringValidationUtil.isValidNotRequired(self.subStores, self.MINCHAR, self.MAXCHAR):
+            if not (stringValidationUtil.isValidNotRequired(self.subStores, self.MINCHAR, self.MAXCHAR)):
                 stringBuffer.append("Sub stores is invalid. Must be < " + str(self.MAXCHAR) + " and > 0 characters.<br>")
-            if not stringValidationUtil.isValidNotRequired(self.tagLocation, self.MINCHAR, self.MAXCHAR):
+            if not (stringValidationUtil.isValidNotRequired(self.tagLocation, self.MINCHAR, self.MAXCHAR)):
                 stringBuffer.append("Tag location is invalid. Must be < " + str(self.MAXCHAR) + " and > 0 characters.<br>")
-            if not stringValidationUtil.isValidRequired(self.packageLocation, self.MINCHAR, self.MAXCHAR):
+            if not (stringValidationUtil.isValidRequired(self.packageLocation, self.MINCHAR, self.MAXCHAR)):
                 stringBuffer.append("Package location is invalid. Must be < " + str(self.MAXCHAR) + " and > 0 characters.<br>")
-            if not stringValidationUtil.isValidNotRequired(self.ftp, self.MINCHAR, self.MAXCHAR):
+            if not (stringValidationUtil.isValidNotRequired(self.ftp, self.MINCHAR, self.MAXCHAR)):
                 stringBuffer.append("Ftp is invalid. Must be < " + str(self.MAXCHAR) + " and > 0 characters.<br>")
-            if not stringValidationUtil.isValidNotRequired(str(self.ftpPath), self.MINCHAR, self.MAXCHAR):
+            if not (stringValidationUtil.isValidNotRequired(str(self.ftpPath), self.MINCHAR, self.MAXCHAR)):
                 stringBuffer.append("Ftp path is invalid. Must be < " + str(self.MAXCHAR) + " and > 0 characters.<br>")
-            if not stringValidationUtil.isValidNotRequired(self.ftpUserName, self.MINCHAR, self.MAXCHAR):
+            if not (stringValidationUtil.isValidNotRequired(self.ftpUserName, self.MINCHAR, self.MAXCHAR)):
                 stringBuffer.append("Ftp username is invalid. Must be < " + str(self.MAXCHAR) + " and > 0 characters.<br>")
-            if not stringValidationUtil.isValidNotRequired(self.ftpPassword, self.MINCHAR, self.MAXCHAR):
+            if not (stringValidationUtil.isValidNotRequired(self.ftpPassword, self.MINCHAR, self.MAXCHAR)):
                 stringBuffer.append("Ftp password is invalid. Must be < " + str(self.MAXCHAR) + " and > 0 characters.<br>")
-            if not stringValidationUtil.isValidNotRequired(self.testFtp, self.MINCHAR, self.MAXCHAR):
+            if not (stringValidationUtil.isValidNotRequired(self.testFtp, self.MINCHAR, self.MAXCHAR)):
                 stringBuffer.append("Test ftp is invalid. Must be < " + str(self.MAXCHAR) + " and > 0 characters.<br>")
-            if not stringValidationUtil.isValidNotRequired(str(self.testFtpPath), self.MINCHAR, self.MAXCHAR):
+            if not (stringValidationUtil.isValidNotRequired(str(self.testFtpPath), self.MINCHAR, self.MAXCHAR)):
                 stringBuffer.append("Test ftp Path is invalid. Must be < " + str(self.MAXCHAR) + " and > 0 characters.<br>")
-            if not stringValidationUtil.isValidNotRequired(self.testFtpUserName, self.MINCHAR, self.MAXCHAR):
+            if not (stringValidationUtil.isValidNotRequired(self.testFtpUserName, self.MINCHAR, self.MAXCHAR)):
                 stringBuffer.append("Test ftp username is invalid. Must be < " + str(self.MAXCHAR) + " and > 0 characters.<br>")
-            if not stringValidationUtil.isValidNotRequired(self.testFtpPassword, self.MINCHAR, self.MAXCHAR):
+            if not (stringValidationUtil.isValidNotRequired(self.testFtpPassword, self.MINCHAR, self.MAXCHAR)):
                 stringBuffer.append("Test ftp password is invalid. Must be < " + str(self.MAXCHAR) + " and > 0 characters.<br>")
             return str(stringBuffer)
         except Exception as e:
@@ -373,7 +378,7 @@ class StoreFront(StoreFrontInterface):
     def getCurrentHostName(self) -> str:
         from org.allbinary.globals.URLGLOBALS import URLGLOBALS
         location: str = self.EMPTY_STRING
-        if URLGLOBALS.isTestingMode():
+        if java_predicate(URLGLOBALS, "isTestingMode"):
             location = self.getTestHostName()
         else:
             location = self.getHostName()
@@ -383,7 +388,7 @@ class StoreFront(StoreFrontInterface):
     def getCurrentHostNamePath(self) -> str:
         from org.allbinary.globals.URLGLOBALS import URLGLOBALS
         location: str = self.EMPTY_STRING
-        if URLGLOBALS.isTestingMode():
+        if java_predicate(URLGLOBALS, "isTestingMode"):
             location = self.getTestHostNamePath()
         else:
             location = self.getHostNamePath()
@@ -393,7 +398,7 @@ class StoreFront(StoreFrontInterface):
     def getCurrentHomeHostName(self) -> str:
         from org.allbinary.globals.URLGLOBALS import URLGLOBALS
         location: str = self.EMPTY_STRING
-        if URLGLOBALS.isTestingMode():
+        if java_predicate(URLGLOBALS, "isTestingMode"):
             location = self.getTestHomeHostName()
         else:
             location = self.getHomeHostName()
@@ -403,7 +408,7 @@ class StoreFront(StoreFrontInterface):
     def getCurrentHomeHostNamePath(self) -> str:
         from org.allbinary.globals.URLGLOBALS import URLGLOBALS
         location: str = self.EMPTY_STRING
-        if URLGLOBALS.isTestingMode():
+        if java_predicate(URLGLOBALS, "isTestingMode"):
             location = self.getTestHomeHostNamePath()
         else:
             location = self.getHomeHostNamePath()
@@ -619,7 +624,9 @@ class StoreFront(StoreFrontInterface):
         self.packageLocation = value
 
     def getPackageLocation(self, *args):
-        return getattr(self, "getPackageLocation_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("getPackageLocation_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getPackageLocation(*args)
     
 
     def setFtp(self, value: str) -> None:
@@ -674,11 +681,11 @@ class StoreFront(StoreFrontInterface):
         from org.allbinary.logic.io.path.AbPath import AbPath
         from org.allbinary.logic.string.StringUtil import StringUtil
         storeAbPath: AbPath = AbPath(URLGLOBALS.getWebappPath() + self.getCurrentHomeHostNamePath(), StringUtil.getInstance().EMPTY_STRING)
-        if not self.directory.create(storeAbPath):
+        if not (self.directory.create(storeAbPath)):
             return False
-        if not self.directory.create(AbPath(storeAbPath + self.getCategoryPath(), StringUtil.getInstance().EMPTY_STRING)):
+        if not (self.directory.create(AbPath(storeAbPath + self.getCategoryPath(), StringUtil.getInstance().EMPTY_STRING))):
             return False
-        if not self.directory.create(AbPath(storeAbPath + self.getStaticPath(), StringUtil.getInstance().EMPTY_STRING)):
+        if not (self.directory.create(AbPath(storeAbPath + self.getStaticPath(), StringUtil.getInstance().EMPTY_STRING))):
             return False
         return True
     
@@ -695,7 +702,7 @@ class StoreFront(StoreFrontInterface):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            if not self.createDirectories():
+            if not (self.createDirectories()):
                 raise Exception("Unable to create store directories")
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.delete(0, stringBuffer.length())
@@ -717,13 +724,13 @@ class StoreFront(StoreFrontInterface):
             stringBuffer.append(AbPathData.getInstance().SEPARATOR)
             toDirectoryAbPath: AbPath = AbPath(str(stringBuffer), StringUtil.getInstance().EMPTY_STRING)
             if current == 0:
-                if not self.directory.create(toDirectoryAbPath):
+                if not (self.directory.create(toDirectoryAbPath)):
                     raise Exception("Unable to create store view directory: " + str(toDirectoryAbPath))
             viewTotal: int = int((total * 85) / 100)
             installTotal: int = int((total * 93) / 100)
             if current < viewTotal:
                 file: AbFile = AbFile.createAbFileFromAbPath(fromSpecialDirectoryAbPath)
-                if file.isDirectory():
+                if java_predicate(file, "isDirectory"):
                     halfViewTotal: int = int(viewTotal / 2)
                     if current < halfViewTotal:
                         self.installViews(fromSpecialDirectoryAbPath, toDirectoryAbPath, current, halfViewTotal)
@@ -834,6 +841,7 @@ class StoreFront(StoreFrontInterface):
 
     # throws Exception
     def toHashMap(self) -> HashMap:
+        from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
         from java.util.HashMap import HashMap
         from org.allbinary.business.context.configuration.ContextConfigurationDomDocumentMapping import ContextConfigurationDomDocumentMapping
         from org.allbinary.business.entry.EntryData import EntryData

@@ -3,6 +3,8 @@
 
 from __future__ import annotations
 
+from java.lang.System import System
+from java.lang.Runtime import Runtime
 import os
 import platform
 
@@ -17,11 +19,11 @@ class RuntimeEnvironmentVariables:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getTest1(self) -> str:
-        return {"os.name": platform.system(), "os.arch": platform.machine(), "os.version": platform.version(), "user.home": os.path.expanduser("~"), "user.dir": os.getcwd(), "file.separator": os.sep, "path.separator": os.pathsep, "line.separator": os.linesep, "java.version": "1.8.0"}.get("java.java.home", os.environ.get(str("java.java.home")))
+        return System.getProperty("java.java.home")
     
 
     def getVariable(self, var: str) -> str:
@@ -31,6 +33,8 @@ class RuntimeEnvironmentVariables:
     
 
     def get(self) -> Properties:
+        from java.io.BufferedReader import BufferedReader
+        from java.io.InputStreamReader import InputStreamReader
         from java.util.Properties import Properties
         from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
         from org.allbinary.logic.system.os.OperatingSystemFactory import OperatingSystemFactory
@@ -73,7 +77,7 @@ class RuntimeEnvironmentVariables:
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            return {"os.name": platform.system(), "os.arch": platform.machine(), "os.version": platform.version(), "user.home": os.path.expanduser("~"), "user.dir": os.getcwd(), "file.separator": os.sep, "path.separator": os.pathsep, "line.separator": os.linesep, "java.version": "1.8.0"}.get("java.io.tmpdir", os.environ.get(str("java.io.tmpdir")))
+            return System.getProperty("java.io.tmpdir")
         except Exception as e:
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().OSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "getTempDir()", e)
@@ -84,7 +88,7 @@ class RuntimeEnvironmentVariables:
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            return {"os.name": platform.system(), "os.arch": platform.machine(), "os.version": platform.version(), "user.home": os.path.expanduser("~"), "user.dir": os.getcwd(), "file.separator": os.sep, "path.separator": os.pathsep, "line.separator": os.linesep, "java.version": "1.8.0"}.get("java.library.path", os.environ.get(str("java.library.path")))
+            return System.getProperty("java.library.path")
         except Exception as e:
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().OSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "getLibraryPath()", e)
@@ -95,7 +99,7 @@ class RuntimeEnvironmentVariables:
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            return {"os.name": platform.system(), "os.arch": platform.machine(), "os.version": platform.version(), "user.home": os.path.expanduser("~"), "user.dir": os.getcwd(), "file.separator": os.sep, "path.separator": os.pathsep, "line.separator": os.linesep, "java.version": "1.8.0"}.get("java.class.path", os.environ.get(str("java.class.path")))
+            return System.getProperty("java.class.path")
         except Exception as e:
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().OSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "getClassPath()", e)
@@ -117,7 +121,7 @@ class RuntimeEnvironmentVariables:
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            return {"os.name": platform.system(), "os.arch": platform.machine(), "os.version": platform.version(), "user.home": os.path.expanduser("~"), "user.dir": os.getcwd(), "file.separator": os.sep, "path.separator": os.pathsep, "line.separator": os.linesep, "java.version": "1.8.0"}.get("user.home", os.environ.get(str("user.home")))
+            return System.getProperty("user.home")
         except Exception as e:
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().OSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "getUserHome()", e)
@@ -128,7 +132,7 @@ class RuntimeEnvironmentVariables:
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
-            return {"os.name": platform.system(), "os.arch": platform.machine(), "os.version": platform.version(), "user.home": os.path.expanduser("~"), "user.dir": os.getcwd(), "file.separator": os.sep, "path.separator": os.pathsep, "line.separator": os.linesep, "java.version": "1.8.0"}.get("user.dir", os.environ.get(str("user.dir")))
+            return System.getProperty("user.dir")
         except Exception as e:
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().OSERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "getUserDir()", e)

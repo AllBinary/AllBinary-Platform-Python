@@ -34,11 +34,13 @@ class OpenGLGLUUtils:
         raise RuntimeError()
 
     def texImage2D(self, *args):
-        if len(args) == 8 and True and not isinstance(args[0], (str, list, int, float)) and (args[1] is None or isinstance(args[1], str)) and isinstance(args[2], int) and not isinstance(args[2], bool) and isinstance(args[3], int) and not isinstance(args[3], bool) and isinstance(args[4], bool) and not isinstance(args[5], (str, list, int, float)) and isinstance(args[6], int) and not isinstance(args[6], bool) and isinstance(args[7], bool):
-            return self.texImage2D_j8_1(*args)
+        if len(args) == 8 and True and (args[0] is None or any(base.__name__ == "GL10" for base in type(args[0]).__mro__)) and (args[1] is None or isinstance(args[1], str)) and isinstance(args[2], int) and not isinstance(args[2], bool) and isinstance(args[3], int) and not isinstance(args[3], bool) and isinstance(args[4], bool) and (args[5] is None or any(base.__name__ == "OpenGLESImage" for base in type(args[5]).__mro__)) and isinstance(args[6], int) and not isinstance(args[6], bool) and isinstance(args[7], bool):
+            return __class__.__dict__["texImage2D_j8_1"].__get__(self, __class__)(*args)
         if len(args) == 8:
-            return self.texImage2D_j8_2(*args)
-        return getattr(self, "texImage2D_j" + str(len(args)))(*args)
+            return __class__.__dict__["texImage2D_j8_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("texImage2D_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().texImage2D(*args)
 # from java.nio.ByteBuffer import ByteBuffer
 # from javax.microedition.khronos.opengles.GL10 import GL10
 # from org.allbinary.graphics.OpenGLBitmap import OpenGLBitmap

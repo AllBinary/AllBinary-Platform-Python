@@ -15,26 +15,33 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.validate.ValidationComponentInterface import ValidationComponentInterface
 from views.business.context.HttpContextView import HttpContextView
 
 
+@java_inherited_overloads
 class AddValidationStoreFrontView(*java_bases(HttpContextView, ValidationComponentInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("newStoreFrontInterface", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.newStoreFrontInterface: StoreFrontInterface = None
+        if "newStoreFrontInterface" not in vars(self): self.newStoreFrontInterface: StoreFrontInterface = None
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.context.modules.storefront.StoreFront import StoreFront
         from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
         self.newStoreFrontInterface = StoreFront(self.getPageContext().getRequest())
         if self.newStoreFrontInterface.getName() is None:
             self.newStoreFrontInterface.setName(self.getWeblisketSession().getStoreName())
@@ -49,11 +56,11 @@ class AddValidationStoreFrontView(*java_bases(HttpContextView, ValidationCompone
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             valid: bool = True
-            if self.newStoreFrontInterface.isValid() == False:
+            if java_predicate(self.newStoreFrontInterface, "isValid") == False:
                 valid = False
             if StoreFrontFactory.getInstance(self.newStoreFrontInterface.getName()) is not None:
                 valid = False
-            if AbFile.createAbFileFromAbPath(AbPath(self.getStoreViewsPath(), StringUtil.getInstance().EMPTY_STRING)).isFile():
+            if java_predicate(AbFile.createAbFileFromAbPath(AbPath(self.getStoreViewsPath(), StringUtil.getInstance().EMPTY_STRING)), "isFile"):
                 valid = False
             return valid
         except Exception as e:
@@ -84,11 +91,11 @@ class AddValidationStoreFrontView(*java_bases(HttpContextView, ValidationCompone
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             stringBuffer: StringMaker = StringMaker()
-            if self.newStoreFrontInterface.isValid() == False:
+            if java_predicate(self.newStoreFrontInterface, "isValid") == False:
                 stringBuffer.append(self.newStoreFrontInterface.validationInfo())
             if StoreFrontFactory.getInstance(self.newStoreFrontInterface.getName()) is not None:
                 stringBuffer.append("Store name already used<br/>")
-            if AbFile.createAbFileFromAbPath(AbPath(self.getStoreViewsPath(), StringUtil.getInstance().EMPTY_STRING)).isFile():
+            if java_predicate(AbFile.createAbFileFromAbPath(AbPath(self.getStoreViewsPath(), StringUtil.getInstance().EMPTY_STRING)), "isFile"):
                 stringBuffer.append("Store name clashes with template name<br/>")
             return str(stringBuffer)
         except Exception as e:
@@ -117,7 +124,7 @@ class AddValidationStoreFrontView(*java_bases(HttpContextView, ValidationCompone
     # throws Exception
     def getTransformInfoInterface(self) -> TransformInfoInterface:
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-        return super().getTransformInfoInterface()
+        return java_super_call(super(), "getTransformInfoInterface")
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
 # from org.allbinary.business.context.modules.storefront.StoreFront import StoreFront
 # from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory

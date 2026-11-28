@@ -15,20 +15,25 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.visual.transform.AbTransformer import AbTransformer
 
 
+@java_inherited_overloads
 class CompoundTransform(AbTransformer):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("abeClientInformation", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         from org.allbinary.logic.system.security.licensing.ServiceClientInformationInterfaceFactory import ServiceClientInformationInterfaceFactory
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.abeClientInformation: AbeClientInformationInterface = ServiceClientInformationInterfaceFactory.getInstance()
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        __class__._java_defaults(self)
         from java.io.InputStream import InputStream
         from org.allbinary.data.tree.dom.BasicUriResolver import BasicUriResolver
         from org.allbinary.data.tree.dom.StoreUriResolver import StoreUriResolver
@@ -37,7 +42,7 @@ class CompoundTransform(AbTransformer):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__(transformInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
         self.setURIResolver(StoreUriResolver(self.getTransformInfoInterface(), self.getURIResolver()))
         objectConfig: CompoundContextTransformInfoObjectConfig = CompoundContextTransformInfoObjectConfig(self.abeClientInformation, self.getTransformInfoInterface(), self.getTransformInfoInterface().getObjectConfigInterface().toXmlDoc())
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):

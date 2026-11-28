@@ -24,7 +24,7 @@ class GLHolder:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def runOnSurfaceCreated(self, renderer: object) -> None:

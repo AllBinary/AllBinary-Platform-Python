@@ -15,24 +15,32 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.logic.visual.transform.info.objectConfig.generator.TransformInfoObjectConfigGenerator import TransformInfoObjectConfigGenerator
 
 
+@java_inherited_overloads
 class StoreFileGenerator(TransformInfoObjectConfigGenerator):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("output", None)
+        vars(self).setdefault("fileAbPath", None)
+        vars(self).setdefault("file", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.logic.io.file.AbFile import AbFile
-        from org.allbinary.logic.io.path.AbPath import AbPath
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.output: str = None
-        self.fileAbPath: AbPath = None
-        self.file: AbFile = None
+        if "output" not in vars(self): self.output: str = None
+        if "fileAbPath" not in vars(self): self.fileAbPath: AbPath = None
+        if "file" not in vars(self): self.file: AbFile = None
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        __class__._java_defaults(self)
         from java.util.HashMap import HashMap
         from org.allbinary.globals.URLGLOBALS import URLGLOBALS
         from org.allbinary.logic.StdUtil import StdUtil
@@ -53,7 +61,7 @@ class StoreFileGenerator(TransformInfoObjectConfigGenerator):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         httpTransformInfoInterface: TransformInfoHttpInterface = transformInfoInterface
         weblisketSession: WeblisketSession = WeblisketSession(httpTransformInfoInterface.getPropertiesHashMap(), httpTransformInfoInterface.getPageContext())
         stringBuffer: StringMaker = StringMaker()
@@ -65,7 +73,7 @@ class StoreFileGenerator(TransformInfoObjectConfigGenerator):
         stringValidationUtil: StringValidationUtil = StringValidationUtil.getInstance()
         if stringValidationUtil.isEmpty(fileName):
             transformInfoHttpStoreInterface: TransformInfoHttpStoreInterface = transformInfoInterface
-            fileName = transformInfoInterface.getName().substring(transformInfoHttpStoreInterface.getStoreName().length() + 1)
+            fileName = transformInfoInterface.getName().substring(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(transformInfoHttpStoreInterface.getStoreName()) + 1)
             outputMappingHashMap: HashMap = StdUtil.getInstance().createHashMap()
             outputMappingHashMap.put(TransformInfosData.getInstance().PREVIEW, "Preview")
             outputMappingHashMap.put(TransformInfosData.getInstance().SMALL_PREVIEW, "SmallPreview")
@@ -93,6 +101,7 @@ class StoreFileGenerator(TransformInfoObjectConfigGenerator):
 
     # throws Exception
     def process(self, input: str) -> str:
+        from java.io.ByteArrayInputStream import ByteArrayInputStream
         from java.io.InputStream import InputStream
         from org.allbinary.logic.io.file.FileUtil import FileUtil
         from org.allbinary.logic.string.StringUtil import StringUtil
@@ -100,7 +109,7 @@ class StoreFileGenerator(TransformInfoObjectConfigGenerator):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF("Processing", self, self.commonStrings.PROCESS)
-        if not self.file.exists():
+        if not (self.file.exists()):
             self.file.createNewFile()
         if self.file.exists():
             inputStream: InputStream = ByteArrayInputStream(list(input.encode()))

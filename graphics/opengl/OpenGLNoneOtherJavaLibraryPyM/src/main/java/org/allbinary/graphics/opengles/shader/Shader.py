@@ -21,15 +21,14 @@ class Shader:
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.string.StringUtil import StringUtil
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         self.shaderName: str = StringUtil.getInstance().EMPTY_STRING
         self.shaderStringList: BasicArrayList = BasicArrayListUtil.getInstance().getImmutableInstance()
         self.shaderAsString: str = StringUtil.getInstance().EMPTY_STRING
-        self.shaderHandle: int = 0
+        if "shaderHandle" not in vars(self): self.shaderHandle: int = 0
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
 # from org.allbinary.logic.string.StringUtil import StringUtil
 # from org.allbinary.util.BasicArrayList import BasicArrayList
 # from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil

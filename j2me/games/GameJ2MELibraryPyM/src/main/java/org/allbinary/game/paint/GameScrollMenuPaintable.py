@@ -15,11 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.graphics.color.ColorChangeListener import ColorChangeListener
 from org.allbinary.game.paint.BasicGameDemoPaintable import BasicGameDemoPaintable
 
 
+@java_inherited_overloads
 class GameScrollMenuPaintable(*java_bases(BasicGameDemoPaintable, ColorChangeListener)):
     
 

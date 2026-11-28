@@ -25,22 +25,21 @@ class BasicTouchInputFactory:
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.SPECIAL_BUTTON_SEVEN_TESTING_ONLY: TouchButtonInput = None
-        self.SPECIAL_BUTTON_EIGHT_TESTING_ONLY: TouchButtonInput = None
-        self.SPECIAL_BUTTON_SIX: TouchButtonInput = None
-        self.SPECIAL_BUTTON_FIVE: TouchButtonInput = None
-        self.SPECIAL_BUTTON_FOUR: TouchButtonInput = None
-        self.SPECIAL_BUTTON_THREE: TouchButtonInput = None
-        self.SPECIAL_BUTTON_TWO: TouchButtonInput = None
-        self.SPECIAL_BUTTON_ONE: TouchButtonInput = None
-        self.UP: TouchButtonInput = None
-        self.LEFT: TouchButtonInput = None
-        self.RIGHT: TouchButtonInput = None
-        self.DOWN: TouchButtonInput = None
-        self.NONE: TouchButtonInput = None
+        if "SPECIAL_BUTTON_SEVEN_TESTING_ONLY" not in vars(self): self.SPECIAL_BUTTON_SEVEN_TESTING_ONLY: TouchButtonInput = None
+        if "SPECIAL_BUTTON_EIGHT_TESTING_ONLY" not in vars(self): self.SPECIAL_BUTTON_EIGHT_TESTING_ONLY: TouchButtonInput = None
+        if "SPECIAL_BUTTON_SIX" not in vars(self): self.SPECIAL_BUTTON_SIX: TouchButtonInput = None
+        if "SPECIAL_BUTTON_FIVE" not in vars(self): self.SPECIAL_BUTTON_FIVE: TouchButtonInput = None
+        if "SPECIAL_BUTTON_FOUR" not in vars(self): self.SPECIAL_BUTTON_FOUR: TouchButtonInput = None
+        if "SPECIAL_BUTTON_THREE" not in vars(self): self.SPECIAL_BUTTON_THREE: TouchButtonInput = None
+        if "SPECIAL_BUTTON_TWO" not in vars(self): self.SPECIAL_BUTTON_TWO: TouchButtonInput = None
+        if "SPECIAL_BUTTON_ONE" not in vars(self): self.SPECIAL_BUTTON_ONE: TouchButtonInput = None
+        if "UP" not in vars(self): self.UP: TouchButtonInput = None
+        if "LEFT" not in vars(self): self.LEFT: TouchButtonInput = None
+        if "RIGHT" not in vars(self): self.RIGHT: TouchButtonInput = None
+        if "DOWN" not in vars(self): self.DOWN: TouchButtonInput = None
+        if "NONE" not in vars(self): self.NONE: TouchButtonInput = None
         self.initialized: bool = False
         self.list_: BasicArrayList = BasicArrayListD()
     
@@ -68,7 +67,7 @@ class BasicTouchInputFactory:
         from org.allbinary.input.motion.button.TouchButtonInput import TouchButtonInput
         from org.allbinary.input.motion.button.TouchButtonInput import TouchButtonInput
         from org.allbinary.game.input.InputFactory import InputFactory
-        self._init_fields()
+        __class__._init_fields(self)
         MAX: int = InputFactory.getInstance().MAX
         self.SPECIAL_BUTTON_SEVEN_TESTING_ONLY = TouchButtonInput(MAX - 41, "Button 7 - Testing Only May Cross Over Key Values")
         self.SPECIAL_BUTTON_EIGHT_TESTING_ONLY = TouchButtonInput(MAX - 42, "Button 8 - Testing Only May Cross Over Key Values")
@@ -87,11 +86,11 @@ class BasicTouchInputFactory:
 
     def init(self, inputToGameKeyMapping: InputToGameKeyMapping) -> None:
         with self._lock:
-            return self._init_unlocked(inputToGameKeyMapping)
+            return __class__.__dict__["_init_unlocked"].__get__(self, __class__)(inputToGameKeyMapping)
 
     def _init_unlocked(self, inputToGameKeyMapping: InputToGameKeyMapping) -> None:
         from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
-        if not self.initialized:
+        if not (self.initialized):
             self.initialized = True
             self.list_.add(self.UP)
             self.list_.add(self.LEFT)

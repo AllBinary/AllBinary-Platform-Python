@@ -15,34 +15,55 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.canvas.RunnableCanvas import RunnableCanvas
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 from org.allbinary.graphics.paint.PaintableInterface import PaintableInterface
 
 
+@java_inherited_overloads
 class ProgressCanvas(*java_bases(RunnableCanvas, PaintableInterface, UpdateMyFontInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("hasPainted", False)
+        vars(self).setdefault("backgroundBasicColor", None)
+        vars(self).setdefault("GAUGE_PAINTABLE", None)
+        vars(self).setdefault("maxValue", 0.0)
+        vars(self).setdefault("gauge", None)
+        vars(self).setdefault("TEXT", None)
+        vars(self).setdefault("updateMyFontProcessor", None)
+        vars(self).setdefault("myFontProcessor", None)
+        vars(self).setdefault("allbinaryMidlet", None)
+        vars(self).setdefault("value", 0.0)
+        vars(self).setdefault("text", None)
+        vars(self).setdefault("background", False)
+        vars(self).setdefault("paintable", None)
+        vars(self).setdefault("inProgress", False)
+        vars(self).setdefault("IN_GAME_PROCESSOR", None)
+        vars(self).setdefault("inGameProcessor", None)
+        vars(self).setdefault("progressEndListener", None)
+        vars(self).setdefault("backgroundLabel", None)
+        vars(self).setdefault("START_BACKGROUND", None)
+        vars(self).setdefault("ADD_PORTION", None)
+        vars(self).setdefault("ADD_EARLY_PORTION", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.canvas.Processor import Processor
-        from org.allbinary.graphics.color.BasicColor import BasicColor
-        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
-        from org.allbinary.graphics.form.item.ABCustomGaugeItem import ABCustomGaugeItem
-        from org.allbinary.graphics.paint.Paintable import Paintable
         from org.allbinary.midlet.AllBinaryMidlet import AllBinaryMidlet
         from org.allbinary.thread.PathFindingThreadPool import PathFindingThreadPool
         from org.allbinary.thread.ThreadPool import ThreadPool
-        self.hasPainted: bool = False
-        self.backgroundBasicColor: BasicColor = None
+        if "hasPainted" not in vars(self): self.hasPainted: bool = False
+        if "backgroundBasicColor" not in vars(self): self.backgroundBasicColor: BasicColor = None
         self.GAUGE_PAINTABLE: Paintable = ProgressPaintable(self)
         self.maxValue: float = 100.0
-        self.gauge: ABCustomGaugeItem = None
+        if "gauge" not in vars(self): self.gauge: ABCustomGaugeItem = None
         self.TEXT: str = self.commonStrings.LOADING
         self.updateMyFontProcessor: MyFontProcessor = UpdateMyFontProcessor(self)
         self.myFontProcessor: MyFontProcessor = self.updateMyFontProcessor
         self.allbinaryMidlet: AllBinaryMidlet = AllBinaryMidlet.getNullInstance()
-        self.value: float = 0.0
+        if "value" not in vars(self): self.value: float = 0.0
         self.text: str = self.TEXT
         self.background: bool = True
         self.paintable: PaintableInterface = self.GAUGE_PAINTABLE
@@ -64,13 +85,14 @@ class ProgressCanvas(*java_bases(RunnableCanvas, PaintableInterface, UpdateMyFon
     
 
     def __init__(self, title: str, backgroundBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.NullCommandListener import NullCommandListener
         from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.displayable.CanvasStrings import CanvasStrings
         from org.allbinary.graphics.form.item.ABCustomGaugeItem import ABCustomGaugeItem
         from org.allbinary.logic.string.StringUtil import StringUtil
         super().__init__(NullCommandListener.NULL_COMMAND_LISTENER, CanvasStrings.getInstance().EMPTY_CHILD_NAME_LIST, False)
-        self._init_fields()
+        __class__._init_fields(self)
         self.backgroundBasicColor = backgroundBasicColor
         self.gauge = ABCustomGaugeItem(StringUtil.getInstance().EMPTY_STRING, int(self.maxValue), 0, backgroundBasicColor, foregroundBasicColor)
     

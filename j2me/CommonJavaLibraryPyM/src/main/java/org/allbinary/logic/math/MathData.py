@@ -22,12 +22,12 @@ class MathData:
     instance: MathData = None
 
     def _init_fields(self) -> None:
-        self.EQUALS: str = None
+        if "EQUALS" not in vars(self): self.EQUALS: str = None
         self.PLUS: str = "+"
         self.GREATER_THAN: str = ">"
-        self.MINUS: str = None
-        self.DIVIDE: str = None
-        self.MULTIPLY: str = None
+        if "MINUS" not in vars(self): self.MINUS: str = None
+        if "DIVIDE" not in vars(self): self.DIVIDE: str = None
+        if "MULTIPLY" not in vars(self): self.MULTIPLY: str = None
     
 
     @staticmethod
@@ -38,7 +38,7 @@ class MathData:
     def __init__(self) -> None:
         from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
         from org.allbinary.string.CommonSeps import CommonSeps
-        self._init_fields()
+        __class__._init_fields(self)
         commonSeps: CommonSeps = CommonSeps.getInstance()
         self.EQUALS = commonSeps.EQUALS
         self.MINUS = commonSeps.DASH

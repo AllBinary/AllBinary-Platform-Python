@@ -15,10 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.view.ViewPosition import ViewPosition
 
 
+@java_inherited_overloads
 class StaticTileLayerIntoPositionViewPosition(ViewPosition):
     tiledLayer: Layer = None
     layer: AllBinaryLayer = None
@@ -29,15 +32,15 @@ class StaticTileLayerIntoPositionViewPosition(ViewPosition):
     
 
     def getX(self) -> int:
-        return super().getX() - StaticTileLayerIntoPositionViewPosition.tiledLayer.getXP()
+        return java_super_call(super(), "getX") - StaticTileLayerIntoPositionViewPosition.tiledLayer.getXP()
     
 
     def getY(self) -> int:
-        return super().getY() - StaticTileLayerIntoPositionViewPosition.tiledLayer.getYP()
+        return java_super_call(super(), "getY") - StaticTileLayerIntoPositionViewPosition.tiledLayer.getYP()
     
 
     def getZ(self) -> int:
-        return super().getZ() - StaticTileLayerIntoPositionViewPosition.tiledLayer.getZP()
+        return java_super_call(super(), "getZ") - StaticTileLayerIntoPositionViewPosition.tiledLayer.getZP()
     
 
     @staticmethod

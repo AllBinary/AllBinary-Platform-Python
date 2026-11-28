@@ -15,10 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.layer.waypoint.Waypoint import Waypoint
 
 
+@java_inherited_overloads
 class WorkWaypoint(Waypoint):
     ID: int = None
     
@@ -57,12 +60,12 @@ class WorkWaypoint(Waypoint):
             waypointInfoHudPaintable: WaypointInfoHudPaintable = self.ownerLayer.getHudPaintable()
             if self.ownerLayer == waypointInfoHudPaintable.getRtsLayer():
                 waypointInfoHudPaintable.updateSelectionInfo()
-            if not outOfResources:
+            if not (outOfResources):
                 unitWaypointBehavior: UnitWaypointBehavior = unitLayer.getWaypointBehavior()
                 rtsLayer: RTSLayer = None
                 while self.getConnectedWaypointList().size() > 0:
                     rtsLayer = self.getConnectedWaypointList().get(0)
-                    if rtsLayer.isDestroyed():
+                    if java_predicate(rtsLayer, "isDestroyed"):
                         self.getConnectedWaypointList().remove(rtsLayer)
                     else:
                         unitWaypointBehavior.insertWaypoint(0, rtsLayer)

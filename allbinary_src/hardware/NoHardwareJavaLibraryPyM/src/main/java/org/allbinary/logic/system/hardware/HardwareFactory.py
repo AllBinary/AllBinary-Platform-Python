@@ -31,7 +31,7 @@ class HardwareFactory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -42,8 +42,11 @@ class HardwareFactory:
         except Exception as e:
             raise e
 
-    def getInstance(self, *args):
-        return getattr(self, "getInstance_j" + str(len(args)))(*args)
+    def getInstance(self=None, *args):
+        if self is None and not args: return __class__.getInstance_j0()
+        implementation = __class__.__dict__.get("getInstance_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getInstance(*args)
 # from org.allbinary.logic.system.os.OperatingSystemInterface import OperatingSystemInterface
 from org.allbinary.logic.system.hardware.NoHardware import NoHardware
 

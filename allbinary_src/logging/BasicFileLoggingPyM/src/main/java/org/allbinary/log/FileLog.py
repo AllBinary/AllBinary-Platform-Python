@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.System import System
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 
@@ -46,9 +48,11 @@ class FileLog:
 
     @staticmethod
     def _createLogFile_unlocked() -> bool:
+        from java.io.File import File
+        from java.io.FileWriter import FileWriter
         try:
             FileLog.logFile = File(FileLog.logPath, FileLog.fileName)
-            if not FileLog.firstTime:
+            if not (FileLog.firstTime):
                 FileLog.fileOut = BufferedWriter(FileWriter(FileLog.logFile))
             else:
                 FileLog.firstTime = False
@@ -69,12 +73,15 @@ class FileLog:
 
     @staticmethod
     def _createLogFileBackup_unlocked() -> bool:
+        from java.io.BufferedReader import BufferedReader
+        from java.io.File import File
+        from java.io.FileWriter import FileWriter
         from org.allbinary.string.CommonSeps import CommonSeps
         from org.allbinary.logic.string.StringMaker import StringMaker
         try:
             stringMaker: StringMaker = StringMaker()
             FileLog.logFileBak = File(FileLog.logPath, str(stringMaker.append(FileLog.backupFileName).append(CommonSeps.getInstance().PERIOD).appendint(FileLog.backupIndex)))
-            while FileLog.logFileBak.isFile():
+            while java_predicate(FileLog.logFileBak, "isFile"):
                 FileLog.backupIndex += 1
                 stringMaker.delete(0, stringMaker.length())
                 FileLog.logFileBak = File(FileLog.logPath, str(stringMaker.append(FileLog.backupFileName).append(CommonSeps.getInstance().PERIOD).appendint(FileLog.backupIndex)))
@@ -120,17 +127,17 @@ class FileLog:
                 FileLog.createLogFileBackup()
                 if FileLog.createLogFile() == False:
                     return str("Log File Creation Error")
-            length: int = FileLog.logFile.length()
+            length: int = __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(FileLog.logFile)
             if length > FileLog.logLength:
-                if not FileLog.createLogFileBackup() or FileLog.createLogFile() == False:
+                if not (FileLog.createLogFileBackup()) or FileLog.createLogFile() == False:
                     return str("Couldn't Create a Backup file")
             className: str = str(FileLog.stringUtil.NULL_STRING)
             if functionName is None:
                 functionName = str(FileLog.stringUtil.NULL_STRING)
             if specialMessage is None:
                 specialMessage = str(FileLog.stringUtil.NULL_STRING)
-            if type(anyType).__module__ + "." + type(anyType).__qualname__ is not None:
-                className = str(type(anyType).__module__ + "." + type(anyType).__qualname__)
+            if __import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(anyType)) is not None:
+                className = str(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(anyType)))
             message: str = LogFormatUtil.getInstance().get(className, functionName, specialMessage, exception)
             FileLog.fileOut.write(message, 0, len(message))
             FileLog.fileOut.newLine()
@@ -165,9 +172,9 @@ class FileLog:
                 FileLog.createLogFileBackup()
                 if FileLog.createLogFile() == False:
                     return str("Log File Creation Error")
-            length: int = FileLog.logFile.length()
+            length: int = __import__("java.lang.JavaRuntimeStatic", fromlist=["java_length"]).java_length(FileLog.logFile)
             if length > FileLog.logLength:
-                if not FileLog.createLogFileBackup() or FileLog.createLogFile() == False:
+                if not (FileLog.createLogFileBackup()) or FileLog.createLogFile() == False:
                     return str("Couldn't Create a Backup file")
             if functionName is None:
                 functionName = str(FileLog.stringUtil.NULL_STRING)
@@ -231,6 +238,7 @@ def _FileLog_backupFileName() -> object:
 lazy_static(FileLog, "backupFileName", _FileLog_backupFileName)
 
 def _FileLog_logFile() -> object:
+    from java.io.File import File
     return File(FileLog.logPath, FileLog.fileName)
 
 lazy_static(FileLog, "logFile", _FileLog_logFile)

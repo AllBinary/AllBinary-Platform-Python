@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -32,7 +33,7 @@ class HttpFilePermissionsUtil:
         from org.allbinary.logic.io.file.AbFile import AbFile
         from org.allbinary.logic.io.path.AbPath import AbPath
         file: AbFile = AbFile.createAbFileFromAbPath(path)
-        if not file.isFile():
+        if not (java_predicate(file, "isFile")):
             file.createNewFile()
 # from org.allbinary.logic.io.file.AbFile import AbFile
 # from org.allbinary.logic.io.path.AbPath import AbPath

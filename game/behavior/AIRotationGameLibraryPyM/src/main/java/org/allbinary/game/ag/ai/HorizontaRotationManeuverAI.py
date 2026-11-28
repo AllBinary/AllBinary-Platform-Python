@@ -15,26 +15,34 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.ai.ArtificialIntelligenceTransitionInterface import ArtificialIntelligenceTransitionInterface
 from org.allbinary.game.ai.BasicAI import BasicAI
 
 
+@java_inherited_overloads
 class HorizontaRotationManeuverAI(*java_bases(BasicAI, ArtificialIntelligenceTransitionInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("circularIndexUtil", None)
+        vars(self).setdefault("currentSpeedDivisor", 0)
+        vars(self).setdefault("rotationAnimationInterface", None)
+        vars(self).setdefault("baseVelocityInterface", None)
+        vars(self).setdefault("velocityInterface", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.animation.IndexedAnimation import IndexedAnimation
-        from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
-        from org.allbinary.game.physics.velocity.VelocityInterface import VelocityInterface
         from org.allbinary.util.CircularIndexUtil import CircularIndexUtil
         self.circularIndexUtil: CircularIndexUtil = CircularIndexUtil.createInstanceAt(10, 2147483647)
         self.currentSpeedDivisor: int = 5
-        self.rotationAnimationInterface: IndexedAnimation = None
-        self.baseVelocityInterface: BasicVelocityProperties = None
-        self.velocityInterface: VelocityInterface = None
+        if "rotationAnimationInterface" not in vars(self): self.rotationAnimationInterface: IndexedAnimation = None
+        if "baseVelocityInterface" not in vars(self): self.baseVelocityInterface: BasicVelocityProperties = None
+        if "velocityInterface" not in vars(self): self.velocityInterface: VelocityInterface = None
     
 
     def __init__(self, ownerLayerInterface: AllBinaryLayer, gameInput: GameInput) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.animation.RotationAnimationInterface import RotationAnimationInterface
         from org.allbinary.animation.RotationAnimationInterfaceCompositeInterface import RotationAnimationInterfaceCompositeInterface
         from org.allbinary.game.input.GameInput import GameInput
@@ -43,7 +51,7 @@ class HorizontaRotationManeuverAI(*java_bases(BasicAI, ArtificialIntelligenceTra
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         from org.allbinary.math.AngleIncrementInfo import AngleIncrementInfo
         super().__init__(ownerLayerInterface, gameInput)
-        self._init_fields()
+        __class__._init_fields(self)
         rotationAnimationInterfaceCompositeInterface: RotationAnimationInterfaceCompositeInterface = self.getOwnerLayerInterface()
         self.rotationAnimationInterface = rotationAnimationInterfaceCompositeInterface.getRotationAnimationInterface()
         velocityInterfaceCompositeInterface: VelocityInterfaceCompositeInterface = self.getOwnerLayerInterface()
@@ -89,13 +97,14 @@ class HorizontaRotationManeuverAI(*java_bases(BasicAI, ArtificialIntelligenceTra
             self.drop()
         index: int = self.circularIndexUtil.getIndex()
         if index % self.currentSpeedDivisor == 0 and index % 2 == 0:
-            super().processKeyAI(Canvas.UP)
-            self.velocityInterface.limitMaxXYVelocity(self.velocityInterface.getMaxForwardVelocity() / self.currentSpeedDivisor)
+            java_super_call(super(), "processKeyAI", Canvas.UP)
+            self.velocityInterface.limitMaxXYVelocity(java_divide(self.velocityInterface.getMaxForwardVelocity(), self.currentSpeedDivisor)
+            )
         self.circularIndexUtil.next()
         if frame == int(angleIncrementInfo.LEFT_FRAME):
-            super().processKeyAI(Canvas.KEY_NUM0)
+            java_super_call(super(), "processKeyAI", Canvas.KEY_NUM0)
         elif frame == int(angleIncrementInfo.RIGHT_FRAME):
-            super().processKeyAI(Canvas.KEY_POUND)
+            java_super_call(super(), "processKeyAI", Canvas.KEY_POUND)
     
 
     def reverse(self) -> None:

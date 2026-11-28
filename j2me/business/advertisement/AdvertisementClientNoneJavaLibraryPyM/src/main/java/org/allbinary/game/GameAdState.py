@@ -15,11 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.business.advertisement.GameAdStateBase import GameAdStateBase
 from org.allbinary.input.event.VirtualKeyboardEventListenerInterface import VirtualKeyboardEventListenerInterface
 
 
+@java_inherited_overloads
 class GameAdState(*java_bases(GameAdStateBase, VirtualKeyboardEventListenerInterface)):
     
 
@@ -38,7 +41,7 @@ class GameAdState(*java_bases(GameAdStateBase, VirtualKeyboardEventListenerInter
 
     def onEvent(self, eventObject: AllBinaryEventObject) -> None:
         from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
-        super().onEvent(eventObject)
+        java_super_call(super(), "onEvent", eventObject)
 # from org.allbinary.business.advertisement.AdConfiguration import AdConfiguration
 # from org.allbinary.input.event.VirtualKeyboardEvent import VirtualKeyboardEvent
 # from org.allbinary.input.event.VirtualKeyboardEventHandler import VirtualKeyboardEventHandler

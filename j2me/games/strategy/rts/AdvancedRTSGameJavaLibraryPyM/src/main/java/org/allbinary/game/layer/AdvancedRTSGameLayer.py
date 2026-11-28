@@ -15,21 +15,28 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.combat.destroy.event.DestroyedEventListenerInterface import DestroyedEventListenerInterface
 from org.allbinary.game.layer.RTSLayer import RTSLayer
 
 
+@java_inherited_overloads
 class AdvancedRTSGameLayer(*java_bases(RTSLayer, DestroyedEventListenerInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("shakeListener", None)
+        vars(self).setdefault("vibration", None)
+        vars(self).setdefault("duration", 0)
+        vars(self).setdefault("parentLayer", None)
+        vars(self).setdefault("waypointBehaviorBase", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.animation.transition.shake.ShakeAnimationListener import ShakeAnimationListener
         from org.allbinary.game.tick.NullTickable import NullTickable
-        from org.allbinary.game.tick.TickableInterface import TickableInterface
-        from org.allbinary.media.AllBinaryVibrationME import AllBinaryVibrationME
-        self.shakeListener: ShakeAnimationListener = None
-        self.vibration: AllBinaryVibrationME = None
-        self.duration: int = None
+        if "shakeListener" not in vars(self): self.shakeListener: ShakeAnimationListener = None
+        if "vibration" not in vars(self): self.vibration: AllBinaryVibrationME = None
+        if "duration" not in vars(self): self.duration: int = 0
         self.parentLayer: PathFindingLayerInterface = NullPathFindingLayer.NULL_PATH_FINDING_LAYER
         self.waypointBehaviorBase: TickableInterface = NullTickable.getInstance()
     
@@ -37,6 +44,7 @@ class AdvancedRTSGameLayer(*java_bases(RTSLayer, DestroyedEventListenerInterface
     # throws Exception
     @staticmethod
     def createSimulated() -> AdvancedRTSGameLayer:
+        from org.allbinary.game.layer.NullPathFindingLayer import NullPathFindingLayer
         from org.allbinary.game.layer.AdvancedRTSProperties import AdvancedRTSProperties
         from org.allbinary.animation.AnimationInterfaceFactoryInterface import AnimationInterfaceFactoryInterface
         from org.allbinary.animation.NullAnimationFactory import NullAnimationFactory
@@ -54,6 +62,8 @@ class AdvancedRTSGameLayer(*java_bases(RTSLayer, DestroyedEventListenerInterface
     
 
     def __init__(self, remoteInfo: RemoteInfo, parentLayer: PathFindingLayerInterface, advancedRTSProperties: AdvancedRTSProperties, groupInterface: list[Group], rootName: str, name: str, healthInterface: Health, rtsFormInput: RTSFormInput, animationInterfaceFactoryInterface: AnimationInterfaceFactoryInterface, emptyAnimationInterfaceFactoryInterface: AnimationInterfaceFactoryInterface, baseAnimationInterfaceFactoryInterface: AnimationInterfaceFactoryInterface, buildAnimationInterfaceFactoryInterface: AnimationInterfaceFactoryInterface, verticleBuildAnimationInterfaceFactoryInterface: AnimationInterfaceFactoryInterface, proceduralAnimationInterfaceFactoryInterface: ProceduralAnimationInterfaceFactoryInterface, rectangle: Rectangle, x: int, y: int, viewPosition: ViewPositionBase) -> None:
+        __class__._java_defaults(self)
+        from org.allbinary.game.layer.WaypointBehaviorBase import WaypointBehaviorBase
         from org.allbinary.animation.AnimationInterfaceFactoryInterface import AnimationInterfaceFactoryInterface
         from org.allbinary.animation.ProceduralAnimationInterfaceFactoryInterface import ProceduralAnimationInterfaceFactoryInterface
         from org.allbinary.game.health.Health import Health
@@ -63,7 +73,7 @@ class AdvancedRTSGameLayer(*java_bases(RTSLayer, DestroyedEventListenerInterface
         from org.allbinary.graphics.Rectangle import Rectangle
         from org.allbinary.view.ViewPositionBase import ViewPositionBase
         super().__init__(remoteInfo, groupInterface, rootName, name, healthInterface, rtsFormInput, animationInterfaceFactoryInterface, emptyAnimationInterfaceFactoryInterface, baseAnimationInterfaceFactoryInterface, buildAnimationInterfaceFactoryInterface, verticleBuildAnimationInterfaceFactoryInterface, proceduralAnimationInterfaceFactoryInterface, rectangle, x, y, viewPosition)
-        self._init_fields()
+        __class__._init_fields(self)
         self.setVisible(False)
         self.setWaypointBehavior(WaypointBehaviorBase())
         self.shakeListener = advancedRTSProperties.shakeListener
@@ -75,14 +85,14 @@ class AdvancedRTSGameLayer(*java_bases(RTSLayer, DestroyedEventListenerInterface
     # throws Exception
     def updateWaypointBehavior(self, geographicMapInterface: BasicGeographicMap) -> None:
         from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
-        super().updateWaypointBehavior(geographicMapInterface)
+        java_super_call(super(), "updateWaypointBehavior", geographicMapInterface)
         self.getWaypointBehavior().getWaypoint().setAllBinaryGameLayerManager(self.allBinaryGameLayerManagerP)
     
 
     def initVisibility(self, rtsPlayerLayerInterface: RTSPlayerLayerInterface) -> None:
         from org.allbinary.game.GameTypeFactory import GameTypeFactory
         advancedRTSPlayerLayerInterface: AdvancedRTSPlayerLayerInterface = rtsPlayerLayerInterface
-        if advancedRTSPlayerLayerInterface.isLocalPlayer() or advancedRTSPlayerLayerInterface.getGameType() == GameTypeFactory.getInstance().BOT:
+        if java_predicate(advancedRTSPlayerLayerInterface, "isLocalPlayer") or advancedRTSPlayerLayerInterface.getGameType() == GameTypeFactory.getInstance().BOT:
             self.setVisible(True)
         else:
             self.setVisible(False)
@@ -91,17 +101,18 @@ class AdvancedRTSGameLayer(*java_bases(RTSLayer, DestroyedEventListenerInterface
     # throws Exception
     def construct(self, rtsPlayerLayerInterface: RTSPlayerLayerInterface) -> None:
         from org.allbinary.game.layer.building.event.BuildingEventHandler import BuildingEventHandler
-        super().construct(rtsPlayerLayerInterface)
+        java_super_call(super(), "construct", rtsPlayerLayerInterface)
         self.initVisibility(rtsPlayerLayerInterface)
         BuildingEventHandler.getInstance().addListenerInterface(self.getWaypointBehavior().getWaypoint())
     
 
     # throws Exception
     def setDestroyed(self, destroyed: bool) -> None:
+        from org.allbinary.game.layer.RTSLayerUtil import RTSLayerUtil
         from org.allbinary.game.combat.destroy.event.DestroyedEventHandler import DestroyedEventHandler
         from org.allbinary.game.layer.building.event.BuildingEventHandler import BuildingEventHandler
-        super().setDestroyed(destroyed)
-        if self.isDestroyed():
+        java_super_call(super(), "setDestroyed", destroyed)
+        if java_predicate(self, "isDestroyed"):
             BuildingEventHandler.getInstance().removeListener(self.getWaypointBehavior().getWaypoint())
             BuildingEventHandler.getInstance().removeListener(self)
             DestroyedEventHandler.getInstance().addListener(self)
@@ -140,6 +151,7 @@ class AdvancedRTSGameLayer(*java_bases(RTSLayer, DestroyedEventListenerInterface
     
 
     def shouldAddWaypointFromBuilding(self) -> bool:
+        from org.allbinary.game.layer.NullPathFindingLayer import NullPathFindingLayer
         if self.parentLayer != NullPathFindingLayer.NULL_PATH_FINDING_LAYER:
             parentAdvancedRTSGameLayer: AdvancedRTSGameLayer = self.parentLayer
             if parentAdvancedRTSGameLayer.getType() != 1:
@@ -240,7 +252,7 @@ class AdvancedRTSGameLayer(*java_bases(RTSLayer, DestroyedEventListenerInterface
         from org.allbinary.game.layer.waypoint.WaypointRunnableLogHelper import WaypointRunnableLogHelper
         from org.allbinary.game.layer.waypoint.WaypointRunnableSelectedLogHelper import WaypointRunnableSelectedLogHelper
         from org.allbinary.game.layer.waypoint.WaypointSelectedLogHelper import WaypointSelectedLogHelper
-        super().setSelected(selected)
+        java_super_call(super(), "setSelected", selected)
         if self.debug:
             if selected:
                 self.waypointLogHelperP = WaypointSelectedLogHelper.getInstance()
@@ -259,7 +271,7 @@ class AdvancedRTSGameLayer(*java_bases(RTSLayer, DestroyedEventListenerInterface
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         try:
             layerInterface: AllBinaryLayer = destroyedEvent.getLayerInterface()
-            if layerInterface == self:
+            if layerInterface is self:
                 DestroyedEventHandler.getInstance().removeListener(self)
                 waypoint: WaypointBase = self.getWaypointBehavior().getWaypoint()
                 waypoint.reset()
@@ -307,5 +319,6 @@ class AdvancedRTSGameLayer(*java_bases(RTSLayer, DestroyedEventListenerInterface
 # from org.allbinary.media.graphics.geography.map.GeographicMapDirectionUtil import GeographicMapDirectionUtil
 # from org.allbinary.util.BasicArrayList import BasicArrayList
 # from org.allbinary.view.ViewPositionBase import ViewPositionBase
+from org.allbinary.game.layer.NullPathFindingLayer import NullPathFindingLayer
 
 

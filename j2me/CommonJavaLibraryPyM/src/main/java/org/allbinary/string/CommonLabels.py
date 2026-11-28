@@ -22,7 +22,6 @@ class CommonLabels:
     instance: CommonLabels = None
 
     def _init_fields(self) -> None:
-        from jsinterop.annotations.JsProperty import JsProperty
         self.WIDTH_LABEL: str = " Width: "
         self.HEIGHT_LABEL: str = " Height: "
         self.END_LABEL: str = "End: "
@@ -40,7 +39,7 @@ class CommonLabels:
         self.COLON_SEP: str = ": "
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

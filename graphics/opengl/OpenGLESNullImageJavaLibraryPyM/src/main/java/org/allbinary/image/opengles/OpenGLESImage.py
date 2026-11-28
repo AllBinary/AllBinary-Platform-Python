@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from java.lang.JavaRuntimeStatic import java_bases
 from javax.microedition.lcdui.Image import Image
@@ -22,28 +23,35 @@ from org.allbinary.image.opengles.OpenGLSurfaceChangedInterface import OpenGLSur
 
 
 #OpenGLESNullImageJavaLibrary
+@java_inherited_overloads
 class OpenGLESImage(*java_bases(Image, OpenGLSurfaceChangedInterface)):
     NULL_OPENGL_IMAGE: OpenGLESImage = None
     texture2dList: BasicArrayList = None
     TYPE: int = 4
+    def _java_defaults(self):
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("textureFactory", None)
+        vars(self).setdefault("openGLBitmap", None)
+        vars(self).setdefault("openGLESImageProperties", None)
+        vars(self).setdefault("imageProcessor", None)
+        vars(self).setdefault("openGLESImageTranslate", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.platform.graphics.PlatformBitmapBase import PlatformBitmapBase
-        from org.allbinary.platform.opengles.PlatformTextureBaseFactory import PlatformTextureBaseFactory
         from org.allbinary.string.CommonStrings import CommonStrings
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.textureFactory: PlatformTextureBaseFactory = None
-        self.openGLBitmap: PlatformBitmapBase = None
+        if "textureFactory" not in vars(self): self.textureFactory: PlatformTextureBaseFactory = None
+        if "openGLBitmap" not in vars(self): self.openGLBitmap: PlatformBitmapBase = None
         self.openGLESImageProperties: OpenGLESImageProperties = OpenGLESImageProperties()
         self.imageProcessor: OpenGLESImageProcessor = OpenGLESImageProcessor.getInstance()
         self.openGLESImageTranslate: OpenGLESImageTranslate = OpenGLESImageTranslate.getInstance()
     
 
     def __init__(self, image: Image, bitmapFactory: PlatformBitmapBaseFactory, textureFactory: PlatformTextureBaseFactory) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.platform.graphics.PlatformBitmapBaseFactory import PlatformBitmapBaseFactory
         from org.allbinary.platform.opengles.PlatformTextureBaseFactory import PlatformTextureBaseFactory
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.openGLBitmap = bitmapFactory.createBitmap(image)
         self.textureFactory = textureFactory
     

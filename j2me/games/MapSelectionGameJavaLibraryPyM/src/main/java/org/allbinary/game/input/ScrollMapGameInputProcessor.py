@@ -15,18 +15,23 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.input.GameInputProcessor import GameInputProcessor
 
 
+@java_inherited_overloads
 class ScrollMapGameInputProcessor(GameInputProcessor):
+    def _java_defaults(self):
+        vars(self).setdefault("scrollMapPlayerGameInput", None)
 
     def _init_fields(self) -> None:
-        self.scrollMapPlayerGameInput: ScrollMapPlayerGameInput = None
+        if "scrollMapPlayerGameInput" not in vars(self): self.scrollMapPlayerGameInput: ScrollMapPlayerGameInput = None
     
 
     def __init__(self, scrollMapPlayerGameInput: ScrollMapPlayerGameInput) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.scrollMapPlayerGameInput = scrollMapPlayerGameInput
 
 

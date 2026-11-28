@@ -20,26 +20,26 @@ from __future__ import annotations
 class Time:
 
     def _init_fields(self) -> None:
-        self.timeLong: int = None
+        if "timeLong" not in vars(self): self.timeLong: int = None
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self.__jconstructor1(*args)
+            __class__.__jconstructor1(self, *args)
 
     def __jconstructor1(self, *args) -> None:
         if True and (args[0] is None or isinstance(args[0], str)):
-            self._constructor1_1(*args)
+            __class__._constructor1_1(self, *args)
         else:
-            self._constructor1_2(*args)
+            __class__._constructor1_2(self, *args)
     
 
     def _constructor1_1(self, time: str) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.timeLong = int(time)
     
 
     def _constructor1_2(self, time: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.timeLong = int(time)
     
 

@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
 
 
+@java_inherited_overloads
 class CachingGeographicMapCellPositionFactory(BasicGeographicMapCellPositionFactory):
     
 

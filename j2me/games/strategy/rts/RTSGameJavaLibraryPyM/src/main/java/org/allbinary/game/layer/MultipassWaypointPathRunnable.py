@@ -15,60 +15,86 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_new_inner
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.thread.ARunnable import ARunnable
 from org.allbinary.game.layer.WaypointPathRunnableBase import WaypointPathRunnableBase
 
 
+@java_inherited_overloads
 class MultipassWaypointPathRunnable(WaypointPathRunnableBase):
+    @java_inherited_overloads
     class FirstRunnable(ARunnable):
+        def _java_defaults(self):
+            vars(self).setdefault("multipassWaypointPathRunnable", None)
 
         def _init_fields(self) -> None:
-            self.multipassWaypointPathRunnable: MultipassWaypointPathRunnable = None
+            if "multipassWaypointPathRunnable" not in vars(self): self.multipassWaypointPathRunnable: MultipassWaypointPathRunnable = None
         
 
         def __init__(self, multipassWaypointPathRunnable: MultipassWaypointPathRunnable) -> None:
+            __class__._java_defaults(self)
             super().__init__()
-            self._init_fields()
+            __class__._init_fields(self)
             self.multipassWaypointPathRunnable = multipassWaypointPathRunnable
         
 
         def run(self) -> None:
             self.multipassWaypointPathRunnable.processFirstRunnable()
     #    private boolean first = true;
+    @java_inherited_overloads
     class SecondRunnable(ARunnable):
+        def _java_defaults(self):
+            vars(self).setdefault("multipassWaypointPathRunnable", None)
 
         def _init_fields(self) -> None:
-            self.multipassWaypointPathRunnable: MultipassWaypointPathRunnable = None
+            if "multipassWaypointPathRunnable" not in vars(self): self.multipassWaypointPathRunnable: MultipassWaypointPathRunnable = None
         
 
         def __init__(self, multipassWaypointPathRunnable: MultipassWaypointPathRunnable) -> None:
+            __class__._java_defaults(self)
             super().__init__()
-            self._init_fields()
+            __class__._init_fields(self)
             self.multipassWaypointPathRunnable = multipassWaypointPathRunnable
         
 
         def run(self) -> None:
             self.multipassWaypointPathRunnable.processSecondRunnable()
+    @java_inherited_overloads
     class EndRunnable(ARunnable):
+        def _java_defaults(self):
+            vars(self).setdefault("multipassWaypointPathRunnable", None)
 
         def _init_fields(self) -> None:
-            self.multipassWaypointPathRunnable: MultipassWaypointPathRunnable = None
+            if "multipassWaypointPathRunnable" not in vars(self): self.multipassWaypointPathRunnable: MultipassWaypointPathRunnable = None
         
 
         def __init__(self, multipassWaypointPathRunnable: MultipassWaypointPathRunnable) -> None:
+            __class__._java_defaults(self)
             super().__init__()
-            self._init_fields()
+            __class__._init_fields(self)
             self.multipassWaypointPathRunnable = multipassWaypointPathRunnable
         
 
         def run(self) -> None:
             self.multipassWaypointPathRunnable.processEndRunnable()
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("basicArrayListUtil", None)
+        vars(self).setdefault("multipassState", None)
+        vars(self).setdefault("done", False)
+        vars(self).setdefault("list_", None)
+        vars(self).setdefault("pathFindingInfo", None)
+        vars(self).setdefault("FIRST_RUNNABLE", None)
+        vars(self).setdefault("SECOND_RUNNABLE", None)
+        vars(self).setdefault("END_RUNNABLE", None)
+        vars(self).setdefault("ALREADY_ENDED_RUNNABLE", None)
+        vars(self).setdefault("currentPassRunnable", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.NullUtil import NullUtil
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.media.graphics.geography.pathfinding.MultipassState import MultipassState
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.basicArrayListUtil: BasicArrayListUtil = BasicArrayListUtil.getInstance()
@@ -76,21 +102,25 @@ class MultipassWaypointPathRunnable(WaypointPathRunnableBase):
         self.done: bool = False
         self.list_: BasicArrayList = self.basicArrayListUtil.getImmutableInstance()
         self.pathFindingInfo: object = NullUtil.getInstance().NULL_OBJECT
-        self.FIRST_RUNNABLE: object = FirstRunnable(self)
-        self.SECOND_RUNNABLE: object = SecondRunnable(self)
-        self.END_RUNNABLE: object = EndRunnable(self)
-        self.ALREADY_ENDED_RUNNABLE: object = (ARunnable()  # Java anonymous class body:
-#         
-# 
-#         def run(self) -> None:
-#             raise RuntimeError()
-)
+        self.FIRST_RUNNABLE: object = java_new_inner(self, FirstRunnable, self)
+        self.SECOND_RUNNABLE: object = java_new_inner(self, SecondRunnable, self)
+        self.END_RUNNABLE: object = java_new_inner(self, EndRunnable, self)
+        _java_listener_owner = self
+        class _JavaListenerN66915(ARunnable):
+                
+
+
+            def run(self) -> None:
+                raise RuntimeError()
+        self.ALREADY_ENDED_RUNNABLE: object = _JavaListenerN66915()
+            
         self.currentPassRunnable: object = self.FIRST_RUNNABLE
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def setRunning(self, isRunning: bool) -> None:

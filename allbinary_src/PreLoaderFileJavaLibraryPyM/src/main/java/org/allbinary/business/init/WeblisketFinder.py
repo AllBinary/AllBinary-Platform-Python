@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.System import System
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -37,7 +38,7 @@ class WeblisketFinder:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def findAll(self, path: str) -> BasicArrayList:

@@ -20,11 +20,11 @@ from __future__ import annotations
 class Capital:
 
     def _init_fields(self) -> None:
-        self.value: int = 0
+        if "value" not in vars(self): self.value: int = 0
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getTotalMoney(self) -> int:

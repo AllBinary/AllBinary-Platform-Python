@@ -15,19 +15,23 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.io.FileInputStream import FileInputStream
 
 
+@java_inherited_overloads
 class AbFileInputStream(FileInputStream):
     
 
     def __init__(self, name: str) -> None:
+        from java.io.FileNotFoundException import FileNotFoundException
         super().__init__(name)
     
 
     # throws FileNotFoundException
     @staticmethod
     def createFromAbFile(file: AbFile) -> AbFileInputStream:
+        from java.io.FileNotFoundException import FileNotFoundException
         from org.allbinary.logic.io.file.AbFile import AbFile
         from org.allbinary.logic.io.file.AbFileNativeUtil import AbFileNativeUtil
         return AbFileInputStream(AbFileNativeUtil.get(file).getPath())
@@ -36,6 +40,8 @@ class AbFileInputStream(FileInputStream):
     # throws FileNotFoundException
     @staticmethod
     def createFromFile(file: File) -> AbFileInputStream:
+        from java.io.File import File
+        from java.io.FileNotFoundException import FileNotFoundException
         return AbFileInputStream(file.getPath())
 # from java.io.File import File
 # from java.io.FileNotFoundException import FileNotFoundException

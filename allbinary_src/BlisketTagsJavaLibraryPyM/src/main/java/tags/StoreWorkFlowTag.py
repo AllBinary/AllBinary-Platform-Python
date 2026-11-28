@@ -15,25 +15,32 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from tags.HelperTag import HelperTag
 
 
 #and hidden field removal
+@java_inherited_overloads
 class StoreWorkFlowTag(HelperTag):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("viewName", None)
+        vars(self).setdefault("viewFile", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.viewName: str = None
-        self.viewFile: str = None
+        if "viewName" not in vars(self): self.viewName: str = None
+        if "viewFile" not in vars(self): self.viewFile: str = None
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from taghelpers.StoreTagWorkFlowHelperFactory import StoreTagWorkFlowHelperFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__(StoreTagWorkFlowHelperFactory())
-        self._init_fields()
+        __class__._init_fields(self)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().JSPTAG):
             self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
     

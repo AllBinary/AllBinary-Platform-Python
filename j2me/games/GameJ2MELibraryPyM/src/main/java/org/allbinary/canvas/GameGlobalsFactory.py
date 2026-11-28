@@ -22,14 +22,13 @@ class GameGlobalsFactory:
     instance: GameGlobalsFactory = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.GPoint import GPoint
         from org.allbinary.graphics.PointFactory import PointFactory
         self.newCanvas: bool = True
         self.newDisplaybleTime: int = int(-2147483648)
         self.point: GPoint = PointFactory.getInstance().ZERO_ZERO
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

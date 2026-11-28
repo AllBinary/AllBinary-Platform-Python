@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -34,7 +35,7 @@ class AndroidOperatingSystemFactory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -53,7 +54,7 @@ class AndroidOperatingSystemFactory:
             if ((osName > OperatingSystems.getInstance().ANDROID) - (osName < OperatingSystems.getInstance().ANDROID)) == 0:
                 GenericOperatingSystem = AndroidOS()
             else:
-                if OperatingSystems.getInstance().isUnknownSpecificOSAllowed():
+                if java_predicate(OperatingSystems.getInstance(), "isUnknownSpecificOSAllowed"):
                     GenericOperatingSystem = AndroidOS()
                 else:
                     raise Exception("Specific Android OS Not Supported: " + osName)

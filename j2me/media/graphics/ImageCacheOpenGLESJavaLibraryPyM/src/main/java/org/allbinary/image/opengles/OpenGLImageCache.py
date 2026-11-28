@@ -15,19 +15,27 @@
 
 from __future__ import annotations
 
+from java.lang.JavaMonitor import java_monitor, java_wait
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import threading
 from org.allbinary.image.ImageCache import ImageCache
 
 
 #ImageCacheOpenGLESJavaLibrary
+@java_inherited_overloads
 class OpenGLImageCache(ImageCache):
     _lock = threading.RLock()
+    def _java_defaults(self):
+        vars(self).setdefault("imageCache", None)
+        vars(self).setdefault("preResourceImageUtil", None)
+        vars(self).setdefault("gl", None)
+        vars(self).setdefault("lock", None)
+        vars(self).setdefault("list_", None)
+        vars(self).setdefault("renderer", None)
 
     def _init_fields(self) -> None:
-        from javax.microedition.khronos.opengles.GL10 import GL10
         from org.allbinary.device.NullGL10 import NullGL10
         from org.allbinary.graphics.opengles.renderer.AllBinaryRendererBase3 import AllBinaryRendererBase3
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         from org.allbinary.image.ImageCacheFactory import ImageCacheFactory
         from org.allbinary.image.PreResourceImageUtil import PreResourceImageUtil
@@ -41,8 +49,9 @@ class OpenGLImageCache(ImageCache):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def addListener(self, renderer: object) -> None:
@@ -52,9 +61,10 @@ class OpenGLImageCache(ImageCache):
 
     # throws Exception
     def update(self, gl: GL10) -> None:
+        from org.allbinary.image.opengles.OpenGLESImage import OpenGLESImage
         from javax.microedition.khronos.opengles.GL10 import GL10
         self.gl = gl
-        with self._lock:  # synchronized (self.lock)
+        with java_monitor(self.lock):
             for index in range(self.list_.size() - 1, 0 - 1, -1):
                 openGLESImage: OpenGLESImage = (self.list_.objectArray[index])
                 if openGLESImage != OpenGLESImage.NULL_OPENGL_IMAGE:
@@ -74,7 +84,7 @@ class OpenGLImageCache(ImageCache):
         height = textureSize
         image2: Image = self.imageCache.get(caller, width, height)
         image: Image = self.preResourceImageUtil.encapsulate(image2)
-        with self._lock:  # synchronized (self.lock)
+        with java_monitor(self.lock):
             if image != NullImage.NULL_IMAGE:
                 self.list_.add(image)
         return image
@@ -87,7 +97,7 @@ class OpenGLImageCache(ImageCache):
         from javax.microedition.lcdui.NullImage import NullImage
         cachedImage: Image = self.imageCache.getWithKey(key)
         image: Image = self.preResourceImageUtil.encapsulate(cachedImage)
-        with self._lock:  # synchronized (self.lock)
+        with java_monitor(self.lock):
             if image != NullImage.NULL_IMAGE:
                 self.list_.add(image)
         return image
@@ -101,7 +111,7 @@ class OpenGLImageCache(ImageCache):
     def init(self, image: Image) -> None:
         from javax.microedition.lcdui.Image import Image
         try:
-            with self._lock:  # synchronized (self.lock)
+            with java_monitor(self.lock):
                 if self.list_.contains(image):
                     raise RuntimeError()
                 self.list_.add(image)

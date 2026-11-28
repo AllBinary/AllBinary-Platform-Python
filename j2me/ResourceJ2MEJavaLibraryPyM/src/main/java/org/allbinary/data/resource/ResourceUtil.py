@@ -33,7 +33,7 @@ class ResourceUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def setLoadingPaths(self, path: str, ext: str) -> None:
@@ -46,7 +46,7 @@ class ResourceUtil:
         from java.io.InputStream import InputStream
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.string.CommonSeps import CommonSeps
-        inputStream: InputStream = type(resource).getResourceAsStream(resource)
+        inputStream: InputStream = __import__("java.lang.ClassLoader", fromlist=["ClassLoader"]).ClassLoader.classResource(type(resource), resource, True)
         if inputStream is None:
             inputStream = self.getResourceAsStreamAtStart(resource, 2)
             if inputStream is None:
@@ -55,36 +55,36 @@ class ResourceUtil:
                     stringMaker: StringMaker = StringMaker()
                     index: int = resource.rfind('/')
                     resourcePath: str = resource[index + 1:]
-                    inputStream = type(resource).getResourceAsStream(resourcePath)
+                    inputStream = __import__("java.lang.ClassLoader", fromlist=["ClassLoader"]).ClassLoader.classResource(type(resource), resourcePath, True)
                     if inputStream is None:
                         resourcePath = resource[index:]
-                        inputStream = type(resource).getResourceAsStream(resourcePath)
+                        inputStream = __import__("java.lang.ClassLoader", fromlist=["ClassLoader"]).ClassLoader.classResource(type(resource), resourcePath, True)
                         if inputStream is None:
                             RES: str = "res"
                             resourcePath = str(stringMaker.append(RES).append(resource[index:]))
-                            inputStream = type(resource).getResourceAsStream(resourcePath)
+                            inputStream = __import__("java.lang.ClassLoader", fromlist=["ClassLoader"]).ClassLoader.classResource(type(resource), resourcePath, True)
                             if inputStream is None:
                                 stringMaker.delete(0, stringMaker.length())
                                 resourcePath = str(stringMaker.append("/").append(RES).append(resource[index:]))
-                                inputStream = type(resource).getResourceAsStream(resourcePath)
+                                inputStream = __import__("java.lang.ClassLoader", fromlist=["ClassLoader"]).ClassLoader.classResource(type(resource), resourcePath, True)
                                 COLON: str = CommonSeps.getInstance().COLON
                                 if inputStream is None:
                                     stringMaker.delete(0, stringMaker.length())
                                     resourcePath = str(stringMaker.append(RES).append(COLON).append(resource[index:]))
-                                    inputStream = type(resource).getResourceAsStream(resourcePath)
+                                    inputStream = __import__("java.lang.ClassLoader", fromlist=["ClassLoader"]).ClassLoader.classResource(type(resource), resourcePath, True)
                                     if inputStream is None:
                                         stringMaker.delete(0, stringMaker.length())
                                         resourcePath = str(stringMaker.append(RES).append(COLON).append(resource[index + 1:]))
-                                        inputStream = type(resource).getResourceAsStream(resourcePath)
+                                        inputStream = __import__("java.lang.ClassLoader", fromlist=["ClassLoader"]).ClassLoader.classResource(type(resource), resourcePath, True)
                                         if inputStream is None:
                                             RESOURCE_STRING: str = "resource"
                                             stringMaker.delete(0, stringMaker.length())
                                             resourcePath = str(stringMaker.append(RESOURCE_STRING).append(COLON).append(resource[index:]))
-                                            inputStream = type(resource).getResourceAsStream(resourcePath)
+                                            inputStream = __import__("java.lang.ClassLoader", fromlist=["ClassLoader"]).ClassLoader.classResource(type(resource), resourcePath, True)
                                             if inputStream is None:
                                                 stringMaker.delete(0, stringMaker.length())
                                                 resourcePath = str(stringMaker.append(RESOURCE_STRING).append(COLON).append(resource[index + 1:]))
-                                                inputStream = type(resource).getResourceAsStream(resourcePath)
+                                                inputStream = __import__("java.lang.ClassLoader", fromlist=["ClassLoader"]).ClassLoader.classResource(type(resource), resourcePath, True)
                                                 if inputStream is None:
                                                     stringMaker.delete(0, stringMaker.length())
                                                     raise Exception(str(stringMaker.append("Unable to obtain: ").append(resource)))
@@ -99,7 +99,7 @@ class ResourceUtil:
         stringMaker: StringMaker = StringMaker()
         index: int = resource.find(CommonSeps.getInstance().COLON)
         resourcePath: str = resource[index + startIndex:]
-        inputStream: InputStream = type(resource).getResourceAsStream(resourcePath)
+        inputStream: InputStream = __import__("java.lang.ClassLoader", fromlist=["ClassLoader"]).ClassLoader.classResource(type(resource), resourcePath, True)
         if inputStream is not None:
             return inputStream
         return inputStream

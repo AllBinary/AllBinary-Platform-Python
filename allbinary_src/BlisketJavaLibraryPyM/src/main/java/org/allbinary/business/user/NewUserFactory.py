@@ -34,6 +34,7 @@ class NewUserFactory:
     # throws Exception
     @staticmethod
     def getInstance_j1(transformInfoInterface: TransformInfoInterface) -> UserInterface:
+        from org.allbinary.business.user.CreateUserFactory import CreateUserFactory
         from java.util.HashMap import HashMap
         from org.allbinary.business.user.role.UserRoleData import UserRoleData
         from org.allbinary.logic.communication.http.request.RequestParams import RequestParams
@@ -50,6 +51,7 @@ class NewUserFactory:
     # throws Exception
     @staticmethod
     def getInstance_j2(httpServletRequest: HttpServletRequest, propertiesHashMap: HashMap) -> UserInterface:
+        from org.allbinary.business.user.CreateUserFactory import CreateUserFactory
         from java.util.HashMap import HashMap
         from org.allbinary.business.user.role.UserRoleData import UserRoleData
         from org.allbinary.logic.communication.http.request.RequestParams import RequestParams

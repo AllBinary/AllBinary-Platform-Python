@@ -32,12 +32,14 @@ class StylesValidationFactory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
     # Java overloaded method with the same parameter count: Python keeps the last definition
     def getInstance_j1_1(self, document: Document) -> BasicArrayList:
+        from org.allbinary.logic.visual.dhtml.style.StylesData import StylesData
+        from org.allbinary.logic.visual.dhtml.style.StyleData import StyleData
         from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         from org.allbinary.data.tree.dom.DomSearchHelper import DomSearchHelper
@@ -81,14 +83,17 @@ class StylesValidationFactory:
         from org.allbinary.logic.communication.http.request.NameSpaceRequestParamData import NameSpaceRequestParamData
         from org.w3c.dom.Document import Document
         stylesDocument: Document = hashMap.get(NameSpaceRequestParamData.DOCUMENT)
-        return StylesValidationFactory.getInstance().getInstance(stylesDocument)
+        return StylesValidationFactory.getInstance_j0()
+            .getInstance(stylesDocument)
 
     def getInstance(self, *args):
-        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
-            return self.getInstance_j1_1(*args)
+        if len(args) == 1 and True and (args[0] is None or any(base.__name__ == "Document" for base in type(args[0]).__mro__)):
+            return __class__.__dict__["getInstance_j1_1"].__get__(self, __class__)(*args)
         if len(args) == 1:
-            return self.getInstance_j1_2(*args)
-        return getattr(self, "getInstance_j" + str(len(args)))(*args)
+            return __class__.__dict__["getInstance_j1_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("getInstance_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getInstance(*args)
 # from java.util.HashMap import HashMap
 # from org.allbinary.util.BasicArrayList import BasicArrayList
 # from org.allbinary.util.BasicArrayListD import BasicArrayListD

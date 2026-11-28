@@ -15,31 +15,39 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 from org.allbinary.graphics.form.LockablePaintable import LockablePaintable
 
 
+@java_inherited_overloads
 class PreGameLockablePaintable(LockablePaintable):
+    def _java_defaults(self):
+        vars(self).setdefault("halfWidth", 0)
+        vars(self).setdefault("paintableForm", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.form.ScrollCurrentSelectionForm import ScrollCurrentSelectionForm
-        self.halfWidth: int = None
-        self.paintableForm: ScrollCurrentSelectionForm = None
+        if "halfWidth" not in vars(self): self.halfWidth: int = 0
+        if "paintableForm" not in vars(self): self.paintableForm: ScrollCurrentSelectionForm = None
     
 
     def __init__(self, paintableForm: ScrollCurrentSelectionForm, lockedIndex: int) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.image.GameFeatureImageCacheFactory import GameFeatureImageCacheFactory
         from org.allbinary.logic.system.security.licensing.LockedResources import LockedResources
         from org.allbinary.graphics.form.ScrollCurrentSelectionForm import ScrollCurrentSelectionForm
         super().__init__(lockedIndex)
-        self._init_fields()
+        __class__._init_fields(self)
         self.paintableForm = paintableForm
-        self.halfWidth = GameFeatureImageCacheFactory.getInstance().getWithKey(LockedResources.getInstance().LOCKED_DEMO_GAME_FEATURE_RESOURCE).getWidth() / 2
+        self.halfWidth = java_divide(GameFeatureImageCacheFactory.getInstance().getWithKey(LockedResources.getInstance().LOCKED_DEMO_GAME_FEATURE_RESOURCE).getWidth(), 2)
+            
     
 
     def paint(self, graphics: Graphics, currentIndex: int, x: int, y: int) -> None:
         from javax.microedition.lcdui.Graphics import Graphics
         from org.allbinary.logic.system.security.licensing.LockedUtil import LockedUtil
-        if LockedUtil.getInstance().isLocked() and self.getPaintableForm().getSelectedIndex() >= self.getLockedIndex():
+        if java_predicate(LockedUtil.getInstance(), "isLocked") and self.getPaintableForm().getSelectedIndex() >= self.getLockedIndex():
             self.getAnimation().paintXY(graphics, self.getPaintableForm().getDx() - self.halfWidth, self.getPaintableForm().getDy() + 34)
     
 

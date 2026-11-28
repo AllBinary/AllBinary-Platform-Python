@@ -15,43 +15,49 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.visual.transform.info.TransformInfo import TransformInfo
 from org.allbinary.logic.visual.transform.info.TransformInfoHttpInterface import TransformInfoHttpInterface
 
 
+@java_inherited_overloads
 class TransformInfoHttp(*java_bases(TransformInfo, TransformInfoHttpInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("abContext", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.context.AbContext import AbContext
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.abContext: AbContext = None
+        if "abContext" not in vars(self): self.abContext: AbContext = None
 
     def __init__(self, *args) -> None:
         if len(args) == 3:
-            self.__jconstructor3(*args)
+            __class__.__jconstructor3(self, *args)
         elif len(args) == 2:
-            self._constructor2(*args)
+            __class__._constructor2(self, *args)
         elif len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
 
     def __jconstructor3(self, *args) -> None:
-        if True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)) and isinstance(args[2], bool):
-            self._constructor3_1(*args)
-        elif True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)) and not isinstance(args[2], (str, list, int, float)):
-            self._constructor3_2(*args)
+        if True and not isinstance(args[0], (str, list, int, float)) and (args[1] is None or any(base.__name__ == "PageContext" for base in type(args[1]).__mro__)) and isinstance(args[2], bool):
+            __class__._constructor3_1(self, *args)
+        elif True and (args[0] is None or any(base.__name__ == "HttpServletRequest" for base in type(args[0]).__mro__)) and not isinstance(args[1], (str, list, int, float)) and (args[2] is None or any(base.__name__ == "PageContext" for base in type(args[2]).__mro__)):
+            __class__._constructor3_2(self, *args)
         else:
-            self._constructor3_3(*args)
+            __class__._constructor3_3(self, *args)
     
 
     def _constructor3_1(self, propertiesHashMap: HashMap, pageContext: PageContext, crud: bool) -> None:
+        __class__._java_defaults(self)
         from java.util.HashMap import HashMap
         from org.allbinary.business.context.AbContext import AbContext
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.abContext = AbContext(propertiesHashMap, pageContext)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF("Properties HashMap: " + str(propertiesHashMap), self, "Constructor(HashMap, PageContext, boolean)")
@@ -59,13 +65,14 @@ class TransformInfoHttp(*java_bases(TransformInfo, TransformInfoHttpInterface)):
     
 
     def _constructor3_2(self, request: HttpServletRequest, propertiesHashMap: HashMap, pageContext: PageContext) -> None:
+        __class__._java_defaults(self)
         from java.util.HashMap import HashMap
         from org.allbinary.business.context.AbContext import AbContext
         from org.allbinary.logic.communication.http.request.RequestParams import RequestParams
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.abContext = AbContext(propertiesHashMap, pageContext)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF("Properties HashMap: " + str(propertiesHashMap), self, "Constructor(HttpServletRequest, HashMap, PageContext)")
@@ -74,12 +81,13 @@ class TransformInfoHttp(*java_bases(TransformInfo, TransformInfoHttpInterface)):
     
 
     def _constructor3_3(self, databaseHashMap: HashMap, propertiesHashMap: HashMap, pageContext: PageContext) -> None:
+        __class__._java_defaults(self)
         from java.util.HashMap import HashMap
         from org.allbinary.business.context.AbContext import AbContext
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.abContext = AbContext(propertiesHashMap, pageContext)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF("Properties HashMap: " + str(propertiesHashMap), self, "Constructor(HashMap, HashMap, PageContext)")
@@ -87,12 +95,13 @@ class TransformInfoHttp(*java_bases(TransformInfo, TransformInfoHttpInterface)):
     
 
     def _constructor2(self, propertiesHashMap: HashMap, pageContext: PageContext) -> None:
+        __class__._java_defaults(self)
         from java.util.HashMap import HashMap
         from org.allbinary.business.context.AbContext import AbContext
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.abContext = AbContext(propertiesHashMap, pageContext)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF("Properties HashMap: " + str(propertiesHashMap), self, "Constructor(HashMap, PageContext)")
@@ -100,14 +109,16 @@ class TransformInfoHttp(*java_bases(TransformInfo, TransformInfoHttpInterface)):
     
 
     def _constructor1(self, parentViewOfThisTransformInfoInterface: TransformInfoHttp) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.context.AbContext import AbContext
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.abContext = AbContext(parentViewOfThisTransformInfoInterface.getPropertiesHashMap(), parentViewOfThisTransformInfoInterface.getPageContext())
     
 
     # throws Exception
     def set(self, hashMap: HashMap) -> None:
+        from org.allbinary.logic.visual.transform.info.TransformInfoData import TransformInfoData
         from java.util.HashMap import HashMap
         from org.allbinary.business.context.modules.storefront.StoreFrontData import StoreFrontData
         from org.allbinary.logic.communication.sql.AbSqlData import AbSqlData
@@ -128,7 +139,7 @@ class TransformInfoHttp(*java_bases(TransformInfo, TransformInfoHttpInterface)):
             self.setObjectConfig(objectConfigString)
         else:
             self.setObjectConfig(str(TransformInfoObjectConfig(self)))
-        if not stringValidationUtil.isEmpty(hashMap.get(transformInfoData.OBJECTCONFIGFILENAME)):
+        if not (stringValidationUtil.isEmpty(hashMap.get(transformInfoData.OBJECTCONFIGFILENAME))):
             self.setObjectConfigFile(hashMap.get(transformInfoData.OBJECTCONFIGFILENAME))
         self.setTemplateFile(hashMap.get(transformInfoData.TEMPLATEFILENAME))
         self.setTemplate(hashMap.get(transformInfoData.TEMPLATE))

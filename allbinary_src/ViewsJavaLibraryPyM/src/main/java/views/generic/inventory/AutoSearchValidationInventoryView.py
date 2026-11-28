@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from views.generic.inventory.InventorySearch import InventorySearch
 
 
+@java_inherited_overloads
 class AutoSearchValidationInventoryView(InventorySearch):
     
 

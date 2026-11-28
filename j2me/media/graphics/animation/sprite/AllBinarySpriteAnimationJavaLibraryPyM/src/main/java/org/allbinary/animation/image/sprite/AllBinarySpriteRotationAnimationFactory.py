@@ -15,12 +15,17 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.ProceduralAnimationInterfaceFactoryInterface import ProceduralAnimationInterfaceFactoryInterface
 from org.allbinary.animation.image.BaseImageAnimationFactory import BaseImageAnimationFactory
 
 
+@java_inherited_overloads
 class AllBinarySpriteRotationAnimationFactory(*java_bases(BaseImageAnimationFactory, ProceduralAnimationInterfaceFactoryInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("animationFactorySpriteScaleUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.image.sprite.AnimationFactorySpriteScaleUtil import AnimationFactorySpriteScaleUtil
@@ -87,11 +92,12 @@ class AllBinarySpriteRotationAnimationFactory(*java_bases(BaseImageAnimationFact
     
 
     def __init__(self, image: Image, sequenceArray: list[int], width: int, height: int, dx: int, dy: int, animationBehaviorFactory: AnimationBehaviorFactory) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
         from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
         super().__init__(image, sequenceArray, width, height, dx, dy, animationBehaviorFactory)
-        self._init_fields()
+        __class__._init_fields(self)
         if animationBehaviorFactory == AnimationBehaviorFactory.getInstance():
             ForcedLogUtil.log("Using default AnimationBehaviorFactory with IndexedAnimationFactory", self)
     
@@ -103,8 +109,10 @@ class AllBinarySpriteRotationAnimationFactory(*java_bases(BaseImageAnimationFact
 
     def initWH(self, dx: int, dy: int) -> None:
         self.init(dx, dy)
-        self.animationFactoryInitializationVisitor.dx += -self.animationFactoryInitializationVisitor.width / 5
-        self.animationFactoryInitializationVisitor.dy += -self.animationFactoryInitializationVisitor.height / 5
+        self.animationFactoryInitializationVisitor.dx += java_divide(-self.animationFactoryInitializationVisitor.width, 5)
+            
+        self.animationFactoryInitializationVisitor.dy += java_divide(-self.animationFactoryInitializationVisitor.height, 5)
+            
     
 
     # throws Exception

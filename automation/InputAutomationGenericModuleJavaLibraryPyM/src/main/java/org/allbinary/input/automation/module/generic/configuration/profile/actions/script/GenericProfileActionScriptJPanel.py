@@ -15,12 +15,21 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.input.automation.actions.script.JTreeInterface import JTreeInterface
 # from javax.swing.JPanel import JPanel
 
 
+@java_inherited_overloads
 class GenericProfileActionScriptJPanel(*java_bases(JPanel, JTreeInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("defaultMutableTreeNode", None)
+        vars(self).setdefault("genericProfileActionScript", None)
+        vars(self).setdefault("actionScriptJTree", None)
+        vars(self).setdefault("jScrollPane1", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -28,14 +37,15 @@ class GenericProfileActionScriptJPanel(*java_bases(JPanel, JTreeInterface)):
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.defaultMutableTreeNode: DefaultMutableTreeNode = DefaultMutableTreeNode("Root")
-        self.genericProfileActionScript: GenericProfileActionScript = None
-        self.actionScriptJTree: JTree = None
-        self.jScrollPane1: JScrollPane = None
+        if "genericProfileActionScript" not in vars(self): self.genericProfileActionScript: GenericProfileActionScript = None
+        if "actionScriptJTree" not in vars(self): self.actionScriptJTree: JTree = None
+        if "jScrollPane1" not in vars(self): self.jScrollPane1: JScrollPane = None
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
         self.initComponents()
     
@@ -68,16 +78,19 @@ class GenericProfileActionScriptJPanel(*java_bases(JPanel, JTreeInterface)):
         self.actionScriptJTree = JTree()
         self.setLayout(GridLayout(1, 0))
         self.actionScriptJTree.setPreferredSize(Dimension(500, 500))
-        self.actionScriptJTree.addMouseListener((MouseAdapter()  # Java anonymous class body:
-#             
-# 
-#             def mouseClicked(self, evt: MouseEvent) -> None:
-#                 self.actionScriptJTreeMouseClicked(evt)
-#             
-# 
-#             def mouseReleased(self, evt: MouseEvent) -> None:
-#                 self.actionScriptJTreeMouseReleased(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN66909(MouseAdapter):
+            
+            
+
+            def mouseClicked(self, evt: MouseEvent) -> None:
+                (self if hasattr(self, "actionScriptJTreeMouseClicked") else _java_listener_owner).actionScriptJTreeMouseClicked(evt)
+            
+
+            def mouseReleased(self, evt: MouseEvent) -> None:
+                (self if hasattr(self, "actionScriptJTreeMouseReleased") else _java_listener_owner).actionScriptJTreeMouseReleased(evt)
+        self.actionScriptJTree.addMouseListener(_JavaListenerN66909()
+            )
         self.jScrollPane1.setViewportView(self.actionScriptJTree)
         self.add(self.jScrollPane1)
     

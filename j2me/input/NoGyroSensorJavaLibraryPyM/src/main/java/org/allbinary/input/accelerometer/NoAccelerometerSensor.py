@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.input.gyro.AllBinaryOrientationSensor import AllBinaryOrientationSensor
 
 
+@java_inherited_overloads
 class NoAccelerometerSensor(AllBinaryOrientationSensor):
     
 

@@ -15,13 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 
 
 class InventoryUploadMediaUtil:
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
-        from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.logic.visual.media.MediaUtil import MediaUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
@@ -35,20 +34,21 @@ class InventoryUploadMediaUtil:
         self.SMALL: str = "Small"
         self.MEDIUM: str = "Medium"
         self.LARGE: str = "Large"
-        self.storeFrontInterface: StoreFrontInterface = None
-        self.itemInterface: ItemInterface = None
+        if "storeFrontInterface" not in vars(self): self.storeFrontInterface: StoreFrontInterface = None
+        if "itemInterface" not in vars(self): self.itemInterface: ItemInterface = None
     
 
     def __init__(self, storeFrontInterface: StoreFrontInterface, itemInterface: ItemInterface) -> None:
         from org.allbinary.business.context.modules.storefront.StoreFrontInterface import StoreFrontInterface
         from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
-        self._init_fields()
+        __class__._init_fields(self)
         self.storeFrontInterface = storeFrontInterface
         self.itemInterface = itemInterface
     
 
     # throws Exception
     def saveFiles(self, byteArray: list[int], fileName: str, mediaData: MediaData) -> ItemInterface:
+        from java.io.ByteArrayInputStream import ByteArrayInputStream
         from org.allbinary.business.user.commerce.inventory.item.ItemInterface import ItemInterface
         from org.allbinary.globals.URLGLOBALS import URLGLOBALS
         from org.allbinary.logic.communication.http.file.upload.media.UploadMediaSingleton import UploadMediaSingleton
@@ -73,7 +73,7 @@ class InventoryUploadMediaUtil:
         stringBuffer.append(self.itemInterface.getCategory())
         fullPath: str = str(stringBuffer)
         imageDirectoryFile: AbFile = AbFile.createAbFile(fullPath)
-        if not imageDirectoryFile.isDirectory():
+        if not (java_predicate(imageDirectoryFile, "isDirectory")):
             raise Exception("Unable to save file to non existant directory")
         stringBuffer.delete(0, stringBuffer.length())
         stringBuffer.append(fullPath)

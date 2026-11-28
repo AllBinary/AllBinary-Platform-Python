@@ -21,26 +21,23 @@ from org.allbinary.animation.AnimationInterfaceFactoryInterface import Animation
 class ImageCaptionIndexedAnimationFactory(AnimationInterfaceFactoryInterface):
 
     def _init_fields(self) -> None:
-        from javax.microedition.lcdui.Image import Image
-        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
         from org.allbinary.image.AnimationFactoryImageScaleUtil import AnimationFactoryImageScaleUtil
         from org.allbinary.image.sprite.AnimationFactorySpriteScaleUtil import AnimationFactorySpriteScaleUtil
         from org.allbinary.media.ScaleProperties import ScaleProperties
-        from org.allbinary.media.audio.Sound import Sound
         self.animationFactoryImageScaleUtil: AnimationFactoryImageScaleUtil = AnimationFactoryImageScaleUtil.getInstance()
         self.animationFactorySpriteScaleUtil: AnimationFactorySpriteScaleUtil = AnimationFactorySpriteScaleUtil.getInstance()
-        self.captionImage: Image = None
-        self.spriteMovieImage: Image = None
-        self.frameWidth: int = None
-        self.frameHeight: int = None
-        self.captionDx: int = None
-        self.captionDy: int = None
-        self.dx: int = None
-        self.dy: int = None
-        self.time: int = None
-        self.soundInterface: Sound = None
+        if "captionImage" not in vars(self): self.captionImage: Image = None
+        if "spriteMovieImage" not in vars(self): self.spriteMovieImage: Image = None
+        if "frameWidth" not in vars(self): self.frameWidth: int = 0
+        if "frameHeight" not in vars(self): self.frameHeight: int = 0
+        if "captionDx" not in vars(self): self.captionDx: int = 0
+        if "captionDy" not in vars(self): self.captionDy: int = 0
+        if "dx" not in vars(self): self.dx: int = 0
+        if "dy" not in vars(self): self.dy: int = 0
+        if "time" not in vars(self): self.time: int = 0
+        if "soundInterface" not in vars(self): self.soundInterface: Sound = None
         self.scaleProperties: ScaleProperties = ScaleProperties.instance
-        self.animationBehaviorFactory: AnimationBehaviorFactory = None
+        if "animationBehaviorFactory" not in vars(self): self.animationBehaviorFactory: AnimationBehaviorFactory = None
     
 
     def __init__(self, captionImage: Image, spriteMovieImage: Image, soundInterface: Sound, frameWidth: int, frameHeight: int, captionDx: int, captionDy: int, dx: int, dy: int, time: int, animationBehaviorFactory: AnimationBehaviorFactory) -> None:
@@ -48,7 +45,7 @@ class ImageCaptionIndexedAnimationFactory(AnimationInterfaceFactoryInterface):
         from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
         from org.allbinary.logic.communication.log.ForcedLogUtil import ForcedLogUtil
         from org.allbinary.media.audio.Sound import Sound
-        self._init_fields()
+        __class__._init_fields(self)
         if animationBehaviorFactory == AnimationBehaviorFactory.getInstance():
             ForcedLogUtil.log("Using default AnimationBehaviorFactory with IndexedAnimationFactory", self)
         self.captionImage = captionImage

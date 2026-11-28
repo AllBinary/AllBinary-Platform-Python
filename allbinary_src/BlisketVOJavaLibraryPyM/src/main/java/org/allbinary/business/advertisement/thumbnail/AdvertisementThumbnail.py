@@ -21,14 +21,13 @@ from org.allbinary.business.advertisement.thumbnail.AdvertisementThumbnailInterf
 class AdvertisementThumbnail(AdvertisementThumbnailInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.logic.control.contraints.size.TwoDimensionalConstraintInterface import TwoDimensionalConstraintInterface
-        self.imageFileName: str = None
-        self.imageUrl: str = None
-        self.constraint: TwoDimensionalConstraintInterface = None
+        if "imageFileName" not in vars(self): self.imageFileName: str = None
+        if "imageUrl" not in vars(self): self.imageUrl: str = None
+        if "constraint" not in vars(self): self.constraint: TwoDimensionalConstraintInterface = None
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getFileName(self) -> str:

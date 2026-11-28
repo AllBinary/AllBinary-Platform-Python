@@ -15,23 +15,30 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.control.validate.ValidatorBase import ValidatorBase
 
 
+@java_inherited_overloads
 class TextFieldItemValidator(ValidatorBase):
+    def _java_defaults(self):
+        vars(self).setdefault("textFieldItem", None)
+        vars(self).setdefault("min", 0)
+        vars(self).setdefault("max", 0)
+        vars(self).setdefault("allowOnEmpty", False)
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.form.item.ABTextFieldItem import ABTextFieldItem
-        self.textFieldItem: ABTextFieldItem = None
-        self.min: int = None
-        self.max: int = None
-        self.allowOnEmpty: bool = None
+        if "textFieldItem" not in vars(self): self.textFieldItem: ABTextFieldItem = None
+        if "min" not in vars(self): self.min: int = 0
+        if "max" not in vars(self): self.max: int = 0
+        if "allowOnEmpty" not in vars(self): self.allowOnEmpty: bool = False
     
 
     def __init__(self, textFieldItem: ABTextFieldItem, min: int, max: int, allowOnEmpty: bool) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.form.item.ABTextFieldItem import ABTextFieldItem
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.textFieldItem = textFieldItem
         self.min = min
         self.max = max

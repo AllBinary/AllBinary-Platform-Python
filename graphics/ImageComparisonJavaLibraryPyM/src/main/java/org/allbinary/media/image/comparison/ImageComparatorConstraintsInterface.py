@@ -36,11 +36,13 @@ class ImageComparatorConstraintsInterface:
         raise NotImplementedError()
 
     def isCollisionWithAvoidRectangles(self, *args):
-        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
-            return self.isCollisionWithAvoidRectangles_j1_1(*args)
+        if len(args) == 1 and True and (args[0] is None or any(base.__name__ == "Rectangle" for base in type(args[0]).__mro__)):
+            return __class__.__dict__["isCollisionWithAvoidRectangles_j1_1"].__get__(self, __class__)(*args)
         if len(args) == 1:
-            return self.isCollisionWithAvoidRectangles_j1_2(*args)
-        return getattr(self, "isCollisionWithAvoidRectangles_j" + str(len(args)))(*args)
+            return __class__.__dict__["isCollisionWithAvoidRectangles_j1_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("isCollisionWithAvoidRectangles_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().isCollisionWithAvoidRectangles(*args)
     
 
     def isColorAllowed(self, frame: int, point: GPoint, color: Color) -> bool:

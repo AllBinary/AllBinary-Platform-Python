@@ -31,7 +31,7 @@ class CssElementData:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
 
 
 def _CssElementData_instance() -> object:

@@ -9,13 +9,12 @@ from org.apache.xmlrpc.XmlRpcHandler import XmlRpcHandler
 class XmlRpcClient(XmlRpcHandler):
 
     def _init_fields(self) -> None:
-        from java.net.URL import URL
-        self.url: URL = None
+        if "url" not in vars(self): self.url: URL = None
     
 
     def __init__(self, url: str) -> None:
         from java.net.URL import URL
-        self._init_fields()
+        __class__._init_fields(self)
         self.url = URL(url)
     
 

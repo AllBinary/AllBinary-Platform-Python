@@ -15,11 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from javax.microedition.lcdui.PlatformImage import PlatformImage
 
 
 #PlatformNullImageJavaLibrary
+@java_inherited_overloads
 class PostLoadPlatformImage(PlatformImage):
     instance: PostLoadPlatformImage = None
 

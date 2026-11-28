@@ -15,15 +15,19 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.util.event.handler.BasicEventHandler import BasicEventHandler
 
 
+@java_inherited_overloads
 class AnalogControllerConfigurationEventHandler(BasicEventHandler):
     instance: AnalogControllerConfigurationEventHandler = None
+    def _java_defaults(self):
+        vars(self).setdefault("list_", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.list_: BasicArrayList = BasicArrayListD()
     
@@ -34,24 +38,25 @@ class AnalogControllerConfigurationEventHandler(BasicEventHandler):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def addListener(self, analogControllerConfigurationEventListenerInterface: AnalogControllerConfigurationEventListenerInterface) -> None:
-        if not self.list_.contains(analogControllerConfigurationEventListenerInterface):
+        if not (self.list_.contains(analogControllerConfigurationEventListenerInterface)):
             self.list_.add(analogControllerConfigurationEventListenerInterface)
     
 
     def removeAllListeners(self) -> None:
         self.list_.clear()
-        super().removeAllListeners()
+        java_super_call(super(), "removeAllListeners")
     
 
     def removeListener(self, eventListenerInterface: EventListenerInterface) -> None:
         from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         self.list_.remove(eventListenerInterface)
-        super().removeListener(eventListenerInterface)
+        java_super_call(super(), "removeListener", eventListenerInterface)
     
 
     # throws Exception
@@ -65,7 +70,7 @@ class AnalogControllerConfigurationEventHandler(BasicEventHandler):
                 playerGameInput.onAnalogControllerConfigurationEvent(eventObject)
             except Exception as e:
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, EventStrings.getInstance().FIRE_EVENT, e)
-        super().fireEvent(eventObject)
+        java_super_call(super(), "fireEvent", eventObject)
     
 
     # throws Exception

@@ -29,7 +29,7 @@ class PaintableToImageUtil:
         from javax.microedition.lcdui.Graphics import Graphics
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.graphics.paint.PaintableInterface import PaintableInterface
-        image: Image = GameFeatureImageCacheFactory.getInstance().get(type(PaintableToImageUtil.instance).__module__ + "." + type(PaintableToImageUtil.instance).__qualname__, width, height)
+        image: Image = GameFeatureImageCacheFactory.getInstance().get(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(PaintableToImageUtil.instance)), width, height)
         graphics: Graphics = image.getGraphics()
         paintableInterface.paint(graphics)
         return image

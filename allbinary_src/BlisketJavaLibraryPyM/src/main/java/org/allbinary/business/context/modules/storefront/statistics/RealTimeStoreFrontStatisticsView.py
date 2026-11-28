@@ -21,20 +21,20 @@ from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 class RealTimeStoreFrontStatisticsView(DomNodeInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.user.role.UserRole import UserRole
-        self.storeFrontStatisticsInterface: StoreFrontStatisticsInterface = None
-        self.userRole: UserRole = None
+        if "storeFrontStatisticsInterface" not in vars(self): self.storeFrontStatisticsInterface: StoreFrontStatisticsInterface = None
+        if "userRole" not in vars(self): self.userRole: UserRole = None
     
 
     def __init__(self, storeFrontStatisticsInterface: StoreFrontStatisticsInterface, userRole: UserRole) -> None:
         from org.allbinary.business.user.role.UserRole import UserRole
-        self._init_fields()
+        __class__._init_fields(self)
         self.storeFrontStatisticsInterface = storeFrontStatisticsInterface
         self.userRole = userRole
     
 
     # throws Exception
     def toXmlNode(self, document: Document) -> Node:
+        from org.allbinary.business.context.modules.storefront.statistics.StoreFrontStatisticsData import StoreFrontStatisticsData
         from org.allbinary.business.context.modules.storefront.statistics.advertisements.StoreFrontAdvertisementsStatisticsInterface import StoreFrontAdvertisementsStatisticsInterface
         from org.allbinary.business.context.modules.storefront.statistics.advertisements.StoreFrontAdvertisementsStatisticsView import StoreFrontAdvertisementsStatisticsView
         from org.allbinary.business.context.modules.storefront.statistics.inventory.StoreFrontInventoryStatisticsInterface import StoreFrontInventoryStatisticsInterface

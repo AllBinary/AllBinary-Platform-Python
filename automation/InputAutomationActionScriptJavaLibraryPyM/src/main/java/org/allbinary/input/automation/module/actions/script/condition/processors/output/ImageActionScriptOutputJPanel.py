@@ -15,31 +15,48 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 # from javax.swing.JPanel import JPanel
 
 
+@java_inherited_overloads
 class ImageActionScriptOutputJPanel(JPanel):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("capturedImageActionScriptOutputInterface", None)
+        vars(self).setdefault("capturedImageActionJButton", None)
+        vars(self).setdefault("capturedImageActionJDialog", None)
+        vars(self).setdefault("displayJCheckBox", None)
+        vars(self).setdefault("itemTypesJList", None)
+        vars(self).setdefault("jLabel1", None)
+        vars(self).setdefault("jScrollPane1", None)
+        vars(self).setdefault("okJButton", None)
+        vars(self).setdefault("saveJCheckBox", None)
+        vars(self).setdefault("titleJLabel", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.capturedImageActionScriptOutputInterface: ImageActionScriptOutputInterface = None
-        self.capturedImageActionJButton: JButton = None
-        self.capturedImageActionJDialog: JDialog = None
-        self.displayJCheckBox: JCheckBox = None
-        self.itemTypesJList: JList = None
-        self.jLabel1: JLabel = None
-        self.jScrollPane1: JScrollPane = None
-        self.okJButton: JButton = None
-        self.saveJCheckBox: JCheckBox = None
-        self.titleJLabel: JLabel = None
+        if "capturedImageActionScriptOutputInterface" not in vars(self): self.capturedImageActionScriptOutputInterface: ImageActionScriptOutputInterface = None
+        if "capturedImageActionJButton" not in vars(self): self.capturedImageActionJButton: JButton = None
+        if "capturedImageActionJDialog" not in vars(self): self.capturedImageActionJDialog: JDialog = None
+        if "displayJCheckBox" not in vars(self): self.displayJCheckBox: JCheckBox = None
+        if "itemTypesJList" not in vars(self): self.itemTypesJList: JList = None
+        if "jLabel1" not in vars(self): self.jLabel1: JLabel = None
+        if "jScrollPane1" not in vars(self): self.jScrollPane1: JScrollPane = None
+        if "okJButton" not in vars(self): self.okJButton: JButton = None
+        if "saveJCheckBox" not in vars(self): self.saveJCheckBox: JCheckBox = None
+        if "titleJLabel" not in vars(self): self.titleJLabel: JLabel = None
     
 
     def __init__(self, capturedImageActionScriptOutputInterface: ImageActionScriptOutputInterface) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
         self.initComponents()
         self.capturedImageActionScriptOutputInterface = capturedImageActionScriptOutputInterface
@@ -58,9 +75,9 @@ class ImageActionScriptOutputJPanel(JPanel):
             imageType: InputImageType = vector.get(index)
             selectedArray[((index := index + 1) - 1)] = imageType.getIndex()
         self.itemTypesJList.setSelectedIndices(selectedArray)
-        if self.capturedImageActionScriptOutputInterface.isSaved():
+        if java_predicate(self.capturedImageActionScriptOutputInterface, "isSaved"):
             self.saveJCheckBox.setSelected(True)
-        if self.capturedImageActionScriptOutputInterface.isSaved():
+        if java_predicate(self.capturedImageActionScriptOutputInterface, "isSaved"):
             self.displayJCheckBox.setSelected(True)
         self.capturedImageActionScriptOutputInterface.log()
     
@@ -70,11 +87,11 @@ class ImageActionScriptOutputJPanel(JPanel):
         anyType: list[object] = self.itemTypesJList.getSelectedValues()
         imageTypes: ImageTypes = ImageTypes.valueOf(anyType)
         self.capturedImageActionScriptOutputInterface.setImageTypes(imageTypes)
-        if self.saveJCheckBox.isSelected():
+        if java_predicate(self.saveJCheckBox, "isSelected"):
             self.capturedImageActionScriptOutputInterface.setSaved(True)
         else:
             self.capturedImageActionScriptOutputInterface.setSaved(False)
-        if self.displayJCheckBox.isSelected():
+        if java_predicate(self.displayJCheckBox, "isSelected"):
             self.capturedImageActionScriptOutputInterface.setDisplay(True)
         else:
             self.capturedImageActionScriptOutputInterface.setDisplay(False)
@@ -114,34 +131,40 @@ class ImageActionScriptOutputJPanel(JPanel):
         self.capturedImageActionJDialog.setMinimumSize(Dimension(250, 250))
         self.titleJLabel.setText("Image Output Options")
         self.okJButton.setText("OK")
-        self.okJButton.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.okJButtonActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN68305(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "okJButtonActionPerformed") else _java_listener_owner).okJButtonActionPerformed(evt)
+        self.okJButton.addActionListener(_JavaListenerN68305()
+            )
         self.saveJCheckBox.setText("Save To File")
         self.saveJCheckBox.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0))
         self.saveJCheckBox.setMargin(Insets(0, 0, 0, 0))
         self.displayJCheckBox.setText("Display")
         self.displayJCheckBox.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0))
         self.displayJCheckBox.setMargin(Insets(0, 0, 0, 0))
-        self.displayJCheckBox.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.displayJCheckBoxActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN68710(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "displayJCheckBoxActionPerformed") else _java_listener_owner).displayJCheckBoxActionPerformed(evt)
+        self.displayJCheckBox.addActionListener(_JavaListenerN68710()
+            )
         self.itemTypesJList.setModel((AbstractListModel()  # Java anonymous class body:
 #             self.strings: list[str] = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"]
 #             
 # 
 #             def getSize(self) -> int:
-#                 return len(strings)
+#                 return len(self.strings)
 #             
 # 
 #             def getElementAt(self, i: int) -> object:
-#                 return strings[i]
+#                 return self.strings[i]
 ))
         self.jScrollPane1.setViewportView(self.itemTypesJList)
         capturedImageActionJDialogLayout: GroupLayout = GroupLayout(self.capturedImageActionJDialog.getContentPane())
@@ -150,12 +173,15 @@ class ImageActionScriptOutputJPanel(JPanel):
         capturedImageActionJDialogLayout.setVerticalGroup(capturedImageActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(capturedImageActionJDialogLayout.createSequentialGroup().addComponent(self.titleJLabel).addGap(5, 5, 5).addComponent(self.jScrollPane1, GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.saveJCheckBox).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(self.displayJCheckBox).addGap(9, 9, 9).addComponent(self.okJButton).addContainerGap()))
         self.setMinimumSize(Dimension(100, 0))
         self.capturedImageActionJButton.setText("Edit")
-        self.capturedImageActionJButton.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.capturedImageActionJButtonActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN70175(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "capturedImageActionJButtonActionPerformed") else _java_listener_owner).capturedImageActionJButtonActionPerformed(evt)
+        self.capturedImageActionJButton.addActionListener(_JavaListenerN70175()
+            )
         self.jLabel1.setText("Capture Image:")
         layout: GroupLayout = GroupLayout(self)
         self.setLayout(layout)

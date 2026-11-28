@@ -17,6 +17,8 @@ from __future__ import annotations
 
 import random
 import time
+from java.lang.System import System
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -27,7 +29,7 @@ class MyRandomFactory:
     def _init_fields(self) -> None:
         from org.allbinary.logic.math.MathUtil import MathUtil
         self.mathUtil: MathUtil = MathUtil.getInstance()
-        self.rand: random.Random = None
+        if "rand" not in vars(self): self.rand: random.Random = None
     
 
     @staticmethod
@@ -38,7 +40,7 @@ class MyRandomFactory:
 
     def __init__(self) -> None:
         from jsinterop.annotations.JsConstructor import JsConstructor
-        self._init_fields()
+        __class__._init_fields(self)
         self.rand = random.Random(int(time.time() * 1000))
     
 
@@ -49,8 +51,10 @@ class MyRandomFactory:
 
     def getNextInt(self, range: int) -> int:
         from jsinterop.annotations.JsMethod import JsMethod
-        div: int = (2147483647 / range) + 1
-        return int((self.rand.randint(-2147483648, 2147483647) / div))
+        div: int = (java_divide(2147483647, range)
+            ) + 1
+        return int((java_divide(self.rand.randint(-2147483648, 2147483647), div)
+            ))
     
 
     def getAbsoluteNextInt(self, range: int) -> int:
@@ -141,7 +145,7 @@ class MyRandomFactory:
             for index2 in range(0, size):
                 if intArray[index2] == index:
                     found = True
-            if not found:
+            if not (found):
                 raise RuntimeError()
 # from java.util.Random import Random
 # from jsinterop.annotations.JsType import JsType

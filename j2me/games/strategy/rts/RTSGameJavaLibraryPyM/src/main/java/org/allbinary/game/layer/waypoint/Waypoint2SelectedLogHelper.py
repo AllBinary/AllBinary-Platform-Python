@@ -15,12 +15,28 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.layer.waypoint.Waypoint2LogHelper import Waypoint2LogHelper
 
 
+@java_inherited_overloads
 class Waypoint2SelectedLogHelper(Waypoint2LogHelper):
     instanceC: Waypoint2SelectedLogHelper = None
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("commonSeps", None)
+        vars(self).setdefault("positionStrings", None)
+        vars(self).setdefault("stringUtil", None)
+        vars(self).setdefault("ENEMY_POSSIBLE_TARGET", None)
+        vars(self).setdefault("CLOSE_RANGE", None)
+        vars(self).setdefault("SENSOR_RANGE", None)
+        vars(self).setdefault("ONLY_TARGETS", None)
+        vars(self).setdefault("SHORTER_THAN_CURRENT_TARGET_DISTANCE", None)
+        vars(self).setdefault("CURRENT_TARGET_DESTROYED", None)
+        vars(self).setdefault("CURRENT_TARGET_NOT_AVAILABLE", None)
+        vars(self).setdefault("PROCESS_POSSIBLE_TARGET", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -41,8 +57,9 @@ class Waypoint2SelectedLogHelper(Waypoint2LogHelper):
         self.PROCESS_POSSIBLE_TARGET: str = "selected: processPossibleTarget1"
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -67,11 +84,11 @@ class Waypoint2SelectedLogHelper(Waypoint2LogHelper):
         from org.allbinary.game.layer.WaypointBehaviorBase import WaypointBehaviorBase
         from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
         from org.allbinary.logic.string.StringMaker import StringMaker
-        if waypointBehaviorBase.isWaypointListEmptyOrOnlyTargets() and waypointBehaviorBase.isInSensorRange(layerInterface, anotherTargetDistance):
+        if java_predicate(waypointBehaviorBase, "isWaypointListEmptyOrOnlyTargets") and waypointBehaviorBase.isInSensorRange(layerInterface, anotherTargetDistance):
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.append(associatedAdvancedRTSGameLayer.getName())
             stringBuffer.append(self.ONLY_TARGETS)
-            stringBuffer.appendboolean(waypointBehaviorBase.isWaypointListEmptyOrOnlyTargets())
+            stringBuffer.appendboolean(java_predicate(waypointBehaviorBase, "isWaypointListEmptyOrOnlyTargets"))
             stringBuffer.append(self.SHORTER_THAN_CURRENT_TARGET_DISTANCE)
             stringBuffer.appendboolean(isShorterThanCurrentTargetDistance)
             stringBuffer.append(self.CURRENT_TARGET_DESTROYED)
@@ -159,9 +176,9 @@ class Waypoint2SelectedLogHelper(Waypoint2LogHelper):
         stringBuffer.append(" Target: ")
         stringBuffer.append(self.stringUtil.toString(waypointBehaviorBase.getCurrentTargetLayerInterface()))
         stringBuffer.append(" isTrackingWaypoint: ")
-        stringBuffer.appendboolean(waypointBehaviorBase.isTrackingWaypoint())
+        stringBuffer.appendboolean(java_predicate(waypointBehaviorBase, "isTrackingWaypoint"))
         stringBuffer.append(" WaypointOverridesAttacking: ")
-        stringBuffer.appendboolean(waypointBehaviorBase.isWaypointOverridesAttacking())
+        stringBuffer.appendboolean(java_predicate(waypointBehaviorBase, "isWaypointOverridesAttacking"))
         self.logUtil.putF(str(stringBuffer), self, "selected: processWaypoint")
     
 

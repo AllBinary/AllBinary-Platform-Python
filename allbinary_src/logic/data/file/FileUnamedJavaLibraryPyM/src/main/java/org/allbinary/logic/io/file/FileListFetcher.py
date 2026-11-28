@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.System import System
 import traceback
 from java.lang.JavaRuntimeStatic import lazy_static
 
@@ -27,7 +28,7 @@ class FileListFetcher:
         self.subDirectory: SubDirectory = SubDirectory.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -36,6 +37,7 @@ class FileListFetcher:
     
 
     def getFiles_j1(self, path: str) -> BasicArrayList:
+        from org.allbinary.logic.io.file.AbFile import AbFile
         from org.allbinary.util.BasicArrayList import BasicArrayList
         try:
             files: BasicArrayList = self.subDirectory.search(AbFile.createAbFile(path))
@@ -48,6 +50,7 @@ class FileListFetcher:
 
     # Java overloaded method with the same parameter count: Python keeps the last definition
     def getFiles_j2_1(self, path: str, includeExtensions: list[str]) -> BasicArrayList:
+        from org.allbinary.logic.io.file.AbFile import AbFile
         from org.allbinary.logic.io.file.directory.DirectoryOrIncludeFileExtensionBooleanFileVisitor import DirectoryOrIncludeFileExtensionBooleanFileVisitor
         from org.allbinary.logic.io.file.filter.VisitorFileFilter import VisitorFileFilter
         from org.allbinary.util.BasicArrayList import BasicArrayList
@@ -68,6 +71,7 @@ class FileListFetcher:
 
     # Java overloaded method with the same parameter count: Python keeps the last definition
     def getFiles_j2_2(self, path: str, includeExtension: str) -> BasicArrayList:
+        from org.allbinary.logic.io.file.AbFile import AbFile
         from org.allbinary.logic.io.file.directory.DirectoryOrIncludeFileExtensionBooleanFileVisitor import DirectoryOrIncludeFileExtensionBooleanFileVisitor
         from org.allbinary.logic.io.file.filter.VisitorFileFilter import VisitorFileFilter
         from org.allbinary.util.BasicArrayList import BasicArrayList
@@ -85,6 +89,7 @@ class FileListFetcher:
     
 
     def getFiles_j3(self, path: str, pathIncludes: str, includeExtension: str) -> BasicArrayList:
+        from org.allbinary.logic.io.file.AbFile import AbFile
         from org.allbinary.logic.io.file.directory.DirectoryOrIncludeFileExtensionBooleanFileVisitor import DirectoryOrIncludeFileExtensionBooleanFileVisitor
         from org.allbinary.logic.io.file.filter.VisitorFileFilter import VisitorFileFilter
         from org.allbinary.util.BasicArrayList import BasicArrayList
@@ -102,14 +107,17 @@ class FileListFetcher:
 
     def getFiles(self, *args):
         if len(args) == 2 and True and (args[0] is None or isinstance(args[0], str)) and (args[1] is None or isinstance(args[1], list)):
-            return self.getFiles_j2_1(*args)
+            return __class__.__dict__["getFiles_j2_1"].__get__(self, __class__)(*args)
         if len(args) == 2:
-            return self.getFiles_j2_2(*args)
-        return getattr(self, "getFiles_j" + str(len(args)))(*args)
+            return __class__.__dict__["getFiles_j2_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("getFiles_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getFiles(*args)
     
 
     # Java overloaded method with the same parameter count: Python keeps the last definition
     def getTrackedFiles_j2_1(self, path: str, includeExtensions: list[str]) -> BasicArrayList:
+        from org.allbinary.logic.io.file.AbFile import AbFile
         from org.allbinary.logic.io.file.directory.DirectoryOrIncludeFileExtensionAndTrackedBooleanFileVisitor import DirectoryOrIncludeFileExtensionAndTrackedBooleanFileVisitor
         from org.allbinary.logic.io.file.filter.VisitorFileFilter import VisitorFileFilter
         from org.allbinary.util.BasicArrayList import BasicArrayList
@@ -130,6 +138,7 @@ class FileListFetcher:
 
     # Java overloaded method with the same parameter count: Python keeps the last definition
     def getTrackedFiles_j2_2(self, path: str, includeExtension: str) -> BasicArrayList:
+        from org.allbinary.logic.io.file.AbFile import AbFile
         from org.allbinary.logic.io.file.directory.DirectoryOrIncludeFileExtensionAndTrackedBooleanFileVisitor import DirectoryOrIncludeFileExtensionAndTrackedBooleanFileVisitor
         from org.allbinary.logic.io.file.filter.VisitorFileFilter import VisitorFileFilter
         from org.allbinary.util.BasicArrayList import BasicArrayList
@@ -147,13 +156,16 @@ class FileListFetcher:
 
     def getTrackedFiles(self, *args):
         if len(args) == 2 and True and (args[0] is None or isinstance(args[0], str)) and (args[1] is None or isinstance(args[1], list)):
-            return self.getTrackedFiles_j2_1(*args)
+            return __class__.__dict__["getTrackedFiles_j2_1"].__get__(self, __class__)(*args)
         if len(args) == 2:
-            return self.getTrackedFiles_j2_2(*args)
-        return getattr(self, "getTrackedFiles_j" + str(len(args)))(*args)
+            return __class__.__dict__["getTrackedFiles_j2_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("getTrackedFiles_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getTrackedFiles(*args)
     
 
     def getDirectories(self, path: str) -> BasicArrayList:
+        from org.allbinary.logic.io.file.AbFile import AbFile
         from org.allbinary.logic.io.file.directory.DirectoryBooleanFileVisitor import DirectoryBooleanFileVisitor
         from org.allbinary.logic.io.file.filter.VisitorFileFilter import VisitorFileFilter
         from org.allbinary.util.BasicArrayList import BasicArrayList

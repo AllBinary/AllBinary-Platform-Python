@@ -15,12 +15,19 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.input.GameKeyEventSourceInterface import GameKeyEventSourceInterface
 from org.allbinary.game.input.Input import Input
 
 
+@java_inherited_overloads
 class TouchButtonInput(*java_bases(Input, GameKeyEventSourceInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("gameKeyEventFactory", None)
+        vars(self).setdefault("TOUCH_BUTTON_SOURCE_ID", 0)
+        vars(self).setdefault("gameKeyEvent", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
@@ -33,9 +40,10 @@ class TouchButtonInput(*java_bases(Input, GameKeyEventSourceInterface)):
     
 
     def __init__(self, id: int, name: str) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.input.InputFactory import InputFactory
         super().__init__(id, name)
-        self._init_fields()
+        __class__._init_fields(self)
         inputFactory: InputFactory = InputFactory.getInstance()
         inputFactory.add(self.getId(), self)
     

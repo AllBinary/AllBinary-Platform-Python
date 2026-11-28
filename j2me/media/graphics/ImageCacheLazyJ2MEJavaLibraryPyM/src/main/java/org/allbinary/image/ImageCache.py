@@ -16,15 +16,22 @@
 from __future__ import annotations
 
 import time
+from java.lang.JavaMonitor import java_monitor, java_wait
+from java.lang.JavaRuntimeStatic import java_new_inner
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.canvas.Processor import Processor
 from org.allbinary.image.ImageCacheBase import ImageCacheBase
 
 
+@java_inherited_overloads
 class ImageCache(ImageCacheBase):
     NULL_IMAGE_CACHE: ImageCache = None
     _lock = threading.RLock()
+    @java_inherited_overloads
     class NotHTMLProcessor(Processor):
 
         def __init__(self) -> None:
@@ -32,7 +39,8 @@ class ImageCache(ImageCacheBase):
         
 
         def process(self) -> None:
-            self.concurrentImageLoadingProcessor.runTask()
+            self._java_outer.concurrentImageLoadingProcessor.runTask()
+    @java_inherited_overloads
     class NotHTMLEndProcessor(Processor):
 
         def __init__(self) -> None:
@@ -44,6 +52,7 @@ class ImageCache(ImageCacheBase):
             from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
             progressCanvas: ProgressCanvas = ProgressCanvasFactory.getInstance()
             progressCanvas.endIfPaintedSinceStart()
+    @java_inherited_overloads
     class HTMLEndProcessor(Processor):
 
         def __init__(self) -> None:
@@ -53,14 +62,15 @@ class ImageCache(ImageCacheBase):
         def process(self) -> None:
             from org.allbinary.graphics.canvas.transition.progress.ProgressCanvas import ProgressCanvas
             from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
-            size: int = self.gdResources.currentLayoutRequiredTotal
+            size: int = self._java_outer.gdResources.currentLayoutRequiredTotal
             if size == 0:
                 progressCanvas: ProgressCanvas = ProgressCanvasFactory.getInstance()
                 progressCanvas.endIfPaintedSinceStart()
-            elif self.totalLoaded > int(size / 12):
+            elif self._java_outer.totalLoaded > int(size / 12):
                 progressCanvas: ProgressCanvas = ProgressCanvasFactory.getInstance()
                 progressCanvas.endIfPaintedSinceStart()
-                self.endProcessor = ImageCache.NotHTMLEndProcessor()
+                self._java_outer.endProcessor = java_new_inner(self, ImageCache.NotHTMLEndProcessor)
+    @java_inherited_overloads
     class FirstProcessor(Processor):
 
         def __init__(self) -> None:
@@ -68,7 +78,27 @@ class ImageCache(ImageCacheBase):
         
 
         def process(self) -> None:
-            self.firstProcess()
+            self._java_outer.firstProcess()
+    def _java_defaults(self):
+        vars(self).setdefault("tsUtil", None)
+        vars(self).setdefault("concurrentImageLoadingProcessor", None)
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("commonSeps", None)
+        vars(self).setdefault("resourceUtil", None)
+        vars(self).setdefault("gameGlobalsFactory", None)
+        vars(self).setdefault("gdResources", None)
+        vars(self).setdefault("loadNowList", None)
+        vars(self).setdefault("loadSoonList", None)
+        vars(self).setdefault("loadList", None)
+        vars(self).setdefault("loadAfterList", None)
+        vars(self).setdefault("lock", None)
+        vars(self).setdefault("firstTime", False)
+        vars(self).setdefault("totalLoaded", 0)
+        vars(self).setdefault("progressEnded", False)
+        vars(self).setdefault("hasAnyLazyAnimationFactories", False)
+        vars(self).setdefault("processor", None)
+        vars(self).setdefault("endProcessor", None)
+        vars(self).setdefault("LOAD_IMAGE_FOR_ANIMATION", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.TsUtil import TsUtil
@@ -77,10 +107,8 @@ class ImageCache(ImageCacheBase):
         from org.allbinary.data.resource.ResourceUtil import ResourceUtil
         from org.allbinary.game.gd.resource.GDResources import GDResources
         from org.allbinary.string.CommonSeps import CommonSeps
-        from org.allbinary.thread.BaseImageLoadingProcessor import BaseImageLoadingProcessor
         from org.allbinary.thread.ConcurrentImageLoadingProcessor import ConcurrentImageLoadingProcessor
         from org.allbinary.thread.SynchObject import SynchObject
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.tsUtil: TsUtil = TsUtil.getInstance()
         self.concurrentImageLoadingProcessor: BaseImageLoadingProcessor = ConcurrentImageLoadingProcessor(self)
@@ -98,27 +126,28 @@ class ImageCache(ImageCacheBase):
         self.totalLoaded: int = 0
         self.progressEnded: bool = False
         self.hasAnyLazyAnimationFactories: bool = False
-        self.processor: Processor = FirstProcessor()
+        self.processor: Processor = java_new_inner(self, FirstProcessor)
         self.endProcessor: Processor = Processor.getInstance()
         self.LOAD_IMAGE_FOR_ANIMATION: str = "Load Image Animation"
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def firstProcess(self) -> None:
         from org.allbinary.J2MEUtil import J2MEUtil
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         logUtil: LogUtil = LogUtil.getInstance()
-        isHTML: bool = J2MEUtil.isHTML()
+        isHTML: bool = java_predicate(J2MEUtil, "isHTML")
         if isHTML:
             self.processor = Processor.getInstance()
-            self.endProcessor = ImageCache.HTMLEndProcessor()
+            self.endProcessor = java_new_inner(self, ImageCache.HTMLEndProcessor)
         else:
-            self.processor = ImageCache.NotHTMLProcessor()
-            self.endProcessor = ImageCache.NotHTMLEndProcessor()
+            self.processor = java_new_inner(self, ImageCache.NotHTMLProcessor)
+            self.endProcessor = java_new_inner(self, ImageCache.NotHTMLEndProcessor)
             try:
                 self.runTask()
             except Exception as e:
@@ -136,7 +165,7 @@ class ImageCache(ImageCacheBase):
         if self.firstTime:
             abToGBUtil: ABToGBUtil = ABToGBUtil.getInstance()
             abCanvas: AllBinaryGameCanvas = abToGBUtil.abCanvas
-            while self.loadNowList.isEmpty() and (not abCanvas.isInitialized() or (abCanvas.isInitialized() and self.hasAnyLazyAnimationFactories)) and not self.progressEnded:
+            while java_predicate(self.loadNowList, "isEmpty") and (not (java_predicate(abCanvas, "isInitialized")) or (java_predicate(abCanvas, "isInitialized") and self.hasAnyLazyAnimationFactories)) and not (self.progressEnded):
                 time.sleep((120) / 1000)
             self.firstTime = False
     
@@ -149,11 +178,11 @@ class ImageCache(ImageCacheBase):
         from org.allbinary.graphics.canvas.transition.progress.ProgressCanvasFactory import ProgressCanvasFactory
         from org.allbinary.util.BasicArrayList import BasicArrayList
         lazyImageRotationAnimation: LazyImageRotationAnimation = None
-        with self._lock:  # synchronized (self.lock)
-            if self.loadNowList.isEmpty():
+        with java_monitor(self.lock):
+            if java_predicate(self.loadNowList, "isEmpty"):
                 self.endProcessor.process()
-                if self.loadSoonList.isEmpty():
-                    if self.loadAfterList.isEmpty():
+                if java_predicate(self.loadSoonList, "isEmpty"):
+                    if java_predicate(self.loadAfterList, "isEmpty"):
                         if self.firstTime:
                             pass
                         elif self.gameGlobalsFactory.newCanvas:
@@ -172,17 +201,17 @@ class ImageCache(ImageCacheBase):
                 return
             lazyImageRotationAnimation = self.loadNowList.get(0)
         if self.loadImageForLazyAnimation(lazyImageRotationAnimation):
-            with self._lock:  # synchronized (self.lock)
+            with java_monitor(self.lock):
                 self.loadNowList.remove(lazyImageRotationAnimation)
             if lazyImageRotationAnimation.layoutIndex != 0:
                 list_: BasicArrayList = self.getAssociated(lazyImageRotationAnimation)
-                with self._lock:  # synchronized (self.lock)
+                with java_monitor(self.lock):
                     size: int = list_.size()
                     if size > 0:
                         self.loadSoonList.addAllList(list_)
             progressCanvas: ProgressCanvas = ProgressCanvasFactory.getInstance()
-            isHTML: bool = J2MEUtil.isHTML()
-            if self.loadNowList.isEmpty() and (not isHTML or self.firstTime):
+            isHTML: bool = java_predicate(J2MEUtil, "isHTML")
+            if java_predicate(self.loadNowList, "isEmpty") and (not (isHTML) or self.firstTime):
                 progressCanvas.endFromInitialLazyLoadingComplete()
             else:
                 if self.totalLoaded % 10 == 0:
@@ -191,26 +220,26 @@ class ImageCache(ImageCacheBase):
 
     # throws Exception
     def loadImages(self) -> None:
-        while not self.loadList.isEmpty() or not self.loadNowList.isEmpty():
+        while not (java_predicate(self.loadList, "isEmpty")) or not (java_predicate(self.loadNowList, "isEmpty")):
             self.loadImageForAnimations()
             self.loadNextImage()
     
 
     # throws Exception
     def loadImageForAnimations(self) -> None:
-        while not self.loadNowList.isEmpty():
+        while not (java_predicate(self.loadNowList, "isEmpty")):
             self.loadImageForAnimation()
     
 
     # throws Exception
     def loadRemainingAnimations(self) -> None:
         from org.allbinary.animation.image.LazyImageRotationAnimation import LazyImageRotationAnimation
-        while not self.loadAfterList.isEmpty() or not self.loadNowList.isEmpty():
-            while not self.loadNowList.isEmpty():
+        while not (java_predicate(self.loadAfterList, "isEmpty")) or not (java_predicate(self.loadNowList, "isEmpty")):
+            while not (java_predicate(self.loadNowList, "isEmpty")):
                 self.loadImageForAnimation()
             lazyImageRotationAnimation: LazyImageRotationAnimation = None
-            with self._lock:  # synchronized (self.lock)
-                if not self.loadAfterList.isEmpty():
+            with java_monitor(self.lock):
+                if not (java_predicate(self.loadAfterList, "isEmpty")):
                     lazyImageRotationAnimation = self.loadAfterList.removeAt(0)
             if lazyImageRotationAnimation is not None:
                 self.loadImageForLazyAnimation(lazyImageRotationAnimation)
@@ -231,7 +260,7 @@ class ImageCache(ImageCacheBase):
     def loadNextImage(self) -> None:
         from javax.microedition.lcdui.Image import Image
         image: Image = None
-        with self._lock:  # synchronized (self.lock)
+        with java_monitor(self.lock):
             if self.loadList.size() == 0:
                 return
             image = self.loadList.removeAt(0)
@@ -241,18 +270,18 @@ class ImageCache(ImageCacheBase):
     # throws Exception
     def loadImage(self, image: Image) -> bool:
         from javax.microedition.lcdui.Image import Image
-        if image.isReady():
+        if java_predicate(image, "isReady"):
             return True
         else:
             if image.getImage() is not None:
                 if image.setReady():
-                    if image.isReady():
+                    if java_predicate(image, "isReady"):
                         self.totalLoaded += 1
                         return True
             else:
                 key: str = image.getName()
                 image2: Image = self.creatImage(key)
-                if image2.isReady():
+                if java_predicate(image2, "isReady"):
                     self.init(image, image2)
                     return True
                 else:
@@ -268,6 +297,7 @@ class ImageCache(ImageCacheBase):
 
     # throws Exception
     def creatImage(self, key: str) -> Image:
+        from org.allbinary.image.ImageFactory import ImageFactory
         from java.io.InputStream import InputStream
         from javax.microedition.lcdui.Image import Image
         inputStream: InputStream = self.resourceUtil.getResourceAsStream(key)
@@ -353,7 +383,7 @@ class ImageCache(ImageCacheBase):
         width: int = gdLazyResources.imageResourceWidthArray[index]
         height: int = gdLazyResources.imageResourceHeightArray[index]
         image: Image = self.createImageLater(key, width, height)
-        with self._lock:  # synchronized (self.lock)
+        with java_monitor(self.lock):
             self.loadList.add(image)
         return image
     
@@ -369,7 +399,7 @@ class ImageCache(ImageCacheBase):
         from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         list_: BasicArrayList = BasicArrayListD()
-        with self._lock:  # synchronized (self.lock)
+        with java_monitor(self.lock):
             lazyImageRotationAnimation2: LazyImageRotationAnimation = None
             size: int = self.loadAfterList.size()
             for index in range(0, size):
@@ -384,7 +414,7 @@ class ImageCache(ImageCacheBase):
 
     def add(self, lazyImageRotationAnimation: LazyImageRotationAnimation) -> None:
         from org.allbinary.animation.image.LazyImageRotationAnimation import LazyImageRotationAnimation
-        with self._lock:  # synchronized (self.lock)
+        with java_monitor(self.lock):
             self.loadAfterList.add(lazyImageRotationAnimation)
     
 
@@ -394,7 +424,7 @@ class ImageCache(ImageCacheBase):
         if self.loadNowList.contains(lazyImageRotationAnimation):
             pass
         else:
-            with self._lock:  # synchronized (self.lock)
+            with java_monitor(self.lock):
                 self.loadNowList.add(lazyImageRotationAnimation)
                 self.loadAfterList.remove(lazyImageRotationAnimation)
         self.runTask()

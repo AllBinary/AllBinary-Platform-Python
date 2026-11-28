@@ -15,29 +15,41 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 from views.business.context.modules.storefront.HttpStoreComponentView import HttpStoreComponentView
 
 
+@java_inherited_overloads
 class OrderHistoryView(*java_bases(HttpStoreComponentView, DomNodeInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("request", None)
+        vars(self).setdefault("shipped", None)
+        vars(self).setdefault("partiallyShipped", None)
+        vars(self).setdefault("processing", None)
+        vars(self).setdefault("preprocessing", None)
+        vars(self).setdefault("cancelled", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.request: HttpServletRequest = None
-        self.shipped: str = None
-        self.partiallyShipped: str = None
-        self.processing: str = None
-        self.preprocessing: str = None
-        self.cancelled: str = None
+        if "request" not in vars(self): self.request: HttpServletRequest = None
+        if "shipped" not in vars(self): self.shipped: str = None
+        if "partiallyShipped" not in vars(self): self.partiallyShipped: str = None
+        if "processing" not in vars(self): self.processing: str = None
+        if "preprocessing" not in vars(self): self.preprocessing: str = None
+        if "cancelled" not in vars(self): self.cancelled: str = None
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.user.commerce.inventory.order.OrderHistoryData import OrderHistoryData
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
         self.request = self.getPageContext().getRequest()
         self.preprocessing = self.request.getParameter(OrderHistoryData.PREPROCESSINGNAME)
         self.shipped = self.request.getParameter(OrderHistoryData.SHIPPEDNAME)
@@ -94,7 +106,7 @@ class OrderHistoryView(*java_bases(HttpStoreComponentView, DomNodeInterface)):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             self.addDomNodeInterfaces()
-            return super().view()
+            return java_super_call(super(), "view")
         except Exception as e:
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().TAGHELPERERROR):
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "view()", e)

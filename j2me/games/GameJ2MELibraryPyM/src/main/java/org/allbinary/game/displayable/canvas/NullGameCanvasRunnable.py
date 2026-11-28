@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaThread import JavaThread
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.displayable.canvas.GameCanvasRunnableInterface import GameCanvasRunnableInterface
@@ -28,7 +29,7 @@ class NullGameCanvasRunnable(GameCanvasRunnableInterface):
         self.gameStateFactory: GameStateFactory = GameStateFactory.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getTitle(self) -> str:
@@ -134,7 +135,7 @@ class NullGameCanvasRunnable(GameCanvasRunnableInterface):
     
 
     # throws Exception
-    def setThread(self, thread: threading.Thread) -> None:
+    def setThread(self, thread: JavaThread) -> None:
         pass
     
 

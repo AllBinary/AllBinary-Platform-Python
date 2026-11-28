@@ -26,9 +26,9 @@ class ShapeTypeFactory:
         self.KEY_CIRCLE: str = "circle"
         self.KEY_RECTANGLE: str = "rectangle"
         self.KEY_RECT: str = "rect"
-        self.LINE: ShapeType = None
-        self.CIRCLE: ShapeType = None
-        self.RECTANGLE: ShapeType = None
+        if "LINE" not in vars(self): self.LINE: ShapeType = None
+        if "CIRCLE" not in vars(self): self.CIRCLE: ShapeType = None
+        if "RECTANGLE" not in vars(self): self.RECTANGLE: ShapeType = None
     
 
     @staticmethod
@@ -40,7 +40,7 @@ class ShapeTypeFactory:
         from org.allbinary.animation.ShapeType import ShapeType
         from org.allbinary.animation.ShapeType import ShapeType
         from org.allbinary.animation.ShapeType import ShapeType
-        self._init_fields()
+        __class__._init_fields(self)
         self.LINE = ShapeType(self.KEY_LINE)
         self.CIRCLE = ShapeType(self.KEY_CIRCLE)
         self.RECTANGLE = ShapeType(self.KEY_RECTANGLE)

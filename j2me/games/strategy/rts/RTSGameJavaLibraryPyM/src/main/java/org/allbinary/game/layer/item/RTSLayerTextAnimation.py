@@ -15,27 +15,34 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.Animation import Animation
 from org.allbinary.graphics.font.UpdateMyFontInterface import UpdateMyFontInterface
 
 
+@java_inherited_overloads
 class RTSLayerTextAnimation(*java_bases(Animation, UpdateMyFontInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("image", None)
+        vars(self).setdefault("text", None)
+        vars(self).setdefault("myFontProcessor", None)
+        vars(self).setdefault("fontHeight", 0)
 
     def _init_fields(self) -> None:
-        from javax.microedition.lcdui.Image import Image
-        from org.allbinary.graphics.font.MyFontProcessor import MyFontProcessor
         from org.allbinary.graphics.font.UpdateMyFontProcessor import UpdateMyFontProcessor
-        self.image: Image = None
-        self.text: str = None
+        if "image" not in vars(self): self.image: Image = None
+        if "text" not in vars(self): self.text: str = None
         self.myFontProcessor: MyFontProcessor = UpdateMyFontProcessor(self)
         self.fontHeight: int = 0
     
 
     def __init__(self, text: str, image: Image) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.Image import Image
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.text = text
         self.image = image
     
@@ -52,7 +59,7 @@ class RTSLayerTextAnimation(*java_bases(Animation, UpdateMyFontInterface)):
     def paintXY(self, graphics: Graphics, x: int, y: int) -> None:
         from javax.microedition.lcdui.Graphics import Graphics
         self.myFontProcessor.process(graphics)
-        super().paintXY(graphics, x, y)
+        java_super_call(super(), "paintXY", graphics, x, y)
         adjustedCostY: int = self.image.getHeight() - self.fontHeight
         graphics.drawString(self.text, x, y + adjustedCostY, 0)
 # from javax.microedition.lcdui.Font import Font

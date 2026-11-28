@@ -25,13 +25,13 @@ class OpenGLESImageProperties:
         self.scaleY: float = 1.0
         self.scaleX2: float = 1.0
         self.scaleY2: float = 1.0
-        self.angle: int = 0
+        if "angle" not in vars(self): self.angle: int = 0
         self.redf: float = 1.0
         self.greenf: float = 1.0
         self.bluef: float = 1.0
         self.alphaf: float = 1.0
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
 
 

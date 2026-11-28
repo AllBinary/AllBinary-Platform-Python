@@ -24,17 +24,16 @@ class AngleFactory:
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
-        from jsinterop.annotations.JsProperty import JsProperty
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.TOTAL_ANGLE: int = 360
         self.QUARTER_TOTAL_ANGLE: int = 90
         self.angleArray: list[Angle] = [None] * (self.TOTAL_ANGLE)
         self.NEGATIVE_ONE: int = ((int(-1) + 32768) % 65536 - 32768)
         self.NOT_ANGLE: NamedAngle = NamedAngle(self.NEGATIVE_ONE, CommonStrings.getInstance().EMPTY)
-        self.DOWN: NamedAngle = None
-        self.UP: NamedAngle = None
-        self.LEFT: NamedAngle = None
-        self.RIGHT: NamedAngle = None
+        if "DOWN" not in vars(self): self.DOWN: NamedAngle = None
+        if "UP" not in vars(self): self.UP: NamedAngle = None
+        if "LEFT" not in vars(self): self.LEFT: NamedAngle = None
+        if "RIGHT" not in vars(self): self.RIGHT: NamedAngle = None
         self.frameUtil: FrameUtil = FrameUtil.getInstance()
     
 
@@ -55,7 +54,7 @@ class AngleFactory:
         from org.allbinary.math.Angle import Angle
         from org.allbinary.string.CommonPhoneStrings import CommonPhoneStrings
         from jsinterop.annotations.JsConstructor import JsConstructor
-        self._init_fields()
+        __class__._init_fields(self)
         commonPhoneStrings: CommonPhoneStrings = CommonPhoneStrings.getInstance()
         total: int = ((int(len(self.angleArray)) + 32768) % 65536 - 32768)
         self.UP = NamedAngle(((int(0) + 32768) % 65536 - 32768), commonPhoneStrings.UP)

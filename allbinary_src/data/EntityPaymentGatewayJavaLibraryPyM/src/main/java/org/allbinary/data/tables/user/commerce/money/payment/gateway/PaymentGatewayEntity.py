@@ -15,13 +15,19 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import datetime
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.communication.sql.AbSqlBean import AbSqlBean
 from org.allbinary.data.tables.user.commerce.money.payment.gateway.PaymentGatewayEntityInterface import PaymentGatewayEntityInterface
 
 
+@java_inherited_overloads
 class PaymentGatewayEntity(*java_bases(AbSqlBean, PaymentGatewayEntityInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("tableName", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -30,11 +36,12 @@ class PaymentGatewayEntity(*java_bases(AbSqlBean, PaymentGatewayEntityInterface)
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.init.db.UserDbInitInfo import UserDbInitInfo
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         super().__init__(UserDbInitInfo())
-        self._init_fields()
+        __class__._init_fields(self)
         self.setTableName(self.tableName)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
             self.logUtil.putF(self.commonStrings.CONSTRUCTOR, self, self.commonStrings.CONSTRUCTOR)
@@ -58,7 +65,7 @@ class PaymentGatewayEntity(*java_bases(AbSqlBean, PaymentGatewayEntityInterface)
             time: str = str(str(int(calendar.getTimeInMillis())))
             vector.add(time)
             vector.add(time)
-            super().insert(vector)
+            java_super_call(super(), "insert", vector)
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.END, self, "add")
         except Exception as e:
@@ -86,7 +93,7 @@ class PaymentGatewayEntity(*java_bases(AbSqlBean, PaymentGatewayEntityInterface)
             if whereKeyValuePairs.get(EntryData.getInstance().TIMECREATED) is not None:
                 raise Exception("Don't update TimeCreated for update")
             updateHashMap: HashMap = PaymentGatewayEncryptedMapping(paymentGatewayInterface).toHashMap()
-            super().updateWhere(whereKeyValuePairs, updateHashMap)
+            java_super_call(super(), "updateWhere", whereKeyValuePairs, updateHashMap)
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, "update")
         except Exception as e:
@@ -111,7 +118,7 @@ class PaymentGatewayEntity(*java_bases(AbSqlBean, PaymentGatewayEntityInterface)
             whereKeyAndValue: HashMap = StdUtil.getInstance().createHashMap()
             whereKeyAndValue.put(str(StoreFrontData.getInstance().NAME), storeName)
             whereKeyAndValue.put(str(PaymentGatewayData.NAME), paymentType.getName())
-            paymentGatewayHashMap = super().getRow(whereKeyAndValue)
+            paymentGatewayHashMap = java_super_call(super(), "getRow", whereKeyAndValue)
             if paymentGatewayHashMap is not None:
                 userName: str = paymentGatewayHashMap.get(str(UserData.USERNAME))
                 password: str = paymentGatewayHashMap.get(str(UserData.PASSWORD))
@@ -159,7 +166,7 @@ class PaymentGatewayEntity(*java_bases(AbSqlBean, PaymentGatewayEntityInterface)
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             paymentGatewayNameVector: BasicArrayList = BasicArrayListD()
-            paymentGatewayNameVector = super().getColumnWhere(str(PaymentGatewayData.NAME), str(StoreFrontData.getInstance().NAME), storeName)
+            paymentGatewayNameVector = java_super_call(super(), "getColumnWhere", str(PaymentGatewayData.NAME), str(StoreFrontData.getInstance().NAME), storeName)
             if paymentGatewayNameVector is not None:
                 paymentGatewayVector: BasicArrayList = BasicArrayListD()
                 size: int = paymentGatewayNameVector.size()
@@ -190,7 +197,7 @@ class PaymentGatewayEntity(*java_bases(AbSqlBean, PaymentGatewayEntityInterface)
             whereHashMap: HashMap = StdUtil.getInstance().createHashMap()
             whereHashMap.put(str(StoreFrontData.getInstance().NAME), storeName)
             whereHashMap.put(str(PaymentGatewayData.NAME), paymentType.getName())
-            super().deleteWhere(whereHashMap)
+            java_super_call(super(), "deleteWhere", whereHashMap)
             if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGING):
                 self.logUtil.putF(self.commonStrings.SUCCESS, self, "remove")
         except Exception as e:
@@ -286,11 +293,11 @@ class PaymentGatewayEntity(*java_bases(AbSqlBean, PaymentGatewayEntityInterface)
     
 
     def createTable(self) -> str:
-        return super().createTable(self.createTableStatement())
+        return java_super_call(super(), "createTable", self.createTableStatement())
     
 
     def dropTable(self) -> str:
-        return super().dropTable()
+        return java_super_call(super(), "dropTable")
 # from java.util.Calendar import Calendar
 # from java.util.HashMap import HashMap
 # from org.allbinary.util.BasicArrayList import BasicArrayList

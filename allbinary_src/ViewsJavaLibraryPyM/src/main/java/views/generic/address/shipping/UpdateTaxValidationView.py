@@ -15,11 +15,15 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.control.validate.ValidationComponentInterface import ValidationComponentInterface
 from views.generic.address.shipping.ShippingAddressView import ShippingAddressView
 
 
+@java_inherited_overloads
 class UpdateTaxValidationView(*java_bases(ShippingAddressView, ValidationComponentInterface)):
     
 
@@ -74,7 +78,7 @@ class UpdateTaxValidationView(*java_bases(ShippingAddressView, ValidationCompone
     # throws Exception
     def getTransformInfoInterface(self) -> TransformInfoInterface:
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-        return super().getTransformInfoInterface()
+        return java_super_call(super(), "getTransformInfoInterface")
 # from org.allbinary.util.BasicArrayList import BasicArrayList
 # from org.allbinary.util.BasicArrayListD import BasicArrayListD
 # from org.allbinary.business.context.modules.storefront.StoreFrontFactory import StoreFrontFactory

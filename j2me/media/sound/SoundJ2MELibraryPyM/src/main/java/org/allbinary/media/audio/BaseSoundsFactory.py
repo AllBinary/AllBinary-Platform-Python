@@ -21,10 +21,10 @@ from org.allbinary.media.audio.SoundsFactoryInterface import SoundsFactoryInterf
 class BaseSoundsFactory(SoundsFactoryInterface):
 
     def _init_fields(self) -> None:
-        self.initialized: bool = False
+        if "initialized" not in vars(self): self.initialized: bool = False
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def init(self) -> None:

@@ -40,7 +40,7 @@ class GameInputStrings:
         self.ENABLE_PLAYER_GAME_INPUT: str = "Enabling PlayerGameInput: "
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

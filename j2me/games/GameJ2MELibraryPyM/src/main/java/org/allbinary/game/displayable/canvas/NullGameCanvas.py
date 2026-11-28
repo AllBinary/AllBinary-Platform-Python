@@ -15,16 +15,21 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.displayable.canvas.AllBinaryGameCanvas import AllBinaryGameCanvas
 
 
+@java_inherited_overloads
 class NullGameCanvas(AllBinaryGameCanvas):
     instance: object = None
     NO_GAME: str = "No Background Game"
     TYPE: int = 1
     _lock = threading.RLock()
+    def _java_defaults(self):
+        vars(self).setdefault("runningNull", False)
 
     def _init_fields(self) -> None:
         self.runningNull: bool = True
@@ -61,18 +66,19 @@ class NullGameCanvas(AllBinaryGameCanvas):
     
 
     def __init__(self, gameLayerManager: AllBinaryGameLayerManager) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.NullCommandListener import NullCommandListener
         from org.allbinary.game.init.BasicBuildGameInitializerFactory import BasicBuildGameInitializerFactory
         from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
         from org.allbinary.game.score.NoHighScoresFactory import NoHighScoresFactory
         super().__init__(NullCommandListener.NULL_COMMAND_LISTENER, gameLayerManager, NoHighScoresFactory.getInstance(), BasicBuildGameInitializerFactory.NULL_BASE_BUILD_GMAE_INITIALIZER_FACTORY, False)
-        self._init_fields()
-        super().setWait(1200)
+        __class__._init_fields(self)
+        java_super_call(super(), "setWait", 1200)
     
 
     def isGameOver(self) -> bool:
         with self._lock:
-            return self._isGameOver_unlocked()
+            return __class__.__dict__["_isGameOver_unlocked"].__get__(self, __class__)()
 
     def _isGameOver_unlocked(self) -> bool:
         return False
@@ -84,7 +90,7 @@ class NullGameCanvas(AllBinaryGameCanvas):
 
     def isRunning(self) -> bool:
         with self._lock:
-            return self._isRunning_unlocked()
+            return __class__.__dict__["_isRunning_unlocked"].__get__(self, __class__)()
 
     def _isRunning_unlocked(self) -> bool:
         return self.runningNull
@@ -92,7 +98,7 @@ class NullGameCanvas(AllBinaryGameCanvas):
 
     def pause(self) -> None:
         with self._lock:
-            return self._pause_unlocked()
+            return __class__.__dict__["_pause_unlocked"].__get__(self, __class__)()
 
     def _pause_unlocked(self) -> None:
         self.setPaused(True)
@@ -100,7 +106,7 @@ class NullGameCanvas(AllBinaryGameCanvas):
 
     def unPause(self) -> None:
         with self._lock:
-            return self._unPause_unlocked()
+            return __class__.__dict__["_unPause_unlocked"].__get__(self, __class__)()
 
     def _unPause_unlocked(self) -> None:
         self.setPaused(False)

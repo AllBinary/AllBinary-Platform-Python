@@ -15,10 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.input.motion.action.GameKeyCompleteMotionGestureInputEvent import GameKeyCompleteMotionGestureInputEvent
 
 
+@java_inherited_overloads
 class UpTouchInputToGameKeyEventAction(GameKeyCompleteMotionGestureInputEvent):
     instance: object = None
     

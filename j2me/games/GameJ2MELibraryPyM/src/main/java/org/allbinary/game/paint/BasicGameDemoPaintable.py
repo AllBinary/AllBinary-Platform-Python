@@ -15,25 +15,32 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.graphics.paint.StatePaintable import StatePaintable
 
 
+@java_inherited_overloads
 class BasicGameDemoPaintable(StatePaintable):
+    def _java_defaults(self):
+        vars(self).setdefault("mainDemoStatePaintable", None)
+        vars(self).setdefault("ownershipPaintable", None)
+        vars(self).setdefault("helpPaintableInterface", None)
+        vars(self).setdefault("currentStatePaintable", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.graphics.paint.NullPaintable import NullPaintable
-        from org.allbinary.graphics.paint.Paintable import Paintable
-        self.mainDemoStatePaintable: Paintable = None
-        self.ownershipPaintable: Paintable = None
-        self.helpPaintableInterface: Paintable = None
+        if "mainDemoStatePaintable" not in vars(self): self.mainDemoStatePaintable: Paintable = None
+        if "ownershipPaintable" not in vars(self): self.ownershipPaintable: Paintable = None
+        if "helpPaintableInterface" not in vars(self): self.helpPaintableInterface: Paintable = None
         self.currentStatePaintable: Paintable = NullPaintable.getInstance()
     
 
     def __init__(self, mainDemoStatePaintable: Paintable, ownershipPaintable: Paintable, helpPaintableInterface: Paintable) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.paint.NullPaintable import NullPaintable
         from org.allbinary.graphics.paint.Paintable import Paintable
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.mainDemoStatePaintable = mainDemoStatePaintable
         self.setCurrentStatePaintable(NullPaintable.getInstance())
         self.ownershipPaintable = ownershipPaintable

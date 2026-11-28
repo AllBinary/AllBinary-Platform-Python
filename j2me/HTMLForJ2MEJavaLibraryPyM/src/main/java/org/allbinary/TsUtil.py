@@ -15,6 +15,9 @@
 
 from __future__ import annotations
 
+from java.lang.JavaMonitor import java_monitor, java_wait
+from java.lang.JavaRuntimeStatic import java_equals
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 
@@ -39,7 +42,7 @@ class TsUtil:
     
 
     def hashCode(self, anyType: object) -> int:
-        return hash(anyType)
+        return java_predicate(anyType, "hashCode")
     
 
     # throws InterruptedException
@@ -56,7 +59,7 @@ class TsUtil:
         from org.allbinary.logic.NullUtil import NullUtil
         recordStore: RecordStore = anyType
         data: list[int] = None
-        with self._lock:  # synchronized (self)
+        with java_monitor(self):
             data = [0] * (recordStore.getRecordSize(recordId))
             recordStore.getRecord(recordId, data, 0)
         return (NullUtil.getInstance().NULL_BYTE_ARRAY if len(data) < 1 else data)
@@ -71,7 +74,7 @@ class TsUtil:
     
 
     def equalsNotstring(self, anyType: object, object2: object) -> bool:
-        return anyType.equals(object2)
+        return java_equals(anyType, object2)
     
 
     def toNumberFromChar(self, value: str) -> int:

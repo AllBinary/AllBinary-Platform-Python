@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 
 
@@ -23,13 +24,12 @@ class UploadMediaSingleton:
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
-        from java.util.HashMap import HashMap
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.readerFileTypesHashMap: HashMap = None
-        self.writerFileTypesHashMap: HashMap = None
+        if "readerFileTypesHashMap" not in vars(self): self.readerFileTypesHashMap: HashMap = None
+        if "writerFileTypesHashMap" not in vars(self): self.writerFileTypesHashMap: HashMap = None
     
 
     def __init__(self) -> None:
@@ -42,7 +42,7 @@ class UploadMediaSingleton:
         from org.allbinary.logic.visual.media.MediaTypeData import MediaTypeData
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-        self._init_fields()
+        __class__._init_fields(self)
         self.readerFileTypesHashMap = StdUtil.getInstance().createHashMap()
         self.writerFileTypesHashMap = StdUtil.getInstance().createHashMap()
         hashMap: HashMap = MediaData.toHashMap()
@@ -118,7 +118,9 @@ class UploadMediaSingleton:
             return False
 
     def isMedia(self, *args):
-        return getattr(self, "isMedia_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("isMedia_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().isMedia(*args)
 # from java.util.HashMap import HashMap
 # from java.util.Set import Set
 # from org.allbinary.logic.StdUtil import StdUtil

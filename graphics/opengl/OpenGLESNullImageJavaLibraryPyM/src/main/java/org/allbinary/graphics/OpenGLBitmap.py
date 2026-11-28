@@ -3,18 +3,23 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.platform.graphics.PlatformBitmapBase import PlatformBitmapBase
 
 
+@java_inherited_overloads
 class OpenGLBitmap(PlatformBitmapBase):
+    def _java_defaults(self):
+        vars(self).setdefault("bitmap", None)
 
     def _init_fields(self) -> None:
-        self.bitmap: object = None
+        if "bitmap" not in vars(self): self.bitmap: object = None
     
 
     def __init__(self, bitmap: object) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.bitmap = bitmap
     
 

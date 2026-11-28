@@ -23,22 +23,16 @@ class HighScoreUtil(HighScoresResultsListener):
     SUBMIT_TEXTBOX_COMMAND: Command = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.GameInfo import GameInfo
-        from org.allbinary.game.score.HighScore import HighScore
-        from org.allbinary.game.score.HighScores import HighScores
-        from org.allbinary.game.score.HighScoresFactoryInterface import HighScoresFactoryInterface
-        from org.allbinary.game.score.HighScoresHelperBaseInterface import HighScoresHelperBaseInterface
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.highScoresFactoryInterface: HighScoresFactoryInterface = None
-        self.highScoresArray: list[HighScores] = None
-        self.highScore: HighScore = None
-        self.abeClientInformation: AbeClientInformationInterface = None
-        self.gameInfo: GameInfo = None
-        self.highScoresHelper: HighScoresHelperBaseInterface = None
+        if "highScoresFactoryInterface" not in vars(self): self.highScoresFactoryInterface: HighScoresFactoryInterface = None
+        if "highScoresArray" not in vars(self): self.highScoresArray: list[HighScores] = None
+        if "highScore" not in vars(self): self.highScore: HighScore = None
+        if "abeClientInformation" not in vars(self): self.abeClientInformation: AbeClientInformationInterface = None
+        if "gameInfo" not in vars(self): self.gameInfo: GameInfo = None
+        if "highScoresHelper" not in vars(self): self.highScoresHelper: HighScoresHelperBaseInterface = None
         self.firstTime: bool = True
     
 
@@ -49,7 +43,7 @@ class HighScoreUtil(HighScoresResultsListener):
         from org.allbinary.game.score.HighScoresFactoryInterface import HighScoresFactoryInterface
         from org.allbinary.game.score.HighScoresHelperBaseInterface import HighScoresHelperBaseInterface
         from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
-        self._init_fields()
+        __class__._init_fields(self)
         self.highScoresFactoryInterface = highScoresFactoryInterface
         self.highScoresHelper = highScoresHelper
         self.highScoresArray = self.highScoresHelper.getHighScoresArray()

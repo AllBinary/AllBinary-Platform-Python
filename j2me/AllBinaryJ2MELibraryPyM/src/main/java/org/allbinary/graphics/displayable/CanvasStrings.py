@@ -22,7 +22,6 @@ class CanvasStrings:
     instance: CanvasStrings = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListUtil import BasicArrayListUtil
         self.CONSTRUCTOR: str = "MyCanvas::MyCanvas"
         self.PAUSE: str = "MyCanvas::pause"
@@ -44,7 +43,7 @@ class CanvasStrings:
         self._PNG: str = ".png"
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

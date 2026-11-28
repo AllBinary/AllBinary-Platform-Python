@@ -37,20 +37,20 @@ class LicenseInitInfoUtil:
 
     def setFilePath(self, filePath: str) -> None:
         with self._lock:
-            return self._setFilePath_unlocked(filePath)
+            return __class__.__dict__["_setFilePath_unlocked"].__get__(self, __class__)(filePath)
 
     def _setFilePath_unlocked(self, filePath: str) -> None:
         pass
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
     def write(self, initData: LicenseInitInfo) -> None:
         with self._lock:
-            return self._write_unlocked(initData)
+            return __class__.__dict__["_write_unlocked"].__get__(self, __class__)(initData)
 
     def _write_unlocked(self, initData: LicenseInitInfo) -> None:
         pass
@@ -59,7 +59,7 @@ class LicenseInitInfoUtil:
     # throws Exception
     def read(self) -> LicenseInitInfo:
         with self._lock:
-            return self._read_unlocked()
+            return __class__.__dict__["_read_unlocked"].__get__(self, __class__)()
 
     def _read_unlocked(self) -> LicenseInitInfo:
         return self.readAgain(0)
@@ -68,7 +68,7 @@ class LicenseInitInfoUtil:
     # throws Exception
     def readAgain(self, initializeCounter: int) -> LicenseInitInfo:
         with self._lock:
-            return self._readAgain_unlocked(initializeCounter)
+            return __class__.__dict__["_readAgain_unlocked"].__get__(self, __class__)(initializeCounter)
 
     def _readAgain_unlocked(self, initializeCounter: int) -> LicenseInitInfo:
         from org.allbinary.business.init.LicenseInitInfo import LicenseInitInfo

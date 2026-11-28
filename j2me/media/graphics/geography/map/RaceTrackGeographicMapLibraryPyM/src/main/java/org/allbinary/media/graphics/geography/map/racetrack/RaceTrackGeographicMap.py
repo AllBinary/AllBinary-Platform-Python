@@ -15,22 +15,27 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.media.graphics.geography.map.racetrack.BaseRaceTrackGeographicMap import BaseRaceTrackGeographicMap
 
 
+@java_inherited_overloads
 class RaceTrackGeographicMap(BaseRaceTrackGeographicMap):
+    def _java_defaults(self):
+        vars(self).setdefault("customMapGenerator", None)
 
     def _init_fields(self) -> None:
-        self.customMapGenerator: CustomMapGeneratorBase = None
+        if "customMapGenerator" not in vars(self): self.customMapGenerator: CustomMapGeneratorBase = None
     
 
     def __init__(self, raceTrackInfo: RaceTrackInfo, raceTrackData: RaceTrackData, tiledLayerFactoryInterface: AllBinaryTiledLayerFactoryInterface, geographicMapCellPositionFactoryInterface: GeographicMapCellPositionFactoryInterface, geographicMapCellPositionBaseFactory: GeographicMapCellPositionBaseFactory, geographicMapCellTypeFactory: GeographicMapCellTypeFactory, customMapGeneratorBaseFactory: CustomMapGeneratorBaseFactory) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.media.graphics.geography.map.racetrack.BasicGeographicMapFactory import BasicGeographicMapFactory
         from org.allbinary.media.graphics.geography.map.GeographicMapCellPositionBaseFactory import GeographicMapCellPositionBaseFactory
         from org.allbinary.media.graphics.geography.map.GeographicMapCellPositionFactoryInterface import GeographicMapCellPositionFactoryInterface
         from org.allbinary.media.graphics.geography.map.GeographicMapCellTypeFactory import GeographicMapCellTypeFactory
         super().__init__(raceTrackInfo, raceTrackData, tiledLayerFactoryInterface.getInstance(raceTrackInfo, raceTrackData), BasicGeographicMapFactory().getInstance(raceTrackInfo, raceTrackData, tiledLayerFactoryInterface, geographicMapCellPositionFactoryInterface, geographicMapCellTypeFactory), geographicMapCellPositionFactoryInterface, geographicMapCellPositionBaseFactory, geographicMapCellTypeFactory)
-        self._init_fields()
+        __class__._init_fields(self)
         self.customMapGenerator = customMapGeneratorBaseFactory.create(self)
     
 

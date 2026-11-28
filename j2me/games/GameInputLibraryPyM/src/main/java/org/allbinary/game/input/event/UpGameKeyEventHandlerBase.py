@@ -15,51 +15,56 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import threading
 from org.allbinary.logic.util.event.handler.BasicEventHandler import BasicEventHandler
 
 
+@java_inherited_overloads
 class UpGameKeyEventHandlerBase(BasicEventHandler):
     TOTAL_LISTENERS: str = " Total PlayerGameInput Listeners: "
     LISTENER_LABEL: str = " PlayerGameInput Listener: "
     _lock = threading.RLock()
+    def _java_defaults(self):
+        vars(self).setdefault("list_", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.list_: BasicArrayList = BasicArrayListD()
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def addListener(self, playerGameInput: PlayerGameInput) -> None:
         from org.allbinary.game.input.PlayerGameInput import PlayerGameInput
-        if not self.list_.contains(playerGameInput):
+        if not (self.list_.contains(playerGameInput)):
             self.list_.add(playerGameInput)
     
 
     def removeAllListeners(self) -> None:
         self.list_.clear()
-        super().removeAllListeners()
+        java_super_call(super(), "removeAllListeners")
     
 
     def removeListenerSingleThreaded(self, eventListenerInterface: EventListenerInterface) -> None:
         from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         self.list_.remove(eventListenerInterface)
-        super().removeListenerSingleThreaded(eventListenerInterface)
+        java_super_call(super(), "removeListenerSingleThreaded", eventListenerInterface)
     
 
     def removeListener(self, eventListenerInterface: EventListenerInterface) -> None:
         with self._lock:
-            return self._removeListener_unlocked(eventListenerInterface)
+            return __class__.__dict__["_removeListener_unlocked"].__get__(self, __class__)(eventListenerInterface)
 
     def _removeListener_unlocked(self, eventListenerInterface: EventListenerInterface) -> None:
         from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         self.list_.remove(eventListenerInterface)
-        super().removeListener(eventListenerInterface)
+        java_super_call(super(), "removeListener", eventListenerInterface)
     
 
     # throws Exception
@@ -74,7 +79,7 @@ class UpGameKeyEventHandlerBase(BasicEventHandler):
                 playerGameInput.onUpGameKeyEvent(eventObject)
             except Exception as e:
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, EventStrings.getInstance().FIRE_EVENT, e)
-        super().fireEvent(eventObject)
+        java_super_call(super(), "fireEvent", eventObject)
     
 
     # throws Exception
@@ -90,7 +95,7 @@ class UpGameKeyEventHandlerBase(BasicEventHandler):
         from org.allbinary.logic.util.event.EventListenerInterface import EventListenerInterface
         stringBuffer: StringMaker = StringMaker()
         size: int = self.list_.size()
-        stringBuffer.append(str(super()))
+        stringBuffer.append(java_super_call(super(), "toString"))
         stringBuffer.append(UpGameKeyEventHandlerBase.TOTAL_LISTENERS)
         stringBuffer.appendint(size)
         for index in range(0, size):

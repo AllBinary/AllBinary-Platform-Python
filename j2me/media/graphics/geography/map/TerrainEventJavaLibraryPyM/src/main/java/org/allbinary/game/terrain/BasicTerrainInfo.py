@@ -22,13 +22,12 @@ class BasicTerrainInfo:
     NULL_BASIC_TERRAIN_INFO: BasicTerrainInfo = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.math.Angle import Angle
-        self.angle: Angle = None
+        if "angle" not in vars(self): self.angle: Angle = None
     
 
     def __init__(self, angle: Angle) -> None:
         from org.allbinary.math.Angle import Angle
-        self._init_fields()
+        __class__._init_fields(self)
         self.angle = angle
     
 

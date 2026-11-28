@@ -15,19 +15,24 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.animation.IndexedAnimation import IndexedAnimation
 
 
+@java_inherited_overloads
 class SimultaneousCompoundIndexAnimation(IndexedAnimation):
+    def _java_defaults(self):
+        vars(self).setdefault("animationInterfaceArray", None)
 
     def _init_fields(self) -> None:
-        self.animationInterfaceArray: list[IndexedAnimation] = None
+        if "animationInterfaceArray" not in vars(self): self.animationInterfaceArray: list[IndexedAnimation] = None
     
 
     def __init__(self, animationInterfaceArray: list[IndexedAnimation], animationBehavior: AnimationBehavior) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         super().__init__(animationBehavior)
-        self._init_fields()
+        __class__._init_fields(self)
         self.animationInterfaceArray = animationInterfaceArray
     
 

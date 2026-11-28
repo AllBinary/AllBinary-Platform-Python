@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.system.security.licensing.AbeClientInformation import AbeClientInformation
 
 
+@java_inherited_overloads
 class InputAutomationClientInformation(AbeClientInformation):
     
 

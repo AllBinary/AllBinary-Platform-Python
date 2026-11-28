@@ -20,11 +20,11 @@ from __future__ import annotations
 class InputAutomationRobotChangeEvent:
 
     def _init_fields(self) -> None:
-        self.inputAutomationRobotInterfaceWrapper: InputAutomationRobotInterfaceWrapper = None
+        if "inputAutomationRobotInterfaceWrapper" not in vars(self): self.inputAutomationRobotInterfaceWrapper: InputAutomationRobotInterfaceWrapper = None
     
 
     def __init__(self, inputAutomationRobotInterfaceWrapper: InputAutomationRobotInterfaceWrapper) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.setInputAutomationRobotInterfaceWrapper(inputAutomationRobotInterfaceWrapper)
     
 

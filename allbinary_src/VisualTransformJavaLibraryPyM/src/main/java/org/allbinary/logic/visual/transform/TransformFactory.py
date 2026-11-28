@@ -34,7 +34,7 @@ class TransformFactory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -124,12 +124,15 @@ class TransformFactory:
                 self.logUtil.put(self.commonStrings.EXCEPTION, self, "getInstance(TransformInfoInterface)", e)
             raise e
 
-    def getInstance(self, *args):
-        if len(args) == 3 and True and not isinstance(args[0], (str, list, int, float)) and (args[1] is None or isinstance(args[1], str)) and not isinstance(args[2], (str, list, int, float)):
-            return self.getInstance_j3_1(*args)
+    def getInstance(self=None, *args):
+        if self is None and not args: return __class__.getInstance_j0()
+        if len(args) == 3 and True and (args[0] is None or any(base.__name__ == "AbeClientInformationInterface" for base in type(args[0]).__mro__)) and (args[1] is None or isinstance(args[1], str)) and (args[2] is None or any(base.__name__ == "TransformInfoInterface" for base in type(args[2]).__mro__)):
+            return __class__.__dict__["getInstance_j3_1"].__get__(self, __class__)(*args)
         if len(args) == 3:
-            return self.getInstance_j3_2(*args)
-        return getattr(self, "getInstance_j" + str(len(args)))(*args)
+            return __class__.__dict__["getInstance_j3_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("getInstance_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getInstance(*args)
 # from java.util.HashMap import HashMap
 # from javax.servlet.jsp.PageContext import PageContext
 # from org.allbinary.data.tables.transform.info.TransformInfoEntity import TransformInfoEntity

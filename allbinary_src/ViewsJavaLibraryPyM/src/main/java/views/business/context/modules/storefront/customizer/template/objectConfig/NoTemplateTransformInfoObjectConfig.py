@@ -15,10 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.visual.transform.info.objectConfig.TransformInfoObjectConfig import TransformInfoObjectConfig
 
 
+@java_inherited_overloads
 class NoTemplateTransformInfoObjectConfig(TransformInfoObjectConfig):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -26,31 +30,34 @@ class NoTemplateTransformInfoObjectConfig(TransformInfoObjectConfig):
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
         elif len(args) == 2:
-            self._constructor2(*args)
+            __class__._constructor2(self, *args)
         elif len(args) == 3:
-            self._constructor3(*args)
+            __class__._constructor3(self, *args)
     
 
     def _constructor1(self, transformInfoInterface: TransformInfoInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def _constructor2(self, transformInfoInterface: TransformInfoInterface, document: Document) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         from org.w3c.dom.Document import Document
         super().__init__(transformInfoInterface, document)
-        self._init_fields()
+        __class__._init_fields(self)
         self.setDocument(self.generate(self.toXmlDoc()))
     
 
     def _constructor3(self, transformInfoInterface: TransformInfoInterface, name: str, type_: str) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         super().__init__(transformInfoInterface, name, type_)
-        self._init_fields()
+        __class__._init_fields(self)
         self.setDocument(self.generate(self.toXmlDoc()))
     
 

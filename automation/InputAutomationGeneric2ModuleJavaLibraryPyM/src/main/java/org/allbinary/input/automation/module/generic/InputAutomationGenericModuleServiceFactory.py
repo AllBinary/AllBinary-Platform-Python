@@ -15,12 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.input.automation.module.osgi.InputAutomationModuleServiceFactory import InputAutomationModuleServiceFactory
 
 
+@java_inherited_overloads
 class InputAutomationGenericModuleServiceFactory(InputAutomationModuleServiceFactory):
     inputAutomationGenericModuleServiceFactory: InputAutomationGenericModuleServiceFactory = None
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -28,10 +32,11 @@ class InputAutomationGenericModuleServiceFactory(InputAutomationModuleServiceFac
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.input.automation.module.generic.GenericModuleFactory import GenericModuleFactory
         from org.allbinary.input.automation.module.InputAutomationModuleFactoryInterface import InputAutomationModuleFactoryInterface
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         try:
             inputAutomationModuleInterfaceArray: list[InputAutomationModuleFactoryInterface] = [None] * (1)
             inputAutomationModuleInterfaceArray[0] = GenericModuleFactory()

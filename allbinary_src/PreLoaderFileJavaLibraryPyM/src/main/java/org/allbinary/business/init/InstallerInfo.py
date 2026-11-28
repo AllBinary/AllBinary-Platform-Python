@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 
@@ -34,13 +35,13 @@ class InstallerInfo:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
     def write(self) -> None:
         with self._lock:
-            return self._write_unlocked()
+            return __class__.__dict__["_write_unlocked"].__get__(self, __class__)()
 
     def _write_unlocked(self) -> None:
         from org.allbinary.globals.URLGLOBALS import URLGLOBALS
@@ -71,7 +72,7 @@ class InstallerInfo:
     # throws Exception
     def read(self) -> None:
         with self._lock:
-            return self._read_unlocked()
+            return __class__.__dict__["_read_unlocked"].__get__(self, __class__)()
 
     def _read_unlocked(self) -> None:
         from org.allbinary.globals.URLGLOBALS import URLGLOBALS
@@ -86,7 +87,7 @@ class InstallerInfo:
         FILEABPATH: AbPath = AbPath(URLGLOBALS.getMainPath() + InstallerInfo.PACKAGE, InstallerInfo.INITFILENAME)
         try:
             file: AbFile = AbFile.createAbFileFromAbPath(FILEABPATH)
-            if file.isFile():
+            if java_predicate(file, "isFile"):
                 iFile: AbFileLocalInputStream = AbFileLocalInputStream(file)
                 iData: AbDataInputStream = AbDataInputStream(iFile)
                 decryptedUserName: str = str(DatabaseEncoder.decode(iData.readUTF()))
@@ -122,12 +123,12 @@ class InstallerInfo:
     # throws Exception
     def updateIfNeeded(self) -> None:
         with self._lock:
-            return self._updateIfNeeded_unlocked()
+            return __class__.__dict__["_updateIfNeeded_unlocked"].__get__(self, __class__)()
 
     def _updateIfNeeded_unlocked(self) -> None:
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-        if not InstallerInfo.hasRead:
+        if not (InstallerInfo.hasRead):
             InstallerInfo.hasRead = True
             self.read()
             if InstallerInfo.userName is None or InstallerInfo.password is None:
@@ -150,7 +151,7 @@ class InstallerInfo:
     # throws Exception
     def isValid(self, userName: str, password: str) -> bool:
         self.updateIfNeeded()
-        if self.userName is not None and ((self.userName > userName) - (self.userName < userName)) == 0 and self.password is not None and ((self.password > password) - (self.password < password)) == 0:
+        if InstallerInfo.userName is not None and ((InstallerInfo.userName > userName) - (InstallerInfo.userName < userName)) == 0 and InstallerInfo.password is not None and ((InstallerInfo.password > password) - (InstallerInfo.password < password)) == 0:
             return True
         return False
 # from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS

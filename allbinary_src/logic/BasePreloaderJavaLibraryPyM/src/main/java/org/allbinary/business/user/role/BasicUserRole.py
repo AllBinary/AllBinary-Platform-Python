@@ -15,32 +15,33 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_equals
 # from java.io.Serializable import Serializable
 
 
 class BasicUserRole(object):
 
     def _init_fields(self) -> None:
-        self.m_int_RoleId: int = None
-        self.role: str = None
-        self.displayValue: str = None
-        self.sessionTimeout: int = None
-        self.sessionInactivityTimeout: int = None
+        if "m_int_RoleId" not in vars(self): self.m_int_RoleId: int = 0
+        if "role" not in vars(self): self.role: str = None
+        if "displayValue" not in vars(self): self.displayValue: str = None
+        if "sessionTimeout" not in vars(self): self.sessionTimeout: int = 0
+        if "sessionInactivityTimeout" not in vars(self): self.sessionInactivityTimeout: int = 0
 
     def __init__(self, *args) -> None:
         if len(args) == 4:
-            self._constructor4(*args)
+            __class__._constructor4(self, *args)
         elif len(args) == 5:
-            self._constructor5(*args)
+            __class__._constructor5(self, *args)
     
 
     def _constructor4(self, aRole: str, a_int_RoleId: int, aSessionTimeout: int, aSessionInactivityTimeout: int) -> None:
-        self._constructor5(aRole, aRole, a_int_RoleId, aSessionTimeout, aSessionInactivityTimeout)
+        __class__._constructor5(self, aRole, aRole, a_int_RoleId, aSessionTimeout, aSessionInactivityTimeout)
     
 
     def _constructor5(self, aRole: str, aDisplayValue: str, a_int_RoleId: int, aSessionTimeout: int, aSessionInactivityTimeout: int) -> None:
         from org.allbinary.business.user.role.BasicUserRoles import BasicUserRoles
-        self._init_fields()
+        __class__._init_fields(self)
         self.m_int_RoleId = a_int_RoleId
         self.role = aRole
         self.displayValue = aDisplayValue

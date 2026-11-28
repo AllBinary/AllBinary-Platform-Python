@@ -15,46 +15,57 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_equals
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 from org.allbinary.logic.control.validate.Validation import Validation
 
 
+@java_inherited_overloads
 class MetaValidation(*java_bases(Validation, DomNodeInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("label", None)
+        vars(self).setdefault("name", None)
+        vars(self).setdefault("httpEquiv", None)
+        vars(self).setdefault("content", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.label: str = None
-        self.name: str = None
-        self.httpEquiv: str = None
-        self.content: str = None
+        if "label" not in vars(self): self.label: str = None
+        if "name" not in vars(self): self.name: str = None
+        if "httpEquiv" not in vars(self): self.httpEquiv: str = None
+        if "content" not in vars(self): self.content: str = None
 
     def __init__(self, *args) -> None:
         if len(args) == 4:
-            self._constructor4(*args)
+            __class__._constructor4(self, *args)
         elif len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
     
 
     def _constructor4(self, htmlMetaAttributeData: HtmlMetaAttributeData, label: str, attributeValue: str, contentValue: str) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.visual.dhtml.html.head.meta.HtmlMetaAttributeData import HtmlMetaAttributeData
         from org.allbinary.logic.visual.dhtml.html.head.meta.HtmlMetaAttributeDataFactory import HtmlMetaAttributeDataFactory
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.label = label
-        if htmlMetaAttributeData.equals(HtmlMetaAttributeDataFactory.getInstance().HTTP_EQUIV):
+        if java_equals(htmlMetaAttributeData, HtmlMetaAttributeDataFactory.getInstance().HTTP_EQUIV):
             self.httpEquiv = attributeValue
-        elif htmlMetaAttributeData.equals(HtmlMetaAttributeDataFactory.getInstance().NAME):
+        elif java_equals(htmlMetaAttributeData, HtmlMetaAttributeDataFactory.getInstance().NAME):
             self.name = attributeValue
         self.content = contentValue
     
 
     def _constructor1(self, document: Document) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.string.CommonStrings import CommonStrings
         from org.w3c.dom.Document import Document
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         raise Exception(CommonStrings.getInstance().NOT_IMPLEMENTED)
     
 

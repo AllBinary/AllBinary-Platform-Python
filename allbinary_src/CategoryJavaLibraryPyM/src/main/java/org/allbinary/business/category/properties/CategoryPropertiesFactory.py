@@ -23,35 +23,38 @@ class CategoryPropertiesFactory(CategoryPropertiesFactoryInterface):
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.categoryPropertiesInterface: CategoryPropertiesInterface = None
+        if "categoryPropertiesInterface" not in vars(self): self.categoryPropertiesInterface: CategoryPropertiesInterface = None
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self.__jconstructor1(*args)
+            __class__.__jconstructor1(self, *args)
 
     def __jconstructor1(self, *args) -> None:
         if True and (args[0] is None or isinstance(args[0], str)):
-            self._constructor1_1(*args)
-        elif True and not isinstance(args[0], (str, list, int, float)):
-            self._constructor1_2(*args)
+            __class__._constructor1_1(self, *args)
+        elif True and (args[0] is None or any(base.__name__ == "Node" for base in type(args[0]).__mro__)):
+            __class__._constructor1_2(self, *args)
         else:
-            self._constructor1_3(*args)
+            __class__._constructor1_3(self, *args)
     
 
     def _constructor1_1(self, name: str) -> None:
-        self._init_fields()
+        from org.allbinary.business.category.properties.CategoryProperties import CategoryProperties
+        __class__._init_fields(self)
         self.categoryPropertiesInterface = CategoryProperties(name)
     
 
     def _constructor1_2(self, node: Node) -> None:
+        from org.allbinary.business.category.properties.CategoryProperties import CategoryProperties
         from org.w3c.dom.Node import Node
-        self._init_fields()
+        __class__._init_fields(self)
         self.categoryPropertiesInterface = CategoryProperties(node)
     
 
     def _constructor1_3(self, categoryPropertiesHashMap: HashMap) -> None:
+        from org.allbinary.business.category.properties.CategoryProperties import CategoryProperties
         from java.util.HashMap import HashMap
-        self._init_fields()
+        __class__._init_fields(self)
         self.categoryPropertiesInterface = CategoryProperties(categoryPropertiesHashMap)
     
 

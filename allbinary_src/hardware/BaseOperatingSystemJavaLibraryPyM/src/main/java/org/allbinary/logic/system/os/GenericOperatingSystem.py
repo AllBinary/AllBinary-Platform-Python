@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.logic.system.os.OperatingSystemInterface import OperatingSystemInterface
 
 
@@ -22,9 +23,9 @@ class GenericOperatingSystem(OperatingSystemInterface):
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.java.character.CharacterSet import CharacterSet
-        self.osName: str = None
-        self.osArch: str = None
-        self.osVersion: str = None
+        if "osName" not in vars(self): self.osName: str = None
+        if "osArch" not in vars(self): self.osArch: str = None
+        if "osVersion" not in vars(self): self.osVersion: str = None
         self.characterSet: CharacterSet = CharacterSet()
         self.scalable: bool = False
     
@@ -33,7 +34,7 @@ class GenericOperatingSystem(OperatingSystemInterface):
         from org.allbinary.logic.system.os.SystemProperties import SystemProperties
         from org.allbinary.logic.string.StringUtil import StringUtil
         from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
-        self._init_fields()
+        __class__._init_fields(self)
         systemProperties: SystemProperties = SystemProperties.getInstance()
         stringValidationUtil: StringValidationUtil = StringValidationUtil.getInstance()
         EMPTY_STRING: str = StringUtil.getInstance().EMPTY_STRING

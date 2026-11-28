@@ -38,6 +38,7 @@ class ModDomHelper:
     # throws Exception
     @staticmethod
     def createValueNode(document: Document, text: str) -> Node:
+        from org.allbinary.data.tree.dom.DomData import DomData
         from org.w3c.dom.Document import Document
         from org.w3c.dom.Node import Node
         return ModDomHelper.createTextNode(document, DomData.VALUE, text)
@@ -46,6 +47,7 @@ class ModDomHelper:
     # throws Exception
     @staticmethod
     def createNameNode(document: Document, text: str) -> Node:
+        from org.allbinary.data.tree.dom.DomData import DomData
         from org.w3c.dom.Document import Document
         from org.w3c.dom.Node import Node
         return ModDomHelper.createTextNode(document, DomData.NAME, text)
@@ -54,6 +56,7 @@ class ModDomHelper:
     # throws Exception
     @staticmethod
     def createIndexNode(document: Document, index: int) -> Node:
+        from org.allbinary.data.tree.dom.DomData import DomData
         from org.w3c.dom.Document import Document
         from org.w3c.dom.Node import Node
         return ModDomHelper.createTextNode(document, DomData.INDEX, str(int(index)))
@@ -153,11 +156,11 @@ class ModDomHelper:
 
     @staticmethod
     def createNameValueNodes(*args):
-        if len(args) == 4 and True and not isinstance(args[0], (str, list, int, float)) and (args[1] is None or isinstance(args[1], str)) and (args[2] is None or isinstance(args[2], str)) and (args[3] is None or isinstance(args[3], str)):
+        if len(args) == 4 and True and (args[0] is None or any(base.__name__ == "Document" for base in type(args[0]).__mro__)) and (args[1] is None or isinstance(args[1], str)) and (args[2] is None or isinstance(args[2], str)) and (args[3] is None or isinstance(args[3], str)):
             return ModDomHelper.createNameValueNodes_j4_1(*args)
-        if len(args) == 3 and True and not isinstance(args[0], (str, list, int, float)) and (args[1] is None or isinstance(args[1], str)) and (args[2] is None or isinstance(args[2], str)):
+        if len(args) == 3 and True and (args[0] is None or any(base.__name__ == "Document" for base in type(args[0]).__mro__)) and (args[1] is None or isinstance(args[1], str)) and (args[2] is None or isinstance(args[2], str)):
             return ModDomHelper.createNameValueNodes_j3_1(*args)
-        if len(args) == 3 and True and not isinstance(args[0], (str, list, int, float)) and (args[1] is None or isinstance(args[1], str)) and not isinstance(args[2], (str, list, int, float)):
+        if len(args) == 3 and True and (args[0] is None or any(base.__name__ == "Document" for base in type(args[0]).__mro__)) and (args[1] is None or isinstance(args[1], str)) and not isinstance(args[2], (str, list, int, float)):
             return ModDomHelper.createNameValueNodes_j3_2(*args)
         if len(args) == 3:
             return ModDomHelper.createNameValueNodes_j3_3(*args)
@@ -184,7 +187,7 @@ class ModDomHelper:
 
     @staticmethod
     def createNameValueIndexNodes(*args):
-        if len(args) == 4 and True and not isinstance(args[0], (str, list, int, float)) and (args[1] is None or isinstance(args[1], str)) and isinstance(args[2], int) and not isinstance(args[2], bool) and (args[3] is None or isinstance(args[3], str)):
+        if len(args) == 4 and True and (args[0] is None or any(base.__name__ == "Document" for base in type(args[0]).__mro__)) and (args[1] is None or isinstance(args[1], str)) and isinstance(args[2], int) and not isinstance(args[2], bool) and (args[3] is None or isinstance(args[3], str)):
             return ModDomHelper.createNameValueIndexNodes_j4_1(*args)
         if len(args) == 4:
             return ModDomHelper.createNameValueIndexNodes_j4_2(*args)
@@ -224,7 +227,7 @@ class ModDomHelper:
 
     @staticmethod
     def createNodeWithValueNodes(*args):
-        if len(args) == 3 and True and not isinstance(args[0], (str, list, int, float)) and (args[1] is None or isinstance(args[1], str)) and not isinstance(args[2], (str, list, int, float)):
+        if len(args) == 3 and True and (args[0] is None or any(base.__name__ == "Document" for base in type(args[0]).__mro__)) and (args[1] is None or isinstance(args[1], str)) and not isinstance(args[2], (str, list, int, float)):
             return ModDomHelper.createNodeWithValueNodes_j3_1(*args)
         if len(args) == 3:
             return ModDomHelper.createNodeWithValueNodes_j3_2(*args)

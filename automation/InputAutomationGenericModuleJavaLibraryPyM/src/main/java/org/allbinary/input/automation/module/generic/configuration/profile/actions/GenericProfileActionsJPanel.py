@@ -15,34 +15,53 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 # from javax.swing.JPanel import JPanel
 
 
+@java_inherited_overloads
 class GenericProfileActionsJPanel(JPanel):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("genericProfileActions", None)
+        vars(self).setdefault("genericProfileActionJPanel", None)
+        vars(self).setdefault("blankGenericProfileActionJPanel", None)
+        vars(self).setdefault("deleteActionJButton", None)
+        vars(self).setdefault("genericProfileActionsJList", None)
+        vars(self).setdefault("genericProfileActionsJPanel", None)
+        vars(self).setdefault("genericProfileActionsJScrollPane", None)
+        vars(self).setdefault("newActionJButton", None)
+        vars(self).setdefault("newProfileActionJDialog", None)
+        vars(self).setdefault("newProfileActionJLabel", None)
+        vars(self).setdefault("newProfileActionJTextField", None)
+        vars(self).setdefault("okNewProfileActionJButton", None)
+        vars(self).setdefault("saveJButton", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.genericProfileActions: GenericProfileActions = None
-        self.genericProfileActionJPanel: GenericProfileActionJPanel = None
-        self.blankGenericProfileActionJPanel: JPanel = None
-        self.deleteActionJButton: JButton = None
-        self.genericProfileActionsJList: JList = None
-        self.genericProfileActionsJPanel: JPanel = None
-        self.genericProfileActionsJScrollPane: JScrollPane = None
-        self.newActionJButton: JButton = None
-        self.newProfileActionJDialog: JDialog = None
-        self.newProfileActionJLabel: JLabel = None
-        self.newProfileActionJTextField: JTextField = None
-        self.okNewProfileActionJButton: JButton = None
-        self.saveJButton: JButton = None
+        if "genericProfileActions" not in vars(self): self.genericProfileActions: GenericProfileActions = None
+        if "genericProfileActionJPanel" not in vars(self): self.genericProfileActionJPanel: GenericProfileActionJPanel = None
+        if "blankGenericProfileActionJPanel" not in vars(self): self.blankGenericProfileActionJPanel: JPanel = None
+        if "deleteActionJButton" not in vars(self): self.deleteActionJButton: JButton = None
+        if "genericProfileActionsJList" not in vars(self): self.genericProfileActionsJList: JList = None
+        if "genericProfileActionsJPanel" not in vars(self): self.genericProfileActionsJPanel: JPanel = None
+        if "genericProfileActionsJScrollPane" not in vars(self): self.genericProfileActionsJScrollPane: JScrollPane = None
+        if "newActionJButton" not in vars(self): self.newActionJButton: JButton = None
+        if "newProfileActionJDialog" not in vars(self): self.newProfileActionJDialog: JDialog = None
+        if "newProfileActionJLabel" not in vars(self): self.newProfileActionJLabel: JLabel = None
+        if "newProfileActionJTextField" not in vars(self): self.newProfileActionJTextField: JTextField = None
+        if "okNewProfileActionJButton" not in vars(self): self.okNewProfileActionJButton: JButton = None
+        if "saveJButton" not in vars(self): self.saveJButton: JButton = None
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.initComponents()
     
 
@@ -62,45 +81,60 @@ class GenericProfileActionsJPanel(JPanel):
         self.newProfileActionJDialog.setResizable(False)
         self.newProfileActionJLabel.setText("New Action Name")
         self.okNewProfileActionJButton.setText("Ok")
-        self.okNewProfileActionJButton.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.okNewProfileActionJButtonActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN66752(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "okNewProfileActionJButtonActionPerformed") else _java_listener_owner).okNewProfileActionJButtonActionPerformed(evt)
+        self.okNewProfileActionJButton.addActionListener(_JavaListenerN66752()
+            )
         newProfileActionJDialogLayout: GroupLayout = GroupLayout(self.newProfileActionJDialog.getContentPane())
         self.newProfileActionJDialog.getContentPane().setLayout(newProfileActionJDialogLayout)
         newProfileActionJDialogLayout.setHorizontalGroup(newProfileActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(newProfileActionJDialogLayout.createSequentialGroup().addGroup(newProfileActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(newProfileActionJDialogLayout.createSequentialGroup().addGap(93, 93, 93).addComponent(self.okNewProfileActionJButton)).addGroup(newProfileActionJDialogLayout.createSequentialGroup().addGap(75, 75, 75).addComponent(self.newProfileActionJLabel)).addGroup(newProfileActionJDialogLayout.createSequentialGroup().addGap(29, 29, 29).addComponent(self.newProfileActionJTextField, GroupLayout.PREFERRED_SIZE, 178, GroupLayout.PREFERRED_SIZE))).addContainerGap(34, Short.MAX_VALUE)))
         newProfileActionJDialogLayout.setVerticalGroup(newProfileActionJDialogLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(GroupLayout.Alignment.TRAILING, newProfileActionJDialogLayout.createSequentialGroup().addContainerGap().addComponent(self.newProfileActionJLabel).addGap(21, 21, 21).addComponent(self.newProfileActionJTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE).addComponent(self.okNewProfileActionJButton).addContainerGap()))
         self.genericProfileActionsJPanel.setPreferredSize(Dimension(10000, 10000))
-        self.genericProfileActionsJList.addListSelectionListener((ListSelectionListener()  # Java anonymous class body:
-#             
-# 
-#             def valueChanged(self, evt: ListSelectionEvent) -> None:
-#                 self.genericProfileActionsJListValueChanged(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN67750(ListSelectionListener):
+            
+            
+
+            def valueChanged(self, evt: ListSelectionEvent) -> None:
+                (self if hasattr(self, "genericProfileActionsJListValueChanged") else _java_listener_owner).genericProfileActionsJListValueChanged(evt)
+        self.genericProfileActionsJList.addListSelectionListener(_JavaListenerN67750()
+            )
         self.genericProfileActionsJScrollPane.setViewportView(self.genericProfileActionsJList)
         self.newActionJButton.setText("New")
-        self.newActionJButton.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.newActionJButtonActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN67926(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "newActionJButtonActionPerformed") else _java_listener_owner).newActionJButtonActionPerformed(evt)
+        self.newActionJButton.addActionListener(_JavaListenerN67926()
+            )
         self.deleteActionJButton.setText("Delete")
-        self.deleteActionJButton.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.deleteActionJButtonActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN68065(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "deleteActionJButtonActionPerformed") else _java_listener_owner).deleteActionJButtonActionPerformed(evt)
+        self.deleteActionJButton.addActionListener(_JavaListenerN68065()
+            )
         self.saveJButton.setText("Save")
-        self.saveJButton.addActionListener((ActionListener()  # Java anonymous class body:
-#             
-# 
-#             def actionPerformed(self, evt: ActionEvent) -> None:
-#                 self.saveJButtonActionPerformed(evt)
-))
+        _java_listener_owner = self
+        class _JavaListenerN68204(ActionListener):
+            
+            
+
+            def actionPerformed(self, evt: ActionEvent) -> None:
+                (self if hasattr(self, "saveJButtonActionPerformed") else _java_listener_owner).saveJButtonActionPerformed(evt)
+        self.saveJButton.addActionListener(_JavaListenerN68204()
+            )
         self.blankGenericProfileActionJPanel.setMinimumSize(Dimension(500, 300))
         blankGenericProfileActionJPanelLayout: GroupLayout = GroupLayout(self.blankGenericProfileActionJPanel)
         self.blankGenericProfileActionJPanel.setLayout(blankGenericProfileActionJPanelLayout)

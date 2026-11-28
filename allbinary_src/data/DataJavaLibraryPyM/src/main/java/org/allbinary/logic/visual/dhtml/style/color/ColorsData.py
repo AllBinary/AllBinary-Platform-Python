@@ -31,7 +31,7 @@ class ColorsData:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
 
 
 def _ColorsData_instance() -> object:

@@ -21,20 +21,18 @@ from org.allbinary.logic.visual.transform.BasicTransformerInterface import Basic
 class AbTransformer(BasicTransformerInterface):
 
     def _init_fields(self) -> None:
-        from java.io.InputStream import InputStream
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.transformInfoInterface: TransformInfoInterface = None
-        self.inputStream: InputStream = None
-        self.uriResolver: URIResolver = None
+        if "transformInfoInterface" not in vars(self): self.transformInfoInterface: TransformInfoInterface = None
+        if "inputStream" not in vars(self): self.inputStream: InputStream = None
+        if "uriResolver" not in vars(self): self.uriResolver: URIResolver = None
     
 
     def __init__(self, transformInfoInterface: TransformInfoInterface) -> None:
         from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
-        self._init_fields()
+        __class__._init_fields(self)
         self.transformInfoInterface = transformInfoInterface
     
 

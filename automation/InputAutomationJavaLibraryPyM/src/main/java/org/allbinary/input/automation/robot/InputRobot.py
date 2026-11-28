@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.input.automation.robot.InputRobotInterface import InputRobotInterface
 
 
@@ -24,11 +25,11 @@ class InputRobot(InputRobotInterface):
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.robot: Robot = None
+        if "robot" not in vars(self): self.robot: Robot = None
     
 
     def __init__(self, graphicsDevice: GraphicsDevice) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.robot = Robot(graphicsDevice)
     
 
@@ -73,7 +74,9 @@ class InputRobot(InputRobotInterface):
         self.mouseMoveToTarget(rectangle, 0, 0)
 
     def mouseMoveToTarget(self, *args):
-        return getattr(self, "mouseMoveToTarget_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("mouseMoveToTarget_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().mouseMoveToTarget(*args)
     
 
     def createScreenCapture(self, screenRect: Rectangle) -> BufferedImage:
@@ -93,7 +96,7 @@ class InputRobot(InputRobotInterface):
     
 
     def isAutoWaitForIdle(self) -> bool:
-        return self.robot.isAutoWaitForIdle()
+        return java_predicate(self.robot, "isAutoWaitForIdle")
     
 
     def keyPress(self, keycode: int) -> None:
@@ -110,10 +113,12 @@ class InputRobot(InputRobotInterface):
 
     def mouseMove(self, *args):
         if len(args) == 2 and True and isinstance(args[0], int) and not isinstance(args[0], bool) and isinstance(args[1], int) and not isinstance(args[1], bool):
-            return self.mouseMove_j2_1(*args)
+            return __class__.__dict__["mouseMove_j2_1"].__get__(self, __class__)(*args)
         if len(args) == 2:
-            return self.mouseMove_j2_2(*args)
-        return getattr(self, "mouseMove_j" + str(len(args)))(*args)
+            return __class__.__dict__["mouseMove_j2_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("mouseMove_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().mouseMove(*args)
     
 
     def mousePress(self, buttons: int) -> None:

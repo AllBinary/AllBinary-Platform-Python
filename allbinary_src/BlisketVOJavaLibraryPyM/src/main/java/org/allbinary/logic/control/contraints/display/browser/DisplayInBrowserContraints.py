@@ -21,15 +21,15 @@ from org.allbinary.logic.control.contraints.display.browser.DisplayInBrowserCont
 class DisplayInBrowserContraints(DisplayInBrowserContraintsInterface):
 
     def _init_fields(self) -> None:
-        self.frameable: bool = False
-        self.mountable: bool = False
-        self.quickFrameable: bool = False
-        self.mountedLink: str = None
+        if "frameable" not in vars(self): self.frameable: bool = False
+        if "mountable" not in vars(self): self.mountable: bool = False
+        if "quickFrameable" not in vars(self): self.quickFrameable: bool = False
+        if "mountedLink" not in vars(self): self.mountedLink: str = None
     
 
     def __init__(self, node: Node) -> None:
         from org.w3c.dom.Node import Node
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def isMountable(self) -> bool:

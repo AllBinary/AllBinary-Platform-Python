@@ -15,29 +15,42 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.game.input.form.RTSFormInput import RTSFormInput
 
 
+@java_inherited_overloads
 class WaypointRTSFormInput(RTSFormInput):
+    def _java_defaults(self):
+        vars(self).setdefault("WAYPOINT_EVENT", None)
+        vars(self).setdefault("dragToSpotGameNotificationEvent", None)
+        vars(self).setdefault("spotTakenGameNotificationEvent", None)
+        vars(self).setdefault("buildingCollisionGameNotificationEvent", None)
+        vars(self).setdefault("roadCollisionGameNotificationEvent", None)
+        vars(self).setdefault("newWaypointGameNotificationEvent", None)
+        vars(self).setdefault("noMoneyGameNotificationEvent", None)
+        vars(self).setdefault("isPrimaryWaypointCreator", False)
+        vars(self).setdefault("stickyAssociatedRtsLayer", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.game.layer.RTSLayerEvent import RTSLayerEvent
         from org.allbinary.game.layer.NullPathFindingLayer import NullPathFindingLayer
         from org.allbinary.game.layer.NullRTSLayer import NullRTSLayer
-        from org.allbinary.game.layer.PathFindingLayerInterface import PathFindingLayerInterface
-        from org.allbinary.game.layer.hud.event.GameNotificationEvent import GameNotificationEvent
         self.WAYPOINT_EVENT: RTSLayerEvent = RTSLayerEvent(NullRTSLayer.NULL_RTS_LAYER)
-        self.dragToSpotGameNotificationEvent: GameNotificationEvent = None
-        self.spotTakenGameNotificationEvent: GameNotificationEvent = None
-        self.buildingCollisionGameNotificationEvent: GameNotificationEvent = None
-        self.roadCollisionGameNotificationEvent: GameNotificationEvent = None
-        self.newWaypointGameNotificationEvent: GameNotificationEvent = None
-        self.noMoneyGameNotificationEvent: GameNotificationEvent = None
-        self.isPrimaryWaypointCreator: bool = None
+        if "dragToSpotGameNotificationEvent" not in vars(self): self.dragToSpotGameNotificationEvent: GameNotificationEvent = None
+        if "spotTakenGameNotificationEvent" not in vars(self): self.spotTakenGameNotificationEvent: GameNotificationEvent = None
+        if "buildingCollisionGameNotificationEvent" not in vars(self): self.buildingCollisionGameNotificationEvent: GameNotificationEvent = None
+        if "roadCollisionGameNotificationEvent" not in vars(self): self.roadCollisionGameNotificationEvent: GameNotificationEvent = None
+        if "newWaypointGameNotificationEvent" not in vars(self): self.newWaypointGameNotificationEvent: GameNotificationEvent = None
+        if "noMoneyGameNotificationEvent" not in vars(self): self.noMoneyGameNotificationEvent: GameNotificationEvent = None
+        if "isPrimaryWaypointCreator" not in vars(self): self.isPrimaryWaypointCreator: bool = False
         self.stickyAssociatedRtsLayer: PathFindingLayerInterface = NullPathFindingLayer.NULL_PATH_FINDING_LAYER
     
 
     def __init__(self, groupInterface: list[Group], isPrimaryWaypointCreator: bool) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.layer.RTSGameStrings import RTSGameStrings
         from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
         from org.allbinary.game.identification.Group import Group
@@ -45,7 +58,7 @@ class WaypointRTSFormInput(RTSFormInput):
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
         super().__init__(groupInterface)
-        self._init_fields()
+        __class__._init_fields(self)
         self.isPrimaryWaypointCreator = isPrimaryWaypointCreator
         smallIntegerSingletonFactory: SmallIntegerSingletonFactory = SmallIntegerSingletonFactory.getInstance()
         basicColorFactory: BasicColorFactory = BasicColorFactory.getInstance()
@@ -62,7 +75,7 @@ class WaypointRTSFormInput(RTSFormInput):
         from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
         from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
         from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
-        super().setAllBinaryGameLayerManager(allBinaryGameLayerManager)
+        java_super_call(super(), "setAllBinaryGameLayerManager", allBinaryGameLayerManager)
         geographicMapCompositeInterface: GeographicMapCompositeInterface = allBinaryGameLayerManager
         geographicMapInterface: BasicGeographicMap = geographicMapCompositeInterface.getGeographicMapInterface()[0]
         self.dragToSpotGameNotificationEvent.setBasicColorP(geographicMapInterface.getForegroundBasicColor())
@@ -84,9 +97,9 @@ class WaypointRTSFormInput(RTSFormInput):
         from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
         from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
-        super().process(layerManager)
-        if self.isStickyItemSelected() or associatedRtsLayer == CollidableDestroyableDamageableLayer.getNullInstance():
-            if self.isStickyItemSelected() and associatedRtsLayer == CollidableDestroyableDamageableLayer.getNullInstance():
+        java_super_call(super(), "process", layerManager)
+        if java_predicate(self, "isStickyItemSelected") or associatedRtsLayer == CollidableDestroyableDamageableLayer.getNullInstance():
+            if java_predicate(self, "isStickyItemSelected") and associatedRtsLayer == CollidableDestroyableDamageableLayer.getNullInstance():
                 geographicMapCompositeInterface: GeographicMapCompositeInterface = layerManager
                 geographicMapInterface: BasicGeographicMap = geographicMapCompositeInterface.getGeographicMapInterface()[0]
                 allBinaryTiledLayer: AllBinaryTiledLayer = geographicMapInterface.getAllBinaryTiledLayer()
@@ -95,10 +108,10 @@ class WaypointRTSFormInput(RTSFormInput):
                 geographicMapCellPosition: GeographicMapCellPosition = geographicMapInterface.getCellPositionAtXY(x, y)
                 self.processCellPosition(rtsPlayerLayerInterface, layerManager, geographicMapCellPosition)
             else:
-                if not rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface():
+                if not (rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface()):
                     GameNotificationEventHandler.getInstance().fireEvent(self.dragToSpotGameNotificationEvent)
         else:
-            if not rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface():
+            if not (rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface()):
                 GameNotificationEventHandler.getInstance().fireEvent(self.spotTakenGameNotificationEvent)
     
 
@@ -172,7 +185,7 @@ class WaypointRTSFormInput(RTSFormInput):
         list_: BasicArrayList = geographicMapCellPositionArea.getOccupyingGeographicMapCellPositionList()
         if DropCellPositionHistory.getInstance().anyCellPositionWithDrop(list_) or WaypointCellPositionHistory.getInstance().anyCellPositionWithDrop(list_):
             rtsPlayerLayerInterface.add(ErrorSound.getInstance())
-            if not rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface():
+            if not (rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface()):
                 GameNotificationEventHandler.getInstance().fireEvent(self.buildingCollisionGameNotificationEvent)
             return False
         geographicMapCompositeInterface: GeographicMapCompositeInterface = layerManager
@@ -184,7 +197,7 @@ class WaypointRTSFormInput(RTSFormInput):
             geographicMapCellType = geographicMapInterface.getCellTypeAt(list_.get(index))
             if raceTrackGeographicMapCellTypeFactory.isPath(geographicMapCellType):
                 rtsPlayerLayerInterface.add(ErrorSound.getInstance())
-                if not rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface():
+                if not (rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface()):
                     GameNotificationEventHandler.getInstance().fireEvent(self.roadCollisionGameNotificationEvent)
                 return False
         cost: int = layerInterface.getCost()
@@ -212,12 +225,12 @@ class WaypointRTSFormInput(RTSFormInput):
             layerManager.append(layerInterface)
             waypointAvancedRTSGameLayer: AdvancedRTSGameLayer = waypointLayer
             rtsPlayerLayerInterface.add(waypointAvancedRTSGameLayer.getWaypointBehavior().getWaypoint().getSound())
-            if not rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface():
+            if not (rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface()):
                 GameNotificationEventHandler.getInstance().fireEvent(self.newWaypointGameNotificationEvent)
             return True
         else:
             rtsPlayerLayerInterface.add(ErrorSound.getInstance())
-            if not rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface():
+            if not (rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface()):
                 GameNotificationEventHandler.getInstance().fireEvent(self.noMoneyGameNotificationEvent)
             return False
     

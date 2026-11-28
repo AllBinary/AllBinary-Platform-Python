@@ -15,10 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.graphics.opengles.shader.ShaderComposite import ShaderComposite
 
 
+@java_inherited_overloads
 class NullShaderComposite(ShaderComposite):
     instance: NullShaderComposite = None
     
@@ -48,13 +50,8 @@ def _NullShaderComposite_instance() -> object:
     from javax.microedition.khronos.opengles.GL10 import GL10
     from org.allbinary.graphics.opengles.NullOpenGLProcessorFactory import NullOpenGLProcessorFactory
     from org.allbinary.graphics.opengles.OpenGLCapabilities import OpenGLCapabilities
-    return (NullShaderComposite(OpenGLCapabilities.getInstance().VERSION_2_0, [Shader(), Shader()], CompositeShaderUpdater.getInstance(), ShaderInitializer.getInstance(), ModelViewProjection.getInstance(), NullOpenGLProcessorFactory.getInstance(), NullOpenGLProcessorFactory.getInstance(), NullOpenGLProcessorFactory.getInstance())  # Java anonymous class body:
-#         
-# 
-#         def init(self, gl: GL10) -> None:
-#             from javax.microedition.khronos.opengles.GL10 import GL10
-#             pass
-)
+    return _JavaListenerN65746(OpenGLCapabilities.getInstance().VERSION_2_0, [Shader(), Shader()], CompositeShaderUpdater.getInstance(), ShaderInitializer.getInstance(), ModelViewProjection.getInstance(), NullOpenGLProcessorFactory.getInstance(), NullOpenGLProcessorFactory.getInstance(), NullOpenGLProcessorFactory.getInstance())
+            
 
 lazy_static(NullShaderComposite, "instance", _NullShaderComposite_instance)
 

@@ -15,26 +15,35 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.game.behavior.topview.GeographicMapTopViewLayerBehavior import GeographicMapTopViewLayerBehavior
 
 
+@java_inherited_overloads
 class GeographicMapTopViewGameLayerBehavior2(GeographicMapTopViewLayerBehavior):
+    def _java_defaults(self):
+        vars(self).setdefault("gravityUtil", None)
+        vars(self).setdefault("geographicMapBehavior", None)
+        vars(self).setdefault("autoStepBlocks", False)
+        vars(self).setdefault("offsetY", 0)
+        vars(self).setdefault("previousGeographicMapCellPosition", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.media.graphics.geography.map.MultiGeographicMapBehavior import MultiGeographicMapBehavior
         from org.allbinary.game.physics.acceleration.GravityUtil import GravityUtil
-        from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         from org.allbinary.media.graphics.geography.map.SimpleGeographicMapCellPositionFactory import SimpleGeographicMapCellPositionFactory
         self.gravityUtil: GravityUtil = GravityUtil.getInstance()
         self.geographicMapBehavior: MultiGeographicMapBehavior = MultiGeographicMapBehavior()
-        self.autoStepBlocks: bool = None
-        self.offsetY: int = None
+        if "autoStepBlocks" not in vars(self): self.autoStepBlocks: bool = False
+        if "offsetY" not in vars(self): self.offsetY: int = 0
         self.previousGeographicMapCellPosition: GeographicMapCellPosition = SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION
     
 
     def __init__(self, maxGravityActionIndex: int, autoStepBlocks: bool, offsetY: int) -> None:
+        __class__._java_defaults(self)
         super().__init__(maxGravityActionIndex)
-        self._init_fields()
+        __class__._init_fields(self)
         self.autoStepBlocks = autoStepBlocks
         self.offsetY = offsetY
     
@@ -49,12 +58,16 @@ class GeographicMapTopViewGameLayerBehavior2(GeographicMapTopViewLayerBehavior):
         if geographicMapCellPosition != SimpleGeographicMapCellPositionFactory.NULL_GEOGRAPHIC_MAP_CELL_POSITION:
             self.geographicMapBehavior.getCellTypeAt(geographicMapInterfaceArray, geographicMapCellTypeArray, geographicMapCellPosition)
             hasSolidBlock: bool = self.hasSolidBlock(geographicMapInterfaceArray, geographicMapCellTypeArray)
-            if not hasSolidBlock:
+            if not (hasSolidBlock):
                 self.gravityUtil.process(velocityProperties, self.gravityUtil.GAME_GRAVITY_VELOCITY)
                 velocityProperties.limitXYToForwardAndReverseMaxVelocity()
                 self.gravity()
             else:
                 pass
+    _declared_gravity = gravity
+    def gravity(self, *args, **kwargs):
+        if len(args) + len(kwargs) == 4 and (kwargs or (True and (args[0] is None or any(base.__name__ == "VelocityProperties" for base in type(args[0]).__mro__)) and (args[1] is None or isinstance(args[1], list)) and (args[2] is None or isinstance(args[2], list)) and (args[3] is None or any(base.__name__ == "GeographicMapCellPosition" for base in type(args[3]).__mro__)))): return __class__._declared_gravity(self, *args, **kwargs)
+        return super().gravity(*args, **kwargs)
     
 
     # throws Exception

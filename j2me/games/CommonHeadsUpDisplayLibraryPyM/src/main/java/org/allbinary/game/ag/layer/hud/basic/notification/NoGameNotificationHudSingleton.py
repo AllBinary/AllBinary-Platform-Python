@@ -36,7 +36,7 @@ class NoGameNotificationHudSingleton:
         from org.allbinary.game.ag.layer.hud.basic.notification.NoGameGameNotificationHud import NoGameGameNotificationHud
         from org.allbinary.game.graphics.hud.BasicHudFactory import BasicHudFactory
         from org.allbinary.string.CommonStrings import CommonStrings
-        self._init_fields()
+        __class__._init_fields(self)
         try:
             basicHudFactory: BasicHudFactory = BasicHudFactory.getInstance()
             self.gameNotificationHud = NoGameGameNotificationHud()

@@ -21,15 +21,14 @@ from org.allbinary.logic.math.vector.MathVectorInterface import MathVectorInterf
 class MathVector(MathVectorInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.logic.math.BasicDecimal import BasicDecimal
-        self.magnitudeBasicDecimal: BasicDecimal = None
-        self.direction: int = None
-        self.resultBasicDecimal: BasicDecimal = None
+        if "magnitudeBasicDecimal" not in vars(self): self.magnitudeBasicDecimal: BasicDecimal = None
+        if "direction" not in vars(self): self.direction: int = 0
+        if "resultBasicDecimal" not in vars(self): self.resultBasicDecimal: BasicDecimal = None
     
 
     def __init__(self, magnitudeBasicDecimal: BasicDecimal, direction: int) -> None:
         from org.allbinary.logic.math.BasicDecimal import BasicDecimal
-        self._init_fields()
+        __class__._init_fields(self)
         self.magnitudeBasicDecimal = magnitudeBasicDecimal
         self.direction = direction
     

@@ -20,15 +20,15 @@ from __future__ import annotations
 class TableSearchRequest:
 
     def _init_fields(self) -> None:
-        self.xslFile: str = None
-        self.pageName: str = None
-        self.contentType: str = None
-        self.keywords: str = None
-        self.searchParams: SearchParams = None
+        if "xslFile" not in vars(self): self.xslFile: str = None
+        if "pageName" not in vars(self): self.pageName: str = None
+        if "contentType" not in vars(self): self.contentType: str = None
+        if "keywords" not in vars(self): self.keywords: str = None
+        if "searchParams" not in vars(self): self.searchParams: SearchParams = None
     
 
     def __init__(self, keywords: str, searchParams: SearchParams, xslFile: str, contentType: str) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.keywords = keywords
         self.searchParams = searchParams
         self.xslFile = xslFile
@@ -82,6 +82,7 @@ class TableSearchRequest:
 
     # throws Exception
     def getFileBaseNameNode(self, document: Document) -> Node:
+        from org.allbinary.logic.control.search.SearchData import SearchData
         from org.allbinary.data.tree.dom.ModDomHelper import ModDomHelper
         from org.w3c.dom.Document import Document
         from org.w3c.dom.Node import Node

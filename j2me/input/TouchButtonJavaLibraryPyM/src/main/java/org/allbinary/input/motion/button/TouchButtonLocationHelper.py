@@ -16,31 +16,32 @@
 from __future__ import annotations
 
 import math
+from java.lang.JavaRuntimeStatic import java_divide
 
 
 class TouchButtonLocationHelper:
 
     def _init_fields(self) -> None:
-        self.totalColumns: int = None
-        self.totalRows: int = None
-        self.columnsRemainder: int = None
-        self.rowsRemainder: int = None
-        self.columnsRemainderHalf: int = None
-        self.rowsRemainderHalf: int = None
+        if "totalColumns" not in vars(self): self.totalColumns: int = 0
+        if "totalRows" not in vars(self): self.totalRows: int = 0
+        if "columnsRemainder" not in vars(self): self.columnsRemainder: int = 0
+        if "rowsRemainder" not in vars(self): self.rowsRemainder: int = 0
+        if "columnsRemainderHalf" not in vars(self): self.columnsRemainderHalf: int = 0
+        if "rowsRemainderHalf" not in vars(self): self.rowsRemainderHalf: int = 0
     
 
     def __init__(self) -> None:
         from org.allbinary.input.motion.button.CommonButtons import CommonButtons
         from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-        self._init_fields()
+        __class__._init_fields(self)
         buttonSize: int = CommonButtons.getInstance().STANDARD_BUTTON_SIZE
         displayInfo: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
         self.totalColumns = int(math.floor(float(displayInfo.getLastWidth()) / float(buttonSize) + 0.5))
         self.totalRows = int(math.floor(float(displayInfo.getLastHeight()) / float(buttonSize) + 0.5))
         self.columnsRemainder = displayInfo.getLastWidth() % buttonSize
-        self.columnsRemainderHalf = (self.columnsRemainder >> 1)
+        self.columnsRemainderHalf = (int(self.columnsRemainder) >> (int(1) & 31))
         self.rowsRemainder = displayInfo.getLastHeight() % buttonSize
-        self.rowsRemainderHalf = (self.rowsRemainder >> 1)
+        self.rowsRemainderHalf = (int(self.rowsRemainder) >> (int(1) & 31))
     
 
     def getTotalColumns(self) -> int:

@@ -15,13 +15,24 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.layer.PlayerOwnedRTSLayers import PlayerOwnedRTSLayers
 
 
+@java_inherited_overloads
 class AdvancedPlayerOwnedRTSLayers(PlayerOwnedRTSLayers):
+    def _java_defaults(self):
+        vars(self).setdefault("unitsList", None)
+        vars(self).setdefault("waypointsList", None)
+        vars(self).setdefault("buildingList", None)
+        vars(self).setdefault("baseList", None)
+        vars(self).setdefault("garrisonList", None)
+        vars(self).setdefault("houseList", None)
+        vars(self).setdefault("labList", None)
+        vars(self).setdefault("factoryList", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.unitsList: BasicArrayList = BasicArrayListD()
         self.waypointsList: BasicArrayList = BasicArrayListD()
@@ -33,8 +44,9 @@ class AdvancedPlayerOwnedRTSLayers(PlayerOwnedRTSLayers):
         self.factoryList: BasicArrayList = BasicArrayListD()
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def addUnit(self, rtsLayer: RTSLayer) -> None:
@@ -143,7 +155,7 @@ class AdvancedPlayerOwnedRTSLayers(PlayerOwnedRTSLayers):
     def toString(self) -> str:
         from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
-        stringBuffer.append(str(super()))
+        stringBuffer.append(java_super_call(super(), "toString"))
         stringBuffer.append(" Bases: ")
         stringBuffer.appendint(self.getBaseList().size())
         stringBuffer.append(" Factory: ")

@@ -15,14 +15,20 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.animation.image.BaseImageAnimationFactory import BaseImageAnimationFactory
 
 
+@java_inherited_overloads
 class AllBinaryJ2SEImageRotationAnimationFactory(BaseImageAnimationFactory):
+    def _java_defaults(self):
+        vars(self).setdefault("angleIncrementP", 0)
+        vars(self).setdefault("resizeCanvasForRotation", False)
 
     def _init_fields(self) -> None:
-        self.angleIncrementP: int = None
-        self.resizeCanvasForRotation: bool = None
+        if "angleIncrementP" not in vars(self): self.angleIncrementP: int = 0
+        if "resizeCanvasForRotation" not in vars(self): self.resizeCanvasForRotation: bool = False
     
 
     # throws Exception
@@ -39,11 +45,12 @@ class AllBinaryJ2SEImageRotationAnimationFactory(BaseImageAnimationFactory):
     
 
     def __init__(self, image: Image, width: int, height: int, angleIncrement: int, animationBehaviorFactory: AnimationBehaviorFactory, resizeCanvasForRotation: bool) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
         from org.allbinary.logic.math.PrimitiveIntUtil import PrimitiveIntUtil
         super().__init__(image, PrimitiveIntUtil.getArrayInstance(), width, height, 0, 0, animationBehaviorFactory)
-        self._init_fields()
+        __class__._init_fields(self)
         self.angleIncrementP = angleIncrement
         self.resizeCanvasForRotation = resizeCanvasForRotation
     
@@ -55,7 +62,7 @@ class AllBinaryJ2SEImageRotationAnimationFactory(BaseImageAnimationFactory):
         from org.allbinary.graphics.opengles.OpenGLFeatureFactory import OpenGLFeatureFactory
         from org.allbinary.media.image.ImageCopyUtil import ImageCopyUtil
         features: Features = Features.getInstance()
-        if self.resizeCanvasForRotation and not features.isDefault(OpenGLFeatureFactory.getInstance().OPENGL):
+        if self.resizeCanvasForRotation and not (features.isDefault(OpenGLFeatureFactory.getInstance().OPENGL)):
             return ImageCopyUtil.getInstance().createImageScale(self.getImage(), 1.44, False)
         else:
             return self.getImage()

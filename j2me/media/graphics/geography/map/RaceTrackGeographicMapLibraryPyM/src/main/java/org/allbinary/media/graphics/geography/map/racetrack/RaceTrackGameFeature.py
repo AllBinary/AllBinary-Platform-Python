@@ -15,10 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.configuration.feature.GameFeature import GameFeature
 
 
+@java_inherited_overloads
 class RaceTrackGameFeature(GameFeature):
     MINI_MAP: GameFeature = None
     AUTO_FINISH_AI: GameFeature = None

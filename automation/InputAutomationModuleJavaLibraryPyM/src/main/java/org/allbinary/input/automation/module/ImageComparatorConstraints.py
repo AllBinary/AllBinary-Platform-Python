@@ -15,23 +15,23 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.media.image.comparison.ImageComparatorConstraintsInterface import ImageComparatorConstraintsInterface
 
 
 class ImageComparatorConstraints(ImageComparatorConstraintsInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.avoidVector: BasicArrayList = None
-        self.maxNonMatchingPixelDeltas: int = 0
-        self.doImageComparisonEveryNthFrame: int = None
+        if "avoidVector" not in vars(self): self.avoidVector: BasicArrayList = None
+        if "maxNonMatchingPixelDeltas" not in vars(self): self.maxNonMatchingPixelDeltas: int = 0
+        if "doImageComparisonEveryNthFrame" not in vars(self): self.doImageComparisonEveryNthFrame: int = 0
     
 
     def __init__(self, doImageComparisonEveryNthFrame: int) -> None:
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
-        self._init_fields()
+        __class__._init_fields(self)
         self.doImageComparisonEveryNthFrame = doImageComparisonEveryNthFrame
         self.setAvoidVector(BasicArrayListD())
     
@@ -76,11 +76,13 @@ class ImageComparatorConstraints(ImageComparatorConstraintsInterface):
         return isCollsionWithAvoidRectangles
 
     def isCollisionWithAvoidRectangles(self, *args):
-        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
-            return self.isCollisionWithAvoidRectangles_j1_1(*args)
+        if len(args) == 1 and True and (args[0] is None or any(base.__name__ == "Rectangle" for base in type(args[0]).__mro__)):
+            return __class__.__dict__["isCollisionWithAvoidRectangles_j1_1"].__get__(self, __class__)(*args)
         if len(args) == 1:
-            return self.isCollisionWithAvoidRectangles_j1_2(*args)
-        return getattr(self, "isCollisionWithAvoidRectangles_j" + str(len(args)))(*args)
+            return __class__.__dict__["isCollisionWithAvoidRectangles_j1_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("isCollisionWithAvoidRectangles_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().isCollisionWithAvoidRectangles(*args)
     
 
     def setAvoidVector(self, avoidVector: BasicArrayList) -> None:

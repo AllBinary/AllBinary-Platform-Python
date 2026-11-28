@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.input.PCGameInputMapping import PCGameInputMapping
 
 
+@java_inherited_overloads
 class MotionLaptopGameInputMapping(PCGameInputMapping):
 
     def __init__(self) -> None:

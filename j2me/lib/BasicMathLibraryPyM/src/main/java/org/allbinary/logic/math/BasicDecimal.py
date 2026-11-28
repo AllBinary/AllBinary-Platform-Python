@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -22,8 +23,8 @@ class BasicDecimal:
     ZERO_BIGDECIMAL: BasicDecimal = None
 
     def _init_fields(self) -> None:
-        self.units: int = None
-        self.scaled: int = 0
+        if "units" not in vars(self): self.units: int = 0
+        if "scaled" not in vars(self): self.scaled: int = 0
         self.factor: int = ScaleFactorFactory.getInstance().DEFAULT_SCALE_FACTOR
         self.factorValue: int = ScaleFactorFactory.getInstance().DEFAULT_SCALE_VALUE
     
@@ -34,7 +35,7 @@ class BasicDecimal:
     
 
     def __init__(self, units: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.units = units
         self.updateScaled()
     
@@ -110,7 +111,8 @@ class BasicDecimal:
     
 
     def divide(self, bigDecimal: BasicDecimal) -> None:
-        self.units = self.units / bigDecimal.getUnscaled()
+        self.units = java_divide(self.units, bigDecimal.getUnscaled())
+            
         self.updateScaled()
     
 

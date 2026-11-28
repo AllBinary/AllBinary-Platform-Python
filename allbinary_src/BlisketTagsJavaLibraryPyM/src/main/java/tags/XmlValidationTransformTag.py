@@ -15,10 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from tags.TransformTag import TransformTag
 
 
+@java_inherited_overloads
 class XmlValidationTransformTag(TransformTag):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -26,8 +32,9 @@ class XmlValidationTransformTag(TransformTag):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -51,11 +58,11 @@ class XmlValidationTransformTag(TransformTag):
         from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
         try:
             self.setHelper()
-            if self.isValid():
-                super().doStartTag()
+            if java_predicate(self, "isValid"):
+                java_super_call(super(), "doStartTag")
                 return self.EVAL_BODY_INCLUDE
             else:
-                super().doStartTag()
+                java_super_call(super(), "doStartTag")
                 return self.SKIP_BODY
         except LicensingException as e:
             AbResponseHandler.sendJspTagLicensingRedirect(self.pageContext, e)

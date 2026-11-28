@@ -21,27 +21,26 @@ from org.allbinary.business.category.hierarchy.CategoryHierarchyInterface import
 class CategoryHierarchy(CategoryHierarchyInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.category.CategoryInterface import CategoryInterface
-        self.rootCategoryInterface: CategoryInterface = None
-        self.parentCategoryInterface: CategoryInterface = None
-        self.level: int = None
+        if "rootCategoryInterface" not in vars(self): self.rootCategoryInterface: CategoryInterface = None
+        if "parentCategoryInterface" not in vars(self): self.parentCategoryInterface: CategoryInterface = None
+        if "level" not in vars(self): self.level: int = 0
 
     def __init__(self, *args) -> None:
         if len(args) == 2:
-            self._constructor2(*args)
+            __class__._constructor2(self, *args)
         elif len(args) == 3:
-            self.__jconstructor3(*args)
+            __class__.__jconstructor3(self, *args)
 
     def __jconstructor3(self, *args) -> None:
-        if True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)) and isinstance(args[2], int) and not isinstance(args[2], bool):
-            self._constructor3_1(*args)
+        if True and (args[0] is None or any(base.__name__ == "CategoryInterface" for base in type(args[0]).__mro__)) and (args[1] is None or any(base.__name__ == "CategoryInterface" for base in type(args[1]).__mro__)) and isinstance(args[2], int) and not isinstance(args[2], bool):
+            __class__._constructor3_1(self, *args)
         else:
-            self._constructor3_2(*args)
+            __class__._constructor3_2(self, *args)
     
 
     def _constructor2(self, rootCategoryInterface: CategoryInterface, parentCategoryInterface: CategoryInterface) -> None:
         from org.allbinary.business.category.CategoryInterface import CategoryInterface
-        self._init_fields()
+        __class__._init_fields(self)
         self.level = 0
         self.setRoot(rootCategoryInterface)
         self.setParent(parentCategoryInterface)
@@ -49,7 +48,7 @@ class CategoryHierarchy(CategoryHierarchyInterface):
 
     def _constructor3_1(self, rootCategoryInterface: CategoryInterface, parentCategoryInterface: CategoryInterface, level: int) -> None:
         from org.allbinary.business.category.CategoryInterface import CategoryInterface
-        self._init_fields()
+        __class__._init_fields(self)
         self.level = level
         self.setRoot(rootCategoryInterface)
         self.setParent(parentCategoryInterface)
@@ -60,7 +59,7 @@ class CategoryHierarchy(CategoryHierarchyInterface):
         from org.allbinary.business.category.CategoryData import CategoryData
         from org.allbinary.business.category.CategoryInterface import CategoryInterface
         from org.allbinary.logic.string.StringUtil import StringUtil
-        self._init_fields()
+        __class__._init_fields(self)
         levelString: str = StringUtil.getInstance().getNonNull(categoryPropertiesHashMap.get(CategoryData.getInstance().LEVEL))
         self.level = int(str(levelString))
         self.setRoot(rootCategoryInterface)

@@ -23,16 +23,16 @@ class FREEBLISKET_PATH_GLOBALS:
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.io.path.AbPathData import AbPathData
-        self.INSTALLPATH: str = None
-        self.XSLPATH: str = None
+        if "INSTALLPATH" not in vars(self): self.INSTALLPATH: str = None
+        if "XSLPATH" not in vars(self): self.XSLPATH: str = None
         self.TEMPLATEPATH: str = "template" + str(AbPathData.getInstance().SEPARATOR)
         self.STYLEPATH: str = self.TEMPLATEPATH + "style" + str(AbPathData.getInstance().SEPARATOR)
         self.THEMEPATH: str = self.STYLEPATH + "theme" + str(AbPathData.getInstance().SEPARATOR)
-        self.DBINITPATH: str = str(self.PATH_GLOBALS.getInstance().INIT_PATH) + "db" + str(AbPathData.getInstance().SEPARATOR)
-        self.LINEDATAPATH: str = str(self.PATH_GLOBALS.getInstance().INIT_PATH) + "lineData" + str(AbPathData.getInstance().SEPARATOR)
-        self.CONFIGURATIONPATH: str = None
-        self.USERCONFIGURATIONPATH: str = None
-        self.CONTEXTCONFIGURATIONPATH: str = None
+        self.DBINITPATH: str = str(PATH_GLOBALS.getInstance().INIT_PATH) + "db" + str(AbPathData.getInstance().SEPARATOR)
+        self.LINEDATAPATH: str = str(PATH_GLOBALS.getInstance().INIT_PATH) + "lineData" + str(AbPathData.getInstance().SEPARATOR)
+        if "CONFIGURATIONPATH" not in vars(self): self.CONFIGURATIONPATH: str = None
+        if "USERCONFIGURATIONPATH" not in vars(self): self.USERCONFIGURATIONPATH: str = None
+        if "CONTEXTCONFIGURATIONPATH" not in vars(self): self.CONTEXTCONFIGURATIONPATH: str = None
         self.LICENSEERRORPAGE: str = "LicensingError.jsp"
         self.ERRORPAGE: str = "Error.jsp"
     
@@ -43,15 +43,16 @@ class FREEBLISKET_PATH_GLOBALS:
     
 
     def __init__(self) -> None:
+        from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
         from org.allbinary.logic.io.path.AbPathData import AbPathData
         from org.allbinary.logic.string.StringMaker import StringMaker
-        self._init_fields()
+        __class__._init_fields(self)
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("install")
         stringBuffer.append(AbPathData.getInstance().SEPARATOR)
         self.INSTALLPATH = str(stringBuffer)
         stringBuffer.delete(0, stringBuffer.length())
-        stringBuffer.append(self.PATH_GLOBALS.getInstance().INIT_PATH)
+        stringBuffer.append(PATH_GLOBALS.getInstance().INIT_PATH)
         stringBuffer.append("views")
         stringBuffer.append(AbPathData.getInstance().SEPARATOR)
         self.XSLPATH = str(stringBuffer)
@@ -73,6 +74,7 @@ class FREEBLISKET_PATH_GLOBALS:
         stringBuffer.delete(0, stringBuffer.length())
 # from org.allbinary.logic.io.path.AbPathData import AbPathData
 # from org.allbinary.logic.string.StringMaker import StringMaker
+from org.allbinary.globals.PATH_GLOBALS import PATH_GLOBALS
 
 
 def _FREEBLISKET_PATH_GLOBALS_instance() -> object:

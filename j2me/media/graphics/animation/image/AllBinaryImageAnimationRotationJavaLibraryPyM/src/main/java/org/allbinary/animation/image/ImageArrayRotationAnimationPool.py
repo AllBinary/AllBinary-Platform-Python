@@ -15,10 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.util.cache.BasicArrayListResetablePool import BasicArrayListResetablePool
 
 
+@java_inherited_overloads
 class ImageArrayRotationAnimationPool(BasicArrayListResetablePool):
     IMAGE_ROTATION_ANIMATION_POOL: PoolInterface = None
     
@@ -37,7 +40,7 @@ class ImageArrayRotationAnimationPool(BasicArrayListResetablePool):
     # throws Exception
     def remove(self, key: object) -> CacheableInterface:
         from org.allbinary.logic.util.cache.CacheableInterface import CacheableInterface
-        cacheableInterface: CacheableInterface = super().remove(key)
+        cacheableInterface: CacheableInterface = java_super_call(super(), "remove", key)
         allBinaryImageRotationAnimationInfo: ImageArrayRotationAnimationInfo = key
         imageArrayRotationAnimationCacheable: ImageArrayRotationAnimationCacheable = (cacheableInterface)
         imageArrayRotationAnimationCacheable.setImageArray(allBinaryImageRotationAnimationInfo.getImageArray())

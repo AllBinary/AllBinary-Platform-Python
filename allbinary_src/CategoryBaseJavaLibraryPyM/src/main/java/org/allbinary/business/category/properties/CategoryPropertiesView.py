@@ -21,11 +21,11 @@ from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 class CategoryPropertiesView(DomNodeInterface):
 
     def _init_fields(self) -> None:
-        self.categoryPropertiesInterface: CategoryPropertiesInterface = None
+        if "categoryPropertiesInterface" not in vars(self): self.categoryPropertiesInterface: CategoryPropertiesInterface = None
     
 
     def __init__(self, categoryPropertiesInterface: CategoryPropertiesInterface) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.categoryPropertiesInterface = categoryPropertiesInterface
     
 

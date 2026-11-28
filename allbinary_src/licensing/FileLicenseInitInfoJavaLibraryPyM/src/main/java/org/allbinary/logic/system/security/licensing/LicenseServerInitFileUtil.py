@@ -15,12 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 
 
 class LicenseServerInitFileUtil:
 
     def _init_fields(self) -> None:
-        from java.io.OutputStream import OutputStream
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.logic.io.file.SimpleFileUtil import SimpleFileUtil
         from org.allbinary.string.CommonStrings import CommonStrings
@@ -29,7 +29,7 @@ class LicenseServerInitFileUtil:
         self.NULL_OUTPUT_STREAM: OutputStream = SimpleFileUtil.nullOutputStream()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def init(self) -> None:

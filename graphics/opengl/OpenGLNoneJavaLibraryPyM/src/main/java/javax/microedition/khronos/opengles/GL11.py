@@ -3,10 +3,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from javax.microedition.khronos.opengles.GL10 import GL10
 
 
 # Java interface
+@java_inherited_overloads
 class GL11(GL10):
     GL_ACTIVE_TEXTURE: int = 34016
     GL_ADD_SIGNED: int = 34164
@@ -152,7 +154,9 @@ class GL11(GL10):
         raise NotImplementedError()
 
     def glClipPlanef(self, *args):
-        return getattr(self, "glClipPlanef_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glClipPlanef_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glClipPlanef(*args)
     
 
     def glColor4ub(self, red: int, green: int, blue: int, alpha: int) -> None:
@@ -171,7 +175,9 @@ class GL11(GL10):
         raise NotImplementedError()
 
     def glDeleteBuffers(self, *args):
-        return getattr(self, "glDeleteBuffers_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glDeleteBuffers_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glDeleteBuffers(*args)
     
 
     def glDrawElements(self, mode: int, count: int, type_: int, offset: int) -> None:
@@ -186,7 +192,9 @@ class GL11(GL10):
         raise NotImplementedError()
 
     def glGenBuffers(self, *args):
-        return getattr(self, "glGenBuffers_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glGenBuffers_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glGenBuffers(*args)
     
 
     def glGetBufferParameteriv_j4(self, target: int, pname: int, params: list[int], offset: int) -> None:
@@ -197,7 +205,9 @@ class GL11(GL10):
         raise NotImplementedError()
 
     def glGetBufferParameteriv(self, *args):
-        return getattr(self, "glGetBufferParameteriv_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glGetBufferParameteriv_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glGetBufferParameteriv(*args)
     
 
     def glGetClipPlanef_j3(self, pname: int, eqn: list[float], offset: int) -> None:
@@ -208,7 +218,9 @@ class GL11(GL10):
         raise NotImplementedError()
 
     def glGetClipPlanef(self, *args):
-        return getattr(self, "glGetClipPlanef_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glGetClipPlanef_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glGetClipPlanef(*args)
     
 
     def glGetFloatv_j3(self, pname: int, params: list[float], offset: int) -> None:
@@ -219,7 +231,9 @@ class GL11(GL10):
         raise NotImplementedError()
 
     def glGetFloatv(self, *args):
-        return getattr(self, "glGetFloatv_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glGetFloatv_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glGetFloatv(*args)
     
 
     def glGetLightfv_j4(self, light: int, pname: int, params: list[float], offset: int) -> None:
@@ -230,7 +244,9 @@ class GL11(GL10):
         raise NotImplementedError()
 
     def glGetLightfv(self, *args):
-        return getattr(self, "glGetLightfv_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glGetLightfv_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glGetLightfv(*args)
     
 
     def glGetMaterialfv_j4(self, face: int, pname: int, params: list[float], offset: int) -> None:
@@ -241,7 +257,9 @@ class GL11(GL10):
         raise NotImplementedError()
 
     def glGetMaterialfv(self, *args):
-        return getattr(self, "glGetMaterialfv_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glGetMaterialfv_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glGetMaterialfv(*args)
     
 
     def glGetTexEnviv_j4(self, env: int, pname: int, params: list[int], offset: int) -> None:
@@ -252,7 +270,9 @@ class GL11(GL10):
         raise NotImplementedError()
 
     def glGetTexEnviv(self, *args):
-        return getattr(self, "glGetTexEnviv_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glGetTexEnviv_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glGetTexEnviv(*args)
     
 
     def glGetTexParameterfv_j4(self, target: int, pname: int, params: list[float], offset: int) -> None:
@@ -263,7 +283,9 @@ class GL11(GL10):
         raise NotImplementedError()
 
     def glGetTexParameterfv(self, *args):
-        return getattr(self, "glGetTexParameterfv_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glGetTexParameterfv_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glGetTexParameterfv(*args)
     
 
     def glGetTexParameteriv_j4(self, target: int, pname: int, params: list[int], offset: int) -> None:
@@ -274,7 +296,9 @@ class GL11(GL10):
         raise NotImplementedError()
 
     def glGetTexParameteriv(self, *args):
-        return getattr(self, "glGetTexParameteriv_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glGetTexParameteriv_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glGetTexParameteriv(*args)
     
 
     def glIsBuffer(self, buffer: int) -> bool:
@@ -305,7 +329,9 @@ class GL11(GL10):
         raise NotImplementedError()
 
     def glPointParameterfv(self, *args):
-        return getattr(self, "glPointParameterfv_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glPointParameterfv_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glPointParameterfv(*args)
     
 
     def glTexCoordPointer(self, size: int, type_: int, stride: int, offset: int) -> None:
@@ -324,7 +350,9 @@ class GL11(GL10):
         raise NotImplementedError()
 
     def glTexEnviv(self, *args):
-        return getattr(self, "glTexEnviv_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glTexEnviv_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glTexEnviv(*args)
     
 
     def glTexParameterfv_j4(self, target: int, pname: int, params: list[float], offset: int) -> None:
@@ -335,7 +363,9 @@ class GL11(GL10):
         raise NotImplementedError()
 
     def glTexParameterfv(self, *args):
-        return getattr(self, "glTexParameterfv_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glTexParameterfv_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glTexParameterfv(*args)
     
 
     def glTexParameteriv_j4(self, target: int, pname: int, params: list[int], offset: int) -> None:
@@ -346,7 +376,9 @@ class GL11(GL10):
         raise NotImplementedError()
 
     def glTexParameteriv(self, *args):
-        return getattr(self, "glTexParameteriv_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("glTexParameteriv_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().glTexParameteriv(*args)
     
 
     def glVertexPointer(self, size: int, type_: int, stride: int, offset: int) -> None:

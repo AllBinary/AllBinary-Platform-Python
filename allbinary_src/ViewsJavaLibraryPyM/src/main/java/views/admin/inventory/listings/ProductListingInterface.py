@@ -31,6 +31,8 @@ class ProductListingInterface:
         raise NotImplementedError()
 
     def generateAll(self, *args):
-        return getattr(self, "generateAll_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("generateAll_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().generateAll(*args)
 
 

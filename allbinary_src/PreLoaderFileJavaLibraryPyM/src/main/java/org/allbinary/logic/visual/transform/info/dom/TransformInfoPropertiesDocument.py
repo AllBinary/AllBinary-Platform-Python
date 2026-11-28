@@ -21,15 +21,14 @@ class TransformInfoPropertiesDocument:
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.w3c.dom.Document import Document
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.document: Document = None
+        if "document" not in vars(self): self.document: Document = None
     
 
     def __init__(self, filePath: str) -> None:
         from org.allbinary.data.tree.dom.document.DomDocumentFileHelper import DomDocumentFileHelper
         from org.allbinary.logic.io.file.AbFile import AbFile
-        self._init_fields()
+        __class__._init_fields(self)
         xmlFile: AbFile = AbFile.createAbFile(filePath)
         self.document = DomDocumentFileHelper.createDocument(xmlFile)
     

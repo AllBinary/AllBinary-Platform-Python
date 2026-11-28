@@ -15,22 +15,29 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.graphics.hud.BasicHud import BasicHud
 
 
 #super.paint(graphics, positionString, currentPostString, offset2, offset);
+@java_inherited_overloads
 class PositionWidget(BasicHud):
+    def _java_defaults(self):
+        vars(self).setdefault("position", 0)
+        vars(self).setdefault("positionString", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.string.StringUtil import StringUtil
-        self.position: int = 0
+        if "position" not in vars(self): self.position: int = 0
         self.positionString: str = StringUtil.getInstance().EMPTY_STRING
     
 
     def __init__(self, position: int, location: int, direction: int, basicColor: BasicColor) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(location, direction, 2, basicColor)
-        self._init_fields()
+        __class__._init_fields(self)
         self.updateMaxHeight = 10
         self.updateMaxWidth = 40
     
@@ -46,7 +53,7 @@ class PositionWidget(BasicHud):
 
     def paint(self, graphics: Graphics) -> None:
         from javax.microedition.lcdui.Graphics import Graphics
-        super().paintString(graphics, self.positionString)
+        java_super_call(super(), "paintString", graphics, self.positionString)
     
 
     @staticmethod

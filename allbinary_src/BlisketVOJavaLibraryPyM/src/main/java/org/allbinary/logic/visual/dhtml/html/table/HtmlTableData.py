@@ -37,7 +37,7 @@ class HtmlTableData:
         self.FRAMES: list[str] = [self.NONE, self.TOP, self.BOTTOM, self.TOPBOT, self.SIDES, self.ALL, self.BORDERED]
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

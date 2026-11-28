@@ -21,21 +21,21 @@ from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 class TimeCreatedView(DomNodeInterface):
 
     def _init_fields(self) -> None:
-        self.timeCreated: TimeCreated = None
+        if "timeCreated" not in vars(self): self.timeCreated: TimeCreated = None
 
     def __init__(self, *args) -> None:
         if len(args) == 1:
-            self.__jconstructor1(*args)
+            __class__.__jconstructor1(self, *args)
 
     def __jconstructor1(self, *args) -> None:
-        if True and not isinstance(args[0], (str, list, int, float)):
-            self._constructor1_1(*args)
+        if True and (args[0] is None or any(base.__name__ == "TimeCreated" for base in type(args[0]).__mro__)):
+            __class__._constructor1_1(self, *args)
         else:
-            self._constructor1_2(*args)
+            __class__._constructor1_2(self, *args)
     
 
     def _constructor1_1(self, timeCreated: TimeCreated) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.setTimeCreated(timeCreated)
     
 
@@ -43,7 +43,7 @@ class TimeCreatedView(DomNodeInterface):
         from org.allbinary.business.time.created.TimeCreated import TimeCreated
         from org.allbinary.data.tree.dom.DomNodeHelper import DomNodeHelper
         from org.w3c.dom.Node import Node
-        self._init_fields()
+        __class__._init_fields(self)
         self.setTimeCreated(TimeCreated(DomNodeHelper.getTextNodeValue(node)))
     
 

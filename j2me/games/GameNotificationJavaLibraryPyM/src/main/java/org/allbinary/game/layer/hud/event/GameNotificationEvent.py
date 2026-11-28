@@ -15,25 +15,32 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
 
 
+@java_inherited_overloads
 class GameNotificationEvent(AllBinaryEventObject):
+    def _java_defaults(self):
+        vars(self).setdefault("string", None)
+        vars(self).setdefault("seconds", None)
+        vars(self).setdefault("basicColor", None)
+        vars(self).setdefault("removeable", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         from org.allbinary.logic.string.StringUtil import StringUtil
         self.string: str = StringUtil.getInstance().EMPTY_STRING
-        self.seconds: int = None
+        if "seconds" not in vars(self): self.seconds: int = None
         self.basicColor: BasicColor = BasicColorFactory.getInstance().BLACK
-        self.removeable: bool = None
+        if "removeable" not in vars(self): self.removeable: bool = None
     
 
     def __init__(self, anyType: object, string: str, seconds: int, basicColor: BasicColor, permanent: bool) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(anyType)
-        self._init_fields()
+        __class__._init_fields(self)
         self.setString(string)
         self.seconds = seconds
         self.setBasicColorP(basicColor)

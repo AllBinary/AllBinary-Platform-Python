@@ -30,7 +30,7 @@ class SoundStrings:
         self.CLOSING_SOUND: str = "Closing Sound: "
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

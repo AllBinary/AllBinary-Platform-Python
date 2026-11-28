@@ -35,7 +35,7 @@ class BlisketServletUtil:
         urlGlobals: AppUrlGlobals = AppUrlGlobals()
         urlGlobals.setWebappPath(request.getServletContext().getRealPath(AbPathData.getInstance().SEPARATOR))
         URLGLOBALS.init(urlGlobals)
-        WebappClassLoaderInfo.setLoader(type(self).getClassLoader())
+        WebappClassLoaderInfo.setLoader(__import__("java.lang.ClassLoader", fromlist=["ClassLoader"]).ClassLoader.getSystemClassLoader())
 # from javax.servlet.http.HttpServletRequest import HttpServletRequest
 # from org.allbinary.globals.AppUrlGlobals import AppUrlGlobals
 # from org.allbinary.globals.URLGLOBALS import URLGLOBALS

@@ -21,15 +21,19 @@ from org.allbinary.data.tables.TableMappingInterface import TableMappingInterfac
 class FtpConfigurationMapping(TableMappingInterface):
 
     def _init_fields(self) -> None:
-        self.ftpConfigurationInterface: FtpConfigurationInterface = None
+        if "ftpConfigurationInterface" not in vars(self): self.ftpConfigurationInterface: FtpConfigurationInterface = None
     
 
     def __init__(self, ftpConfigurationInterface: FtpConfigurationInterface) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.ftpConfigurationInterface = ftpConfigurationInterface
     
 
     def toHashMap(self) -> HashMap:
+        from org.allbinary.logic.communication.ftp.configuration.FtpConfigurationData import FtpConfigurationData
+        from org.allbinary.logic.communication.ftp.configuration.FtpConfigurationData import FtpConfigurationData
+        from org.allbinary.logic.communication.ftp.configuration.FtpConfigurationData import FtpConfigurationData
+        from org.allbinary.logic.communication.ftp.configuration.FtpConfigurationData import FtpConfigurationData
         from java.util.HashMap import HashMap
         from org.allbinary.logic.StdUtil import StdUtil
         hashMap: HashMap = StdUtil.getInstance().createHashMap()
@@ -42,6 +46,7 @@ class FtpConfigurationMapping(TableMappingInterface):
 
     # throws Exception
     def getKey(self) -> object:
+        from org.allbinary.logic.communication.ftp.configuration.FtpConfigurationData import FtpConfigurationData
         return FtpConfigurationData.NAME
     
 

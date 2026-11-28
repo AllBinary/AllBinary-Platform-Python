@@ -21,15 +21,18 @@ from org.allbinary.data.tables.TableMappingInterface import TableMappingInterfac
 class EmailServerConfigurationMapping(TableMappingInterface):
 
     def _init_fields(self) -> None:
-        self.emailServerConfigurationInterface: EmailServerConfigurationInterface = None
+        if "emailServerConfigurationInterface" not in vars(self): self.emailServerConfigurationInterface: EmailServerConfigurationInterface = None
     
 
     def __init__(self, emailServerConfigurationInterface: EmailServerConfigurationInterface) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.emailServerConfigurationInterface = emailServerConfigurationInterface
     
 
     def toHashMap(self) -> HashMap:
+        from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfigurationData import EmailServerConfigurationData
+        from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfigurationData import EmailServerConfigurationData
+        from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfigurationData import EmailServerConfigurationData
         from java.util.HashMap import HashMap
         from org.allbinary.logic.StdUtil import StdUtil
         hashMap: HashMap = StdUtil.getInstance().createHashMap()
@@ -41,6 +44,7 @@ class EmailServerConfigurationMapping(TableMappingInterface):
 
     # throws Exception
     def getKey(self) -> object:
+        from org.allbinary.logic.communication.smtp.configuration.server.EmailServerConfigurationData import EmailServerConfigurationData
         return EmailServerConfigurationData.NAME
     
 

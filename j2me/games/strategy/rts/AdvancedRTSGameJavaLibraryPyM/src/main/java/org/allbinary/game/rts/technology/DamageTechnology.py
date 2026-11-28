@@ -21,12 +21,12 @@ from org.allbinary.game.layer.RTSInterface import RTSInterface
 class DamageTechnology(RTSInterface):
 
     def _init_fields(self) -> None:
-        self.level: int = 0
-        self.maxLevel: int = None
+        if "level" not in vars(self): self.level: int = 0
+        if "maxLevel" not in vars(self): self.maxLevel: int = 0
     
 
     def __init__(self, maxLevel: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.maxLevel = maxLevel
     
 

@@ -15,29 +15,29 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.logic.system.security.licensing.AbeLicenseInterface import AbeLicenseInterface
 
 
 class AbeClientLicense(AbeLicenseInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.ABHashtable import ABHashtable
-        from org.allbinary.util.BasicArrayList import BasicArrayList
-        self.hashtable: ABHashtable[object, object] = None
-        self.id: str = None
-        self.servers: BasicArrayList = None
-        self.special: str = None
-        self.licenseType: LicenseType = None
+        if "hashtable" not in vars(self): self.hashtable: ABHashtable[object, object] = None
+        if "id" not in vars(self): self.id: str = None
+        if "servers" not in vars(self): self.servers: BasicArrayList = None
+        if "special" not in vars(self): self.special: str = None
+        if "licenseType" not in vars(self): self.licenseType: LicenseType = None
     
 
     def __init__(self, hashtable: ABHashtable[object, object]) -> None:
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationData import AbeClientInformationData
         from org.allbinary.logic.system.security.licensing.LicenseTypeFactory import LicenseTypeFactory
         from org.allbinary.logic.StdUtil import StdUtil
         from org.allbinary.logic.string.StringUtil import StringUtil
         from org.allbinary.util.ABHashtable import ABHashtable
         from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
-        self._init_fields()
+        __class__._init_fields(self)
         self.hashtable = StdUtil.getInstance().createHashtable()
         abeClientInformationData: AbeClientInformationData = AbeClientInformationData.getInstance()
         keyValue: object = hashtable.get(abeClientInformationData.KEY)
@@ -58,6 +58,7 @@ class AbeClientLicense(AbeLicenseInterface):
 
     @staticmethod
     def hasRequiredKeys(resultHashtable: ABHashtable[object, object]) -> bool:
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationData import AbeClientInformationData
         from org.allbinary.util.ABHashtable import ABHashtable
         abeClientInformationData: AbeClientInformationData = AbeClientInformationData.getInstance()
         if resultHashtable.containsKey(abeClientInformationData.LICENSEID) and resultHashtable.containsKey(abeClientInformationData.LICENSESERVERS) and resultHashtable.containsKey(abeClientInformationData.KEY) and resultHashtable.containsKey(abeClientInformationData.LICENSE_TYPE):
@@ -67,7 +68,7 @@ class AbeClientLicense(AbeLicenseInterface):
     
 
     def hasKey(self) -> bool:
-        return self.isValid()
+        return java_predicate(self, "isValid")
     
 
     def getKey(self, keyName: str) -> str:
@@ -84,9 +85,10 @@ class AbeClientLicense(AbeLicenseInterface):
     
 
     def isValid(self) -> bool:
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationData import AbeClientInformationData
         from org.allbinary.logic.string.StringValidationUtil import StringValidationUtil
         stringValidationUtil: StringValidationUtil = StringValidationUtil.getInstance()
-        if not stringValidationUtil.isEmpty(self.getKey(AbeClientInformationData.getInstance().KEY)):
+        if not (stringValidationUtil.isEmpty(self.getKey(AbeClientInformationData.getInstance().KEY))):
             return True
         return False
     
@@ -100,7 +102,7 @@ class AbeClientLicense(AbeLicenseInterface):
         stringBuffer.append(self.getLicenseId())
         stringBuffer.append(BREAK)
         stringBuffer.append("Is Valid: ")
-        stringBuffer.appendboolean(self.isValid())
+        stringBuffer.appendboolean(java_predicate(self, "isValid"))
         stringBuffer.append(BREAK)
         stringBuffer.append("Keys: ")
         stringBuffer.append(str(self.hashtable))

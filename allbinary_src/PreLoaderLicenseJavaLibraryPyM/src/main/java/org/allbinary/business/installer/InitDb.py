@@ -21,7 +21,7 @@ from __future__ import annotations
 class InitDb:
 
     def _init_fields(self) -> None:
-        self.anyType: object = None
+        if "anyType" not in vars(self): self.anyType: object = None
         self.METHOD_CALL_GET_HOST_NAME: str = "getHostName"
         self.METHOD_CALL_ADD_USERS: str = "addUsers"
         self.METHOD_CALL_ADD_DATABASES: str = "addDatabases"
@@ -31,20 +31,20 @@ class InitDb:
 
     def __init__(self, *args) -> None:
         if len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
         elif len(args) == 1:
-            self._constructor1(*args)
+            __class__._constructor1(self, *args)
     
 
     def _constructor0(self) -> None:
         from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def _constructor1(self, dbConnectionInfo: DbConnectionInfo) -> None:
         from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
         from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def setHelper(self, anyType: object) -> None:

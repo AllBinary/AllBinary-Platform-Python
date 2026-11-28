@@ -15,10 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.displayable.canvas.DemoGameBehavior import DemoGameBehavior
 
 
+@java_inherited_overloads
 class BaseGameBehavior(DemoGameBehavior):
     instanceC: BaseGameBehavior = None
 

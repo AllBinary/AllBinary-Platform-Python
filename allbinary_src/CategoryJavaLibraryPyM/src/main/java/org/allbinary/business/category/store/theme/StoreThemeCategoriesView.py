@@ -21,11 +21,11 @@ from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 class StoreThemeCategoriesView(DomNodeInterface):
 
     def _init_fields(self) -> None:
-        self.categoryInterface: StoreThemeCategoryInterface = None
+        if "categoryInterface" not in vars(self): self.categoryInterface: StoreThemeCategoryInterface = None
     
 
     def __init__(self, categoryInterface: StoreThemeCategoryInterface) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.categoryInterface = categoryInterface
     
 

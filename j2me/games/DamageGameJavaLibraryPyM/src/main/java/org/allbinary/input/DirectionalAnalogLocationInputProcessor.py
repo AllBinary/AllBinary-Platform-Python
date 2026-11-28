@@ -15,20 +15,31 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.android.input.motion.AnalogLocationInputProcessor import AnalogLocationInputProcessor
 from org.allbinary.game.input.GameKeyEventSourceInterface import GameKeyEventSourceInterface
 
 
+@java_inherited_overloads
 class DirectionalAnalogLocationInputProcessor(*java_bases(AnalogLocationInputProcessor, GameKeyEventSourceInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("inputProcessorArray", None)
+        vars(self).setdefault("gameKeyFactory", None)
+        vars(self).setdefault("leftGameKeyEvent", None)
+        vars(self).setdefault("rightGameKeyEvent", None)
+        vars(self).setdefault("upGameKeyEvent", None)
+        vars(self).setdefault("downGameKeyEvent", None)
+        vars(self).setdefault("leftTriggerGameKeyEvent", None)
+        vars(self).setdefault("rightTriggerGameKeyEvent", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.input.GameInputProcessor import GameInputProcessor
         from org.allbinary.game.input.GameKeyFactory import GameKeyFactory
         from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.inputProcessorArray: list[GameInputProcessor] = None
+        if "inputProcessorArray" not in vars(self): self.inputProcessorArray: list[GameInputProcessor] = None
         self.gameKeyFactory: GameKeyFactory = GameKeyFactory.getInstance()
         self.leftGameKeyEvent: GameKeyEvent = GameKeyEvent.NONE
         self.rightGameKeyEvent: GameKeyEvent = GameKeyEvent.NONE
@@ -39,11 +50,12 @@ class DirectionalAnalogLocationInputProcessor(*java_bases(AnalogLocationInputPro
     
 
     def __init__(self, inputProcessorArray: list[GameInputProcessor]) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.input.GameInputProcessor import GameInputProcessor
         from org.allbinary.game.input.event.GameKeyEventFactory import GameKeyEventFactory
         from org.allbinary.string.CommonStrings import CommonStrings
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.inputProcessorArray = inputProcessorArray
         try:
             self.leftGameKeyEvent = GameKeyEventFactory.getInstance().getInstanceForInput(self, self.gameKeyFactory.LEFT)

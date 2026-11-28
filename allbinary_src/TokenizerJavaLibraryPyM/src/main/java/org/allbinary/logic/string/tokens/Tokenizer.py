@@ -21,14 +21,14 @@ class Tokenizer:
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.string.StringUtil import StringUtil
-        self.sep: str = None
+        if "sep" not in vars(self): self.sep: str = None
         self.endSep: str = StringUtil.getInstance().EMPTY_STRING
     
 
     def __init__(self, sep: str) -> None:
         from org.allbinary.TsUtil import TsUtil
         from org.allbinary.logic.string.StringUtil import StringUtil
-        self._init_fields()
+        __class__._init_fields(self)
         if TsUtil.getInstance().compareTo(sep, StringUtil.getInstance().EMPTY_STRING) == 0:
             raise Exception("Sep provided is not valid")
         self.sep = sep

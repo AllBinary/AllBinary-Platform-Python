@@ -20,12 +20,11 @@ from __future__ import annotations
 class InitInfoDocument:
 
     def _init_fields(self) -> None:
-        from org.w3c.dom.Document import Document
-        self.initInfoDocument: Document = None
+        if "initInfoDocument" not in vars(self): self.initInfoDocument: Document = None
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
 # from org.w3c.dom.Document import Document
 
 

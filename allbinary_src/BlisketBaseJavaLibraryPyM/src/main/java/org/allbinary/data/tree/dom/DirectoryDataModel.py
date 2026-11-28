@@ -23,10 +23,8 @@ from org.allbinary.data.tree.dom.DomNodeInterface import DomNodeInterface
 class DirectoryDataModel(*java_bases(DomNodeInterface, TransformInterface)):
 
     def _init_fields(self) -> None:
-        from org.allbinary.logic.visual.transform.data.TransformDocumentInterface import TransformDocumentInterface
-        from org.allbinary.util.BasicArrayList import BasicArrayList
-        self.fileBasicArrayList: BasicArrayList = None
-        self.transformDocumentInterface: TransformDocumentInterface = None
+        if "fileBasicArrayList" not in vars(self): self.fileBasicArrayList: BasicArrayList = None
+        if "transformDocumentInterface" not in vars(self): self.transformDocumentInterface: TransformDocumentInterface = None
         self.NO_TYPE: int = 0
     
 
@@ -35,7 +33,7 @@ class DirectoryDataModel(*java_bases(DomNodeInterface, TransformInterface)):
         from org.allbinary.logic.io.file.directory.Directory import Directory
         from org.allbinary.logic.visual.transform.data.TransformDocumentFactory import TransformDocumentFactory
         from org.allbinary.logic.visual.transform.data.TransformDocumentInterface import TransformDocumentInterface
-        self._init_fields()
+        __class__._init_fields(self)
         self.fileBasicArrayList = Directory.getInstance().search(file)
         self.transformDocumentInterface = TransformDocumentFactory.getInstance()
     

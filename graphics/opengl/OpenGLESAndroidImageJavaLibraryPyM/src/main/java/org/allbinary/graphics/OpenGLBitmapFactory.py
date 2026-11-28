@@ -3,20 +3,25 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.platform.graphics.PlatformBitmapBaseFactory import PlatformBitmapBaseFactory
 
 
+@java_inherited_overloads
 class OpenGLBitmapFactory(PlatformBitmapBaseFactory):
     instance: OpenGLBitmapFactory = None
+    def _java_defaults(self):
+        vars(self).setdefault("ARGB_8888", None)
 
     def _init_fields(self) -> None:
         from android.graphics.Bitmap import Bitmap
         self.ARGB_8888: OpenGLBitmapConfig = OpenGLBitmapConfig(Bitmap.Config.ARGB_8888)
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -46,7 +51,9 @@ class OpenGLBitmapFactory(PlatformBitmapBaseFactory):
         return OpenGLBitmap((image).getBitmap())
 
     def createBitmap(self, *args):
-        return getattr(self, "createBitmap_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("createBitmap_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().createBitmap(*args)
 # from java.io.InputStream import InputStream
 # from javax.microedition.lcdui.Image import Image
 # from android.graphics.Bitmap import Bitmap

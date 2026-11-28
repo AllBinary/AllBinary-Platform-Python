@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.JavaThread import JavaThread
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 
@@ -27,7 +29,7 @@ class ThreadFactoryUtil:
         self.logUtil: LogUtil = LogUtil.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -35,16 +37,16 @@ class ThreadFactoryUtil:
         return ThreadFactoryUtil.instance
     
 
-    def getInstanceGameCanvasRunnable(self, runnable: GameCanvasRunnableInterface) -> threading.Thread:
+    def getInstanceGameCanvasRunnable(self, runnable: GameCanvasRunnableInterface) -> JavaThread:
         from org.allbinary.game.displayable.canvas.GameCanvasRunnableInterface import GameCanvasRunnableInterface
         return self.getInstanceType(runnable, runnable.getType())
     
 
-    def getInstanceForRunnable(self, runnable: ABRunnable) -> threading.Thread:
+    def getInstanceForRunnable(self, runnable: ABRunnable) -> JavaThread:
         return self.getInstanceType(runnable, runnable.getType())
     
 
-    def getInstanceType(self, runnable: object, type_: int) -> threading.Thread:
+    def getInstanceType(self, runnable: object, type_: int) -> JavaThread:
         from org.allbinary.thread.PrimaryThreadPool import PrimaryThreadPool
         from org.allbinary.thread.PrimaryThreadPool import PrimaryThreadPool
         from org.allbinary.J2MEUtil import J2MEUtil
@@ -57,7 +59,7 @@ class ThreadFactoryUtil:
         from org.allbinary.logic.string.StringUtil import StringUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         commonStrings: CommonStrings = CommonStrings.getInstance()
-        if J2MEUtil.isHTML():
+        if java_predicate(J2MEUtil, "isHTML"):
             if type_ == DemoCanvas.TYPE or type_ == AllBinaryGameCanvas.TYPE:
                 demoGameSingleThreadStartRunnable: RunnableCanvasSingleThreadStartRunnable = RunnableCanvasSingleThreadStartRunnable(runnable)
                 PreLogUtil.put(str(StringMaker().append("Using Pseudo Thread for DemoCanvas/AllBinaryGameCanvas under PlayN/HTML5: ").append(StringUtil.getInstance().toString(runnable))), self, commonStrings.CONSTRUCTOR)
@@ -67,12 +69,12 @@ class ThreadFactoryUtil:
                 PreLogUtil.put(str(StringMaker().append("Using Pseudo Thread for Runnable under PlayN/HTML5: ").append(StringUtil.getInstance().toString(runnable))), self, commonStrings.CONSTRUCTOR)
                 primaryThreadPool: ThreadPool = PrimaryThreadPool.getInstance()
                 primaryThreadPool.runTask(runnable)
-        thread: threading.Thread = threading.Thread(target=runnable.run, name=str(runnable))
+        thread: JavaThread = JavaThread(target=runnable.run, name=str(runnable))
         self.logUtil.putF(str(thread), self, commonStrings.CONSTRUCTOR)
         return thread
     
 
-    def start(self, thread: threading.Thread) -> None:
+    def start(self, thread: JavaThread) -> None:
         thread.start()
 # from org.allbinary.J2MEUtil import J2MEUtil
 # from org.allbinary.canvas.RunnableCanvas import RunnableCanvas

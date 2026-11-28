@@ -22,14 +22,14 @@ class Log:
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogFormatUtil import LogFormatUtil
         self.logFormatUtil: LogFormatUtil = LogFormatUtil.getInstance()
-        self.specialMessage: str = None
-        self.anyType: object = None
-        self.functionName: str = None
-        self.exception: object = None
+        if "specialMessage" not in vars(self): self.specialMessage: str = None
+        if "anyType" not in vars(self): self.anyType: object = None
+        if "functionName" not in vars(self): self.functionName: str = None
+        if "exception" not in vars(self): self.exception: object = None
     
 
     def __init__(self, specialMessage: str, anyType: object, functionName: str, exception: object) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.specialMessage = specialMessage
         self.anyType = anyType
         self.functionName = functionName
@@ -56,8 +56,8 @@ class Log:
         from org.allbinary.string.CommonStrings import CommonStrings
         className: str = CommonStrings.getInstance().EMPTY
         clazz: type = type(self.anyType)
-        if clazz.__module__ + "." + clazz.__qualname__ is not None:
-            className = clazz.__module__ + "." + clazz.__qualname__
+        if __import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(clazz) is not None:
+            className = __import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(clazz)
         return self.logFormatUtil.get(className, self.functionName, self.specialMessage, self.exception)
 
     def __str__(self) -> str:

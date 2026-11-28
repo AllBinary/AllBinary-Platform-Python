@@ -15,18 +15,23 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.graphics.form.ItemIndexPaintable import ItemIndexPaintable
 
 
+@java_inherited_overloads
 class ScrollSelectionFormHorizontalPaintable(ItemIndexPaintable):
+    def _java_defaults(self):
+        vars(self).setdefault("scrollSelectionForm", None)
 
     def _init_fields(self) -> None:
-        self.scrollSelectionForm: ScrollSelectionForm = None
+        if "scrollSelectionForm" not in vars(self): self.scrollSelectionForm: ScrollSelectionForm = None
     
 
     def __init__(self, scrollSelectionForm: ScrollSelectionForm) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.scrollSelectionForm = scrollSelectionForm
     
 

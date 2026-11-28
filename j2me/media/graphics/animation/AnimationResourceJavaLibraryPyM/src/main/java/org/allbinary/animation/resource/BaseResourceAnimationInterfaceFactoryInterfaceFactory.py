@@ -23,19 +23,18 @@ class BaseResourceAnimationInterfaceFactoryInterfaceFactory(FeatureResourceAnima
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
-        from org.allbinary.util.ABHashtable import ABHashtable
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.hashtable: ABHashtable[object, object] = None
-        self.rectangleHashtable: ABHashtable[object, object] = None
-        self.rectangleArrayOfArraysHashtable: ABHashtable[object, object] = None
-        self.name: str = None
-        self.initialized: bool = False
+        if "hashtable" not in vars(self): self.hashtable: ABHashtable[object, object] = None
+        if "rectangleHashtable" not in vars(self): self.rectangleHashtable: ABHashtable[object, object] = None
+        if "rectangleArrayOfArraysHashtable" not in vars(self): self.rectangleArrayOfArraysHashtable: ABHashtable[object, object] = None
+        if "name" not in vars(self): self.name: str = None
+        if "initialized" not in vars(self): self.initialized: bool = False
     
 
     def __init__(self, name: str, hashtable: ABHashtable[object, object], rectangleHashtable: ABHashtable[object, object], rectangleArrayHashtable: ABHashtable[object, object]) -> None:
         from org.allbinary.util.ABHashtable import ABHashtable
-        self._init_fields()
+        __class__._init_fields(self)
         self.hashtable = hashtable
         self.rectangleHashtable = rectangleHashtable
         self.rectangleArrayOfArraysHashtable = rectangleArrayHashtable
@@ -130,7 +129,7 @@ class BaseResourceAnimationInterfaceFactoryInterfaceFactory(FeatureResourceAnima
     def toString(self) -> str:
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.string.CommonSeps import CommonSeps
-        return str(StringMaker().append(type(self).__module__ + "." + type(self).__qualname__).append(CommonSeps.getInstance().SEMICOLON).append(CommonSeps.getInstance().SPACE).append(self.name))
+        return str(StringMaker().append(__import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(self))).append(CommonSeps.getInstance().SEMICOLON).append(CommonSeps.getInstance().SPACE).append(self.name))
 
     def __str__(self) -> str:
         return self.toString()

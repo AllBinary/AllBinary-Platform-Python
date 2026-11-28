@@ -15,23 +15,41 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.input.motion.gesture.observer.BaseMotionGestureEventListener import BaseMotionGestureEventListener
 from org.allbinary.game.input.RTSPlayerGameInput import RTSPlayerGameInput
 
 
+@java_inherited_overloads
 class HumanRTSPlayerGameInput(*java_bases(RTSPlayerGameInput, BaseMotionGestureEventListener)):
+    def _java_defaults(self):
+        vars(self).setdefault("isDragging", False)
+        vars(self).setdefault("gameStateFactory", None)
+        vars(self).setdefault("rectangleCollisionUtil", None)
+        vars(self).setdefault("touchMotionGestureFactory", None)
+        vars(self).setdefault("PRESSED", None)
+        vars(self).setdefault("RELEASED", None)
+        vars(self).setdefault("touchButtonsBuilderFactory", None)
+        vars(self).setdefault("notYoursGameNotificationEvent", None)
+        vars(self).setdefault("selectedRtsLayer", None)
+        vars(self).setdefault("startPoint", None)
+        vars(self).setdefault("endPoint", None)
+        vars(self).setdefault("POSSIBLE", None)
+        vars(self).setdefault("AT", None)
+        vars(self).setdefault("METHOD", None)
+        vars(self).setdefault("ADDING", None)
+        vars(self).setdefault("SPACE", None)
+        vars(self).setdefault("multiSelectPaintable", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.game.layer.MultiSelectPaintable import MultiSelectPaintable
         from org.allbinary.game.state.GameStateFactory import GameStateFactory
         from org.allbinary.string.CommonSeps import CommonSeps
-        from org.allbinary.game.layer.hud.event.GameNotificationEvent import GameNotificationEvent
         from org.allbinary.game.layer.special.CollidableDestroyableDamageableLayer import CollidableDestroyableDamageableLayer
-        from org.allbinary.graphics.GPoint import GPoint
         from org.allbinary.graphics.PointFactory import PointFactory
-        from org.allbinary.input.motion.button.TouchButtonsBuilderFactory import TouchButtonsBuilderFactory
-        from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
         from org.allbinary.input.motion.gesture.TouchMotionGestureFactory import TouchMotionGestureFactory
         from org.allbinary.math.RectangleCollisionUtil import RectangleCollisionUtil
         self.isDragging: bool = False
@@ -40,8 +58,8 @@ class HumanRTSPlayerGameInput(*java_bases(RTSPlayerGameInput, BaseMotionGestureE
         self.touchMotionGestureFactory: TouchMotionGestureFactory = TouchMotionGestureFactory.getInstance()
         self.PRESSED: MotionGestureInput = self.touchMotionGestureFactory.PRESSED
         self.RELEASED: MotionGestureInput = self.touchMotionGestureFactory.RELEASED
-        self.touchButtonsBuilderFactory: TouchButtonsBuilderFactory = None
-        self.notYoursGameNotificationEvent: GameNotificationEvent = None
+        if "touchButtonsBuilderFactory" not in vars(self): self.touchButtonsBuilderFactory: TouchButtonsBuilderFactory = None
+        if "notYoursGameNotificationEvent" not in vars(self): self.notYoursGameNotificationEvent: GameNotificationEvent = None
         self.selectedRtsLayer: CollidableDestroyableDamageableLayer = CollidableDestroyableDamageableLayer.getNullInstance()
         self.startPoint: GPoint = PointFactory.getInstance().ZERO_ZERO
         self.endPoint: GPoint = PointFactory.getInstance().ZERO_ZERO
@@ -54,6 +72,7 @@ class HumanRTSPlayerGameInput(*java_bases(RTSPlayerGameInput, BaseMotionGestureE
     
 
     def __init__(self, gameCanvas: AllBinaryGameCanvas, inputList: BasicArrayList, playerInputId: int, towerInfoPaintable: RTSLayerInfoPaintable, rtsPlayerLayerInterface: RTSPlayerLayerInterface, layerPositionFinderInterface: LayerPositionFinderInterface, selectRTSLayerVisitorFactoryInterface: SelectRTSLayerVisitorFactoryInterface, touchButtonsBuilderFactory: TouchButtonsBuilderFactory) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.layer.RTSGameStrings import RTSGameStrings
         from org.allbinary.game.layer.RTSLayerInfoPaintable import RTSLayerInfoPaintable
         from org.allbinary.game.layer.RTSPlayerLayerInterface import RTSPlayerLayerInterface
@@ -66,7 +85,7 @@ class HumanRTSPlayerGameInput(*java_bases(RTSPlayerGameInput, BaseMotionGestureE
         from org.allbinary.input.motion.gesture.observer.BasicMotionGesturesHandler import BasicMotionGesturesHandler
         from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
         super().__init__(gameCanvas, inputList, playerInputId, towerInfoPaintable, rtsPlayerLayerInterface, layerPositionFinderInterface, selectRTSLayerVisitorFactoryInterface)
-        self._init_fields()
+        __class__._init_fields(self)
         self.touchButtonsBuilderFactory = touchButtonsBuilderFactory
         basicColorFactory: BasicColorFactory = BasicColorFactory.getInstance()
         self.notYoursGameNotificationEvent = GameNotificationEvent(self, RTSGameStrings.getInstance().NOT_YOURS, SmallIntegerSingletonFactory.getInstance().getAt(2), basicColorFactory.PINK, BooleanFactory.getInstance().FALSE)
@@ -102,7 +121,7 @@ class HumanRTSPlayerGameInput(*java_bases(RTSPlayerGameInput, BaseMotionGestureE
             point: GPoint = motionGestureEvent.getCurrentPoint()
             if self.getRtsPlayerLayerInterface().getCurrentScrollSelectionForm().isInForm(point):
                 rtsFormInput.processAtPoint(self.getSelectedRtsLayer(), self.getRtsPlayerLayerInterface(), layerManager, point)
-            elif rtsFormInput.isStickyItemSelected():
+            elif java_predicate(rtsFormInput, "isStickyItemSelected"):
                 previousRtsFormInput: RTSFormInput = rtsFormInput
                 self.select(motionGestureEvent)
                 self.getSelectedBuildingPlayerGameInput().selectAllPreselected()
@@ -199,7 +218,7 @@ class HumanRTSPlayerGameInput(*java_bases(RTSPlayerGameInput, BaseMotionGestureE
         from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
         if self.getMotionGestureInputList().size() > 0:
             endDrag: bool = self.processDraggingMotionInput(layerManager)
-            if not self.isDragging:
+            if not (self.isDragging):
                 self.processSelectionBoxMotionInput(layerManager)
             if endDrag:
                 self.isDragging = False
@@ -215,7 +234,7 @@ class HumanRTSPlayerGameInput(*java_bases(RTSPlayerGameInput, BaseMotionGestureE
         from org.allbinary.logic.string.StringUtil import StringUtil
         logUtil: LogUtil = LogUtil.getInstance()
         self.logUtil.putF(str(StringMaker().append(CommonLabels.getInstance().START).append(StringUtil.getInstance().toString(selectedRtsFormInput))), self, "setSelectedRtsFormInput")
-        super().setSelectedRtsFormInput(selectedRtsFormInput)
+        java_super_call(super(), "setSelectedRtsFormInput", selectedRtsFormInput)
         self.setSelectedRtsLayer(CollidableDestroyableDamageableLayer.getNullInstance())
     
 
@@ -265,7 +284,7 @@ class HumanRTSPlayerGameInput(*java_bases(RTSPlayerGameInput, BaseMotionGestureE
             rtsLayer.select()
             self.updateFormForLayer(rtsLayer)
             if gameCanvas.getGameState() == self.gameStateFactory.PLAYING_GAME_STATE:
-                if rtsLayer.isSelfUpgradeable():
+                if java_predicate(rtsLayer, "isSelfUpgradeable"):
                     gameCanvas.updateCurrentTouchInputFactory(RTSTouchButtonsBuilder())
                 else:
                     gameCanvas.updateCurrentTouchInputFactory(NoBuildingSelectedTouchButtonsBuilder())
@@ -315,7 +334,7 @@ class HumanRTSPlayerGameInput(*java_bases(RTSPlayerGameInput, BaseMotionGestureE
         from javax.microedition.lcdui.Graphics import Graphics
         from org.allbinary.graphics.PointFactory import PointFactory
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
-        super().paint(graphics)
+        java_super_call(super(), "paint", graphics)
         if self.startPoint != PointFactory.getInstance().ZERO_ZERO and self.endPoint != PointFactory.getInstance().ZERO_ZERO:
             graphics.setColor(int(BasicColorFactory.getInstance().RED))
             rectX1: int = self.startPoint.getX()

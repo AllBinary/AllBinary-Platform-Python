@@ -25,11 +25,11 @@ class WorkFlowWrapper(WorkFlowInterface):
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.anyType: object = None
+        if "anyType" not in vars(self): self.anyType: object = None
     
 
     def __init__(self, anyType: object) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.anyType = anyType
     
 

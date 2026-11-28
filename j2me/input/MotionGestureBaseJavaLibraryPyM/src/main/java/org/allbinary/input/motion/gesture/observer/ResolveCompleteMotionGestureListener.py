@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.input.motion.gesture.observer.CompleteMotionGestureListenerInterface import CompleteMotionGestureListenerInterface
 
 
@@ -29,7 +30,7 @@ class ResolveCompleteMotionGestureListener(CompleteMotionGestureListenerInterfac
         from org.allbinary.game.input.CompleteMotionGestureInputEventHandler import CompleteMotionGestureInputEventHandler
         from org.allbinary.game.input.motion.action.GameKeyFromMotionGestureEventListener import GameKeyFromMotionGestureEventListener
         from org.allbinary.string.CommonStrings import CommonStrings
-        self._init_fields()
+        __class__._init_fields(self)
         commonStrings: CommonStrings = CommonStrings.getInstance()
         self.logUtil.putF("MotionGesture to CompleteMotionGesture Reciever", self, commonStrings.CONSTRUCTOR)
         CompleteMotionGestureInputEventHandler.getInstance().addListener(GameKeyFromMotionGestureEventListener())

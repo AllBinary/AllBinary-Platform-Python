@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from org.allbinary.game.score.remote.RemoteHighScoresSubmissionProcessorInterface import RemoteHighScoresSubmissionProcessorInterface
 
@@ -32,12 +33,12 @@ class RemoteHighScoresSubmissionProcessor(RemoteHighScoresSubmissionProcessorInt
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def process(self, remoteHighScores: RemoteHighScores, abeClientInformation: AbeClientInformationInterface, highScore: HighScore) -> None:
         with self._lock:
-            return self._process_unlocked(remoteHighScores, abeClientInformation, highScore)
+            return __class__.__dict__["_process_unlocked"].__get__(self, __class__)(remoteHighScores, abeClientInformation, highScore)
 
     def _process_unlocked(self, remoteHighScores: RemoteHighScores, abeClientInformation: AbeClientInformationInterface, highScore: HighScore) -> None:
         from org.allbinary.game.score.remote.RemoteHighScoresData import RemoteHighScoresData
@@ -64,7 +65,7 @@ class RemoteHighScoresSubmissionProcessor(RemoteHighScoresSubmissionProcessorInt
             hashtable.put(gameInfoData.SOFTWARE_INFORMATION, str(remoteHighScores.getSoftwareInformation()))
             hashtable.put(remoteHighScores.ASCENDING, str(remoteHighScores.getAscending()))
             displayInfoSingleton: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
-            hashtable.put(displayInfoSingleton.ORIENTATION, BooleanFactory.getInstance().toStringb(displayInfoSingleton.isPortrait()))
+            hashtable.put(displayInfoSingleton.ORIENTATION, BooleanFactory.getInstance().toStringb(java_predicate(displayInfoSingleton, "isPortrait")))
             hashtable.put(RemoteHighScoresData.getInstance().GAME_CONFIGURATION, str(GameConfigurationCentral.getInstance()))
             hashtable.put(RemoteHighScoresData.getInstance().SCORE, str(highScore.getScore()))
             if XmlRpcAbeClient.isOnline:

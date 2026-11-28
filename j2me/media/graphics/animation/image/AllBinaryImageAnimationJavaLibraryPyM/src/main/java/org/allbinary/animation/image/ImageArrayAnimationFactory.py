@@ -21,18 +21,16 @@ from org.allbinary.animation.AnimationInterfaceFactoryInterface import Animation
 class ImageArrayAnimationFactory(AnimationInterfaceFactoryInterface):
 
     def _init_fields(self) -> None:
-        from javax.microedition.lcdui.Image import Image
-        from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
         self.dx: int = 0
         self.dy: int = 0
-        self.imageArray: list[Image] = None
-        self.animationBehaviorFactory: AnimationBehaviorFactory = None
+        if "imageArray" not in vars(self): self.imageArray: list[Image] = None
+        if "animationBehaviorFactory" not in vars(self): self.animationBehaviorFactory: AnimationBehaviorFactory = None
     
 
     def __init__(self, imageArray: list[Image], dx: int, dy: int, animationBehaviorFactory: AnimationBehaviorFactory) -> None:
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
-        self._init_fields()
+        __class__._init_fields(self)
         self.imageArray = imageArray
         self.animationBehaviorFactory = animationBehaviorFactory
         self.dx = dx

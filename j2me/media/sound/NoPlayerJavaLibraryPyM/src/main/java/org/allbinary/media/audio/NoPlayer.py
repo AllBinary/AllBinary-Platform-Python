@@ -15,10 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.media.audio.BasicPlayer import BasicPlayer
 
 
+@java_inherited_overloads
 class NoPlayer(BasicPlayer):
     NO_PLAYER: NoPlayer = None
     

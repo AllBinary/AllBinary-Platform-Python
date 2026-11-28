@@ -28,6 +28,7 @@ class ItemFactoryUnused:
     # Java overloaded method with the same parameter count: Python keeps the last definition
     @staticmethod
     def getInstance_j1_1(hashMap: HashMap) -> TableMappingInterface:
+        from org.allbinary.business.user.commerce.inventory.item.Item import Item
         from java.util.HashMap import HashMap
         from org.allbinary.business.user.commerce.money.MoneyException import MoneyException
         from org.allbinary.data.tables.TableMappingInterface import TableMappingInterface
@@ -38,6 +39,7 @@ class ItemFactoryUnused:
     # Java overloaded method with the same parameter count: Python keeps the last definition
     @staticmethod
     def getInstance_j1_2(request: HttpServletRequest) -> TableMappingInterface:
+        from org.allbinary.business.user.commerce.inventory.item.Item import Item
         from org.allbinary.business.user.commerce.money.MoneyException import MoneyException
         from org.allbinary.data.tables.TableMappingInterface import TableMappingInterface
         from org.allbinary.logic.communication.http.request.RequestParams import RequestParams

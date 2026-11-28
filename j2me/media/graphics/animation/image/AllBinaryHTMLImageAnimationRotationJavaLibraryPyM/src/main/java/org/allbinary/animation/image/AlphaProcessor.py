@@ -15,10 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.animation.image.AlphaBaseProcessor import AlphaBaseProcessor
 
 
+@java_inherited_overloads
 class AlphaProcessor(AlphaBaseProcessor):
     instanceC: AlphaProcessor = None
 

@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.graphics.form.item.CustomTextBox import CustomTextBox
 
 
+@java_inherited_overloads
 class CustomTextBox2(CustomTextBox):
     
 

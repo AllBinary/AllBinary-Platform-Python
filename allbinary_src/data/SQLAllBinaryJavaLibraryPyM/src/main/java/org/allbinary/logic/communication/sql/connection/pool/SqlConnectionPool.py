@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 
@@ -24,7 +25,6 @@ class SqlConnectionPool:
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
-        from java.util.HashMap import HashMap
         from org.allbinary.logic.StdUtil import StdUtil
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
@@ -48,13 +48,13 @@ class SqlConnectionPool:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws SQLException
     def get(self, url: str) -> Connection:
         with self._lock:
-            return self._get_unlocked(url)
+            return __class__.__dict__["_get_unlocked"].__get__(self, __class__)(url)
 
     def _get_unlocked(self, url: str) -> Connection:
         from org.allbinary.util.BasicArrayList import BasicArrayList
@@ -88,7 +88,7 @@ class SqlConnectionPool:
                 size: int = connectionVector.size()
                 for i in range(0, size):
                     sqlConnection: Connection = connectionVector.get(i)
-                    if not sqlConnection.isClosed():
+                    if not (java_predicate(sqlConnection, "isClosed")):
                         connectionVector.remove(sqlConnection)
                         self.connectionHashMap.put(url, connectionVector)
                         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().SQLLOGGINGPOOL):
@@ -112,7 +112,7 @@ class SqlConnectionPool:
     # throws SQLException
     def add(self, url: str, sqlConnection: Connection) -> None:
         with self._lock:
-            return self._add_unlocked(url, sqlConnection)
+            return __class__.__dict__["_add_unlocked"].__get__(self, __class__)(url, sqlConnection)
 
     def _add_unlocked(self, url: str, sqlConnection: Connection) -> None:
         from org.allbinary.util.BasicArrayList import BasicArrayList
@@ -120,7 +120,7 @@ class SqlConnectionPool:
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-        if not sqlConnection.isClosed():
+        if not (java_predicate(sqlConnection, "isClosed")):
             connectionVector: BasicArrayList = None
             if self.connectionHashMap is None:
                 self.connectionHashMap = self.stdUtil.createHashMap()

@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_equals
 
 
 #This is a very fast and simple resizable list.
@@ -10,15 +11,14 @@ class BasicArrayList:
     SIZE: str = ", Size: "
 
     def _init_fields(self) -> None:
-        from jsinterop.annotations.JsProperty import JsProperty
         self.arrayUtil: ArrayUtil = ArrayUtil.getInstance()
-        self.objectArray: list[object] = None
+        if "objectArray" not in vars(self): self.objectArray: list[object] = None
         self.currentIndex: int = 0
     
 
     def __init__(self, objectArray: list[object]) -> None:
         from jsinterop.annotations.JsConstructor import JsConstructor
-        self._init_fields()
+        __class__._init_fields(self)
         self.objectArray = objectArray
     
 
@@ -34,7 +34,7 @@ class BasicArrayList:
             stringBuffer.appendint(self.currentIndex)
             raise IndexError(str(stringBuffer))
         self.ensureCapacity(self.currentIndex + 1)
-        self.objectArray[index + 1:index + 1 + self.currentIndex - index] = self.objectArray[index:index + self.currentIndex - index]
+        __import__("java.lang.System", fromlist=["System"]).System.arraycopy(self.objectArray, index, self.objectArray, index + 1, self.currentIndex - index)
         self.objectArray[index] = element
         self.currentIndex += 1
     
@@ -60,7 +60,7 @@ class BasicArrayList:
         oldValue: object = self.objectArray[index]
         numMoved: int = self.currentIndex - index - 1
         if numMoved > 0:
-            self.objectArray[index:index + numMoved] = self.objectArray[index + 1:index + 1 + numMoved]
+            __import__("java.lang.System", fromlist=["System"]).System.arraycopy(self.objectArray, index + 1, self.objectArray, index, numMoved)
         self.objectArray[(setattr(self, "currentIndex", self.currentIndex - 1) or self.currentIndex)] = None
         return oldValue
     
@@ -72,15 +72,15 @@ class BasicArrayList:
                 if self.objectArray[index] is None:
                     numMoved: int = self.currentIndex - index - 1
                     if numMoved > 0:
-                        self.objectArray[index:index + numMoved] = self.objectArray[index + 1:index + 1 + numMoved]
+                        __import__("java.lang.System", fromlist=["System"]).System.arraycopy(self.objectArray, index + 1, self.objectArray, index, numMoved)
                     self.objectArray[(setattr(self, "currentIndex", self.currentIndex - 1) or self.currentIndex)] = None
                     return True
         else:
             for index in range(0, self.currentIndex):
-                if anyType == self.objectArray[index] or anyType.equals(self.objectArray[index]):
+                if anyType == self.objectArray[index] or java_equals(anyType, self.objectArray[index]):
                     numMoved: int = self.currentIndex - index - 1
                     if numMoved > 0:
-                        self.objectArray[index:index + numMoved] = self.objectArray[index + 1:index + 1 + numMoved]
+                        __import__("java.lang.System", fromlist=["System"]).System.arraycopy(self.objectArray, index + 1, self.objectArray, index, numMoved)
                     self.objectArray[(setattr(self, "currentIndex", self.currentIndex - 1) or self.currentIndex)] = None
                     return True
         return False
@@ -117,7 +117,7 @@ class BasicArrayList:
         from jsinterop.annotations.JsMethod import JsMethod
         numSize: int = len(newObjectArray)
         self.ensureCapacity(self.currentIndex + numSize)
-        self.objectArray[self.currentIndex:self.currentIndex + numSize] = newObjectArray[0:0 + numSize]
+        __import__("java.lang.System", fromlist=["System"]).System.arraycopy(newObjectArray, 0, self.objectArray, self.currentIndex, numSize)
         self.currentIndex += numSize
         return numSize != 0
     
@@ -126,7 +126,7 @@ class BasicArrayList:
         from jsinterop.annotations.JsMethod import JsMethod
         oldCapacity: int = len(self.objectArray)
         if minSize > oldCapacity:
-            newCapacity: int = ((oldCapacity * 3) >> 1) + 1
+            newCapacity: int = (int((oldCapacity * 3)) >> (int(1) & 31)) + 1
             if newCapacity < minSize:
                 newCapacity = minSize
             self.objectArray = self.arrayUtil.copyOf(self.objectArray, newCapacity)
@@ -147,7 +147,7 @@ class BasicArrayList:
                     return i
         else:
             for i in range(0, self.currentIndex):
-                if anyType.equals(self.objectArray[i]):
+                if java_equals(anyType, self.objectArray[i]):
                     return i
         return -1
     
@@ -160,7 +160,7 @@ class BasicArrayList:
                     return i
         else:
             for i in range(self.currentIndex - 1, 0 - 1, -1):
-                if anyType.equals(self.objectArray[i]):
+                if java_equals(anyType, self.objectArray[i]):
                     return i
         return -1
     
@@ -226,7 +226,7 @@ class BasicArrayList:
         from jsinterop.annotations.JsMethod import JsMethod
         if len(objectArray) < self.currentIndex:
             return self.arrayUtil.copyOfType(self.objectArray, self.currentIndex, type(objectArray))
-        objectArray[0:0 + self.currentIndex] = self.objectArray[0:0 + self.currentIndex]
+        __import__("java.lang.System", fromlist=["System"]).System.arraycopy(self.objectArray, 0, objectArray, 0, self.currentIndex)
         if len(objectArray) > self.currentIndex:
             objectArray[self.currentIndex] = None
         return objectArray

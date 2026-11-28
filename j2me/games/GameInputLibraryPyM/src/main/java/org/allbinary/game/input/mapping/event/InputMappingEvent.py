@@ -15,10 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
 
 
+@java_inherited_overloads
 class InputMappingEvent(AllBinaryEventObject):
+    def _java_defaults(self):
+        vars(self).setdefault("inputToGameKeyMapping", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.game.input.mapping.InputToGameKeyMapping import InputToGameKeyMapping
@@ -26,8 +30,9 @@ class InputMappingEvent(AllBinaryEventObject):
     
 
     def __init__(self, anyType: object) -> None:
+        __class__._java_defaults(self)
         super().__init__(anyType)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def setInputToGameKeyMapping(self, inputToGameKeyMapping: InputToGameKeyMapping) -> None:

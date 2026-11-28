@@ -15,9 +15,11 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.layer.LayerProcessor import LayerProcessor
 
 
+@java_inherited_overloads
 class OptimizedTickableLayerProcessor(LayerProcessor):
     
 

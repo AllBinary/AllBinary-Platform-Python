@@ -20,12 +20,12 @@ from __future__ import annotations
 class BasicWeblisketSession:
 
     def _init_fields(self) -> None:
-        self.session: HttpSession = None
-        self.pageContext: PageContext = None
+        if "session" not in vars(self): self.session: HttpSession = None
+        if "pageContext" not in vars(self): self.pageContext: PageContext = None
     
 
     def __init__(self, pageContext: PageContext) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.pageContext = pageContext
         request: HttpServletRequest = pageContext.getRequest()
         self.session = request.getSession(True)
@@ -59,15 +59,18 @@ class BasicWeblisketSession:
     
 
     def setAuthenticated_j0(self) -> None:
+        from org.allbinary.logic.communication.http.request.session.WeblisketSessionData import WeblisketSessionData
         from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
         self.session.setAttribute(WeblisketSessionData.AUTHENTICATED, BooleanFactory.getInstance().TRUE_STRING)
     
 
     def setAttempts(self, value: int) -> None:
+        from org.allbinary.logic.communication.http.request.session.WeblisketSessionData import WeblisketSessionData
         self.session.setAttribute(WeblisketSessionData.ATTEMPTS, value)
     
 
     def setTimeout(self, value: str) -> None:
+        from org.allbinary.logic.communication.http.request.session.WeblisketSessionData import WeblisketSessionData
         self.session.setAttribute(WeblisketSessionData.TIMEOUT, value)
     
 
@@ -97,14 +100,17 @@ class BasicWeblisketSession:
     
 
     def getAuthentication(self) -> str:
+        from org.allbinary.logic.communication.http.request.session.WeblisketSessionData import WeblisketSessionData
         return self.session.getAttribute(WeblisketSessionData.AUTHENTICATED)
     
 
     def getAttempts(self) -> int:
+        from org.allbinary.logic.communication.http.request.session.WeblisketSessionData import WeblisketSessionData
         return self.session.getAttribute(WeblisketSessionData.ATTEMPTS)
     
 
     def getTimeout(self) -> str:
+        from org.allbinary.logic.communication.http.request.session.WeblisketSessionData import WeblisketSessionData
         return self.session.getAttribute(WeblisketSessionData.TIMEOUT)
     
 
@@ -114,14 +120,19 @@ class BasicWeblisketSession:
     
 
     def setAuthenticated_j1(self, value: bool) -> None:
+        from org.allbinary.logic.communication.http.request.session.WeblisketSessionData import WeblisketSessionData
         from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
         self.session.setAttribute(WeblisketSessionData.AUTHENTICATED, BooleanFactory.getInstance().FALSE_STRING)
 
     def setAuthenticated(self, *args):
-        return getattr(self, "setAuthenticated_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("setAuthenticated_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().setAuthenticated(*args)
     
 
     def clear(self) -> None:
+        from org.allbinary.logic.communication.http.request.session.WeblisketSessionData import WeblisketSessionData
+        from org.allbinary.logic.communication.http.request.session.WeblisketSessionData import WeblisketSessionData
         from org.allbinary.business.user.UserData import UserData
         from org.allbinary.business.user.role.BasicUserRoleData import BasicUserRoleData
         self.session.removeAttribute(WeblisketSessionData.AUTHENTICATED)

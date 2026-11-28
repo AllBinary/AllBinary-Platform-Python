@@ -21,27 +21,27 @@ class LogoImageFileUtil:
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.io.file.directory.Directory import Directory
-        from org.allbinary.logic.io.path.AbPath import AbPath
         self.directory: Directory = Directory.getInstance()
-        self.fileName: str = None
-        self.imageFileAbPath: AbPath = None
+        if "fileName" not in vars(self): self.fileName: str = None
+        if "imageFileAbPath" not in vars(self): self.imageFileAbPath: AbPath = None
     
 
     def __init__(self, imageAbPath: AbPath, imageFile: str) -> None:
         from org.allbinary.logic.io.path.AbPath import AbPath
-        self._init_fields()
+        __class__._init_fields(self)
         self.fileName = imageFile
         self.imageFileAbPath = imageAbPath
     
 
     # throws Exception
     def saveFiles(self, fileItem: FileItem) -> None:
+        from java.io.ByteArrayInputStream import ByteArrayInputStream
         from org.allbinary.logic.io.file.AbFile import AbFile
         from org.allbinary.logic.io.file.FileUtil import FileUtil
         from org.apache.commons.fileupload.FileItem import FileItem
         if self.fileName is None:
             raise Exception("Image File Name Was Null")
-        if not self.directory.create(self.imageFileAbPath):
+        if not (self.directory.create(self.imageFileAbPath)):
             raise Exception("Unable to save file to non creatable directory")
         originalImageFile: AbFile = AbFile.createAbFile(str(self.imageFileAbPath) + self.fileName)
         originalImageFile.createNewFile()

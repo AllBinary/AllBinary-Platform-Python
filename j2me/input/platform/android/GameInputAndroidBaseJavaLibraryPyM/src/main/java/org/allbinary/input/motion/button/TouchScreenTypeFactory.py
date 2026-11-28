@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -28,6 +29,8 @@ class TouchScreenTypeFactory:
     
 
     def update(self, activity: Activity) -> None:
+        from org.allbinary.input.motion.button.TouchScreenFactory import TouchScreenFactory
+        from org.allbinary.input.motion.button.TouchScreenTypesFactory import TouchScreenTypesFactory
         from android.app.Activity import Activity
         from android.content.res.Configuration import Configuration
         from org.allbinary.string.CommonStrings import CommonStrings
@@ -39,12 +42,12 @@ class TouchScreenTypeFactory:
         touchScreen: int = configuration.touchscreen
         if touchScreen == Configuration.TOUCHSCREEN_FINGER:
             touchScreenFactory.setTouchScreenType(touchScreenTypesFactory.FINGER)
-            if not touchScreenFactory.isTouch():
+            if not (java_predicate(touchScreenFactory, "isTouch")):
                 PreLogUtil.put("Not Really Exception: This indicates that a touch screen does exist but is not API8 so we will try it", self, commonStrings.PROCESS)
                 touchScreenFactory.setTouch(True)
         elif touchScreen == Configuration.TOUCHSCREEN_STYLUS:
             touchScreenFactory.setTouchScreenType(touchScreenTypesFactory.STYLUS)
-            if not touchScreenFactory.isTouch():
+            if not (java_predicate(touchScreenFactory, "isTouch")):
                 PreLogUtil.put("Not Really Exception: This indicates that a touch screen does exist but is not API8 so we will try it", self, commonStrings.PROCESS)
                 touchScreenFactory.setTouch(True)
         elif touchScreen == Configuration.TOUCHSCREEN_NOTOUCH:

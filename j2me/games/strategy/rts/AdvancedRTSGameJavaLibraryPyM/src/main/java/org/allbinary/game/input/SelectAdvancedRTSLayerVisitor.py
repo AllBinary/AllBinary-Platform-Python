@@ -15,18 +15,23 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.util.visitor.Visitor import Visitor
 
 
+@java_inherited_overloads
 class SelectAdvancedRTSLayerVisitor(Visitor):
+    def _java_defaults(self):
+        vars(self).setdefault("selectedRTSLayersPlayerGameInput", None)
 
     def _init_fields(self) -> None:
-        self.selectedRTSLayersPlayerGameInput: SelectedRTSLayersPlayerGameInput = None
+        if "selectedRTSLayersPlayerGameInput" not in vars(self): self.selectedRTSLayersPlayerGameInput: SelectedRTSLayersPlayerGameInput = None
     
 
     def __init__(self, selectedRTSLayersPlayerGameInput: SelectedRTSLayersPlayerGameInput) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.selectedRTSLayersPlayerGameInput = selectedRTSLayersPlayerGameInput
     
 

@@ -15,26 +15,31 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.ai.BasicAI import BasicAI
 
 
+@java_inherited_overloads
 class BoundBounceAI(BasicAI):
+    def _java_defaults(self):
+        vars(self).setdefault("currentRelativeAngle", 0)
+        vars(self).setdefault("layerBounds", None)
+        vars(self).setdefault("boundsVisitorInterface", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.bounds.BoundsVisitorInterface import BoundsVisitorInterface
-        from org.allbinary.bounds.LayerBounds import LayerBounds
         self.currentRelativeAngle: int = 0
-        self.layerBounds: LayerBounds = None
-        self.boundsVisitorInterface: BoundsVisitorInterface = None
+        if "layerBounds" not in vars(self): self.layerBounds: LayerBounds = None
+        if "boundsVisitorInterface" not in vars(self): self.boundsVisitorInterface: BoundsVisitorInterface = None
     
 
     def __init__(self, ownerLayerInterface: AllBinaryLayer, gameInput: GameInput, layerBounds: LayerBounds, boundsVisitorInterface: BoundsVisitorInterface) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.bounds.BoundsVisitorInterface import BoundsVisitorInterface
         from org.allbinary.bounds.LayerBounds import LayerBounds
         from org.allbinary.game.input.GameInput import GameInput
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         super().__init__(ownerLayerInterface, gameInput)
-        self._init_fields()
+        __class__._init_fields(self)
         self.layerBounds = layerBounds
         self.boundsVisitorInterface = boundsVisitorInterface
     

@@ -3,20 +3,26 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 import datetime
 from org.allbinary.time.TimeTypeUtil import TimeTypeUtil
 
 
 class TimeTypeTest:
+    @java_inherited_overloads
     class TestableTimeTypeUtil(TimeTypeUtil):
+        def _java_defaults(self):
+            vars(self).setdefault("hour", 0)
 
         def _init_fields(self) -> None:
-            self.hour: int = None
+            if "hour" not in vars(self): self.hour: int = 0
         
 
         def __init__(self, hour: int) -> None:
+            __class__._java_defaults(self)
             super().__init__()
-            self._init_fields()
+            __class__._init_fields(self)
             self.hour = hour
         
 

@@ -15,10 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.logic.system.os.GenericOperatingSystem import GenericOperatingSystem
 
 
+@java_inherited_overloads
 class NoOperatingSystem(GenericOperatingSystem):
     NO_OPERATING_SYSTEM: GenericOperatingSystem = None
     

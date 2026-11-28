@@ -15,9 +15,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_divide
 from org.allbinary.animation.image.sprite.HackRotationSpriteIndexedAnimation import HackRotationSpriteIndexedAnimation
 
 
+@java_inherited_overloads
 class AllBinarySpriteRotationAnimation(HackRotationSpriteIndexedAnimation):
     
 
@@ -27,7 +30,8 @@ class AllBinarySpriteRotationAnimation(HackRotationSpriteIndexedAnimation):
         from org.allbinary.animation.AnimationBehavior import AnimationBehavior
         from org.allbinary.math.AngleFactory import AngleFactory
         from org.allbinary.math.AngleInfo import AngleInfo
-        super().__init__(sprite, image, AngleInfo.getInstance(((int((AngleFactory.getInstance().TOTAL_ANGLE / sprite.getRawFrameCount())) + 32768) % 65536 - 32768)), animationBehavior)
+        super().__init__(sprite, image, AngleInfo.getInstance(((int((java_divide(AngleFactory.getInstance().TOTAL_ANGLE, sprite.getRawFrameCount())
+            )) + 32768) % 65536 - 32768)), animationBehavior)
         self.angleInfo.adjustAngle(self.sprite.getFrame())
     
 

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 import datetime
 from java.lang.JavaRuntimeStatic import lazy_static
 
@@ -39,7 +40,7 @@ class AbeLicenseInterfaceFactory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws LicensingException
@@ -53,6 +54,7 @@ class AbeLicenseInterfaceFactory:
     # throws LicensingException
     def get(self, abeClientInformation: AbeClientInformationInterface) -> AbeLicenseInterface:
         from org.allbinary.logic.system.security.licensing.AbeNoLicense import AbeNoLicense
+        from org.allbinary.logic.system.security.licensing.AbeClientInformationData import AbeClientInformationData
         from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
         from org.allbinary.logic.system.security.licensing.LicensingException import LicensingException
         from org.allbinary.logic.system.security.licensing.client.AbeLicenseClient import AbeLicenseClient
@@ -69,14 +71,14 @@ class AbeLicenseInterfaceFactory:
             raise LicensingException("License Server Connection Error")
         except Exception as e:
             self.logUtil.put("Licensing Failure", self, self.commonStrings.GET, e)
-            raise LicensingException("Unknown License Failure: " + type(self).__module__ + "." + type(self).__qualname__)
+            raise LicensingException("Unknown License Failure: " + __import__("java.lang.JavaRuntimeStatic", fromlist=["java_class_name"]).java_class_name(type(self)))
     
 
     def isTimeToGetKey(self) -> bool:
         from org.allbinary.logic.system.security.licensing.AbeNoLicense import AbeNoLicense
         calendar: datetime.datetime = datetime.datetime.now()
         currentTime: int = calendar.getTimeInMillis()
-        if self.abeLicenseInterface is None or self.abeLicenseInterface == AbeNoLicense.getInstance() or not self.abeLicenseInterface.hasKey() or self.isCheck() or currentTime - self.checkPeriod > self.time:
+        if self.abeLicenseInterface is None or self.abeLicenseInterface == AbeNoLicense.getInstance() or not (java_predicate(self.abeLicenseInterface, "hasKey")) or self.isCheck() or currentTime - self.checkPeriod > self.time:
             self.abeLicenseInterface = None
             self.time = currentTime
             return True

@@ -22,7 +22,6 @@ class StringUtil:
     instance: StringUtil = None
 
     def _init_fields(self) -> None:
-        from jsinterop.annotations.JsProperty import JsProperty
         self.INIT_STRING: str = str("")
         self.NULL_STRING: str = "null"
         self.EMPTY_STRING: str = ""
@@ -39,7 +38,7 @@ class StringUtil:
 
     def __init__(self) -> None:
         from jsinterop.annotations.JsConstructor import JsConstructor
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getNonNull(self, string: str) -> str:

@@ -21,13 +21,12 @@ from org.allbinary.business.advertisement.campaign.AdvertisementCampaignsInterfa
 class AdvertisementCampaigns(AdvertisementCampaignsInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
-        self.advertisementsVector: BasicArrayList = None
+        if "advertisementsVector" not in vars(self): self.advertisementsVector: BasicArrayList = None
     
 
     def __init__(self, vector: BasicArrayList) -> None:
         from org.allbinary.util.BasicArrayList import BasicArrayList
-        self._init_fields()
+        __class__._init_fields(self)
         self.advertisementsVector = self.advertisementsVector
     
 

@@ -27,7 +27,7 @@ class NullCompleteMotionGestureReceiver(CompleteMotionGestureListenerInterface):
 
     def __init__(self) -> None:
         from org.allbinary.string.CommonStrings import CommonStrings
-        self._init_fields()
+        __class__._init_fields(self)
         commonStrings: CommonStrings = CommonStrings.getInstance()
         self.logUtil.putF("Null Gesture Reciever", self, commonStrings.CONSTRUCTOR)
     

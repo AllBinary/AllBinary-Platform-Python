@@ -3,23 +3,27 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.graphics.form.item.ABTextItem import ABTextItem
 
 
+@java_inherited_overloads
 class ABTextFieldItem(ABTextItem):
+    def _java_defaults(self):
+        vars(self).setdefault("font", None)
 
     def _init_fields(self) -> None:
-        from javax.microedition.lcdui.Font import Font
-        self.font: Font = None
+        if "font" not in vars(self): self.font: Font = None
     
 
     def __init__(self, canvas: Canvas, visitor: Visitor, label: str, value: str, maxSize: int, layout: int, altText: str, font: Font, backgroundBasicColor: BasicColor, foregroundBasicColor: BasicColor) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.Canvas import Canvas
         from javax.microedition.lcdui.Font import Font
         from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.logic.util.visitor.Visitor import Visitor
         super().__init__(label, layout, altText, backgroundBasicColor, foregroundBasicColor)
-        self._init_fields()
+        __class__._init_fields(self)
         self.font = font
     
 

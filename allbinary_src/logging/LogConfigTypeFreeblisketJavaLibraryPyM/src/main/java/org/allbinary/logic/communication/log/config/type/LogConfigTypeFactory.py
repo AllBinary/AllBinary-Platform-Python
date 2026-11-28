@@ -101,7 +101,7 @@ class LogConfigTypeFactory:
     def __init__(self) -> None:
         from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
-        self._init_fields()
+        __class__._init_fields(self)
         PreLogUtil.put("FreeBlisket", self, CommonStrings.getInstance().CONSTRUCTOR)
 # from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
 # from org.allbinary.string.CommonStrings import CommonStrings

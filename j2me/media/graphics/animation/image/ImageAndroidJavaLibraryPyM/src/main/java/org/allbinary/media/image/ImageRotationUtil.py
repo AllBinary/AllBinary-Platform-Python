@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -34,7 +35,7 @@ class ImageRotationUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -45,11 +46,11 @@ class ImageRotationUtil:
         from android.graphics.Canvas import Canvas
         from org.microemu.android.device.AndroidImageInterface import AndroidImageInterface
         image: Image = ImageCreationUtil.getInstance().createImageWH(originalImage.getWidth(), originalImage.getHeight())
-        if image.isMutable():
+        if java_predicate(image, "isMutable"):
             bitmap: Bitmap = (image).getBitmap()
             width: int = bitmap.getWidth()
             height: int = bitmap.getHeight()
-            self.matrix.setRotate(float(rotationInDegrees), float((width >> 1)), float((height >> 1)))
+            self.matrix.setRotate(float(rotationInDegrees), float((int(width) >> (int(1) & 31))), float((int(height) >> (int(1) & 31))))
             canvas: Canvas = (image).getCanvas()
             canvas.concat(self.matrix)
             image.getGraphics().drawImage(originalImage, 0, 0, self.anchor)

@@ -15,9 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.game.layer.special.CollidableDestroyableDamageableBehavior import CollidableDestroyableDamageableBehavior
 
 
+@java_inherited_overloads
 class CollidableRTSBehavior(CollidableDestroyableDamageableBehavior):
     
 
@@ -33,7 +37,7 @@ class CollidableRTSBehavior(CollidableDestroyableDamageableBehavior):
         if collisionType == collisionTypeFactory.PICKUP:
             pass
         elif collisionType == collisionTypeFactory.COLLISION:
-            return super().isCollision(ownerLayer, collidableInterfaceCompositeInterface)
+            return java_super_call(super(), "isCollision", ownerLayer, collidableInterfaceCompositeInterface)
         else:
             if collidableInterfaceCompositeInterface.getX2() <= ownerLayer.getXP() or collidableInterfaceCompositeInterface.getY2() <= ownerLayer.getYP() or collidableInterfaceCompositeInterface.getYP() >= ownerLayer.getY2() or collidableInterfaceCompositeInterface.getXP() >= ownerLayer.getX2():
                 return False
@@ -51,7 +55,7 @@ class CollidableRTSBehavior(CollidableDestroyableDamageableBehavior):
         if collisionType == collisionTypeFactory.PICKUP:
             pass
         elif collisionType == collisionTypeFactory.COLLISION:
-            super().collide(ownerLayer, collidableInterfaceCompositeInterface)
+            java_super_call(super(), "collide", ownerLayer, collidableInterfaceCompositeInterface)
         else:
             self.collideNone(ownerLayer, collidableInterfaceCompositeInterface)
     

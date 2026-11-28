@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 import datetime
 from org.allbinary.business.user.UserInterface import UserInterface
 
@@ -22,53 +23,50 @@ from org.allbinary.business.user.UserInterface import UserInterface
 class User(UserInterface):
 
     def _init_fields(self) -> None:
-        from org.allbinary.business.user.modules.configuration.UserConfigurationInterface import UserConfigurationInterface
-        from org.allbinary.business.user.password.Password import Password
-        from org.allbinary.business.user.role.UserRole import UserRole
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.userName: str = None
-        self.prefixName: str = None
-        self.firstName: str = None
-        self.lastName: str = None
-        self.middleName: str = None
-        self.suffixName: str = None
-        self.company: str = None
-        self.positionAtCompany: str = None
-        self.mainEmail: str = None
-        self.secondaryEmail: str = None
-        self.homePhone: str = None
-        self.cellPhone: str = None
-        self.workPhone: str = None
-        self.otherContact: str = None
-        self.electronicDevice: str = None
-        self.fax: str = None
-        self.role: UserRole = None
-        self.encryption: str = None
-        self.secret: str = None
-        self.password: Password = None
-        self.enable: str = None
-        self.permissions: str = None
-        self.userConfigurationInterface: UserConfigurationInterface = None
+        if "userName" not in vars(self): self.userName: str = None
+        if "prefixName" not in vars(self): self.prefixName: str = None
+        if "firstName" not in vars(self): self.firstName: str = None
+        if "lastName" not in vars(self): self.lastName: str = None
+        if "middleName" not in vars(self): self.middleName: str = None
+        if "suffixName" not in vars(self): self.suffixName: str = None
+        if "company" not in vars(self): self.company: str = None
+        if "positionAtCompany" not in vars(self): self.positionAtCompany: str = None
+        if "mainEmail" not in vars(self): self.mainEmail: str = None
+        if "secondaryEmail" not in vars(self): self.secondaryEmail: str = None
+        if "homePhone" not in vars(self): self.homePhone: str = None
+        if "cellPhone" not in vars(self): self.cellPhone: str = None
+        if "workPhone" not in vars(self): self.workPhone: str = None
+        if "otherContact" not in vars(self): self.otherContact: str = None
+        if "electronicDevice" not in vars(self): self.electronicDevice: str = None
+        if "fax" not in vars(self): self.fax: str = None
+        if "role" not in vars(self): self.role: UserRole = None
+        if "encryption" not in vars(self): self.encryption: str = None
+        if "secret" not in vars(self): self.secret: str = None
+        if "password" not in vars(self): self.password: Password = None
+        if "enable_field" not in vars(self): self.enable_field: str = None
+        if "permissions" not in vars(self): self.permissions: str = None
+        if "userConfigurationInterface" not in vars(self): self.userConfigurationInterface: UserConfigurationInterface = None
 
     def __init__(self, *args) -> None:
         if len(args) == 0:
-            self._constructor0(*args)
+            __class__._constructor0(self, *args)
         elif len(args) == 1:
-            self.__jconstructor1(*args)
+            __class__.__jconstructor1(self, *args)
 
     def __jconstructor1(self, *args) -> None:
-        if True and not isinstance(args[0], (str, list, int, float)):
-            self._constructor1_1(*args)
+        if True and (args[0] is None or any(base.__name__ == "HttpServletRequest" for base in type(args[0]).__mro__)):
+            __class__._constructor1_1(self, *args)
         else:
-            self._constructor1_2(*args)
+            __class__._constructor1_2(self, *args)
     
 
     def _constructor0(self) -> None:
         from org.allbinary.business.user.modules.configuration.UserConfigurationInterfaceFactory import UserConfigurationInterfaceFactory
         from org.allbinary.business.user.password.Password import Password
         from org.allbinary.logic.string.StringUtil import StringUtil
-        self._init_fields()
+        __class__._init_fields(self)
         self.userConfigurationInterface = UserConfigurationInterfaceFactory.getInstance()
         self.password = Password(StringUtil.getInstance().EMPTY_STRING)
     
@@ -76,7 +74,7 @@ class User(UserInterface):
     def _constructor1_1(self, request: HttpServletRequest) -> None:
         from org.allbinary.business.user.modules.configuration.UserConfigurationInterfaceFactory import UserConfigurationInterfaceFactory
         from org.allbinary.logic.communication.http.request.RequestParams import RequestParams
-        self._init_fields()
+        __class__._init_fields(self)
         self.getFormData(RequestParams(request).toHashMap())
         self.userConfigurationInterface = UserConfigurationInterfaceFactory.getInstance(self.getRole())
     
@@ -84,7 +82,7 @@ class User(UserInterface):
     def _constructor1_2(self, userHashMap: HashMap) -> None:
         from java.util.HashMap import HashMap
         from org.allbinary.business.user.modules.configuration.UserConfigurationInterfaceFactory import UserConfigurationInterfaceFactory
-        self._init_fields()
+        __class__._init_fields(self)
         self.getFormData(userHashMap)
         self.userConfigurationInterface = UserConfigurationInterfaceFactory.getInstance(self.getRole())
     
@@ -129,11 +127,11 @@ class User(UserInterface):
         self.fax = stringUtil.getNonNull(userHashMap.get(UserData.FAX))
         self.role = UserRoleB.getRole(userHashMap.get(str(UserRoleData.NAME)))
         self.permissions = stringUtil.getNonNull(userHashMap.get(UserData.PERMISSIONS))
-        if not stringValidationUtil.isEmpty(self.permissions) and ((self.permissions > StoreFrontData.getInstance().NAME) - (self.permissions < StoreFrontData.getInstance().NAME)) == 0:
+        if not (stringValidationUtil.isEmpty(self.permissions)) and ((self.permissions > StoreFrontData.getInstance().NAME) - (self.permissions < StoreFrontData.getInstance().NAME)) == 0:
             self.permissions = stringUtil.getNonNull(userHashMap.get(StoreFrontData.getInstance().NAME))
         elif self.permissions is None:
             self.permissions = "No Permissions"
-        self.enable = stringUtil.getNonNull(userHashMap.get(EntryData.getInstance().ENABLE))
+        self.enable_field = stringUtil.getNonNull(userHashMap.get(EntryData.getInstance().ENABLE))
     
 
     def isValid(self) -> bool:
@@ -145,16 +143,16 @@ class User(UserInterface):
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
         try:
             valid: bool = True
-            if not UserName.getInstance().isValid(self.userName):
+            if not (UserName.getInstance().isValid(self.userName)):
                 valid = False
-            if not self.password.isValid():
+            if not (java_predicate(self.password, "isValid")):
                 valid = False
             stringValidationUtil: StringValidationUtil = StringValidationUtil.getInstance()
-            if not stringValidationUtil.isValidRequired(self.firstName, 1, UserData.MAXLEN):
+            if not (stringValidationUtil.isValidRequired(self.firstName, 1, UserData.MAXLEN)):
                 valid = False
-            if not stringValidationUtil.isValidRequired(self.lastName, 1, UserData.MAXLEN):
+            if not (stringValidationUtil.isValidRequired(self.lastName, 1, UserData.MAXLEN)):
                 valid = False
-            if not stringValidationUtil.isValidRequired(self.mainEmail, 1, UserData.MAXLEN) or self.mainEmail.find("@") == -1:
+            if not (stringValidationUtil.isValidRequired(self.mainEmail, 1, UserData.MAXLEN)) or self.mainEmail.find("@") == -1:
                 valid = False
             return valid
         except Exception as e:
@@ -176,11 +174,11 @@ class User(UserInterface):
             stringBuffer: StringMaker = StringMaker()
             stringBuffer.append(UserName.getValidationInfo(self.userName))
             stringBuffer.append(self.password.getValidationInfo())
-            if not stringValidationUtil.isValidRequired(self.firstName, 1, UserData.MAXLEN):
+            if not (stringValidationUtil.isValidRequired(self.firstName, 1, UserData.MAXLEN)):
                 stringBuffer.append("Please enter a valid First Name.<br />")
-            if not stringValidationUtil.isValidRequired(self.lastName, 1, UserData.MAXLEN):
+            if not (stringValidationUtil.isValidRequired(self.lastName, 1, UserData.MAXLEN)):
                 stringBuffer.append("Please enter a valid Last Name.<br />")
-            if not stringValidationUtil.isValidRequired(self.mainEmail, 1, UserData.MAXLEN) or self.mainEmail.find("@") == -1:
+            if not (stringValidationUtil.isValidRequired(self.mainEmail, 1, UserData.MAXLEN)) or self.mainEmail.find("@") == -1:
                 stringBuffer.append("Please enter a valid email address.<br />")
             return str(stringBuffer)
         except Exception as e:
@@ -283,7 +281,7 @@ class User(UserInterface):
     
 
     def setEnable(self, enable: str) -> None:
-        self.enable = enable
+        self.enable_field = enable
     
 
     def getUserName(self) -> str:
@@ -398,7 +396,7 @@ class User(UserInterface):
         values.add(userConfigurationDomDocumentMapping.toDomDocumentString())
         values.add(self.permissions)
         values.addAllList(self.password.toVector(self.secret))
-        values.add(self.enable)
+        values.add(self.enable_field)
         calendar: datetime.datetime = datetime.datetime.now()
         time: str = str(str(int(calendar.getTimeInMillis())))
         values.add(time)
@@ -437,7 +435,7 @@ class User(UserInterface):
         values.put(UserData.CONFIGURATION, userConfigurationDomDocumentMapping.toDomDocumentString())
         values.put(UserData.PERMISSIONS, self.permissions)
         values.putAll(self.password.toHashMap(self.secret))
-        values.put(EntryData.getInstance().ENABLE, self.enable)
+        values.put(EntryData.getInstance().ENABLE, self.enable_field)
         calendar: datetime.datetime = datetime.datetime.now()
         time: str = str(str(int(calendar.getTimeInMillis())))
         values.put(EntryData.getInstance().LASTMODIFIED, time)

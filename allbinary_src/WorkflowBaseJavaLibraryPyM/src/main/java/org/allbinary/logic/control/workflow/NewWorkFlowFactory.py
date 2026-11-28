@@ -32,11 +32,12 @@ class NewWorkFlowFactory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception, LicensingException
     def getInstance_j3(self, abeClientInformation: AbeClientInformationInterface, hashMap: HashMap, pageContext: PageContext) -> WorkFlowInterface:
+        from org.allbinary.logic.control.workflow.WorkFlowWrapper import WorkFlowWrapper
         from java.util.HashMap import HashMap
         from org.allbinary.business.DynamicObjectData import DynamicObjectData
         from org.allbinary.logic.system.loader.AbeFactory import AbeFactory
@@ -69,6 +70,7 @@ class NewWorkFlowFactory:
 
     # throws Exception, LicensingException
     def getInstance_j2(self, abeClientInformation: AbeClientInformationInterface, className: str) -> WorkFlowInterface:
+        from org.allbinary.logic.control.workflow.WorkFlowWrapper import WorkFlowWrapper
         from org.allbinary.logic.string.StringUtil import StringUtil
         from org.allbinary.logic.system.loader.AbeFactory import AbeFactory
         from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
@@ -94,8 +96,11 @@ class NewWorkFlowFactory:
                 self.logUtil.put(commonStrings.EXCEPTION, self, commonStrings.GET_INSTANCE, e)
             raise e
 
-    def getInstance(self, *args):
-        return getattr(self, "getInstance_j" + str(len(args)))(*args)
+    def getInstance(self=None, *args):
+        if self is None and not args: return __class__.getInstance_j0()
+        implementation = __class__.__dict__.get("getInstance_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getInstance(*args)
 # from java.util.HashMap import HashMap
 # from javax.servlet.jsp.PageContext import PageContext
 # from org.allbinary.business.DynamicObjectData import DynamicObjectData

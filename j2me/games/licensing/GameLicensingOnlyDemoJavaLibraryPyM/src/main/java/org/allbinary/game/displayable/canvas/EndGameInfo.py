@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 
 
 class EndGameInfo:
@@ -28,13 +29,13 @@ class EndGameInfo:
         self.winStr: str = self.gameOverStr
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def update(self, gameInfo: GameInfo, myCanvas: MyCanvas) -> None:
         from org.allbinary.game.GameInfo import GameInfo
         from org.allbinary.graphics.displayable.MyCanvas import MyCanvas
-        if gameInfo.isLastLevel():
+        if java_predicate(gameInfo, "isLastLevel"):
             self.setWinStr(self.TEASER_DEMO_GAME_END_LAST_LEVEL)
             self.setGameOverStr(self.TEASER_DEMO_GAME_END_LAST_LEVEL)
         else:

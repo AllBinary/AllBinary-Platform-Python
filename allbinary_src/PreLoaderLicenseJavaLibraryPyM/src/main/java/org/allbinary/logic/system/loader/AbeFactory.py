@@ -36,13 +36,13 @@ class AbeFactory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws LicensingException
     def getInstance_j2(self, abeClientInformation: AbeClientInformationInterface, className: str) -> object:
         with self._lock:
-            return self._getInstance_j2_unlocked(abeClientInformation, className)
+            return __class__.__dict__["_getInstance_j2_unlocked"].__get__(self, __class__)(abeClientInformation, className)
 
     def _getInstance_j2_unlocked(self, abeClientInformation: AbeClientInformationInterface, className: str) -> object:
         from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface
@@ -64,9 +64,10 @@ class AbeFactory:
     # throws LicensingException
     def getInstance_j4(self, abeClientInformation: AbeClientInformationInterface, className: str, classes: list[type], params: list[object]) -> object:
         with self._lock:
-            return self._getInstance_j4_unlocked(abeClientInformation, className, classes, params)
+            return __class__.__dict__["_getInstance_j4_unlocked"].__get__(self, __class__)(abeClientInformation, className, classes, params)
 
     def _getInstance_j4_unlocked(self, abeClientInformation: AbeClientInformationInterface, className: str, classes: list[type], params: list[object]) -> object:
+        from org.allbinary.logic.system.loader.WebappClassLoaderInfo import WebappClassLoaderInfo
         from org.allbinary.logic.system.loader.AbeClassLoader import AbeClassLoader
         from org.allbinary.logic.java.anyType.ConstructorUtil import ConstructorUtil
         from org.allbinary.logic.string.StringMaker import StringMaker
@@ -107,16 +108,20 @@ class AbeFactory:
                 self.logUtil.put(str(stringBuffer), self, "getInstance(className,params)", e)
             return None
 
-    def getInstance(self, *args):
-        return getattr(self, "getInstance_j" + str(len(args)))(*args)
+    def getInstance(self=None, *args):
+        if self is None and not args: return __class__.getInstance_j0()
+        implementation = __class__.__dict__.get("getInstance_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().getInstance(*args)
     
 
     # throws LicensingException
     def getClass(self, abeClientInformation: AbeClientInformationInterface, className: str) -> type:
         with self._lock:
-            return self._getClass_unlocked(abeClientInformation, className)
+            return __class__.__dict__["_getClass_unlocked"].__get__(self, __class__)(abeClientInformation, className)
 
     def _getClass_unlocked(self, abeClientInformation: AbeClientInformationInterface, className: str) -> type:
+        from org.allbinary.logic.system.loader.WebappClassLoaderInfo import WebappClassLoaderInfo
         from org.allbinary.logic.system.loader.AbeClassLoader import AbeClassLoader
         from org.allbinary.logic.system.security.AbKeys import AbKeys
         from org.allbinary.logic.system.security.licensing.AbeClientInformationInterface import AbeClientInformationInterface

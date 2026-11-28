@@ -20,16 +20,16 @@ from __future__ import annotations
 class TransformInfoProperties:
 
     def _init_fields(self) -> None:
-        self.name: str = None
-        self.label: str = None
-        self.description: str = None
-        self.objectFileName: str = None
-        self.objectConfigFileName: str = None
-        self.templateFileName: str = None
+        if "name" not in vars(self): self.name: str = None
+        if "label" not in vars(self): self.label: str = None
+        if "description" not in vars(self): self.description: str = None
+        if "objectFileName" not in vars(self): self.objectFileName: str = None
+        if "objectConfigFileName" not in vars(self): self.objectConfigFileName: str = None
+        if "templateFileName" not in vars(self): self.templateFileName: str = None
     
 
     def __init__(self, name: str, label: str, description: str, objectFileName: str, objectConfigFileName: str, templateFileName: str) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.name = name
         self.label = label
         self.description = description

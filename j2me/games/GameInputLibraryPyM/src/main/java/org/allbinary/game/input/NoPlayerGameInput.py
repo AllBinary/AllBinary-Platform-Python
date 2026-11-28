@@ -15,11 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.input.PlayerGameInput import PlayerGameInput
 
 
+@java_inherited_overloads
 class NoPlayerGameInput(PlayerGameInput):
     SINGLETON: NoPlayerGameInput = None
     _lock = threading.RLock()
@@ -37,7 +39,7 @@ class NoPlayerGameInput(PlayerGameInput):
 
     def onDownGameKeyEvent(self, gameKeyEvent: GameKeyEvent) -> None:
         with self._lock:
-            return self._onDownGameKeyEvent_unlocked(gameKeyEvent)
+            return __class__.__dict__["_onDownGameKeyEvent_unlocked"].__get__(self, __class__)(gameKeyEvent)
 
     def _onDownGameKeyEvent_unlocked(self, gameKeyEvent: GameKeyEvent) -> None:
         from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent
@@ -46,7 +48,7 @@ class NoPlayerGameInput(PlayerGameInput):
 
     def onUpGameKeyEvent(self, gameKeyEvent: GameKeyEvent) -> None:
         with self._lock:
-            return self._onUpGameKeyEvent_unlocked(gameKeyEvent)
+            return __class__.__dict__["_onUpGameKeyEvent_unlocked"].__get__(self, __class__)(gameKeyEvent)
 
     def _onUpGameKeyEvent_unlocked(self, gameKeyEvent: GameKeyEvent) -> None:
         from org.allbinary.game.input.event.GameKeyEvent import GameKeyEvent

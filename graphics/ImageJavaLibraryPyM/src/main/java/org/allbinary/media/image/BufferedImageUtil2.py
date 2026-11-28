@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -13,7 +14,7 @@ class BufferedImageUtil2:
         self.imageUtil: ImageUtil = ImageUtil.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -44,6 +45,7 @@ class BufferedImageUtil2:
         return bufferedImage
 # from java.awt.Graphics2D import Graphics2D
 # from java.awt.image.BufferedImage import BufferedImage
+from org.allbinary.media.image.ImageUtil import ImageUtil
 
 
 def _BufferedImageUtil2_instance() -> object:

@@ -40,7 +40,7 @@ class GraphicsFeatureFactory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
 # from org.allbinary.logic.string.StringUtil import StringUtil
 from org.allbinary.game.configuration.feature.GraphicsFeature import GraphicsFeature
 

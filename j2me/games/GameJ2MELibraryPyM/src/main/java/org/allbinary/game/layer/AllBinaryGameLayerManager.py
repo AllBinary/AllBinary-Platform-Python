@@ -15,22 +15,26 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
 
 
+@java_inherited_overloads
 class AllBinaryGameLayerManager(AllBinaryLayerManager):
     NULL_ALLBINARY_LAYER_MANAGER: object = None
     ID: int = None
+    def _java_defaults(self):
+        vars(self).setdefault("backgroundBasicColor", None)
+        vars(self).setdefault("foregroundBasicColor", None)
+        vars(self).setdefault("gameInfo", None)
+        vars(self).setdefault("playerGameInputCompositeInterface", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.GameInfo import GameInfo
         from org.allbinary.game.input.NullPlayerGameInputComposite import NullPlayerGameInputComposite
-        from org.allbinary.game.input.PlayerGameInputCompositeInterface import PlayerGameInputCompositeInterface
-        from org.allbinary.graphics.color.BasicColor import BasicColor
-        self.backgroundBasicColor: BasicColor = None
-        self.foregroundBasicColor: BasicColor = None
-        self.gameInfo: GameInfo = None
+        if "backgroundBasicColor" not in vars(self): self.backgroundBasicColor: BasicColor = None
+        if "foregroundBasicColor" not in vars(self): self.foregroundBasicColor: BasicColor = None
+        if "gameInfo" not in vars(self): self.gameInfo: GameInfo = None
         self.playerGameInputCompositeInterface: PlayerGameInputCompositeInterface = NullPlayerGameInputComposite.NULL_PLAYER_GAME_INPUT_COMPOSITE
     
 
@@ -45,11 +49,12 @@ class AllBinaryGameLayerManager(AllBinaryLayerManager):
     
 
     def __init__(self, backgroundBasicColor: BasicColor, foregroundBasicColor: BasicColor, gameInfo: GameInfo) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.GameInfo import GameInfo
         from org.allbinary.graphics.ItemColorFactory import ItemColorFactory
         from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.backgroundBasicColor = backgroundBasicColor
         self.foregroundBasicColor = foregroundBasicColor
         itemColorFactory: ItemColorFactory = ItemColorFactory.getInstance()

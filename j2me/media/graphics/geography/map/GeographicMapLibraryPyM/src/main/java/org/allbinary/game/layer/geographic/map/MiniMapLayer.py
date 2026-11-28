@@ -15,29 +15,35 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import threading
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
 from org.allbinary.media.graphics.geography.map.event.GeographicMapCellPositionEventListenerInterface import GeographicMapCellPositionEventListenerInterface
 
 
+@java_inherited_overloads
 class MiniMapLayer(*java_bases(AllBinaryLayer, GeographicMapCellPositionEventListenerInterface)):
     _lock = threading.RLock()
+    def _java_defaults(self):
+        vars(self).setdefault("allBinaryTiledLayer", None)
+        vars(self).setdefault("geographicMapCellPositionFactory", None)
+        vars(self).setdefault("list_", None)
+        vars(self).setdefault("basicColorList", None)
+        vars(self).setdefault("positionList", None)
+        vars(self).setdefault("animationInterface", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
-        from org.allbinary.animation.vector.CircleFilledAnimation import CircleFilledAnimation
-        from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
-        from org.allbinary.media.graphics.geography.map.BasicGeographicMapCellPositionFactory import BasicGeographicMapCellPositionFactory
-        self.allBinaryTiledLayer: AllBinaryTiledLayer = None
-        self.geographicMapCellPositionFactory: BasicGeographicMapCellPositionFactory = None
-        self.list_: BasicArrayList = None
-        self.basicColorList: BasicArrayList = None
-        self.positionList: BasicArrayList = None
-        self.animationInterface: CircleFilledAnimation = None
+        if "allBinaryTiledLayer" not in vars(self): self.allBinaryTiledLayer: AllBinaryTiledLayer = None
+        if "geographicMapCellPositionFactory" not in vars(self): self.geographicMapCellPositionFactory: BasicGeographicMapCellPositionFactory = None
+        if "list_" not in vars(self): self.list_: BasicArrayList = None
+        if "basicColorList" not in vars(self): self.basicColorList: BasicArrayList = None
+        if "positionList" not in vars(self): self.positionList: BasicArrayList = None
+        if "animationInterface" not in vars(self): self.animationInterface: CircleFilledAnimation = None
     
 
     def __init__(self, geographicMapInterface: BasicGeographicMap, viewPosition: ViewPositionBase) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.logic.string.StringUtil import StringUtil
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         from org.allbinary.animation.vector.CircleFilledAnimation import CircleFilledAnimation
@@ -48,7 +54,7 @@ class MiniMapLayer(*java_bases(AllBinaryLayer, GeographicMapCellPositionEventLis
         from org.allbinary.media.graphics.geography.map.event.GeographicMapCellPositionEventHandler import GeographicMapCellPositionEventHandler
         from org.allbinary.view.ViewPositionBase import ViewPositionBase
         super().__init__(StringUtil.getInstance().EMPTY_STRING, Rectangle(PointFactory.getInstance().createXY(0, viewPosition.getY()), geographicMapInterface.getAllBinaryTiledLayer().getWidth(), geographicMapInterface.getAllBinaryTiledLayer().getHeight()), viewPosition)
-        self._init_fields()
+        __class__._init_fields(self)
         self.allBinaryTiledLayer = geographicMapInterface.getAllBinaryTiledLayer()
         self.geographicMapCellPositionFactory = geographicMapInterface.getGeographicMapCellPositionFactory()
         self.animationInterface = CircleFilledAnimation(self.allBinaryTiledLayer.getCellWidth(), self.allBinaryTiledLayer.getCellHeight(), BasicColorFactory.getInstance().WHITE)
@@ -74,7 +80,7 @@ class MiniMapLayer(*java_bases(AllBinaryLayer, GeographicMapCellPositionEventLis
     # throws Exception
     def onRemoveGeographicMapCellPositionEvent(self, geographicMapCellPositionEvent: GeographicMapCellPositionEvent) -> None:
         with self._lock:
-            return self._onRemoveGeographicMapCellPositionEvent_unlocked(geographicMapCellPositionEvent)
+            return __class__.__dict__["_onRemoveGeographicMapCellPositionEvent_unlocked"].__get__(self, __class__)(geographicMapCellPositionEvent)
 
     def _onRemoveGeographicMapCellPositionEvent_unlocked(self, geographicMapCellPositionEvent: GeographicMapCellPositionEvent) -> None:
         from org.allbinary.graphics.color.ColorCompositeInterface import ColorCompositeInterface
@@ -90,7 +96,7 @@ class MiniMapLayer(*java_bases(AllBinaryLayer, GeographicMapCellPositionEventLis
     # throws Exception
     def onGeographicMapCellPositionEvent(self, geographicMapCellPositionEvent: GeographicMapCellPositionEvent) -> None:
         with self._lock:
-            return self._onGeographicMapCellPositionEvent_unlocked(geographicMapCellPositionEvent)
+            return __class__.__dict__["_onGeographicMapCellPositionEvent_unlocked"].__get__(self, __class__)(geographicMapCellPositionEvent)
 
     def _onGeographicMapCellPositionEvent_unlocked(self, geographicMapCellPositionEvent: GeographicMapCellPositionEvent) -> None:
         from org.allbinary.graphics.GPoint import GPoint

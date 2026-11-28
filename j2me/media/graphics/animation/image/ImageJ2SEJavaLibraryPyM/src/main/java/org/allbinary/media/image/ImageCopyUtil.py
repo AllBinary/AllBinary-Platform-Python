@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -36,7 +37,7 @@ class ImageCopyUtil:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -49,7 +50,7 @@ class ImageCopyUtil:
     def createImage(self, originalImage: Image) -> Image:
         from javax.microedition.lcdui.Image import Image
         image: Image = self.imageCreationUtil.createImageWH(originalImage.getWidth(), originalImage.getHeight())
-        if image.isMutable():
+        if java_predicate(image, "isMutable"):
             image.getGraphics().drawImage(originalImage, 0, 0, self.anchor)
             return image
         else:

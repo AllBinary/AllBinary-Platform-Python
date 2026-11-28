@@ -14,10 +14,12 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.media.audio.CompositeSound import CompositeSound
 
 
+@java_inherited_overloads
 class SelectBuildingSound(CompositeSound):
     soundInterface: Sound = None
     

@@ -15,33 +15,42 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.displayable.canvas.GameCommandCanvas import GameCommandCanvas
 
 
+@java_inherited_overloads
 class GameInputMappingInstructionsCanvas(GameCommandCanvas):
     DISPLAY: Command = None
     CLOSE: Command = None
     NAME: str = "GameInputMappingInstructionsCanvas"
+    def _java_defaults(self):
+        vars(self).setdefault("drawStringUtil", None)
+        vars(self).setdefault("TITLE", None)
+        vars(self).setdefault("instructions", None)
+        vars(self).setdefault("colorFillPaintable", None)
+        vars(self).setdefault("anchor", 0)
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.paint.ColorFillBasePaintable import ColorFillBasePaintable
         from org.allbinary.graphics.Anchor import Anchor
         from org.allbinary.graphics.draw.DrawStringUtil import DrawStringUtil
         from org.allbinary.logic.string.StringUtil import StringUtil
         self.drawStringUtil: DrawStringUtil = DrawStringUtil.getInstance()
         self.TITLE: str = "Input Instructions"
         self.instructions: list[str] = ["Add Input Mapping:", "1. Select the desired action by generating a currently defined input for a given action.", "(Example: Press the '1' key to select the Fire action)", "2. Make the newly desired input for the selected action.", "(Example: Press 'f' to add it to the selected action)", "Note: If the input is already mapped to another action then it will not be added. You", "will need to deleted from the other action before adding it to another.", "Warning: Not all keys map for a given platform and show as Unknown.", StringUtil.getInstance().EMPTY_STRING, "Remove Input Mapping:", "1. Select the desired action by generating a currently defined input for a given action.", "(Example: Press the key '1' to select the Fire action)", "2. Select a mapped input for the selected action.", "(Example: Press the key '1' to select the '1' key input for the selected Fire action)", "3. Press the Delete Key."]
-        self.colorFillPaintable: ColorFillBasePaintable = None
+        if "colorFillPaintable" not in vars(self): self.colorFillPaintable: ColorFillBasePaintable = None
         self.anchor: int = Anchor.TOP_LEFT
     
 
     def __init__(self, commandListener: CommandListener, allBinaryGameLayerManager: AllBinaryGameLayerManager) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.CommandListener import CommandListener
         from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
         from org.allbinary.game.paint.ColorFillPaintableFactory import ColorFillPaintableFactory
         super().__init__(commandListener, GameInputMappingInstructionsCanvas.NAME, allBinaryGameLayerManager.getBackgroundBasicColor(), allBinaryGameLayerManager.getForegroundBasicColor())
-        self._init_fields()
+        __class__._init_fields(self)
         self.logUtil.putF(self.commonStrings.START, self, self.commonStrings.CONSTRUCTOR)
         self.colorFillPaintable = ColorFillPaintableFactory.getInstance().getInstance(allBinaryGameLayerManager.getBackgroundBasicColor(), False)
     
@@ -62,7 +71,7 @@ class GameInputMappingInstructionsCanvas(GameCommandCanvas):
         graphics.setColor(self.foregroundColor)
         graphics.drawString(self.TITLE, halfWidth - beginWidth, self.fontHeight, self.anchor)
         self.drawStringUtil.drawCenterStrings(graphics, self.instructions, self.displayInfo.getLastWidth(), self.fontHeight, halfWidth, 3 * self.fontHeight)
-        super().paint(graphics)
+        java_super_call(super(), "paint", graphics)
 # from javax.microedition.lcdui.Command import Command
 # from javax.microedition.lcdui.CommandListener import CommandListener
 # from javax.microedition.lcdui.Graphics import Graphics

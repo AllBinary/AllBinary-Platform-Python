@@ -15,11 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.media.audio.CompositeSound import CompositeSound
 
 
 #Use 8hz16bitmono for most J2ME
+@java_inherited_overloads
 class SelectSound(CompositeSound):
     soundInterface: Sound = None
     

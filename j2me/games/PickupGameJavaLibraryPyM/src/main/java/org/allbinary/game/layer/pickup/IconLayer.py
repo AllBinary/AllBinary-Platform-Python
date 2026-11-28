@@ -15,26 +15,30 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
 
 
+@java_inherited_overloads
 class IconLayer(AllBinaryLayer):
     NULL_ICON_LAYER: IconLayer = None
+    def _java_defaults(self):
+        vars(self).setdefault("animationInterface", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.animation.Animation import Animation
-        self.animationInterface: Animation = None
+        if "animationInterface" not in vars(self): self.animationInterface: Animation = None
     
 
     def __init__(self, animationInterface: Animation, width: int, height: int) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.animation.Animation import Animation
         from org.allbinary.graphics.PointFactory import PointFactory
         from org.allbinary.graphics.Rectangle import Rectangle
         from org.allbinary.logic.string.StringUtil import StringUtil
         from org.allbinary.view.ViewPosition import ViewPosition
         super().__init__(StringUtil.getInstance().EMPTY_STRING, Rectangle(PointFactory.getInstance().ZERO_ZERO, width, height), ViewPosition.getInstanceD())
-        self._init_fields()
+        __class__._init_fields(self)
         self.animationInterface = animationInterface
     
 

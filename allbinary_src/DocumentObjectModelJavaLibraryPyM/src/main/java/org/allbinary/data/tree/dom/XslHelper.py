@@ -60,6 +60,7 @@ class XslHelper:
 
     # throws Exception
     def translateTemplate(self, templates: Templates, xmlStreamSource: StreamSource) -> str:
+        from java.io.ByteArrayOutputStream import ByteArrayOutputStream
         try:
             outputStream: ByteArrayOutputStream = ByteArrayOutputStream()
             streamResult: StreamResult = StreamResult(outputStream)
@@ -72,6 +73,7 @@ class XslHelper:
     # throws Exception
     # Java overloaded method with the same parameter count: Python keeps the last definition
     def translate_j2_1(self, xsltStreamSource: StreamSource, xmlDocument: Document) -> str:
+        from java.io.ByteArrayOutputStream import ByteArrayOutputStream
         from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
         from org.w3c.dom.Document import Document
         try:
@@ -84,6 +86,7 @@ class XslHelper:
     # throws Exception
     # Java overloaded method with the same parameter count: Python keeps the last definition
     def translate_j2_2(self, xsltStreamSource: StreamSource, xmlStreamSource: StreamSource) -> str:
+        from java.io.ByteArrayOutputStream import ByteArrayOutputStream
         try:
             outputStream: ByteArrayOutputStream = ByteArrayOutputStream()
             return str(self.translate(xsltStreamSource, xmlStreamSource, StreamResult(outputStream)))
@@ -94,6 +97,7 @@ class XslHelper:
     # throws Exception
     # Java overloaded method with the same parameter count: Python keeps the last definition
     def translate_j3_2(self, resolver: URIResolver, xsltStreamSource: StreamSource, xmlStreamSource: StreamSource) -> str:
+        from java.io.ByteArrayOutputStream import ByteArrayOutputStream
         try:
             outputStream: ByteArrayOutputStream = ByteArrayOutputStream()
             return str(self.translate(resolver, xsltStreamSource, xmlStreamSource, StreamResult(outputStream)))
@@ -101,19 +105,22 @@ class XslHelper:
             raise e
 
     def translate(self, *args):
-        if len(args) == 3 and True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)) and not isinstance(args[2], (str, list, int, float)):
-            return self.translate_j3_1(*args)
-        if len(args) == 2 and True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)):
-            return self.translate_j2_1(*args)
+        if len(args) == 3 and True and (args[0] is None or any(base.__name__ == "StreamSource" for base in type(args[0]).__mro__)) and (args[1] is None or any(base.__name__ == "StreamSource" for base in type(args[1]).__mro__)) and (args[2] is None or any(base.__name__ == "StreamResult" for base in type(args[2]).__mro__)):
+            return __class__.__dict__["translate_j3_1"].__get__(self, __class__)(*args)
+        if len(args) == 2 and True and (args[0] is None or any(base.__name__ == "StreamSource" for base in type(args[0]).__mro__)) and (args[1] is None or any(base.__name__ == "Document" for base in type(args[1]).__mro__)):
+            return __class__.__dict__["translate_j2_1"].__get__(self, __class__)(*args)
         if len(args) == 2:
-            return self.translate_j2_2(*args)
+            return __class__.__dict__["translate_j2_2"].__get__(self, __class__)(*args)
         if len(args) == 3:
-            return self.translate_j3_2(*args)
-        return getattr(self, "translate_j" + str(len(args)))(*args)
+            return __class__.__dict__["translate_j3_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("translate_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().translate(*args)
     
 
     # throws Exception
     def export(self, outputFile: File, xsltFilePath: str, xmlDocument: Document) -> None:
+        from java.io.File import File
         from org.allbinary.data.tree.dom.document.XmlDocumentHelper import XmlDocumentHelper
         from org.w3c.dom.Document import Document
         try:

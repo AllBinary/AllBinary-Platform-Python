@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -32,7 +33,7 @@ class AbFileUploadFactory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -53,7 +54,7 @@ class AbFileUploadFactory:
             fileUpload: AbFileUpload = AbFileUpload(AbFileItemFactory())
             iterator: FileItemIterator = fileUpload.getItemIterator(httpServletRequest)
             items: List = ArrayList()
-            while iterator.hasNext():
+            while java_predicate(iterator, "hasNext"):
                 fileItemStream: FileItemStream = iterator.next()
                 HttpFileUploadUtil.log(fileItemStream)
                 fileItem: AbFileItem = AbFileItem(fileItemStream.getName(), fileItemStream.getFieldName(), FileItemUtil.getInstance().getBytes(fileItemStream))

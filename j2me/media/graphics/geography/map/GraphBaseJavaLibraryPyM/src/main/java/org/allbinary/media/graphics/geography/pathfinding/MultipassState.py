@@ -20,11 +20,11 @@ from __future__ import annotations
 class MultipassState:
 
     def _init_fields(self) -> None:
-        self.step: int = 0
-        self.iteration: int = 0
-        self.iteration2: int = 0
+        if "step" not in vars(self): self.step: int = 0
+        if "iteration" not in vars(self): self.iteration: int = 0
+        if "iteration2" not in vars(self): self.iteration2: int = 0
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
 
 

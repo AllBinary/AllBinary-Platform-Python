@@ -22,11 +22,10 @@ class GameSkill:
     hashMap: HashMap = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
-        self.gameSkillType: GameSkillType = None
-        self.extra: str = None
-        self.time: int = 0
-        self.vector: BasicArrayList = None
+        if "gameSkillType" not in vars(self): self.gameSkillType: GameSkillType = None
+        if "extra" not in vars(self): self.extra: str = None
+        if "time" not in vars(self): self.time: int = 0
+        if "vector" not in vars(self): self.vector: BasicArrayList = None
         self.GAME_SKILL_LABEL: str = "GameSkill: "
         self.EXTRA_LABEL: str = "Extra: "
         self.TIME_LABEL: str = "Time: "
@@ -36,7 +35,7 @@ class GameSkill:
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.string.CommonSeps import CommonSeps
-        self._init_fields()
+        __class__._init_fields(self)
         self.setGameSkillType(gameSkillType)
         self.setExtra(extra)
         self.setTime(time)

@@ -15,12 +15,24 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.media.graphics.geography.map.racetrack.drop.RaceTrackDropCellPositionGenerator import RaceTrackDropCellPositionGenerator
 
 
+@java_inherited_overloads
 class RaceTrackRandomDropCellPositionGenerator(RaceTrackDropCellPositionGenerator):
     SINGLETON: RaceTrackRandomDropCellPositionGenerator = None
+    def _java_defaults(self):
+        vars(self).setdefault("myRandomFactory", None)
+        vars(self).setdefault("cellsPerRowOrColumn", 0)
+        vars(self).setdefault("totalCells", 0)
+        vars(self).setdefault("rowArray", None)
+        vars(self).setdefault("columnArray", None)
+        vars(self).setdefault("cellWidth", 0)
+        vars(self).setdefault("cellHeight", 0)
 
     def _init_fields(self) -> None:
         from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
@@ -29,8 +41,8 @@ class RaceTrackRandomDropCellPositionGenerator(RaceTrackDropCellPositionGenerato
         self.totalCells: int = self.cellsPerRowOrColumn * self.cellsPerRowOrColumn
         self.rowArray: list[int] = [0, 1, 2, 0, 1, 2, 0, 1, 2]
         self.columnArray: list[int] = [0, 0, 0, 1, 1, 1, 2, 2, 2]
-        self.cellWidth: int = 0
-        self.cellHeight: int = 0
+        if "cellWidth" not in vars(self): self.cellWidth: int = 0
+        if "cellHeight" not in vars(self): self.cellHeight: int = 0
     
 
     @staticmethod
@@ -39,8 +51,9 @@ class RaceTrackRandomDropCellPositionGenerator(RaceTrackDropCellPositionGenerato
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
@@ -48,10 +61,12 @@ class RaceTrackRandomDropCellPositionGenerator(RaceTrackDropCellPositionGenerato
         from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
         from org.allbinary.game.layer.AllBinaryTiledLayer import AllBinaryTiledLayer
         from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
-        super().update(allBinaryGameLayerManager, geographicMapInterface)
+        java_super_call(super(), "update", allBinaryGameLayerManager, geographicMapInterface)
         tiledLayer: AllBinaryTiledLayer = geographicMapInterface.getAllBinaryTiledLayer()
-        self.cellWidth = tiledLayer.getCellWidth() / self.cellsPerRowOrColumn
-        self.cellHeight = tiledLayer.getCellHeight() / self.cellsPerRowOrColumn
+        self.cellWidth = java_divide(tiledLayer.getCellWidth(), self.cellsPerRowOrColumn)
+            
+        self.cellHeight = java_divide(tiledLayer.getCellHeight(), self.cellsPerRowOrColumn)
+            
     
 
     # throws Exception

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -51,9 +52,9 @@ class Directory:
         from org.allbinary.logic.io.file.FileFactory import FileFactory
         try:
             directoryFile: AbFile = FileFactory.getInstance().getInstance(directory)
-            if not directoryFile.isDirectory():
+            if not (java_predicate(directoryFile, "isDirectory")):
                 PreLogUtil.put("Creating Directories: " + directory, self, "create")
-                if not directoryFile.mkdirs():
+                if not (directoryFile.mkdirs()):
                     return False
             return True
         except Exception as e:
@@ -61,11 +62,13 @@ class Directory:
             return False
 
     def create(self, *args):
-        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
-            return self.create_j1_1(*args)
+        if len(args) == 1 and True and (args[0] is None or any(base.__name__ == "AbPath" for base in type(args[0]).__mro__)):
+            return __class__.__dict__["create_j1_1"].__get__(self, __class__)(*args)
         if len(args) == 1:
-            return self.create_j1_2(*args)
-        return getattr(self, "create_j" + str(len(args)))(*args)
+            return __class__.__dict__["create_j1_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("create_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().create(*args)
     
 
     # throws Exception
@@ -75,7 +78,7 @@ class Directory:
         from org.allbinary.logic.io.file.AbFile import AbFile
         from org.allbinary.logic.io.file.FileFactory import FileFactory
         existingDirectoryFile: AbFile = FileFactory.getInstance().getInstance(existingDirectory)
-        if existingDirectoryFile.isDirectory():
+        if java_predicate(existingDirectoryFile, "isDirectory"):
             if len(existingDirectoryFile.list_()) > 0:
                 raise Exception("Did not remove category: " + existingDirectory + " because files exist")
             elif existingDirectoryFile.delete():
@@ -84,11 +87,13 @@ class Directory:
             raise Exception("Category Directory Is Missing:" + existingDirectory)
 
     def remove(self, *args):
-        if len(args) == 1 and True and not isinstance(args[0], (str, list, int, float)):
-            return self.remove_j1_1(*args)
+        if len(args) == 1 and True and (args[0] is None or any(base.__name__ == "AbPath" for base in type(args[0]).__mro__)):
+            return __class__.__dict__["remove_j1_1"].__get__(self, __class__)(*args)
         if len(args) == 1:
-            return self.remove_j1_2(*args)
-        return getattr(self, "remove_j" + str(len(args)))(*args)
+            return __class__.__dict__["remove_j1_2"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("remove_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().remove(*args)
     
 
     # Java overloaded method with the same parameter count: Python keeps the last definition
@@ -106,7 +111,7 @@ class Directory:
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         fileList: BasicArrayList = BasicArrayListD()
         recursiveFileList: BasicArrayList = None
-        if file.isDirectory():
+        if java_predicate(file, "isDirectory"):
             fileArray: list[object] = file.listFilesFileFilter(fileFilter)
             if fileArray is None:
                 return fileList
@@ -136,7 +141,7 @@ class Directory:
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         fileList: BasicArrayList = BasicArrayListD()
         recursiveFileList: BasicArrayList = None
-        if file.isDirectory():
+        if java_predicate(file, "isDirectory"):
             fileArray: list[object] = file.listFiles()
             if fileArray is None:
                 return fileList
@@ -166,7 +171,7 @@ class Directory:
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         fileList: BasicArrayList = BasicArrayListD()
         recursiveFileList: BasicArrayList = None
-        if file.isDirectory():
+        if java_predicate(file, "isDirectory"):
             fileArray: list[object] = file.listFiles()
             if fileArray is None:
                 return fileList
@@ -197,7 +202,7 @@ class Directory:
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         fileList: BasicArrayList = BasicArrayListD()
         recursiveFileList: BasicArrayList = None
-        if file.isDirectory():
+        if java_predicate(file, "isDirectory"):
             fileArray: list[object] = file.listFiles()
             if fileArray is None:
                 return fileList
@@ -213,21 +218,23 @@ class Directory:
         return fileList
 
     def search(self, *args):
-        if len(args) == 2 and True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)):
-            return self.search_j2_1(*args)
-        if len(args) == 3 and True and not isinstance(args[0], (str, list, int, float)) and not isinstance(args[1], (str, list, int, float)) and isinstance(args[2], bool):
-            return self.search_j3_1(*args)
-        if len(args) == 2 and True and not isinstance(args[0], (str, list, int, float)) and isinstance(args[1], bool):
-            return self.search_j2_2(*args)
-        if len(args) == 2 and True and (args[0] is None or isinstance(args[0], str)) and not isinstance(args[1], (str, list, int, float)):
-            return self.search_j2_3(*args)
-        if len(args) == 3 and True and (args[0] is None or isinstance(args[0], str)) and not isinstance(args[1], (str, list, int, float)) and isinstance(args[2], bool):
-            return self.search_j3_2(*args)
+        if len(args) == 2 and True and (args[0] is None or any(base.__name__ == "FileFilter" for base in type(args[0]).__mro__)) and (args[1] is None or any(base.__name__ == "AbFile" for base in type(args[1]).__mro__)):
+            return __class__.__dict__["search_j2_1"].__get__(self, __class__)(*args)
+        if len(args) == 3 and True and (args[0] is None or any(base.__name__ == "FileFilter" for base in type(args[0]).__mro__)) and (args[1] is None or any(base.__name__ == "AbFile" for base in type(args[1]).__mro__)) and isinstance(args[2], bool):
+            return __class__.__dict__["search_j3_1"].__get__(self, __class__)(*args)
+        if len(args) == 2 and True and (args[0] is None or any(base.__name__ == "AbFile" for base in type(args[0]).__mro__)) and isinstance(args[1], bool):
+            return __class__.__dict__["search_j2_2"].__get__(self, __class__)(*args)
+        if len(args) == 2 and True and (args[0] is None or isinstance(args[0], str)) and (args[1] is None or any(base.__name__ == "AbFile" for base in type(args[1]).__mro__)):
+            return __class__.__dict__["search_j2_3"].__get__(self, __class__)(*args)
+        if len(args) == 3 and True and (args[0] is None or isinstance(args[0], str)) and (args[1] is None or any(base.__name__ == "AbFile" for base in type(args[1]).__mro__)) and isinstance(args[2], bool):
+            return __class__.__dict__["search_j3_2"].__get__(self, __class__)(*args)
         if len(args) == 2:
-            return self.search_j2_4(*args)
+            return __class__.__dict__["search_j2_4"].__get__(self, __class__)(*args)
         if len(args) == 3:
-            return self.search_j3_3(*args)
-        return getattr(self, "search_j" + str(len(args)))(*args)
+            return __class__.__dict__["search_j3_3"].__get__(self, __class__)(*args)
+        implementation = __class__.__dict__.get("search_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().search(*args)
 # from java.io.FileFilter import FileFilter
 # from org.allbinary.logic.communication.log.PreLogUtil import PreLogUtil
 # from org.allbinary.logic.io.file.AbFile import AbFile

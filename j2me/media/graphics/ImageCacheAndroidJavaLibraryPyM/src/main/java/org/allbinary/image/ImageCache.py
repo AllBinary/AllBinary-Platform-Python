@@ -16,13 +16,19 @@
 from __future__ import annotations
 
 import time
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import threading
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.image.ImageCacheBase import ImageCacheBase
 
 
+@java_inherited_overloads
 class ImageCache(ImageCacheBase):
     NULL_IMAGE_CACHE: ImageCache = None
+    def _java_defaults(self):
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("systemWrapper", None)
+        vars(self).setdefault("tsUtil", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.TsUtil import TsUtil
@@ -34,8 +40,9 @@ class ImageCache(ImageCacheBase):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def addListener(self, renderer: object) -> None:

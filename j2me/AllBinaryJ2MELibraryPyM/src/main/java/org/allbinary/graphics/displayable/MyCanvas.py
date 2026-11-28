@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import threading
 from java.lang.JavaRuntimeStatic import java_bases
 from javax.microedition.lcdui.Canvas import Canvas
@@ -22,36 +24,47 @@ from org.allbinary.graphics.displayable.command.MyCommandInterface import MyComm
 from org.allbinary.graphics.displayable.DisplayableInterface import DisplayableInterface
 
 
+@java_inherited_overloads
 class MyCanvas(*java_bases(Canvas, DisplayableInterface, MyCommandInterface)):
     _lock = threading.RLock()
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("commonStrings", None)
+        vars(self).setdefault("canvasStrings", None)
+        vars(self).setdefault("stringUtil", None)
+        vars(self).setdefault("displayInfo", None)
+        vars(self).setdefault("name", None)
+        vars(self).setdefault("childNameList", None)
+        vars(self).setdefault("commandStack", None)
+        vars(self).setdefault("commandListener", None)
+        vars(self).setdefault("paused", False)
+        vars(self).setdefault("touchME", None)
 
     def _init_fields(self) -> None:
-        from javax.microedition.lcdui.CommandListener import CommandListener
         from javax.microedition.lcdui.NullCommandListener import NullCommandListener
         from org.allbinary.input.TouchJ2ME import TouchJ2ME
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.logic.string.StringUtil import StringUtil
         from org.allbinary.string.CommonStrings import CommonStrings
-        from org.allbinary.util.BasicArrayList import BasicArrayList
-        from org.allbinary.util.ABStack import ABStack
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.canvasStrings: CanvasStrings = CanvasStrings.getInstance()
         self.stringUtil: StringUtil = StringUtil.getInstance()
         self.displayInfo: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
-        self.name: str = None
-        self.childNameList: BasicArrayList = None
-        self.commandStack: ABStack[object] = None
+        if "name" not in vars(self): self.name: str = None
+        if "childNameList" not in vars(self): self.childNameList: BasicArrayList = None
+        if "commandStack" not in vars(self): self.commandStack: ABStack[object] = None
         self.commandListener: CommandListener = NullCommandListener.NULL_COMMAND_LISTENER
-        self.paused: bool = False
+        if "paused" not in vars(self): self.paused: bool = False
         self.touchME: TouchJ2ME = TouchJ2ME()
     
 
     def __init__(self, name: str, childNameList: BasicArrayList) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.logic.StdUtil import StdUtil
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.logUtil.putF(self.commonStrings.CONSTRUCTOR, self, self.commonStrings.CONSTRUCTOR)
         self.displayInfo.update(self, self.canvasStrings.CONSTRUCTOR)
         self.name = name
@@ -60,20 +73,24 @@ class MyCanvas(*java_bases(Canvas, DisplayableInterface, MyCommandInterface)):
     
 
     def getWidth(self) -> int:
-        return super().getWidth()
+        return java_super_call(super(), "getWidth")
     
 
     def getHeight(self) -> int:
-        return super().getHeight()
+        return java_super_call(super(), "getHeight")
     
 
     def setFullScreenMode(self, mode: bool) -> None:
-        super().setFullScreenMode(mode)
+        java_super_call(super(), "setFullScreenMode", mode)
         self.displayInfo.update(self, self.canvasStrings.SET_FULL_SCREEN_MODE)
     
 
     def sizeChanged(self, w: int, h: int) -> None:
         self.displayInfo.update(self, self.canvasStrings.SIZE_CHANGED)
+    _declared_sizeChanged = sizeChanged
+    def sizeChanged(self, *args, **kwargs):
+        if len(args) + len(kwargs) == 2 and (kwargs or (True and isinstance(args[0], int) and not isinstance(args[0], bool) and isinstance(args[1], int) and not isinstance(args[1], bool))): return __class__._declared_sizeChanged(self, *args, **kwargs)
+        return super().sizeChanged(*args, **kwargs)
     
 
     def getCommandStack(self) -> ABStack[object]:
@@ -83,7 +100,7 @@ class MyCanvas(*java_bases(Canvas, DisplayableInterface, MyCommandInterface)):
 
     def isCommand(self, command: Command) -> bool:
         with self._lock:
-            return self._isCommand_unlocked(command)
+            return __class__.__dict__["_isCommand_unlocked"].__get__(self, __class__)(command)
 
     def _isCommand_unlocked(self, command: Command) -> bool:
         from javax.microedition.lcdui.Command import Command
@@ -92,39 +109,39 @@ class MyCanvas(*java_bases(Canvas, DisplayableInterface, MyCommandInterface)):
 
     def addCommand(self, command: Command) -> None:
         with self._lock:
-            return self._addCommand_unlocked(command)
+            return __class__.__dict__["_addCommand_unlocked"].__get__(self, __class__)(command)
 
     def _addCommand_unlocked(self, command: Command) -> None:
         from javax.microedition.lcdui.Command import Command
-        if not self.commandStack.contains(command):
+        if not (self.commandStack.contains(command)):
             self.commandStack.push(command)
-            super().addCommand(command)
+            java_super_call(super(), "addCommand", command)
     
 
     def removeCommand(self, command: Command) -> None:
         with self._lock:
-            return self._removeCommand_unlocked(command)
+            return __class__.__dict__["_removeCommand_unlocked"].__get__(self, __class__)(command)
 
     def _removeCommand_unlocked(self, command: Command) -> None:
         from javax.microedition.lcdui.Command import Command
         self.commandStack.removeElement(command)
-        super().removeCommand(command)
+        java_super_call(super(), "removeCommand", command)
     
 
     def removeAllCommands(self) -> None:
         with self._lock:
-            return self._removeAllCommands_unlocked()
+            return __class__.__dict__["_removeAllCommands_unlocked"].__get__(self, __class__)()
 
     def _removeAllCommands_unlocked(self) -> None:
         from javax.microedition.lcdui.Command import Command
         size: int = self.commandStack.size()
         for index in range(0, size):
-            super().removeCommand(self.commandStack.pop())
+            java_super_call(super(), "removeCommand", self.commandStack.pop())
     
 
     def setCommandListener(self, l: CommandListener) -> None:
         from javax.microedition.lcdui.CommandListener import CommandListener
-        super().setCommandListener(l)
+        java_super_call(super(), "setCommandListener", l)
         self.commandListener = l
     
 
@@ -135,7 +152,7 @@ class MyCanvas(*java_bases(Canvas, DisplayableInterface, MyCommandInterface)):
 
     def isPaused(self) -> bool:
         with self._lock:
-            return self._isPaused_unlocked()
+            return __class__.__dict__["_isPaused_unlocked"].__get__(self, __class__)()
 
     def _isPaused_unlocked(self) -> bool:
         return self.paused
@@ -148,7 +165,7 @@ class MyCanvas(*java_bases(Canvas, DisplayableInterface, MyCommandInterface)):
 
     def pause(self) -> None:
         with self._lock:
-            return self._pause_unlocked()
+            return __class__.__dict__["_pause_unlocked"].__get__(self, __class__)()
 
     def _pause_unlocked(self) -> None:
         from org.allbinary.graphics.displayable.command.MyCommandsFactory import MyCommandsFactory
@@ -160,7 +177,7 @@ class MyCanvas(*java_bases(Canvas, DisplayableInterface, MyCommandInterface)):
 
     def unPause(self) -> None:
         with self._lock:
-            return self._unPause_unlocked()
+            return __class__.__dict__["_unPause_unlocked"].__get__(self, __class__)()
 
     def _unPause_unlocked(self) -> None:
         from org.allbinary.graphics.displayable.command.MyCommandsFactory import MyCommandsFactory

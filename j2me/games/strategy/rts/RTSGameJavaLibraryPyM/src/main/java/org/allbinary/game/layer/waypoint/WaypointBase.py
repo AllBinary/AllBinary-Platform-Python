@@ -24,17 +24,15 @@ class WaypointBase(EventListenerInterface):
 
     def _init_fields(self) -> None:
         from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
-        from org.allbinary.media.audio.Sound import Sound
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.connectedWaypointList: BasicArrayList = BasicArrayListD()
-        self.sound: Sound = None
+        if "sound" not in vars(self): self.sound: Sound = None
         self.allBinaryGameLayerManagerP: AllBinaryGameLayerManager = AllBinaryGameLayerManager.getNullInstance()
     
 
     def __init__(self, sound: Sound) -> None:
         from org.allbinary.media.audio.Sound import Sound
-        self._init_fields()
+        __class__._init_fields(self)
         self.sound = sound
     
 

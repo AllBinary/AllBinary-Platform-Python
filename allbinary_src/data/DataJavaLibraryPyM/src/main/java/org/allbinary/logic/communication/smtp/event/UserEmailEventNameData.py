@@ -49,12 +49,12 @@ class UserEmailEventNameData:
     _lock = threading.RLock()
 
     def _init_fields(self) -> None:
-        self.eventNameId: int = 0
-        self.eventHandlerName: str = None
+        if "eventNameId" not in vars(self): self.eventNameId: int = 0
+        if "eventHandlerName" not in vars(self): self.eventHandlerName: str = None
     
 
     def __init__(self, eventHandlerName: str) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.eventHandlerName = eventHandlerName
         self.initNextId()
         UserEmailEventNameData.userNameEvenNameHashMap.put(self.eventHandlerName, self)
@@ -62,7 +62,7 @@ class UserEmailEventNameData:
 
     def initNextId(self) -> None:
         with self._lock:
-            return self._initNextId_unlocked()
+            return __class__.__dict__["_initNextId_unlocked"].__get__(self, __class__)()
 
     def _initNextId_unlocked(self) -> None:
         self.eventNameId = UserEmailEventNameData.nextId

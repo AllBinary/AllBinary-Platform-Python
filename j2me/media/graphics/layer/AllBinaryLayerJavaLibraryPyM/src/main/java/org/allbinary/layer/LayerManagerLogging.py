@@ -15,13 +15,27 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.layer.LayerManagerLoggingBase import LayerManagerLoggingBase
 
 
+@java_inherited_overloads
 class LayerManagerLogging(LayerManagerLoggingBase):
     instance: LayerManagerLogging = None
     removeFailed: bool = False
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("stringBuilder", None)
+        vars(self).setdefault("APPEND", None)
+        vars(self).setdefault("APPEND_", None)
+        vars(self).setdefault("_AT_", None)
+        vars(self).setdefault("ATTEMPT_REMOVE_", None)
+        vars(self).setdefault("REMOVE_", None)
+        vars(self).setdefault("REMOVE", None)
+        vars(self).setdefault("DID_NOT_REMOVE", None)
+        vars(self).setdefault("CLEAR", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
@@ -38,8 +52,9 @@ class LayerManagerLogging(LayerManagerLoggingBase):
         self.CLEAR: str = " Clear List"
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

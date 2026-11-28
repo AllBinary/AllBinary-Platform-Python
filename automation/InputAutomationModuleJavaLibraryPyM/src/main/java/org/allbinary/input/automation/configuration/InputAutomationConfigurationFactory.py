@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -33,13 +34,14 @@ class InputAutomationConfigurationFactory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
     def init(self, abeClientInformation: AbeClientInformationInterface) -> None:
         from org.allbinary.input.automation.configuration.InputAutomationConfiguration import InputAutomationConfiguration
         from org.allbinary.input.automation.configuration.InputAutomationConfiguration import InputAutomationConfiguration
+        from java.io.File import File
         from java.io.FileInputStream import FileInputStream
         from java.util.List import List
         from org.allbinary.input.automation.module.configuration.InputAutomationModuleConfiguration import InputAutomationModuleConfiguration
@@ -50,14 +52,14 @@ class InputAutomationConfigurationFactory:
         commonStrings: CommonStrings = CommonStrings.getInstance()
         INPUT_AUTOMATION_CONFIGURATION: str = "InputAutomationConfiguration"
         file: File = InputAutomationConfiguration.getFile()
-        if file.isFile():
+        if java_predicate(file, "isFile"):
             logUtil.putF("LoadingConfiguration", INPUT_AUTOMATION_CONFIGURATION, commonStrings.INIT)
             jaxbContext: JAXBContext = JAXBContext.newInstance(InputAutomationConfiguration)
             unmarshaller: Unmarshaller = jaxbContext.createUnmarshaller()
             root: JAXBElement[InputAutomationConfiguration] = unmarshaller.unmarshal(StreamSource(FileInputStream(file)), InputAutomationConfiguration)
             self.inputAutomationConfiguration = root.getValue()
             inputAutomationModuleConfigurationList: List[InputAutomationModuleConfiguration] = self.inputAutomationConfiguration.getInputAutomationModuleConfigurationList()
-            logUtil.putF("isInstalled: " + str(self.inputAutomationConfiguration.isInstalled()) + " inputAutomationModuleConfigurationList: " + str(inputAutomationModuleConfigurationList), INPUT_AUTOMATION_CONFIGURATION, commonStrings.INIT)
+            logUtil.putF("isInstalled: " + str(java_predicate(self.inputAutomationConfiguration, "isInstalled")) + " inputAutomationModuleConfigurationList: " + str(inputAutomationModuleConfigurationList), INPUT_AUTOMATION_CONFIGURATION, commonStrings.INIT)
             if inputAutomationModuleConfigurationList is not None:
                 size: int = inputAutomationModuleConfigurationList.size()
                 inputAutomationModuleConfiguration: InputAutomationModuleConfiguration = None

@@ -23,7 +23,7 @@ class InputProcessor:
         self.gameInputStrings: GameInputStrings = GameInputStrings.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def keyPressedByDevice(self, keyCode: int, deviceId: int) -> None:

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from org.allbinary.game.configuration.event.GameFeatureListenerInterface import GameFeatureListenerInterface
 
 
@@ -23,7 +24,6 @@ class BaseChangedGameFeatureListener(GameFeatureListenerInterface):
     def _init_fields(self) -> None:
         from org.allbinary.game.configuration.feature.GameFeatureUtil import GameFeatureUtil
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.gameFeatureUtil: GameFeatureUtil = GameFeatureUtil.getInstance()
@@ -31,7 +31,7 @@ class BaseChangedGameFeatureListener(GameFeatureListenerInterface):
         self.changed: bool = True
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def onEvent(self, eventObject: AllBinaryEventObject) -> None:
@@ -60,7 +60,7 @@ class BaseChangedGameFeatureListener(GameFeatureListenerInterface):
 
     def setChanged(self, initialized: bool) -> None:
         self.changed = initialized
-        if not self.isChanged():
+        if not (java_predicate(self, "isChanged")):
             self.list_.clear()
     
 

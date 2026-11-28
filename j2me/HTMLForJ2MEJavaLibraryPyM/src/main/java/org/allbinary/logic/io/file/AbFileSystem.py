@@ -29,7 +29,7 @@ class AbFileSystem:
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -60,7 +60,9 @@ class AbFileSystem:
         return StringUtil.getInstance().EMPTY_STRING
 
     def readAsString(self, *args):
-        return getattr(self, "readAsString_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("readAsString_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().readAsString(*args)
     
 
     def close(self, closeable: object) -> bool:

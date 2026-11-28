@@ -22,7 +22,6 @@ class ImageCacheBase:
     def _init_fields(self) -> None:
         from org.allbinary.logic.StdUtil import StdUtil
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
-        from org.allbinary.util.ABHashtable import ABHashtable
         from org.allbinary.util.BasicArrayList import BasicArrayList
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.imageFactory: ImageFactory = ImageFactory.getInstance()
@@ -38,7 +37,7 @@ class ImageCacheBase:
 
     def __init__(self) -> None:
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
-        self._init_fields()
+        __class__._init_fields(self)
         for index in range(len(self.listOfList) - 1, 0 - 1, -1):
             self.listOfList[index] = BasicArrayListD()
         for index in range(len(self.availableListOfList) - 1, 0 - 1, -1):

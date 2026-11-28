@@ -20,20 +20,19 @@ from __future__ import annotations
 class AbContext:
 
     def _init_fields(self) -> None:
-        from java.util.HashMap import HashMap
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
-        self.propertiesHashMap: HashMap = None
-        self.pageContext: PageContext = None
+        if "propertiesHashMap" not in vars(self): self.propertiesHashMap: HashMap = None
+        if "pageContext" not in vars(self): self.pageContext: PageContext = None
     
 
     def __init__(self, propertiesHashMap: HashMap, pageContext: PageContext) -> None:
         from java.util.HashMap import HashMap
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
         from org.allbinary.logic.communication.log.config.type.LogConfigTypes import LogConfigTypes
-        self._init_fields()
+        __class__._init_fields(self)
         if LogConfigTypes.LOGGING.contains(LogConfigTypeFactory.getInstance().VIEW):
             self.logUtil.putF("Properties HashMap: " + str(propertiesHashMap), self, self.commonStrings.CONSTRUCTOR)
         self.propertiesHashMap = propertiesHashMap

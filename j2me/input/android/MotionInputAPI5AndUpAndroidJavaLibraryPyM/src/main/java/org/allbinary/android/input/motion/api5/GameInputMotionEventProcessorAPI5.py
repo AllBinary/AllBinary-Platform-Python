@@ -15,21 +15,29 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.android.input.motion.BaseGameInputMotionEventProcessor import BaseGameInputMotionEventProcessor
 
 
+@java_inherited_overloads
 class GameInputMotionEventProcessorAPI5(BaseGameInputMotionEventProcessor):
     instance: object = None
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("displayInfo", None)
+        vars(self).setdefault("motionRecognizerArray", None)
+        vars(self).setdefault("TOTAL_MINUS_ONE", 0)
 
     def _init_fields(self) -> None:
         from org.allbinary.graphics.displayable.DisplayInfoSingleton import DisplayInfoSingleton
-        from org.allbinary.input.motion.MotionRecognizer import MotionRecognizer
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.displayInfo: DisplayInfoSingleton = DisplayInfoSingleton.getInstance()
-        self.motionRecognizerArray: list[MotionRecognizer] = None
-        self.TOTAL_MINUS_ONE: int = None
+        if "motionRecognizerArray" not in vars(self): self.motionRecognizerArray: list[MotionRecognizer] = None
+        if "TOTAL_MINUS_ONE" not in vars(self): self.TOTAL_MINUS_ONE: int = 0
     
 
     @staticmethod
@@ -41,10 +49,11 @@ class GameInputMotionEventProcessorAPI5(BaseGameInputMotionEventProcessor):
     
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.android.input.motion.api5.GameInputMotionInfoAPI5 import GameInputMotionInfoAPI5
         from org.allbinary.input.motion.AllMotionRecognizer import AllMotionRecognizer
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         size: int = GameInputMotionInfoAPI5.getInstance().MAX_POINTERS
         self.motionRecognizerArray = [None] * (size)
         self.TOTAL_MINUS_ONE = size
@@ -80,24 +89,30 @@ class GameInputMotionEventProcessorAPI5(BaseGameInputMotionEventProcessor):
                     pointerId: int = motionEvent.getPointerId(pointerIndex)
                     if self.isValid(pointerId):
                         scalableListener: ScalableListener = self.displayInfo.getScalableListener()
-                        x: int = int(((motionEvent.getX(pointerIndex) - self.displayInfo.getLeft()) / scalableListener.getRatio(self.displayInfo.getRatio())))
-                        y: int = int(((motionEvent.getY(pointerIndex) - self.displayInfo.getTop()) / scalableListener.getRatio(self.displayInfo.getRatio())))
+                        x: int = int((java_divide((motionEvent.getX(pointerIndex) - self.displayInfo.getLeft()), scalableListener.getRatio(self.displayInfo.getRatio()))
+            ))
+                        y: int = int((java_divide((motionEvent.getY(pointerIndex) - self.displayInfo.getTop()), scalableListener.getRatio(self.displayInfo.getRatio()))
+            ))
                         self.motionRecognizerArray[pointerId].processStartMotionEvent(x, y, motionEvent.getDeviceId(), 0)
             elif action == MotionEvent.ACTION_UP or action == MotionEvent.ACTION_CANCEL:
                 for pointerIndex in range(totalMinusOne, 0 - 1, -1):
                     pointerId: int = motionEvent.getPointerId(pointerIndex)
                     if self.isValid(pointerId):
                         scalableListener: ScalableListener = self.displayInfo.getScalableListener()
-                        x: int = int(((motionEvent.getX(pointerIndex) - self.displayInfo.getLeft()) / scalableListener.getRatio(self.displayInfo.getRatio())))
-                        y: int = int(((motionEvent.getY(pointerIndex) - self.displayInfo.getTop()) / scalableListener.getRatio(self.displayInfo.getRatio())))
+                        x: int = int((java_divide((motionEvent.getX(pointerIndex) - self.displayInfo.getLeft()), scalableListener.getRatio(self.displayInfo.getRatio()))
+            ))
+                        y: int = int((java_divide((motionEvent.getY(pointerIndex) - self.displayInfo.getTop()), scalableListener.getRatio(self.displayInfo.getRatio()))
+            ))
                         self.motionRecognizerArray[pointerId].processEndMotionEvent(x, y, motionEvent.getDeviceId(), 0)
             elif action == MotionEvent.ACTION_MOVE:
                 for pointerIndex in range(totalMinusOne, 0 - 1, -1):
                     pointerId: int = motionEvent.getPointerId(pointerIndex)
                     if self.isValid(pointerId):
                         scalableListener: ScalableListener = self.displayInfo.getScalableListener()
-                        x: int = int(((motionEvent.getX(pointerIndex) - self.displayInfo.getLeft()) / scalableListener.getRatio(self.displayInfo.getRatio())))
-                        y: int = int(((motionEvent.getY(pointerIndex) - self.displayInfo.getTop()) / scalableListener.getRatio(self.displayInfo.getRatio())))
+                        x: int = int((java_divide((motionEvent.getX(pointerIndex) - self.displayInfo.getLeft()), scalableListener.getRatio(self.displayInfo.getRatio()))
+            ))
+                        y: int = int((java_divide((motionEvent.getY(pointerIndex) - self.displayInfo.getTop()), scalableListener.getRatio(self.displayInfo.getRatio()))
+            ))
                         self.motionRecognizerArray[pointerId].processDraggedMotionEvent(x, y, motionEvent.getDeviceId(), 0)
         except Exception as e:
             self.logUtil.put(self.commonStrings.EXCEPTION, self, self.commonStrings.PROCESS, e)

@@ -29,7 +29,7 @@ class BasicCryptUtil:
         self.XML_START: str = "<?xml"
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -39,6 +39,8 @@ class BasicCryptUtil:
 
     # throws Exception
     def getDecryptedInputStream(self, inputStream: InputStream, cryptInterface: CryptInterface) -> InputStream:
+        from java.io.ByteArrayInputStream import ByteArrayInputStream
+        from java.io.ByteArrayOutputStream import ByteArrayOutputStream
         from java.io.InputStream import InputStream
         buffer: ByteArrayOutputStream = ByteArrayOutputStream()
         ch: int = 0

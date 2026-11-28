@@ -15,6 +15,8 @@
 
 from __future__ import annotations
 
+from java.lang.System import System
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -29,7 +31,7 @@ class AbFileSystem:
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -38,15 +40,18 @@ class AbFileSystem:
     
 
     def isDirectoryOrFile(self, path: str) -> bool:
+        from java.io.File import File
         file: File = File(path)
-        return file.isDirectory() or file.isFile()
+        return java_predicate(file, "isDirectory") or java_predicate(file, "isFile")
     
 
     def isDirectory(self, path: str) -> bool:
-        return File(path).isDirectory()
+        from java.io.File import File
+        return java_predicate(File(path), "isDirectory")
     
 
     def getFilesAsStringArrayForPath(self, currentDirPath: str) -> list[str]:
+        from java.io.File import File
         from org.allbinary.logic.string.StringUtil import StringUtil
         file: File = File(currentDirPath)
         if file.exists():
@@ -79,7 +84,9 @@ class AbFileSystem:
         return StringUtil.getInstance().EMPTY_STRING
 
     def readAsString(self, *args):
-        return getattr(self, "readAsString_j" + str(len(args)))(*args)
+        implementation = __class__.__dict__.get("readAsString_j" + str(len(args)))
+        if implementation is not None: return implementation.__get__(self, __class__)(*args)
+        return super().readAsString(*args)
     
 
     def close(self, closeable: object) -> bool:

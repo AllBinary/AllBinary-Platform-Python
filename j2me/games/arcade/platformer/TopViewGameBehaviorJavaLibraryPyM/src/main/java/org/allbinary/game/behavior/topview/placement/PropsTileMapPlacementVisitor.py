@@ -15,10 +15,16 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_divide
 from org.allbinary.game.behavior.topview.placement.TileMapPlacementVisitor import TileMapPlacementVisitor
 
 
+@java_inherited_overloads
 class PropsTileMapPlacementVisitor(TileMapPlacementVisitor):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("randomFactory", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.game.rand.MyRandomFactory import MyRandomFactory
@@ -27,8 +33,9 @@ class PropsTileMapPlacementVisitor(TileMapPlacementVisitor):
         self.randomFactory: MyRandomFactory = MyRandomFactory.getInstance()
 
     def __init__(self) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def visit(self, lastMap: TiledMap, mapData: list[list[int]]) -> None:

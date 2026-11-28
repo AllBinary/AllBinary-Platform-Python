@@ -15,33 +15,45 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
+from java.lang.JavaRuntimeStatic import java_divide
 from org.allbinary.game.input.PlayerGameInput import PlayerGameInput
 
 
+@java_inherited_overloads
 class ScrollMapPlayerGameInput(PlayerGameInput):
+    def _java_defaults(self):
+        vars(self).setdefault("inputProcessorArray", None)
+        vars(self).setdefault("border", 0)
+        vars(self).setdefault("inputList", None)
+        vars(self).setdefault("isSingleKeyProcessing", False)
+        vars(self).setdefault("geographicMapInterface", None)
+        vars(self).setdefault("maxBottom", 0)
+        vars(self).setdefault("maxRight", 0)
+        vars(self).setdefault("scrollMapEvent", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.game.configuration.feature.Features import Features
         from org.allbinary.game.configuration.feature.InputFeatureFactory import InputFeatureFactory
         from org.allbinary.layer.event.ScrollMapEvent import ScrollMapEvent
-        from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
         self.inputProcessorArray: list[GameInputProcessor] = [None] * (InputFactory.getInstance().MAX)
         self.border: int = 150
-        self.inputList: BasicArrayList = None
+        if "inputList" not in vars(self): self.inputList: BasicArrayList = None
         self.isSingleKeyProcessing: bool = Features.getInstance().isFeature(InputFeatureFactory.getInstance().SINGLE_KEY_REPEAT_PRESS) or Features.getInstance().isFeature(InputFeatureFactory.getInstance().SINGLE_KEY_PRESS)
-        self.geographicMapInterface: BasicGeographicMap = None
-        self.maxBottom: int = 0
-        self.maxRight: int = 0
+        if "geographicMapInterface" not in vars(self): self.geographicMapInterface: BasicGeographicMap = None
+        if "maxBottom" not in vars(self): self.maxBottom: int = 0
+        if "maxRight" not in vars(self): self.maxRight: int = 0
         self.scrollMapEvent: ScrollMapEvent = ScrollMapEvent(self)
     
 
     def __init__(self, geographicMapInterface: BasicGeographicMap, list_: BasicArrayList, playerInputId: int) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         super().__init__(list_, BasicArrayListD(), playerInputId)
-        self._init_fields()
+        __class__._init_fields(self)
         self.initInputProcessors()
         self.geographicMapInterface = geographicMapInterface
         self.inputList = list_
@@ -93,7 +105,8 @@ class ScrollMapPlayerGameInput(PlayerGameInput):
             self.move(0, diffY)
         elif anchor == Graphics.VCENTER:
             self.logUtil.putF("Center", self, "scrollY")
-            diffY: int = (terrainTiledLayer.getHeight() - displayInfo.getLastHeight()) / 2
+            diffY: int = java_divide((terrainTiledLayer.getHeight() - displayInfo.getLastHeight()), 2)
+            
             self.move(0, diffY)
         else:
             raise Exception("No Such Anchor Supported")
@@ -132,6 +145,7 @@ class ScrollMapPlayerGameInput(PlayerGameInput):
         from org.allbinary.game.input.ScrollMapDownGameInputProcessor import ScrollMapDownGameInputProcessor
         from org.allbinary.game.input.ScrollMapRightGameInputProcessor import ScrollMapRightGameInputProcessor
         from org.allbinary.game.input.ScrollMapLeftGameInputProcessor import ScrollMapLeftGameInputProcessor
+        from org.allbinary.game.input.GameInputProcessorUtil import GameInputProcessorUtil
         from javax.microedition.lcdui.Canvas import Canvas
         self.inputProcessorArray[Canvas.UP] = ScrollMapUpGameInputProcessor(self)
         self.inputProcessorArray[Canvas.DOWN] = ScrollMapDownGameInputProcessor(self)
@@ -232,5 +246,6 @@ class ScrollMapPlayerGameInput(PlayerGameInput):
 # from org.allbinary.layer.event.ScrollMapEventHandler import ScrollMapEventHandler
 # from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
 # from org.allbinary.util.BasicArrayListD import BasicArrayListD
+from org.allbinary.game.input.InputFactory import InputFactory
 
 

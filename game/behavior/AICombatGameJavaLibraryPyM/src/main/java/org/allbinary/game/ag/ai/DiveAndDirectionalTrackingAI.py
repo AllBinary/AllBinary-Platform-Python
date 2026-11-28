@@ -15,48 +15,64 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.game.ai.BasicAI import BasicAI
 from org.allbinary.game.combat.destroy.event.DestroyedEventListenerInterface import DestroyedEventListenerInterface
 from org.allbinary.game.tracking.TrackingEventListenerInterface import TrackingEventListenerInterface
 
 
+@java_inherited_overloads
 class DiveAndDirectionalTrackingAI(*java_bases(BasicAI, TrackingEventListenerInterface, DestroyedEventListenerInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("mathUtil", None)
+        vars(self).setdefault("directionFactory", None)
+        vars(self).setdefault("gameTickTimeDelayHelper", None)
+        vars(self).setdefault("timeDelayHelper", None)
+        vars(self).setdefault("list_", None)
+        vars(self).setdefault("directionalInterface", None)
+        vars(self).setdefault("velocityInterface", None)
+        vars(self).setdefault("directionToKeyMap", None)
+        vars(self).setdefault("initialDropped", False)
+        vars(self).setdefault("diveP", False)
+        vars(self).setdefault("directionOfTarget", None)
+        vars(self).setdefault("MIN_DISTANCE", 0)
+        vars(self).setdefault("lastTrackingLayerInterface", None)
+        vars(self).setdefault("artificialIntelligenceInterface", None)
+        vars(self).setdefault("aiVistor", None)
+        vars(self).setdefault("lastDirection", None)
 
     def _init_fields(self) -> None:
         from javax.microedition.lcdui.Canvas import Canvas
-        from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
         from org.allbinary.direction.Direction import Direction
         from org.allbinary.direction.DirectionFactory import DirectionFactory
-        from org.allbinary.direction.DirectionalInterface import DirectionalInterface
-        from org.allbinary.game.physics.velocity.BasicVelocityProperties import BasicVelocityProperties
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         from org.allbinary.logic.math.MathUtil import MathUtil
-        from org.allbinary.logic.util.visitor.Visitor import Visitor
-        from org.allbinary.time.GameTickTimeDelayHelper import GameTickTimeDelayHelper
         from org.allbinary.time.GameTickTimeDelayHelperFactory import GameTickTimeDelayHelperFactory
         from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.mathUtil: MathUtil = MathUtil.getInstance()
         self.directionFactory: DirectionFactory = DirectionFactory.getInstance()
         self.gameTickTimeDelayHelper: GameTickTimeDelayHelper = GameTickTimeDelayHelperFactory.getInstance()
         self.timeDelayHelper: TimeDelayHelper = TimeDelayHelper(500)
         self.list_: BasicArrayList = BasicArrayListD()
-        self.directionalInterface: DirectionalInterface = None
-        self.velocityInterface: BasicVelocityProperties = None
+        if "directionalInterface" not in vars(self): self.directionalInterface: DirectionalInterface = None
+        if "velocityInterface" not in vars(self): self.velocityInterface: BasicVelocityProperties = None
         self.directionToKeyMap: list[int] = [Canvas.LEFT, Canvas.DOWN, Canvas.UP, Canvas.RIGHT]
-        self.initialDropped: bool = False
-        self.diveP: bool = False
+        if "initialDropped" not in vars(self): self.initialDropped: bool = False
+        if "diveP" not in vars(self): self.diveP: bool = False
         self.directionOfTarget: Direction = Direction.getInstance(0)
         self.MIN_DISTANCE: int = 40
         self.lastTrackingLayerInterface: AllBinaryLayer = AllBinaryLayer.NULL_ALLBINARY_LAYER
-        self.artificialIntelligenceInterface: ArtificialIntelligenceInterface = None
-        self.aiVistor: Visitor = None
+        if "artificialIntelligenceInterface" not in vars(self): self.artificialIntelligenceInterface: ArtificialIntelligenceInterface = None
+        if "aiVistor" not in vars(self): self.aiVistor: Visitor = None
         self.lastDirection: Direction = DirectionFactory.getInstance().NO_DIRECTION
     
 
     def __init__(self, ownerLayerInterface: AllBinaryLayer, artificialIntelligenceInterface: ArtificialIntelligenceInterface, gameInput: GameInput, visitor: Visitor) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.ai.ArtificialIntelligenceInterface import ArtificialIntelligenceInterface
         from org.allbinary.direction.DirectionalCompositeInterface import DirectionalCompositeInterface
         from org.allbinary.game.combat.destroy.event.DestroyedEventHandler import DestroyedEventHandler
@@ -65,7 +81,7 @@ class DiveAndDirectionalTrackingAI(*java_bases(BasicAI, TrackingEventListenerInt
         from org.allbinary.layer.AllBinaryLayer import AllBinaryLayer
         from org.allbinary.logic.util.visitor.Visitor import Visitor
         super().__init__(ownerLayerInterface, gameInput)
-        self._init_fields()
+        __class__._init_fields(self)
         self.aiVistor = visitor
         self.artificialIntelligenceInterface = artificialIntelligenceInterface
         directionalCompositeInterface: DirectionalCompositeInterface = self.getOwnerLayerInterface()
@@ -79,10 +95,10 @@ class DiveAndDirectionalTrackingAI(*java_bases(BasicAI, TrackingEventListenerInt
     # throws Exception
     def processAI(self, allBinaryLayerManager: AllBinaryLayerManager) -> None:
         from org.allbinary.layer.AllBinaryLayerManager import AllBinaryLayerManager
-        if self.isBeyondTarget():
+        if java_predicate(self, "isBeyondTarget"):
             self.init()
             self.velocityInterface.zero()
-        if not self.diveP:
+        if not (self.diveP):
             self.target(allBinaryLayerManager)
         else:
             self.dive()
@@ -130,7 +146,7 @@ class DiveAndDirectionalTrackingAI(*java_bases(BasicAI, TrackingEventListenerInt
                 self.directionOfTarget = directionFactory.LEFT
             elif xDistance < -self.MIN_DISTANCE:
                 self.directionOfTarget = directionFactory.RIGHT
-        if not self.initialDropped and self.directionOfTarget != directionFactory.NOT_BORDERED_WITH:
+        if not (self.initialDropped) and self.directionOfTarget != directionFactory.NOT_BORDERED_WITH:
             self.drop()
         if self.initialDropped:
             if self.directionOfTarget == directionFactory.UP or self.directionOfTarget == directionFactory.DOWN:
@@ -209,7 +225,7 @@ class DiveAndDirectionalTrackingAI(*java_bases(BasicAI, TrackingEventListenerInt
     # throws Exception
     def attack(self) -> None:
         from javax.microedition.lcdui.Canvas import Canvas
-        super().processKeyAI(Canvas.KEY_NUM1)
+        java_super_call(super(), "processKeyAI", Canvas.KEY_NUM1)
     
 
     # throws Exception
@@ -270,13 +286,13 @@ class DiveAndDirectionalTrackingAI(*java_bases(BasicAI, TrackingEventListenerInt
         self.lastDirection = lastDirection
         value: int = self.getLastDirection().getValue()
         if value < 4:
-            super().setLastKey(self.directionToKeyMap[value])
+            java_super_call(super(), "setLastKey", self.directionToKeyMap[value])
     
 
     def setLastKey(self, lastKey: int) -> None:
         from javax.microedition.lcdui.Canvas import Canvas
         from org.allbinary.direction.DirectionFactory import DirectionFactory
-        super().setLastKey(lastKey)
+        java_super_call(super(), "setLastKey", lastKey)
         if self.getLastKey() == Canvas.LEFT:
             self.lastDirection = DirectionFactory.getInstance().LEFT
         elif self.getLastKey() == Canvas.DOWN:
@@ -296,7 +312,7 @@ class DiveAndDirectionalTrackingAI(*java_bases(BasicAI, TrackingEventListenerInt
         from org.allbinary.logic.string.StringMaker import StringMaker
         from org.allbinary.logic.string.StringUtil import StringUtil
         stringBuffer: StringMaker = StringMaker()
-        stringBuffer.append(str(super()))
+        stringBuffer.append(java_super_call(super(), "toString"))
         stringBuffer.append(" LastDirection: ")
         stringBuffer.append(StringUtil.getInstance().toString(self.getLastDirection()))
         return str(stringBuffer)

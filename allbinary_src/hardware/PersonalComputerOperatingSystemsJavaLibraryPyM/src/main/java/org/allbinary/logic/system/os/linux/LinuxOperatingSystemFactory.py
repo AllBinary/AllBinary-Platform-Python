@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -32,7 +33,7 @@ class LinuxOperatingSystemFactory:
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def getOperatingSystemInstance(self) -> GenericOperatingSystem:
@@ -52,7 +53,7 @@ class LinuxOperatingSystemFactory:
             if ((osName > operatingSystems.LINUX) - (osName < operatingSystems.LINUX)) == 0:
                 operatingSystemInterface = LinuxOS()
             else:
-                if operatingSystems.isUnknownSpecificOSAllowed():
+                if java_predicate(operatingSystems, "isUnknownSpecificOSAllowed"):
                     operatingSystemInterface = LinuxOS()
                 else:
                     raise Exception("Specific Linux OS Not Supported: " + osName)

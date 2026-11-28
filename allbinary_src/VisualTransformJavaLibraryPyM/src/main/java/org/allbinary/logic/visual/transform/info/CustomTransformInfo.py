@@ -15,11 +15,13 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.logic.visual.transform.info.TransformInfo import TransformInfo
 from org.allbinary.logic.visual.transform.info.TransformInfoInterface import TransformInfoInterface
 
 
+@java_inherited_overloads
 class CustomTransformInfo(*java_bases(TransformInfo, TransformInfoInterface)):
     
 

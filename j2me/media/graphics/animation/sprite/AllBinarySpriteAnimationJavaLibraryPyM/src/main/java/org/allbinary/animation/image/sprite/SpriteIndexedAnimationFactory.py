@@ -15,15 +15,20 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import java_bases
 from org.allbinary.animation.ProceduralAnimationInterfaceFactoryInterface import ProceduralAnimationInterfaceFactoryInterface
 from org.allbinary.animation.image.BaseImageAnimationFactory import BaseImageAnimationFactory
 
 
+@java_inherited_overloads
 class SpriteIndexedAnimationFactory(*java_bases(BaseImageAnimationFactory, ProceduralAnimationInterfaceFactoryInterface)):
+    def _java_defaults(self):
+        vars(self).setdefault("animationFactorySpriteScaleUtil", None)
+        vars(self).setdefault("basicColorArray", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.graphics.color.BasicColor import BasicColor
         from org.allbinary.graphics.color.BasicColorUtil import BasicColorUtil
         from org.allbinary.image.sprite.AnimationFactorySpriteScaleUtil import AnimationFactorySpriteScaleUtil
         self.animationFactorySpriteScaleUtil: AnimationFactorySpriteScaleUtil = AnimationFactorySpriteScaleUtil.getInstance()
@@ -63,11 +68,12 @@ class SpriteIndexedAnimationFactory(*java_bases(BaseImageAnimationFactory, Proce
     
 
     def __init__(self, image: Image, basicColorArray: list[BasicColor], sequenceArray: list[int], width: int, height: int, dx: int, dy: int, animationBehaviorFactory: AnimationBehaviorFactory) -> None:
+        __class__._java_defaults(self)
         from javax.microedition.lcdui.Image import Image
         from org.allbinary.animation.AnimationBehaviorFactory import AnimationBehaviorFactory
         from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(image, sequenceArray, width, height, dx, dy, animationBehaviorFactory)
-        self._init_fields()
+        __class__._init_fields(self)
         self.basicColorArray = basicColorArray
     
 
@@ -75,7 +81,7 @@ class SpriteIndexedAnimationFactory(*java_bases(BaseImageAnimationFactory, Proce
         from org.allbinary.AndroidUtil import AndroidUtil
         self.animationFactoryInitializationVisitor.dx = -self.animationFactoryInitializationVisitor.width >> 2
         self.animationFactoryInitializationVisitor.dy = -self.animationFactoryInitializationVisitor.height >> 2
-        if AndroidUtil.isAndroid():
+        if java_predicate(AndroidUtil, "isAndroid"):
             self.animationFactoryInitializationVisitor.dx += 3
     
 

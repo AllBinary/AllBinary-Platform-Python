@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 import threading
 
 
@@ -25,34 +26,33 @@ class ThreadPool:
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         from org.allbinary.string.CommonStrings import CommonStrings
-        from org.allbinary.util.BasicArrayList import BasicArrayList
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
         self.logUtil: LogUtil = LogUtil.getInstance()
         self.commonStrings: CommonStrings = CommonStrings.getInstance()
         self.NULL_RUNNABLE: NullRunnable = NullRunnable.getInstance()
         self.threadPoolStrings: ThreadPoolStrings = ThreadPoolStrings.getInstance()
         self.threadObjectUtil: ThreadObjectUtil = ThreadObjectUtil.getInstance()
-        self.isAlive: bool = False
+        if "isAlive" not in vars(self): self.isAlive: bool = False
         self.taskQueue: BasicArrayList = BasicArrayListD()
-        self.numThreads: int = 0
-        self.runningTask: bool = False
+        if "numThreads" not in vars(self): self.numThreads: int = 0
+        if "runningTask" not in vars(self): self.runningTask: bool = False
         self.currentPriorityRunnable: PriorityRunnable = self.threadObjectUtil.NULL_PRIORITY_RUNNABLE
     
 
     def __init__(self, poolName: str, numThreads: int, priority: int) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     # throws Exception
     def runAPriorityTask(self) -> None:
-        if not self.currentPriorityRunnable.isDone():
+        if not (java_predicate(self.currentPriorityRunnable, "isDone")):
             self.currentPriorityRunnable.run()
         else:
             runnable: object = self.getTask()
             if runnable == self.NULL_RUNNABLE:
                 return
             self.currentPriorityRunnable = runnable
-            if not self.currentPriorityRunnable == self.threadObjectUtil.NULL_PRIORITY_RUNNABLE:
+            if not (self.currentPriorityRunnable == self.threadObjectUtil.NULL_PRIORITY_RUNNABLE):
                 self.currentPriorityRunnable.reset()
                 self.currentPriorityRunnable.run()
     
@@ -66,17 +66,17 @@ class ThreadPool:
 
     def init(self) -> None:
         from org.allbinary.util.BasicArrayListD import BasicArrayListD
-        if not self.isAlive:
+        if not (self.isAlive):
             self.isAlive = True
             self.taskQueue = BasicArrayListD()
     
 
     def runTaskWithPriority(self, task: PriorityRunnable) -> None:
         with self._lock:
-            return self._runTaskWithPriority_unlocked(task)
+            return __class__.__dict__["_runTaskWithPriority_unlocked"].__get__(self, __class__)(task)
 
     def _runTaskWithPriority_unlocked(self, task: PriorityRunnable) -> None:
-        if not self.isAlive:
+        if not (self.isAlive):
             self.init()
         if task is not None:
             size: int = self.taskQueue.size()
@@ -96,10 +96,10 @@ class ThreadPool:
 
     def runTask(self, task: object) -> None:
         with self._lock:
-            return self._runTask_unlocked(task)
+            return __class__.__dict__["_runTask_unlocked"].__get__(self, __class__)(task)
 
     def _runTask_unlocked(self, task: object) -> None:
-        if not self.isAlive:
+        if not (self.isAlive):
             self.init()
         if task is not None:
             self.taskQueue.add(task)
@@ -108,17 +108,17 @@ class ThreadPool:
     # throws InterruptedException
     def getTask(self) -> object:
         with self._lock:
-            return self._getTask_unlocked()
+            return __class__.__dict__["_getTask_unlocked"].__get__(self, __class__)()
 
     def _getTask_unlocked(self) -> object:
-        if self.taskQueue.isEmpty():
+        if java_predicate(self.taskQueue, "isEmpty"):
             return self.NULL_RUNNABLE
         return self.taskQueue.removeAt(0)
     
 
     def clear(self) -> None:
         with self._lock:
-            return self._clear_unlocked()
+            return __class__.__dict__["_clear_unlocked"].__get__(self, __class__)()
 
     def _clear_unlocked(self) -> None:
         self.taskQueue.clear()
@@ -126,7 +126,7 @@ class ThreadPool:
 
     def close(self) -> None:
         with self._lock:
-            return self._close_unlocked()
+            return __class__.__dict__["_close_unlocked"].__get__(self, __class__)()
 
     def _close_unlocked(self) -> None:
         if self.isAlive:
@@ -142,7 +142,7 @@ class ThreadPool:
     
 
     def isBusy(self) -> bool:
-        if not self.isAlive:
+        if not (self.isAlive):
             return False
         if self.taskQueue.size() > 0:
             return True

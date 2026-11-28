@@ -15,10 +15,17 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.graphics.hud.BasicHud import BasicHud
 
 
+@java_inherited_overloads
 class LapWidget(BasicHud):
+    def _java_defaults(self):
+        vars(self).setdefault("LAP_STR", None)
+        vars(self).setdefault("OF_STR", None)
+        vars(self).setdefault("string", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.string.StringUtil import StringUtil
@@ -28,9 +35,10 @@ class LapWidget(BasicHud):
     
 
     def __init__(self, location: int, direction: int, basicColor: BasicColor) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.graphics.color.BasicColor import BasicColor
         super().__init__(location, direction, 2, basicColor)
-        self._init_fields()
+        __class__._init_fields(self)
         self.updateMaxHeight = 15
         self.updateMaxWidth = 40
     
@@ -49,7 +57,7 @@ class LapWidget(BasicHud):
 
     def paint(self, graphics: Graphics) -> None:
         from javax.microedition.lcdui.Graphics import Graphics
-        super().paintString(graphics, self.string)
+        java_super_call(super(), "paintString", graphics, self.string)
 # from javax.microedition.lcdui.Graphics import Graphics
 # from org.allbinary.logic.string.StringMaker import StringMaker
 # from org.allbinary.logic.string.StringUtil import StringUtil

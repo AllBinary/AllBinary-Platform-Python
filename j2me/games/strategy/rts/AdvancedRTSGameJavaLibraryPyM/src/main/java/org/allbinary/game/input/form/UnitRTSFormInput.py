@@ -14,20 +14,26 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_super_call
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from java.lang.JavaRuntimeStatic import lazy_static
 from org.allbinary.game.input.form.RTSFormInput import RTSFormInput
 
 
+@java_inherited_overloads
 class UnitRTSFormInput(RTSFormInput):
     DECAL_ID: int = None
+    def _java_defaults(self):
+        vars(self).setdefault("noMoneyGameNotificationEvent", None)
+        vars(self).setdefault("newUnitGameNotificationEvent", None)
 
     def _init_fields(self) -> None:
-        from org.allbinary.game.layer.hud.event.GameNotificationEvent import GameNotificationEvent
-        self.noMoneyGameNotificationEvent: GameNotificationEvent = None
-        self.newUnitGameNotificationEvent: GameNotificationEvent = None
+        if "noMoneyGameNotificationEvent" not in vars(self): self.noMoneyGameNotificationEvent: GameNotificationEvent = None
+        if "newUnitGameNotificationEvent" not in vars(self): self.newUnitGameNotificationEvent: GameNotificationEvent = None
     
 
     def __init__(self, groupInterface: list[Group]) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.game.layer.RTSGameStrings import RTSGameStrings
         from org.allbinary.game.layer.waypoint.WorkWaypoint import WorkWaypoint
         from org.allbinary.logic.java.bool.BooleanFactory import BooleanFactory
@@ -36,7 +42,7 @@ class UnitRTSFormInput(RTSFormInput):
         from org.allbinary.graphics.color.BasicColorFactory import BasicColorFactory
         from org.allbinary.logic.math.SmallIntegerSingletonFactory import SmallIntegerSingletonFactory
         super().__init__(groupInterface)
-        self._init_fields()
+        __class__._init_fields(self)
         smallIntegerSingletonFactory: SmallIntegerSingletonFactory = SmallIntegerSingletonFactory.getInstance()
         basicColorFactory: BasicColorFactory = BasicColorFactory.getInstance()
         self.noMoneyGameNotificationEvent = GameNotificationEvent(self, RTSGameStrings.getInstance().NO_MONEY, smallIntegerSingletonFactory.getAt(2), basicColorFactory.WHITE, BooleanFactory.getInstance().FALSE)
@@ -49,7 +55,7 @@ class UnitRTSFormInput(RTSFormInput):
         from org.allbinary.game.layer.AllBinaryGameLayerManager import AllBinaryGameLayerManager
         from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
         from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
-        super().setAllBinaryGameLayerManager(allBinaryGameLayerManager)
+        java_super_call(super(), "setAllBinaryGameLayerManager", allBinaryGameLayerManager)
         geographicMapCompositeInterface: GeographicMapCompositeInterface = allBinaryGameLayerManager
         geographicMapInterface: BasicGeographicMap = geographicMapCompositeInterface.getGeographicMapInterface()[0]
         self.noMoneyGameNotificationEvent.setBasicColorP(geographicMapInterface.getForegroundBasicColor())
@@ -70,7 +76,7 @@ class UnitRTSFormInput(RTSFormInput):
         from org.allbinary.media.graphics.geography.map.BasicGeographicMap import BasicGeographicMap
         from org.allbinary.media.graphics.geography.map.GeographicMapCellPosition import GeographicMapCellPosition
         from org.allbinary.media.graphics.geography.map.GeographicMapCompositeInterface import GeographicMapCompositeInterface
-        super().process(layerManager)
+        java_super_call(super(), "process", layerManager)
         associatedRtsLayer2: RTSLayer = associatedRtsLayer
         geographicMapCellPositionArea: GeographicMapCellPositionAreaBase = associatedRtsLayer2.geographicMapCellPositionAreaBase
         geographicMapCellPosition: GeographicMapCellPosition = geographicMapCellPositionArea.getNextSurroundingGeographicMapCellPosition()
@@ -128,11 +134,11 @@ class UnitRTSFormInput(RTSFormInput):
             advancedRTSPlayerLayerInterface: AdvancedRTSPlayerLayerInterface = rtsPlayerLayerInterface
             advancedPlayerOwnedRTSLayers: AdvancedPlayerOwnedRTSLayers = advancedRTSPlayerLayerInterface.getAdvancedPlayerOwnedRTSLayers()
             advancedPlayerOwnedRTSLayers.addUnit(layerInterface)
-            if not rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface():
+            if not (rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface()):
                 GameNotificationEventHandler.getInstance().fireEvent(self.newUnitGameNotificationEvent)
         else:
             rtsPlayerLayerInterface.add(ErrorSound.getInstance())
-            if not rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface():
+            if not (rtsPlayerLayerInterface.implmentsArtificialIntelligenceCompositeInterface()):
                 GameNotificationEventHandler.getInstance().fireEvent(self.noMoneyGameNotificationEvent)
 # from org.allbinary.graphics.form.item.ABCustomItem import ABCustomItem
 # from org.allbinary.logic.string.StringMaker import StringMaker

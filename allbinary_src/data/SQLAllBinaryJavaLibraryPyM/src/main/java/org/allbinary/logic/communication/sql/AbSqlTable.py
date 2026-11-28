@@ -15,17 +15,26 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 import threading
 from org.allbinary.logic.communication.sql.AbSqlBasic import AbSqlBasic
 
 
+@java_inherited_overloads
 class AbSqlTable(AbSqlBasic):
     _lock = threading.RLock()
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("tableName", None)
+        vars(self).setdefault("METHOD_CREATED_TABLE", None)
+        vars(self).setdefault("METHOD_DROP_TABLE", None)
+        vars(self).setdefault("TABLE_CREATION_SUCCESS", None)
+        vars(self).setdefault("DROPPED_SUCCESS", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.LogUtil import LogUtil
         self.logUtil: LogUtil = LogUtil.getInstance()
-        self.tableName: str = None
+        if "tableName" not in vars(self): self.tableName: str = None
         self.METHOD_CREATED_TABLE: str = "createTable()"
         self.METHOD_DROP_TABLE: str = "dropTable()"
         self.TABLE_CREATION_SUCCESS: str = "Table Creation Successful: "
@@ -33,9 +42,10 @@ class AbSqlTable(AbSqlBasic):
     
 
     def __init__(self, databaseConnectionInfoInterface: DbConnectionInfo) -> None:
+        __class__._java_defaults(self)
         from org.allbinary.business.init.db.DbConnectionInfo import DbConnectionInfo
         super().__init__(databaseConnectionInfoInterface)
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     def setTableName(self, tableName: str) -> None:
@@ -48,7 +58,7 @@ class AbSqlTable(AbSqlBasic):
 
     def createTable(self, data: str) -> str:
         with self._lock:
-            return self._createTable_unlocked(data)
+            return __class__.__dict__["_createTable_unlocked"].__get__(self, __class__)(data)
 
     def _createTable_unlocked(self, data: str) -> str:
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory
@@ -66,7 +76,7 @@ class AbSqlTable(AbSqlBasic):
 
     def dropTable(self) -> str:
         with self._lock:
-            return self._dropTable_unlocked()
+            return __class__.__dict__["_dropTable_unlocked"].__get__(self, __class__)()
 
     def _dropTable_unlocked(self) -> str:
         from org.allbinary.logic.communication.log.config.type.LogConfigTypeFactory import LogConfigTypeFactory

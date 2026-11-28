@@ -21,11 +21,11 @@ class AllMotionRecognizer:
     index: int = 0
 
     def _init_fields(self) -> None:
-        self.id: int = None
+        if "id" not in vars(self): self.id: int = 0
     
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
         self.id = ((setattr(AllMotionRecognizer, "index", AllMotionRecognizer.index + 1) or AllMotionRecognizer.index) - 1)
     
 

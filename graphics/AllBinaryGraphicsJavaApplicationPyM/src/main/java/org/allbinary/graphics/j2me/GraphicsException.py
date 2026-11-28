@@ -15,9 +15,14 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 
 
+@java_inherited_overloads
 class GraphicsException(Exception):
+    def _java_defaults(self):
+        vars(self).setdefault("logUtil", None)
+        vars(self).setdefault("guiLog", None)
 
     def _init_fields(self) -> None:
         from org.allbinary.logic.communication.log.GuiLog import GuiLog
@@ -27,18 +32,19 @@ class GraphicsException(Exception):
 
     def __init__(self, *args) -> None:
         if len(args) == 3:
-            self.__jconstructor3(*args)
+            __class__.__jconstructor3(self, *args)
 
     def __jconstructor3(self, *args) -> None:
         if True and (args[0] is None or isinstance(args[0], str)) and (args[2] is None or isinstance(args[2], str)):
-            self._constructor3_1(*args)
+            __class__._constructor3_1(self, *args)
         else:
-            self._constructor3_2(*args)
+            __class__._constructor3_2(self, *args)
     
 
     def _constructor3_1(self, msg: str, obj: object, method: str) -> None:
+        __class__._java_defaults(self)
         super().__init__(msg)
-        self._init_fields()
+        __class__._init_fields(self)
         try:
             self.guiLog.showDialog(msg)
             self.logUtil.put(msg, obj, method, self)
@@ -47,8 +53,9 @@ class GraphicsException(Exception):
     
 
     def _constructor3_2(self, msg: str, className: str, method: str) -> None:
+        __class__._java_defaults(self)
         super().__init__(msg)
-        self._init_fields()
+        __class__._init_fields(self)
         try:
             self.guiLog.showDialog(msg)
             self.logUtil.put(msg, className, method, self)

@@ -20,14 +20,14 @@ from __future__ import annotations
 class ImageColorResults:
 
     def _init_fields(self) -> None:
-        self.colorRange: ColorRange = None
-        self.colorAverage: ColorAverage = None
+        if "colorRange" not in vars(self): self.colorRange: ColorRange = None
+        if "colorAverage" not in vars(self): self.colorAverage: ColorAverage = None
     
 
     def __init__(self) -> None:
         from org.allbinary.media.image.analysis.ColorRange import ColorRange
         from org.allbinary.media.image.analysis.ColorAverage import ColorAverage
-        self._init_fields()
+        __class__._init_fields(self)
         self.setColorRange(ColorRange())
         self.getColorRange().setMaxRed(-1)
         self.getColorRange().setMaxGreen(-1)

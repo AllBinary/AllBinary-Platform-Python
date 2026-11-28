@@ -15,18 +15,23 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.logic.util.event.AllBinaryEventObject import AllBinaryEventObject
 
 
+@java_inherited_overloads
 class GameFeatureEvent(AllBinaryEventObject):
+    def _java_defaults(self):
+        vars(self).setdefault("whatChanged", None)
 
     def _init_fields(self) -> None:
-        self.whatChanged: str = None
+        if "whatChanged" not in vars(self): self.whatChanged: str = None
     
 
     def __init__(self, anyType: object, whatChanged: str) -> None:
+        __class__._java_defaults(self)
         super().__init__(anyType)
-        self._init_fields()
+        __class__._init_fields(self)
         self.whatChanged = whatChanged
     
 

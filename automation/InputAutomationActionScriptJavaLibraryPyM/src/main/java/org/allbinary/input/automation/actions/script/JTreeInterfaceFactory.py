@@ -14,10 +14,10 @@ class JTreeInterfaceFactory:
     instance: JTreeInterfaceFactory = None
 
     def _init_fields(self) -> None:
-        self.jTreeInterface: JTreeInterface = None
+        if "jTreeInterface" not in vars(self): self.jTreeInterface: JTreeInterface = None
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod

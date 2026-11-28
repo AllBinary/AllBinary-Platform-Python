@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -27,7 +28,7 @@ class ApplicationConfiguration:
 
     def __init__(self) -> None:
         from org.allbinary.string.CommonStrings import CommonStrings
-        self._init_fields()
+        __class__._init_fields(self)
         try:
             self.read()
         except Exception as e:
@@ -56,11 +57,11 @@ class ApplicationConfiguration:
         if gameFeature == MainFeatureFactory.getInstance().FULL_SCREEN:
             features: Features = Features.getInstance()
             if features.isFeature(gameFeature):
-                if not self.isFullscreen():
+                if not (java_predicate(self, "isFullscreen")):
                     self.setFullscreen(True)
                     self.write()
             else:
-                if self.isFullscreen():
+                if java_predicate(self, "isFullscreen"):
                     self.setFullscreen(False)
                     self.write()
     
@@ -93,11 +94,11 @@ class ApplicationConfiguration:
         from org.allbinary.logic.string.StringMaker import StringMaker
         stringBuffer: StringMaker = StringMaker()
         stringBuffer.append("isFullscreen: ")
-        stringBuffer.appendboolean(self.isFullscreen())
+        stringBuffer.appendboolean(java_predicate(self, "isFullscreen"))
         stringBuffer.append(" isProgressBarView: ")
-        stringBuffer.appendboolean(self.isProgressBarView())
+        stringBuffer.appendboolean(java_predicate(self, "isProgressBarView"))
         stringBuffer.append(" isShowTitleBar: ")
-        stringBuffer.appendboolean(self.isShowTitleBar())
+        stringBuffer.appendboolean(java_predicate(self, "isShowTitleBar"))
         return str(stringBuffer)
 
     def __str__(self) -> str:

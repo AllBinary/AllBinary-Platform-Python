@@ -22,13 +22,12 @@ class OrientationMotionGestureFactory:
     instance: object = None
 
     def _init_fields(self) -> None:
-        from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
-        self.LEFT: MotionGestureInput = None
-        self.RIGHT: MotionGestureInput = None
-        self.UP: MotionGestureInput = None
-        self.DOWN: MotionGestureInput = None
-        self.ROLL_LEFT: MotionGestureInput = None
-        self.ROLL_RIGHT: MotionGestureInput = None
+        if "LEFT" not in vars(self): self.LEFT: MotionGestureInput = None
+        if "RIGHT" not in vars(self): self.RIGHT: MotionGestureInput = None
+        if "UP" not in vars(self): self.UP: MotionGestureInput = None
+        if "DOWN" not in vars(self): self.DOWN: MotionGestureInput = None
+        if "ROLL_LEFT" not in vars(self): self.ROLL_LEFT: MotionGestureInput = None
+        if "ROLL_RIGHT" not in vars(self): self.ROLL_RIGHT: MotionGestureInput = None
     
 
     @staticmethod
@@ -42,7 +41,7 @@ class OrientationMotionGestureFactory:
     def __init__(self) -> None:
         from org.allbinary.game.input.InputFactory import InputFactory
         from org.allbinary.input.motion.gesture.MotionGestureInput import MotionGestureInput
-        self._init_fields()
+        __class__._init_fields(self)
         MAX: int = InputFactory.getInstance().MAX
         self.LEFT = MotionGestureInput(MAX - 20, "Left Orient")
         self.RIGHT = MotionGestureInput(MAX - 21, "Right Orient")

@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_predicate
 from java.lang.JavaRuntimeStatic import lazy_static
 
 
@@ -27,7 +28,7 @@ class ImageCompleteUtil:
         self.allTimeDelayHelper: TimeDelayHelper = TimeDelayHelper(120000)
 
     def __init__(self) -> None:
-        self._init_fields()
+        __class__._init_fields(self)
     
 
     @staticmethod
@@ -48,8 +49,8 @@ class ImageCompleteUtil:
         from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         from org.microemu.device.playn.PlaynImage import PlaynImage
         playnImage: PlaynImage = image
-        if not playnImage.getImage().isReady() and playnImage.getImage().width() + playnImage.getImage().height() == 0:
-            if timeDelayHelper.isTime():
+        if not (java_predicate(playnImage.getImage(), "isReady")) and playnImage.getImage().width() + playnImage.getImage().height() == 0:
+            if java_predicate(timeDelayHelper, "isTime"):
                 raise Exception("isReady: Timeout Waiting or GameHtmlHasLoadedResourcesProcessor does not have this Image: " + name)
             return False
         return True
@@ -61,8 +62,8 @@ class ImageCompleteUtil:
         from org.allbinary.time.TimeDelayHelper import TimeDelayHelper
         from org.microemu.device.playn.PlaynImage import PlaynImage
         playnImage: PlaynImage = image
-        while not playnImage.getImage().isReady() and playnImage.getImage().width() + playnImage.getImage().height() == 0:
-            if timeDelayHelper.isTime():
+        while not (java_predicate(playnImage.getImage(), "isReady")) and playnImage.getImage().width() + playnImage.getImage().height() == 0:
+            if java_predicate(timeDelayHelper, "isTime"):
                 raise Exception("waitFor: Timeout Waiting or GameHtmlHasLoadedResourcesProcessor does not have this Image: " + name)
     
 

@@ -15,13 +15,21 @@
 
 from __future__ import annotations
 
+from java.lang.JavaRuntimeStatic import java_inherited_overloads
 from org.allbinary.game.layer.behavior.GameLayerBehavior import GameLayerBehavior
 
 
+@java_inherited_overloads
 class TopViewGameLayerBehavior(GameLayerBehavior):
+    def _java_defaults(self):
+        vars(self).setdefault("maxGravityActionIndex", 0)
+        vars(self).setdefault("isJumpAction", False)
+        vars(self).setdefault("isJumpOver", False)
+        vars(self).setdefault("isFallingWithoutJumpAttempt", False)
+        vars(self).setdefault("gravityActionIndex", 0)
 
     def _init_fields(self) -> None:
-        self.maxGravityActionIndex: int = None
+        if "maxGravityActionIndex" not in vars(self): self.maxGravityActionIndex: int = 0
         self.isJumpAction: bool = True
         self.isJumpOver: bool = False
         self.isFallingWithoutJumpAttempt: bool = False
@@ -29,8 +37,9 @@ class TopViewGameLayerBehavior(GameLayerBehavior):
     
 
     def __init__(self, maxGravityActionIndex: int) -> None:
+        __class__._java_defaults(self)
         super().__init__()
-        self._init_fields()
+        __class__._init_fields(self)
         self.maxGravityActionIndex = maxGravityActionIndex
     
 
@@ -56,7 +65,7 @@ class TopViewGameLayerBehavior(GameLayerBehavior):
     def up(self, velocityProperties: VelocityProperties, acceleration: BasicAccelerationProperties, jumpBehavior: InitialJumpBehavior, accelerationMultiplier: int) -> None:
         from org.allbinary.game.physics.acceleration.BasicAccelerationProperties import BasicAccelerationProperties
         from org.allbinary.game.physics.velocity.VelocityProperties import VelocityProperties
-        if not self.isJumpOver:
+        if not (self.isJumpOver):
             if self.gravityActionIndex < self.maxGravityActionIndex:
                 acceleration2: int = -acceleration.getForward() * accelerationMultiplier
                 velocityProperties.getVelocityYBasicDecimalP().addint(acceleration2)
